@@ -7,7 +7,11 @@ function PlaylistsManager() {
             i;
 
         try {
-            data = JSON.parse(localStorage['playlists'] || '[]');
+            if (logged_in) {
+                data = JSON.parse(localStorage['loggedInPlaylists'] || '[]');
+            } else {
+                data = JSON.parse(localStorage['loggedOutPlaylists'] || '[]');
+            }
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
                 this.playlists.push(new Playlist(item.title, item.videos, item.remoteID, item.isPrivate, item.shuffle));
@@ -55,7 +59,8 @@ function PlaylistsManager() {
     this.save = function() {
         var startTime = new Date().getTime(),
             currentTime,
-            timeDelta;
+            timeDelta,
+            key = logged_in ? 'loggedInPlaylists' : 'loggedOutPlaylists';
 
         while (this.locked) {
             currentTime = new Date().getTime();
@@ -69,7 +74,7 @@ function PlaylistsManager() {
 
         this.locked = true;
         try {
-            localStorage['playlists'] = JSON.stringify(this.playlists);
+            localStorage[key] = JSON.stringify(this.playlists);
         } catch(e) {
             alert('Error saving playlists: ' + e);
         }
