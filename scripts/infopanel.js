@@ -23,9 +23,10 @@ var InfoPanel = {
 				resultItem.appendTo($('#related'));
 			}); 
 		});
+		$('#related').show();
 	},
 	_loadVideoInfo: function(songTag) {
-		$('#uploader').html('');
+		$('#uploader a').remove();
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + songTag + "?callback=?";
 		var params = {
 			'alt': 'json-in-script',
@@ -35,7 +36,6 @@ var InfoPanel = {
 		$.getJSON(url, params, function(data) {
 			var author = data.entry.author[0].name.$t;
 			var uri = data.entry.author[0].uri.$t;
-			$('#uploader').text(translations.Uploader);
 			$('<a/>')
 				.attr('href', 'javascript:void(0);')
 				.click(function() {

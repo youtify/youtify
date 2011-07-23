@@ -11,8 +11,8 @@ from model import get_current_youtify_user
 translations = {}
 
 translations['en_US'] = {
-	'Uploader': u'Uploader: ',
-	'Related': u'Related: ',
+	'Uploader:': u'Uploader: ',
+	'Related:': u'Related: ',
 	'Top 100': u'Top 100',
 	'Best of YouTube': u'Best of YouTube',
 	'Play Queue': u'Play Queue',
@@ -36,8 +36,8 @@ translations['en_US'] = {
 }
 
 translations['sv_SE'] = {
-	'Uploader': u'Uppladdare: ',
-	'Related': u'Relaterat: ',
+	'Uploader:': u'Uppladdare: ',
+	'Related:': u'Relaterat: ',
 	'Top 100': u'Topp 100',
 	'Best of YouTube': u'YouTubes bästa',
 	'Play Queue': u'Spellista',

@@ -102,6 +102,7 @@ var Player = {
 	},
 	
 	next: function() {
+		Notification.hide();
 		var elem = null; 
 		// Queue
 		if (Player._queue.length > 0) {
