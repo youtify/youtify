@@ -1,0 +1,4 @@
+cron:
+- description: store pings
+  url: /pingcron
+  schedule: every 10 minutes

@@ -1,0 +1,61 @@
+.lightGradient(@stop1:40%, @stop2:70%){
+  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @light-gradient1), color-stop(@stop2, @light-gradient2));
+  background:-moz-linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
+  background:-o-linear-gradient(bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
+  background:linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
+}
+.darkGradient(@stop1:50%, @stop2:75%, @stop3: 100%){
+  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @dark-gradient1), color-stop(@stop2, @dark-gradient2), color-stop(@stop3, @dark-gradient3));
+  background:-moz-linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3);
+  background:-o-linear-gradient(bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3);
+  background:linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3);
+}
+.background-left(){ background: #D8DFE9; }
+.background-right(){ background: #FFF; }
+.background-search(){ background: #FFF; }
+@light-text: #1D1B1D;
+@dark-text: #E2EFFF;
+@rename-color: #E2EFFF;
+@rename-bg: #1D1B1D;
+@light-link: #1D1B1D;
+@drag-bg: #8996B9;
+@odd-result: #F3F7FA;
+@inset: #000;
+
+@light-border: #606060;
+@light-gradient1: #C4C4C4;
+@light-gradient2: #ECECEC;
+
+@dark-gradient1: #A0A0A0;
+@dark-gradient2: #B0B0B0;
+@dark-gradient3: #D0D0D0;
+
+@playing-row: #8996B9;
+@playing-row-color: #E2EFFF;
+@selected: #4794E2;
+@green: #499C2A;
+@button-color: #444;
+
+@font: 'Arimo', arial, sans-serif;
+
+.infoPanelBackground() {
+	background-color: @dark-gradient2;
+	box-shadow: inset 0px 3px 5px 0px #777;
+}
+
+@infoPanelColor: @light-text;
+
+.results > li,
+#left-menu li,
+#new-playlist { 
+	text-shadow: 0 1px 1px transparent; 
+}
+.results > .selected, 
+.results > .selected:nth-child(2n+1), 
+#left-menu .playlistElem.selected { 
+	text-shadow: 0 1px 1px transparent;
+}
+#settings-text, 
+#search-options label { 
+	text-shadow: 0px 1px 1px #FFF; 
+}

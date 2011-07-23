@@ -1,0 +1,39 @@
+#translator-panel {
+    width: 100%;
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
+}
+#translator-panel table {
+    padding: 8px;
+    width: 100%;
+    overflow-y: scroll;
+    height: 100%;
+}
+#translator-panel thead td {
+    font-weight: bold;
+    text-align: left;
+}
+#translator-panel tbody td {
+    width: 50%;
+}
+#translator-panel table tbody tr:nth-child(odd) {
+	background-color: gainsboro;
+}
+#translator-panel table tbody tr input[type=text] {
+	background:rgba(255, 255, 255, 0.5);
+    width: 80%;
+    color: #000;
+	border: solid 1px #444;
+}
+#translator-panel .actionbar {
+    background: #eee;
+    border-bottom: 1px solid #ccc;
+    padding: 8px;
+}
+#translator-panel .actionbar .close {
+    float: right;
+}
+.selected-translation {
+    border: 2px solid red;
+}

@@ -1,0 +1,76 @@
+.lightGradient(@stop1:40%, @stop2:70%){
+  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @light-gradient1), color-stop(@stop2, @light-gradient2));
+  background:-moz-linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
+  background:-o-linear-gradient(bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
+  background: -o-linear-gradient(center bottom, red 50%, yellow 100%);
+  background:linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
+}
+.darkGradient(@stop1:0%, @stop2:8%, @stop3: 50%, @stop4: 50%, @stop5: 80%, @stop6: 100%){
+  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @dark-gradient1), color-stop(@stop2, @dark-gradient2), color-stop(@stop3, @dark-gradient3), color-stop(@stop4, @dark-gradient4), color-stop(@stop5, @dark-gradient5), color-stop(@stop6, @dark-gradient6));
+  background:-moz-linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3, @dark-gradient4 @stop4, @dark-gradient5 @stop5, @dark-gradient6 @stop6);
+  background:-o-linear-gradient(bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3, @dark-gradient4 @stop4, @dark-gradient5 @stop5, @dark-gradient6 @stop6);
+  background:linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3, @dark-gradient4 @stop4, @dark-gradient5 @stop5, @dark-gradient6 @stop6);
+}
+
+.background-left(){ background-color: #3483A4; }
+
+.background-right(){ 
+	background-color: #016D9B; 
+	background:-webkit-gradient(linear, left center, right center, color-stop(10%, rgb(1,99,141)), color-stop(50%, rgb(50,143,180)), color-stop(90%, rgb(1,99,141)));
+	background:-moz-linear-gradient(left center, rgb(1,99,141) 10%, rgb(50,143,180) 50%, rgb(1,99,141) 90%);
+	background:-o-linear-gradient(left center, rgb(1,99,141) 10%, rgb(50,143,180) 50%, rgb(1,99,141) 90%);
+	background:linear-gradient(left center, rgb(1,99,141) 10%, rgb(50,143,180) 50%, rgb(1,99,141) 90%);
+}
+
+.background-search(){ background: #016D9B; }
+
+@light-text: #C8DFE8;
+@dark-text: #D4D3CE;
+@rename-color: #393858;
+@rename-bg: #C8DFE8;
+@light-link: #C8DFE8;
+@drag-bg: #393858;
+@odd-result: rgba(151, 253, 255, 0.3);
+@inset: #000;
+
+@light-border: #606060;
+@light-gradient1: #C4C4C4;
+@light-gradient2: #ECECEC;
+
+@dark-gradient1: #9BFFFE;
+@dark-gradient2: #088CBE;
+@dark-gradient3: #01648D;
+
+@dark-gradient4: #3685A4;
+@dark-gradient5: #60A7C6;
+@dark-gradient6: #76BFDC;
+
+@playing-row: rgba(0,0,0,0.5);
+@playing-row-color: #FFF;
+@selected: #393858;
+@green: #499C2A;
+@button-color: #444;
+
+@font: 'Arimo', arial, sans-serif;
+
+.infoPanelBackground() {
+	background-color: @playing-row;
+	box-shadow: inset 0px 3px 5px 0px #000;
+}
+
+@infoPanelColor: @light-text;
+
+.results > li,
+#left-menu li,
+#new-playlist { 
+	text-shadow: 0 1px 1px #000; 
+}
+.results > .selected, 
+.results > .selected:nth-child(2n+1), 
+#left-menu .playlistElem.selected { 
+	text-shadow: 0 1px 1px #000; 
+}
+#settings-text, 
+#search-options label { 
+	text-shadow: 0px 1px 1px #FFF; 
+}

@@ -1,0 +1,50 @@
+application: youtify
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /tests
+  static_files: html/tests.html
+  upload: html/tests.html
+  login: admin
+
+- url: /beta
+  script: beta.py
+
+- url: /your.*
+  script: sucks.py
+
+- url: /toplist.*
+  script: toplist.py
+
+- url: /playlists.*
+  script: playlists.py
+
+- url: /pingcron
+  script: ping.py
+  login: admin
+
+- url: /pinggraph
+  script: ping.py
+  login: admin
+
+- url: /ping.*
+  script: ping.py
+
+- url: /scripts
+  static_dir: scripts
+
+- url: /styles
+  static_dir: styles
+
+- url: /images
+  static_dir: images
+
+- url: /translations.*
+  script: translations.py
+
+- url: /.*
+  script: main.py
+
