@@ -33,6 +33,8 @@ translations['en_US'] = {
 	'Flattr us!': u'Flattr us!',
 	'Follow us on Twitter!': u'Follow us on Twitter!',
 	'Like us on Facebook!': u'Like us on Facebook!',
+	'Blog': u'Blog',
+	'Legal': u'Legal',
 }
 
 translations['sv_SE'] = {
@@ -58,6 +60,8 @@ translations['sv_SE'] = {
 	'Flattr us!': u'Flattra oss!',
 	'Follow us on Twitter!': u'Följ oss på Twitter!',
 	'Like us on Facebook!': u'Gilla oss på Facebook!',
+	'Blog': u'Blogg',
+	'Legal': u'Rättsligt',
 }
 
 class TranslationsHandler(webapp.RequestHandler):
