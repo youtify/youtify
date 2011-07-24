@@ -19,7 +19,7 @@ function constructPlaylistsMenu() {
 
 $(document).ready(function() {
     if (logged_in) {
-        // @todo: sync/get playlists from remote
+        playlistManager.pull(constructPlaylistsMenu);
     } else {
         constructPlaylistsMenu();
     }

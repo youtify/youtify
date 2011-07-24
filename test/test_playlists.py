@@ -1,11 +1,12 @@
 import unittest
 from StringIO import StringIO
+from google.appengine.ext import db
 from google.appengine.ext.webapp import Request
 from google.appengine.ext.webapp import Response
+from django.utils import simplejson
+
 from playlists import PlaylistsHandler
 from model import Playlist
-from django.utils import simplejson
-from google.appengine.ext import db
 
 class Test(unittest.TestCase):
 
@@ -39,3 +40,27 @@ class Test(unittest.TestCase):
         self.failUnless(db.get(playlists[0].videos[0]).title == 'video1')
         self.failUnless(db.get(playlists[0].videos[0]).video_id == 'z2Am3aLwu1E')
         self.failUnless(response == str(playlists[0].key()))
+
+    def test_get_playlists(self):
+        playlist_model = Playlist(title='playlist1', videos=[])
+        playlist_model.put()
+
+        playlist_model = Playlist(title='playlist2', videos=[])
+        playlist_model.put()
+
+        handler = PlaylistsHandler()
+        handler.request = Request({
+            'REQUEST_METHOD': 'GET',
+            'PATH_INFO': '/playlists',
+            'SERVER_NAME': 'hi',
+            'SERVER_PORT': '80',
+            'wsgi.url_scheme': 'http',
+        })
+
+        handler.response = Response()
+        handler.get()
+        response = handler.response.out.getvalue()
+        response = simplejson.loads(response)
+
+        self.failUnless(response[1]['title'] == 'playlist2')
+        self.failUnless(response[1]['remoteId'] == str(playlist_model.key()))

@@ -22,6 +22,16 @@ function PlaylistsManager() {
     }
     this.load();
 
+    this.getPlaylistsMap = function() {
+        var ret = {};
+        $.each(this.playlists, function(i, item) {
+            if (item.remoteId !== null) {
+                ret[item.remoteId] = item;
+            }
+        });
+        return ret;
+    }
+
     /**
      * Download stored playlists and place them in localStorage if
      * they don't already exist.
@@ -29,27 +39,22 @@ function PlaylistsManager() {
      * @param callback The function to be called when done.
      */
     this.pull = function(callback) {
-        var remoteIds = {};
-        $.each(this.playlists, function(i, item) {
-            if (item.remoteId !== null) {
-                remoteIds[item.remoteId] = item;
-            }
-        });
-
-        var home = this;
+        var self = this,
+            remoteIds = this.getPlaylistsMap();
 
         $.getJSON('/playlists', {}, function(data) {
             $.each(data, function(i, item) {
                 var title = item['title'],
+                    videos = item['videos'],
                     remoteId = item['remoteId'],
                     isPrivate = false,
                     shuffle = false;
 
                 if (!(remoteId in remoteIds)) {
-                    home.addPlaylist(new Playlist(title, [], remoteId, isPrivate));
+                    self.addPlaylist(new Playlist(title, videos, remoteId, isPrivate));
                 }
             });
-            home.save();
+            self.saveToLocalStorage();
             callback();
         });
     };
