@@ -409,7 +409,6 @@ var Player = {
 	},
 	
 	loadIFramePlayer: function() {
-		console.log(YT);
 		Player._player = new YT.Player('youtube', {
           height: '230',
           width: '230',
@@ -424,11 +423,9 @@ var Player = {
 			'onError': Player.onPlayerError
           }
         });
-		console.log('player loaded');
 	},
 	
 	onIFramePlayerReady: function(event) {
-		console.log('onIFramePlayerReady called');
 		Player._playerReady = true;
 		
 		var pathname = document.location.pathname.split('/');

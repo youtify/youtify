@@ -157,12 +157,13 @@ $(document).ready(function() {
 		Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
 	});
 	
-	// LOAD YOUTUBE PLAYER
-	Player.loadIFramePlayer()
-	
     // Initially show Top 100
     TopList.select();
 	
 	//Notification.show('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 });
 
+function onYouTubePlayerAPIReady() {
+	// LOAD YOUTUBE PLAYER
+	Player.loadIFramePlayer();
+}
