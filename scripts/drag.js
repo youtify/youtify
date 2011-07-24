@@ -36,7 +36,7 @@ function dragAborted() {
 function dragStarted(event) {
     sourceElem = findDraggable($(event.target)); // set global
     if (sourceElem.find('.title').length) {
-		text = sourceElem.find('.title').text();
+		text = sourceElem.find('.title').not(sourceElem.find('.alternative > .title')).text();
 	} else {
 		text = sourceElem.text();
 	}

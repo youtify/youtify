@@ -38,10 +38,7 @@ var Player = {
 	play: function(videoId, title) {
 		if (!Player._playerReady) return;
 		
-		if (Player._player === null || Player._player === undefined) {
-			Player.loadYoutubePlayer();
-			return;
-		}
+		Player.assertPlayerLoaded();
 
 		if (videoId !== undefined) {
             history.pushState(null, null, '/videos/' + videoId);
@@ -65,12 +62,14 @@ var Player = {
 	
 	pause: function() {
 		if (!Player._playerReady) return;
-
+		Player.assertPlayerLoaded();
+		
 		Player._player.pauseVideo();
 	},
 
 	playPause: function() {
 		if (!Player._playerReady) return;
+		Player.assertPlayerLoaded();
 
 		if (Player._player.getPlayerState() === 1) {
 			Player.pause();
@@ -80,6 +79,8 @@ var Player = {
 	},
 	
 	prev: function() {
+		Player.assertPlayerLoaded();
+		
 		if (Player._player.getCurrentTime() > 3) {
 			Player._player.seekTo(0);
 		} else {
@@ -102,6 +103,8 @@ var Player = {
 	},
 	
 	next: function() {
+		Player.assertPlayerLoaded();
+		
 		Notification.hide();
 		var elem = null; 
 		// Queue
@@ -263,6 +266,8 @@ var Player = {
 	},
 	
 	seekForward: function(step) {
+		Player.assertPlayerLoaded();
+		
 		var pos = Player._player.getCurrentTime();
 		var len = Player._player.getDuration();
 		if (step !== undefined)
@@ -275,6 +280,8 @@ var Player = {
 	},
 
 	seekBackward: function(step) {
+		Player.assertPlayerLoaded();
+		
 		var pos = Player._player.getCurrentTime();
 		if (step !== undefined)
 			pos -= step;
@@ -286,7 +293,8 @@ var Player = {
 	},
 	
 	timelineClick: function(event) {
-		if (!Player._player) return;
+		Player.assertPlayerLoaded();
+		
 		var len = Player._player.getDuration(); 
 		var clickpos = event.pageX - $('#timeline').offset().left;
 		var wasMuted = Player._player.isMuted();
@@ -299,7 +307,8 @@ var Player = {
 	},
 	
 	_startTimelineUpdate: function() {
-		if (!Player._player) return;
+		Player.assertPlayerLoaded();
+		
 		var pos = Player._player.getCurrentTime();
 		var len = Player._player.getDuration();
 		$('#inner-timeline').show();
@@ -309,7 +318,7 @@ var Player = {
 	},
 
 	_updateTimeline: function() { 
-		if (!Player._player) { 
+		if (Player.assertPlayerLoaded()) { 
 			clearInterval(Player._timelineUpdateVar);
 			return;
 		}
@@ -353,6 +362,8 @@ var Player = {
 	},
 	
 	volumeUp: function(step) {
+		Player.assertPlayerLoaded();
+		
 		var volume = Player._player.getVolume();
 		if (step !== undefined)
 			volume += step;
@@ -364,6 +375,8 @@ var Player = {
 	},
 	
 	volumeDown: function(step) {
+		Player.assertPlayerLoaded();
+		
 		var volume = Player._player.getVolume();
 		if (step !== undefined)
 			volume -= step;
@@ -375,6 +388,8 @@ var Player = {
 	},
 	
 	setVolume: function(volume) {
+		Player.assertPlayerLoaded();
+		
 		if (volume === undefined || volume > 100)
 			volume = 100;
 		if (volume < 0)
@@ -408,6 +423,16 @@ var Player = {
 			id: "youtube"
 		};
 		swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapii=youtube", "youtube", "230", "230", "9.0.0", null, null, params, atts);
+	},
+	
+	assertPlayerLoaded: function() {
+		if (Player._player === undefined || Player._player.getPlayerState === undefined) { 
+			Player._playerReady = false;
+			
+			console.log("Reloading player");
+			Player.loadYoutubePlayer();
+		}
+		return Player._playerReady;
 	}
-
+	
 }
