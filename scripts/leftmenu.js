@@ -14,15 +14,12 @@ function constructPlaylistsMenu() {
         playlist = playlistManager.getPlaylist(i);
         li = playlist.createListElem();
         li.appendTo('#playlists');
-        if (playlist.remoteID && playlist.videos.length === 0) {
-            playlist.sync(li);
-        }
     }
 }
 
 $(document).ready(function() {
     if (logged_in) {
-        playlistManager.loadYouTubePlaylists(constructPlaylistsMenu);
+        // @todo: sync/get playlists from remote
     } else {
         constructPlaylistsMenu();
     }

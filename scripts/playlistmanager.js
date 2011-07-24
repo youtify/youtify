@@ -14,7 +14,7 @@ function PlaylistsManager() {
             }
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
-                this.playlists.push(new Playlist(item.title, item.videos, item.remoteID, item.isPrivate, item.shuffle));
+                this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.isPrivate, item.shuffle));
             }
         } catch (e) {
             alert('Error parsing playlists from localStorage: ' + e); 
@@ -23,29 +23,30 @@ function PlaylistsManager() {
     this.load();
 
     /**
-     * Download YouTube entries and create entries for them in localStorage if
+     * Download stored playlists and place them in localStorage if
      * they don't already exist.
      *
      * @param callback The function to be called when done.
      */
-    this.loadYouTubePlaylists = function(callback) {
-        var remoteIDs = {};
+    this.pull = function(callback) {
+        var remoteIds = {};
         $.each(this.playlists, function(i, item) {
-            if (item.remoteID !== null) {
-                remoteIDs[item.remoteID] = item;
+            if (item.remoteId !== null) {
+                remoteIds[item.remoteId] = item;
             }
         });
 
         var home = this;
 
         $.getJSON('/playlists', {}, function(data) {
-            $.each(data.feed.entry, function(i, item) {
-                var title = item['title']['$t'],
-                    remoteID = item['yt$playlistId']['$t'],
-                    isPrivate = 'yt$private' in item;
+            $.each(data, function(i, item) {
+                var title = item['title'],
+                    remoteId = item['remoteId'],
+                    isPrivate = false,
+                    shuffle = false;
 
-                if (!(remoteID in remoteIDs)) {
-                    home.addPlaylist(new Playlist(title, [], remoteID, isPrivate));
+                if (!(remoteId in remoteIds)) {
+                    home.addPlaylist(new Playlist(title, [], remoteId, isPrivate));
                 }
             });
             home.save();
@@ -53,13 +54,21 @@ function PlaylistsManager() {
         });
     };
 
+    this.save = function() {
+        this.saveToLocalStorage();
+        if (logged_in && this.playlists.length) {
+            this.pushPlaylists(0);
+        }
+    };
+
     /**
      * Will save the current state when as soon as no other process tries to
      */
-    this.save = function() {
+    this.saveToLocalStorage = function() {
         var startTime = new Date().getTime(),
             currentTime,
             timeDelta,
+            self = this,
             key = logged_in ? 'loggedInPlaylists' : 'loggedOutPlaylists';
 
         while (this.locked) {
@@ -71,15 +80,49 @@ function PlaylistsManager() {
             }
             continue;
         }
-
         this.locked = true;
+
         try {
             localStorage[key] = JSON.stringify(this.playlists);
         } catch(e) {
             alert('Error saving playlists: ' + e);
         }
         this.locked = false;
-    };
+    }
+
+    /**
+     * Sync playlists sequentially with server.
+     *
+     * Will save back to localStorage when done (remoteIds may have been set).
+     */
+    this.pushPlaylists = function(i) {
+        if (i >= this.playlists.length) {
+            return;
+            this.saveToLocalStorage();
+        }
+
+        var params = {},
+            self = this,
+            playlist = this.playlists[i];
+
+        if (playlist.remoteId === null) {
+            params = {
+                'title': playlist.title,
+                'videos': JSON.stringify(playlist.videos)
+            };
+            $.post('/playlists', params, function(data, textStatus) {
+                if (textStatus === 'success') {
+                    playlist.remoteId = data;
+                } else {
+                    alert('Failed to create new playlist ' + playlist.title);
+                }
+                self.pushPlaylists(i + 1);
+            });
+        } else {
+            // @todo update/sync existing playlist
+            self.pushPlaylists(i + 1);
+        }
+    }
 
     this.addPlaylist = function(playlist) {
         if (typeof playlist !== 'object') {

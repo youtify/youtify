@@ -95,10 +95,10 @@ function getVidsInPrivatePlaylist(playlistId, callback, start, feed) {
 /** CLASS PLAYLIST
  ****************************************************************************/
 
-function Playlist(title, videos, remoteID, isPrivate, shuffle) {
+function Playlist(title, videos, remoteId, isPrivate, shuffle) {
     this.title = title;
     this.videos = videos;
-    this.remoteID = remoteID || null;
+    this.remoteId = remoteId || null;
     this.isPrivate = isPrivate || false;
     this.shuffle = shuffle;
 
@@ -204,7 +204,7 @@ function Playlist(title, videos, remoteID, isPrivate, shuffle) {
 
         $.post(url, params, function(data, textStatus) {
             if (textStatus === 'success') {
-                playlist.remoteID = data;
+                playlist.remoteId = data;
                 playlistElem.removeClass('loading');
                 playlistElem.addClass('youtube');
             } else {
@@ -236,7 +236,7 @@ function Playlist(title, videos, remoteID, isPrivate, shuffle) {
         return {
             title: this.title,
             videos: this.videos,
-            remoteID: this.remoteID,
+            remoteId: this.remoteId,
             isPrivate: this.isPrivate,
 			shuffle: this.shuffle
         };
@@ -254,7 +254,7 @@ function Playlist(title, videos, remoteID, isPrivate, shuffle) {
             .mousedown(playlistMouseDown)
             .click(playlistClicked);
 
-        if (this.remoteID) {
+        if (this.remoteId) {
             li.addClass('youtube');
         } else {
             li.addClass('local')
