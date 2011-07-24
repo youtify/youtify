@@ -6,8 +6,7 @@ jQuery.fn.play = function() {
 
 function selectVideo(li, event) {
 	
-	if (event !== undefined && (event.ctrlKey || event.shiftKey)) {
-		// insert code for multiselect and remove next line
+	if (event !== undefined && (event.ctrlKey || event.metaKey)) {
 		if (li.hasClass('selected'))
 			li.removeClass('selected');
 		else
