@@ -22,7 +22,13 @@ function showContextMenu(buttons, event) {
             })
             .appendTo(contextmenu);
     });
-
+	
+	// Move menu if it overflows
+	var bottom = parseInt(contextmenu.css('top')) + (30*buttons.length);
+	var diff = bottom - $(window).height();
+	if (diff > 0)
+		contextmenu.css('top', parseInt(contextmenu.css('top')) - diff + 'px');	
+	
     // Set up a blocker div that closes the menu when clicked
     var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
         $('#blocker, #contextmenu').remove();
@@ -170,7 +176,34 @@ function showResultsItemContextMenu(event) {
             callback: function(li) {
                 Player.addToPlayOrder(li);
             }
-        }
+        },
+		{
+			title: 'Show related',
+			li: $(this),
+			callback: function(li) {
+				var videoTag = li.data('videoId');
+				$('#results').html('');
+				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoTag + "/related?callback=?";
+				var params = {
+					'alt': 'json-in-script',
+					'max-results': 50,
+					'prettyprint': true,
+					'v': 2
+				};
+				$.getJSON(url, params, function(data) {
+					$.each(data.feed.entry, function(i, item) {
+						var url = item['id']['$t'];
+						var videoId = url.match('video:(.*)$')[1];
+						var title = item['title']['$t'];
+						if (item['gd$rating'])
+							var rating = item['gd$rating']['average'];
+						var resultItem = createResultsItem(title, videoId, rating);
+						resultItem.appendTo($('#results'));
+					}); 
+				});
+				Search.selectSearchResults();
+			}
+		}
     ];
 
     buttons = $.merge(buttons, $(this).data('additionalMenuButtons'));
