@@ -318,7 +318,7 @@ var Player = {
 	},
 
 	_updateTimeline: function() { 
-		if (Player.assertPlayerLoaded()) { 
+		if (!Player.assertPlayerLoaded()) { 
 			clearInterval(Player._timelineUpdateVar);
 			return;
 		}
