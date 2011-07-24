@@ -158,7 +158,7 @@ $(document).ready(function() {
 	});
 	
 	// LOAD YOUTUBE PLAYER
-	Player.loadYoutubePlayer();
+	Player.loadIFramePlayer()
 	
     // Initially show Top 100
     TopList.select();

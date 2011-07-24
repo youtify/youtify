@@ -1,17 +1,3 @@
-function onYouTubePlayerReady(playerId) {
-	Player._player = $('#youtube')[0];
-	Player._playerReady = true;
-	Player._player.addEventListener("onStateChange", "Player.onPlayerStateChange");
-	Player._player.addEventListener("onError", "Player.onError");
-
-    var pathname = document.location.pathname.split('/');
-
-    // '/videos/123'
-    if (pathname.length === 3 && pathname[1] === 'videos') {
-        Player.play(pathname[2]);
-    }
-}
-
 var Player = { 
 	_player: null,
 	_playerReady: false,
@@ -177,19 +163,19 @@ var Player = {
 		});
 	},
 	
-	onPlayerStateChange: function(value) {
+	onPlayerStateChange: function(event) {
 		//unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5)
 
 		Player._stopTimelineUpdate();
 		
-		if (value != 5) {
+		if (event.data != 5) {
 			if ($('body').hasClass('playing')) {
 				$('body').removeClass('playing');
             }
 			$('body').addClass('paused');
 		}
 			
-		switch (value) {
+		switch (event.data) {
 			case -1:
 				// avoid buffer hang at start
 				if (Player._loadingNewVideo){
@@ -225,7 +211,7 @@ var Player = {
 		}
 	},
 	
-	onError: function(code) {
+	onError: function(event) {
 		var messages = {
             2: 'Sorry, the video requested cannot be played. Invalid video ID.',
             100: 'The requested video was not found. The video is removed or marked as private.',
@@ -250,7 +236,7 @@ var Player = {
 		}
 		elem.addClass('disabled');
 		Search.findAndPlayAlternative(elem);
-		Notification.show(messages[code]);
+		Notification.show(messages[event.data]);
 	},
 	
 	playPrevAlternative: function() {
@@ -348,15 +334,23 @@ var Player = {
 		Player._isFullscreen = true;
 		$('#youtube').css('left',0);
 		$('#youtube').css('top',0);
-		$('#youtube').width($(window).width());
-		$('#youtube').height($(window).height() -45);
+		var width = $(window).width();
+		var height = $(window).height() -45;
+		$('#youtube').width(width);
+		$('#youtube').height(height);
+		Player._player.setSize(width, height);
+		
 		$('#fullscreen').addClass('minimize');
 	},
 	
 	stopFullscreen: function() { 
 		Player._isFullscreen = false;
-		$('#youtube').width(230);
-		$('#youtube').height(230);
+		var width = 230;
+		var height = 230;
+		$('#youtube').width(width);
+		$('#youtube').height(height);
+		Player._player.setSize(width, height);
+
 		$(window).resize();
 		$('#fullscreen').removeClass('minimize');
 	},
@@ -413,16 +407,36 @@ var Player = {
 			}); 
 		});
 	},
+	
+	loadIFramePlayer: function() {
+		console.log(YT);
+		Player._player = new YT.Player('youtube', {
+          height: '230',
+          width: '230',
+		  videoId: '',
+		  enablejsapi: 1,
+		  modestbranding: 1,
+		  origin: 'http://www.youtify.com',
+		  playerVars: { 'autoplay': 0, 'controls': 0 },
+          events: {
+            'onReady': Player.onIFramePlayerReady,
+            'onStateChange': Player.onPlayerStateChange,
+			'onError': Player.onPlayerError
+          }
+        });
+		console.log('player loaded');
+	},
+	
+	onIFramePlayerReady: function(event) {
+		console.log('onIFramePlayerReady called');
+		Player._playerReady = true;
+		
+		var pathname = document.location.pathname.split('/');
 
-	loadYoutubePlayer: function() {
-		var params = {
-			allowScriptAccess: "always",
-			fs: true
-		};
-		var atts = {
-			id: "youtube"
-		};
-		swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapii=youtube", "youtube", "230", "230", "9.0.0", null, null, params, atts);
+		// '/videos/123'
+		if (pathname.length === 3 && pathname[1] === 'videos') {
+			Player.play(pathname[2]);
+		}
 	},
 	
 	assertPlayerLoaded: function() {
@@ -434,5 +448,4 @@ var Player = {
 		}
 		return Player._playerReady;
 	}
-	
 }

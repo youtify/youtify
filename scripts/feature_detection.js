@@ -43,9 +43,5 @@ function checkBrowser() {
 	if (!CSSDetect() || !JSDetect()) {
 		window.location = '/yourbrowsersucks';
 	}
-	var playerVersion = swfobject.getFlashPlayerVersion();
-	if (!playerVersion || parseInt(playerVersion.major) < 10) {
-		window.location = '/yourdecisionrocks';
-	}
 };
 checkBrowser();
