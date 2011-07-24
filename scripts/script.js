@@ -119,6 +119,17 @@ $(document).ready(function() {
     $('#new-playlist').data('type', 'button');
 
     changeTheme(settings.theme);
+	
+	// Legal & Information
+	$('#infomenu-text').click(function() {
+        var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
+            $('#blocker').remove();
+            $('#infomenu-popup').hide();
+            event.stopPropagation();
+        });
+        blocker.appendTo('body');
+        $('#infomenu-popup').show();
+    });
 
 	// CONTROLS
 	$('#playpause').click(Player.playPause);

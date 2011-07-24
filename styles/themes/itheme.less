@@ -1,9 +1,4 @@
-.lightGradient(@stop1:40%, @stop2:70%){
-  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @light-gradient1), color-stop(@stop2, @light-gradient2));
-  background:-moz-linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
-  background:-o-linear-gradient(bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
-  background:linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
-}
+
 .darkGradient(@stop1:50%, @stop2:75%, @stop3: 100%){
   background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @dark-gradient1), color-stop(@stop2, @dark-gradient2), color-stop(@stop3, @dark-gradient3));
   background:-moz-linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3);
@@ -54,8 +49,4 @@
 .results > .selected:nth-child(2n+1), 
 #left-menu .playlistElem.selected { 
 	text-shadow: 0 1px 1px transparent;
-}
-#settings-text, 
-#search-options label { 
-	text-shadow: 0px 1px 1px #FFF; 
 }

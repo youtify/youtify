@@ -1,9 +1,4 @@
-.lightGradient(@stop1:40%, @stop2:70%){
-  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @light-gradient1), color-stop(@stop2, @light-gradient2));
-  background:-moz-linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
-  background:-o-linear-gradient(bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
-  background:linear-gradient(center bottom, @light-gradient1 @stop1, @light-gradient2 @stop2);
-}
+
 .darkGradient(@stop1:0%, @stop2:8%, @stop3: 50%, @stop4: 50%, @stop5: 80%, @stop6: 100%){
   background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @dark-gradient1), color-stop(@stop2, @dark-gradient2), color-stop(@stop3, @dark-gradient3), color-stop(@stop4, @dark-gradient4), color-stop(@stop5, @dark-gradient5), color-stop(@stop6, @dark-gradient6));
   background:-moz-linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3, @dark-gradient4 @stop4, @dark-gradient5 @stop5, @dark-gradient6 @stop6);
@@ -13,7 +8,9 @@
 
 .background-left(){ background: transparent; }
 
-.background-right(){ background: transparent; }
+.background-right(){ 
+	background: -moz-linear-gradient(left , rgba(8, 30, 62, 1) 0%, rgba(8, 30, 62, 0.0) 500px) repeat scroll 0% 0% transparent;
+}
 
 .background-search(){ background: rgb(4, 20, 46); color: #FFF; }
 
@@ -57,7 +54,7 @@
 @font: 'Arimo', arial, sans-serif;
 
 .infoPanelBackground() {
-	background-color: rgb(29, 80, 143);
+	background-color: rgba(8, 30, 62, 0.5);
 	box-shadow: inset 0px 3px 5px 0px #FFF;
 }
 
@@ -71,9 +68,5 @@
 .results > .selected, 
 .results > .selected:nth-child(2n+1), 
 #left-menu .playlistElem.selected { 
-	text-shadow: 0px 1px 1px #FFF; 
-}
-#settings-text, 
-#search-options label { 
 	text-shadow: 0px 1px 1px #FFF; 
 }

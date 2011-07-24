@@ -33,8 +33,12 @@ translations['en_US'] = {
 	'Flattr us!': u'Flattr us!',
 	'Follow us on Twitter!': u'Follow us on Twitter!',
 	'Like us on Facebook!': u'Like us on Facebook!',
-	'Blog': u'Blog',
-	'Legal': u'Legal',
+	'Legal & Information': u'Legal & Information',
+	'Legal disclaimer': u'Legal disclaimer',
+	'Our blog': u'Our blog',
+	'Youtify on GitHub': u'Youtify on GitHub',
+	'How to import from Spotify': u'How to import from Spotify',
+	
 }
 
 translations['sv_SE'] = {
@@ -60,8 +64,11 @@ translations['sv_SE'] = {
 	'Flattr us!': u'Flattra oss!',
 	'Follow us on Twitter!': u'Följ oss på Twitter!',
 	'Like us on Facebook!': u'Gilla oss på Facebook!',
-	'Blog': u'Blogg',
-	'Legal': u'Rättsligt',
+	'Legal & Information': u'Rättsligt & Information',
+	'Legal disclaimer': u'Juridisk ansvarsbegränsning',
+	'Our blog': u'Vår blogg',
+	'Youtify on GitHub': u'Youtify på GitHub',
+	'How to import from Spotify': u'Hur man importerar från Spotify',
 }
 
 class TranslationsHandler(webapp.RequestHandler):

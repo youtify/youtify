@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#settings .button').click(function() {
+    $('#settings-text').click(function() {
         var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
             $('#blocker').remove();
             $('#settings-popup').hide();

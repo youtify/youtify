@@ -8,6 +8,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="keywords" content="youtify, music, youtube, spotify, streaming" /> 
         <meta name="description" content="Youtify - YouTube's music, all the time" /> 
+		<link rel="canonical" href="http://www.youtify.com/" />
+		
+		<meta property="og:title" content="Youtify"/>
+		<meta property="og:type" content="software"/>
+		<meta property="og:url" content="http://www.youtify.com/"/>
+		<meta property="og:image" content="http://www.youtify.com/images/logo50x50.png"/>
+		<meta property="og:site_name" content="Youtify"/>
+		<meta property="fb:admins" content="704121239,676899180"/>
+		<meta property="og:description" content="The BEST online music video player"/>
+		
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
 		<script src="/scripts/swfobject.js"></script>
@@ -79,6 +89,7 @@
 		<script src="/scripts/uploader.js"></script> 
 		<script src="/scripts/spotify_import.js"></script> 
 
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 		{% if ON_PRODUCTION %}
 			<script src="/scripts/ga.js"></script>
         {% else %}
@@ -104,10 +115,7 @@
                         <a id="facebook" href="http://facebook.com/Youtify" target="_blank">
                             <img class="translatable" src="/images/facebook.png" alt="Like us on Facebook!" title="Like us on Facebook!" border="0" />
                         </a>
-						<div id="info-link-container">
-							<a class="translatable" href="http://blog.youtify.com/" target="_blank">Blog</a>
-							<a class="translatable" href="http://blog.youtify.com/2011/05/legal.html" target="_blank">Legal</a>
-						</div>
+						<div class="g-plusone" data-size="medium" data-count="false"></div>
                     </div> 
 					<div id="left-menu"> 
                         {% include "loginbox.html" %}
@@ -123,7 +131,7 @@
                             <input type="text" style="display:none" /> 
                         </div> 
 						
-						<div id="spotify-importer" style="display: none;">
+						<div id="spotify-importer" style="display: none;" class="popup">
 							<h2 class="translatable">Paste Spotify links below</h2>
 							<a href="javascript:Player.play('G1KJjqdalp8');" class="translatable">HELP!</a>
 							<textarea></textarea>
@@ -164,9 +172,10 @@
 						
 						<a id="yt-power" href="http://www.youtube.com"></a>
                         <div id="logo"></div> 
+						
 						<div id="settings">
-                            <span id="settings-text" class="button translatable">Settings</span>
-							<div id="settings-popup">
+                            <span id="settings-text" class="translatable">Settings</span>
+							<div id="settings-popup" class="popup point-up">
                                 <div class="language">
                                     <h2 class="translatable">Language</h2>
                                     <select>
@@ -199,6 +208,17 @@
                                 </div>
 							</div>
 						</div>
+						<div id="infomenu">
+                            <span id="infomenu-text" class="translatable">Legal & Information</span>
+							<div id="infomenu-popup" class="popup point-up">
+								<a class="translatable" href="http://blog.youtify.com/2011/05/legal.html" target="_blank">Legal disclaimer</a>
+								<a class="translatable" href="http://blog.youtify.com/" target="_blank">Our blog</a>
+								<a class="translatable" href="https://github.com/youtify/youtify" target="_blank">Youtify on GitHub</a>
+								<br />
+								<a class="translatable" href="javascript:Player.play('G1KJjqdalp8');">How to import from Spotify</a>
+							</div>
+						</div>
+						
 					</div> 
 					<div id="results-container" class="droppable"> 
 						<ol id="results" class="results"></ol> 
