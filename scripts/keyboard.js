@@ -1,5 +1,5 @@
 $(window).keydown(function(event) {
-    if ($('input').is(":focus")) return; // Shouldn't the other keypresses make sure the event isn't propagated here?
+    if ($('input, textarea').is(":focus")) return; // Shouldn't the other keypresses make sure the event isn't propagated here?
     
     switch(event.keyCode) {
         case 32: // Space

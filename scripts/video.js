@@ -5,17 +5,17 @@ jQuery.fn.play = function() {
 };
 
 function selectVideo(li, event) {
-	if (event !== undefined) {
-		if (event.ctrlKey || event.shiftKey) {
-			// insert code for multiselect and remove next line
-			li.siblings().removeClass('selected');
-		} else {
-			li.siblings().removeClass('selected');
-		}
+	
+	if (event !== undefined && (event.ctrlKey || event.shiftKey)) {
+		// insert code for multiselect and remove next line
+		if (li.hasClass('selected'))
+			li.removeClass('selected');
+		else
+			li.addClass('selected');
 	} else {
 		li.siblings().removeClass('selected');
+		li.addClass('selected');
 	}
-    li.addClass('selected');
 }
 
 function createRatingBar(rating) {
@@ -36,11 +36,9 @@ function createResultsItem(title, videoId, rating) {
         .addClass("video")
         .data('type', 'video') // used for drag n drop
         .data('videoId', videoId)
-        .mousedown(function(event) {
-            selectVideo($(this), event);
-        })
         .bind('contextmenu', showResultsItemContextMenu)
         .click(function(event) {
+            selectVideo($(this), event);
             event.stopPropagation();
         });
 
@@ -58,6 +56,10 @@ function createResultsItem(title, videoId, rating) {
 	$('<span/>')
 		.addClass("title")
 		.text(title)
+		.click(function(event) {
+            selectVideo($(this).parent(), event);
+            event.stopPropagation();
+        })
 		.appendTo(li);
 
     if (rating !== undefined) {

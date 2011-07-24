@@ -35,13 +35,19 @@ function dragAborted() {
  */
 function dragStarted(event) {
     sourceElem = findDraggable($(event.target)); // set global
+	var text = '';
     if (sourceElem.find('.title').length) {
-		text = sourceElem.find('.title').not(sourceElem.find('.alternative > .title')).text();
+		var titles = sourceElem.find('.title').not(sourceElem.find('.alternative > .title'));
+		$.each(titles, function(index, item) {
+			text += $(item).text();
+			if (index < titles.length-1)
+				text += '<br />';
+		});
 	} else {
 		text = sourceElem.text();
 	}
 	dragElem = $('<span id="dragElem" />')
-        .text(text)
+        .html(text)
         .appendTo('body');
 }
 
@@ -90,6 +96,11 @@ function findDraggable(elem) {
             draggable = $(draggable[0]);
         }
     }
+	if (draggable.hasClass('selected')) {
+		draggable = draggable.parent().children('.selected');
+	} else {
+		selectVideo(draggable);
+	}
     return draggable;
 }
 
@@ -195,12 +206,20 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 
 // VIDEO DROPPED ON PLAYLIST
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (targetElem.hasClass('playlistElem') && sourceElem.hasClass('video')) {
-        var playlist = targetElem.data('model');
-        playlist.addVideo(sourceElem.text(), sourceElem.data('videoId'));
-        playlistManager.save();
-        constructPlaylistsMenu();
-    }
+    if (!targetElem.hasClass('playlistElem'))
+		return;
+	
+	var playlist = targetElem.data('model');
+	$.each(sourceElem, function(index, item) {
+		item = $(item);
+		if (item.hasClass('video')) {
+			playlist.addVideo(item.find('.title').text(), item.data('videoId'));
+			item.removeClass('selected');
+		}
+	});
+		
+	playlistManager.save();
+	constructPlaylistsMenu();
 });
 
 // VIDEO DROPPED ON #new-playlist
