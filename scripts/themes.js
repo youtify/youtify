@@ -48,7 +48,8 @@ $(document).ready(function() {
 	}).click(function(event) {
 		changeTheme('cloud');
 		event.stopPropagation();
-		createClouds();
+		if (confirm('WARNING! This theme is experimental and your browser may crash! Save all your work and continue on your own risk!'))
+			createClouds();
 	});
 });
 
