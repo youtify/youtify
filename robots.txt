@@ -1,0 +1,12 @@
+# robots.txt for http://www.youtify.com/
+
+User-agent: *
+Disallow: /yourbrowsersucks
+Disallow: /ping
+Disallow: /beta
+Disallow: /translations
+Disallow: /images
+Disallow: /styles
+Disallow: /scripts
+Disallow: /tests
+Disallow: /toplist
