@@ -412,10 +412,11 @@ var Player = {
 		Player._player = new YT.Player('youtube', {
           height: '230',
           width: '230',
-		  videoId: '',
+		  videoId: Player._hiddenPlaylist[new Date().getWeek()],
 		  enablejsapi: 1,
 		  modestbranding: 1,
-		  origin: 'http://www.youtify.com',
+//		  origin: 'http://www.youtify.com',
+		  origin: document.location,
 		  playerVars: { 'autoplay': 0, 'controls': 0 },
           events: {
             'onReady': Player.onIFramePlayerReady,
@@ -426,8 +427,8 @@ var Player = {
 	},
 	
 	onIFramePlayerReady: function(event) {
+		//Player._player = event.data;
 		Player._playerReady = true;
-		
 		var pathname = document.location.pathname.split('/');
 
 		// '/videos/123'
@@ -441,7 +442,7 @@ var Player = {
 			Player._playerReady = false;
 			
 			console.log("Reloading player");
-			Player.loadYoutubePlayer();
+			Player.loadIFramePlayer();
 		}
 		return Player._playerReady;
 	}
