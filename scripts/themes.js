@@ -46,10 +46,11 @@ $(document).ready(function() {
 	$('#themes-cloud').hover(function() {
 		$('#settings .themes span').text('Cloud - experimental!');
 	}).click(function(event) {
-		changeTheme('cloud');
 		event.stopPropagation();
-		if (confirm('WARNING! This theme is experimental and your browser may crash! Save all your work and continue on your own risk!'))
+		if (confirm('WARNING! This theme is experimental and your browser may crash! Save all your work and continue on your own risk!')) {
+            changeTheme('cloud');
 			createClouds();
+        }
 	});
 });
 
