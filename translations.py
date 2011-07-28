@@ -38,7 +38,9 @@ translations['en_US'] = {
 	'Our blog': u'Our blog',
 	'Youtify on GitHub': u'Youtify on GitHub',
 	'How to import from Spotify': u'How to import from Spotify',
-	
+	'Notifications': u'Notifications',
+	'Hide after:': u'Hide after:',
+	'seconds': u'seconds',
 }
 
 translations['sv_SE'] = {
@@ -69,6 +71,9 @@ translations['sv_SE'] = {
 	'Our blog': u'Vår blogg',
 	'Youtify on GitHub': u'Youtify på GitHub',
 	'How to import from Spotify': u'Hur man importerar från Spotify',
+	'Notifications': u'Meddelande',
+	'Hide after:': u'Göm efter:',
+	'seconds': u'sekunder',
 }
 
 class TranslationsHandler(webapp.RequestHandler):
