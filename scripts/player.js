@@ -36,6 +36,8 @@ var Player = {
 			if (title !== undefined) {
 				document.title = "Youtify - " + title;
 				$('#info .title').text(title);
+				
+				Notification.announce(title);
 			} else {
 				Player.loadTitle(videoId);
 			}
@@ -415,8 +417,7 @@ var Player = {
 		  videoId: Player._hiddenPlaylist[new Date().getWeek()],
 		  enablejsapi: 1,
 		  modestbranding: 1,
-//		  origin: 'http://www.youtify.com',
-		  origin: document.location,
+		  origin: document.location.host,
 		  playerVars: { 'autoplay': 0, 'controls': 0 },
           events: {
             'onReady': Player.onIFramePlayerReady,

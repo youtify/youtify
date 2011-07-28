@@ -50,13 +50,15 @@ function Settings() {
     this.translatorMode = settings.translatorMode || false;
     this.theme = settings.theme || 'default';
 	this.quality = settings.quality || 'hd720';
+	this.announceTimeout = settings.announceTimeout || 3000;
 
     this.save = function() {
         localStorage['settings'] = JSON.stringify({
             'language': this.language,
             'translatorMode': this.translatorMode,
             'theme': this.theme,
-			'quality': this.quality
+			'quality': this.quality,
+			'announceTimeout': this.announceTimeout
         });
     }
 }
