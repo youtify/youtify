@@ -57,6 +57,9 @@ function showPlaylistContextMenu(event) {
 				var div = $('#spotify-importer')
 					.clone()
 					.addClass('spotify-importer')
+                    .bind('contextmenu', function(event) {
+                        event.stopPropagation();
+                    })
 					.click(function(event) {
 						event.stopPropagation();
 					});
