@@ -24,6 +24,15 @@ $(document).ready(function() {
 			settings.quality = 'hd720'; 
 			settings.save(); 
 		});
+		
+	if (!window.webkitNotifications)
+		$('#settings .notifications').hide();
+	$('#notificationRange').change(function() {
+		$('#notificationRangeText').text(this.value);
+		var settings = new Settings();
+		settings.announceTimeout = parseInt(this.value) * 1000; 
+		settings.save(); 
+	});
 });
 
 function autoDetectLanguage() {
