@@ -73,8 +73,8 @@ function getVidsInPlaylist(playlistId, callback, parameters, start, feed) {
 $(window).resize(function() {
 	var windowHeight = $(window).height();
 	var windowWidth = $(window).width();
-	if (windowWidth < 976) {
-		windowWidth = 976;
+	if (windowWidth < 650) {
+		windowWidth = 650;
     }
 
     // height
