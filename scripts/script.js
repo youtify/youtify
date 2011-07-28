@@ -110,6 +110,12 @@ $(window).load(function() {
 	$(window).resize();
 	$('#loading span').text('Done');
 	$('#loading').fadeOut();
+	
+	// LOAD VIDEO?
+	var pathname = document.location.pathname.split('/'); // '/videos/123'
+	if (pathname.length === 3 && pathname[1] === 'videos') {
+		Player.play(pathname[2]);
+	}
 });
 
 $(document).ready(function() {
@@ -156,8 +162,6 @@ $(document).ready(function() {
 	$('#logo').click(function() {
 		Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
 	});
-	
-	//Player.loadIFramePlayer();
 
 	// Initially show Top 100
     TopList.select();
@@ -166,5 +170,7 @@ $(document).ready(function() {
 });
 
 function onYouTubePlayerAPIReady() {
-	Player.loadIFramePlayer();
+	// 
+	// Player cannot be loaded before
+	// $(window).load()
 }

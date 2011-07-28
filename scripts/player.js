@@ -22,16 +22,22 @@ var Player = {
     },
 	
 	play: function(videoId, title) {
-		if (!Player._playerReady) return;
-		
-		Player.assertPlayerLoaded();
-
 		if (videoId !== undefined) {
             history.pushState(null, null, '/videos/' + videoId);
             Player._currentVideoId = videoId;
+			
+			// Make sure currentVideoId is set before assert
+			Player.assertPlayerLoaded();
+			
 			Player._loadingNewVideo = true;
 			var quality = new Settings().quality || 'hd720';
-			Player._player.loadVideoById(videoId, 0, quality);
+			
+			try {
+				Player._player.loadVideoById(videoId, 0, quality);
+			} catch (ex) { 
+				console.log(ex);
+				Notification.show('An error has occurred with the player. Please reload the page.');
+			}
 			
 			if (title !== undefined) {
 				document.title = "Youtify - " + title;
@@ -43,6 +49,8 @@ var Player = {
 			}
 			InfoPanel.loadFromTag(videoId);
 			// avoid buffer hang at start
+		} else {
+			Player.assertPlayerLoaded();
 		}
 
 		Player._player.playVideo();
@@ -411,14 +419,16 @@ var Player = {
 	},
 	
 	loadIFramePlayer: function() {
+		$('#youtube').html(''); // remove old iframe
+		var videoId = Player.getCurrentVideoId() || '';
 		Player._player = new YT.Player('youtube', {
           height: '230',
           width: '230',
-		  videoId: Player._hiddenPlaylist[new Date().getWeek()],
+		  videoId: videoId,
 		  enablejsapi: 1,
 		  modestbranding: 1,
 		  origin: document.location.host,
-		  playerVars: { 'autoplay': 0, 'controls': 0 },
+		  playerVars: { 'autoplay': 1, 'controls': 0 },
           events: {
             'onReady': Player.onIFramePlayerReady,
             'onStateChange': Player.onPlayerStateChange,
@@ -428,18 +438,11 @@ var Player = {
 	},
 	
 	onIFramePlayerReady: function(event) {
-		//Player._player = event.data;
 		Player._playerReady = true;
-		var pathname = document.location.pathname.split('/');
-
-		// '/videos/123'
-		if (pathname.length === 3 && pathname[1] === 'videos') {
-			Player.play(pathname[2]);
-		}
 	},
 	
 	assertPlayerLoaded: function() {
-		if (Player._player === undefined || Player._player.getPlayerState === undefined) { 
+		if (Player._player === undefined || Player._player === null || Player._player.getPlayerState === undefined) { 
 			Player._playerReady = false;
 			
 			console.log("Reloading player");
