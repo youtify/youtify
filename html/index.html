@@ -20,7 +20,6 @@
 		<meta property="fb:admins" content="704121239,676899180"/>
 		<meta property="og:description" content="The BEST online music video player"/>
 		
-
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
 		<script src="/scripts/feature_detection.js"></script>
 		
@@ -61,6 +60,7 @@
             var logged_in = {{ logged_in }};
             var toplist = {{ toplist }};
             var accept_language_header = "{{ accept_language_header }}";
+            var SPOTIFY_INSTRUCTIONS_VIDEO_ID = 'uLG5rWWf_rg';
         </script>
 
 		<script src="/scripts/jquery.shuffle.js"></script>
@@ -134,7 +134,7 @@
 						
 						<div id="spotify-importer" style="display: none;" class="popup">
 							<h2 class="translatable">Paste Spotify links below</h2>
-							<a href="javascript:Player.play('G1KJjqdalp8');" class="translatable">Instructions</a>
+							<a href="javascript:Player.play(SPOTIFY_INSTRUCTIONS_VIDEO_ID);" class="translatable">Instructions</a>
 							<textarea></textarea>
 							<input type="button" value="Cancel" class="translatable cancel" />
 							<span class="added">0</span><span class="max">/0</span>
@@ -218,7 +218,7 @@
 								<a class="translatable" href="http://blog.youtify.com/" target="_blank">Our blog</a>
 								<a class="translatable" href="https://github.com/youtify/youtify" target="_blank">Youtify on GitHub</a>
 								<br />
-								<a class="translatable" href="javascript:Player.play('G1KJjqdalp8');">How to import from Spotify</a>
+								<a class="translatable" href="javascript:Player.play(SPOTIFY_INSTRUCTIONS_VIDEO_ID);">How to import from Spotify</a>
 							</div>
 						</div>
 						
