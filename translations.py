@@ -76,6 +76,38 @@ translations['sv_SE'] = {
 	'seconds': u'sekunder',
 }
 
+translations['fi_FI'] = {
+	'Uploader:': u'Lähettäjä: ',
+	'Related:': u'Liittyvää: ',
+	'Top 100': u'Top 100',
+	'Best of YouTube': u'YouTuben parhaat',
+	'Play Queue': u'Soitto jono',
+	'Search Results': u'Haku tulokset',
+	'New playlist...': u'Uusi soittolista...',
+	'Search': u'Haku',
+	'Videos': u'Videot',
+	'Playlists': u'Soittolistat',
+	'Toggle fullscreen': u'Vaihda kokoruututila',
+	'Settings': u'Asetukset',
+	'Language': u'Kieli',
+	'Themes': u'Teemat',
+	'Choose theme': u'Valitse teema',
+	'Quality': u'Laatu',
+	'Low': u'Alhainen',
+	'High': u'Korkea',
+	'Quality (Sound & Video)': u'Laatu (Ääni & Video)',
+	'Flattr us!': u'Flattr meitä!',
+	'Follow us on Twitter!': u'Seuraa meitä Twitterissä!',
+	'Like us on Facebook!': u'Tykkää meistä Facebookissa!',
+	'Legal & Information': u'Laillisuus & tiedot',
+	'Legal disclaimer': u'Laillinen vastuunvapauslauseke',
+	'Our blog': u'Meidän blogimme',
+	'Youtify on GitHub': u'Youtify GitHubissa',
+	'How to import from Spotify': u'Kuinka tuoda Spotifystä',
+	
+}
+
+
 class TranslationsHandler(webapp.RequestHandler):
     def get(self):
         code = self.request.path.split('/')[-1]
