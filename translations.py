@@ -39,8 +39,9 @@ translations['en_US'] = {
 	'Youtify on GitHub': u'Youtify on GitHub',
 	'How to import from Spotify': u'How to import from Spotify',
 	'Notifications': u'Notifications',
-	'Hide after:': u'Hide after:',
+	'Hide after %s seconds:': u'Hide after:',
 	'seconds': u'seconds',
+	'Instructions': u'Instructions',
 }
 
 translations['sv_SE'] = {
@@ -74,6 +75,7 @@ translations['sv_SE'] = {
 	'Notifications': u'Meddelande',
 	'Hide after:': u'Göm efter:',
 	'seconds': u'sekunder',
+	'Instructions': u'Instruktioner',
 }
 
 translations['fi_FI'] = {
@@ -104,7 +106,10 @@ translations['fi_FI'] = {
 	'Our blog': u'Meidän blogimme',
 	'Youtify on GitHub': u'Youtify GitHubissa',
 	'How to import from Spotify': u'Kuinka tuoda Spotifystä',
-	
+	#'Notifications': u'Meddelande',
+	#'Hide after:': u'Göm efter:',
+	#'seconds': u'sekunder',
+	#'Instructions': u'Instruktioner',
 }
 
 
