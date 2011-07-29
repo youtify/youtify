@@ -80,11 +80,11 @@ translations['sv_SE'] = {
 
 translations['fi_FI'] = {
 	'Uploader:': u'Lähettäjä: ',
-	'Related:': u'Liittyvää: ',
+	'Related:': u'Samankaltaista: ',
 	'Top 100': u'Top 100',
 	'Best of YouTube': u'YouTuben parhaat',
-	'Play Queue': u'Soitto jono',
-	'Search Results': u'Haku tulokset',
+	'Play Queue': u'Soittojono',
+	'Search Results': u'Hakutulokset',
 	'New playlist...': u'Uusi soittolista...',
 	'Search': u'Haku',
 	'Videos': u'Videot',
@@ -101,15 +101,15 @@ translations['fi_FI'] = {
 	'Flattr us!': u'Flattr meitä!',
 	'Follow us on Twitter!': u'Seuraa meitä Twitterissä!',
 	'Like us on Facebook!': u'Tykkää meistä Facebookissa!',
-	'Legal & Information': u'Laillisuus & tiedot',
+	'Legal & Information': u'Laillisuus & Tiedot',
 	'Legal disclaimer': u'Laillinen vastuunvapauslauseke',
 	'Our blog': u'Meidän blogimme',
 	'Youtify on GitHub': u'Youtify GitHubissa',
 	'How to import from Spotify': u'Kuinka tuoda Spotifystä',
-	#'Notifications': u'Meddelande',
-	#'Hide after:': u'Göm efter:',
-	#'seconds': u'sekunder',
-	#'Instructions': u'Instruktioner',
+	'Notifications': u'Huomautukset',
+	'Hide after:': u'Piilota jälkeen:',
+	'seconds': u'sekuntit',
+	'Instructions': u'Ohjeet',
 }
 
 
