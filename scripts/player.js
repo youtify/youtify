@@ -289,7 +289,9 @@ var Player = {
 	},
 	
 	timelineClick: function(event) {
-		Player.assertPlayerLoaded();
+		if (!Player._playerReady) {
+			return;
+		}
 		
 		var len = Player._player.getDuration(); 
 		var clickpos = event.pageX - $('#timeline').offset().left;
@@ -340,6 +342,9 @@ var Player = {
 	},
 	
 	startFullscreen: function() { 
+		if (!Player._playerReady) {
+			return;
+		}
 		// Must set style, not class (and not position).
 		Player._isFullscreen = true;
 		$('#youtube').css('left',0);
@@ -366,7 +371,9 @@ var Player = {
 	},
 	
 	volumeUp: function(step) {
-		Player.assertPlayerLoaded();
+		if (!Player._playerReady) {
+			return;
+		}
 		
 		var volume = Player._player.getVolume();
 		if (step !== undefined)
@@ -379,7 +386,9 @@ var Player = {
 	},
 	
 	volumeDown: function(step) {
-		Player.assertPlayerLoaded();
+		if (!Player._playerReady) {
+			return;
+		}
 		
 		var volume = Player._player.getVolume();
 		if (step !== undefined)
@@ -392,7 +401,9 @@ var Player = {
 	},
 	
 	setVolume: function(volume) {
-		Player.assertPlayerLoaded();
+		if (!Player._playerReady) {
+			return;
+		}
 		
 		if (volume === undefined || volume > 100)
 			volume = 100;
