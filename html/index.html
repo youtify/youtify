@@ -27,15 +27,24 @@
         <link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'> 
 		
 		<style id="leavebritneyalone" type="text/css" rel="stylesheet">
+			html, body { 
+				margin: 0; 
+				padding: 0; 
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
 			#loading {
 				position: absolute;
 				width: 100%;
 				height: 100%;
-				background: rgba(0,0,0,0.9);
 				color: white;
 				font-size: 36px;
 				text-align: center;
 				z-index: 999;
+				background: url('/images/loader.gif') no-repeat center center #070707;
+				opacity: 0.9;
+				font-family: 'Arimo', arial, sans-serif;
 			}
 			#loading span {
 				display: block;
@@ -99,7 +108,7 @@
 	</head> 
 	<body> 
         <div id="loading"> 
-            <span>Loading...</span> 
+            <span>Loading</span> 
         </div> 
 		<div id="wrapper"> 
 			<div id="header"></div> 

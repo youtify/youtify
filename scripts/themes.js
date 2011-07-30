@@ -62,7 +62,7 @@ function changeTheme(themeName) {
     settings.theme = themeName;
     settings.save();
 
-	$('#loading span').text('Loading...');
+	$('#loading span').text('Loading');
     $('#loading').show();
 	
     $('#less\\:styles-' + themeName).remove();

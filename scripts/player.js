@@ -443,7 +443,7 @@ var Player = {
           events: {
             'onReady': Player.onIFramePlayerReady,
             'onStateChange': Player.onPlayerStateChange,
-			'onError': Player.onPlayerError
+			'onError': Player.onError
           }
         });
 	},
