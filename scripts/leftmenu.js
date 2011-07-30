@@ -24,6 +24,16 @@ $(document).ready(function() {
         constructPlaylistsMenu();
     }
 
+    // LOGIN/LOGOUT BUTTON
+    $('#logout-link').click(function() {
+        if (localStorage['loggedInPlaylists'] !== undefined) {
+            localStorage.removeItem('loggedInPlaylists');
+        }
+        if (localStorage['loggedInSettings'] !== undefined) {
+            localStorage.removeItem('loggedInSettings');
+        }
+    });
+
     // NEW PLAYLIST BUTTON
     $('#new-playlist span').click(function() {
         var suggestedTitle = '',
