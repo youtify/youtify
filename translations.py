@@ -107,8 +107,8 @@ translations['fi_FI'] = {
 	'Youtify on GitHub': u'Youtify GitHubissa',
 	'How to import from Spotify': u'Kuinka tuoda Spotifystä',
 	'Notifications': u'Huomautukset',
-	'Hide after:': u'Piilota jälkeen:',
-	'seconds': u'sekuntit',
+	'Hide after:': u'Piilota ajassa:',
+	'seconds': u'sekuntia',
 	'Instructions': u'Ohjeet',
 }
 
