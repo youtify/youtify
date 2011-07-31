@@ -102,30 +102,36 @@ function PlaylistsManager() {
      */
     this.pushPlaylists = function(i) {
         if (i >= this.playlists.length) {
-            return;
             this.saveToLocalStorage();
+            return;
         }
 
-        var params = {},
-            self = this,
-            playlist = this.playlists[i];
-
-        if (playlist.remoteId === null) {
+        var playlist = this.playlists[i],
             params = {
                 'title': playlist.title,
                 'videos': JSON.stringify(playlist.videos)
-            };
+            },
+            self = this;
+
+        if (playlist.remoteId) {
+            $.post('/playlists/' + playlist.remoteId, params, function(data, textStatus) {
+                if (textStatus === 'success') {
+                    console.log(playlist.title + ' updated');
+                } else {
+                    alert('Failed to update playlist ' + playlist.title);
+                }
+                self.pushPlaylists(i + 1);
+            });
+        } else {
             $.post('/playlists', params, function(data, textStatus) {
                 if (textStatus === 'success') {
+                    console.log(playlist.title + ' = ' + data);
                     playlist.remoteId = data;
                 } else {
                     alert('Failed to create new playlist ' + playlist.title);
                 }
                 self.pushPlaylists(i + 1);
             });
-        } else {
-            // @todo update/sync existing playlist
-            self.pushPlaylists(i + 1);
         }
     }
 

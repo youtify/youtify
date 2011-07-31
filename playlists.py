@@ -19,7 +19,13 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         """Update playlist"""
         playlist_id = self.request.path.split('/')[-1]
         youtify_user = get_current_youtify_user()
-        self.response.out.write('updating playlist')
+        title = self.request.get('title')
+
+        playlist_model = db.get(db.Key(playlist_id))
+        playlist_model.title = title
+        playlist_model.save()
+
+        self.response.out.write(str(playlist_model.key()))
 
 def get_videos_json_for_playlist(playlist_model):
     ret = []

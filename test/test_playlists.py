@@ -6,6 +6,7 @@ from google.appengine.ext.webapp import Response
 from django.utils import simplejson
 
 from playlists import PlaylistsHandler
+from playlists import SpecificPlaylistHandler
 from model import Playlist
 
 class Test(unittest.TestCase):
@@ -64,3 +65,26 @@ class Test(unittest.TestCase):
 
         self.failUnless(response[1]['title'] == 'playlist2')
         self.failUnless(response[1]['remoteId'] == str(playlist_model.key()))
+
+    def test_update_playlists(self):
+        playlist_model = Playlist(title='playlist1', videos=[])
+        playlist_model.put()
+
+        form = 'title=lopez'
+
+        handler = SpecificPlaylistHandler()
+        handler.request = Request({
+            'REQUEST_METHOD': 'POST',
+            'PATH_INFO': '/playlists/' + str(playlist_model.key()),
+            'wsgi.input': StringIO(form),
+            'CONTENT_LENGTH': len(form),
+            'SERVER_NAME': 'hi',
+            'SERVER_PORT': '80',
+            'wsgi.url_scheme': 'http',
+        })
+
+        handler.response = Response()
+        handler.post()
+
+        playlist_model = db.get(playlist_model.key())
+        self.failUnless(playlist_model.title == 'lopez')
