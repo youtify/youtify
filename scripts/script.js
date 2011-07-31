@@ -1,6 +1,10 @@
 ﻿$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if ($.trim(r.responseText).length > 0) {
-        alert(r.responseText);
+        if (ON_PRODUCTION) {
+            alert(r.responseText);
+        } else {
+            $('body').html(r.responseText);
+        }
     }
 });
 
