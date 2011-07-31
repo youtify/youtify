@@ -149,16 +149,6 @@ function showPlaylistContextMenu(event) {
         }
     ];
 
-    if (logged_in) {
-        buttons.push({
-            title: 'Sync',
-            li: $(this),
-            callback: function(li) {
-                sync(li);
-            }
-        });
-    }
-
     showContextMenu(buttons, event);
 }
 

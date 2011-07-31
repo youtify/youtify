@@ -69,29 +69,6 @@ function setShuffle(enabled, playlistElem) {
 	}
 }
 
-function getVidsInPrivatePlaylist(playlistId, callback, start, feed) {
-    if (start === undefined) {
-        start = 1;
-    }
-    if (feed === undefined) {
-        feed = [];
-    }
-
-    var url = '/playlists/' + playlistId,
-        params = {
-            'start-index': start
-        };
-
-    $.getJSON(url, params, function(data) {
-        if (data.feed.entry && data.feed.entry.length > 0) {
-			feed = $.merge(feed, data.feed.entry);
-            getVidsInPrivatePlaylist(playlistId, callback, start+50, feed);
-        } else {
-            callback(feed);
-        }
-    });
-}
-
 /** CLASS PLAYLIST
  ****************************************************************************/
 
@@ -136,100 +113,6 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
 
     this.deleteVideo = function(index) {
         this.videos.splice(index, 1);
-    };
-
-    this.sync = function(playlistElem) {
-        if (this.remoteID === null) {
-            this.push(playlistElem);
-            return;
-        }
-
-        //this.updateRemotePlaylist(playlistElem);
-        
-        var home = this;
-
-        if (this.isPrivate) {
-            playlistElem.addClass('loading');
-            getVidsInPrivatePlaylist(remoteID, function (vids) {
-                playlistElem.removeClass('loading');
-                $.each(vids, function(i, item) {
-                    var videoId = item['media$group']['yt$videoid']['$t'],
-                        title = item['title']['$t'];
-
-                    home.videos.push({
-                        videoId: videoId,
-                        title: title,
-                    });
-                });
-                playlistManager.save();
-            });
-        } else {
-            getVidsInPlaylist(remoteID, function(vids) {
-                $.each(vids, function(i, item) {
-                    var videoId = item['media$group']['yt$videoid']['$t'],
-                        title = item['title']['$t'];
-
-                    home.videos.push({
-                        videoId: videoId,
-                        title: title,
-                    });
-                });
-                playlistManager.save();
-            }, {'playlist': playlistElem});
-        }
-    };
-
-    this.makeCommaSeparatedVideoIdString = function() {
-        var ret = '';
-        $.each(this.videos, function(i, video) {
-            if (ret.length) {
-                ret += ',';
-            }
-            ret += video.videoId;
-        });
-        return ret;
-    };
-
-    /**
-     * Create new playlist on remote.
-     */
-    this.push = function(playlistElem) {
-        var url = '/playlists',
-            params = {
-                title: playlist.title,
-                videos: this.makeCommaSeparatedVideoIdString()
-            };
-
-        playlistElem.addClass('loading');
-
-        $.post(url, params, function(data, textStatus) {
-            if (textStatus === 'success') {
-                playlist.remoteId = data;
-                playlistElem.removeClass('loading');
-                playlistElem.addClass('youtube');
-            } else {
-                alert('problem creating playlist on YouTube');
-            }
-        });
-    };
-
-    /**
-     * Sync title and videos from this playlist to * remote playlist.
-     */
-    function updateRemotePlaylist(playlistElem) {
-        var url = '/playlists/' + playlist.remoteID,
-            params = {
-                title: this.title,
-                videos: this.makeCommaSeparatedVideoIdString(),
-            };
-
-        $.post(url, params, function(data, textStatus) {
-            if (textStatus === 'success') {
-                playlistElem.removeClass('loading');
-            } else {
-                alert('problem updating YouTube playlist');
-            }
-        });
     };
 
     this.toJSON = function() {
