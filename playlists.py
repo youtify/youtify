@@ -4,7 +4,6 @@ from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user
 from model import Playlist
-from model import Video
 
 class SpecificPlaylistHandler(webapp.RequestHandler):
     
@@ -19,10 +18,10 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         """Update playlist"""
         playlist_id = self.request.path.split('/')[-1]
         youtify_user = get_current_youtify_user()
-        title = self.request.get('title')
+        json = self.request.get('json')
 
         playlist_model = db.get(db.Key(playlist_id))
-        playlist_model.title = title
+        playlist_model.json = json
         playlist_model.save()
 
         self.response.out.write(str(playlist_model.key()))
@@ -43,33 +42,24 @@ class PlaylistsHandler(webapp.RequestHandler):
         """Get logged in users playlists"""
         youtify_user = get_current_youtify_user()
 
-        playlists = []
-        for playlist_model in Playlist.all():
-            playlists.append({
-                'title': playlist_model.title,
-                'remoteId': str(playlist_model.key()),
-                'videos': get_videos_json_for_playlist(playlist_model)
-            })
+        playlists = [m.json for m in Playlist.all()]
+        output = '[' + ','.join(playlists) + ']'
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(playlists))
+        self.response.out.write(output)
 
     def post(self):
         """Create new playlist"""
         youtify_user = get_current_youtify_user()
-        title = self.request.get('title')
-        videos = simplejson.loads(self.request.get('videos'))
 
-        playlist_model = Playlist(title=title, videos=[])
-        for video in videos:
-            video_model = Video(
-                title=video['title'],
-                video_id=video['videoId']
-            )
-            video_model.put()
-            playlist_model.videos.append(video_model.key());
-
+        playlist_model = Playlist(json=None)
         playlist_model.put()
+
+        json = simplejson.loads(self.request.get('json'))
+        json['remoteId'] = str(playlist_model.key())
+        playlist_model.json = simplejson.dumps(json)
+        playlist_model.save()
+
         self.response.out.write(str(playlist_model.key()))
 
 def main():

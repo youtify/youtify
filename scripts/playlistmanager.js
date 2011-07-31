@@ -108,8 +108,7 @@ function PlaylistsManager() {
 
         var playlist = this.playlists[i],
             params = {
-                'title': playlist.title,
-                'videos': JSON.stringify(playlist.videos)
+                'json': JSON.stringify(playlist.toJSON()),
             },
             self = this;
 

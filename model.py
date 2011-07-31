@@ -14,13 +14,8 @@ class Phrase(db.Model):
     sv_SE = db.ListProperty(db.Key)
     pl_PL = db.ListProperty(db.Key)
 
-class Video(db.Model):
-    title = db.StringProperty(required=True)
-    video_id = db.StringProperty(required=True)
-
 class Playlist(db.Model):
-    title = db.StringProperty(required=True)
-    videos = db.ListProperty(db.Key)
+    json = db.StringProperty()
 
 # HELPERS
 ##############################################################################
