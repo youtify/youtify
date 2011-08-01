@@ -21,10 +21,13 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         json = self.request.get('json')
 
         playlist_model = db.get(db.Key(playlist_id))
-        playlist_model.json = json
-        playlist_model.save()
 
-        self.response.out.write(str(playlist_model.key()))
+        if playlist_model.owner == youtify_user:
+            playlist_model.json = json
+            playlist_model.save()
+            self.response.out.write(str(playlist_model.key()))
+        else:
+            self.error(403)
 
 def get_videos_json_for_playlist(playlist_model):
     ret = []
@@ -42,7 +45,7 @@ class PlaylistsHandler(webapp.RequestHandler):
         """Get logged in users playlists"""
         youtify_user = get_current_youtify_user()
 
-        playlists = [m.json for m in Playlist.all()]
+        playlists = [m.json for m in Playlist.all().filter('owner =', youtify_user)]
         output = '[' + ','.join(playlists) + ']'
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -52,7 +55,7 @@ class PlaylistsHandler(webapp.RequestHandler):
         """Create new playlist"""
         youtify_user = get_current_youtify_user()
 
-        playlist_model = Playlist(json=None)
+        playlist_model = Playlist(owner=youtify_user, json=None)
         playlist_model.put()
 
         json = simplejson.loads(self.request.get('json'))

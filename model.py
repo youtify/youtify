@@ -15,6 +15,7 @@ class Phrase(db.Model):
     pl_PL = db.ListProperty(db.Key)
 
 class Playlist(db.Model):
+    owner = db.ReferenceProperty(reference_class=YoutifyUser)
     json = db.StringProperty()
 
 # HELPERS
