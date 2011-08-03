@@ -167,6 +167,15 @@ function PlaylistsManager() {
     };
 
     this.deletePlaylist = function(index) {
+        var remoteId = this.playlists[index].remoteId;
+
+        if (logged_in && remoteId) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/playlists/' + remoteId,
+            });
+        }
+
         this.playlists.splice(index, 1);
     };
 }

@@ -10,22 +10,33 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
     def get(self):
         """Get playlist"""
         playlist_id = self.request.path.split('/')[-1]
+        playlist_model = db.get(db.Key(playlist_id))
         youtify_user = get_current_youtify_user()
+
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(result.content)
+        self.response.out.write(str(playlist_model.owner.key() == youtify_user.key()))
 
     def post(self):
         """Update playlist"""
         playlist_id = self.request.path.split('/')[-1]
+        playlist_model = db.get(db.Key(playlist_id))
         youtify_user = get_current_youtify_user()
         json = self.request.get('json')
 
-        playlist_model = db.get(db.Key(playlist_id))
-
-        if playlist_model.owner == youtify_user:
+        if playlist_model.owner.key() == youtify_user.key():
             playlist_model.json = json
             playlist_model.save()
             self.response.out.write(str(playlist_model.key()))
+        else:
+            self.error(403)
+
+    def delete(self):
+        playlist_id = self.request.path.split('/')[-1]
+        playlist_model = db.get(db.Key(playlist_id))
+        youtify_user = get_current_youtify_user()
+
+        if playlist_model.owner.key() == youtify_user.key():
+            playlist_model.delete()
         else:
             self.error(403)
 
