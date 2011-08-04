@@ -44,6 +44,10 @@ handlers:
 
 - url: /translations.*
   script: translations.py
+  
+- url: /robots.*
+  static_files: robots.txt
+  upload: robots.txt
 
 - url: /.*
   script: main.py
