@@ -11,6 +11,14 @@ error_handlers:
 
 handlers:
 
+- url: /export
+  static_files: html/export.html
+  upload: html/export.html
+
+- url: /import
+  static_files: html/import.html
+  upload: html/import.html
+
 - url: /tests
   static_files: html/tests.html
   upload: html/tests.html
