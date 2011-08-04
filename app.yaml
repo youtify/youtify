@@ -3,6 +3,12 @@ version: 1
 runtime: python
 api_version: 1
 
+error_handlers:
+  - file: html/error.html
+
+  - error_code: over_quota
+    file: html/quota.html
+
 handlers:
 
 - url: /tests
