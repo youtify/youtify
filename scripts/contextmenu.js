@@ -149,6 +149,20 @@ function showPlaylistContextMenu(event) {
         }
     ];
 
+    if (logged_in) {
+        buttons.push({
+            title: 'Sync',
+            li: $(this),
+            callback: function(li) {
+                li.data('model').sync(function() {
+                    playlistManager.save();
+                    console.log(li);
+                    li.addClass('youtube');
+                });
+            }
+        });
+    }
+
     showContextMenu(buttons, event);
 }
 

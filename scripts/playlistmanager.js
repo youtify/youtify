@@ -58,7 +58,7 @@ function PlaylistsManager() {
     this.save = function() {
         this.saveToLocalStorage();
         if (logged_in && this.playlists.length) {
-            this.pushPlaylists(0);
+            this.syncPlaylists(0);
         }
     };
 
@@ -94,37 +94,22 @@ function PlaylistsManager() {
      *
      * Will save back to localStorage when done (remoteIds may have been set).
      */
-    this.pushPlaylists = function(i) {
+    this.syncPlaylists = function(i) {
         if (i >= this.playlists.length) {
             this.saveToLocalStorage();
             return;
         }
 
         var playlist = this.playlists[i],
-            params = {
-                'json': JSON.stringify(playlist.toJSON()),
-            },
             self = this;
 
         if (playlist.remoteId) {
-            $.post('/playlists/' + playlist.remoteId, params, function(data, textStatus) {
-                if (textStatus === 'success') {
-                    console.log(playlist.title + ' updated');
-                } else {
-                    alert('Failed to update playlist ' + playlist.title);
-                }
-                self.pushPlaylists(i + 1);
+            playlist.sync(function() {
+                self.syncPlaylists(i + 1);
             });
         } else {
-            $.post('/playlists', params, function(data, textStatus) {
-                if (textStatus === 'success') {
-                    console.log(playlist.title + ' = ' + data);
-                    playlist.remoteId = data;
-                } else {
-                    alert('Failed to create new playlist ' + playlist.title);
-                }
-                self.pushPlaylists(i + 1);
-            });
+            console.log('skipping ' + playlist.title);
+            self.syncPlaylists(i + 1);
         }
     }
 

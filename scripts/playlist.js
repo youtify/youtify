@@ -86,6 +86,38 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
         }
     };
 
+    this.sync = function(callback) {
+        var self = this,
+            params = {
+            'json': JSON.stringify(this.toJSON()),
+        };
+
+        if (this.remoteId) {
+            $.post('/playlists/' + this.remoteId, params, function(data, textStatus) {
+                if (textStatus === 'success') {
+                    console.log(self.title + ' updated');
+                } else {
+                    alert('Failed to update playlist ' + self.title);
+                }
+                if (callback) {
+                    callback();
+                }
+            });
+        } else {
+            $.post('/playlists', params, function(data, textStatus) {
+                if (textStatus === 'success') {
+                    console.log(self.title + ' = ' + data);
+                    self.remoteId = data;
+                } else {
+                    alert('Failed to create new playlist ' + self.title);
+                }
+                if (callback) {
+                    callback();
+                }
+            });
+        }
+    };
+
     this.addVideo = function(title, videoId) {
         if (typeof title !== 'string') {
             throw "title param must be string";
