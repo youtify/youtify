@@ -163,6 +163,18 @@ function showPlaylistContextMenu(event) {
         });
     }
 
+    if (logged_in && $(this).data('model').remoteId) {
+        buttons.push({
+            title: 'Unsync',
+            li: $(this),
+            callback: function(li) {
+                li.data('model').unsync();
+                playlistManager.save();
+                li.removeClass('youtube');
+            }
+        });
+    }
+
     showContextMenu(buttons, event);
 }
 

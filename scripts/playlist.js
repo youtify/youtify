@@ -86,6 +86,22 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
         }
     };
 
+    this.unsync = function(callback) {
+        console.log("Unsyncing " + this.title);
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/playlists/' + this.remoteId,
+            success: function() {
+                if (callback) {
+                    callback();
+                }
+            }
+        });
+
+        this.remoteId = null;
+    };
+
     this.sync = function(callback) {
         var self = this,
             params = {

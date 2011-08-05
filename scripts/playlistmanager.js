@@ -146,13 +146,8 @@ function PlaylistsManager() {
     };
 
     this.deletePlaylist = function(index) {
-        var remoteId = this.playlists[index].remoteId;
-
-        if (logged_in && remoteId) {
-            $.ajax({
-                type: 'DELETE',
-                url: '/playlists/' + remoteId,
-            });
+        if (logged_in && this.playlists[index].remoteId) {
+            this.playlists[index].unsync();
         }
 
         this.playlists.splice(index, 1);
