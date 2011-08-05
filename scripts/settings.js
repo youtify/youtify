@@ -53,12 +53,7 @@ function autoDetectLanguage() {
 }
 
 function Settings() {
-    var settings;
-    if (logged_in) {
-        settings = JSON.parse(localStorage['loggedInSettings'] || '{}');
-    } else {
-        settings = JSON.parse(localStorage['loggedOutSettings'] || '{}');
-    }
+    var settings = JSON.parse(localStorage['settings'] || '{}');
 
     this.language = settings.language || autoDetectLanguage();
     this.translatorMode = settings.translatorMode || false;
@@ -67,8 +62,7 @@ function Settings() {
 	this.announceTimeout = settings.announceTimeout || 3000;
 
     this.save = function() {
-        var key = logged_in ? 'loggedInSettings' : 'loggedOutSettings';
-        localStorage[key] = JSON.stringify({
+        localStorage['settings'] = JSON.stringify({
             'language': this.language,
             'translatorMode': this.translatorMode,
             'theme': this.theme,
