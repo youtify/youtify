@@ -3,7 +3,21 @@ version: 1
 runtime: python
 api_version: 1
 
+error_handlers:
+  - file: html/error.html
+
+  - error_code: over_quota
+    file: html/quota.html
+
 handlers:
+
+- url: /export
+  static_files: html/export.html
+  upload: html/export.html
+
+- url: /import
+  static_files: html/import.html
+  upload: html/import.html
 
 - url: /tests
   static_files: html/tests.html
@@ -44,6 +58,10 @@ handlers:
 
 - url: /translations.*
   script: translations.py
+  
+- url: /robots.*
+  static_files: robots.txt
+  upload: robots.txt
 
 - url: /.*
   script: main.py
