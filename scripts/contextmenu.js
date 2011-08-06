@@ -156,7 +156,6 @@ function showPlaylistContextMenu(event) {
             callback: function(li) {
                 li.data('model').sync(function() {
                     playlistManager.save();
-                    console.log(li);
                     li.addClass('youtube');
                 });
             }

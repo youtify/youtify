@@ -78,8 +78,8 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
     this.remoteId = remoteId || null;
     this.isPrivate = isPrivate || false;
     this.shuffle = shuffle;
-    this.synced = true;
-    this.syncing = false;
+    this.synced = true; // not part of JSON structure
+    this.syncing = false; // not part of JSON structure
 
     this.rename = function(newTitle) {
         var title = $.trim(newTitle);
@@ -90,8 +90,6 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
     };
 
     this.unsync = function(callback) {
-        console.log("Unsyncing " + this.title);
-
         $.ajax({
             type: 'DELETE',
             url: '/playlists/' + this.remoteId,
@@ -116,7 +114,6 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
         $.post('/playlists', params, function(data, textStatus) {
             self.syncing = false;
             if (textStatus === 'success') {
-                console.log(self.title + ' = ' + data);
                 self.remoteId = data;
                 self.synced = true;
             } else {
@@ -139,7 +136,6 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
         $.post('/playlists/' + this.remoteId, params, function(data, textStatus) {
             self.syncing = false;
             if (textStatus === 'success') {
-                console.log(self.title + ' updated');
                 self.synced = true;
             } else {
                 alert('Failed to update playlist ' + self.title);
@@ -152,12 +148,8 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
 
     this.sync = function(callback) {
         if (this.remoteId && this.synced) {
-            console.log("Skippinig synced playlist " + this.title);
             callback();
-            return;
-        }
-
-        if (this.remoteId) {
+        } else if (this.remoteId) {
             this.updatePlaylistOnRemote(callback);
         } else {
             this.createNewPlaylistOnRemote(callback);

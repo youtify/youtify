@@ -31,6 +31,7 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
             self.error(403)
 
     def delete(self):
+        """Delete playlist"""
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = db.get(db.Key(playlist_id))
         youtify_user = get_current_youtify_user()
@@ -40,20 +41,10 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         else:
             self.error(403)
 
-def get_videos_json_for_playlist(playlist_model):
-    ret = []
-    for key in playlist_model.videos:
-        video_model = db.get(key)
-        ret.append({
-            'title': video_model.title,
-            'videoId': video_model.video_id,
-        })
-    return ret
-
 class PlaylistsHandler(webapp.RequestHandler):
 
     def get(self):
-        """Get logged in users playlists"""
+        """Get playlists for logged in user"""
         youtify_user = get_current_youtify_user()
 
         playlists = [m.json for m in Playlist.all().filter('owner =', youtify_user)]

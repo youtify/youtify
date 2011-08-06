@@ -108,7 +108,6 @@ function PlaylistsManager() {
                 self.syncPlaylists(i + 1);
             });
         } else {
-            console.log('skipping ' + playlist.title);
             self.syncPlaylists(i + 1);
         }
     }
