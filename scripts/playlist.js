@@ -78,12 +78,15 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
     this.remoteId = remoteId || null;
     this.isPrivate = isPrivate || false;
     this.shuffle = shuffle;
+    this.synced = true;
+    this.syncing = false;
 
     this.rename = function(newTitle) {
         var title = $.trim(newTitle);
         if (title.length > 0 && title.length < 50) {
             this.title = newTitle;
         }
+        this.synced = false;
     };
 
     this.unsync = function(callback) {
@@ -102,39 +105,71 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
         this.remoteId = null;
     };
 
-    this.sync = function(callback) {
+    this.createNewPlaylistOnRemote = function(callback) {
         var self = this,
             params = {
-            'json': JSON.stringify(this.toJSON()),
-        };
+                'json': JSON.stringify(this.toJSON())
+            };
+
+        this.syncing = true;
+
+        $.post('/playlists', params, function(data, textStatus) {
+            self.syncing = false;
+            if (textStatus === 'success') {
+                console.log(self.title + ' = ' + data);
+                self.remoteId = data;
+                self.synced = true;
+            } else {
+                alert('Failed to create new playlist ' + self.title);
+            }
+            if (callback) {
+                callback();
+            }
+        });
+    };
+
+    this.updatePlaylistOnRemote = function(callback) {
+        var self = this,
+            params = {
+                'json': JSON.stringify(this.toJSON())
+            };
+
+        this.syncing = true;
+
+        $.post('/playlists/' + this.remoteId, params, function(data, textStatus) {
+            self.syncing = false;
+            if (textStatus === 'success') {
+                console.log(self.title + ' updated');
+                self.synced = true;
+            } else {
+                alert('Failed to update playlist ' + self.title);
+            }
+            if (callback) {
+                callback();
+            }
+        });
+    };
+
+    this.sync = function(callback) {
+        if (this.remoteId && this.synced) {
+            console.log("Skippinig synced playlist " + this.title);
+            callback();
+            return;
+        }
 
         if (this.remoteId) {
-            $.post('/playlists/' + this.remoteId, params, function(data, textStatus) {
-                if (textStatus === 'success') {
-                    console.log(self.title + ' updated');
-                } else {
-                    alert('Failed to update playlist ' + self.title);
-                }
-                if (callback) {
-                    callback();
-                }
-            });
+            this.updatePlaylistOnRemote(callback);
         } else {
-            $.post('/playlists', params, function(data, textStatus) {
-                if (textStatus === 'success') {
-                    console.log(self.title + ' = ' + data);
-                    self.remoteId = data;
-                } else {
-                    alert('Failed to create new playlist ' + self.title);
-                }
-                if (callback) {
-                    callback();
-                }
-            });
+            this.createNewPlaylistOnRemote(callback);
         }
     };
 
     this.addVideo = function(title, videoId) {
+        if (this.syncing) {
+            alert("Please wait until the playlist is synced");
+            return;
+        }
+
         if (typeof title !== 'string') {
             throw "title param must be string";
         }
@@ -146,9 +181,16 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
             videoId: videoId,
             title: title,
         });
+
+        this.synced = false;
     };
 
     this.moveVideo = function(sourceIndex, destIndex) {
+        if (this.syncing) {
+            alert("Please wait until the playlist is synced");
+            return;
+        }
+
         var tmp;
 
         if (destIndex > sourceIndex) {
@@ -157,10 +199,18 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
 
         tmp = this.videos.splice(sourceIndex, 1)[0];
         this.videos.splice(destIndex, 0, tmp);
+
+        this.synced = false;
     };
 
     this.deleteVideo = function(index) {
+        if (this.syncing) {
+            alert("Please wait until the playlist is synced");
+            return;
+        }
+
         this.videos.splice(index, 1);
+        this.synced = false;
     };
 
     this.toJSON = function() {
