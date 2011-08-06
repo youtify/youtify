@@ -26,12 +26,7 @@ $(document).ready(function() {
 
     // LOGIN/LOGOUT BUTTON
     $('#logout-link').click(function() {
-        if (localStorage['loggedInPlaylists'] !== undefined) {
-            localStorage.removeItem('loggedInPlaylists');
-        }
-        if (localStorage['loggedInSettings'] !== undefined) {
-            localStorage.removeItem('loggedInSettings');
-        }
+        playlistManager.removeRemotePlaylistsFromLocalStorage();
     });
 
     // NEW PLAYLIST BUTTON

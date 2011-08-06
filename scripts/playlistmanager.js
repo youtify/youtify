@@ -10,6 +10,9 @@ function PlaylistsManager() {
             data = JSON.parse(localStorage['playlists'] || '[]');
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
+                if (!logged_in && item.remoteId) {
+                    continue;
+                }
                 this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.isPrivate, item.shuffle));
             }
         } catch (e) {
@@ -17,6 +20,19 @@ function PlaylistsManager() {
         }
     }
     this.load();
+
+    this.removeRemotePlaylistsFromLocalStorage = function() {
+        var localPlaylists = [];
+
+        $.each(this.playlists, function(i, playlist) {
+            if (!playlist.remoteId) {
+                localPlaylists.push(playlist);
+            }
+        });
+
+        this.playlists = localPlaylists;
+        this.saveToLocalStorage();
+    };
 
     this.getPlaylistsMap = function() {
         var ret = {};
