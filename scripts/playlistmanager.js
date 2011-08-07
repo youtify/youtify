@@ -13,7 +13,7 @@ function PlaylistsManager() {
                 if (!logged_in && item.remoteId) {
                     continue;
                 }
-                this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.isPrivate, item.shuffle));
+                this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.shuffle));
             }
         } catch (e) {
             alert('Error parsing playlists from localStorage: ' + e); 
@@ -59,11 +59,12 @@ function PlaylistsManager() {
                 var title = item['title'],
                     videos = item['videos'],
                     remoteId = item['remoteId'],
+                    owner = item['owner'],
                     isPrivate = false,
                     shuffle = false;
 
                 if (!(remoteId in remoteIds)) {
-                    self.addPlaylist(new Playlist(title, videos, remoteId, isPrivate));
+                    self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate));
                 }
             });
             self.saveToLocalStorage();

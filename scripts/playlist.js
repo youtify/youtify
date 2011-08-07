@@ -80,12 +80,13 @@ function setShuffle(enabled, playlistElem) {
 /** CLASS PLAYLIST
  ****************************************************************************/
 
-function Playlist(title, videos, remoteId, isPrivate, shuffle) {
+function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.title = title;
     this.videos = videos;
     this.remoteId = remoteId || null;
     this.isPrivate = isPrivate || false;
     this.shuffle = shuffle;
+    this.owner = owner;
     this.synced = true; // not part of JSON structure
     this.syncing = false; // not part of JSON structure
 
@@ -122,7 +123,8 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
         $.post('/api/playlists', params, function(data, textStatus) {
             self.syncing = false;
             if (textStatus === 'success') {
-                self.remoteId = data;
+                self.remoteId = data.remoteId;
+                self.owner = data.owner;
                 self.synced = true;
             } else {
                 alert('Failed to create new playlist ' + self.title);
@@ -218,6 +220,7 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
             title: this.title,
             videos: this.videos,
             remoteId: this.remoteId,
+            owner: this.owner,
             isPrivate: this.isPrivate,
 			shuffle: this.shuffle
         };

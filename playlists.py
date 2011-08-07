@@ -1,4 +1,3 @@
-from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
@@ -62,10 +61,15 @@ class PlaylistsHandler(webapp.RequestHandler):
 
         json = simplejson.loads(self.request.get('json'))
         json['remoteId'] = playlist_model.key().id()
+        json['owner'] = {
+            'id': youtify_user.key().id(),
+            'name': youtify_user.google_user.nickname().split('@')[0], # don't leak users email
+        }
         playlist_model.json = simplejson.dumps(json)
         playlist_model.save()
 
-        self.response.out.write(playlist_model.key().id())
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(playlist_model.json)
 
 def main():
     application = webapp.WSGIApplication([

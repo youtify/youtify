@@ -124,9 +124,9 @@ $(window).load(function() {
 	}
 });
 
-function loadPlaylist(key) {
-    $.getJSON('/api/playlists/' + key, function(data) {
-        var playlist = new Playlist(data.title, data.videos, data.remoteId, data.isPrivate);
+function loadPlaylist(id) {
+    $.getJSON('/api/playlists/' + id, function(data) {
+        var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
         loadPlaylistView(playlist);
     });
 }
