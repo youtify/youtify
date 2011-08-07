@@ -10,7 +10,7 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
     def get(self):
         """Get playlist"""
         playlist_id = self.request.path.split('/')[-1]
-        playlist_model = db.get(db.Key(playlist_id))
+        playlist_model = Playlist.get_by_id(int(playlist_id))
         youtify_user = get_current_youtify_user()
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -19,21 +19,21 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
     def post(self):
         """Update playlist"""
         playlist_id = self.request.path.split('/')[-1]
-        playlist_model = db.get(db.Key(playlist_id))
+        playlist_model = Playlist.get_by_id(int(playlist_id))
         youtify_user = get_current_youtify_user()
         json = self.request.get('json')
 
         if playlist_model.owner.key() == youtify_user.key():
             playlist_model.json = json
             playlist_model.save()
-            self.response.out.write(str(playlist_model.key()))
+            self.response.out.write(str(playlist_model.key().id()))
         else:
             self.error(403)
 
     def delete(self):
         """Delete playlist"""
         playlist_id = self.request.path.split('/')[-1]
-        playlist_model = db.get(db.Key(playlist_id))
+        playlist_model = Playlist.get_by_id(int(playlist_id))
         youtify_user = get_current_youtify_user()
 
         if playlist_model.owner.key() == youtify_user.key():
@@ -61,11 +61,11 @@ class PlaylistsHandler(webapp.RequestHandler):
         playlist_model.put()
 
         json = simplejson.loads(self.request.get('json'))
-        json['remoteId'] = str(playlist_model.key())
+        json['remoteId'] = playlist_model.key().id()
         playlist_model.json = simplejson.dumps(json)
         playlist_model.save()
 
-        self.response.out.write(str(playlist_model.key()))
+        self.response.out.write(playlist_model.key().id())
 
 def main():
     application = webapp.WSGIApplication([

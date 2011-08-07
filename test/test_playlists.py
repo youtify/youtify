@@ -26,7 +26,7 @@ class Test(unittest.TestCase):
         handler = PlaylistsHandler()
         handler.request = Request({
             'REQUEST_METHOD': 'POST',
-            'PATH_INFO': '/playlists',
+            'PATH_INFO': '/api/playlists',
             'wsgi.input': StringIO(form),
             'CONTENT_LENGTH': len(form),
             'SERVER_NAME': 'hi',
@@ -44,7 +44,7 @@ class Test(unittest.TestCase):
         playlists = [m for m in Playlist.all()]
 
         self.failUnless(len(playlists) == 1)
-        self.failUnless(response == str(playlists[0].key()))
+        self.failUnless(response == str(playlists[0].key().id()))
 
     def test_get_playlists(self):
         self._post_playlist()
@@ -54,7 +54,7 @@ class Test(unittest.TestCase):
         handler = PlaylistsHandler()
         handler.request = Request({
             'REQUEST_METHOD': 'GET',
-            'PATH_INFO': '/playlists',
+            'PATH_INFO': '/api/playlists',
             'SERVER_NAME': 'hi',
             'SERVER_PORT': '80',
             'wsgi.url_scheme': 'http',
@@ -66,7 +66,7 @@ class Test(unittest.TestCase):
         response = simplejson.loads(response)
 
         self.failUnless(response[0]['title'] == 'lopez')
-        self.failUnless(response[0]['remoteId'] == str(playlist_model.key()))
+        self.failUnless(response[0]['remoteId'] == playlist_model.key().id())
 
     def test_update_playlists(self):
         self._post_playlist()
@@ -87,7 +87,7 @@ class Test(unittest.TestCase):
         handler = SpecificPlaylistHandler()
         handler.request = Request({
             'REQUEST_METHOD': 'POST',
-            'PATH_INFO': '/playlists/' + str(playlist_model.key()),
+            'PATH_INFO': '/api/playlists/' + str(playlist_model.key().id()),
             'wsgi.input': StringIO(form),
             'CONTENT_LENGTH': len(form),
             'SERVER_NAME': 'hi',
@@ -98,6 +98,6 @@ class Test(unittest.TestCase):
         handler.response = Response()
         handler.post()
 
-        playlist_model = db.get(playlist_model.key())
+        playlist_model = Playlist.get_by_id(1)
         json = simplejson.loads(playlist_model.json)
         self.failUnless(json['title'] == 'britney')
