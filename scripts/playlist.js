@@ -222,13 +222,14 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
             .addClass('draggable')
             .addClass('reorderable')
             .data('model', this)
-            .text(this.title)
             .bind('contextmenu', showPlaylistContextMenu)
             .mousedown(playlistMouseDown)
             .click(playlistClicked);
 
+        $('<span class="title"></span>').text(this.title).appendTo(li);
+
         if (this.remoteId) {
-            li.addClass('youtube');
+            li.addClass('remote');
         } else {
             li.addClass('local')
         }

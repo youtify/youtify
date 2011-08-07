@@ -156,7 +156,7 @@ function showPlaylistContextMenu(event) {
             callback: function(li) {
                 li.data('model').sync(function() {
                     playlistManager.save();
-                    li.addClass('youtube');
+                    li.addClass('remote');
                 });
             }
         });
@@ -169,7 +169,7 @@ function showPlaylistContextMenu(event) {
             callback: function(li) {
                 li.data('model').unsync();
                 playlistManager.save();
-                li.removeClass('youtube');
+                li.removeClass('remote');
             }
         });
     }
