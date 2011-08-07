@@ -37,7 +37,7 @@ handlers:
 - url: /toplist.*
   script: toplist.py
 
-- url: /playlists.*
+- url: /api/playlists.*
   script: playlists.py
 
 - url: /pingcron

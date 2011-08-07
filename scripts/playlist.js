@@ -15,18 +15,10 @@ function playlistMouseDown(event) {
 	$(this).addClass('selected');
 }
 
-/**
- * Mark the playlistElem in the #left-menu as selected, then
- * fill #playlist with the contained videos.
- */
-function playlistClicked(event) {
-    $('#playlist').html('');
-
+function loadPlaylistView(playlist) {
 	$('#results-container ol').hide();
+    $('#playlist').html('');
 	$('#playlist').show();
-	$('#playlist').data('owner', $(this));
-
-    var playlist = $(this).data('model');
 
     $.each(playlist.videos, function(i, item) {
         var li = createResultsItem(item.title, item.videoId);
@@ -40,6 +32,22 @@ function playlistClicked(event) {
         li.addClass('reorderable');
         li.appendTo('#playlist');
     });
+}
+
+/**
+ * Mark the playlistElem in the #left-menu as selected, then
+ * fill #playlist with the contained videos.
+ */
+function playlistClicked(event) {
+    var playlist = $(this).data('model');
+
+    if (playlist.remoteId) {
+        history.pushState(null, null, '/playlists/' + playlist.remoteId);
+    }
+
+	$('#playlist').data('owner', $(this));
+
+    loadPlaylistView(playlist);
 }
 
 function shuffleButtonClicked(event) {
@@ -92,7 +100,7 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
     this.unsync = function(callback) {
         $.ajax({
             type: 'DELETE',
-            url: '/playlists/' + this.remoteId,
+            url: '/api/playlists/' + this.remoteId,
             success: function() {
                 if (callback) {
                     callback();
@@ -111,7 +119,7 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
 
         this.syncing = true;
 
-        $.post('/playlists', params, function(data, textStatus) {
+        $.post('/api/playlists', params, function(data, textStatus) {
             self.syncing = false;
             if (textStatus === 'success') {
                 self.remoteId = data;
@@ -133,7 +141,7 @@ function Playlist(title, videos, remoteId, isPrivate, shuffle) {
 
         this.syncing = true;
 
-        $.post('/playlists/' + this.remoteId, params, function(data, textStatus) {
+        $.post('/api/playlists/' + this.remoteId, params, function(data, textStatus) {
             self.syncing = false;
             if (textStatus === 'success') {
                 self.synced = true;

@@ -14,7 +14,7 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         youtify_user = get_current_youtify_user()
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(str(playlist_model.owner.key() == youtify_user.key()))
+        self.response.out.write(playlist_model.json)
 
     def post(self):
         """Update playlist"""
@@ -69,8 +69,8 @@ class PlaylistsHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/playlists/.*', SpecificPlaylistHandler),
-        ('/playlists', PlaylistsHandler),
+        ('/api/playlists/.*', SpecificPlaylistHandler),
+        ('/api/playlists', PlaylistsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

@@ -54,7 +54,7 @@ function PlaylistsManager() {
         var self = this,
             remoteIds = this.getPlaylistsMap();
 
-        $.getJSON('/playlists', {}, function(data) {
+        $.getJSON('/api/playlists', {}, function(data) {
             $.each(data, function(i, item) {
                 var title = item['title'],
                     videos = item['videos'],

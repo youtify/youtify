@@ -119,8 +119,17 @@ $(window).load(function() {
 	var pathname = document.location.pathname.split('/'); // '/videos/123'
 	if (pathname.length === 3 && pathname[1] === 'videos') {
 		Player.play(pathname[2]);
+	} else if (pathname.length === 3 && pathname[1] === 'playlists') { // '/playlists/123'
+		loadPlaylist(pathname[2]);
 	}
 });
+
+function loadPlaylist(key) {
+    $.getJSON('/api/playlists/' + key, function(data) {
+        var playlist = new Playlist(data.title, data.videos, data.remoteId, data.isPrivate);
+        loadPlaylistView(playlist);
+    });
+}
 
 $(document).ready(function() {
     var settings = new Settings();
@@ -167,8 +176,10 @@ $(document).ready(function() {
 		Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
 	});
 
-	// Initially show Top 100
-    TopList.select();
+    // Initially show Top 100 if not a playlist should be loaded instead.
+    if (location.href.indexOf('playlists') === -1) {
+        TopList.select();
+    }
 	
 	//Notification.show('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 });
