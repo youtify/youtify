@@ -14,18 +14,20 @@ function constructPlaylistsMenu() {
         playlist = playlistManager.getPlaylist(i);
         li = playlist.createListElem();
         li.appendTo('#playlists');
-        if (playlist.remoteID && playlist.videos.length === 0) {
-            playlist.sync(li);
-        }
     }
 }
 
 $(document).ready(function() {
     if (logged_in) {
-        playlistManager.loadYouTubePlaylists(constructPlaylistsMenu);
+        playlistManager.pull(constructPlaylistsMenu);
     } else {
         constructPlaylistsMenu();
     }
+
+    // LOGIN/LOGOUT BUTTON
+    $('#logout-link').click(function() {
+        playlistManager.removeRemotePlaylistsFromLocalStorage();
+    });
 
     // NEW PLAYLIST BUTTON
     $('#new-playlist span').click(function() {
@@ -54,6 +56,7 @@ $(document).ready(function() {
     // NEW PLAYLIST INPUT FIELD
     $('#new-playlist input').keyup(function(event) {
         var title,
+            playlist,
             videos = [];
 
         switch (event.keyCode) {
@@ -66,9 +69,17 @@ $(document).ready(function() {
                     if (pendingVideo) {
                         videos.push(pendingVideo);
                     }
-                    playlistManager.addPlaylist(new Playlist($(this).val(), videos));
-                    playlistManager.save();
-                    constructPlaylistsMenu();
+                    playlist = new Playlist($(this).val(), videos);
+                    playlistManager.addPlaylist(playlist);
+                    if (logged_in) {
+                        playlist.createNewPlaylistOnRemote(function() {
+                            playlistManager.save();
+                            constructPlaylistsMenu();
+                        });
+                    } else {
+                        playlistManager.save();
+                        constructPlaylistsMenu();
+                    }
                 } else {
                     return;
                 }

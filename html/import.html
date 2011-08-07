@@ -4,6 +4,8 @@
     <body>
         <script>
             function importLocalStorage() {
+                console.log("Clearing localStorage");
+                localStorage.clear();
                 var textarea = document.getElementById("import");
                 var json = JSON.parse(textarea.value);
                 for (key in json) {

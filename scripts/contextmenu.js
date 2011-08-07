@@ -154,7 +154,22 @@ function showPlaylistContextMenu(event) {
             title: 'Sync',
             li: $(this),
             callback: function(li) {
-                sync(li);
+                li.data('model').sync(function() {
+                    playlistManager.save();
+                    li.addClass('remote');
+                });
+            }
+        });
+    }
+
+    if (logged_in && $(this).data('model').remoteId) {
+        buttons.push({
+            title: 'Unsync',
+            li: $(this),
+            callback: function(li) {
+                li.data('model').unsync();
+                playlistManager.save();
+                li.removeClass('remote');
             }
         });
     }

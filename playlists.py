@@ -1,40 +1,80 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
-
 from model import get_current_youtify_user
+from model import Playlist
 
 class SpecificPlaylistHandler(webapp.RequestHandler):
     
     def get(self):
-        """Get videos from specific playlist"""
+        """Get playlist"""
         playlist_id = self.request.path.split('/')[-1]
+        playlist_model = Playlist.get_by_id(int(playlist_id))
         youtify_user = get_current_youtify_user()
+
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(result.content)
+        self.response.out.write(playlist_model.json)
 
     def post(self):
-        """Update specific playlist"""
+        """Update playlist"""
         playlist_id = self.request.path.split('/')[-1]
+        playlist_model = Playlist.get_by_id(int(playlist_id))
         youtify_user = get_current_youtify_user()
+        json = self.request.get('json')
+
+        if playlist_model.owner.key() == youtify_user.key():
+            playlist_model.json = json
+            playlist_model.save()
+            self.response.out.write(str(playlist_model.key().id()))
+        else:
+            self.error(403)
+
+    def delete(self):
+        """Delete playlist"""
+        playlist_id = self.request.path.split('/')[-1]
+        playlist_model = Playlist.get_by_id(int(playlist_id))
+        youtify_user = get_current_youtify_user()
+
+        if playlist_model.owner.key() == youtify_user.key():
+            playlist_model.delete()
+        else:
+            self.error(403)
 
 class PlaylistsHandler(webapp.RequestHandler):
 
     def get(self):
-        """Get logged in users playlists"""
+        """Get playlists for logged in user"""
         youtify_user = get_current_youtify_user()
+
+        playlists = [m.json for m in Playlist.all().filter('owner =', youtify_user)]
+        output = '[' + ','.join(playlists) + ']'
+
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write('[]')
+        self.response.out.write(output)
 
     def post(self):
-        """Create new playlist with submitted title and videos"""
+        """Create new playlist"""
         youtify_user = get_current_youtify_user()
-        self.response.out.write('123')
+
+        playlist_model = Playlist(owner=youtify_user, json=None)
+        playlist_model.put()
+
+        json = simplejson.loads(self.request.get('json'))
+        json['remoteId'] = playlist_model.key().id()
+        json['owner'] = {
+            'id': youtify_user.key().id(),
+            'name': youtify_user.google_user.nickname().split('@')[0], # don't leak users email
+        }
+        playlist_model.json = simplejson.dumps(json)
+        playlist_model.save()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(playlist_model.json)
 
 def main():
     application = webapp.WSGIApplication([
-        ('/playlists/.*', SpecificPlaylistHandler),
-        ('/playlists', PlaylistsHandler),
+        ('/api/playlists/.*', SpecificPlaylistHandler),
+        ('/api/playlists', PlaylistsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

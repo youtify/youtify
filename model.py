@@ -14,6 +14,10 @@ class Phrase(db.Model):
     sv_SE = db.ListProperty(db.Key)
     pl_PL = db.ListProperty(db.Key)
 
+class Playlist(db.Model):
+    owner = db.ReferenceProperty(reference_class=YoutifyUser)
+    json = db.TextProperty()
+
 # HELPERS
 ##############################################################################
 

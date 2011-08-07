@@ -10,7 +10,10 @@ function PlaylistsManager() {
             data = JSON.parse(localStorage['playlists'] || '[]');
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
-                this.playlists.push(new Playlist(item.title, item.videos, item.remoteID, item.isPrivate, item.shuffle));
+                if (!logged_in && item.remoteId) {
+                    continue;
+                }
+                this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.shuffle));
             }
         } catch (e) {
             alert('Error parsing playlists from localStorage: ' + e); 
@@ -18,41 +21,68 @@ function PlaylistsManager() {
     }
     this.load();
 
+    this.removeRemotePlaylistsFromLocalStorage = function() {
+        var localPlaylists = [];
+
+        $.each(this.playlists, function(i, playlist) {
+            if (!playlist.remoteId) {
+                localPlaylists.push(playlist);
+            }
+        });
+
+        this.playlists = localPlaylists;
+        this.saveToLocalStorage();
+    };
+
+    this.getPlaylistsMap = function() {
+        var ret = {};
+        $.each(this.playlists, function(i, item) {
+            if (item.remoteId !== null) {
+                ret[item.remoteId] = item;
+            }
+        });
+        return ret;
+    }
+
     /**
-     * Download YouTube entries and create entries for them in localStorage if
+     * Download stored playlists and place them in localStorage if
      * they don't already exist.
      *
      * @param callback The function to be called when done.
      */
-    this.loadYouTubePlaylists = function(callback) {
-        var remoteIDs = {};
-        $.each(this.playlists, function(i, item) {
-            if (item.remoteID !== null) {
-                remoteIDs[item.remoteID] = item;
-            }
-        });
+    this.pull = function(callback) {
+        var self = this,
+            remoteIds = this.getPlaylistsMap();
 
-        var home = this;
+        $.getJSON('/api/playlists', {}, function(data) {
+            $.each(data, function(i, item) {
+                var title = item['title'],
+                    videos = item['videos'],
+                    remoteId = item['remoteId'],
+                    owner = item['owner'],
+                    isPrivate = false,
+                    shuffle = false;
 
-        $.getJSON('/playlists', {}, function(data) {
-            $.each(data.feed.entry, function(i, item) {
-                var title = item['title']['$t'],
-                    remoteID = item['yt$playlistId']['$t'],
-                    isPrivate = 'yt$private' in item;
-
-                if (!(remoteID in remoteIDs)) {
-                    home.addPlaylist(new Playlist(title, [], remoteID, isPrivate));
+                if (!(remoteId in remoteIds)) {
+                    self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate));
                 }
             });
-            home.save();
+            self.saveToLocalStorage();
             callback();
         });
+    };
+
+    this.save = function() {
+        this.saveToLocalStorage();
+        if (logged_in && this.playlists.length) {
+            this.syncPlaylists(0);
+        }
     };
 
     /**
      * Will save the current state when as soon as no other process tries to
      */
-    this.save = function() {
+    this.saveToLocalStorage = function() {
         var startTime = new Date().getTime(),
             currentTime,
             timeDelta;
@@ -66,15 +96,38 @@ function PlaylistsManager() {
             }
             continue;
         }
-
         this.locked = true;
+
         try {
             localStorage['playlists'] = JSON.stringify(this.playlists);
         } catch(e) {
             alert('Error saving playlists: ' + e);
         }
         this.locked = false;
-    };
+    }
+
+    /**
+     * Sync playlists sequentially with server.
+     *
+     * Will save back to localStorage when done (remoteIds may have been set).
+     */
+    this.syncPlaylists = function(i) {
+        if (i >= this.playlists.length) {
+            this.saveToLocalStorage();
+            return;
+        }
+
+        var playlist = this.playlists[i],
+            self = this;
+
+        if (playlist.remoteId) {
+            playlist.sync(function() {
+                self.syncPlaylists(i + 1);
+            });
+        } else {
+            self.syncPlaylists(i + 1);
+        }
+    }
 
     this.addPlaylist = function(playlist) {
         if (typeof playlist !== 'object') {
@@ -109,6 +162,10 @@ function PlaylistsManager() {
     };
 
     this.deletePlaylist = function(index) {
+        if (logged_in && this.playlists[index].remoteId) {
+            this.playlists[index].unsync();
+        }
+
         this.playlists.splice(index, 1);
     };
 }
