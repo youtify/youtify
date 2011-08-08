@@ -43,6 +43,8 @@ function playlistClicked(event) {
 
     if (playlist.remoteId) {
         history.pushState(null, null, '/playlists/' + playlist.remoteId);
+    } else {
+        history.pushState(null, null, '/');
     }
 
 	$('#playlist').data('owner', $(this));
