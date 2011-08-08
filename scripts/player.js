@@ -23,7 +23,11 @@ var Player = {
 	
 	play: function(videoId, title) {
 		if (videoId !== undefined) {
-            history.pushState(null, null, '/videos/' + videoId);
+            if (location.href.indexOf('/playlists') === -1) {
+                history.pushState(null, null, '/videos/' + videoId);
+            } else {
+                history.pushState(null, null, '/playlists/' + getPlaylistIdFromUrl() + '/videos/' + videoId);
+            }
             Player._currentVideoId = videoId;
 			var quality = new Settings().quality || 'hd720';
 			Player._loadingNewVideo = true;

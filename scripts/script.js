@@ -114,22 +114,8 @@ $(window).load(function() {
 	$(window).resize();
 	$('#loading span').text('Done');
 	$('#loading').fadeOut();
-	
-	// LOAD VIDEO?
-	var pathname = document.location.pathname.split('/'); // '/videos/123'
-	if (pathname.length === 3 && pathname[1] === 'videos') {
-		Player.play(pathname[2]);
-	} else if (pathname.length === 3 && pathname[1] === 'playlists') { // '/playlists/123'
-		loadPlaylist(pathname[2]);
-	}
+    loadUrl();
 });
-
-function loadPlaylist(id) {
-    $.getJSON('/api/playlists/' + id, function(data) {
-        var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
-        loadPlaylistView(playlist);
-    });
-}
 
 $(document).ready(function() {
     var settings = new Settings();

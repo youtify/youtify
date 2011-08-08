@@ -35,6 +35,7 @@ function createResultsItem(title, videoId, rating) {
         .addClass("video")
         .data('type', 'video') // used for drag n drop
         .data('videoId', videoId)
+        .attr('rel', videoId)
         .bind('contextmenu', showResultsItemContextMenu)
         .click(function(event) {
             selectVideo($(this), event);
