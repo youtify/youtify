@@ -38,12 +38,6 @@ $(document).ready(function() {
             }
         }, timeout);
     });
-
-    // LOAD ANY PREVIOUS SEARCH
-    if ('q' in localStorage) {
-        $("#search input").val(localStorage['q']);
-        $("#search input").keyup(); // trigger search
-    }
 	
 	$('#results-tab').click(function() {
 		Search.selectSearchResults();
@@ -61,7 +55,6 @@ var Search = {
         }
 
         $('body').addClass('searching');
-        localStorage['q'] = q;
 
         $('#results').html('');
         
