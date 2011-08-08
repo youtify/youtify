@@ -25,18 +25,17 @@ var Player = {
 		if (videoId !== undefined) {
             history.pushState(null, null, '/videos/' + videoId);
             Player._currentVideoId = videoId;
+			var quality = new Settings().quality || 'hd720';
+			Player._loadingNewVideo = true;
 			
 			// Make sure currentVideoId is set before assert
-			Player.assertPlayerLoaded();
-			
-			Player._loadingNewVideo = true;
-			var quality = new Settings().quality || 'hd720';
-			
-			try {
-				Player._player.loadVideoById(videoId, 0, quality);
-			} catch (ex) { 
-				console.log(ex);
-				Notification.show('An error has occurred with the player. Please reload the page.');
+			if (Player.assertPlayerLoaded()) {
+				try {
+					Player._player.loadVideoById(videoId, 0, quality);
+				} catch (ex) { 
+					console.log(ex);
+					Notification.show('An error has occurred with the player. Please reload the page.');
+				}
 			}
 			
 			if (title !== undefined) {
