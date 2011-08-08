@@ -39,10 +39,7 @@ var Player = {
 			}
 			
 			if (title !== undefined) {
-				document.title = "Youtify - " + title;
-				$('#info .title').text(title);
-				
-				Notification.announce(title);
+				Player.setTitle(title);
 			} else {
 				Player.loadTitle(videoId);
 			}
@@ -170,6 +167,12 @@ var Player = {
 			title: elem.find('.title').text(), 
 			originalElem: elem 
 		});
+	},
+	
+	setTitle: function(title) {
+		document.title = "Youtify - " + title;
+		$('#info .title').text(title);
+		Notification.announce(title);
 	},
 	
 	onPlayerStateChange: function(event) {
@@ -421,10 +424,13 @@ var Player = {
 			'v': 2,
 			'q': videoId
 		};
+		Player.setTitle('');
 		$.getJSON(url, params, function(data) {
-			$.each(data.feed.entry, function(i, item) {
-				$('#info .title').text(item['title']['$t']);
-			}); 
+			if (data.feed.entry) {
+				$.each(data.feed.entry, function(i, item) {
+					Player.setTitle(item['title']['$t']);
+				}); 
+			}
 		});
 	},
 	
