@@ -1,0 +1,288 @@
+/* COLORS
+*******************************/
+@background: #444444;
+@light-text: #F4F4F4;
+@dark-text: #444444;
+@light-link: #F4F4F4;
+@drag-bg: #eee;
+
+@light-border: #606060;
+@light-gradient1: #C4C4C4;
+@light-gradient2: #ECECEC;
+
+@dark-gradient1: #4E4E4E;
+@dark-gradient2: #5F5F5F;
+
+@selected: #A9D9FE;
+@green: #499C2A;
+
+@font: 'Arimo', arial, sans-serif;
+
+
+/* DEFAULT
+*******************************/
+html,
+body{ 
+	color: @light-text;
+	.background-left();
+	text-shadow: 0px 0px 0px transparent;
+}
+input[type=text],
+textarea {
+	.background-left();
+	color: @light-text;
+}
+
+
+/* CONTENT
+*******************************/
+body {
+}
+#content {
+}
+
+/* LEFT
+*******************************/
+#content-left {
+	.background-left();
+}
+
+/* PLAYLISTS
+*******************************/
+#left-menu {
+}
+.playlistElem {
+}
+#left-menu > ul > .selected,
+#left-menu > .selected:nth-child(odd) {
+    background-color: @selected;
+    color: @light-text;
+}
+
+#login {
+}
+#login a {
+    color: @light-link;
+}
+
+#playlists .remote .title {
+    background: url(/images/circle_white.png) center right no-repeat;
+}
+#playlists .selected.remote .title {
+    background-image: url(/images/circle_dark.png);
+}
+#playlists {
+    border-bottom: 1px solid @light-border;
+}
+#new-playlist {
+    text-decoration: none;
+    color: @light-link;
+}
+#new-playlist span {
+}
+#left-menu #new-playlist input[type=text],
+#left-menu input.rename {
+    border: solid 1px @light-border;
+    color: @rename-color;
+	background: @rename-bg;
+}
+#left-menu .playlistElem.selected {
+    color: @dark-text;
+}
+
+/* TABS
+ ***********************************/
+#tabs { 
+	border: 0;
+}
+#tabs li {
+}
+#left-menu li.loading {
+    background-image: url(/images/loading.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+/* RIGHT
+ ***********************************/
+
+#content-right {
+	.background-right();
+}
+
+#search {
+}
+
+#search > input[type=text] {
+    border: 0;
+	.background-search();
+    .border(30px);
+}
+#search .loader {
+	background: url('/images/loading.gif');
+}
+
+
+#results-container {
+
+}
+#results-container.target {
+    background: inherit;
+    color: inherit;
+}
+
+.results {
+}
+.results > li {
+	border-top: solid 1px transparent;
+	border-bottom: solid 1px transparent;
+}
+.results > li .rating {
+    border: 1px solid @light-text;
+    opacity: 0.6;
+}
+.results > li .rating div {
+    background: @light-text;
+}
+.results > li.selected .rating {
+    border: 1px solid @dark-text;
+}
+.results > li.selected .rating div {
+    background: @dark-text;
+}
+.results > li:nth-child(odd) {
+    background-color: @odd-result;
+}
+.results > .playing,
+.results > .playing:nth-child(odd) {
+    color: @playing-row-color;
+	background-color: @playing-row;
+} 
+.results > .selected, 
+.results > .selected:nth-child(odd) {
+    background-color: @selected;
+    color: @dark-text;
+}
+.results > .disabled {
+    color: #FFF;
+} 
+
+.results > .playlist {
+}
+
+.results > .loadMore {
+
+}
+
+.results > .loading {
+    background-image: url('/images/loading.gif');
+    background-position: center left;
+    background-repeat: no-repeat;
+}
+
+.results > li > ul {
+}
+.results > li  > ul > li { 
+}
+.results > li > ul > .playing,
+.results > li > ul > .playing:nth-child(odd) { 
+    color: @playing-row-color;
+	background-color: @playing-row;
+} 
+.results > li > ul > .selected, 
+.results > li > ul > .selected:nth-child(odd) { 
+	background-color: @selected; 
+	color: @dark-text; 
+}
+.results > li > ul > .disabled { 
+	color: #FFF; 
+}
+
+.alternatives { 
+}
+.alternatives li {
+}
+.alternatives > .playing {
+}
+
+#info-panel {
+	color: @infoPanelColor;
+	.infoPanelBackground;
+}
+#uploader {
+}
+#uploader a, #uploader a:visited {
+	color: @light-link;
+}
+#related { 
+}
+#related-span { 
+}
+#related li {
+}
+
+#timeline-container {
+    .darkGradient;
+}
+#position-label {
+}
+#end-label { 
+}
+
+/* MISC
+******************************************************************************/
+
+/* DRAG N DROP
+*******************************/
+
+#dragElem {
+    background: @drag-bg;
+    color: @dark-text;
+    border-radius: 3px;
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.8);
+}
+.target {
+	text-shadow: 0px 0px 0px transparent !important;
+    background: @drag-bg;
+    color: @dark-text;
+    border-radius: 3px;
+}
+#new-playlist.target {
+    background: @drag-bg;
+    color: @dark-text;
+    border-radius: 3px;
+}
+.reorderable {
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+.results > .insert-before,
+#playlists > .insert-before {
+    border-top: 1px solid #eee;
+}
+.results > .insert-after,
+#playlists > .insert-after {
+    border-bottom: 1px solid #eee;
+}
+
+/* CONTEXT MENU
+*******************************/
+
+#contextmenu {
+    background: @drag-bg;
+    color: @dark-text;
+    border-radius: 3px;
+}
+#contextmenu .option {
+}
+#contextmenu .option:hover {
+    background: @selected;
+    color: @dark-text;
+}
+
+/* TRANSLATOR PANEL
+*******************************/
+
+.selected-translation {
+    border: 2px solid red;
+}
