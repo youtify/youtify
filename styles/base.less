@@ -32,17 +32,11 @@ div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td
 	-o-border-radius: @radius;
 	border-radius: @radius; 
 }
-.button(@img){
-	background:@img, -webkit-gradient(linear, left bottom, left top, color-stop(40%, @light-gradient1), color-stop(70%, @light-gradient2));
-	background:@img, -moz-linear-gradient(center bottom, @light-gradient1 40%, @light-gradient2 70%);
-	background:@img, -o-linear-gradient(bottom, @light-gradient1 40%, @light-gradient2 70%);
-	background:@img, linear-gradient(center bottom, @light-gradient1 40%, @light-gradient2 70%);
-}
-.inset(@spread: 10px) {
-   -moz-box-shadow:inset 0 0 @spread @inset;
-   -webkit-box-shadow:inset 0 0 @spread @inset;
-   -o-box-shadow:inset 0 0 @spread @inset;
-   box-shadow:inset 0 0 @spread @inset;
+.button(@img: url('/images/null.png')){
+	background:@img, -webkit-gradient(linear, left bottom, left top, color-stop(40%, #C4C4C4), color-stop(70%, #ECECEC));
+	background:@img, -moz-linear-gradient(center bottom, #C4C4C4 40%, #ECECEC 70%);
+	background:@img, -o-linear-gradient(bottom, #C4C4C4 40%, #ECECEC 70%);
+	background:@img, linear-gradient(center bottom, #C4C4C4 40%, #ECECEC 70%);
 }
 
 .lightGradient(){
@@ -54,15 +48,15 @@ div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td
 
 .bold() {
 	font-weight: bold;
-//	letter-spacing: 1px;
+	letter-spacing: 0.05em;
 }
 
 /* DEFAULT
 *******************************/
 html,
-body{ 
+body { 
 	height: 100%; 
-    font-family: @font;
+    font-family: 'Arimo', arial, sans-serif;
 	font-size: 12px;
 	overflow: hidden;
 }
@@ -114,7 +108,7 @@ body {
 	overflow-y: scroll;
 }
 .playlistElem {
-    padding: 3px 4px;
+    padding: 4px;
     cursor: default;
 }
 #left-menu > ul > .selected,
@@ -122,10 +116,12 @@ body {
 }
 
 #login {
-    padding: 5px;
+	margin-bottom: 10px;
 }
 #login a {
-    text-decoration: none;
+	display: block;
+	padding: 5px 4px;
+	text-decoration: underline;
 }
 
 #playlists .remote .title {
@@ -136,6 +132,7 @@ body {
 #playlists .selected.remote .title {
 }
 #playlists {
+	margin-bottom: 5px;
 }
 #new-playlist {
 }
@@ -247,6 +244,7 @@ body {
 }
 #info .title {
     .bold;
+	text-shadow: 0px 1px 1px #FFF;
     text-align: center;
     cursor: default;
 }
@@ -261,7 +259,6 @@ body {
     height: 45px;
     width: 230px;
     text-align: center;
-    .darkGradient;
 }
 #prev {
     cursor: pointer;
@@ -411,7 +408,7 @@ body.searching #search .loader {
 #content-right > .toolbar > #toolbar-buttons > .link { 
 	display: block;
 	padding-top: 16px;
-	color: @dark-text;
+	color: #444;
 	font-size: 14px;
 	.bold;
 	text-align: center;
@@ -661,7 +658,7 @@ body.searching #search .loader {
 }
 .alternatives .prev, .alternatives .next {
 	display: inline-block;
-	border: solid 1px @dark-text;
+	border: solid 1px #444;
 	.button(url('/images/null.png'));
 	color: #444;
 	font-size: 10px;
