@@ -174,6 +174,18 @@ function showPlaylistContextMenu(event) {
         });
     }
 
+    if (ON_DEV) {
+        buttons.push({
+            title: 'View JSON',
+            li: $(this),
+            callback: function(li) {
+                var playlist = li.data('model');
+                alert(JSON.stringify(playlist.toJSON()));
+                console.log(playlist.toJSON());
+            }
+        });
+    }
+
     showContextMenu(buttons, event);
 }
 
