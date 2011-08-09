@@ -15,7 +15,14 @@ function playlistMouseDown(event) {
 	$(this).addClass('selected');
 }
 
-function loadPlaylistView(playlist) {
+function loadPlaylist(playlistId, videoId) {
+    $.getJSON('/api/playlists/' + playlistId, function(data) {
+        var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
+        loadPlaylistView(playlist, videoId);
+    });
+}
+
+function loadPlaylistView(playlist, videoId) {
 	$('#results-container ol').hide();
     $('#playlist').html('');
 	$('#playlist').show();
@@ -32,6 +39,10 @@ function loadPlaylistView(playlist) {
         li.addClass('reorderable');
         li.appendTo('#playlist');
     });
+
+    if (videoId) {
+        $('#playlist li.video[rel=' + videoId + ']').play();
+    }
 }
 
 /**
@@ -43,6 +54,8 @@ function playlistClicked(event) {
 
     if (playlist.remoteId) {
         history.pushState(null, null, '/playlists/' + playlist.remoteId);
+    } else {
+        history.pushState(null, null, '/');
     }
 
 	$('#playlist').data('owner', $(this));

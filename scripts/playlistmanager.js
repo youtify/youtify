@@ -10,7 +10,7 @@ function PlaylistsManager() {
             data = JSON.parse(localStorage['playlists'] || '[]');
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
-                if (!logged_in && item.remoteId) {
+                if (item.remoteId) {
                     continue;
                 }
                 this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.shuffle));

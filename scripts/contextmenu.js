@@ -149,7 +149,7 @@ function showPlaylistContextMenu(event) {
         }
     ];
 
-    if (logged_in) {
+    if (logged_in && !$(this).data('model').remoteId) {
         buttons.push({
             title: 'Sync',
             li: $(this),

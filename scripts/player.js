@@ -6,7 +6,7 @@ var Player = {
 		'','','','','','','','','','',
 		'','','','','','','sIakSu5VGF0', 'fWucPckXbIw','ypWr6pwoZmI','Tg4u7ko333U',
 		'lcOxhH8N3Bo','dJYAenuVnQw','w789CzQdMl0','N2bCc0EGP6U','P0aXY2pM2sA','-kHzZZvsdOE','kz6vq-409Vg','iSF2YHqHJc4','6f8FCHzRcOs','z2Am3aLwu1E',
-		'D5fRVm3k1aY','--_KyuZMsnA','6zcrgSB5pkU','sTsVJ1PsnMs','vF74D3kbbTI','','','','','',
+		'D5fRVm3k1aY','--_KyuZMsnA','6zcrgSB5pkU','sTsVJ1PsnMs','vF74D3kbbTI','6_W_xLWtNa0','','','','',
 		'','','','','','','','','','',
 		'', ''], // One for each week :)
 	_playbackQuality: ['small', 'medium', 'large', 'hd720', 'hd1080', 'highres'],
@@ -23,27 +23,27 @@ var Player = {
 	
 	play: function(videoId, title) {
 		if (videoId !== undefined) {
-            history.pushState(null, null, '/videos/' + videoId);
+            if (location.href.indexOf('/playlists') === -1) {
+                history.pushState(null, null, '/videos/' + videoId);
+            } else {
+                history.pushState(null, null, '/playlists/' + getPlaylistIdFromUrl() + '/videos/' + videoId);
+            }
             Player._currentVideoId = videoId;
+			var quality = new Settings().quality || 'hd720';
+			Player._loadingNewVideo = true;
 			
 			// Make sure currentVideoId is set before assert
-			Player.assertPlayerLoaded();
-			
-			Player._loadingNewVideo = true;
-			var quality = new Settings().quality || 'hd720';
-			
-			try {
-				Player._player.loadVideoById(videoId, 0, quality);
-			} catch (ex) { 
-				console.log(ex);
-				Notification.show('An error has occurred with the player. Please reload the page.');
+			if (Player.assertPlayerLoaded()) {
+				try {
+					Player._player.loadVideoById(videoId, 0, quality);
+				} catch (ex) { 
+					console.log(ex);
+					Notification.show('An error has occurred with the player. Please reload the page.');
+				}
 			}
 			
 			if (title !== undefined) {
-				document.title = "Youtify - " + title;
-				$('#info .title').text(title);
-				
-				Notification.announce(title);
+				Player.setTitle(title);
 			} else {
 				Player.loadTitle(videoId);
 			}
@@ -171,6 +171,12 @@ var Player = {
 			title: elem.find('.title').text(), 
 			originalElem: elem 
 		});
+	},
+	
+	setTitle: function(title) {
+		document.title = "Youtify - " + title;
+		$('#info .title').text(title);
+		Notification.announce(title);
 	},
 	
 	onPlayerStateChange: function(event) {
@@ -422,10 +428,13 @@ var Player = {
 			'v': 2,
 			'q': videoId
 		};
+		Player.setTitle('');
 		$.getJSON(url, params, function(data) {
-			$.each(data.feed.entry, function(i, item) {
-				$('#info .title').text(item['title']['$t']);
-			}); 
+			if (data.feed.entry) {
+				$.each(data.feed.entry, function(i, item) {
+					Player.setTitle(item['title']['$t']);
+				}); 
+			}
 		});
 	},
 	
