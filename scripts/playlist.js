@@ -123,6 +123,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         });
 
         this.remoteId = null;
+        this.owner = null;
     };
 
     this.createNewPlaylistOnRemote = function(callback) {
