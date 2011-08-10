@@ -122,6 +122,10 @@ body {
 	display: block;
 	padding: 5px 4px;
 	text-decoration: underline;
+	white-space: nowrap;
+	width: 200px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #playlists .remote .title {
@@ -243,7 +247,7 @@ body {
     .lightGradient;
 }
 #info .title {
-    .bold;
+    .bold();
 	text-shadow: 0px 1px 1px #FFF;
     text-align: center;
     cursor: default;
@@ -410,7 +414,7 @@ body.searching #search .loader {
 	padding-top: 16px;
 	color: #444;
 	font-size: 14px;
-	.bold;
+	.bold();
 	text-align: center;
 	cursor: pointer;
 }
@@ -575,28 +579,28 @@ body.searching #search .loader {
 .results {
 	display: none;
 }
-.results > li {
+.results > .video {
     background-image: url('/images/song.png');
     background-repeat: no-repeat;
     background-position: top left;
     padding: 3px 4px 3px 20px;
     cursor: default;
 }
-.results > li .rating {
+.results > .video .rating {
     float: right;
     width: 60px;
     height: 8px;
     margin: 1px 0;
     padding: 1px;
 }
-.results > li .rating div {
+.results > .video .rating div {
     height: 100%;
 }
-.results > li.selected .rating {
+.results > .video.selected .rating {
 }
-.results > li.selected .rating div {
+.results > .video.selected .rating div {
 }
-.results > li:nth-child(odd) {
+.results > .video:nth-child(odd) {
 }
 .results > .playing,
 .results > .playing:nth-child(odd) {
@@ -625,25 +629,25 @@ body.searching #search .loader {
 .results > .loading {
 }
 
-.results > li > ul {
+.results > .video > ul {
 	margin-left: 25px; 
 }
-.results > li  > ul > li { 
+.results > .video > ul > li { 
 	background-image: url('/images/song.png'); 
 	background-repeat: no-repeat; 
 	background-position: top left; 
 	padding: 3px 4px 3px 20px; 
 	cursor: default; 
 }
-.results > li > ul > .playing,
-.results > li > ul > .playing:nth-child(odd) { 
+.results > .video > ul > .playing,
+.results > .video > ul > .playing:nth-child(odd) { 
 	background-repeat: no-repeat;
 	background-image: url('/images/playing.png');
 } 
-.results > li > ul > .selected, 
-.results > li > ul > .selected:nth-child(odd) { 
+.results > .video > ul > .selected, 
+.results > .video > ul > .selected:nth-child(odd) { 
 }
-.results > li > ul > .disabled { 
+.results > .video > ul > .disabled { 
 	background-image: url('/images/disabled.png'); 
 }
 
@@ -679,6 +683,29 @@ body.searching #search .loader {
 .alternatives li:last-child .next {
 	display: none;
 }
+
+/* PLAYLISTBAR
+*******************************/
+li.playlistbar {
+    height: 30px;
+    padding: 10px 10px 3px 10px;
+	overflow: hidden;
+}
+.playlistbar .title {
+	margin-top: 1px;
+    display: inline-block;
+    font-size: 18px;
+    .bold();
+}
+.playlistbar .owner {
+    display: inline-block;
+    margin: 0 10px;
+}
+.playlistbar input {
+    float: right;
+    display: inline-block;
+}
+
 
 /* INFO PANEL
 *******************************/

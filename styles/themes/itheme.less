@@ -31,6 +31,16 @@
 	background:linear-gradient(center bottom, #A0A0A0 50%, #B0B0B0 75%, #D0D0D0 100%);
 }
 
+.playlistbar() {
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(0%, #7C8697), color-stop(100%, #5D6677));
+    background:-moz-linear-gradient(center bottom, #7C8697 0%, #5D6677 100%);
+    background:-o-linear-gradient(center bottom, #7C8697 0%, #5D6677 100%);
+    background:linear-gradient(center bottom, #7C8697 0%, #5D6677 100%);
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #5E6570;
+	color: #FFF;
+}
+
 /* OVERRIDE
 *******************************/
 
@@ -43,7 +53,8 @@
 #login a,
 #new-playlist,
 #left-menu .playlistElem.selected,
-.results > li,
+.alternatives > .playing,
+.results > .video,
 .results > .selected, 
 .results > .selected:nth-child(odd) {
 	text-shadow: 0px 0px 0px transparent;
