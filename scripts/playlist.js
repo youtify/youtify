@@ -35,6 +35,7 @@ function syncPlaylistButtonClicked(event) {
     var playlist = playlistBar.data('playlist');
     playlist.sync(function() {
         playlistBar.replaceWith(createPlaylistBar(playlist));
+        history.pushState(null, null, playlist.getUrl());
         constructPlaylistsMenu();
     });
 }
