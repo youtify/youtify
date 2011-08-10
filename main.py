@@ -23,7 +23,7 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {
             'user': current_user,
             'youtify_user': youtify_user,
-            'accept_language_header': self.request.headers['Accept-Language'],
+            'accept_language_header': self.request.headers.get('Accept-Language', ''),
             'logged_in': int(current_user is not None),
             'login_url': users.create_login_url('/'),
             'logout_url': users.create_logout_url('/'),
