@@ -99,7 +99,7 @@ function playlistClicked(event) {
     var playlist = $(this).data('model');
 
     if (playlist.remoteId) {
-        history.pushState(null, null, '/playlists/' + playlist.remoteId);
+        history.pushState(null, null, playlist.getUrl());
     } else {
         history.pushState(null, null, '/');
     }
@@ -148,6 +148,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.owner = owner;
     this.synced = true; // not part of JSON structure
     this.syncing = false; // not part of JSON structure
+
+    this.getUrl = function() {
+        return '/users/' + this.owner.id + '/playlists/' + this.remoteId;
+    };
 
     this.rename = function(newTitle) {
         var title = $.trim(newTitle);
