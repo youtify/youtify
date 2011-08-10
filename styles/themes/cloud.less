@@ -1,75 +1,59 @@
+/* COLORS
+ * When creating a new skin, 
+ * copy/paste the following section and 
+ * modify color codes.
+ *****************************************/
 
-.darkGradient(@stop1:0%, @stop2:8%, @stop3: 50%, @stop4: 50%, @stop5: 80%, @stop6: 100%){
-  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @dark-gradient1), color-stop(@stop2, @dark-gradient2), color-stop(@stop3, @dark-gradient3), color-stop(@stop4, @dark-gradient4), color-stop(@stop5, @dark-gradient5), color-stop(@stop6, @dark-gradient6));
-  background:-moz-linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3, @dark-gradient4 @stop4, @dark-gradient5 @stop5, @dark-gradient6 @stop6);
-  background:-o-linear-gradient(bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3, @dark-gradient4 @stop4, @dark-gradient5 @stop5, @dark-gradient6 @stop6);
-  background:linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3, @dark-gradient4 @stop4, @dark-gradient5 @stop5, @dark-gradient6 @stop6);
+@text-color-1: yellow;
+@text-color-2: #000000;
+@background-color-1: transparent;
+@background-color-2: transparent;
+@border-color-1: #606060;
+@border-color-2: #606060;
+@infoPanel-color-1: @text-color-1;
+@infoPanel-color-2: rgba(8, 30, 62, 0.5);
+@rename-color-1: @text-color-2;
+@rename-color-2: @text-color-1;
+@menu-color-1: @text-color-2;
+@menu-color-2: #EEEEEE;
+@odd-result-color: transparent;
+@playing-row-color-1: rgba(0,0,0,0.5);
+@playing-row-color-2: #FFFFFF;
+@selected-color: rgba(255,255,255,0.6);
+
+
+/* FUNCTIONS
+*******************************/
+
+.bottomToolbar() {
+	background:-webkit-gradient(linear, left bottom, left top, color-stop(0%, rgb(29, 80, 143)), color-stop(8%, rgb(14, 30, 56)), color-stop(50%, rgb(4, 20, 46)), color-stop(50%, rgb(82, 153, 209)), color-stop(80%, rgb(29, 80, 143)), color-stop(100%, #76BFDC));
+	background:-moz-linear-gradient(center bottom, rgb(29, 80, 143) 0%, rgb(14, 30, 56) 8%, rgb(4, 20, 46) 50%, rgb(82, 153, 209) 50%, rgb(29, 80, 143) 80%, #76BFDC 100%);
+	background:-o-linear-gradient(bottom, rgb(29, 80, 143) 0%, rgb(14, 30, 56) 8%, rgb(4, 20, 46) 50%, rgb(82, 153, 209) 50%, rgb(29, 80, 143) 80%, #76BFDC 100%);
+	background:linear-gradient(center bottom, rgb(29, 80, 143) 0%, rgb(14, 30, 56) 8%, rgb(4, 20, 46) 50%, rgb(82, 153, 209) 50%, rgb(29, 80, 143) 80%, #76BFDC 100%);
 }
 
-.background-left(){ background: transparent; }
+/* OVERRIDE
+*******************************/
 
-.background-right(){ 
+#left-menu .playlistElem.selected {
+	color: @text-color-2;
+}
+
+#content-right {
 	background: -webkit-gradient(linear, left center, right center, color-stop(0%, rgba(8, 30, 62, 1)), color-stop(50%, rgba(8, 30, 62, 0.0))) repeat scroll 0% 0% transparent;
 	background: -moz-linear-gradient(left , rgba(8, 30, 62, 1) 0%, rgba(8, 30, 62, 0.0) 500px) repeat scroll 0% 0% transparent;
 	background: -o-linear-gradient(left , rgba(8, 30, 62, 1) 0%, rgba(8, 30, 62, 0.0) 500px) repeat scroll 0% 0% transparent;
 	background: linear-gradient(left , rgba(8, 30, 62, 1) 0%, rgba(8, 30, 62, 0.0) 500px) repeat scroll 0% 0% transparent;
 }
 
-.background-search(){ background: rgb(4, 20, 46); color: #FFF; }
-
+#search > input[type=text] {
+	background: rgb(4, 20, 46); 
+	color: #FFF; 
+}
 
 #content {
 	background: -webkit-gradient(linear, center top, center bottom, color-stop(0%, rgb(4, 20, 46)), color-stop(35%, rgb(29, 80, 143)), color-stop(50%, rgb(82, 153, 209)), color-stop(100%, rgb(29, 80, 143))) repeat scroll 0% 0% transparent;
 	background: -moz-linear-gradient(center top , rgb(4, 20, 46) 0%, rgb(29, 80, 143) 35%, rgb(82, 153, 209) 50%, rgb(29, 80, 143) 100%) repeat scroll 0% 0% transparent;
 	background: -o-linear-gradient(center top , rgb(4, 20, 46) 0%, rgb(29, 80, 143) 35%, rgb(82, 153, 209) 50%, rgb(29, 80, 143) 100%) repeat scroll 0% 0% transparent;
 	background: linear-gradient(center top , rgb(4, 20, 46) 0%, rgb(29, 80, 143) 35%, rgb(82, 153, 209) 50%, rgb(29, 80, 143) 100%) repeat scroll 0% 0% transparent;
-}
-
-@light-text: yellow;
-
-@dark-text: #000;
-@rename-color: #000;
-@rename-bg: #FFF;
-@light-link: yellow;
-@drag-bg: #393858;
-@odd-result: transparent;
-@inset: #000;
-
-@light-border: #606060;
-@light-gradient1: #C4C4C4;
-@light-gradient2: #ECECEC;
-
-@dark-gradient1: rgb(29, 80, 143);
-@dark-gradient2: rgb(14, 30, 56);
-@dark-gradient3: rgb(4, 20, 46);
-
-@dark-gradient4: rgb(82, 153, 209);
-@dark-gradient5: rgb(29, 80, 143);
-@dark-gradient6: #76BFDC;
-
-
-@playing-row: rgba(0,0,0,0.5);
-@playing-row-color: #FFF;
-@selected: rgba(255,255,255,0.6);
-@green: #499C2A;
-@button-color: #444;
-
-@font: 'Arimo', arial, sans-serif;
-
-.infoPanelBackground() {
-	background-color: rgba(8, 30, 62, 0.5);
-	box-shadow: inset 0px 3px 5px 0px #FFF;
-}
-
-@infoPanelColor: @light-text;
-
-.results > li,
-#left-menu li,
-#new-playlist { 
-	text-shadow: 0 1px 1px #000; 
-}
-.results > .selected, 
-.results > .selected:nth-child(2n+1), 
-#left-menu .playlistElem.selected { 
-	text-shadow: 0px 1px 1px #FFF; 
 }
