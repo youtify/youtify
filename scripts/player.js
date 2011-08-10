@@ -447,7 +447,7 @@ var Player = {
 		  videoId: videoId,
 		  enablejsapi: 1,
 		  modestbranding: 1,
-		  origin: document.location.host,
+		  origin: document.location.origin,
 		  playerVars: { 'autoplay': 1, 'controls': 0 },
           events: {
             'onReady': Player.onIFramePlayerReady,
