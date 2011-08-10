@@ -258,11 +258,10 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 
 // VIDEO DROPPED ON ANOTHER VIDEO
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    var playlistElem = $('.playlistElem.selected');
-    var playlist = playlistElem.data('model');
-    if (targetElem.hasClass('video') && sourceElem.hasClass('video') && playlistElem.length) {
+    var playlist = $('#playlistbar').data('playlist');
+    if (targetElem.hasClass('video') && sourceElem.hasClass('video')) {
         playlist.moveVideo(sourceElem.index(), targetElem.index());
         playlistManager.save();
-        playlistElem.click();
+        loadPlaylistView(playlist);
     }
 });
