@@ -25,7 +25,7 @@ function loadPlaylist(playlistId, videoId) {
 function savePlaylistButtonClicked(event) {
     var playlistBar = $(this).parent();
     var playlist = playlistBar.data('playlist');
-    playlistManager.addPlaylist(playlist);
+    playlistManager.addPlaylist(playlist.copy()); // create copy without connection to remote
     playlistBar.replaceWith(createPlaylistBar(playlist));
     constructPlaylistsMenu();
 }
@@ -53,7 +53,7 @@ function createPlaylistBar(playlist) {
             // Add save button if not already saved
             if (!(playlist.remoteId in playlistManager.getPlaylistsMap())) {
                 $('<input type="button" class="save"></button>')
-                    .val('Save playlist')
+                    .val('Copy playlist')
                     .click(savePlaylistButtonClicked)
                     .appendTo(div);
             }
@@ -151,6 +151,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
 
     this.getUrl = function() {
         return '/users/' + this.owner.id + '/playlists/' + this.remoteId;
+    };
+
+    this.copy = function() {
+        return new Playlist(this.title, this.videos);
     };
 
     this.rename = function(newTitle) {
