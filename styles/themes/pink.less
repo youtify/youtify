@@ -1,51 +1,54 @@
+/* COLORS
+ * When creating a new skin, 
+ * copy/paste the following section and 
+ * modify color codes.
+ *****************************************/
 
-.darkGradient(@stop1:50%, @stop2:80%){
-  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @dark-gradient1), color-stop(@stop2, @dark-gradient2));
-  background:-moz-linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2);
-  background:-o-linear-gradient(bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2);
-  background:linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2);
-}
-.background-left(){ background: #FFACDA; }
-.background-right(){ background: #FFACDA; }
-.background-search(){ background: #FFACDA; }
-@light-text: #70007B;
-@dark-text: #000;
-@rename-color: #F07BFB;
-@rename-bg: #70007B;
-@light-link: #70007B;
-@drag-bg: #eee;
-@odd-result: #FEC7E6;
-@inset: #FFA0A0;
+@text-color-1: #70007B;
+@text-color-2: #000000;
+@background-color-1: #FFACDA;
+@background-color-2: #FFACDA;
+@border-color-1: #606060;
+@border-color-2: #70007B;
+@infoPanel-color-1: @text-color-1;
+@infoPanel-color-2: #FEC7E6;
+@rename-color-1: @text-color-2;
+@rename-color-2: @text-color-1;
+@menu-color-1: @text-color-2;
+@menu-color-2: #EEEEEE;
+@odd-result-color: #FEC7E6;
+@playing-row-color-1: #F07BFB;
+@playing-row-color-2: #70007B;
+@selected-color: #F583B4;
 
-@light-border: #606060;
-@light-gradient1: #C4C4C4;
-@light-gradient2: #ECECEC;
+/* FUNCTIONS
+*******************************/
 
-@dark-gradient1: #F583B4;
-@dark-gradient2: #F07BFB;
-
-@playing-row: #F07BFB;
-@playing-row-color: #70007B;
-@selected: #F583B4;
-@green: #499C2A;
-@button-color: #444;
-
-@font: 'Arimo', arial, sans-serif;
-
-.infoPanelBackground() {
-	background-color: @odd-result;
-	box-shadow: inset 0px 3px 5px 0px @selected;
+.bottomToolbar() {
+	background:-webkit-gradient(linear, left bottom, left top, color-stop(50%, #F583B4), color-stop(80%, #F07BFB));
+	background:-moz-linear-gradient(center bottom, #F583B4 50%, #F07BFB 80%);
+	background:-o-linear-gradient(bottom, #F583B4 50%, #F07BFB 80%);
+	background:linear-gradient(center bottom, #F583B4 50%, #F07BFB 80%);
 }
 
-@infoPanelColor: @light-text;
+/* OVERRIDE
+*******************************/
 
+#info-panel {
+	box-shadow: inset 0px 3px 10px 0px @selected-color;
+}
+
+#left-menu .playlistElem.selected {
+	color: @text-color-2;
+}
+
+/* RESET text-shadows */
+.playlistElem,
+#login a,
+#new-playlist,
+#left-menu .playlistElem.selected,
 .results > li,
-#left-menu li,
-#new-playlist { 
-	text-shadow: 0 1px 1px transparent; 
-}
 .results > .selected, 
-.results > .selected:nth-child(2n+1), 
-#left-menu .playlistElem.selected { 
-	text-shadow: 0 1px 1px transparent;
+.results > .selected:nth-child(odd) {
+	text-shadow: 0px 0px 0px transparent;
 }

@@ -1,52 +1,33 @@
+/* COLORS
+ * When creating a new skin, 
+ * copy/paste the following section and 
+ * modify color codes.
+ *****************************************/
 
-.darkGradient(@stop1:25%, @stop2:85%, @stop3: 100%){
-  background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @dark-gradient1), color-stop(@stop2, @dark-gradient2), color-stop(@stop3, @dark-gradient3));
-  background:-moz-linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3);
-  background:-o-linear-gradient(bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3);
-  background:linear-gradient(center bottom, @dark-gradient1 @stop1, @dark-gradient2 @stop2, @dark-gradient3 @stop3);
-}
-.background-left(){ background: #740000; }
-.background-right(){ background: #740000; }
-.background-search(){ background: #740000; }
-@light-text: #FFF;
-@dark-text: #000;
-@rename-color: #000;
-@rename-bg: #FFF;
-@light-link: #F4F4F4;
-@drag-bg: #eee;
-@odd-result: #A40000;
-@inset: #000;
+@text-color-1: #FFFFFF;
+@text-color-2: #000000;
+@background-color-1: #740000;
+@background-color-2: #740000;
+@border-color-1: #606060;
+@border-color-2: #A40000;
+@infoPanel-color-1: @text-color-1;
+@infoPanel-color-2: #740000;
+@rename-color-1: @text-color-2;
+@rename-color-2: @text-color-1;
+@menu-color-1: @text-color-2;
+@menu-color-2: #EEEEEE;
+@odd-result-color: #A40000;
+@playing-row-color-1: rgba(0,0,0,0.5);
+@playing-row-color-2: #FFFFFF;
+@selected-color: #FC0100;
 
-@light-border: #606060;
-@light-gradient1: #C4C4C4;
-@light-gradient2: #ECECEC;
 
-@dark-gradient1: #6F1614;
-@dark-gradient2: #FF0000;
-@dark-gradient3: #FFEEEE;
+/* FUNCTIONS
+*******************************/
 
-@playing-row: rgba(0,0,0,0.5);
-@playing-row-color: #FFF;
-@selected: #FC0100;
-@green: #499C2A;
-@button-color: #444;
-
-@font: 'Arimo', arial, sans-serif;
-
-.infoPanelBackground() {
-	background-color: #740000;
-	box-shadow: inset 0px 3px 5px 0px #000;
-}
-
-@infoPanelColor: @light-text;
-
-.results > li,
-#left-menu li,
-#new-playlist { 
-	text-shadow: 0 1px 1px #000; 
-}
-.results > .selected, 
-.results > .selected:nth-child(2n+1), 
-#left-menu .playlistElem.selected { 
-	text-shadow: 0 1px 1px #FFF; 
+.bottomToolbar() {
+	background:-webkit-gradient(linear, left bottom, left top, color-stop(25%, #6F1614), color-stop(85%, #FF0000), color-stop(100%, #FFEEEE));
+	background:-moz-linear-gradient(center bottom, #6F1614 25%, #FF0000 85%, #FFEEEE 100%);
+	background:-o-linear-gradient(bottom, #6F1614 25%, #FF0000 85%, #FFEEEE 100%);
+	background:linear-gradient(center bottom, #6F1614 25%, #FF0000 85%, #FFEEEE 100%);
 }
