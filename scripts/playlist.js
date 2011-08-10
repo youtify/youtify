@@ -40,41 +40,40 @@ function syncPlaylistButtonClicked(event) {
 }
 
 function createPlaylistBar(playlist) {
-    var li = $('<li></li>').addClass('playlistbar').data('playlist', playlist);
+    var div = $('<div id="playlistbar"></div>').data('playlist', playlist);
 
-    $('<span class="title"/>').text(playlist.title).appendTo(li);
+    $('<span class="title"/>').text(playlist.title).appendTo(div);
 
     if (playlist.owner) {
         if (playlist.owner.id != my_user_id) {
             var owner = $('<span class="owner"></span>').text('by: ');
             $('<span class="name"></span>').text(playlist.owner.name).appendTo(owner);
-            owner.appendTo(li);
+            owner.appendTo(div);
 
             // Add save button if not already saved
             if (!(playlist.remoteId in playlistManager.getPlaylistsMap())) {
                 $('<input type="button" class="save"></button>')
                     .val('Save playlist')
                     .click(savePlaylistButtonClicked)
-                    .appendTo(li);
+                    .appendTo(div);
             }
 
         }
-        //$('<input type="button" class="share"></button>').val('Share').appendTo(li);
+        //$('<input type="button" class="share"></button>').val('Share').appendTo(div);
     } else if (logged_in) {
         $('<input type="button" class="sync"></button>')
             .val('Sync')
             .click(syncPlaylistButtonClicked)
-            .appendTo(li);
+            .appendTo(div);
     }
 
-    return li;
+    return div;
 }
 
 function loadPlaylistView(playlist, videoId) {
 	$('#results-container ol').hide();
+    $('#playlistbar').replaceWith(createPlaylistBar(playlist)).show();
     $('#playlist').html('');
-	$('#playlist').show();
-    $('#playlist').append(createPlaylistBar(playlist));
 
     $.each(playlist.videos, function(i, item) {
         var li = createResultsItem(item.title, item.videoId);
@@ -89,9 +88,7 @@ function loadPlaylistView(playlist, videoId) {
         li.appendTo('#playlist');
     });
 
-    if (videoId) {
-        $('#playlist li.video[rel=' + videoId + ']').play();
-    }
+	$('#playlist').show();
 }
 
 /**
