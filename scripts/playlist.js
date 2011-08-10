@@ -22,10 +22,59 @@ function loadPlaylist(playlistId, videoId) {
     });
 }
 
+function savePlaylistButtonClicked(event) {
+    var playlistBar = $(this).parent();
+    var playlist = playlistBar.data('playlist');
+    playlistManager.addPlaylist(playlist);
+    playlistBar.replaceWith(createPlaylistBar(playlist));
+    constructPlaylistsMenu();
+}
+
+function syncPlaylistButtonClicked(event) {
+    var playlistBar = $(this).parent();
+    var playlist = playlistBar.data('playlist');
+    playlist.sync(function() {
+        playlistBar.replaceWith(createPlaylistBar(playlist));
+        constructPlaylistsMenu();
+    });
+}
+
+function createPlaylistBar(playlist) {
+    var li = $('<li></li>').addClass('playlistbar').data('playlist', playlist);
+
+    $('<span class="title"/>').text(playlist.title).appendTo(li);
+
+    if (playlist.owner) {
+        if (playlist.owner.id != my_user_id) {
+            var owner = $('<span class="owner"></span>').text('by: ');
+            $('<span class="name"></span>').text(playlist.owner.name).appendTo(owner);
+            owner.appendTo(li);
+
+            // Add save button if not already saved
+            if (!(playlist.remoteId in playlistManager.getPlaylistsMap())) {
+                $('<input type="button" class="save"></button>')
+                    .val('Save playlist')
+                    .click(savePlaylistButtonClicked)
+                    .appendTo(li);
+            }
+
+        }
+        //$('<input type="button" class="share"></button>').val('Share').appendTo(li);
+    } else if (logged_in) {
+        $('<input type="button" class="sync"></button>')
+            .val('Sync')
+            .click(syncPlaylistButtonClicked)
+            .appendTo(li);
+    }
+
+    return li;
+}
+
 function loadPlaylistView(playlist, videoId) {
 	$('#results-container ol').hide();
     $('#playlist').html('');
 	$('#playlist').show();
+    $('#playlist').append(createPlaylistBar(playlist));
 
     $.each(playlist.videos, function(i, item) {
         var li = createResultsItem(item.title, item.videoId);
@@ -123,6 +172,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         });
 
         this.remoteId = null;
+        this.owner = null;
     };
 
     this.createNewPlaylistOnRemote = function(callback) {
