@@ -293,8 +293,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         var li = $('<li/>')
             .addClass("playlistElem")
             .addClass('droppable')
-            .addClass('draggable')
-            .addClass('reorderable')
             .data('model', this)
             .bind('contextmenu', showPlaylistContextMenu)
             .mousedown(playlistMouseDown)

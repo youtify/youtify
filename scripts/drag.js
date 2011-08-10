@@ -266,12 +266,3 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
         playlistElem.click();
     }
 });
-
-// PLAYLIST DROPPED ON ANOTHER PLAYLIST
-registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (targetElem.hasClass('playlistElem') && sourceElem.hasClass('playlistElem')) {
-        playlistManager.movePlaylist(sourceElem.index(), targetElem.index());
-        playlistManager.save();
-        constructPlaylistsMenu();
-    }
-});
