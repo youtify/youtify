@@ -11,10 +11,12 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         """Get playlist"""
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
-        youtify_user = get_current_youtify_user()
 
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(playlist_model.json)
+        if playlist_model:
+            self.response.headers['Content-Type'] = 'application/json'
+            self.response.out.write(playlist_model.json)
+        else:
+            self.error(404)
 
     def post(self):
         """Update playlist"""

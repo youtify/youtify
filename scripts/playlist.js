@@ -16,9 +16,18 @@ function playlistMouseDown(event) {
 }
 
 function loadPlaylist(playlistId, videoId) {
-    $.getJSON('/api/playlists/' + playlistId, function(data) {
-        var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
-        loadPlaylistView(playlist, videoId);
+    $.ajax({
+        url: '/api/playlists/' + playlistId,
+        type: 'GET',
+        statusCode: {
+            200: function(data) {
+                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
+                loadPlaylistView(playlist, videoId);
+            },
+            404: function(data) {
+                alert("No such playlist found");
+            }
+        }
     });
 }
 
