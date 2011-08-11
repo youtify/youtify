@@ -2,12 +2,12 @@
  ****************************************************************************/
 
 function deleteVideoButtonClicked(li) {
-    var playlistElem = $('.playlistElem.selected'),
-        playlist = playlistElem.data('model');
+    var playlist = $('#playlistbar').data('playlist');
 
     playlist.deleteVideo(li.index());
     playlistManager.save();
-    playlistElem.click(); // reload playlist
+
+    loadPlaylistView(playlist);
 }
 
 function playlistMouseDown(event) {
