@@ -32,10 +32,7 @@ def get_current_youtify_user():
     return get_youtify_user_for(users.get_current_user())
 
 def get_youtify_user_for(user=None):
-    # XXX will not scale, replace with filter 
-    for m in YoutifyUser.all():
-        if m.google_user == user:
-            return m
+    return YoutifyUser.all().filter('google_user = ',user).get()
 
 def create_youtify_user():
     m = YoutifyUser()
