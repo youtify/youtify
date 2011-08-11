@@ -1,3 +1,4 @@
+import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
@@ -46,7 +47,13 @@ class PlaylistsHandler(webapp.RequestHandler):
         """Get playlists for logged in user"""
         youtify_user = get_current_youtify_user()
 
-        playlists = [m.json for m in Playlist.all().filter('owner =', youtify_user)]
+        playlists = []
+        for playlist in Playlist.all().filter('owner =', youtify_user):
+            if playlist.json is None:
+                logging.error("Playlist " + str(playlist.key().id()) + " has invalid JSON, skipping...")
+            else:
+                playlists.append(playlist.json)
+
         output = '[' + ','.join(playlists) + ']'
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -55,11 +62,14 @@ class PlaylistsHandler(webapp.RequestHandler):
     def post(self):
         """Create new playlist"""
         youtify_user = get_current_youtify_user()
+        json = simplejson.loads(self.request.get('json'))
+
+        if json is None:
+            self.error(500)
 
         playlist_model = Playlist(owner=youtify_user, json=None)
         playlist_model.put()
 
-        json = simplejson.loads(self.request.get('json'))
         json['remoteId'] = playlist_model.key().id()
         json['owner'] = {
             'id': youtify_user.key().id(),
