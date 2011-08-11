@@ -52,7 +52,6 @@ function SpotifyImporter() {
 		if (this.spotifyIds.length > 0)
 			id = this.spotifyIds[0];
 		else {
-			this.callbackDone();
 			return;
 		}
 
@@ -110,11 +109,18 @@ function SpotifyImporter() {
 				playlist.addVideo(title, videoId);
 				//console.log('addVideo('+title+', '+videoId+');');
 				self.added++;
-				self.callbackUpdate();
 			});
 			
-			if (data.feed.entry.length > 0)
-				playlistManager.save();
+			self.updatedPlaylist();
 		});
+	};
+	
+	this.updatedPlaylist = function() {
+		if (this.spotifyIds.length > 0) {
+			this.callbackUpdate();
+		} else {
+			playlistManager.save();
+			this.callbackDone();
+		}
 	};
 };
