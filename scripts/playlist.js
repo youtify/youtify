@@ -15,14 +15,14 @@ function playlistMouseDown(event) {
 	$(this).addClass('selected');
 }
 
-function loadPlaylist(playlistId, videoId) {
+function loadPlaylist(playlistId) {
     $.ajax({
         url: '/api/playlists/' + playlistId,
         type: 'GET',
         statusCode: {
             200: function(data) {
                 var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
-                loadPlaylistView(playlist, videoId);
+                loadPlaylistView(playlist);
             },
             404: function(data) {
                 alert("No such playlist found");
@@ -86,7 +86,7 @@ function createPlaylistBar(playlist) {
     return div;
 }
 
-function loadPlaylistView(playlist, videoId) {
+function loadPlaylistView(playlist) {
 	$('#results-container ol').hide();
     $('#playlistbar').replaceWith(createPlaylistBar(playlist)).show();
     $('#playlist').html('');
