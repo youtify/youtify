@@ -49,6 +49,12 @@ function syncPlaylistButtonClicked(event) {
     });
 }
 
+function shareButtonClicked(event) {
+    var playlistBar = $(this).parent();
+    var playlist = playlistBar.data('playlist');
+    alert("Link to playlist: " + playlist.getUrl());
+}
+
 function createPlaylistBar(playlist) {
     var div = $('<div id="playlistbar"></div>').data('playlist', playlist);
 
@@ -69,7 +75,7 @@ function createPlaylistBar(playlist) {
             }
 
         }
-        //$('<input type="button" class="share"></button>').val('Share').appendTo(div);
+        $('<input type="button" class="share"></button>').val('Share').click(shareButtonClicked).appendTo(div);
     } else if (logged_in) {
         $('<input type="button" class="sync"></button>')
             .val('Sync')
@@ -160,7 +166,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.syncing = false; // not part of JSON structure
 
     this.getUrl = function() {
-        return '/users/' + this.owner.id + '/playlists/' + this.remoteId;
+        return location.origin + '/users/' + this.owner.id + '/playlists/' + this.remoteId;
     };
 
     this.copy = function() {
