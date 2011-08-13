@@ -2,12 +2,12 @@
  ****************************************************************************/
 
 function deleteVideoButtonClicked(li) {
-    var playlistElem = $('.playlistElem.selected'),
-        playlist = playlistElem.data('model');
+    var playlist = $('#playlistbar').data('playlist');
 
     playlist.deleteVideo(li.index());
     playlistManager.save();
-    playlistElem.click(); // reload playlist
+
+    loadPlaylistView(playlist);
 }
 
 function playlistMouseDown(event) {
@@ -15,17 +15,26 @@ function playlistMouseDown(event) {
 	$(this).addClass('selected');
 }
 
-function loadPlaylist(playlistId, videoId) {
-    $.getJSON('/api/playlists/' + playlistId, function(data) {
-        var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
-        loadPlaylistView(playlist, videoId);
+function loadPlaylist(playlistId) {
+    $.ajax({
+        url: '/api/playlists/' + playlistId,
+        type: 'GET',
+        statusCode: {
+            200: function(data) {
+                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
+                loadPlaylistView(playlist);
+            },
+            404: function(data) {
+                alert("No such playlist found");
+            }
+        }
     });
 }
 
 function savePlaylistButtonClicked(event) {
     var playlistBar = $(this).parent();
     var playlist = playlistBar.data('playlist');
-    playlistManager.addPlaylist(playlist);
+    playlistManager.addPlaylist(playlist.copy()); // create copy without connection to remote
     playlistBar.replaceWith(createPlaylistBar(playlist));
     constructPlaylistsMenu();
 }
@@ -35,46 +44,52 @@ function syncPlaylistButtonClicked(event) {
     var playlist = playlistBar.data('playlist');
     playlist.sync(function() {
         playlistBar.replaceWith(createPlaylistBar(playlist));
+        history.pushState(null, null, playlist.getUrl());
         constructPlaylistsMenu();
     });
 }
 
-function createPlaylistBar(playlist) {
-    var li = $('<li></li>').addClass('playlistbar').data('playlist', playlist);
+function shareButtonClicked(event) {
+    var playlistBar = $(this).parent();
+    var playlist = playlistBar.data('playlist');
+    alert("Link to playlist: " + playlist.getUrl());
+}
 
-    $('<span class="title"/>').text(playlist.title).appendTo(li);
+function createPlaylistBar(playlist) {
+    var div = $('<div id="playlistbar"></div>').data('playlist', playlist);
+
+    $('<span class="title"/>').text(playlist.title).appendTo(div);
 
     if (playlist.owner) {
         if (playlist.owner.id != my_user_id) {
             var owner = $('<span class="owner"></span>').text('by: ');
             $('<span class="name"></span>').text(playlist.owner.name).appendTo(owner);
-            owner.appendTo(li);
+            owner.appendTo(div);
 
             // Add save button if not already saved
             if (!(playlist.remoteId in playlistManager.getPlaylistsMap())) {
                 $('<input type="button" class="save"></button>')
-                    .val('Save playlist')
+                    .val('Copy playlist')
                     .click(savePlaylistButtonClicked)
-                    .appendTo(li);
+                    .appendTo(div);
             }
 
         }
-        //$('<input type="button" class="share"></button>').val('Share').appendTo(li);
+        $('<input type="button" class="share"></button>').val('Share').click(shareButtonClicked).appendTo(div);
     } else if (logged_in) {
         $('<input type="button" class="sync"></button>')
             .val('Sync')
             .click(syncPlaylistButtonClicked)
-            .appendTo(li);
+            .appendTo(div);
     }
 
-    return li;
+    return div;
 }
 
-function loadPlaylistView(playlist, videoId) {
+function loadPlaylistView(playlist) {
 	$('#results-container ol').hide();
+    $('#playlistbar').replaceWith(createPlaylistBar(playlist)).show();
     $('#playlist').html('');
-	$('#playlist').show();
-    $('#playlist').append(createPlaylistBar(playlist));
 
     $.each(playlist.videos, function(i, item) {
         var li = createResultsItem(item.title, item.videoId);
@@ -89,9 +104,7 @@ function loadPlaylistView(playlist, videoId) {
         li.appendTo('#playlist');
     });
 
-    if (videoId) {
-        $('#playlist li.video[rel=' + videoId + ']').play();
-    }
+	$('#playlist').show();
 }
 
 /**
@@ -102,7 +115,7 @@ function playlistClicked(event) {
     var playlist = $(this).data('model');
 
     if (playlist.remoteId) {
-        history.pushState(null, null, '/playlists/' + playlist.remoteId);
+        history.pushState(null, null, playlist.getUrl());
     } else {
         history.pushState(null, null, '/');
     }
@@ -151,6 +164,14 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.owner = owner;
     this.synced = true; // not part of JSON structure
     this.syncing = false; // not part of JSON structure
+
+    this.getUrl = function() {
+        return location.origin + '/users/' + this.owner.id + '/playlists/' + this.remoteId;
+    };
+
+    this.copy = function() {
+        return new Playlist(this.title, this.videos);
+    };
 
     this.rename = function(newTitle) {
         var title = $.trim(newTitle);
@@ -293,8 +314,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         var li = $('<li/>')
             .addClass("playlistElem")
             .addClass('droppable')
-            .addClass('draggable')
-            .addClass('reorderable')
             .data('model', this)
             .bind('contextmenu', showPlaylistContextMenu)
             .mousedown(playlistMouseDown)

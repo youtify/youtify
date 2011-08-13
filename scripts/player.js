@@ -23,11 +23,7 @@ var Player = {
 	
 	play: function(videoId, title) {
 		if (videoId !== undefined) {
-            if (location.href.indexOf('/playlists') === -1) {
-                history.pushState(null, null, '/videos/' + videoId);
-            } else {
-                history.pushState(null, null, '/playlists/' + getPlaylistIdFromUrl() + '/videos/' + videoId);
-            }
+            history.pushState(null, null, '/videos/' + videoId);
             Player._currentVideoId = videoId;
 			var quality = new Settings().quality || 'hd720';
 			Player._loadingNewVideo = true;
@@ -447,7 +443,7 @@ var Player = {
 		  videoId: videoId,
 		  enablejsapi: 1,
 		  modestbranding: 1,
-		  origin: document.location.host,
+		  origin: document.location.origin,
 		  playerVars: { 'autoplay': 1, 'controls': 0 },
           events: {
             'onReady': Player.onIFramePlayerReady,

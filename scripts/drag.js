@@ -124,7 +124,11 @@ function mouseDragged(event) {
     }
 
     if (droppable) {
-        if (droppable.data('type') !== sourceElem.data('type')) {
+        if (sourceElem.data('type') !== undefined) {
+            if (droppable.data('type') !== sourceElem.data('type')) {
+                droppable.addClass('target');
+            }
+        } else {
             droppable.addClass('target');
         }
         
@@ -206,20 +210,18 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 
 // VIDEO DROPPED ON PLAYLIST
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (!targetElem.hasClass('playlistElem'))
-		return;
-	
-	var playlist = targetElem.data('model');
-	$.each(sourceElem, function(index, item) {
-		item = $(item);
-		if (item.hasClass('video')) {
-			playlist.addVideo(item.find('.title').text(), item.data('videoId'));
-			item.removeClass('selected');
-		}
-	});
-		
-	playlistManager.save();
-	constructPlaylistsMenu();
+    if (targetElem.hasClass('playlistElem') && sourceElem.hasClass('video')) {
+        var playlist = targetElem.data('model');
+        $.each(sourceElem, function(index, item) {
+            item = $(item);
+            if (item.hasClass('video')) {
+                playlist.addVideo(item.find('.title').text(), item.data('videoId'));
+                item.removeClass('selected');
+            }
+        });
+        playlistManager.save();
+        constructPlaylistsMenu();
+    }
 });
 
 // VIDEO DROPPED ON #new-playlist
@@ -256,20 +258,10 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 
 // VIDEO DROPPED ON ANOTHER VIDEO
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    var playlistElem = $('.playlistElem.selected');
-    var playlist = playlistElem.data('model');
-    if (targetElem.hasClass('video') && sourceElem.hasClass('video') && playlistElem.length) {
+    var playlist = $('#playlistbar').data('playlist');
+    if (targetElem.hasClass('video') && sourceElem.hasClass('video')) {
         playlist.moveVideo(sourceElem.index(), targetElem.index());
         playlistManager.save();
-        playlistElem.click();
-    }
-});
-
-// PLAYLIST DROPPED ON ANOTHER PLAYLIST
-registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (targetElem.hasClass('playlistElem') && sourceElem.hasClass('playlistElem')) {
-        playlistManager.movePlaylist(sourceElem.index(), targetElem.index());
-        playlistManager.save();
-        constructPlaylistsMenu();
+        loadPlaylistView(playlist);
     }
 });

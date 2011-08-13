@@ -171,6 +171,7 @@ var Search = {
 	},
 	selectSearchResults: function() {
         history.pushState(null, null, '/');
+        $('#playlistbar').hide();
 		$('#left-menu li').removeClass('selected');
 		$('#results-tab').addClass('selected');
 		$('#results-container ol').hide();

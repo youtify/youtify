@@ -163,7 +163,7 @@ $(document).ready(function() {
 	});
 
     // Initially show Top 100 if not a playlist should be loaded instead.
-    if (location.href.indexOf('playlists') === -1) {
+    if (location.pathname === '/') {
         TopList.select();
     }
 	
