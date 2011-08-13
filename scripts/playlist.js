@@ -166,7 +166,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.syncing = false; // not part of JSON structure
 
     this.getUrl = function() {
-        return location.origin + '/users/' + this.owner.id + '/playlists/' + this.remoteId;
+        return location.protocol + '//' + location.host + '/users/' + this.owner.id + '/playlists/' + this.remoteId;
     };
 
     this.copy = function() {
