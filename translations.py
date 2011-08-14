@@ -47,6 +47,8 @@ translations['en_US'] = {
 	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
 	'This will delete duplicate videos from your playlist. Continue?': u'This will delete duplicate videos from your playlist. Continue?',
 	' duplicates removed.': u' duplicates removed.',
+	'More': u'More',
+	'Less': u'Less',
 }
 
 translations['sv_SE'] = {
@@ -86,6 +88,8 @@ translations['sv_SE'] = {
 	'Your account has been used somewhere else. Please reload the page.': u'Ditt konto har använts någon annanstans. Var god ladda om sidan.',
 	'This will delete duplicate videos from your playlist. Continue?': u'Detta kommer radera dubletter från din spellista. Vill du fortsätta?',
 	' duplicates removed.': u'  dubletter raderade.',
+	'More': u'Mer',
+	'Less': u'Mindre',
 }
 
 translations['fi_FI'] = {
@@ -125,6 +129,8 @@ translations['fi_FI'] = {
 	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
 	'This will delete duplicate videos from your playlist. Continue?': u'This will delete duplicate videos from your playlist. Continue?',
 	' duplicates removed.': u' duplicates removed.',
+	#'More': u'Mer',
+	#'Less': u'Mindre',
 }
 
 

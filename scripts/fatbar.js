@@ -3,6 +3,20 @@ var FatBar = {
 		FatBar._loadVideoInfo(videoId);
 		FatBar._loadRelatedInfo(videoId);
 	},
+    show: function() {
+          $("#fatbar-toggle .show").hide();
+          $("#fatbar-toggle .hide").show();
+          $("#fatbar").show();
+          localStorage['fatbar-toggle'] = JSON.stringify(true);
+          $(window).resize();
+    },
+    hide: function() {
+          $("#fatbar-toggle .show").show();
+          $("#fatbar-toggle .hide").hide();
+          $("#fatbar").hide();
+          localStorage['fatbar-toggle'] = JSON.stringify(false);
+          $(window).resize();
+    },
 	_loadRelatedInfo: function(videoId) {
 		$('#related').html('').show();
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "/related?callback=?";
@@ -33,7 +47,6 @@ var FatBar = {
 			'v': 2
 		};
 		$.getJSON(url, params, function(data) {
-            console.log(data);
 			var author = data.entry.author[0].name.$t;
 			var uri = data.entry.author[0].uri.$t;
 			$('#video-info-box .uploader')
@@ -44,3 +57,13 @@ var FatBar = {
 		});
 	}
 };
+
+$(document).ready(function() {
+    $('#fatbar-toggle .show').click(FatBar.show);
+    $('#fatbar-toggle .hide').click(FatBar.hide);
+    if (JSON.parse(localStorage['fatbar-toggle'] || "false")) {
+        FatBar.show();
+    } else {
+        FatBar.hide();
+    }
+});
