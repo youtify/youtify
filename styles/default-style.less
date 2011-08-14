@@ -40,6 +40,14 @@
     border-top: 1px solid rgb(114,114,114);
     border-bottom: 1px solid rgb(29,29,29);
 }
+.fatbar() {
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(0%, rgb(94,94,94)), color-stop(100%, rgb(114,114,114)));
+    background:-moz-linear-gradient(center bottom, rgb(94,94,94) 0%, rgb(114,114,114) 100%);
+    background:-o-linear-gradient(center bottom, rgb(94,94,94) 0%, rgb(114,114,114) 100%);
+    background:linear-gradient(center bottom, rgb(94,94,94) 0%, rgb(114,114,114) 100%);
+    border-top: 1px solid rgb(29,29,29);
+    border-bottom: 1px solid rgb(114,114,114);
+}
 
 /* DEFAULT
 *******************************/
@@ -273,9 +281,14 @@ body {
 *******************************/
 
 #fatbar {
-	color: @infoPanel-color-1;
-	background-color: @infoPanel-color-2;
-	box-shadow: inset 0px 3px 10px 0px #222;
+    .fatbar();
+}
+#fatbar .results li {
+    background-color: inherit;
+}
+#fatbar .results li.selected {
+    background-color: @selected-color;
+    color: @text-color-2;
 }
 
 /* TIMELINE
