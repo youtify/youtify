@@ -25,7 +25,6 @@ div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td
 	-o-user-select: none;
 	user-select: none;
 }
-
 .border(@radius: 30px) {
 	-moz-border-radius: @radius; 
 	-webkit-border-radius: @radius;
@@ -62,6 +61,9 @@ body {
 }
 input[type=text],
 textarea {
+}
+strong {
+    font-weight: bold;
 }
 
 /* CONTENT
@@ -430,6 +432,7 @@ body.searching #search .loader {
 	#logo { display: none; }
 }
 .popup {
+	width: 270px;
 	position: absolute;
 	padding: 10px;
 	background-color: #444;
@@ -464,6 +467,12 @@ body.searching #search .loader {
     transform: rotate(270deg);
 }
 
+.expand-button {
+	background: url(/images/expand.png) center right no-repeat;
+	cursor: pointer;
+    padding: 1px 20px 1px 0px;
+}
+
 #infomenu {
 	float: right;
 }
@@ -477,8 +486,6 @@ body.searching #search .loader {
 	text-shadow: 0px 1px 1px #FFF; 
 }
 #infomenu-popup {
-	width: 270px;
-	right: 220px;
 }
 #infomenu-popup a {
 	display: block;
@@ -505,7 +512,6 @@ body.searching #search .loader {
 	text-shadow: 0px 1px 1px #FFF; 
 }
 #settings-popup {
-	width: 270px;
 }
 #settings-popup > div {
     margin-bottom: 10px;
@@ -708,7 +714,18 @@ body.searching #search .loader {
     float: right;
     display: inline-block;
 }
-
+#playlistbar .share {
+    float: none;
+    margin: 10px;
+}
+#share-playlist-popup input {
+    display: block;
+    width: 100%;
+}
+#share-playlist-popup img {
+    cursor: pointer;
+    margin: 5px 2px 0 0;
+}
 
 /* INFO PANEL
 *******************************/
