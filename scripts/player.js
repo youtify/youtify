@@ -43,7 +43,7 @@ var Player = {
 			} else {
 				Player.loadTitle(videoId);
 			}
-			FatBar.loadFromTag(videoId);
+			FatBar.loadFromVideoId(videoId);
 			// avoid buffer hang at start
 		} else {
 			Player.assertPlayerLoaded();

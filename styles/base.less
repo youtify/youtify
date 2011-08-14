@@ -65,6 +65,10 @@ textarea {
 strong {
     font-weight: bold;
 }
+.clickable {
+    text-decoration: underline;
+    cursor: pointer;
+}
 
 /* CONTENT
 *******************************/
@@ -727,31 +731,9 @@ body.searching #search .loader {
     margin: 5px 2px 0 0;
 }
 
-/* INFO PANEL
+/* NOTIFICATION
 *******************************/
 
-#fatbar {
-	height: 45px;
-	cursor: default;
-}
-#uploader {
-	float: left;
-	margin: 15px 7px;
-}
-#uploader a, #uploader a:visited {
-}
-#related { 
-	position: relative;
-}
-#related-span { 
-	float: left;
-	margin: 15px 0px 15px 5px;
-	position: relative;
-}
-#related li {
-	float: left;
-	margin: 12px 2px;
-}
 #notification {
     position: absolute;
     width: 100%;
@@ -768,6 +750,36 @@ body.searching #search .loader {
 #notification span {
 	font-size: 16px;
 	color: #000;
+}
+
+/* FATBAR
+*******************************/
+
+#fatbar {
+	height: 280px;
+	cursor: default;
+}
+#fatbar .box {
+    float: left;
+    width: 230px;
+    height: 100%;
+}
+#fatbar .box .content {
+    padding: 5px;
+}
+#fatbar .box h2 {
+    text-align: center;
+    padding: 10px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 14px;
+}
+#fatbar .results .title {
+    display: block;
+    width: 190px;
+    height: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* TIME LINE

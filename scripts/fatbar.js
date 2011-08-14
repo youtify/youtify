@@ -1,11 +1,11 @@
 var FatBar = {
-	loadFromTag: function(songTag) {
-		FatBar._loadVideoInfo(songTag);
-		FatBar._loadRelatedInfo(songTag);
+	loadFromVideoId: function(videoId) {
+		FatBar._loadVideoInfo(videoId);
+		FatBar._loadRelatedInfo(videoId);
 	},
-	_loadRelatedInfo: function(songTag) {
-		$('#related').html('');
-		var url = "http://gdata.youtube.com/feeds/api/videos/" + songTag + "/related?callback=?";
+	_loadRelatedInfo: function(videoId) {
+		$('#related').html('').show();
+		var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "/related?callback=?";
 		var params = {
 			'alt': 'json-in-script',
 			'max-results': 10,
@@ -23,26 +23,24 @@ var FatBar = {
 				resultItem.appendTo($('#related'));
 			}); 
 		});
-		$('#related').show();
 	},
-	_loadVideoInfo: function(songTag) {
-		$('#uploader a').remove();
-		var url = "http://gdata.youtube.com/feeds/api/videos/" + songTag + "?callback=?";
+	_loadVideoInfo: function(videoId) {
+		$('#video-info-box .uploader').text('');
+		var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?callback=?";
 		var params = {
 			'alt': 'json-in-script',
 			'prettyprint': true,
 			'v': 2
 		};
 		$.getJSON(url, params, function(data) {
+            console.log(data);
 			var author = data.entry.author[0].name.$t;
 			var uri = data.entry.author[0].uri.$t;
-			$('<a/>')
-				.attr('href', 'javascript:void(0);')
+			$('#video-info-box .uploader')
 				.click(function() {
 					Uploader.loadVideosFromURI(uri);
 				})
-				.text(author)
-				.appendTo($('#uploader'));
+				.text(author);
 		});
 	}
 };
