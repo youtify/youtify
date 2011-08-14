@@ -42,6 +42,8 @@ translations['en_US'] = {
 	'Hide after %s seconds:': u'Hide after:',
 	'seconds': u'seconds',
 	'Instructions': u'Instructions',
+	'No such playlist found': u'No such playlist found',
+	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
 }
 
 translations['sv_SE'] = {
@@ -76,6 +78,8 @@ translations['sv_SE'] = {
 	'Hide after:': u'Göm efter:',
 	'seconds': u'sekunder',
 	'Instructions': u'Instruktioner',
+	'No such playlist found': u'Kunde inte hitta spellistan',
+	'Your account has been used somewhere else. Please reload the page.': u'Ditt konto har använts någon annanstans. Var god ladda om sidan.',
 }
 
 translations['fi_FI'] = {
@@ -110,6 +114,8 @@ translations['fi_FI'] = {
 	'Hide after:': u'Piilota ajassa:',
 	'seconds': u'sekuntia',
 	'Instructions': u'Ohjeet',
+	'No such playlist found': u'No such playlist found',
+	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
 }
 
 

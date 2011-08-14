@@ -41,6 +41,13 @@ var Notification = {
 		} catch(err) {
 			console.log(err.message);
 		}
+	},
+	error: function(message) {
+		try {
+			Player.pause();
+		} catch (err) { }
+		$('#loading span').text(message);
+		$('#loading').css('backgroundImage', 'url(/images/null.png)').show();
 	}
 };
 

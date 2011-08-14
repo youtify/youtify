@@ -1,5 +1,5 @@
 ﻿$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
-    if ($.trim(r.responseText).length > 0) {
+    if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
             alert(r.responseText);
         } else {

@@ -185,11 +185,22 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         $.ajax({
             type: 'DELETE',
             url: '/api/playlists/' + this.remoteId,
-            success: function() {
-                if (callback) {
-                    callback();
-                }
-            }
+			data: { 
+				'device': device 
+			},
+			statusCode: {
+				200: function(data) {
+					if (callback) {
+						callback();
+					}
+				},
+				404: function(data) {
+					Notification.warn(translations['No such playlist found']);
+				},
+				409: function(data) {
+					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+				}
+			}
         });
 
         this.remoteId = null;
@@ -199,44 +210,69 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.createNewPlaylistOnRemote = function(callback) {
         var self = this,
             params = {
-                'json': JSON.stringify(this.toJSON())
+                'json': JSON.stringify(this.toJSON()),
+				'device': device
             };
 
         this.syncing = true;
 
-        $.post('/api/playlists', params, function(data, textStatus) {
-            self.syncing = false;
-            if (textStatus === 'success') {
-                self.remoteId = data.remoteId;
-                self.owner = data.owner;
-                self.synced = true;
-            } else {
-                alert('Failed to create new playlist ' + self.title);
-            }
-            if (callback) {
-                callback();
-            }
+		$.ajax({
+            type: 'POST',
+            url: '/api/playlists',
+			data: params,
+			statusCode: {
+				200: function(data, textStatus) {
+					self.syncing = false;
+					if (textStatus === 'success') {
+						self.remoteId = data.remoteId;
+						self.owner = data.owner;
+						self.synced = true;
+					 } else {
+						alert('Failed to create new playlist ' + self.title);
+					}
+					if (callback) {
+						callback();
+					}
+				},
+				409: function(data) {
+					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+				}
+			}
         });
     };
 
     this.updatePlaylistOnRemote = function(callback) {
         var self = this,
             params = {
-                'json': JSON.stringify(this.toJSON())
+                'json': JSON.stringify(this.toJSON()),
+				'device': device
             };
 
         this.syncing = true;
 
-        $.post('/api/playlists/' + this.remoteId, params, function(data, textStatus) {
-            self.syncing = false;
-            if (textStatus === 'success') {
-                self.synced = true;
-            } else {
-                alert('Failed to update playlist ' + self.title);
-            }
-            if (callback) {
-                callback();
-            }
+		$.ajax({
+            type: 'POST',
+            url: '/api/playlists/' + this.remoteId,
+			data: params,
+			statusCode: {
+				200: function(data, textStatus) {
+					self.syncing = false;
+					if (textStatus === 'success') {
+						self.synced = true;
+					} else {
+						alert('Failed to create new playlist ' + self.title);
+					}
+					if (callback) {
+						callback();
+					}
+				},
+				404: function(data) {
+					Notification.warn(translations['No such playlist found']);
+				},
+				409: function(data) {
+					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+				}
+			}
         });
     };
 

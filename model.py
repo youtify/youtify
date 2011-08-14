@@ -4,6 +4,7 @@ from google.appengine.api import users
 class YoutifyUser(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     google_user = db.UserProperty(auto_current_user=True)
+    device = db.StringProperty()
 
 class Translation(db.Model):
     text = db.StringProperty(required=True)
