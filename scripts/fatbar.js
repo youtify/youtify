@@ -1,7 +1,7 @@
-var InfoPanel = {
+var FatBar = {
 	loadFromTag: function(songTag) {
-		InfoPanel._loadVideoInfo(songTag);
-		InfoPanel._loadRelatedInfo(songTag);
+		FatBar._loadVideoInfo(songTag);
+		FatBar._loadRelatedInfo(songTag);
 	},
 	_loadRelatedInfo: function(songTag) {
 		$('#related').html('');
