@@ -56,6 +56,17 @@ function showPlaylistContextMenu(event) {
             }
         },
         {
+            title: 'Remove duplicate videos',
+            li: $(this),
+            callback: function(li) {
+                var index = li.index();
+                    playlist = playlistManager.getPlaylist(index);
+				if (confirm(translations['This will delete duplicate videos from your playlist. Continue?'])) {
+					Notification.show(playlist.removeDuplicates() + translations[' duplicates removed.']);
+				}
+            }
+        },
+        {
             title: 'Rename',
             li: $(this),
             callback: function(li) {

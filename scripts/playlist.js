@@ -407,4 +407,20 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         
         return li;
     };
+	
+	this.removeDuplicates = function() {
+		var deleted = 0;
+		for (var i = this.videos.length-1; i > 0; i--) {
+			for (var j = i-1; j >= 0; j--) {
+				if (this.videos[i].videoId === this.videos[j].videoId) {
+					this.deleteVideo(j);
+					deleted++;
+					break;
+				}
+			}
+		}
+		playlistManager.save();
+		loadPlaylistView(this);
+		return deleted;
+	};
 };
