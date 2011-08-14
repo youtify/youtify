@@ -29,7 +29,7 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         if playlist_model.owner.key() == youtify_user.key():
             if youtify_user.device != device:
                 self.error(409)
-                self.response.out.write('wrong_device (' + youtify_user.device + ' !=' + device + ')')
+                self.response.out.write('wrong_device')
                 return
             else:
                 playlist_model.json = json
@@ -43,11 +43,12 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
         youtify_user = get_current_youtify_user()
+        device = self.request.get('device')
 
         if playlist_model.owner.key() == youtify_user.key():
             if youtify_user.device != device:
                 self.error(409)
-                self.response.out.write('wrong_device (' + youtify_user.device + ' !=' + device + ')')
+                self.response.out.write('wrong_device')
                 return
             else:
                 playlist_model.delete()
