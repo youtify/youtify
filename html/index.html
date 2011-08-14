@@ -120,6 +120,9 @@
         {% include "./popups/infomenu.html" %}
         {% include "./popups/spotify_importer.html" %}
         {% include "./popups/share_playlist.html" %}
+        <div id="notification">
+            <span></span>
+        </div>
         <div id="loading"> 
             <span>Loading</span> 
         </div> 
@@ -219,7 +222,6 @@
                         </table>
                     </div>
 					<div id="info-panel">
-						<div id="notification"><span></span></div>
 						<div id="uploader" class="translatable">Uploader:</div>
                         <span id="related-span" class="translatable">Related:</span><ul id="related" class="results"></ul>
 					</div>
