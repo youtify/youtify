@@ -5,12 +5,33 @@ jQuery.fn.play = function() {
 };
 
 function selectVideo(li, event) {
-	
 	if (event !== undefined && (event.ctrlKey || event.metaKey)) {
 		if (li.hasClass('selected'))
 			li.removeClass('selected');
 		else
 			li.addClass('selected');
+	} else if (event !== undefined && event.shiftKey &&  li.siblings('.selected').length > 0) {
+		var elements = [li],
+			found = false;
+
+		// search down
+		while (!found && $(elements[0]).next().length > 0) {
+			elements.unshift(elements[0].next());
+			if ($(elements[0]).hasClass('selected')) {
+				found = true;
+			}
+		}
+		if (!found) {
+			elements = [li];
+			// search up
+			while (!found && $(elements[0]).prev().length > 0) {
+				elements.unshift(elements[0].prev());
+				if ($(elements[0]).hasClass('selected')) {
+					found = true;
+				}
+			}
+		}
+		$(elements).each(function(index, item) { $(item).addClass('selected'); });
 	} else {
 		li.siblings().removeClass('selected');
 		li.addClass('selected');
