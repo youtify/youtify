@@ -78,6 +78,7 @@
             var ON_PRODUCTION = {{ ON_PRODUCTION|lower }};
         </script>
 
+		<script src="/scripts/jquery.arrowpopup.js"></script>
 		<script src="/scripts/jquery.shuffle.js"></script>
 		<script src="/scripts/less-1.0.41.min.js"></script>
 		<script src="/scripts/migrations.js"></script>
@@ -115,6 +116,9 @@
 		<script src="http://www.youtube.com/player_api"></script>
 	</head> 
 	<body> 
+        {% include "./popups/settings.html" %}
+        {% include "./popups/infomenu.html" %}
+        {% include "./popups/spotify_importer.html" %}
         <div id="loading"> 
             <span>Loading</span> 
         </div> 
@@ -147,15 +151,6 @@
                             <span id="new-playlist-label" class="translatable">New playlist...</span> 
                             <input type="text" style="display:none" /> 
                         </div> 
-						
-						<div id="spotify-importer" style="display: none;" class="popup">
-							<h2 class="translatable">Paste Spotify links below</h2>
-							<a href="javascript:Player.play(SPOTIFY_INSTRUCTIONS_VIDEO_ID);" class="translatable">Instructions</a>
-							<textarea></textarea>
-							<input type="button" value="Cancel" class="translatable cancel" />
-							<span class="added">0</span><span class="max">/0</span>
-							<input type="button" value="Import" class="translatable start" />
-						</div>
 					</div> 
 					<div id="video"> 
 						<div id="info" class="draggable">
@@ -192,53 +187,11 @@
 						
 						<div id="settings">
                             <span id="settings-text" class="translatable">Settings</span>
-							<div id="settings-popup" class="popup point-up">
-                                <div class="language">
-                                    <h2 class="translatable">Language</h2>
-                                    <select>
-                                        <option value="en_US">English</option>
-                                        <option value="sv_SE">Svenska</option>
-                                        <option value="fi_FI">Suomi</option>
-                                    </select>
-                                </div>
-								<div class="quality">
-									<h2 class="translatable">Quality (Sound & Video)</h2>
-									<input id="qualityLowRadio" type="radio" name="quality" value="Low" />
-									<label id="qualityLowSpan" for="qualityLowRadio" class="translatable">Low</label>
-									<input id="qualityHighRadio" type="radio" name="quality" value="High" />
-									<label id="qualityHighSpan" for="qualityHighRadio" class="translatable">High</label>
-								</div>
-								<div class="notifications">
-									<h2 class="translatable">Notifications</h2>
-									<p class="translatable">Hide after:</p>
-									<input id="notificationRange" type="range" min="1" max="20" step="1" value="3" />
-									<span id="notificationRangeText">3</span>&nbsp;<span class="translatable">seconds</span>
-								</div>
-                                <div class="themes">
-                                    <h2 class="translatable">Themes</h2>
-                                    <div id="themes-default" style="background-color: #444;"></div>
-                                    <div id="themes-black" style="background-color: black;"></div>
-                                    <div id="themes-pink" style="background-color: pink;"></div>
-                                    <div id="themes-red" style="background-color: red;"></div>
-                                    <div id="themes-itheme" style="background-color: #4794E2;"></div>
-                                    <div id="themes-wamp" style="background-color: #1FCB29;"></div>
-                                    <div id="themes-wlive" style="background-color: #02658E;"></div>
-                                    <div id="themes-cloud" style="background-color: #5082B4;"></div>
-                                    <span class="translatable">Choose theme</span>
-                                </div>
-							</div>
 						</div>
+
 						<div id="infomenu">
                             <span id="infomenu-text" class="translatable">Legal & Information</span>
-							<div id="infomenu-popup" class="popup point-up">
-								<a class="translatable" href="http://blog.youtify.com/2011/05/legal.html" target="_blank">Legal disclaimer</a>
-								<a class="translatable" href="http://blog.youtify.com/" target="_blank">Our blog</a>
-								<a class="translatable" href="https://github.com/youtify/youtify" target="_blank">Youtify on GitHub</a>
-								<br />
-								<a class="translatable" href="javascript:Player.play(SPOTIFY_INSTRUCTIONS_VIDEO_ID);">How to import from Spotify</a>
-							</div>
 						</div>
-						
 					</div> 
 					<div id="results-container" class="droppable"> 
 						<ol id="results" class="results"></ol> 

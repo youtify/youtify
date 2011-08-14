@@ -127,13 +127,7 @@ $(document).ready(function() {
 	
 	// Legal & Information
 	$('#infomenu-text').click(function() {
-        var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
-            $('#blocker').remove();
-            $('#infomenu-popup').hide();
-            event.stopPropagation();
-        });
-        blocker.appendTo('body');
-        $('#infomenu-popup').show();
+        $(this).arrowPopup('#infomenu-popup');
     });
 
 	// CONTROLS
