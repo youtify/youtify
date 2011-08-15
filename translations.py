@@ -38,10 +38,17 @@ translations['en_US'] = {
 	'Our blog': u'Our blog',
 	'Youtify on GitHub': u'Youtify on GitHub',
 	'How to import from Spotify': u'How to import from Spotify',
+	'Import from Spotify': u'Import from Spotify',
 	'Notifications': u'Notifications',
 	'Hide after %s seconds:': u'Hide after:',
 	'seconds': u'seconds',
 	'Instructions': u'Instructions',
+	'No such playlist found': u'No such playlist found',
+	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
+	'This will delete duplicate videos from your playlist. Continue?': u'This will delete duplicate videos from your playlist. Continue?',
+	' duplicates removed.': u' duplicates removed.',
+	'More': u'More',
+	'Less': u'Less',
 }
 
 translations['sv_SE'] = {
@@ -72,10 +79,17 @@ translations['sv_SE'] = {
 	'Our blog': u'Vår blogg',
 	'Youtify on GitHub': u'Youtify på GitHub',
 	'How to import from Spotify': u'Hur man importerar från Spotify',
+	'Import from Spotify': u'Importera från Spotify',
 	'Notifications': u'Meddelande',
 	'Hide after:': u'Göm efter:',
 	'seconds': u'sekunder',
 	'Instructions': u'Instruktioner',
+	'No such playlist found': u'Kunde inte hitta spellistan',
+	'Your account has been used somewhere else. Please reload the page.': u'Ditt konto har använts någon annanstans. Var god ladda om sidan.',
+	'This will delete duplicate videos from your playlist. Continue?': u'Detta kommer radera dubletter från din spellista. Vill du fortsätta?',
+	' duplicates removed.': u'  dubletter raderade.',
+	'More': u'Mer',
+	'Less': u'Mindre',
 }
 
 translations['fi_FI'] = {
@@ -106,10 +120,17 @@ translations['fi_FI'] = {
 	'Our blog': u'Meidän blogimme',
 	'Youtify on GitHub': u'Youtify GitHubissa',
 	'How to import from Spotify': u'Kuinka tuoda Spotifystä',
+	'Import from Spotify': u'Import from Spotifystä',
 	'Notifications': u'Huomautukset',
 	'Hide after:': u'Piilota ajassa:',
 	'seconds': u'sekuntia',
 	'Instructions': u'Ohjeet',
+	'No such playlist found': u'No such playlist found',
+	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
+	'This will delete duplicate videos from your playlist. Continue?': u'This will delete duplicate videos from your playlist. Continue?',
+	' duplicates removed.': u' duplicates removed.',
+	#'More': u'Mer',
+	#'Less': u'Mindre',
 }
 
 

@@ -1,6 +1,7 @@
 $(window).keydown(function(event) {
     if ($('input, textarea').is(":focus")) return; // Shouldn't the other keypresses make sure the event isn't propagated here?
     
+	//console.log(event.keyCode);
     switch(event.keyCode) {
         case 32: // Space
             Player.playPause();
@@ -46,6 +47,13 @@ $(window).keydown(function(event) {
                 selectVideo($('#results-container li.selected').next());
             }
 			event.preventDefault();
+            break;
+		case 65: // A
+            if (event.ctrlKey || event.metaKey) {
+                $('#results-container li.selected').siblings().addClass('selected');
+            }
+			event.preventDefault();
+			return false;
             break;
     }
 });

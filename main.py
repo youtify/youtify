@@ -6,12 +6,16 @@ from google.appengine.ext.webapp import util
 import toplist
 from model import get_current_youtify_user
 from model import create_youtify_user
+import random
 
 class MainHandler(webapp.RequestHandler):
 
     def get(self):
         current_user = users.get_current_user()
         youtify_user = get_current_youtify_user()
+        if youtify_user is not None:
+            youtify_user.device = str(random.random())
+            youtify_user.save()
 
         if (current_user is not None) and (youtify_user is None):
             youtify_user = create_youtify_user()

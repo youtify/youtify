@@ -15,7 +15,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 		<meta property="og:title" content="Youtify"/>
 		<meta property="og:type" content="software"/>
-		<meta property="og:url" content="http://www.youtify.com/"/>
 		<meta property="og:image" content="http://www.youtify.com/images/logo50x50.png"/>
 		<meta property="og:site_name" content="Youtify"/>
 		<meta property="fb:admins" content="704121239,676899180"/>
@@ -71,13 +70,15 @@
         <script>
             var my_user_id = "{{ youtify_user.key.id }}";
             var logged_in = {{ logged_in }};
-            var toplist = {{ toplist }};
+			var device = "{{ youtify_user.device }}";
+			var toplist = {{ toplist }};
             var accept_language_header = "{{ accept_language_header }}";
             var SPOTIFY_INSTRUCTIONS_VIDEO_ID = 'uLG5rWWf_rg';
             var ON_DEV = {{ ON_DEV|lower }};
             var ON_PRODUCTION = {{ ON_PRODUCTION|lower }};
         </script>
 
+		<script src="/scripts/jquery.arrowpopup.js"></script>
 		<script src="/scripts/jquery.shuffle.js"></script>
 		<script src="/scripts/less-1.0.41.min.js"></script>
 		<script src="/scripts/migrations.js"></script>
@@ -101,7 +102,7 @@
 		<script src="/scripts/url.js"></script>
 		<script src="/scripts/script.js"></script>
 		<script src="/scripts/ping.js"></script>
-		<script src="/scripts/infopanel.js"></script>
+		<script src="/scripts/fatbar.js"></script>
 		<script src="/scripts/uploader.js"></script>
 		<script src="/scripts/spotify_import.js"></script>
         
@@ -115,6 +116,13 @@
 		<script src="http://www.youtube.com/player_api"></script>
 	</head> 
 	<body> 
+        {% include "./popups/settings.html" %}
+        {% include "./popups/infomenu.html" %}
+        {% include "./popups/spotify_importer.html" %}
+        {% include "./popups/share_playlist.html" %}
+        <div id="notification">
+            <span></span>
+        </div>
         <div id="loading"> 
             <span>Loading</span> 
         </div> 
@@ -147,20 +155,15 @@
                             <span id="new-playlist-label" class="translatable">New playlist...</span> 
                             <input type="text" style="display:none" /> 
                         </div> 
-						
-						<div id="spotify-importer" style="display: none;" class="popup">
-							<h2 class="translatable">Paste Spotify links below</h2>
-							<a href="javascript:Player.play(SPOTIFY_INSTRUCTIONS_VIDEO_ID);" class="translatable">Instructions</a>
-							<textarea></textarea>
-							<input type="button" value="Cancel" class="translatable cancel" />
-							<span class="added">0</span><span class="max">/0</span>
-							<input type="button" value="Import" class="translatable start" />
-						</div>
 					</div> 
 					<div id="video"> 
 						<div id="info" class="draggable">
                             <div class="title">
                             </div> 
+                            <span id="fatbar-toggle">
+                                <span class="translatable clickable show">More</span>
+                                <span class="translatable clickable hide">Less</span>
+                            </span>
 						</div> 
 						<div id="youtube-container"><div id="youtube"></div></div> 
 					</div> 
@@ -192,53 +195,11 @@
 						
 						<div id="settings">
                             <span id="settings-text" class="translatable">Settings</span>
-							<div id="settings-popup" class="popup point-up">
-                                <div class="language">
-                                    <h2 class="translatable">Language</h2>
-                                    <select>
-                                        <option value="en_US">English</option>
-                                        <option value="sv_SE">Svenska</option>
-                                        <option value="fi_FI">Suomi</option>
-                                    </select>
-                                </div>
-								<div class="quality">
-									<h2 class="translatable">Quality (Sound & Video)</h2>
-									<input id="qualityLowRadio" type="radio" name="quality" value="Low" />
-									<label id="qualityLowSpan" for="qualityLowRadio" class="translatable">Low</label>
-									<input id="qualityHighRadio" type="radio" name="quality" value="High" />
-									<label id="qualityHighSpan" for="qualityHighRadio" class="translatable">High</label>
-								</div>
-								<div class="notifications">
-									<h2 class="translatable">Notifications</h2>
-									<p class="translatable">Hide after:</p>
-									<input id="notificationRange" type="range" min="1" max="20" step="1" value="3" />
-									<span id="notificationRangeText">3</span>&nbsp;<span class="translatable">seconds</span>
-								</div>
-                                <div class="themes">
-                                    <h2 class="translatable">Themes</h2>
-                                    <div id="themes-default" style="background-color: #444;"></div>
-                                    <div id="themes-black" style="background-color: black;"></div>
-                                    <div id="themes-pink" style="background-color: pink;"></div>
-                                    <div id="themes-red" style="background-color: red;"></div>
-                                    <div id="themes-itheme" style="background-color: #4794E2;"></div>
-                                    <div id="themes-wamp" style="background-color: #1FCB29;"></div>
-                                    <div id="themes-wlive" style="background-color: #02658E;"></div>
-                                    <div id="themes-cloud" style="background-color: #5082B4;"></div>
-                                    <span class="translatable">Choose theme</span>
-                                </div>
-							</div>
 						</div>
+
 						<div id="infomenu">
                             <span id="infomenu-text" class="translatable">Legal & Information</span>
-							<div id="infomenu-popup" class="popup point-up">
-								<a class="translatable" href="http://blog.youtify.com/2011/05/legal.html" target="_blank">Legal disclaimer</a>
-								<a class="translatable" href="http://blog.youtify.com/" target="_blank">Our blog</a>
-								<a class="translatable" href="https://github.com/youtify/youtify" target="_blank">Youtify on GitHub</a>
-								<br />
-								<a class="translatable" href="javascript:Player.play(SPOTIFY_INSTRUCTIONS_VIDEO_ID);">How to import from Spotify</a>
-							</div>
 						</div>
-						
 					</div> 
 					<div id="results-container" class="droppable"> 
 						<ol id="results" class="results"></ol> 
@@ -264,10 +225,20 @@
                             </tbody>
                         </table>
                     </div>
-					<div id="info-panel">
-						<div id="notification"><span></span></div>
-						<div id="uploader" class="translatable">Uploader:</div>
-                        <span id="related-span" class="translatable">Related:</span><ul id="related" class="results"></ul>
+					<div id="fatbar">
+                        <div class="box" id="video-info-box">
+                            <h2 class="translatable">Video Info:</h2>
+                            <div class="content">
+                                <span class="translatable">Uploader:</span>
+                                <span class="uploader clickable"></span>
+                            </div>
+                        </div>
+                        <div class="box" id="related-box">
+                            <h2 class="translatable">Related:</h2>
+                            <div class="content">
+                                <ul id="related" class="results"></ul>
+                            </div>
+                        </div>
 					</div>
 					<div id="timeline-container"> 
 						<label id="position-label">0:00</label> 

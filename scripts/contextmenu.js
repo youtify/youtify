@@ -52,51 +52,18 @@ function showPlaylistContextMenu(event) {
             title: 'Import from Spotify',
             li: $(this),
             callback: function(li) {
-				li.find('.spotify-importer').remove();
-				li.removeClass('draggable');
-				var div = $('#spotify-importer')
-					.clone()
-					.addClass('spotify-importer')
-                    .bind('contextmenu', function(event) {
-                        event.stopPropagation();
-                    })
-					.click(function(event) {
-						event.stopPropagation();
-					});
-				li.append(div);
-				div.show();
-				var importer = new SpotifyImporter();
-				
-				// cancel
-				li.find('.spotify-importer .cancel').one('click', function() {
-					importer.cancel();
-					li.find('.spotify-importer').fadeOut('normal', function() { 
-						li.find('.spotify-importer').remove(); 
-					});
-					li.addClass('draggable');
-				});
-				
-				// start
-				li.find('.spotify-importer .start').one('click', function() {
-					importer.start(
-						li.find('.spotify-importer textarea').val(), 
-						li.data('model'), 
-						function() {
-							// callbackUpdate
-							// li.click();
-							li.find('.spotify-importer .added').text(importer.added);
-							li.find('.spotify-importer .max').text('/'+importer.max);
-						}, 
-						function() {
-							// callbackDone
-							li.find('.spotify-importer').fadeOut('normal', function() { 
-								li.find('.spotify-importer').remove(); 
-							});
-							li.click();
-							li.addClass('draggable');
-						}
-					); 
-				});
+                li.arrowPopup('#spotify-importer', 'left');
+            }
+        },
+        {
+            title: 'Remove duplicate videos',
+            li: $(this),
+            callback: function(li) {
+                var index = li.index();
+                    playlist = playlistManager.getPlaylist(index);
+				if (confirm(translations['This will delete duplicate videos from your playlist. Continue?'])) {
+					Notification.show(playlist.removeDuplicates() + translations[' duplicates removed.']);
+				}
             }
         },
         {

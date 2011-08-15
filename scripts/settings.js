@@ -1,12 +1,6 @@
 $(document).ready(function() {
     $('#settings-text').click(function() {
-        var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
-            $('#blocker').remove();
-            $('#settings-popup').hide();
-            event.stopPropagation();
-        });
-        blocker.appendTo('body');
-        $('#settings-popup').show();
+        $(this).arrowPopup('#settings-popup');
     });
 	
 	var settings = new Settings();

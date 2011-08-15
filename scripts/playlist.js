@@ -52,7 +52,25 @@ function syncPlaylistButtonClicked(event) {
 function shareButtonClicked(event) {
     var playlistBar = $(this).parent();
     var playlist = playlistBar.data('playlist');
-    alert("Link to playlist: " + playlist.getUrl());
+    $('#share-playlist-popup .link input').val(playlist.getUrl());
+
+    $('#share-playlist-popup .twitter').attr('href', playlist.getTwitterShareUrl())
+        .unbind('click')
+        .click(function(event) {
+            event.preventDefault();
+            window.open($(this).attr('href'), 'Share playlist on Twitter', 400, 400);
+            return false;
+        });
+
+    $('#share-playlist-popup .facebook').attr('href', playlist.getFacebookShareUrl())
+        .unbind('click')
+        .click(function(event) {
+            event.preventDefault();
+            window.open($(this).attr('href'), 'Share playlist on Facebook', 400, 400);
+            return false;
+        });
+
+    $(this).arrowPopup('#share-playlist-popup');
 }
 
 function createPlaylistBar(playlist) {
@@ -73,9 +91,8 @@ function createPlaylistBar(playlist) {
                     .click(savePlaylistButtonClicked)
                     .appendTo(div);
             }
-
         }
-        $('<input type="button" class="share"></button>').val('Share').click(shareButtonClicked).appendTo(div);
+        $('<span class="expand-button share translatable">Share</span>').click(shareButtonClicked).appendTo(div);
     } else if (logged_in) {
         $('<input type="button" class="sync"></button>')
             .val('Sync')
@@ -165,6 +182,17 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.synced = true; // not part of JSON structure
     this.syncing = false; // not part of JSON structure
 
+    this.getTwitterShareUrl = function() {
+        var url = this.getUrl(),
+            text = "Check out this playlist!" + ' -- ' + this.title;
+        return encodeURI('http://twitter.com/share?related=youtify&via=youtify' + '&url=' + url + '&counturl=' + url + '&text=' + text);
+    };
+
+    this.getFacebookShareUrl = function() {
+        var url = this.getUrl();
+        return 'http://facebook.com/sharer.php?u=' + url;
+    };
+
     this.getUrl = function() {
         return location.protocol + '//' + location.host + '/users/' + this.owner.id + '/playlists/' + this.remoteId;
     };
@@ -184,12 +212,23 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.unsync = function(callback) {
         $.ajax({
             type: 'DELETE',
-            url: '/api/playlists/' + this.remoteId,
-            success: function() {
-                if (callback) {
-                    callback();
-                }
-            }
+            url: '/api/playlists/' + this.remoteId + '?device=' + device,
+			data: { 
+				'device': device 
+			},
+			statusCode: {
+				200: function(data) {
+					if (callback) {
+						callback();
+					}
+				},
+				404: function(data) {
+					Notification.warn(translations['No such playlist found']);
+				},
+				409: function(data) {
+					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+				}
+			}
         });
 
         this.remoteId = null;
@@ -199,44 +238,69 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.createNewPlaylistOnRemote = function(callback) {
         var self = this,
             params = {
-                'json': JSON.stringify(this.toJSON())
+                'json': JSON.stringify(this.toJSON()),
+				'device': device
             };
 
         this.syncing = true;
 
-        $.post('/api/playlists', params, function(data, textStatus) {
-            self.syncing = false;
-            if (textStatus === 'success') {
-                self.remoteId = data.remoteId;
-                self.owner = data.owner;
-                self.synced = true;
-            } else {
-                alert('Failed to create new playlist ' + self.title);
-            }
-            if (callback) {
-                callback();
-            }
+		$.ajax({
+            type: 'POST',
+            url: '/api/playlists',
+			data: params,
+			statusCode: {
+				200: function(data, textStatus) {
+					self.syncing = false;
+					if (textStatus === 'success') {
+						self.remoteId = data.remoteId;
+						self.owner = data.owner;
+						self.synced = true;
+					 } else {
+						alert('Failed to create new playlist ' + self.title);
+					}
+					if (callback) {
+						callback();
+					}
+				},
+				409: function(data) {
+					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+				}
+			}
         });
     };
 
     this.updatePlaylistOnRemote = function(callback) {
         var self = this,
             params = {
-                'json': JSON.stringify(this.toJSON())
+                'json': JSON.stringify(this.toJSON()),
+				'device': device
             };
 
         this.syncing = true;
 
-        $.post('/api/playlists/' + this.remoteId, params, function(data, textStatus) {
-            self.syncing = false;
-            if (textStatus === 'success') {
-                self.synced = true;
-            } else {
-                alert('Failed to update playlist ' + self.title);
-            }
-            if (callback) {
-                callback();
-            }
+		$.ajax({
+            type: 'POST',
+            url: '/api/playlists/' + this.remoteId,
+			data: params,
+			statusCode: {
+				200: function(data, textStatus) {
+					self.syncing = false;
+					if (textStatus === 'success') {
+						self.synced = true;
+					} else {
+						alert('Failed to create new playlist ' + self.title);
+					}
+					if (callback) {
+						callback();
+					}
+				},
+				404: function(data) {
+					Notification.warn(translations['No such playlist found']);
+				},
+				409: function(data) {
+					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+				}
+			}
         });
     };
 
@@ -343,4 +407,20 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         
         return li;
     };
+	
+	this.removeDuplicates = function() {
+		var deleted = 0;
+		for (var i = this.videos.length-1; i > 0; i--) {
+			for (var j = i-1; j >= 0; j--) {
+				if (this.videos[i].videoId === this.videos[j].videoId) {
+					this.deleteVideo(j);
+					deleted++;
+					break;
+				}
+			}
+		}
+		playlistManager.save();
+		loadPlaylistView(this);
+		return deleted;
+	};
 };

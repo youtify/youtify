@@ -43,7 +43,7 @@ var Player = {
 			} else {
 				Player.loadTitle(videoId);
 			}
-			InfoPanel.loadFromTag(videoId);
+			FatBar.loadFromVideoId(videoId);
 			// avoid buffer hang at start
 		} else {
 			Player.assertPlayerLoaded();
@@ -437,13 +437,14 @@ var Player = {
 	loadIFramePlayer: function() {
 		$('#youtube').html(''); // remove old iframe
 		var videoId = Player.getCurrentVideoId() || '';
+		var origin = document.location.origin || document.location.protocol + '//' + document.location.host;
 		Player._player = new YT.Player('youtube', {
           height: '230',
           width: '230',
 		  videoId: videoId,
 		  enablejsapi: 1,
 		  modestbranding: 1,
-		  origin: document.location.origin,
+		  origin: origin,
 		  playerVars: { 'autoplay': 1, 'controls': 0 },
           events: {
             'onReady': Player.onIFramePlayerReady,

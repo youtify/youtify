@@ -25,7 +25,6 @@ div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td
 	-o-user-select: none;
 	user-select: none;
 }
-
 .border(@radius: 30px) {
 	-moz-border-radius: @radius; 
 	-webkit-border-radius: @radius;
@@ -62,6 +61,13 @@ body {
 }
 input[type=text],
 textarea {
+}
+strong {
+    font-weight: bold;
+}
+.clickable {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* CONTENT
@@ -179,15 +185,11 @@ body {
 	background: url('/images/shuffle-off.png') no-repeat center center;
 }
 
-.spotify-importer {
-	display: none;
-	position: absolute;
-	left: 230px;
+#spotify-importer {
 	width: 300px;
-	height: 200px;
 	text-shadow: 0px 1px 1px transparent;
 }
-.spotify-importer h2 {
+#spotify-importer h2 {
     border-bottom: 1px solid rgba(255,255,255,0.7);
     text-align: left;
     margin-bottom: 5px;
@@ -196,14 +198,14 @@ body {
 	float: left;
 }
 
-.spotify-importer a {
+#spotify-importer a {
 	color: lightblue;
 	text-shadow: 0px 1px 1px transparent;
 	font-weight: bold;
 	float: right;
- }
+}
 
-.spotify-importer textarea {
+#spotify-importer textarea {
 	border: solid 1px #FFF;
 	width: 298px;
 	height: 150px;
@@ -211,23 +213,23 @@ body {
 	color: #FFF;
 	outline: 0;
 }
-.spotify-importer .added {
+#spotify-importer .added {
 	display: block;
 	margin-left: 65px;
 	margin-top: 10px;
 	float: left;
 	text-align: right;
 }
-.spotify-importer .max {
+#spotify-importer .max {
 	margin-top: 10px;
 	display: block;
 	float: left;
 }
-.spotify-importer .cancel {
+#spotify-importer .cancel {
 	float: left;
 	margin-top: 5px;
 }
-.spotify-importer .start {
+#spotify-importer .start {
 	float: right;
 	margin-top: 5px;
 }
@@ -240,6 +242,7 @@ body {
     color: #444;
 }
 #info {
+    position: relative;
     text-align: center;
     padding: 5px;
     overflow: hidden;
@@ -252,7 +255,12 @@ body {
     text-align: center;
     cursor: default;
 }
-
+#info #fatbar-toggle {
+    position: absolute;
+    padding: 4px;
+    bottom: 0;
+    right: 0;
+}
 /* CONTROLS
  ***********************************/
 
@@ -434,6 +442,8 @@ body.searching #search .loader {
 	#logo { display: none; }
 }
 .popup {
+	width: 270px;
+	position: absolute;
 	padding: 10px;
 	background-color: #444;
     color: #fff;
@@ -454,6 +464,25 @@ body.searching #search .loader {
 	left: 135px;
 }
 
+.point-left:before {
+	content: url('/images/theme-up.png');
+	width: 20px;
+	height: 9px;
+	position: absolute;
+	top: 100px;
+	left: -15px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.expand-button {
+	background: url(/images/expand.png) center right no-repeat;
+	cursor: pointer;
+    padding: 1px 20px 1px 0px;
+}
+
 #infomenu {
 	float: right;
 }
@@ -467,11 +496,6 @@ body.searching #search .loader {
 	text-shadow: 0px 1px 1px #FFF; 
 }
 #infomenu-popup {
-	position: absolute;
-	width: 270px;
-	right: 220px;
-	top: 45px;
-	display: none;
 }
 #infomenu-popup a {
 	display: block;
@@ -498,11 +522,6 @@ body.searching #search .loader {
 	text-shadow: 0px 1px 1px #FFF; 
 }
 #settings-popup {
-	position: absolute;
-	width: 270px;
-	top: 45px;
-	right: 110px;
-	display: none;
 }
 #settings-popup > div {
     margin-bottom: 10px;
@@ -705,34 +724,26 @@ body.searching #search .loader {
     float: right;
     display: inline-block;
 }
+#playlistbar .share {
+    float: none;
+    margin: 10px;
+}
+#share-playlist-popup input {
+    display: block;
+    width: 100%;
+}
+#share-playlist-popup img {
+    cursor: pointer;
+    margin: 5px 2px 0 0;
+}
 
-
-/* INFO PANEL
+/* NOTIFICATION
 *******************************/
 
-#info-panel {
-	height: 45px;
-	cursor: default;
-}
-#uploader {
-	float: left;
-	margin: 15px 7px;
-}
-#uploader a, #uploader a:visited {
-}
-#related { 
-	position: relative;
-}
-#related-span { 
-	float: left;
-	margin: 15px 0px 15px 5px;
-	position: relative;
-}
-#related li {
-	float: left;
-	margin: 12px 2px;
-}
 #notification {
+    position: absolute;
+    width: 100%;
+    z-index: 100;
 	background-color: #fdfea2;
 	padding: 14px 0 14px 20px;
 	cursor: pointer;
@@ -745,6 +756,36 @@ body.searching #search .loader {
 #notification span {
 	font-size: 16px;
 	color: #000;
+}
+
+/* FATBAR
+*******************************/
+
+#fatbar {
+	height: 280px;
+	cursor: default;
+}
+#fatbar .box {
+    float: left;
+    width: 230px;
+    height: 100%;
+}
+#fatbar .box .content {
+    padding: 5px;
+}
+#fatbar .box h2 {
+    text-align: center;
+    padding: 10px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 14px;
+}
+#fatbar .results .title {
+    display: block;
+    width: 190px;
+    height: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* TIME LINE

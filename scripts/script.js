@@ -1,5 +1,5 @@
 ﻿$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
-    if ($.trim(r.responseText).length > 0) {
+    if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
             alert(r.responseText);
         } else {
@@ -127,13 +127,7 @@ $(document).ready(function() {
 	
 	// Legal & Information
 	$('#infomenu-text').click(function() {
-        var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
-            $('#blocker').remove();
-            $('#infomenu-popup').hide();
-            event.stopPropagation();
-        });
-        blocker.appendTo('body');
-        $('#infomenu-popup').show();
+        $(this).arrowPopup('#infomenu-popup');
     });
 
 	// CONTROLS
