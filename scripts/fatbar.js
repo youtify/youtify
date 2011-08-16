@@ -22,7 +22,7 @@ var FatBar = {
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "/related?callback=?";
 		var params = {
 			'alt': 'json-in-script',
-			'max-results': 10,
+			'max-results': 9,
 			'prettyprint': true,
 			'v': 2
 		};
