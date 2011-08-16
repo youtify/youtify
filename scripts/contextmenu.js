@@ -178,9 +178,9 @@ function showResultsItemContextMenu(event) {
 			title: 'Show related',
 			li: $(this),
 			callback: function(li) {
-				var videoTag = li.data('videoId');
 				$('#results').html('');
-				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoTag + "/related?callback=?";
+				var videoId = li.data('videoId');
+				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "/related?callback=?";
 				var params = {
 					'alt': 'json-in-script',
 					'max-results': 50,
