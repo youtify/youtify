@@ -1,6 +1,6 @@
 $(window).keyup(function (event) {
     if (event.keyCode === 27 && $('#contextmenu').length) {
-        $('#blocker, #contextmenu').remove();
+        $('#context-menu-blocker, #contextmenu').remove();
     }
 });
 
@@ -18,7 +18,7 @@ function showContextMenu(buttons, event) {
             .data('callback', item.callback)
             .click(function() {
                 $(this).data('callback')($(this).data('li'));
-                $('#blocker, #contextmenu').remove();
+                $('#context-menu-blocker, #contextmenu').remove();
             })
             .appendTo(contextmenu);
     });
@@ -30,8 +30,8 @@ function showContextMenu(buttons, event) {
 		contextmenu.css('top', parseInt(contextmenu.css('top')) - diff + 'px');	
 	
     // Set up a blocker div that closes the menu when clicked
-    var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
-        $('#blocker, #contextmenu').remove();
+    var blocker = $('<div id="context-menu-blocker"></div>').mousedown(function(event) {
+        $('#context-menu-blocker, #contextmenu').remove();
         event.stopPropagation();
     });
 
@@ -39,7 +39,7 @@ function showContextMenu(buttons, event) {
     contextmenu.appendTo('body');
 
     // Finally, prevent contextmenu on our contextmenu :)
-    $('#blocker, #contextmenu, #contextmenu li.option').bind('contextmenu', function (event) {
+    $('#context-menu-blocker, #contextmenu, #contextmenu li.option').bind('contextmenu', function (event) {
         event.preventDefault();
     });
 }
