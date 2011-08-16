@@ -200,6 +200,35 @@ function showResultsItemContextMenu(event) {
 				});
 				Search.selectSearchResults();
 			}
+		},
+		{
+			title: 'Share',
+			li: $(this),
+			callback: function(li) {
+                var videoId = li.data('videoId');
+                var title = $.trim(li.find('.title').text());
+                var video = new Video(videoId, title);
+
+                $('#share-video-popup .link input').val(video.getUrl());
+
+                $('#share-video-popup .twitter')
+                    .unbind('click')
+                    .click(function() {
+                        event.preventDefault();
+                        window.open(video.getTwitterShareUrl(), 'Share video on Twitter', 400, 400);
+                        return false;
+                    });
+
+                $('#share-video-popup .facebook')
+                    .unbind('click')
+                    .click(function() {
+                        event.preventDefault();
+                        window.open(video.getFacebookShareUrl(), 'Share video on Facebook', 400, 400);
+                        return false;
+                    });
+
+                li.find('.title').arrowPopup('#share-video-popup', 'up');
+			}
 		}
     ];
 

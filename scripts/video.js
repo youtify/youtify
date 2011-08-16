@@ -103,3 +103,22 @@ function createResultsItem(title, videoId, rating) {
     return li;
 }
 
+function Video(videoId, title) {
+    this.videoId = videoId;
+    this.title = title;
+
+    this.getUrl = function() {
+        return location.protocol + '//' + location.host + '/videos/' + this.videoId;
+    };
+
+    this.getTwitterShareUrl = function() {
+        var url = this.getUrl(),
+            text = "Check out this video!" + ' -- ' + this.title;
+        return encodeURI('http://twitter.com/share?related=youtify&via=youtify' + '&url=' + url + '&counturl=' + url + '&text=' + text);
+    };
+
+    this.getFacebookShareUrl = function() {
+        var url = this.getUrl();
+        return 'http://facebook.com/sharer.php?u=' + url;
+    };
+}
