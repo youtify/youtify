@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#settings-text').click(function() {
-        $(this).arrowPopup('#settings-popup');
+        $(this).arrowPopup('#settings');
     });
 	
 	var settings = new Settings();
