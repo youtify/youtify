@@ -521,38 +521,38 @@ body.searching #search .loader {
 	cursor: pointer;
 	text-shadow: 0px 1px 1px #FFF; 
 }
-#settings-popup {
+#settings {
 }
-#settings-popup > div {
+#settings > div {
     margin-bottom: 10px;
 }
-#settings-popup > div:last-child {
+#settings > div:last-child {
     margin-bottom: 0;
 }
-#settings-popup > div h2 {
+#settings > div h2 {
     border-bottom: 1px solid rgba(255,255,255,0.7);
     text-align: left;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-#settings-popup .language > select {
+#settings .language > select {
 	min-width: 150px;
 	margin: 4px 0;
 	padding: 2px;
 }
-#settings-popup .quality > span {
+#settings .quality > span {
 	display: inline-block;
 	padding: 4px 8px 0 0;
 }
-#settings-popup .quality > input {
+#settings .quality > input {
 	vertical-align: baseline;
 }
 
-#settings-popup .themes {
+#settings .themes {
 }
 
-#settings-popup .themes > div {
+#settings .themes > div {
 	width: 20px;
 	height: 20px;
 	margin: 0 10px 5px 0;
@@ -562,13 +562,13 @@ body.searching #search .loader {
 	border: solid 1px rgba(255,255,255,0.7);
 	.border(5px);
 }
-#settings-popup .themes > div:last-of-type {
+#settings .themes > div:last-of-type {
 	margin-right: 0;
 }
-#settings-popup .themes > div:hover {
+#settings .themes > div:hover {
 	border: solid 1px rgb(255,255,255);
 }
-#settings-popup .themes > span {
+#settings .themes > span {
 	clear: both;
 	display: block;
 	color: white;
@@ -728,11 +728,15 @@ body.searching #search .loader {
     float: none;
     margin: 10px;
 }
-#share-playlist-popup input {
+
+/* SHARE VIDEO POPUP
+*******************************/
+
+.popup.share input {
     display: block;
     width: 100%;
 }
-#share-playlist-popup img {
+.popup.share img {
     cursor: pointer;
     margin: 5px 2px 0 0;
 }
@@ -891,7 +895,8 @@ body.searching #search .loader {
 #contextmenu .option:hover {
 }
 
-#blocker {
+#context-menu-blocker,
+#arrow-popup-blocker {
     position: absolute;
     top: 0;
     left: 0;

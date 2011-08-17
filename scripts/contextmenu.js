@@ -1,6 +1,6 @@
 $(window).keyup(function (event) {
     if (event.keyCode === 27 && $('#contextmenu').length) {
-        $('#blocker, #contextmenu').remove();
+        $('#context-menu-blocker, #contextmenu').remove();
     }
 });
 
@@ -18,7 +18,7 @@ function showContextMenu(buttons, event) {
             .data('callback', item.callback)
             .click(function() {
                 $(this).data('callback')($(this).data('li'));
-                $('#blocker, #contextmenu').remove();
+                $('#context-menu-blocker, #contextmenu').remove();
             })
             .appendTo(contextmenu);
     });
@@ -30,8 +30,8 @@ function showContextMenu(buttons, event) {
 		contextmenu.css('top', parseInt(contextmenu.css('top')) - diff + 'px');	
 	
     // Set up a blocker div that closes the menu when clicked
-    var blocker = $('<div id="blocker"></div>').mousedown(function(event) {
-        $('#blocker, #contextmenu').remove();
+    var blocker = $('<div id="context-menu-blocker"></div>').mousedown(function(event) {
+        $('#context-menu-blocker, #contextmenu').remove();
         event.stopPropagation();
     });
 
@@ -39,7 +39,7 @@ function showContextMenu(buttons, event) {
     contextmenu.appendTo('body');
 
     // Finally, prevent contextmenu on our contextmenu :)
-    $('#blocker, #contextmenu, #contextmenu li.option').bind('contextmenu', function (event) {
+    $('#context-menu-blocker, #contextmenu, #contextmenu li.option').bind('contextmenu', function (event) {
         event.preventDefault();
     });
 }
@@ -178,9 +178,9 @@ function showResultsItemContextMenu(event) {
 			title: 'Show related',
 			li: $(this),
 			callback: function(li) {
-				var videoTag = li.data('videoId');
 				$('#results').html('');
-				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoTag + "/related?callback=?";
+				var videoId = li.data('videoId');
+				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "/related?callback=?";
 				var params = {
 					'alt': 'json-in-script',
 					'max-results': 50,
@@ -199,6 +199,35 @@ function showResultsItemContextMenu(event) {
 					}); 
 				});
 				Search.selectSearchResults();
+			}
+		},
+		{
+			title: 'Share',
+			li: $(this),
+			callback: function(li) {
+                var videoId = li.data('videoId');
+                var title = $.trim(li.find('.title').text());
+                var video = new Video(videoId, title);
+
+                $('#share-video-popup .link input').val(video.getUrl());
+
+                $('#share-video-popup .twitter')
+                    .unbind('click')
+                    .click(function() {
+                        event.preventDefault();
+                        window.open(video.getTwitterShareUrl(), 'Share video on Twitter', 400, 400);
+                        return false;
+                    });
+
+                $('#share-video-popup .facebook')
+                    .unbind('click')
+                    .click(function() {
+                        event.preventDefault();
+                        window.open(video.getFacebookShareUrl(), 'Share video on Facebook', 400, 400);
+                        return false;
+                    });
+
+                li.find('.title').arrowPopup('#share-video-popup', 'up');
 			}
 		}
     ];

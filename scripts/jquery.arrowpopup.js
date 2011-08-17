@@ -29,7 +29,7 @@
         }
 
         // Display a blocker div that removes the popup when clicked
-        $('<div id="blocker"></div>').mousedown(function(event) {
+        $('<div id="arrow-popup-blocker"></div>').mousedown(function(event) {
             $(this).remove();
             popup.hide();
             event.stopPropagation();
