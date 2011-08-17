@@ -103,6 +103,39 @@ function createResultsItem(title, videoId, rating) {
     return li;
 }
 
+function showVideoSharePopup(videoId, title, elem, arrowDirection) {
+    var video = new Video(videoId, title);
+
+    $('#share-video-popup .link input').val(video.getUrl());
+
+    $('#share-video-popup .twitter')
+        .unbind('click')
+        .click(function() {
+            event.preventDefault();
+            window.open(video.getTwitterShareUrl(), 'Share video on Twitter', 400, 400);
+            return false;
+        });
+
+    $('#share-video-popup .facebook')
+        .unbind('click')
+        .click(function() {
+            event.preventDefault();
+            window.open(video.getFacebookShareUrl(), 'Share video on Facebook', 400, 400);
+            return false;
+        });
+
+    elem.arrowPopup('#share-video-popup', arrowDirection);
+}
+
+$(document).ready(function() {
+    $('#info .share').click(function() {
+        var videoId = Player.getCurrentVideoId();
+        var title = $('#info .title').text();
+        var elem = $('#info');
+        showVideoSharePopup(videoId, title, elem, 'left');
+    });
+});
+
 function Video(videoId, title) {
     this.videoId = videoId;
     this.title = title;
