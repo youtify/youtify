@@ -49,28 +49,32 @@ function syncPlaylistButtonClicked(event) {
     });
 }
 
+function showPlaylistSharePopup(playlist, elem, arrowDirection) {
+    $('#share-playlist-popup .link input').val(playlist.getUrl());
+
+    $('#share-playlist-popup .twitter')
+        .unbind('click')
+        .click(function(event) {
+            event.preventDefault();
+            window.open(playlist.getTwitterShareUrl(), 'Share playlist on Twitter', 400, 400);
+            return false;
+        });
+
+    $('#share-playlist-popup .facebook')
+        .unbind('click')
+        .click(function(event) {
+            event.preventDefault();
+            window.open(playlist.getFacebookShareUrl(), 'Share playlist on Facebook', 400, 400);
+            return false;
+        });
+
+    elem.arrowPopup('#share-playlist-popup', arrowDirection);
+}
+
 function shareButtonClicked(event) {
     var playlistBar = $(this).parent();
     var playlist = playlistBar.data('playlist');
-    $('#share-playlist-popup .link input').val(playlist.getUrl());
-
-    $('#share-playlist-popup .twitter').attr('href', playlist.getTwitterShareUrl())
-        .unbind('click')
-        .click(function(event) {
-            event.preventDefault();
-            window.open($(this).attr('href'), 'Share playlist on Twitter', 400, 400);
-            return false;
-        });
-
-    $('#share-playlist-popup .facebook').attr('href', playlist.getFacebookShareUrl())
-        .unbind('click')
-        .click(function(event) {
-            event.preventDefault();
-            window.open($(this).attr('href'), 'Share playlist on Facebook', 400, 400);
-            return false;
-        });
-
-    $(this).arrowPopup('#share-playlist-popup');
+    showPlaylistSharePopup(playlist, $(this), 'up');
 }
 
 function createPlaylistBar(playlist) {

@@ -116,6 +116,16 @@ function showPlaylistContextMenu(event) {
         }
     ];
 
+    if (logged_in && $(this).data('model').remoteId) {
+        buttons.push({
+            title: 'Share',
+            li: $(this),
+            callback: function(li) {
+                showPlaylistSharePopup(li.data('model'), li, 'left');
+            }
+        });
+    }
+
     if (logged_in && !$(this).data('model').remoteId) {
         buttons.push({
             title: 'Sync',
