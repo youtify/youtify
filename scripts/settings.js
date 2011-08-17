@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function settings_Init() {
     $('#settings-text').click(function() {
         $(this).arrowPopup('#settings');
     });
@@ -27,7 +27,7 @@ $(document).ready(function() {
 		settings.announceTimeout = parseInt(this.value) * 1000; 
 		settings.save(); 
 	});
-});
+}
 
 function autoDetectLanguage() {
     var supportedLangs = {

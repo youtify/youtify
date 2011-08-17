@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function search_Init() {
     var timeoutId = null;
 
 	// SEARCH OPTIONS
@@ -42,7 +42,7 @@ $(document).ready(function() {
 	$('#results-tab').click(function() {
 		Search.selectSearchResults();
 	});
-});
+}
 
 var Search = {
 	q: '',

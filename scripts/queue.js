@@ -1,9 +1,9 @@
-$(document).ready(function() {
+function queue_Init() {
 	$('#queue-tab').click(function() {
 		Queue.select();
 	});
 	$('#queue-tab').hide();
-});
+}
 
 var Queue = { 
 	select: function() {

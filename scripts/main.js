@@ -1,7 +1,7 @@
 ﻿$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
-            alert(r.responseText);
+            Notification.show('Connection error! <i>' + r.responseText + '</i>');
         } else {
             $('body').html(r.responseText);
         }
@@ -117,6 +117,9 @@ $(window).load(function() {
     loadUrl();
 });
 
+// GLOBALS
+var playlistManager = new PlaylistsManager();
+
 $(document).ready(function() {
     var settings = new Settings();
 
@@ -162,6 +165,20 @@ $(document).ready(function() {
     }
 	
 	//Notification.show('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
+	
+	volume_Init();
+	video_Init();
+	translations_Init();
+    toplist_Init();
+    themes_Init();
+    spotifyImport_Init();
+    settings_Init();
+    search_Init();
+    queue_Init();
+    ping_Init();
+    notification_Init();
+    leftmenu_Init();
+    fatBar_Init();
 });
 
 function onYouTubePlayerAPIReady() {
