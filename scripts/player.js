@@ -22,6 +22,7 @@ var Player = {
     },
 	
 	play: function(videoId, title) {
+        $('#video-actions').show();
 		if (videoId !== undefined) {
             history.pushState(null, null, '/videos/' + videoId);
             Player._currentVideoId = videoId;
