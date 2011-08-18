@@ -1,6 +1,4 @@
-
-$(document).ready(function() {
-	
+function themes_Init() {
 	$('#themes-default').hover(function() {
 		$('#settings .themes span').text('Greytify');
 	}).click(function(event) {
@@ -52,7 +50,7 @@ $(document).ready(function() {
 			createClouds();
         }
 	});
-});
+}
 
 function changeTheme(themeName) {
     /*if ($('#less').length === 0) {

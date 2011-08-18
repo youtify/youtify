@@ -1,11 +1,11 @@
-$(document).ready(function() {
+function toplist_Init() {
 	$('#toplist-tab').click(function() {
 		TopList.select();
 	});
 	$('#bestof-tab').click(function() {
 		BestOfYouTube.select();
 	});
-});
+}
 
 var BestOfYouTube = { 
 	select: function() {

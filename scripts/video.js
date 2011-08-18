@@ -1,7 +1,17 @@
+function video_Init() {
+    $('#info .share').click(function() {
+        var videoId = Player.getCurrentVideoId();
+        var title = $('#info .title').text();
+        var elem = $('#info');
+        showVideoSharePopup(videoId, title, elem, 'left');
+    });
+}
+
 jQuery.fn.play = function() {
 	$('#results-container .playing').removeClass('playing');
 	$(this[0]).addClass("playing");
 	Player.play($(this[0]).data('videoId'), $(this[0]).find('.title').text());
+	return this;
 };
 
 function selectVideo(li, event) {
@@ -101,6 +111,30 @@ function createResultsItem(title, videoId, rating) {
     li.data('additionalMenuButtons', additionalMenuButtons);
 
     return li;
+}
+
+function showVideoSharePopup(videoId, title, elem, arrowDirection) {
+    var video = new Video(videoId, title);
+
+    $('#share-video-popup .link input').val(video.getUrl());
+
+    $('#share-video-popup .twitter')
+        .unbind('click')
+        .click(function() {
+            event.preventDefault();
+            window.open(video.getTwitterShareUrl(), 'Share video on Twitter', 400, 400);
+            return false;
+        });
+
+    $('#share-video-popup .facebook')
+        .unbind('click')
+        .click(function() {
+            event.preventDefault();
+            window.open(video.getFacebookShareUrl(), 'Share video on Facebook', 400, 400);
+            return false;
+        });
+
+    elem.arrowPopup('#share-video-popup', arrowDirection);
 }
 
 function Video(videoId, title) {

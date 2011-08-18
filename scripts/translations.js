@@ -1,3 +1,44 @@
+function translations_Init() {
+    var settings = new Settings();
+    changeLanguage(settings.language);
+
+    $('#settings .language select').change(function() {
+        var code = $(this).val();
+        var settings = new Settings();
+        settings.language = code;
+        settings.save();
+        changeLanguage(code);
+    });
+
+    $('#translator-panel .close').click(function() {
+        $('#translatorMode').removeAttr('checked').change();
+    });
+    $('#translatorMode').change(function() {
+        var mode = $(this).is(':checked');
+        var settings = new Settings();
+
+        settings.translatorMode = mode;
+        settings.save();
+
+        if (mode) {
+            $('#translator-panel').show();
+            $('html').addClass('translator');
+            $('#results-container').hide();
+            loadTranslatorPanel();
+        } else {
+            $('#translator-panel').hide();
+            $('html').removeClass('translator');
+            $('#results-container').show();
+        }
+        
+        $(window).resize();
+    });
+
+    if (settings.translatorMode) {
+        $('#translatorMode').attr('checked', 'checked').change();
+    }
+}
+
 var translations,
     TRANSLATABLE_ATTRIBUTES = [
         'title',
@@ -101,44 +142,3 @@ function loadTranslatorPanel() {
         tr.appendTo('#translator-panel tbody');
     }
 }
-
-$(document).ready(function() {
-    var settings = new Settings();
-    changeLanguage(settings.language);
-
-    $('#settings .language select').change(function() {
-        var code = $(this).val();
-        var settings = new Settings();
-        settings.language = code;
-        settings.save();
-        changeLanguage(code);
-    });
-
-    $('#translator-panel .close').click(function() {
-        $('#translatorMode').removeAttr('checked').change();
-    });
-    $('#translatorMode').change(function() {
-        var mode = $(this).is(':checked');
-        var settings = new Settings();
-
-        settings.translatorMode = mode;
-        settings.save();
-
-        if (mode) {
-            $('#translator-panel').show();
-            $('html').addClass('translator');
-            $('#results-container').hide();
-            loadTranslatorPanel();
-        } else {
-            $('#translator-panel').hide();
-            $('html').removeClass('translator');
-            $('#results-container').show();
-        }
-
-        $(window).resize();
-    });
-
-    if (settings.translatorMode) {
-        $('#translatorMode').attr('checked', 'checked').change();
-    }
-});

@@ -34,6 +34,7 @@ class MainHandler(webapp.RequestHandler):
             'toplist': toplist.get_or_create_toplist_json(),
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,
+			'url': self.request.url,
         }))
 
 def main():

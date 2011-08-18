@@ -1,3 +1,13 @@
+function fatBar_Init() {
+    $('#fatbar-toggle .show').click(FatBar.show);
+    $('#fatbar-toggle .hide').click(FatBar.hide);
+    if (JSON.parse(localStorage['fatbar-toggle'] || "false")) {
+        FatBar.show();
+    } else {
+        FatBar.hide();
+    }
+}
+
 var FatBar = {
 	loadFromVideoId: function(videoId) {
 		FatBar._loadVideoInfo(videoId);
@@ -57,13 +67,3 @@ var FatBar = {
 		});
 	}
 };
-
-$(document).ready(function() {
-    $('#fatbar-toggle .show').click(FatBar.show);
-    $('#fatbar-toggle .hide').click(FatBar.hide);
-    if (JSON.parse(localStorage['fatbar-toggle'] || "false")) {
-        FatBar.show();
-    } else {
-        FatBar.hide();
-    }
-});

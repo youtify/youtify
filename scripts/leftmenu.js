@@ -1,23 +1,4 @@
-var pendingVideo; // used when a video is dragged into 'new playlist' input
-
-/** INIT
- ****************************************************************************/
-
-function constructPlaylistsMenu() {
-    var i,
-        li,
-        playlist;
-
-    $('#playlists').html('');
-
-    for (i = 0; i < playlistManager.playlists.length; i += 1) {
-        playlist = playlistManager.getPlaylist(i);
-        li = playlist.createListElem();
-        li.appendTo('#playlists');
-    }
-}
-
-$(document).ready(function() {
+function leftmenu_Init() {
     if (logged_in) {
         playlistManager.pull(constructPlaylistsMenu);
     } else {
@@ -98,5 +79,24 @@ $(document).ready(function() {
 
         event.stopPropagation();
     });
+}
 
-});
+var pendingVideo; // used when a video is dragged into 'new playlist' input
+
+/** INIT
+ ****************************************************************************/
+
+function constructPlaylistsMenu() {
+    var i,
+        li,
+        playlist;
+
+    $('#playlists').html('');
+
+    for (i = 0; i < playlistManager.playlists.length; i += 1) {
+        playlist = playlistManager.getPlaylist(i);
+        li = playlist.createListElem();
+        li.appendTo('#playlists');
+    }
+}
+

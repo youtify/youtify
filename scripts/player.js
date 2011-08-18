@@ -171,7 +171,7 @@ var Player = {
 	
 	setTitle: function(title) {
 		document.title = "Youtify - " + title;
-		$('#info .title').text(title);
+		$('#info .title').text(title).attr('title', title);
 		Notification.announce(title);
 	},
 	

@@ -1,10 +1,6 @@
-$(window).ajaxError(function() {
-    Notification.show('Connection error!');
-});
-
-$(document).ready(function() {
+function notification_Init() {
 	$('#notification').click( Notification.hide );
-});
+}
 
 var Notification = {
 	show: function(message) {

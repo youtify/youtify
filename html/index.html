@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="keywords" content="youtify, music, youtube, spotify, streaming" /> 
         <meta name="description" content="Youtify - YouTube's music, all the time" /> 
-		<link rel="canonical" href="http://www.youtify.com/" />
+		<link rel="canonical" href="{{url}}" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		
         <link rel="fluid-icon" href="http://www.youtify.com/images/fluidicon.png" title="Youtify" />
@@ -17,6 +17,7 @@
 		<meta property="og:type" content="software"/>
 		<meta property="og:image" content="http://www.youtify.com/images/logo50x50.png"/>
 		<meta property="og:site_name" content="Youtify"/>
+		<meta property="og:url" content="{{url}}"/>
 		<meta property="fb:admins" content="704121239,676899180"/>
 		<meta property="og:description" content="The BEST online music video player"/>
 		
@@ -24,7 +25,7 @@
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
 		<script src="/scripts/feature_detection.js"></script>
-		
+        
         <link rel="icon" href="/images/favicon.png" type="image/png" /> 
         <link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'> 
 		
@@ -81,7 +82,6 @@
 		<script src="/scripts/jquery.arrowpopup.js"></script>
 		<script src="/scripts/jquery.shuffle.js"></script>
 		<script src="/scripts/less-1.0.41.min.js"></script>
-		<script src="/scripts/migrations.js"></script>
 		<script src="/scripts/settings.js"></script>
 		<script src="/scripts/translations.js"></script>
 		<script src="/scripts/utils.js"></script>
@@ -100,16 +100,24 @@
 		<script src="/scripts/themes.js"></script>
 		<script src="/scripts/notify.js"></script>
 		<script src="/scripts/url.js"></script>
-		<script src="/scripts/script.js"></script>
 		<script src="/scripts/ping.js"></script>
 		<script src="/scripts/fatbar.js"></script>
 		<script src="/scripts/uploader.js"></script>
 		<script src="/scripts/spotify_import.js"></script>
+		<script src="/scripts/main.js"></script>
         
 		{% if ON_PRODUCTION %}
-			<script src="/scripts/ga.js"></script>
-        {% else %}
-			<script src="/scripts/chat.js"></script>
+			<script>
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-22835317-1']);
+                _gaq.push(['_trackPageview']);
+
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
 		{% endif %}
 		
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
@@ -165,6 +173,7 @@
                                 <span class="translatable clickable show">More</span>
                                 <span class="translatable clickable hide">Less</span>
                             </span>
+                            <span class="translatable clickable share">Share</span>
 						</div> 
 						<div id="youtube-container"><div id="youtube"></div></div> 
 					</div> 

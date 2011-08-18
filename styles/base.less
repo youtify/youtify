@@ -66,7 +66,6 @@ strong {
     font-weight: bold;
 }
 .clickable {
-    text-decoration: underline;
     cursor: pointer;
 }
 
@@ -254,13 +253,23 @@ body {
 	text-shadow: 0px 1px 1px #FFF;
     text-align: center;
     cursor: default;
+    height: 12px;
+	text-overflow: ellipsis;
+    overflow: hidden;
 }
 #info #fatbar-toggle {
     position: absolute;
-    padding: 4px;
+    margin: 4px;
     bottom: 0;
     right: 0;
 }
+#info .share {
+    position: absolute;
+    margin: 4px;
+    bottom: 0;
+    left: 0;
+}
+
 /* CONTROLS
  ***********************************/
 
@@ -464,12 +473,24 @@ body.searching #search .loader {
 	left: 135px;
 }
 
-.point-left:before {
+#spotify-importer.point-left:before {
 	content: url('/images/theme-up.png');
 	width: 20px;
 	height: 9px;
 	position: absolute;
 	top: 100px;
+	left: -15px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+#share-video-popup.point-left:before {
+	content: url('/images/theme-up.png');
+	width: 20px;
+	height: 9px;
+	position: absolute;
+	top: 35px;
 	left: -15px;
     -webkit-transform: rotate(270deg);
     -moz-transform: rotate(270deg);

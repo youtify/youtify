@@ -170,4 +170,3 @@ function PlaylistsManager() {
     };
 }
 
-var playlistManager = new PlaylistsManager();
