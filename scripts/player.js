@@ -115,7 +115,7 @@ var Player = {
 			if (Player._playOrderIndex+1 <= Player._playOrderList.length) {
 				elem = $(Player._playOrderList[Player._playOrderIndex++]);
 			} else if (Player._playOrderIndex+1 > Player._playOrderList.length) {
-				Player._playOrderList = []
+				Player._playOrderList = [];
 				Player._playOrderIndex = 0;
 				return;
 			}
@@ -226,12 +226,12 @@ var Player = {
 	onError: function(event) {
 		var messages = {
             2: 'Sorry, the video requested cannot be played. Invalid video ID.',
-            100: 'The requested video was not found. The video is removed or marked as private.',
+            //100: 'The requested video was not found. The video is removed or marked as private.',
             //101: 'The 101 error code is broadcast when the video requested does not allow playback in the embedded players.',
             //150: 'The 150 error code is broadcast when the video requested does not allow playback in the embedded players.'
             100: 'The rights holder has decided not to share this video on Youtify',
             150: 'The rights holder has decided not to share this video on Youtify'
-        }
+        };
 		var elem = $('.results li.playing'); //$('.results li.playing, .results li.paused')
 		if (elem.hasClass('alternative')) {
 			if (elem.next()) {
@@ -274,7 +274,7 @@ var Player = {
 			pos += 10;
 		if (pos > len)
 			return;
-		Player._player.seekTo(pos, true);ht
+		Player._player.seekTo(pos, true);
 	},
 
 	seekBackward: function(step) {
@@ -286,7 +286,7 @@ var Player = {
 		else 
 			pos -= 10;
 		if (pos < 0)
-			pos = 0
+			pos = 0;
 		Player._player.seekTo(pos, true);
 	},
 	
