@@ -129,8 +129,8 @@ translations['fi_FI'] = {
 	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
 	'This will delete duplicate videos from your playlist. Continue?': u'This will delete duplicate videos from your playlist. Continue?',
 	' duplicates removed.': u' duplicates removed.',
-	#'More': u'Mer',
-	#'Less': u'Mindre',
+	'More': u'Lisää',
+	'Less': u'Vähemmän',
 }
 
 
