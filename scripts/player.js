@@ -41,7 +41,10 @@ var Player = {
 			
 			if (title !== undefined) {
 				Player.setTitle(title);
-                FatBar.loadFromVideo(new Video(videoId, title));
+                if (FatBar.isVisible()) {
+                    alert('slkdfj');
+                    FatBar.loadFromVideo(new Video(videoId, title));
+                }
 			} else {
 				Player.loadTitle(videoId, function(title) {
                     FatBar.loadFromVideo(new Video(videoId, title));

@@ -28,6 +28,9 @@ var FatBar = {
           localStorage['fatbar-toggle'] = JSON.stringify(false);
           $(window).resize();
     },
+    isVisible: function() {
+        return $('#fatbar').is(':visible');
+    },
 	_loadRelatedInfo: function(video) {
 		$('#related').html('').show();
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "/related?callback=?";
