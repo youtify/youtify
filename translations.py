@@ -125,12 +125,12 @@ translations['fi_FI'] = {
 	'Hide after:': u'Piilota ajassa:',
 	'seconds': u'sekuntia',
 	'Instructions': u'Ohjeet',
-	'No such playlist found': u'No such playlist found',
-	'Your account has been used somewhere else. Please reload the page.': u'Your account has been used somewhere else. Please reload the page.',
-	'This will delete duplicate videos from your playlist. Continue?': u'This will delete duplicate videos from your playlist. Continue?',
-	' duplicates removed.': u' duplicates removed.',
-	#'More': u'Mer',
-	#'Less': u'Mindre',
+	'No such playlist found': u'Soittolistaa ei löytynyt',
+	'Tunnustasi on käytetty jostakin muualta. Ole hyvä ja päivitä sivu.': u'Tunnustasi on käytetty jostakin muualta. Ole hyvä ja pävitä sivu.',
+	'Tämä poistaa videot, jotka ovat kaksoiskappaleita, soittolistastasi. Tahdotko jatkaa?': u'Tämä poistaa videot, jotka ovat kaksoiskappaleita, soittolistastasi. Tahdotko jatkaa?',
+	' kaksoiskappaleet poistettu.': u' kaksoiskappaleet poistettu.',
+	'More': u'Lisää',
+	'Less': u'Vähemmän',
 }
 
 
