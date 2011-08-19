@@ -27,6 +27,7 @@ class PingHandler(webapp.RequestHandler):
     def get(self):
         get_or_create_pings()
         memcache.incr('pings');
+        self.response.out.write('')
 
 class PingCronHandler(webapp.RequestHandler):
     """ Move pings from memcache to DB """
