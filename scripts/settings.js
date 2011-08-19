@@ -31,8 +31,9 @@ function settings_Init() {
 
 function autoDetectLanguage() {
     var supportedLangs = {
-        'en-US': 'en_US',
-        'sv': 'sv_SE'
+        'en': 'en_US',
+        'sv': 'sv_SE',
+        'fi': 'fi_FI'
     };
 
     try {
