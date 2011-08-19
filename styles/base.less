@@ -619,75 +619,70 @@ body.searching #search .loader {
 .results {
 	display: none;
 }
-.results > .video {
+
+.results .video {
     background-image: url('/images/song.png');
     background-repeat: no-repeat;
     background-position: top left;
     padding: 3px 4px 3px 20px;
     cursor: default;
 }
-.results > .video .rating {
+.results .video .rating {
     float: right;
     width: 60px;
     height: 8px;
     margin: 1px 0;
     padding: 1px;
 }
-.results > .video .rating div {
+.results .video .rating div {
     height: 100%;
 }
-.results > .video.selected .rating {
+.results .video.selected .rating {
 }
-.results > .video.selected .rating div {
+.results .video.selected .rating div {
 }
-.results > .video:nth-child(odd) {
+.results .video:nth-child(odd) {
 }
-.results > .playing,
-.results > .playing:nth-child(odd) {
+.results .playing,
+.results .playing:nth-child(odd) {
 	background-repeat: no-repeat;
 	background-image: url('/images/playing.png');
 } 
-.results > .selected, 
-.results > .selected:nth-child(odd) {
+.results .selected, 
+.results .selected:nth-child(odd) {
 }
-.results > .disabled {
+.results .disabled {
     background-image: url('/images/disabled.png');
 } 
 
-.results > .playlist {
+.results .playlist {
     background-image: url('/images/list.png');
     background-repeat: no-repeat;
     background-position: top left;
+    padding: 3px 4px 3px 20px;
 }
 
-.results > .loadMore {
+.results .loadMore {
     text-align: center;
     background-image: none;
     cursor: pointer;
 }
 
-.results > .loading {
+.results .loading {
 }
 
-.results > .video > ul {
-	margin-left: 25px; 
+.results .playlist ul {
+	margin: 5px 0 0 25px; 
 }
-.results > .video > ul > li { 
-	background-image: url('/images/song.png'); 
-	background-repeat: no-repeat; 
-	background-position: top left; 
-	padding: 3px 4px 3px 20px; 
-	cursor: default; 
-}
-.results > .video > ul > .playing,
-.results > .video > ul > .playing:nth-child(odd) { 
+.results > .playlist > ul > .playing,
+.results > .playlist > ul > .playing:nth-child(odd) { 
 	background-repeat: no-repeat;
 	background-image: url('/images/playing.png');
 } 
-.results > .video > ul > .selected, 
-.results > .video > ul > .selected:nth-child(odd) { 
+.results > .playlist > ul > .selected, 
+.results > .playlist > ul > .selected:nth-child(odd) { 
 }
-.results > .video > ul > .disabled { 
+.results > .playlist > ul > .disabled { 
 	background-image: url('/images/disabled.png'); 
 }
 

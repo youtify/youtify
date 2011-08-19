@@ -185,71 +185,71 @@ body {
 
 .results {
 }
-.results > .video {
+.results .playlist,
+.results .video {
 	border-top: solid 1px transparent;
 	border-bottom: solid 1px transparent;
 	text-shadow: 0px 1px 1px #000; 
 }
-.results > .video .rating {
+.results .video .rating {
     border: 1px solid @text-color-1;
     opacity: 0.6;
 }
-.results > .video .rating div {
+.results .video .rating div {
     background: @text-color-1;
 }
-.results > .video.selected .rating {
+.results .video.selected .rating {
     border: 1px solid @text-color-2;
 }
-.results > .video.selected .rating div {
+.results .video.selected .rating div {
     background: @text-color-2;
 }
-.results > .video:nth-child(odd) {
+.results .playlist:nth-child(odd),
+.results .video:nth-child(odd) {
     background-color: @odd-result-color;
 }
-.results > .playing,
-.results > .playing:nth-child(odd) {
+.results .playing,
+.results .playing:nth-child(odd) {
     color: @playing-row-color-2;
 	background-color: @playing-row-color-1;
 	text-shadow: 0px 0px 0px transparent;
 
 } 
-.results > .selected, 
-.results > .selected:nth-child(odd) {
+.results .selected, 
+.results .selected:nth-child(odd) {
     background-color: @selected-color;
     color: @text-color-2;
 	text-shadow: 0px 1px 1px #FFF;
 }
-.results > .disabled {
+.results .disabled {
     color: #FFF;
 } 
 
-.results > .playlist {
+.results .playlist {
 }
 
-.results > .loadMore {
+.results .loadMore {
 }
 
-.results > .loading {
+.results .loading {
     background-image: url('/images/loading.gif');
     background-position: center left;
     background-repeat: no-repeat;
 }
 
-.results > .video > ul {
+.results .playlist ul {
 }
-.results > .video > ul > li { 
-}
-.results > .video > ul > .playing,
-.results > .video > ul > .playing:nth-child(odd) { 
+.results > .playlist > ul > .playing,
+.results > .playlist > ul > .playing:nth-child(odd) { 
     color: @playing-row-color-2;
 	background-color: @playing-row-color-1;
 } 
-.results > .video > ul > .selected, 
-.results > .video > ul > .selected:nth-child(odd) { 
+.results > .playlist > ul > .selected, 
+.results > .playlist > ul > .selected:nth-child(odd) { 
 	background-color: @selected-color; 
 	color: @text-color-2; 
 }
-.results > .video > ul > .disabled { 
+.results > .playlist > ul > .disabled { 
 	color: #FFF; 
 }
 
