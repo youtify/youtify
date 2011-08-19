@@ -170,9 +170,15 @@ var Player = {
 	},
 	
 	setTitle: function(title) {
-		document.title = "Youtify - " + title;
+		var videoId = Player.getCurrentVideoId();
+        document.title = "Youtify - " + title;
 		$('#info .title').text(title).attr('title', title);
-		Notification.announce(title);
+		
+        setTimeout(function() {
+            if (videoId === Player.getCurrentVideoId()) {
+                Notification.announce(title);
+            }
+        }, 1000);
 	},
 	
 	onPlayerStateChange: function(event) {
