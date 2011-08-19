@@ -20,9 +20,13 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
 
     def post(self):
         """Update playlist"""
+        youtify_user = get_current_youtify_user()
+        if youtify_user == None:
+            self.error(403)
+            return
+        
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
-        youtify_user = get_current_youtify_user()
         json = self.request.get('json')
         device = self.request.get('device')
 
@@ -40,9 +44,13 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
 
     def delete(self):
         """Delete playlist"""
+        youtify_user = get_current_youtify_user()
+        if youtify_user == None:
+            self.error(403)
+            return
+        
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
-        youtify_user = get_current_youtify_user()
         device = self.request.get('device')
 
         if playlist_model.owner.key() == youtify_user.key():
