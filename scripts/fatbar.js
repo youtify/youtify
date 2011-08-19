@@ -9,9 +9,10 @@ function fatBar_Init() {
 }
 
 var FatBar = {
-	loadFromVideoId: function(videoId) {
-		FatBar._loadVideoInfo(videoId);
-		FatBar._loadRelatedInfo(videoId);
+	loadFromVideo: function(video) {
+		FatBar._loadVideoInfo(video);
+		FatBar._loadRelatedInfo(video);
+		FatBar._loadLinkosBox(video);
 	},
     show: function() {
           $("#fatbar-toggle .show").hide();
@@ -27,9 +28,9 @@ var FatBar = {
           localStorage['fatbar-toggle'] = JSON.stringify(false);
           $(window).resize();
     },
-	_loadRelatedInfo: function(videoId) {
+	_loadRelatedInfo: function(video) {
 		$('#related').html('').show();
-		var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "/related?callback=?";
+		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "/related?callback=?";
 		var params = {
 			'alt': 'json-in-script',
 			'max-results': 9,
@@ -48,9 +49,9 @@ var FatBar = {
 			}); 
 		});
 	},
-	_loadVideoInfo: function(videoId) {
+	_loadVideoInfo: function(video) {
 		$('#video-info-box .uploader').text('');
-		var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?callback=?";
+		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "?callback=?";
 		var params = {
 			'alt': 'json-in-script',
 			'prettyprint': true,
@@ -65,5 +66,27 @@ var FatBar = {
 				})
 				.text(author);
 		});
-	}
+	},
+    _loadLinkosBox: function(video) {
+        $('#linko-box .name').text('');
+        $('#linko-box .homepage').hide();
+        var artist = extractArtist(video.title);
+        if (artist) {
+            var url = 'http://linko.fruktsallad.net/artist/' + artist.replace(' ', '_') + '.json?callback=?';
+            $.getJSON(url, {}, function(data) {
+                if (!data) {
+                    return;
+                }
+
+                if ('artist_name' in data) {
+                    $('#linko-box .name').text(data.artist_name).show();
+                }
+
+                if ('Official Homepage' in data.links) {
+                    $('#linko-box .homepage').text(data.links['Official Homepage']).attr('href', data.links['Official Homepage']);
+                    $('#linko-box .homepage').show();
+                }
+            });
+        }
+    }
 };

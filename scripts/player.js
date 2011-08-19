@@ -41,10 +41,12 @@ var Player = {
 			
 			if (title !== undefined) {
 				Player.setTitle(title);
+                FatBar.loadFromVideo(new Video(videoId, title));
 			} else {
-				Player.loadTitle(videoId);
+				Player.loadTitle(videoId, function(title) {
+                    FatBar.loadFromVideo(new Video(videoId, title));
+                });
 			}
-			FatBar.loadFromVideoId(videoId);
 			// avoid buffer hang at start
 		} else {
 			Player.assertPlayerLoaded();
@@ -434,10 +436,12 @@ var Player = {
 		Player.setTitle('');
 		$.getJSON(url, params, function(data) {
 			if (data.feed.entry) {
-				$.each(data.feed.entry, function(i, item) {
-					Player.setTitle(item['title']['$t']);
-				}); 
-			}
+                var title = data.feed.entry[0].item['title']['$t'];
+                Player.setTitle(title);
+                if (callback) {
+                    callback(title);
+                }
+            }
 		});
 	},
 	
