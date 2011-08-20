@@ -32,6 +32,7 @@ var FatBar = {
         return $('#fatbar').is(':visible');
     },
 	_loadRelatedInfo: function(video) {
+		$('#related-box').addClass('loading');
 		$('#related').html('').show();
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "/related?callback=?";
 		var params = {
@@ -41,6 +42,7 @@ var FatBar = {
 			'v': 2
 		};
 		$.getJSON(url, params, function(data) {
+            $('#related-box').removeClass('loading');
 			$.each(data.feed.entry, function(i, item) {
 				var url = item['id']['$t'];
 				var videoId = url.match('video:(.*)$')[1];
@@ -55,6 +57,7 @@ var FatBar = {
 	},
 	_loadVideoInfo: function(video) {
 		$('#video-info-box .uploader').text('');
+		$('#video-info-box').addClass('loading');
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "?callback=?";
 		var params = {
 			'alt': 'json-in-script',
@@ -62,6 +65,7 @@ var FatBar = {
 			'v': 2
 		};
 		$.getJSON(url, params, function(data) {
+            $('#video-info-box').removeClass('loading');
 			var author = data.entry.author[0].name.$t;
 			var uri = data.entry.author[0].uri.$t;
 			$('#video-info-box .uploader')
@@ -76,8 +80,10 @@ var FatBar = {
         $('#linko-box .homepage').hide();
         var artist = extractArtist(video.title);
         if (artist) {
+            $('#linko-box').addClass('loading');
             var url = 'http://linko.fruktsallad.net/artist/' + artist.replace(' ', '_') + '.json?callback=?';
             $.getJSON(url, {}, function(data) {
+                $('#linko-box').removeClass('loading');
                 if (!data) {
                     return;
                 }
