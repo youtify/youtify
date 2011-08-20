@@ -23,4 +23,4 @@ var Queue = {
 			$(Player._playOrderList[i]).clone().appendTo(q);
 		}
 	}
-}
+};

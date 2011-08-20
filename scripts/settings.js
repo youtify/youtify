@@ -19,8 +19,9 @@ function settings_Init() {
 			settings.save(); 
 		});
 		
-	if (!window.webkitNotifications)
+	if (!window.webkitNotifications) {
 		$('#settings .notifications').hide();
+    }
 	$('#notificationRange').change(function() {
 		$('#notificationRangeText').text(this.value);
 		var settings = new Settings();
@@ -38,7 +39,7 @@ function autoDetectLanguage() {
 
     try {
         var lang = accept_language_header.substring(0, 2);
-        if (lang in supportedLangs) {
+        if (supportedLangs.hasOwnProperty(lang)) {
             return supportedLangs[lang];
         } 
     } catch (e) {
@@ -64,5 +65,5 @@ function Settings() {
 			'quality': this.quality,
 			'announceTimeout': this.announceTimeout
         });
-    }
+    };
 }

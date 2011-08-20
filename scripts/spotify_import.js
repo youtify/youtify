@@ -69,8 +69,9 @@ function SpotifyImporter() {
 				// don't bother asking spotify for a local file
 				id = $.trim(id).replace('http://open.spotify.com/local/', '').replace('spotify:local:', '');
 				var tmpArray = id.split('/');
-				if (tmpArray.length < 2)
+				if (tmpArray.length < 2) {
 					tmpArray = id.split(':');
+                }
 				var artist = tmpArray[0];
 				var title = tmpArray[2];
 			
@@ -86,13 +87,14 @@ function SpotifyImporter() {
 	};
 	
 	this.addFromSpotifyToPlaylist = function(playlist) {
-		if (this._cancel)
+		if (this._cancel) {
 			return;
+        }
 		var self = this;
 		var id;
-		if (this.spotifyIds.length > 0)
+		if (this.spotifyIds.length > 0) {
 			id = this.spotifyIds[0];
-		else {
+		} else {
 			return;
 		}
 
@@ -101,8 +103,9 @@ function SpotifyImporter() {
 		$.getJSON(url, {}, function(data) {
 			if (data !== undefined) {
 				var q = data.track.name;
-				if (data.track.artists.length > 0)
+				if (data.track.artists.length > 0) {
 					q = data.track.artists[0].name + ' - ' + data.track.name;
+                }
 			}
 			self.findAndAddToPlaylist(q, playlist);
 			
@@ -145,8 +148,9 @@ function SpotifyImporter() {
 				var url = item['id']['$t'];
 				var videoId = url.match('videos/(.*)$')[1];
 				var title = item['title']['$t'];
-				if (item['gd$rating'])
+				if (item['gd$rating']) {
 					var rating = item['gd$rating']['average'];
+                }
 				playlist.addVideo(title, videoId);
 				//console.log('addVideo('+title+', '+videoId+');');
 				self.added++;
@@ -164,5 +168,5 @@ function SpotifyImporter() {
 			this.callbackDone();
 		}
 	};
-};
+}
 

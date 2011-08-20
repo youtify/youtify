@@ -100,13 +100,14 @@ function loadClouds() {
 }
 
 function createClouds() {
-	if (!cloudsEnabled)
+	if (!cloudsEnabled) {
 		return;
+    }
 	if (clouds.length === 0) {
 		loadClouds();
 		return;
 	}
-	
+	var i;
 	var windowHeight = $(window).height();
 	var windowWidth = $(window).width();
 	var canvas = $('#canvas')[0];
@@ -115,7 +116,7 @@ function createClouds() {
 	var ctx = canvas.getContext("2d");
 	//var backdrop = ctx.createLinearGradient(0, 0, 0, windowHeight)
 	canvasClouds = [];
-	for(var i = 0; i < 100; i++) {
+	for(i = 0; i < 100; i++) {
 		var rnd = Math.random()*3;
 		var index = parseInt(Math.random()*(clouds.length));
 		var img = clouds[index];
@@ -137,6 +138,7 @@ function createClouds() {
 }
 
 function cloudTravel() {
+    var i;
 	var windowHeight = $(window).height();
 	var windowWidth = $(window).width();
 	var canvas = $('#canvas')[0];
@@ -144,7 +146,7 @@ function cloudTravel() {
 	canvas.height = windowHeight;
 	var ctx = canvas.getContext("2d");
 	
-	for(var i = 0; i < canvasClouds.length; i++) {
+	for(i = 0; i < canvasClouds.length; i++) {
 		var rnd = Math.random()*3;
 		var index = parseInt(Math.random()*(clouds.length));
 		var img = clouds[index];
@@ -152,9 +154,10 @@ function cloudTravel() {
 		var height = parseInt(rnd*$(img).height()) || rnd*200;
 		var x = parseInt((Math.random()*windowWidth) - (width/2));
 		var y = parseInt((windowHeight/2) + (rnd*height -height));
-		canvasClouds[i]['x'] += canvasClouds[i]['speed']
-		if (canvasClouds[i]['x'] > windowWidth)
+		canvasClouds[i]['x'] += canvasClouds[i]['speed'];
+		if (canvasClouds[i]['x'] > windowWidth) {
 			canvasClouds[i]['x'] = -(canvasClouds[i]['width'] + 10);
+        }
 		ctx.drawImage(
 			canvasClouds[i]['img'], 
 			canvasClouds[i]['x'],

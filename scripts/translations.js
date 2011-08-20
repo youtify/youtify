@@ -51,30 +51,30 @@ function changeLanguage(code) {
         translations = data;
 
         $('.translatable').each(function(i, elem) {
-            var elem = $(elem),
-                translationKeys = elem.data('translationKeys') || {},
+            elem = $(elem);
+            var translationKeys = elem.data('translationKeys') || {},
                 key;
 
-            if ('text' in translationKeys) {
+            if (translationKeys.hasOwnProperty('text')) {
                 key = translationKeys.text;
             } else {
                 key = elem.text();
                 translationKeys.text = key;
             }
 
-            if (key in translations) {
+            if (translations.hasOwnProperty(key)) {
                 elem.text(translations[key]);
             }
 
             $.each(TRANSLATABLE_ATTRIBUTES, function(j, attr) {
                 if (elem.attr(attr) !== undefined) {
-                    if (attr in translationKeys) {
+                    if (translationKeys.hasOwnProperty(attr)) {
                         key = translationKeys[attr];
                     } else {
                         key = elem.attr(attr);
                         translationKeys[attr] = key;
                     }
-                    if (key in translations) {
+                    if (translations.hasOwnProperty(key)) {
                         elem.attr(attr, translations[key]);
                     }
                 }
@@ -98,14 +98,14 @@ function findTranslatable(key) {
         elem = $(elem);
         var translationKeys = elem.data('translationKeys') || {};
 
-        if ('text' in translationKeys && translationKeys.text === key) {
+        if (translationKeys.hasOwnProperty('text') && translationKeys.text === key) {
             ret = elem;
             return false;
         }
 
         $.each(TRANSLATABLE_ATTRIBUTES, function(j, attr) {
             if (elem.attr(attr) !== undefined) {
-                if (attr in translationKeys && translationKeys[attr] === key) {
+                if (translationKeys.hasOwnProperty(attr) && translationKeys[attr] === key) {
                     ret = elem;
                     return false;
                 }

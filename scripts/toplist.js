@@ -35,7 +35,7 @@ var BestOfYouTube = {
         });
 
 	}
-}
+};
 
 var TopList = { 
 	select: function() {
@@ -60,4 +60,4 @@ var TopList = {
 
         $('#toplist-tab').removeClass('loading');
 	}
-}
+};

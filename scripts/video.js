@@ -16,10 +16,11 @@ jQuery.fn.play = function() {
 
 function selectVideo(li, event) {
 	if (event !== undefined && (event.ctrlKey || event.metaKey)) {
-		if (li.hasClass('selected'))
+		if (li.hasClass('selected')) {
 			li.removeClass('selected');
-		else
+		} else {
 			li.addClass('selected');
+        }
 	} else if (event !== undefined && event.shiftKey &&  li.siblings('.selected').length > 0) {
 		var elements = [li],
 			found = false;

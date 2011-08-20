@@ -22,7 +22,7 @@ function search_Init() {
 		Search.selectSearchResults();
         var timeout = 0;
 
-        if ($('#search input').val().length > 1 && event.keyCode != 13) {
+        if ($('#search input').val().length > 1 && event.keyCode !== 13) {
             timeout = 500;
         }
         if (timeoutId) {
@@ -33,7 +33,7 @@ function search_Init() {
                 params = null,
                 q = $.trim($('#search input').val());
 
-            if ((q && q !== Search.q) || event.keyCode == 13) {
+            if ((q && q !== Search.q) || event.keyCode === 13) {
                 Search.search(q);
             }
         }, timeout);
@@ -73,15 +73,15 @@ var Search = {
 			Search.playlistsStart = 0;
         }
 
-		var url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?";
-		params = {
-			'alt': 'json-in-script',
-			'max-results': 30,
-			'start-index': Search.playlistsStart + 1,
-			'format': 5,
-			'v': 2,
-			'q': Search.q
-		};
+		var url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?",
+            params = {
+                'alt': 'json-in-script',
+                'max-results': 30,
+                'start-index': Search.playlistsStart + 1,
+                'format': 5,
+                'v': 2,
+                'q': Search.q
+            };
 		
 		$.getJSON(url, params, function(data) {
             $('body').removeClass('searching');
@@ -151,8 +151,9 @@ var Search = {
 				var url = item['id']['$t'];
 				var videoId = url.match('videos/(.*)$')[1];
 				var title = item['title']['$t'];
-				if (item['gd$rating'])
+				if (item['gd$rating']) {
 					var rating = item['gd$rating']['average'];
+                }
 				var resultItem = createResultsItem(title, videoId, rating);
 				resultItem.appendTo('#results');
 				
