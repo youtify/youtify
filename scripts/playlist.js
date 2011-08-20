@@ -89,7 +89,7 @@ function createPlaylistBar(playlist) {
             owner.appendTo(div);
 
             // Add save button if not already saved
-            if (!(playlist.remoteId in playlistManager.getPlaylistsMap())) {
+            if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
                 $('<input type="button" class="save"></button>')
                     .val('Copy playlist')
                     .click(savePlaylistButtonClicked)
@@ -333,7 +333,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
 
         this.videos.push({
             videoId: videoId,
-            title: title,
+            title: title
         });
 
         this.synced = false;
@@ -392,7 +392,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         if (this.remoteId) {
             li.addClass('remote');
         } else {
-            li.addClass('local')
+            li.addClass('local');
         }
 
         if (this.isPrivate) {
@@ -413,9 +413,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     };
 	
 	this.removeDuplicates = function() {
-		var deleted = 0;
-		for (var i = this.videos.length-1; i > 0; i--) {
-			for (var j = i-1; j >= 0; j--) {
+		var deleted = 0,
+            i, j;
+		for (i = this.videos.length-1; i > 0; i--) {
+			for (j = i-1; j >= 0; j--) {
 				if (this.videos[i].videoId === this.videos[j].videoId) {
 					this.deleteVideo(j);
 					deleted++;
@@ -427,4 +428,4 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
 		loadPlaylistView(this);
 		return deleted;
 	};
-};
+}

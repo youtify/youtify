@@ -45,6 +45,6 @@
         }).show();
 
         return this;
-    }
+    };
 
 })(jQuery);

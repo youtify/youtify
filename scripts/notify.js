@@ -6,12 +6,14 @@ var Notification = {
 	show: function(message) {
 		$('#notification span').text(message);
 		
-		if (!$('#notification').is(':visible'))
+		if (!$('#notification').is(':visible')) {
 			$('#notification').slideDown();	
+        }
 	},
 	hide: function() {
-		if ($('#notification').is(':visible'))
+		if ($('#notification').is(':visible')) {
 			$('#notification').slideUp('normal');
+        }
 	},
 	announce: function(message) {
 		if (window.webkitNotifications) {

@@ -1,5 +1,7 @@
 $(window).keydown(function(event) {
-    if ($('input, textarea').is(":focus")) return; // Shouldn't the other keypresses make sure the event isn't propagated here?
+    if ($('input, textarea').is(":focus")) {
+        return; // Shouldn't the other keypresses make sure the event isn't propagated here?
+    }
     
 	//console.log(event.keyCode);
     switch(event.keyCode) {

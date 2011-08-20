@@ -58,14 +58,18 @@ var Player = {
 	},
 	
 	pause: function() {
-		if (!Player._playerReady) return;
+		if (!Player._playerReady) {
+            return;
+        }
 		Player.assertPlayerLoaded();
 		
 		Player._player.pauseVideo();
 	},
 
 	playPause: function() {
-		if (!Player._playerReady) return;
+		if (!Player._playerReady) {
+            return;
+        }
 		Player.assertPlayerLoaded();
 
 		if (Player._player.getPlayerState() === 1) {
@@ -94,8 +98,9 @@ var Player = {
 			if (elem.hasClass('alternative')) {
 				elem = elem.parent().parent().prev();
 			}
-			if (elem.length > 0)
+			if (elem.length > 0) {
 				elem.play();
+            }
 		}
 	},
 	
@@ -140,8 +145,9 @@ var Player = {
 	},
 	
 	addSiblingsToPlayorder: function(startElem, shuffle) {
-		if (startElem === undefined)
+		if (startElem === undefined) {
 			return;
+        }
 		Player._playOrderList = [];
 		Player._playOrderIndex = 0;
 		if (shuffle) {
@@ -152,7 +158,7 @@ var Player = {
 			$.shuffle(Player._playOrderList);
 			// find the start elem and move it to the top of the list
 			$.each(Player._playOrderList, function(index, item) {
-				if (item == startElem) {
+				if (item === startElem) {
 					Player._playOrderList.splice(index, 1);
 					Player._playOrderList.unshift(startElem);
 				}
@@ -191,7 +197,7 @@ var Player = {
 
 		Player._stopTimelineUpdate();
 		
-		if (event.data != 5) {
+		if (event.data !== 5) {
 			if ($('body').hasClass('playing')) {
 				$('body').removeClass('playing');
             }
@@ -211,9 +217,9 @@ var Player = {
 				break;
 			case 1: 
 				// avoid buffer hang at start
-				if (Player._loadingNewVideo)
+				if (Player._loadingNewVideo) {
 					Player._loadingNewVideo = null;
-					
+                }
 				if ($('body').hasClass('paused')) {
 					$('body').removeClass('paused');
                 }
@@ -226,8 +232,9 @@ var Player = {
 				// Avoid buffer hang at end (rare)
 				var pos = Player._player.getCurrentTime();
 				var len = Player._player.getDuration();
-				if (pos > len-2.0 && len > 0)
+				if (pos > len-2.0 && len > 0) {
 					Player.next();
+                }
 				break;
 			case 5:
 				break;
@@ -264,14 +271,16 @@ var Player = {
 	
 	playPrevAlternative: function() {
 		var elem = $('.alternatives li.playing');
-		if (elem && elem.prev())
+		if (elem && elem.prev()) {
 			elem.prev().play();
+        }
 	},
 	
 	playNextAlternative: function() {
 		var elem = $('.alternatives li.playing');
-		if (elem && elem.next())
+		if (elem && elem.next()) {
 			elem.next().play();
+        }
 	},
 	
 	seekForward: function(step) {
@@ -279,12 +288,14 @@ var Player = {
 		
 		var pos = Player._player.getCurrentTime();
 		var len = Player._player.getDuration();
-		if (step !== undefined)
+		if (step !== undefined) {
 			pos += step;
-		else 
+		} else {
 			pos += 10;
-		if (pos > len)
+        }
+		if (pos > len) {
 			return;
+        }
 		Player._player.seekTo(pos, true);
 	},
 
@@ -292,12 +303,14 @@ var Player = {
 		Player.assertPlayerLoaded();
 		
 		var pos = Player._player.getCurrentTime();
-		if (step !== undefined)
+		if (step !== undefined) {
 			pos -= step;
-		else 
+		} else {
 			pos -= 10;
-		if (pos < 0)
+        }
+		if (pos < 0) {
 			pos = 0;
+        }
 		Player._player.seekTo(pos, true);
 	},
 	
@@ -389,12 +402,14 @@ var Player = {
 		}
 		
 		var volume = Player._player.getVolume();
-		if (step !== undefined)
+		if (step !== undefined) {
 			volume += step;
-		else 
+		} else {
 			volume += 5;
-		if (volume > 100)
+        }
+		if (volume > 100) {
 			volume = 100;
+        }
 		Player._player.setVolume(volume);
 	},
 	
@@ -404,12 +419,14 @@ var Player = {
 		}
 		
 		var volume = Player._player.getVolume();
-		if (step !== undefined)
+		if (step !== undefined) {
 			volume -= step;
-		else 
+		} else {
 			volume -= 5;
-		if (volume < 0)
+        }
+		if (volume < 0) {
 			volume = 0;
+        }
 		Player._player.setVolume(volume);
 	},
 	
@@ -418,14 +435,16 @@ var Player = {
 			return;
 		}
 		
-		if (volume === undefined || volume > 100)
+		if (volume === undefined || volume > 100) {
 			volume = 100;
-		if (volume < 0)
+        }
+		if (volume < 0) {
 			volume = 0;
+        }
 		Player._player.setVolume(volume);
 	},
 	
-	loadTitle: function(videoId) { 
+	loadTitle: function(videoId, callback) { 
 		var url = "http://gdata.youtube.com/feeds/api/videos?callback=?";
 		var params = {
 			'alt': 'json-in-script',
@@ -480,4 +499,4 @@ var Player = {
 		}
 		return Player._playerReady;
 	}
-}
+};

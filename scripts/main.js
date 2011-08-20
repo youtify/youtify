@@ -10,7 +10,7 @@
 
 Date.prototype.getWeek = function (dowOffset) {
 	/*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.meanfreepath.com */
-	dowOffset = typeof(dowOffset) == 'int' ? dowOffset : 0; //default dowOffset to zero
+	dowOffset = typeof(dowOffset) === 'int' ? dowOffset : 0; //default dowOffset to zero
 	var newYear = new Date(this.getFullYear(),0,1);
 	var day = newYear.getDay() - dowOffset; //the day of week the year begins on
 	day = (day >= 0 ? day : day + 7);
@@ -20,6 +20,7 @@ Date.prototype.getWeek = function (dowOffset) {
 	if(day < 4) {
 		weeknum = Math.floor((daynum+day-1)/7) + 1;
 		if(weeknum > 52) {
+            var nYear, nday;
 			nYear = new Date(this.getFullYear() + 1,0,1);
 			nday = nYear.getDay() - dowOffset;
 			nday = nday >= 0 ? nday : nday + 7;
@@ -53,7 +54,7 @@ function toggle(feed, parameters) {
 
 function getVidsInPlaylist(playlistId, callback, parameters, start, feed) {
 	if (!parameters['playlist'].hasClass('loading')) {
-		parameters['playlist'].addClass('loading')
+		parameters['playlist'].addClass('loading');
     }
 	if (start === undefined) {
 		start = 1;
