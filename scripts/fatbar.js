@@ -45,8 +45,9 @@ var FatBar = {
 				var url = item['id']['$t'];
 				var videoId = url.match('video:(.*)$')[1];
 				var title = item['title']['$t'];
-				if (item['gd$rating'])
+				if (item['gd$rating']) {
 					var rating = item['gd$rating']['average'];
+                }
 				var resultItem = createResultsItem(title, videoId, rating);
 				resultItem.appendTo($('#related'));
 			}); 
@@ -81,11 +82,11 @@ var FatBar = {
                     return;
                 }
 
-                if ('artist_name' in data) {
+                if (data.hasOwnProperty('artist_name')) {
                     $('#linko-box .name').text(data.artist_name).show();
                 }
 
-                if ('Official Homepage' in data.links) {
+                if (data.links.hasOwnProperty('Official Homepage')) {
                     $('#linko-box .homepage').text(data.links['Official Homepage']).attr('href', data.links['Official Homepage']);
                     $('#linko-box .homepage').show();
                 }

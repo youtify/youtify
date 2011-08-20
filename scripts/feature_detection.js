@@ -1,24 +1,28 @@
 var CSSDetect = function() {  
     var 
-        props = "textShadow,boxShadow,borderRadius,opacity".split(","), 
-        CSSprefix = "Webkit,Moz,O,ms,Khtml".split(","), 
+        props = ["textShadow", "boxShadow", "borderRadius", "opacity"], 
+        CSSprefix = ["Webkit", "Moz", "O", "ms", "Khtml"], 
         d = document.createElement("detect"), 
         test = [], 
         p, pty; 
     // test prefixed code  
     function TestPrefixes(prop) { 
         var 
+            n, np,
             Uprop = prop.charAt(0).toUpperCase() + prop.substr(1), 
             All = (prop + ' ' + CSSprefix.join(Uprop + ' ') + Uprop).split(' '); 
-        for (var n = 0, np = All.length; n < np; n++) { 
-            if (d.style[All[n]] === "") return true; 
+        for (n = 0, np = All.length; n < np; n++) { 
+            if (d.style[All[n]] === "") {
+                return true; 
+            }
         } 
         return false; 
     } 
     for (p in props) { 
         pty = props[p]; 
-        if (TestPrefixes(pty) === false)
+        if (new TestPrefixes(pty) === false) {
 			return false;
+        }
     }
     return true;
 };
@@ -29,8 +33,8 @@ var JSDetect = function() {
 		history.pushState,
 		JSON.parse,
 		JSON.stringify
-	];
-	for (var i = 0; i < list.length; i++) {
+	], i;
+	for (i = 0; i < list.length; i++) {
 		//alert('typeof ' + typeof list[i]);
 		if (typeof list[i] === 'undefined') {
 			return false;
@@ -40,11 +44,11 @@ var JSDetect = function() {
 };
 
 function checkBrowser() {
-	if (!CSSDetect() || !JSDetect()) {
+	if (new CSSDetect() === false || new JSDetect() === false) {
 		window.location = '/yourbrowsersucks';
         return false;
 	} else {
         return true;
     }
-};
+}
 checkBrowser();

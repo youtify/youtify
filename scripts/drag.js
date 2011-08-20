@@ -5,7 +5,7 @@ var mousedown = false,
     mousedrag = false,
     sourceElem = null, // the REAL dragged element
     dragElem = null, // dragged element copy
-    timeOfMouseDown = null;
+    timeOfMouseDown = null,
     dropCallbacks = [],
     MOUSE_DRAG_TIMEOUT = 100, // Milliseconds until drag kicks in
     mouseDraggedCallback = null;
@@ -16,7 +16,7 @@ function registerDropCallback(f) {
 
 function removeTargetClasses() {
     $('.target').removeClass('target');
-    $('.insert-before').removeClass('insert-before')
+    $('.insert-before').removeClass('insert-before');
     $('.insert-after').removeClass('insert-after');
     $('.alert').removeClass('alert');
 }
@@ -40,8 +40,9 @@ function dragStarted(event) {
 		var titles = sourceElem.find('.title').not(sourceElem.find('.alternative > .title'));
 		$.each(titles, function(index, item) {
 			text += $(item).text();
-			if (index < titles.length-1)
+			if (index < titles.length-1) {
 				text += '<br />';
+            }
 		});
 	} else {
 		text = sourceElem.text();
@@ -184,7 +185,7 @@ mouseDraggedCallback = function(targetElem, sourceElem) {
     if (targetElem.attr('id') === 'results-container' && sourceElem.hasClass('video')) {
         $('#playlist .video:last').addClass('insert-after');
     }
-}
+};
 
 // VIDEO DROPPED ON #results-container
 registerDropCallback(function (dragElem, sourceElem, targetElem) {

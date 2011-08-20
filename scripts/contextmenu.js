@@ -26,9 +26,9 @@ function showContextMenu(buttons, event) {
 	// Move menu if it overflows
 	var bottom = parseInt(contextmenu.css('top')) + (30*buttons.length);
 	var diff = bottom - $(window).height();
-	if (diff > 0)
+	if (diff > 0) {
 		contextmenu.css('top', parseInt(contextmenu.css('top')) - diff + 'px');	
-	
+	}
     // Set up a blocker div that closes the menu when clicked
     var blocker = $('<div id="context-menu-blocker"></div>').mousedown(function(event) {
         $('#context-menu-blocker, #contextmenu').remove();
@@ -59,7 +59,7 @@ function showPlaylistContextMenu(event) {
             title: 'Remove duplicate videos',
             li: $(this),
             callback: function(li) {
-                var index = li.index();
+                var index = li.index(),
                     playlist = playlistManager.getPlaylist(index);
 				if (confirm(translations['This will delete duplicate videos from your playlist. Continue?'])) {
 					Notification.show(playlist.removeDuplicates() + translations[' duplicates removed.']);
@@ -104,7 +104,7 @@ function showPlaylistContextMenu(event) {
             title: 'Delete',
             li: $(this),
             callback: function(li) {
-                var index = li.index();
+                var index = li.index(),
                     playlist = playlistManager.getPlaylist(index);
 
                 if (confirm("Are you sure you want to delete this playlist (" + playlist.title + ")?")) {
@@ -202,8 +202,9 @@ function showResultsItemContextMenu(event) {
 						var url = item['id']['$t'];
 						var videoId = url.match('video:(.*)$')[1];
 						var title = item['title']['$t'];
-						if (item['gd$rating'])
+						if (item['gd$rating']) {
 							var rating = item['gd$rating']['average'];
+                        }
 						var resultItem = createResultsItem(title, videoId, rating);
 						resultItem.appendTo($('#results'));
 					}); 
