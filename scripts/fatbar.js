@@ -77,24 +77,29 @@ var FatBar = {
 	},
     _loadLinkosBox: function(video) {
         $('#linko-box .name').text('');
-        $('#linko-box .homepage').hide();
+        $('#linko-box .links').html('');
         var artist = extractArtist(video.title);
         if (artist) {
             $('#linko-box').addClass('loading');
             var url = 'http://linko.fruktsallad.net/artist/' + artist.replace(' ', '_') + '.json?callback=?';
             $.getJSON(url, {}, function(data) {
                 $('#linko-box').removeClass('loading');
-                if (!data) {
+
+                if (!data || !data.links || !data.hasOwnProperty('artist_name')) {
                     return;
                 }
 
-                if (data.hasOwnProperty('artist_name')) {
-                    $('#linko-box .name').text(data.artist_name).show();
-                }
+                $('#linko-box .name').text(data.artist_name)
 
-                if (data.links.hasOwnProperty('Official Homepage')) {
-                    $('#linko-box .homepage').text(data.links['Official Homepage']).attr('href', data.links['Official Homepage']);
-                    $('#linko-box .homepage').show();
+                for (key in data.links) {
+                    if (data.links.hasOwnProperty(key)) {
+                        var url = data.links[key],
+                            li = $('<li></li>'),
+                            a = $('<a target="_blank"></a>').attr('href', url).text(key);
+
+                        a.appendTo(li);
+                        li.appendTo($('#linko-box .links'));
+                    }
                 }
             });
         }

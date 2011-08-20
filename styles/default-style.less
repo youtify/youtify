@@ -290,13 +290,17 @@ body {
     background-color: @selected-color;
     color: @text-color-2;
 }
-#fatbar #linko-box .homepage,
-#fatbar #linko-box .homepage:visited {
-	text-decoration: underline;
-	color: @text-color-1;
-}
 #fatbar .box.loading {
     background: url(/images/loading.gif) center center no-repeat;
+}
+#fatbar #linko-box a,
+#fatbar #linko-box a:visited {
+	text-decoration: none;
+	color: @text-color-1;
+}
+#fatbar #linko-box .links li {
+    list-style-type: circle;
+    margin: 4px 10px;
 }
 
 /* TIMELINE
