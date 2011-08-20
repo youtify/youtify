@@ -456,8 +456,14 @@ var Player = {
 		};
 		Player.setTitle('');
 		$.getJSON(url, params, function(data) {
+            
 			if (data.feed.entry) {
-                var title = data.feed.entry[0].item['title']['$t'];
+                var title;
+                if (data.feed.entry[0]['title']['$t']) {
+                    title = data.feed.entry[0]['title']['$t'];
+                } else {
+                    return;
+                }
                 Player.setTitle(title);
                 if (callback) {
                     callback(title);
