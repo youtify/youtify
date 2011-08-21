@@ -7,6 +7,7 @@ import toplist
 from model import get_current_youtify_user
 from model import create_youtify_user
 import random
+import re
 
 class MainHandler(webapp.RequestHandler):
 
@@ -21,7 +22,14 @@ class MainHandler(webapp.RequestHandler):
             youtify_user = create_youtify_user()
 
         ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
-
+        
+        # Find videotag and generate open graph meta tags
+        match = re.compile(r'videos/(.*)').search(self.request.url)
+        if match: 
+            og_tag = '<meta property="og:video" content="http://www.youtube.com/v/' + match.groups()[0] + '?version=3&amp;autohide=1"/><meta property="og:video:type" content="application/x-shockwave-flash"/><meta property="og:video:width" content="396"/><meta property="og:video:height" content="297"/>'
+        else:
+            og_tag = ''
+        
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
@@ -35,6 +43,7 @@ class MainHandler(webapp.RequestHandler):
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,
 			'url': self.request.url,
+            'og_tag': og_tag,
         }))
 
 def main():
