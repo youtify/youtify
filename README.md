@@ -10,17 +10,17 @@ Filenames are always lowercase with no spaces or underscores. Example:
 
     contextmenu.js
 
-Namespaces are always CamelCased. Example:
+Namespaces are always PascalCased. Example:
 
     var TopList = {
     }
 
-Classes are always CamelCased. Example:
+Classes are always PascalCased. Example:
 
     function PlaylistManager(foo, bar) {
     }
 
-Variables are pascelCased. Example:
+Variables are camelCased. Example:
 
     var playlistManager = ...;
 
