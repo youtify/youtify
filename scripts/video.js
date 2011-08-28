@@ -94,6 +94,16 @@ function createResultsItem(title, videoId, rating) {
         })
 		.appendTo(li);
 
+    $('<span></span')
+        .addClass('contextmenu')
+        .addClass('clickable')
+        .text('▽')
+        .click(function(event) {
+            var li = $(this).parent();
+            li.trigger('contextmenu');
+        })
+        .appendTo(li);
+
     if (rating !== undefined) {
         //createRatingBar(rating).appendTo(li); // disabled until we can sort by it and appropriately describe what it is
     }

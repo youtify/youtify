@@ -4,12 +4,8 @@ $(window).keyup(function (event) {
     }
 });
 
-function showContextMenu(buttons, event) {
-    var contextmenu = $('<ul id="contextmenu" />')
-        .css({
-            'top': event.pageY,
-            'left': event.pageX
-        });
+function showContextMenu(buttons, x, y) {
+    var contextmenu = $('<ul id="contextmenu" />');
 
     $.each(buttons, function(i, item) {
         $('<li class="option" />')
@@ -22,13 +18,7 @@ function showContextMenu(buttons, event) {
             })
             .appendTo(contextmenu);
     });
-	
-	// Move menu if it overflows
-	var bottom = parseInt(contextmenu.css('top')) + (30*buttons.length);
-	var diff = bottom - $(window).height();
-	if (diff > 0) {
-		contextmenu.css('top', parseInt(contextmenu.css('top')) - diff + 'px');	
-	}
+
     // Set up a blocker div that closes the menu when clicked
     var blocker = $('<div id="context-menu-blocker"></div>').mousedown(function(event) {
         $('#context-menu-blocker, #contextmenu').remove();
@@ -37,6 +27,18 @@ function showContextMenu(buttons, event) {
 
     blocker.appendTo('body');
     contextmenu.appendTo('body');
+
+	// Make sure contextmenu does not reach outside the window
+	if ((y + contextmenu.height()) > $(window).height()) {
+		y -= contextmenu.height();
+	}
+    if ((x + contextmenu.width()) > $(window).width()) {
+        x -= contextmenu.width();
+    }
+    contextmenu.css({
+        'top': y,
+        'left': x
+    });
 
     // Finally, prevent contextmenu on our contextmenu :)
     $('#context-menu-blocker, #contextmenu, #contextmenu li.option').bind('contextmenu', function (event) {
@@ -163,7 +165,7 @@ function showPlaylistContextMenu(event) {
         });
     }
 
-    showContextMenu(buttons, event);
+    showContextMenu(buttons, event.pageX, event.pageY);
 }
 
 function showResultsItemContextMenu(event) {
@@ -226,5 +228,5 @@ function showResultsItemContextMenu(event) {
 
     buttons = $.merge(buttons, $(this).data('additionalMenuButtons'));
 
-    showContextMenu(buttons, event);
+    showContextMenu(buttons, (event.pageX || $(this).offset().left + $(this).width()) , (event.pageY || $(this).offset().top));
 }
