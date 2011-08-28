@@ -62,6 +62,7 @@ var FatBar = {
 	},
 	_loadVideoInfo: function(video) {
 		$('#video-info-box .uploader').text('');
+		$('#video-info-box .description').text('');
 		$('#video-info-box').addClass('loading');
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "?callback=?";
 		var params = {
@@ -73,6 +74,11 @@ var FatBar = {
             $('#video-info-box').removeClass('loading');
 			var author = data.entry.author[0].name.$t;
 			var uri = data.entry.author[0].uri.$t;
+            try {
+                var description = data.entry.media$group.media$description.$t;
+                $('#video-info-box .description').text(description);
+            } catch (e) {
+            }
 			$('#video-info-box .uploader')
 				.click(function() {
 					Uploader.loadVideosFromURI(uri);
