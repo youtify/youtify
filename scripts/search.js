@@ -54,6 +54,8 @@ var Search = {
             q = Search.q;
         }
 
+        history.pushState(null, null, encodeURI('/search?q=' + q));
+
         $('body').addClass('searching');
 
         $('#results').html('');
