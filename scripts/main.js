@@ -119,7 +119,7 @@ $(window).load(function() {
 });
 
 // GLOBALS
-var playlistManager = new PlaylistsManager();
+var playlistManager;
 
 $(document).ready(function() {
     var settings = new Settings();
@@ -167,6 +167,7 @@ $(document).ready(function() {
 	
 	//Notification.show('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 	
+    playlistManager = new PlaylistsManager();
 	volume_Init();
 	video_Init();
 	translations_Init();
