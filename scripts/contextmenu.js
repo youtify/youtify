@@ -173,6 +173,13 @@ function showResultsItemContextMenu(event) {
 
     var buttons = [
         {
+            title: 'Play',
+            li: $(this),
+            callback: function(li) {
+                li.play();
+            }
+        },
+        {
             title: 'Watch on YouTube',
             li: $(this),
             callback: function(li) {
