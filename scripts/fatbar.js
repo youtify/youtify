@@ -86,7 +86,7 @@ var FatBar = {
         var artist = extractArtist(video.title);
         if (artist) {
             $('#linko-box').addClass('loading');
-            var url = 'http://linko.fruktsallad.net/artist/' + artist.replace(' ', '_') + '.json?callback=?';
+            var url = 'http://linko.fruktsallad.net/artist/' + (artist.replace(' ', '_')) + '.json?callback=?';
             $.getJSON(url, {}, function(data) {
                 $('#linko-box').removeClass('loading');
 
