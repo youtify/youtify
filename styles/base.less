@@ -777,17 +777,22 @@ body.searching #search .loader {
     width: 100%;
     z-index: 100;
 	background-color: #fdfea2;
-	padding: 14px 0 14px 20px;
 	cursor: pointer;
 	display: none;
-	max-height: 45px;
+	height: 50px;
 }
 #notification:hover {
 	background-color: #fafbb9;	
 }
-#notification span {
+#notification .content {
+    float: left;
+    margin: 14px 100px 14px 14px;
 	font-size: 16px;
 	color: #000;
+}
+#notification .close {
+    float: right;
+    margin: 14px;
 }
 
 /* FATBAR
