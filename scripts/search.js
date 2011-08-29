@@ -185,7 +185,7 @@ var Search = {
 		var url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
 		var params = {
 			'alt': 'json-in-script',
-			'max-results': 50,
+			'max-results': 10,
 			'start-index': 1,
 			'format': 5,
 			'q': elem.find('.title').text()
@@ -204,20 +204,26 @@ var Search = {
 			$.each(data.feed.entry, function(i, item) {
 				var url = item['id']['$t'];
 				var videoId = url.match('videos/(.*)$')[1];
-				var title = item['title']['$t'];
-				var alternativeItem = createResultsItem(title, videoId).addClass('alternative');
+                if (videoId !== elem.data('videoId')) {
+                    var title = item['title']['$t'];
+                    var alternativeItem = createResultsItem(title, videoId).addClass('alternative');
 
-				var next = $('<input type="button" value="Next alternative &raquo" />').addClass('next').click(function() {
-					Player.playNextAlternative();
-				});
-				next.appendTo(alternativeItem);
+                    $('<input type="button" value="Next alternative &raquo" />')
+                        .addClass('next')
+                        .click(function() {
+                            Player.playNextAlternative();
+                        })
+                        .appendTo(alternativeItem);
 
-				var prev = $('<input type="button" value="&laquo" />').addClass('prev').click(function() {
-					Player.playPrevAlternative();
-				});
-				prev.appendTo(alternativeItem);
+                    $('<input type="button" value="&laquo" />')
+                        .addClass('prev')
+                        .click(function() {
+                            Player.playPrevAlternative();
+                        })
+                        .appendTo(alternativeItem);
 
-				alternativeItem.appendTo(list);
+                    alternativeItem.appendTo(list);
+                }
 			});
 			
 			list.appendTo(elem);
