@@ -44,7 +44,7 @@ var JSDetect = function() {
 };
 
 function checkBrowser() {
-	if (new CSSDetect() === false || new JSDetect() === false) {
+	if (CSSDetect() === false || JSDetect() === false) {
 		window.location = '/yourbrowsersucks';
         return false;
 	} else {
