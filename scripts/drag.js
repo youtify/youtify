@@ -229,7 +229,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.attr('id') === 'new-playlist' && sourceElem.hasClass('video')) {
         pendingVideo = {
-            title: sourceElem.text(),
+            title: sourceElem.find('.title').text(),
             videoId: sourceElem.data('videoId')
         };
         $('#new-playlist span').click();
@@ -240,7 +240,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.attr('id') === 'new-playlist' && sourceElem.attr('id') === 'info') {
         pendingVideo = {
-            title: sourceElem.text(),
+            title: sourceElem.find('.title').text(),
             videoId: Player.getCurrentVideoId()
         };
         $('#new-playlist span').click();
