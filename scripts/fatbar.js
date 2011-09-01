@@ -80,6 +80,7 @@ var FatBar = {
             } catch (e) {
             }
 			$('#video-info-box .uploader')
+                .unbind('click')
 				.click(function() {
 					Uploader.loadVideosFromURI(uri);
 				})
