@@ -218,10 +218,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.unsync = function(callback) {
         $.ajax({
             type: 'DELETE',
-            url: '/api/playlists/' + this.remoteId + '?device=' + device,
-			data: { 
-				'device': device 
-			},
+            url: '/api/playlists/' + this.remoteId,
 			statusCode: {
 				200: function(data) {
 					if (callback) {

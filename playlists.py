@@ -55,15 +55,9 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
-        device = self.request.get('device')
 
         if playlist_model.owner.key() == youtify_user.key():
-            if youtify_user.device != device:
-                self.error(409)
-                self.response.out.write('wrong_device')
-                return
-            else:
-                playlist_model.delete()
+            playlist_model.delete()
         else:
             self.error(403)
 
