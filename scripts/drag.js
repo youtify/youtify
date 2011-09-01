@@ -163,7 +163,8 @@ $(window).mouseup(function (event) {
     }
 });
 
-$(window).mousedown(function (event) {
+
+$('.draggable').live('mousedown', function (event) {
     timeOfMouseDown = new Date().getTime();
     if ($(event.target).hasClass('draggable') || 
 		$(event.target).parents('.draggable') ) {
