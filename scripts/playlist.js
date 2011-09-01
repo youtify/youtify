@@ -113,16 +113,18 @@ function loadPlaylistView(playlist) {
     $('#playlist').html('');
 
     $.each(playlist.videos, function(i, item) {
-        var li = createResultsItem(item.title, item.videoId);
-        li.data('additionalMenuButtons').push({
-            title: 'Delete',
-            li: li,
-            callback: deleteVideoButtonClicked
-        });
-        li.addClass('droppable');
-        li.addClass('draggable');
-        li.addClass('reorderable');
-        li.appendTo('#playlist');
+        if (item) {
+            var li = createResultsItem(item.title, item.videoId);
+            li.data('additionalMenuButtons').push({
+                title: 'Delete',
+                li: li,
+                callback: deleteVideoButtonClicked
+            });
+            li.addClass('droppable');
+            li.addClass('draggable');
+            li.addClass('reorderable');
+            li.appendTo('#playlist');
+        }
     });
 
 	$('#playlist').show();
