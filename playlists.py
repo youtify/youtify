@@ -27,8 +27,12 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
-        json = self.request.get('json')
+        json = self.request.get('json', None)
         device = self.request.get('device')
+
+        if json is None:
+            self.error(400)
+            return
 
         if playlist_model.owner.key() == youtify_user.key():
             if youtify_user.device != device:
