@@ -11,6 +11,7 @@ var Player = {
 		'', ''], // One for each week :)
 	_playbackQuality: ['small', 'medium', 'large', 'hd720', 'hd1080', 'highres'],
 	_isFullscreen: false,
+	_lastVideoId: null,
 	_currentVideoId: null,
 	_loadingNewVideo: null, // avoid buffer hang at start
 	_playOrderIndex: 0,
@@ -22,6 +23,9 @@ var Player = {
     },
 	
 	play: function(videoId, title) {
+        if (Player._lastVideoId !== Player._currentVideoId) {
+            FatBar.clear();
+        }
         $('#video-actions').show();
 		if (videoId !== undefined) {
             history.pushState(null, null, '/videos/' + videoId);
@@ -41,13 +45,8 @@ var Player = {
 			
 			if (title !== undefined) {
 				Player.setTitle(title);
-                if (FatBar.isVisible()) {
-                    FatBar.loadFromVideo(new Video(videoId, title));
-                }
 			} else {
-				Player.loadTitle(videoId, function(title) {
-                    FatBar.loadFromVideo(new Video(videoId, title));
-                });
+				Player.loadTitle(videoId);
 			}
 			// avoid buffer hang at start
 		} else {
@@ -191,6 +190,13 @@ var Player = {
             }
         }, 1000);
 	},
+
+    _startedPlayingVideoSuccessfully: function() {
+        var title = $('#info .title').text();
+        if (FatBar.isVisible()) {
+            FatBar.loadFromVideo(new Video(Player._currentVideoId, title));
+        }
+    },
 	
 	onPlayerStateChange: function(event) {
 		//unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5)
@@ -225,6 +231,10 @@ var Player = {
                 }
 				$('body').addClass('playing');
 				Player._startTimelineUpdate();
+                if (Player._lastVideoId !== Player._currentVideoId) {
+                    Player._startedPlayingVideoSuccessfully();
+                    Player._lastVideoId = Player._currentVideoId;
+                }
 				break;
 			case 2:
 				break;
@@ -444,7 +454,7 @@ var Player = {
 		Player._player.setVolume(volume);
 	},
 	
-	loadTitle: function(videoId, callback) { 
+	loadTitle: function(videoId) {
 		var url = "http://gdata.youtube.com/feeds/api/videos?callback=?";
 		var params = {
 			'alt': 'json-in-script',
@@ -465,9 +475,6 @@ var Player = {
                     return;
                 }
                 Player.setTitle(title);
-                if (callback) {
-                    callback(title);
-                }
             }
 		});
 	},

@@ -14,6 +14,16 @@ var FatBar = {
 		FatBar._loadRelatedInfo(video);
 		FatBar._loadLinkosBox(video);
 	},
+    clear: function() {
+		$('#video-info-box .uploader').text('');
+		$('#video-info-box .description').text('');
+		$('#video-info-box span').hide();
+
+		$('#related').html('');
+
+        $('#linko-box .name').text('');
+        $('#linko-box .links').html('');
+    },
     show: function() {
         if (Player.getCurrentVideoId()) {
             var videoId = Player.getCurrentVideoId();
@@ -38,7 +48,7 @@ var FatBar = {
     },
 	_loadRelatedInfo: function(video) {
 		$('#related-box').addClass('loading');
-		$('#related').html('').show();
+		$('#related').show();
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "/related?callback=?";
 		var params = {
 			'alt': 'json-in-script',
@@ -61,8 +71,6 @@ var FatBar = {
 		});
 	},
 	_loadVideoInfo: function(video) {
-		$('#video-info-box .uploader').text('');
-		$('#video-info-box .description').text('');
 		$('#video-info-box').addClass('loading');
 		var url = "http://gdata.youtube.com/feeds/api/videos/" + video.videoId + "?callback=?";
 		var params = {
@@ -72,6 +80,7 @@ var FatBar = {
 		};
 		$.getJSON(url, params, function(data) {
             $('#video-info-box').removeClass('loading');
+            $('#video-info-box span').show();
 			var author = data.entry.author[0].name.$t;
 			var uri = data.entry.author[0].uri.$t;
             try {
@@ -88,8 +97,6 @@ var FatBar = {
 		});
 	},
     _loadLinkosBox: function(video) {
-        $('#linko-box .name').text('');
-        $('#linko-box .links').html('');
         var artist = extractArtist(video.title);
         if (artist) {
             $('#linko-box').addClass('loading');
