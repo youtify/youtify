@@ -183,16 +183,11 @@ var Player = {
 		var videoId = Player.getCurrentVideoId();
         document.title = "Youtify - " + title;
 		$('#info .title').text(title).attr('title', title);
-		
-        setTimeout(function() {
-            if (videoId === Player.getCurrentVideoId()) {
-                Notification.announce(title);
-            }
-        }, 1000);
 	},
 
     _startedPlayingVideoSuccessfully: function() {
         var title = $('#info .title').text();
+        Notification.announce(title);
         if (FatBar.isVisible()) {
             FatBar.loadFromVideo(new Video(Player._currentVideoId, title));
         }
