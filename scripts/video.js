@@ -131,7 +131,7 @@ function showVideoSharePopup(videoId, title, elem, arrowDirection) {
 
     $('#share-video-popup .twitter')
         .unbind('click')
-        .click(function() {
+        .click(function(event) {
             event.preventDefault();
             window.open(video.getTwitterShareUrl(), 'Share video on Twitter', 400, 400);
             return false;
@@ -139,7 +139,7 @@ function showVideoSharePopup(videoId, title, elem, arrowDirection) {
 
     $('#share-video-popup .facebook')
         .unbind('click')
-        .click(function() {
+        .click(function(event) {
             event.preventDefault();
             window.open(video.getFacebookShareUrl(), 'Share video on Facebook', 400, 400);
             return false;
