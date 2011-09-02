@@ -9,10 +9,14 @@ function fatBar_Init() {
 }
 
 var FatBar = {
+    _lastLoadedVideoId: null,
 	loadFromVideo: function(video) {
-		FatBar._loadVideoInfo(video);
-		FatBar._loadRelatedInfo(video);
-		FatBar._loadLinkosBox(video);
+        if (video.videoId !== FatBar._lastLoadedVideoId) {
+            FatBar._lastLoadedVideoId = video.videoId;
+            FatBar._loadVideoInfo(video);
+            FatBar._loadRelatedInfo(video);
+            FatBar._loadLinkosBox(video);
+        }
 	},
     clear: function() {
 		$('#video-info-box .uploader').text('');
