@@ -18,9 +18,9 @@ function linkify(inputText) {
 
     replacedText = inputText;
 
-    replacedText = replacedText.replace('&', '&amp;');
-    replacedText = replacedText.replace('<', '&lt;');
-    replacedText = replacedText.replace('>', '&gt;');
+    replacedText = replacedText.replace(/&/g, '&amp;');
+    replacedText = replacedText.replace(/</g, '&lt;');
+    replacedText = replacedText.replace(/>/g, '&gt;');
 
     //URLs starting with http://, https://, or ftp://
     replacePattern1 = /(\b(http?|https):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
