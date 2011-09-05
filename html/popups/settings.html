@@ -31,6 +31,9 @@
         <div id="themes-wamp" style="background-color: #1FCB29;"></div>
         <div id="themes-wlive" style="background-color: #02658E;"></div>
         <div id="themes-cloud" style="background-color: #5082B4;"></div>
+        {% if not ON_PRODUCTION %}
+            <div id="themes-new" style="background-color: #4794E2;"></div>
+        {% endif %}
         <span class="translatable">Choose theme</span>
     </div>
 </div>

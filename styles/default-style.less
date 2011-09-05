@@ -47,6 +47,7 @@
     background:linear-gradient(center bottom, rgb(94,94,94) 0%, rgb(114,114,114) 100%);
     border-top: 1px solid rgb(29,29,29);
     border-bottom: 1px solid rgb(114,114,114);
+    color: @text-color-1;
 }
 
 /* DEFAULT
@@ -167,6 +168,7 @@ body {
 
 #search > input[type=text] {
     border: 0;
+    box-shadow: none;
 	background: @background-color-2;
     .border(30px);
 }
@@ -291,7 +293,7 @@ body {
     color: @text-color-2;
 }
 #fatbar .box.loading {
-    background: url(/images/loading.gif) center center no-repeat;
+    background: url('/images/loading.gif') center center no-repeat;
 }
 #fatbar a,
 #fatbar a:visited {

@@ -50,6 +50,12 @@ function themes_Init() {
 			createClouds();
         }
 	});
+    $('#themes-new').hover(function() {
+		$('#settings .themes span').text('New default');
+	}).click(function(event) {
+		changeTheme('new');
+		event.stopPropagation();
+	});
 }
 
 function changeTheme(themeName) {
