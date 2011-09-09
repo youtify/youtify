@@ -9,7 +9,7 @@ var URIManager = {
     },
     loadWarnings: function() {
         if (window.top !== window.self) {
-            Notification.show('This address is not affiliated with Youtify. Always use <a href="http://www.youtify.com/">http://www.youtify.com/</a>');
+            Notification.show('This address is not affiliated with Youtify. Always use <a href="http://www.youtify.com/" target="_top">http://www.youtify.com/</a>');
         }
     },
     loadState: function() {
