@@ -43,7 +43,14 @@ var JSDetect = function() {
 	return true;
 };
 
+var domainDetection = function() {
+    if (top.location.href.indexOf('youtify.com') === -1 && top.location.href.indexOf('http://localhost') !== 0) {
+        top.location.href = 'http://www.youtify.com/domainwarning?domain=' + encodeURI(top.location.href);
+    }
+}
+
 function checkBrowser() {
+    domainDetection();
 	if (CSSDetect() === false || JSDetect() === false) {
 		window.location = '/yourbrowsersucks';
         return false;

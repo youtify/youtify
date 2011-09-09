@@ -4,7 +4,7 @@ function notification_Init() {
 
 var Notification = {
 	show: function(message) {
-		$('#notification .content').text(message);
+		$('#notification .content').html(message);
 		
 		if (!$('#notification').is(':visible')) {
 			$('#notification').slideDown();	

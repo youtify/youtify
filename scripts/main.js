@@ -115,7 +115,6 @@ $(window).load(function() {
 	$(window).resize();
 	$('#loading span').text('Done');
 	$('#loading').fadeOut();
-    loadUrl();
 });
 
 // GLOBALS
@@ -159,11 +158,6 @@ $(document).ready(function() {
 	$('#logo').click(function() {
 		Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
 	});
-
-    // Initially show Top 100 if not a playlist should be loaded instead.
-    if (location.pathname === '/') {
-        TopList.select();
-    }
 	
 	//Notification.show('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 	
@@ -181,6 +175,8 @@ $(document).ready(function() {
     notification_Init();
     leftmenu_Init();
     fatBar_Init();
+    
+    url_Init();
 });
 
 function onYouTubePlayerAPIReady() {
