@@ -1,5 +1,8 @@
 function notification_Init() {
 	$('#notification').click( Notification.hide );
+    $('#notification .content a').live('click', function(event) { 
+        event.stopPropagation(); 
+    });
 }
 
 var Notification = {
