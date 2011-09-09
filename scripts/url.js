@@ -8,9 +8,8 @@ var URIManager = {
         URIManager.loadState();
     },
     loadWarnings: function() {
-        var domainwarning = 'domainwarning?domain=';
-        if (location.href.indexOf(domainwarning) > 0) {
-            Notification.show(decodeURI(location.href.substring(domainwarning.length + location.href.indexOf(domainwarning))) + ' is not affiliated with Youtify. Always use <a href="http://www.youtify.com/">http://www.youtify.com/</a>');
+        if (window.top !== window.self) {
+            Notification.show('This address is not affiliated with Youtify. Always use <a href="http://www.youtify.com/">http://www.youtify.com/</a>');
         }
     },
     loadState: function() {
