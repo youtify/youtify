@@ -28,6 +28,10 @@ handlers:
   upload: html/tests.html
   login: admin
 
+- url: /minimizer
+  script: minimizer.py
+  login: admin
+
 - url: /beta
   script: beta.py
 

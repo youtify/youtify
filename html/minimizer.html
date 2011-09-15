@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+        <script src="/scripts/jslint.js"></script>
+        <script src="/scripts/minimizer.js"></script>
+        <style>
+            tr.selected {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>JavaScript</h2>
+        <table id="files">
+            <thead>
+                <tr>
+                    <th>File name</th>
+                    <th>JSLint</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td class="filename">{{ file }}</td>
+                    <td class="jslint"></td>
+                    <td class="uglifyjs"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <pre id="output"></pre>
+    </body>
+</html>
