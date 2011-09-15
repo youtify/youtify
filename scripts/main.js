@@ -1,4 +1,31 @@
-﻿$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
+﻿/*global
+
+$: true,
+ON_PRODUCTION: true,
+Notification: true,
+createResultsItem: true,
+Player: true,
+Settings: true,
+changeTheme: true,
+PlaylistsManager: true,
+video_Init: true,
+volume_Init: true,
+translations_Init: true,
+toplist_Init: true,
+themes_Init: true,
+spotifyImport_Init: true,
+settings_Init: true,
+search_Init: true,
+queue_Init: true,
+ping_Init: true,
+notification_Init: true,
+leftmenu_Init: true,
+fatBar_Init: true,
+url_Init: true,
+
+*/
+
+$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
             Notification.show('Connection error! <i>' + r.responseText + '</i>');
@@ -35,8 +62,8 @@ Date.prototype.getWeek = function (dowOffset) {
 };
 
 function toggle(feed, parameters) {
-	var event = parameters['event'];
-	var playlist = parameters['playlist'];
+	var event = parameters.event;
+	var playlist = parameters.playlist;
 
 	if (playlist.find('ul').length) {
 		playlist.find('ul').toggle();
@@ -44,8 +71,8 @@ function toggle(feed, parameters) {
 		$('<ul/>').appendTo($(playlist));
 		if (feed) {
 			$.each(feed, function(i, item) { 
-                var videoId = item['media$group']['yt$videoid']['$t'];
-                var title = item['title']['$t'];
+                var videoId = item.media$group.yt$videoid.$t;
+                var title = item.title.$t;
                 createResultsItem(title, videoId).appendTo(playlist.find('ul'));
             });
 		}
@@ -53,8 +80,8 @@ function toggle(feed, parameters) {
 }
 
 function getVidsInPlaylist(playlistId, callback, parameters, start, feed) {
-	if (!parameters['playlist'].hasClass('loading')) {
-		parameters['playlist'].addClass('loading');
+	if (!parameters.playlist.hasClass('loading')) {
+		parameters.playlist.addClass('loading');
     }
 	if (start === undefined) {
 		start = 1;
@@ -69,7 +96,7 @@ function getVidsInPlaylist(playlistId, callback, parameters, start, feed) {
 			getVidsInPlaylist(playlistId, callback, parameters, start+50, feed);
 		} else {
 			callback(feed, parameters);
-			parameters['playlist'].removeClass('loading');
+			parameters.playlist.removeClass('loading');
 		}
     });
 }

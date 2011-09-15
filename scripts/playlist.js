@@ -1,3 +1,11 @@
+/*global
+
+$: true,
+playlistManager: true,
+loadPlaylistView: true,
+
+*/
+
 /** EVENTS
  ****************************************************************************/
 
@@ -83,7 +91,7 @@ function createPlaylistBar(playlist) {
     $('<span class="title"/>').text(playlist.title).appendTo(div);
 
     if (playlist.owner) {
-        if (playlist.owner.id != my_user_id) {
+        if (playlist.owner.id !== my_user_id) {
             var owner = $('<span class="owner"></span>').text('by: ');
             $('<span class="name"></span>').text(playlist.owner.name).appendTo(owner);
             owner.appendTo(div);
@@ -414,11 +422,11 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
 	this.removeDuplicates = function() {
 		var deleted = 0,
             i, j;
-		for (i = this.videos.length-1; i > 0; i--) {
-			for (j = i-1; j >= 0; j--) {
+		for (i = this.videos.length-1; i > 0; i -= 1) {
+			for (j = i-1; j >= 0; j -= 1) {
 				if (this.videos[i].videoId === this.videos[j].videoId) {
 					this.deleteVideo(j);
-					deleted++;
+					deleted += 1;
 					break;
 				}
 			}
