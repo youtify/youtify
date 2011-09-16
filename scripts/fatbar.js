@@ -62,14 +62,14 @@ var FatBar = {
         $("#fatbar-toggle .show").hide();
         $("#fatbar-toggle .hide").show();
         $("#fatbar").show();
-        localStorage.fatbar-toggle = JSON.stringify(true);
+        localStorage['fatbar-toggle'] = JSON.stringify(true);
         $(window).resize();
     },
     hide: function() {
         $("#fatbar-toggle .show").show();
         $("#fatbar-toggle .hide").hide();
         $("#fatbar").hide();
-        localStorage.fatbar-toggle = JSON.stringify(false);
+        localStorage['fatbar-toggle'] = JSON.stringify(false);
         $(window).resize();
     },
     isVisible: function() {
