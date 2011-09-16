@@ -16,6 +16,7 @@ var IGNORE_PATTERN = /less|shuffle.*.js/;
 
 function processRow(tr) {
     var filename = tr.find('td.filename').text();
+    location.hash = filename;
 
     $('tr.selected').removeClass('selected');
     tr.addClass('selected');
@@ -25,24 +26,36 @@ function processRow(tr) {
         return;
     }
 
+    function success() {
+        tr.addClass('success');
+        tr.find('td.jslint').text("✓");
+        if (!tr.is(':last-child')) {
+            processRow(tr.next());
+        }
+    }
+
+    function error() {
+        tr.addClass('error');
+        $('#output h1').text(filename);
+        $('#output pre').html(JSLINT.report());
+        $('#files').hide();
+        $('#output').show();
+    }
+
+    loadFile(filename, success, error);
+
+}
+
+function loadFile(filename, success, error) {
     $.ajax({
         url: filename,
         dataType: 'text',
         success: function(data) {
             if (JSLINT(data, JSLINT_OPTIONS)) {
-                tr.addClass('success');
-                tr.find('td.jslint').text("✓");
-                if (!tr.is(':last-child')) {
-                    processRow(tr.next());
-                }
+                success();
             } else {
-                tr.addClass('error');
-                $('#output h1').text(filename);
-                $('#output pre').html(JSLINT.report());
-                $('#files').hide();
-                $('#output').show();
+                error();
             }
-
         }
     });
 }
@@ -60,15 +73,30 @@ function createTr(filename) {
 }
 
 $(function() {
-    $.get('/', function(data) {
-        var filename;
-            match = data.match(MATCH_PATTERN);
-
-        for (var i = 0; i < match.length; i += 1) {
-            var filename = match[i];
-            $('#files').append(createTr(filename));
+    if (location.hash) {
+        var filename = location.hash.substr(1);
+        function success() {
+            location.hash = '';
+            location.reload();
         }
+        function error() {
+            $('#output h1').text(filename);
+            $('#output pre').html(JSLINT.report());
+            $('#files').hide();
+            $('#output').show();
+        }
+        loadFile(filename, success, error);
+    } else {
+        $.get('/', function(data) {
+            var filename;
+                match = data.match(MATCH_PATTERN);
 
-        processRow($('#files tbody tr:first'));
-    }, 'text');
+            for (var i = 0; i < match.length; i += 1) {
+                var filename = match[i];
+                $('#files').append(createTr(filename));
+            }
+
+            processRow($('#files tbody tr:first'));
+        }, 'text');
+    }
 });
