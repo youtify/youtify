@@ -37,7 +37,10 @@ function processRow(tr) {
                 }
             } else {
                 tr.addClass('error');
-                $('#output').html(JSLINT.report());
+                $('#output h1').text(filename);
+                $('#output pre').html(JSLINT.report());
+                $('#files').hide();
+                $('#output').show();
             }
 
         }

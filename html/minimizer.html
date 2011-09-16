@@ -2,17 +2,39 @@
 
 <html>
     <head>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
         <script src="/scripts/jslint.js"></script>
         <script src="/scripts/minimizer.js"></script>
         <style>
-            tr.selected {
-                font-weight: bold;
+            body,
+            html,
+            table {
+                padding: 0;
+                font-family: 'Arimo', arial, sans-serif;
+                font-size: 12px;
+            }
+            body {
+                margin: 10px;
+            }
+            th {
+                text-align: left;
+            }
+            tr.ignore {
+                color: gray;
+            }
+            tr.error {
+                color: red;
+            }
+            tr.success {
+                color: green;
+            }
+            #files {
+            }
+            #output {
             }
         </style>
     </head>
     <body>
-        <h2>JavaScript</h2>
         <table id="files">
             <thead>
                 <tr>
@@ -23,6 +45,9 @@
             <tbody>
             </tbody>
         </table>
-        <pre id="output"></pre>
+        <div id="output" style="display:none">
+            <h1></h1>
+            <pre></pre>
+        </div>
     </body>
 </html>
