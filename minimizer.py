@@ -9,11 +9,6 @@ class MinimizerHandler(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', 'minimizer.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
-            'files': [
-                '/scripts/main.js',
-                '/scripts/playlist.js',
-                '/scripts/video.js',
-            ],
         }))
 
 def main():
