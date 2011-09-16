@@ -208,11 +208,11 @@ function showResultsItemContextMenu(event) {
 				};
 				$.getJSON(url, params, function(data) {
 					$.each(data.feed.entry, function(i, item) {
-						var url = item['id']['$t'];
+						var url = item.id.$t;
 						var videoId = url.match('video:(.*)$')[1];
-						var title = item['title']['$t'];
-						if (item['gd$rating']) {
-							var rating = item['gd$rating']['average'];
+						var title = item.title.$t;
+						if (item.gd$rating) {
+							var rating = item.gd$rating.average;
                         }
 						var resultItem = createResultsItem(title, videoId, rating);
 						resultItem.appendTo($('#results'));

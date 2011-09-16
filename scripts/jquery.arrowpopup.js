@@ -47,4 +47,4 @@
         return this;
     };
 
-})(jQuery);
+}(jQuery));

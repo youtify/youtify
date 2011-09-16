@@ -96,9 +96,9 @@ var Search = {
 			Search.playlistsStart += data.feed.entry.length;
 
 			$.each(data.feed.entry, function(i, item) {
-				var title = item['title']['$t'];
-				var url = item['id']['$t'];
-				var playlistId = item['yt$playlistId']['$t'];
+				var title = item.title.$t;
+				var url = item.id.$t;
+				var playlistId = item.yt$playlistId.$t;
 				$('<li/>').addClass('playlist').text(title).data('playlistId', playlistId).click(function(event) {
 					var parameters = {
                         'event': event,
@@ -150,11 +150,11 @@ var Search = {
 			Search.videosStart += data.feed.entry.length;
 
 			$.each(data.feed.entry, function(i, item) {
-				var url = item['id']['$t'];
+				var url = item.id.$t;
 				var videoId = url.match('videos/(.*)$')[1];
-				var title = item['title']['$t'];
-				if (item['gd$rating']) {
-					var rating = item['gd$rating']['average'];
+				var title = item.title.$t;
+				if (item.gd$rating) {
+					var rating = item.gd$rating.average;
                 }
 				var resultItem = createResultsItem(title, videoId, rating);
 				resultItem.appendTo('#results');
@@ -202,10 +202,10 @@ var Search = {
 			var list = $('<ul/>').addClass('alternatives');
 			
 			$.each(data.feed.entry, function(i, item) {
-				var url = item['id']['$t'];
+				var url = item.id.$t;
 				var videoId = url.match('videos/(.*)$')[1];
                 if (videoId !== elem.data('videoId')) {
-                    var title = item['title']['$t'];
+                    var title = item.title.$t;
                     var alternativeItem = createResultsItem(title, videoId).addClass('alternative');
 
                     $('<input type="button" value="Next alternative &raquo" />')

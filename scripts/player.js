@@ -87,7 +87,7 @@ var Player = {
 			var elem = null; 
 			if (Player._playOrderList.length > 0) {
 				if (Player._playOrderIndex-1 >= 0) {
-					elem = $(Player._playOrderList[Player._playOrderIndex--]);
+					elem = $(Player._playOrderList[Player._playOrderIndex -= 1]);
 				} else {
 					return;
 				}
@@ -122,7 +122,7 @@ var Player = {
 		// Playlist
 		if (Player._playOrderList.length > 0) {
 			if (Player._playOrderIndex+1 <= Player._playOrderList.length) {
-				elem = $(Player._playOrderList[Player._playOrderIndex++]);
+				elem = $(Player._playOrderList[Player._playOrderIndex += 1]);
 			} else if (Player._playOrderIndex+1 > Player._playOrderList.length) {
 				Player._playOrderList = [];
 				Player._playOrderIndex = 0;
@@ -341,8 +341,8 @@ var Player = {
 		var pos = Player._player.getCurrentTime();
 		var len = Player._player.getDuration();
 		$('#inner-timeline').show();
-		$('#position-label').html(parseInt(pos/60)+':' + ((parseInt(pos%60) <10) ? '0' : '') + parseInt(pos%60));
-		$('#end-label').html(parseInt(len/60)+':' + ((parseInt(len%60) <10) ? '0' : '') + parseInt(len%60));
+		$('#position-label').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
+		$('#end-label').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
 		Player._timelineUpdateVar = setInterval(Player._updateTimeline, 100);
 	},
 
@@ -353,7 +353,7 @@ var Player = {
 		}
 		var pos = Player._player.getCurrentTime(); 
 		var len = Player._player.getDuration(); 
-		$('#position-label').html(parseInt(pos/60)+':' + ((parseInt(pos%60) <10) ? '0' : '') + parseInt(pos%60)); 
+		$('#position-label').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60)); 
 		$('#inner-timeline').width(pos/len*$('#timeline').width()); 
 	},
 
@@ -464,8 +464,8 @@ var Player = {
             
 			if (data.feed.entry) {
                 var title;
-                if (data.feed.entry[0]['title']['$t']) {
-                    title = data.feed.entry[0]['title']['$t'];
+                if (data.feed.entry[0].title.$t) {
+                    title = data.feed.entry[0].title.$t;
                 } else {
                     return;
                 }

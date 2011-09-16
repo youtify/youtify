@@ -16,10 +16,10 @@ var Queue = {
 	updateView: function() {
 		var q = $('#queue').html('');
 		var i;
-		for (i = 0; i < Player._queue.length; i++) {
+		for (i = 0; i < Player._queue.length; i += 1) {
 			$(Player._queue[i]).clone().appendTo(q);
 		}
-		for (i = 0; i < Player._playOrderList.length; i++) {
+		for (i = 0; i < Player._playOrderList.length; i += 1) {
 			$(Player._playOrderList[i]).clone().appendTo(q);
 		}
 	}

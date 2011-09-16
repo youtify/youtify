@@ -51,11 +51,3 @@ var Notification = {
 		$('#loading').css('backgroundImage', 'url(/images/null.png)').show();
 	}
 };
-
-var Publishers = [
-	{
-        uploaderRegEx: '(^[\w]+[VEVO])',
-        twitter: '@vevo',
-        name: 'VEVO'
-    }
-];

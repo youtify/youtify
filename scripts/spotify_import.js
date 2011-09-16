@@ -52,9 +52,13 @@ function SpotifyImporter() {
 	this.cancel = function() {
 		this._cancel = true;
 	};
+
+    function dummyFunction() {
+    }
+
 	this.start = function(str, playlist, callbackUpdate, callbackDone) {
-		this.callbackUpdate = callbackUpdate || function(){void(0);};
-		this.callbackDone   = callbackDone || function(){void(0);};
+		this.callbackUpdate = callbackUpdate || dummyFunction;
+		this.callbackDone   = callbackDone || dummyFunction;
 		this.added = 0;
 		this.max = 0;
 		this.spotifyIds = [];
@@ -75,11 +79,11 @@ function SpotifyImporter() {
 				var artist = tmpArray[0];
 				var title = tmpArray[2];
 			
-				self.max++;
+				self.max += 1;
 				self.findAndAddToPlaylist(artist + ' - ' + title, playlist);
 			} else if (id.length > 0) {
 				self.spotifyIds.push(id);
-				self.max++;
+				self.max += 1;
 			}
 		});
 		
@@ -145,15 +149,12 @@ function SpotifyImporter() {
 			}
 			
 			$.each(data.feed.entry, function(i, item) {
-				var url = item['id']['$t'];
+				var url = item.id.$t;
 				var videoId = url.match('videos/(.*)$')[1];
-				var title = item['title']['$t'];
-				if (item['gd$rating']) {
-					var rating = item['gd$rating']['average'];
-                }
+				var title = item.title.$t;
 				playlist.addVideo(title, videoId);
 				//console.log('addVideo('+title+', '+videoId+');');
-				self.added++;
+				self.added += 1;
 			});
 			
 			self.updatedPlaylist();

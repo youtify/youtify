@@ -25,7 +25,7 @@ function settings_Init() {
 	$('#notificationRange').change(function() {
 		$('#notificationRangeText').text(this.value);
 		var settings = new Settings();
-		settings.announceTimeout = parseInt(this.value) * 1000; 
+		settings.announceTimeout = parseInt(this.value, 10) * 1000;
 		settings.save(); 
 	});
 }
@@ -49,7 +49,7 @@ function autoDetectLanguage() {
 }
 
 function Settings() {
-    var settings = JSON.parse(localStorage['settings'] || '{}');
+    var settings = JSON.parse(localStorage.settings || '{}');
 
     this.language = settings.language || autoDetectLanguage();
     this.translatorMode = settings.translatorMode || false;
@@ -58,7 +58,7 @@ function Settings() {
 	this.announceTimeout = settings.announceTimeout || 3000;
 
     this.save = function() {
-        localStorage['settings'] = JSON.stringify({
+        localStorage.settings = JSON.stringify({
             'language': this.language,
             'translatorMode': this.translatorMode,
             'theme': this.theme,

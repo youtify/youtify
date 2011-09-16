@@ -23,14 +23,14 @@ function linkify(inputText) {
     replacedText = replacedText.replace(/>/g, '&gt;');
 
     //URLs starting with http://, https://, or ftp://
-    replacePattern1 = /(\b(http?|https):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacePattern1 = /(\b(http?|https):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/gim;
     replacedText = replacedText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
 
     //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
     replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
     replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
 
-    return replacedText
+    return replacedText;
 }
 
 var FatBar = {
@@ -62,14 +62,14 @@ var FatBar = {
         $("#fatbar-toggle .show").hide();
         $("#fatbar-toggle .hide").show();
         $("#fatbar").show();
-        localStorage['fatbar-toggle'] = JSON.stringify(true);
+        localStorage.fatbar-toggle = JSON.stringify(true);
         $(window).resize();
     },
     hide: function() {
         $("#fatbar-toggle .show").show();
         $("#fatbar-toggle .hide").hide();
         $("#fatbar").hide();
-        localStorage['fatbar-toggle'] = JSON.stringify(false);
+        localStorage.fatbar-toggle = JSON.stringify(false);
         $(window).resize();
     },
     isVisible: function() {
@@ -88,11 +88,11 @@ var FatBar = {
 		$.getJSON(url, params, function(data) {
             $('#related-box').removeClass('loading');
 			$.each(data.feed.entry, function(i, item) {
-				var url = item['id']['$t'];
+				var url = item.id.$t;
 				var videoId = url.match('video:(.*)$')[1];
-				var title = item['title']['$t'];
-				if (item['gd$rating']) {
-					var rating = item['gd$rating']['average'];
+				var title = item.title.$t;
+				if (item.gd$rating) {
+					var rating = item.gd$rating.average;
                 }
 				var resultItem = createResultsItem(title, videoId, rating);
 				resultItem.appendTo($('#related'));
@@ -137,8 +137,9 @@ var FatBar = {
                     return;
                 }
 
-                $('#linko-box .name').text(data.artist_name)
+                $('#linko-box .name').text(data.artist_name);
 
+                var key;
                 for (key in data.links) {
                     if (data.links.hasOwnProperty(key)) {
                         var url = data.links[key],

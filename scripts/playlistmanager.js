@@ -7,7 +7,7 @@ function PlaylistsManager() {
             i;
 
         try {
-            data = JSON.parse(localStorage['playlists'] || '[]');
+            data = JSON.parse(localStorage.playlists || '[]');
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
                 if (!item.remoteId) {
@@ -55,10 +55,10 @@ function PlaylistsManager() {
 
         $.getJSON('/api/playlists', {}, function(data) {
             $.each(data, function(i, item) {
-                var title = item['title'],
-                    videos = item['videos'],
-                    remoteId = item['remoteId'],
-                    owner = item['owner'],
+                var title = item.title,
+                    videos = item.videos,
+                    remoteId = item.remoteId,
+                    owner = item.owner,
                     isPrivate = false,
                     shuffle = false;
 
@@ -97,7 +97,7 @@ function PlaylistsManager() {
         this.locked = true;
 
         try {
-            localStorage['playlists'] = JSON.stringify(this.playlists);
+            localStorage.playlists = JSON.stringify(this.playlists);
         } catch(e) {
             alert('Error saving playlists: ' + e);
         }

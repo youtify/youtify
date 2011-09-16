@@ -122,14 +122,14 @@ function createClouds() {
 	var ctx = canvas.getContext("2d");
 	//var backdrop = ctx.createLinearGradient(0, 0, 0, windowHeight)
 	canvasClouds = [];
-	for(i = 0; i < 100; i++) {
+	for(i = 0; i < 100; i += 1) {
 		var rnd = Math.random()*3;
-		var index = parseInt(Math.random()*(clouds.length));
+		var index = parseInt(Math.random()*(clouds.length), 10);
 		var img = clouds[index];
-		var width = parseInt(rnd*$(img).width()) || rnd*300;
-		var height = parseInt(rnd*$(img).height()) || rnd*200;
-		var x = parseInt((Math.random()*windowWidth) - (width/2));
-		var y = parseInt((windowHeight/2) + (rnd*height -height));
+		var width = parseInt(rnd*$(img).width(), 10) || rnd*300;
+		var height = parseInt(rnd*$(img).height(), 10) || rnd*200;
+		var x = parseInt((Math.random()*windowWidth) - (width/2), 10);
+		var y = parseInt((windowHeight/2) + (rnd*height -height), 10);
 		ctx.drawImage(
 			img, 
 			x,
@@ -152,24 +152,24 @@ function cloudTravel() {
 	canvas.height = windowHeight;
 	var ctx = canvas.getContext("2d");
 	
-	for(i = 0; i < canvasClouds.length; i++) {
+	for(i = 0; i < canvasClouds.length; i += 1) {
 		var rnd = Math.random()*3;
-		var index = parseInt(Math.random()*(clouds.length));
+		var index = parseInt(Math.random()*(clouds.length), 10);
 		var img = clouds[index];
-		var width = parseInt(rnd*$(img).width()) || rnd*300;
-		var height = parseInt(rnd*$(img).height()) || rnd*200;
-		var x = parseInt((Math.random()*windowWidth) - (width/2));
-		var y = parseInt((windowHeight/2) + (rnd*height -height));
-		canvasClouds[i]['x'] += canvasClouds[i]['speed'];
-		if (canvasClouds[i]['x'] > windowWidth) {
-			canvasClouds[i]['x'] = -(canvasClouds[i]['width'] + 10);
+		var width = parseInt(rnd*$(img).width(), 10) || rnd*300;
+		var height = parseInt(rnd*$(img).height(), 10) || rnd*200;
+		var x = parseInt((Math.random()*windowWidth) - (width/2), 10);
+		var y = parseInt((windowHeight/2) + (rnd*height -height), 10);
+		canvasClouds[i].x += canvasClouds[i].speed;
+		if (canvasClouds[i].x > windowWidth) {
+			canvasClouds[i].x = -(canvasClouds[i].width + 10);
         }
 		ctx.drawImage(
-			canvasClouds[i]['img'], 
-			canvasClouds[i]['x'],
-			canvasClouds[i]['y'],
-			canvasClouds[i]['width'],
-			canvasClouds[i]['height']
+			canvasClouds[i].img,
+			canvasClouds[i].x,
+			canvasClouds[i].y,
+			canvasClouds[i].width,
+			canvasClouds[i].height
 		);
 	}
 }

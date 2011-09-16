@@ -27,8 +27,8 @@ var BestOfYouTube = {
         $('#bestof').html('');
         $.getJSON(url, {}, function (data) {
             $.each(data.feed.entry, function(i, item) {
-                var videoId = item['media$group']['yt$videoid']['$t'];
-                var title = item['title']['$t'];
+                var videoId = item.media$group.yt$videoid.$t;
+                var title = item.title.$t;
                 createResultsItem(title, videoId).appendTo('#bestof');
             });
             $('#bestof-tab').removeClass('loading');

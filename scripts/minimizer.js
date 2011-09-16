@@ -1,6 +1,7 @@
 var JSLINT_OPTIONS = {
     devel: true,
     browser: true,
+    regexp: true,
     sloppy: true,
     undef: true,
     unparam: true,

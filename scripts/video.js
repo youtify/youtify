@@ -1,3 +1,12 @@
+/*global
+
+$: true,
+Player: true,
+extractArtist: true,
+showResultsItemContextMenu: true,
+
+*/
+
 function video_Init() {
     $('#info .share').click(function() {
         var videoId = Player.getCurrentVideoId();
@@ -42,7 +51,9 @@ function selectVideo(li, event) {
 				}
 			}
 		}
-		$(elements).each(function(index, item) { $(item).addClass('selected'); });
+		$(elements).each(function(index, item) {
+            $(item).addClass('selected');
+        });
 	} else {
 		li.siblings().removeClass('selected');
 		li.addClass('selected');
@@ -62,7 +73,7 @@ function createResultsItem(title, videoId, rating) {
     var artist = extractArtist(title);
     var additionalMenuButtons = [];
 	
-    li = $('<li/>')
+    var li = $('<li/>')
         .addClass("draggable")
         .addClass("video")
         .data('type', 'video') // used for drag n drop
@@ -103,10 +114,6 @@ function createResultsItem(title, videoId, rating) {
             li.trigger('contextmenu');
         })
         .appendTo(li);
-
-    if (rating !== undefined) {
-        //createRatingBar(rating).appendTo(li); // disabled until we can sort by it and appropriately describe what it is
-    }
 
     if (artist) {
         additionalMenuButtons.push({

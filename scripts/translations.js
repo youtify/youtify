@@ -123,22 +123,27 @@ function loadTranslatorPanel() {
 
     $('#translator-panel tbody').html('');
 
+    inputBlurHandler = function() {
+        $('.selected-translation').removeClass('selected-translation');
+    };
+    inputFocusHandler = function() {
+        var tr = $(this).parent().parent();
+        var key = tr.find('td.source').text();
+        var elem = findTranslatable(key);
+        if (elem) {
+            elem.addClass('selected-translation');
+        }
+    };
+
     for (key in translations) {
-        tr = $('<tr/>');
-        $('<td class="source"/>').text(key).appendTo(tr);
-        input = $('<input type="text" />').val(translations[key]);
-        input.focus(function() {
-            var tr = $(this).parent().parent();
-            var key = tr.find('td.source').text();
-            var elem = findTranslatable(key);
-            if (elem) {
-                elem.addClass('selected-translation');
-            }
-        });
-        input.blur(function() {
-            $('.selected-translation').removeClass('selected-translation');
-        });
-        $('<td/>').append(input).appendTo(tr);
-        tr.appendTo('#translator-panel tbody');
+        if (translations.hasOwnProperty(key)) {
+            tr = $('<tr/>');
+            $('<td class="source"/>').text(key).appendTo(tr);
+            input = $('<input type="text" />').val(translations[key]);
+            input.focus(inputFocusHandler);
+            input.blur(inputBlurHandler);
+            $('<td/>').append(input).appendTo(tr);
+            tr.appendTo('#translator-panel tbody');
+        }
     }
 }
