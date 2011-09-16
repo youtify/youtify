@@ -15,7 +15,24 @@ var JSLINT_OPTIONS = {
 var MATCH_PATTERN = /\/scripts\/(.*\.js)/g;
 var IGNORE_PATTERN = /less|shuffle.*.js/;
 
-var fileContents = [];
+var files = [];
+
+function uglify(data) {
+    data = data.replace(/\/\/.*/g, '');
+    data = data.replace(/\/\*.*?\*\//g, '');
+    data = data.replace(/^[ \t]+/g, '');
+    return data;
+}
+
+function startUglification() {
+    var i;
+    var file;
+    for (i = 0; i < files.length; i += 1) {
+        file = files[i];
+        file.content = uglify(file.content);
+        file.tr.find('td.uglify').text("✓");
+    }
+}
 
 function processRow(tr) {
     var filename = tr.find('td.filename').text();
@@ -29,18 +46,25 @@ function processRow(tr) {
         return;
     }
 
-    function success() {
+    function success(data) {
+        files.push({
+            'name': filename,
+            'content': data,
+            'tr': tr,
+        });
         tr.addClass('success');
         tr.find('td.jslint').text("✓");
-        if (!tr.is(':last-child')) {
+        if (tr.is(':last-child')) {
+            startUglification();
+        } else {
             processRow(tr.next());
         }
     }
 
-    function error() {
+    function error(report) {
         tr.addClass('error');
         $('#output h1').text(filename);
-        $('#output pre').html(JSLINT.report());
+        $('#output pre').html(report);
         $('#files').hide();
         $('#output').show();
     }
@@ -53,13 +77,10 @@ function loadFile(filename, success, error) {
         url: filename,
         dataType: 'text',
         success: function(data) {
-            if (data) {
-                fileContents.push(data);
-            }
             if (JSLINT(data, JSLINT_OPTIONS)) {
-                success();
+                success(data);
             } else {
-                error();
+                error(JSLINT.report());
             }
         }
     });
@@ -69,6 +90,7 @@ function createTr(filename) {
     var tr = $('<tr></tr>');
     $('<td class="filename"></td>').text(filename).appendTo(tr);
     $('<td class="jslint"></td>').appendTo(tr);
+    $('<td class="uglify"></td>').appendTo(tr);
 
     if (filename.match(IGNORE_PATTERN)) {
         tr.addClass('ignore');
@@ -80,13 +102,13 @@ function createTr(filename) {
 $(function() {
     if (location.hash) {
         var filename = location.hash.substr(1);
-        function success() {
+        function success(data) {
             location.hash = '';
             location.reload();
         }
-        function error() {
+        function error(report) {
             $('#output h1').text(filename);
-            $('#output pre').html(JSLINT.report());
+            $('#output pre').html(report);
             $('#files').hide();
             $('#output').show();
         }
@@ -108,8 +130,8 @@ $(function() {
         var i,
             output = '';
 
-        for (i = 0; i < fileContents.length; i += 1) {
-            output += fileContents[i];
+        for (i = 0; i < files.length; i += 1) {
+            output += files[i].content;
         }
 
         $('body').html('');
