@@ -42,6 +42,8 @@ class MainHandler(webapp.RequestHandler):
             'toplist': toplist.get_or_create_toplist_json(),
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,
+            'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
+            #'USE_PRODUCTION_JAVASCRIPT': True, # Uncomment to try out production settings. Remember to build production.js with localhost:8080/minimizer
 			'url': self.request.url,
             'og_tag': og_tag,
         }))

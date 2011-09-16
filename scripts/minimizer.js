@@ -15,6 +15,8 @@ var JSLINT_OPTIONS = {
 var MATCH_PATTERN = /\/scripts\/(.*\.js)/g;
 var IGNORE_PATTERN = /less|shuffle.*.js/;
 
+var fileContents = [];
+
 function processRow(tr) {
     var filename = tr.find('td.filename').text();
     location.hash = filename;
@@ -44,7 +46,6 @@ function processRow(tr) {
     }
 
     loadFile(filename, success, error);
-
 }
 
 function loadFile(filename, success, error) {
@@ -52,6 +53,9 @@ function loadFile(filename, success, error) {
         url: filename,
         dataType: 'text',
         success: function(data) {
+            if (data) {
+                fileContents.push(data);
+            }
             if (JSLINT(data, JSLINT_OPTIONS)) {
                 success();
             } else {
@@ -100,4 +104,15 @@ $(function() {
             processRow($('#files tbody tr:first'));
         }, 'text');
     }
+    $("#generate").click(function() {
+        var i,
+            output = '';
+
+        for (i = 0; i < fileContents.length; i += 1) {
+            output += fileContents[i];
+        }
+
+        $('body').html('');
+        $('<textarea cols="80" rows="30"></textarea>').val(output).appendTo('body');
+    });
 });

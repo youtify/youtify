@@ -80,9 +80,12 @@
             var ON_PRODUCTION = {{ ON_PRODUCTION|lower }};
         </script>
 
-		<script src="/scripts/less-1.0.41.min.js"></script>
-		<script src="/scripts/jquery.arrowpopup.js"></script>
 		<script src="/scripts/jquery.shuffle.js"></script>
+		<script src="/scripts/less-1.0.41.min.js"></script>
+        {% if USE_PRODUCTION_JAVASCRIPT %}
+		<script src="/scripts/production.js"></script>
+        {% else %}
+		<script src="/scripts/jquery.arrowpopup.js"></script>
 		<script src="/scripts/settings.js"></script>
 		<script src="/scripts/translations.js"></script>
 		<script src="/scripts/utils.js"></script>
@@ -106,6 +109,7 @@
 		<script src="/scripts/uploader.js"></script>
 		<script src="/scripts/spotify_import.js"></script>
 		<script src="/scripts/main.js"></script>
+        {% endif %}
         
 		{% if ON_PRODUCTION %}
 			<script>
