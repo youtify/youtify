@@ -1,5 +1,26 @@
+/* PRELOAD
+*******************************/
+
+body:after {
+    content:
+        url(/images/loading.gif)
+        url(/images/fullscreen.png)
+        url(/images/minimize.png)
+        url(/images/pause.png)
+        url(/images/next.png)
+        url(/images/prev.png)
+        url(/images/song.png)
+        url(/images/playing.png)
+        url(/images/disabled.png)
+		url(/images/shuffle-off.png)
+		url(/images/shuffle-on.png);
+
+    display: none;
+}
+
 /* RESET
 *******************************/
+
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
 blockquote, q { quotes: none; }
@@ -18,6 +39,7 @@ ol, ul { list-style: none; }
 
 /* USER SELECT
 *******************************/
+
 div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td {
 	-moz-user-select: -moz-none;
     -webkit-user-select: none;
@@ -52,6 +74,7 @@ div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td
 
 /* DEFAULT
 *******************************/
+
 html,
 body { 
 	height: 100%; 
@@ -71,6 +94,7 @@ strong {
 
 /* CONTENT
 *******************************/
+
 body {
     min-width: 976px;
     min-height: 500px;
@@ -84,6 +108,7 @@ body {
 
 /* LEFT
 *******************************/
+
 #content-left {
 	width: 230px;
     position: absolute;
@@ -108,6 +133,7 @@ body {
 
 /* PLAYLISTS
 *******************************/
+
 #left-menu {
 	min-height: 100px;
 	overflow-y: scroll;
@@ -160,6 +186,7 @@ body {
 
 /* TABS
  ***********************************/
+
 #tabs { 
 	margin-bottom: 10px;
 }
@@ -450,6 +477,7 @@ body.searching #search .loader {
 	#content-right > .toolbar > #search-options { width: 90px; margin: 10px 5px 0 5px; }
 	#logo { display: none; }
 }
+
 .popup {
 	width: 270px;
 	position: absolute;
@@ -733,6 +761,7 @@ body.searching #search .loader {
 
 /* PLAYLISTBAR
 *******************************/
+
 #playlistbar {
     height: 30px;
     padding: 10px 10px 3px 10px;
@@ -895,9 +924,6 @@ body.searching #search .loader {
         height: 50px;
     }
 }
-
-/* MISC
-******************************************************************************/
 
 /* DRAG N DROP
 *******************************/
