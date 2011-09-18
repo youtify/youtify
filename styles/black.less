@@ -1,3 +1,36 @@
-@import "base.less";
-@import "default-style.less";
-@import "themes/black.less";
+@import "default.less";
+
+/* COLORS
+ * When creating a new skin, 
+ * copy/paste the following section and 
+ * modify color codes.
+ *****************************************/
+
+@text-color-1: #F4F4F4;
+@text-color-2: #000000;
+@background-color-1: #000000;
+@background-color-2: #000000;
+@border-color-1: #606060;
+@border-color-2: #606060;
+@infoPanel-color-1: @text-color-1;
+@infoPanel-color-2: #5F5F5F;
+@rename-color-1: @text-color-2;
+@rename-color-2: @text-color-1;
+@menu-color-1: @text-color-2;
+@menu-color-2: #EEEEEE;
+@odd-result-color: rgba(255, 255, 255, 0.2);
+@playing-row-color-1: rgba(255,255,255,0.5);
+@playing-row-color-2: #FFFFFF;
+@selected-color: #CCC;
+
+
+/* FUNCTIONS
+*******************************/
+
+.bottomToolbar() {
+	background:-webkit-gradient(linear, left bottom, left top, color-stop(60%, #000), color-stop(60%, #333), color-stop(100%, #FFF));
+	background:-moz-linear-gradient(center bottom, #000 60%, #333 60%, #FFF 100%);
+	background:-o-linear-gradient(bottom, #000 60%, #333 60%, #FFF 100%);
+	background:-ms-linear-gradient(bottom, #000 60%, #333 60%, #FFF 100%);
+	background:linear-gradient(center bottom, #000 60%, #333 60%, #FFF 100%);
+}

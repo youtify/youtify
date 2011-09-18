@@ -1,3 +1,130 @@
-@import "base.less";
-@import "default-style.less";
-@import "themes/default.less";
+@import "default.less";
+
+/* COLORS
+ * When creating a new skin, 
+ * copy/paste the following section and 
+ * modify color codes.
+ *****************************************/
+
+@text-color-1: #1D1B1D;
+@text-color-2: #E2EFFF;
+@background-color-1: #DCE3EB;
+@background-color-2: #FFF;
+@border-color-1: #606060;
+@border-color-2: #C0CAEF;
+@infoPanel-color-1: @text-color-1;
+@infoPanel-color-2: #B0B0B0;
+@rename-color-1: @text-color-2;
+@rename-color-2: @text-color-1;
+@menu-color-1: @text-color-1;
+@menu-color-2: #EEEEEE;
+@odd-result-color: #DCE3EB;
+@playing-row-color-1: #8996B9;
+@playing-row-color-2: #E2EFFF;
+@selected-color: #7DB5EE;
+
+/** NEW
+ *
+ * LEFT COL #ABB5C6
+ * Border AABBCC
+ */
+ #left-menu .playlistElem.selected {
+	color: @background-color-2;
+	text-shadow: none;
+}
+
+
+/* FUNCTIONS
+*******************************/
+
+.bottomToolbar() {
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(0%, #5D6677), color-stop(100%, #7C8697));
+    background:-moz-linear-gradient(bottom, #5D6677 0%, #7C8697 100%);
+    background:-o-linear-gradient(bottom, #5D6677 0%, #7C8697 100%);
+	background:-ms-linear-gradient(bottom, #5D6677 0%, #7C8697 100%);
+    background:linear-gradient(bottom, #5D6677 0%, #7C8697 100%);
+    border-top: 1px solid #000;
+	color: #FFF;
+}
+
+.playlistbar() {
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(0%, #7C8697), color-stop(100%, #5D6677));
+    background:-moz-linear-gradient(bottom, #7C8697 0%, #5D6677 100%);
+    background:-o-linear-gradient(bottom, #7C8697 0%, #5D6677 100%);
+	background:-ms-linear-gradient(bottom, #7C8697 0%, #5D6677 100%);
+    background:linear-gradient(bottom, #7C8697 0%, #5D6677 100%);
+    border-bottom: 1px solid #5E6570;
+	color: #FFF;
+}
+
+.songPlaying() {
+    text-shadow: none;
+    background: url('/images/playing.png') no-repeat top left, -webkit-gradient(linear, left bottom, left top, color-stop(0%, #57A4F2), color-stop(100%, #4794E2));
+    background: url('/images/playing.png') no-repeat top left, -moz-linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
+    background: url('/images/playing.png') no-repeat top left, -o-linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
+    background: url('/images/playing.png') no-repeat top left, -ms-linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
+    background: url('/images/playing.png') no-repeat top left, linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
+}
+
+
+.fatbar() {
+    background:#DCE3EB;
+    border-bottom: 1px solid #5E6570;
+    border-top: 1px solid #000;
+	color: #000;
+}
+
+/* OVERRIDE
+*******************************/
+
+#info-panel {
+	box-shadow: inset 0px 3px 5px 0px #777;
+}
+#fatbar .box {
+    border-right: 1px solid #7C8697;
+}
+
+/* RESET text-shadows */
+.playlistElem,
+#login a,
+#new-playlist,
+#left-menu .playlistElem.selected,
+.alternatives > .playing,
+.alternatives > .selected,
+.results .playlist,
+.results > .playlist > ul > .video,
+.results > .video,
+.results > .selected, 
+.results > .selected:nth-child(odd) {
+	text-shadow: none;
+}
+#left-menu .playlistElem.selected,
+.alternatives > .selected,
+.results > .selected, 
+.results > .selected:nth-child(odd),
+#fatbar .results li.selected  {
+    color: #000;
+}
+
+.results .disabled {
+    color: @text-color-1;
+} 
+
+/* PLAYING */
+.results .playing,
+.results .playing:nth-child(odd),
+.results > .playlist > ul > .playing,
+.results > .playlist > ul > .playing:nth-child(odd) { 
+    .songPlaying();
+}
+
+#search > input[type=text] {
+    box-shadow: 1px 1px 1px rgba(255,255,255,0.5), -1px -1px 1px rgba(0,0,0,0.5);
+ 	background: @background-color-2;
+    .border(100px);
+}
+
+#info {
+	border-top: solid 1px @border-color-2;
+	height: 39px;
+}

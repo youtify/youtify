@@ -1,3 +1,58 @@
-@import "base.less";
-@import "default-style.less";
-@import "themes/red.less";
+@import "default.less";
+
+/* COLORS
+ * When creating a new skin, 
+ * copy/paste the following section and 
+ * modify color codes.
+ *****************************************/
+
+@text-color-1: #FFFFFF;
+@text-color-2: #000000;
+@background-color-1: #740000;
+@background-color-2: #740000;
+@border-color-1: #606060;
+@border-color-2: #A40000;
+@infoPanel-color-1: @text-color-1;
+@infoPanel-color-2: #740000;
+@rename-color-1: @text-color-2;
+@rename-color-2: @text-color-1;
+@menu-color-1: @text-color-2;
+@menu-color-2: #EEEEEE;
+@odd-result-color: #A40000;
+@playing-row-color-1: rgba(0,0,0,0.5);
+@playing-row-color-2: #FFFFFF;
+@selected-color: #FC0100;
+
+
+/* FUNCTIONS
+*******************************/
+
+.bottomToolbar() {
+	background:-webkit-gradient(linear, left bottom, left top, color-stop(25%, #6F1614), color-stop(85%, #FF0000), color-stop(100%, #FFEEEE));
+	background:-moz-linear-gradient(center bottom, #6F1614 25%, #FF0000 85%, #FFEEEE 100%);
+	background:-o-linear-gradient(bottom, #6F1614 25%, #FF0000 85%, #FFEEEE 100%);
+	background:-ms-linear-gradient(bottom, #6F1614 25%, #FF0000 85%, #FFEEEE 100%);
+	background:linear-gradient(center bottom, #6F1614 25%, #FF0000 85%, #FFEEEE 100%);
+}
+.playlistbar() {
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(0%, #6F1614), color-stop(100%, #FF0000));
+    background:-moz-linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+    background:-o-linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+	background:-ms-linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+    background:linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+    border-top: 1px solid rgb(114,114,114);
+    border-bottom: 1px solid rgb(29,29,29);
+}
+.fatbar() {
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(0%, #6F1614), color-stop(100%, #FF0000));
+    background:-moz-linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+    background:-o-linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+	background:-ms-linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+    background:linear-gradient(center bottom, #6F1614 0%, #FF0000 100%);
+    border-top: 1px solid rgb(29,29,29);
+    border-bottom: 1px solid rgb(114,114,114);
+}
+
+#fatbar .box {
+    border-right: 1px solid #6F1614;
+}
