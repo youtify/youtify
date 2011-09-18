@@ -90,6 +90,14 @@ function createPlaylistBar(playlist) {
 
     $('<span class="title"/>').text(playlist.title).appendTo(div);
 
+    var shuffleButton = $('<button/>').click(shuffleButtonClicked);
+    if (playlist.shuffle) {
+        shuffleButton.addClass('shuffle-on');
+    } else {
+        shuffleButton.addClass('shuffle-off');
+    }
+    shuffleButton.appendTo(div);
+
     if (playlist.owner) {
         if (playlist.owner.id !== my_user_id) {
             var owner = $('<span class="owner"></span>').text('by: ');
@@ -158,30 +166,22 @@ function playlistClicked(event) {
 }
 
 function shuffleButtonClicked(event) {
+	var playlist = $('#playlistbar').data('playlist');
+
     if ($(this).hasClass('shuffle-on')) {
-        setShuffle(false, $(this).parent());
+        playlist.shuffle = false;
+        $(this).addClass('shuffle-off');
+        $(this).removeClass('shuffle-on');
         Player.addSiblingsToPlayorder($('#results-container li.playing, #results-container li.paused'), false);
     } else {
-        setShuffle(true, $(this).parent());
+        playlist.shuffle = true;
+        $(this).addClass('shuffle-on');
+        $(this).removeClass('shuffle-off');
         Player.addSiblingsToPlayorder($('#results-container li.playing, #results-container li.paused'), true);
     }
-    event.stopPropagation();
-}
 
-/** MISC
- ****************************************************************************/
-
-function setShuffle(enabled, playlistElem) {
-	var playlist = playlistElem.data('model');
-	playlist.shuffle = enabled;
 	playlistManager.save();
-	if (enabled) {
-		$(playlistElem).find('.shuffle-off').addClass('shuffle-on');
-		$(playlistElem).find('.shuffle-off').removeClass('shuffle-off');
-	} else {
-		$(playlistElem).find('.shuffle-on').addClass('shuffle-off');
-		$(playlistElem).find('.shuffle-on').removeClass('shuffle-on');
-	}
+    event.stopPropagation();
 }
 
 /** CLASS PLAYLIST
@@ -406,16 +406,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         if (this.isPrivate) {
             li.addClass('private');
         }
-
-        var shuffleButton = $('<button/>').click(shuffleButtonClicked);
-
-        if (this.shuffle) {
-            shuffleButton.addClass('shuffle-on');
-        } else {
-            shuffleButton.addClass('shuffle-off');
-        }
-
-        shuffleButton.appendTo(li);
         
         return li;
     };
