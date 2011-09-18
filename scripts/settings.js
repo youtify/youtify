@@ -53,7 +53,7 @@ function Settings() {
 
     this.language = settings.language || autoDetectLanguage();
     this.translatorMode = settings.translatorMode || false;
-    this.theme = settings.theme || 'default';
+    this.theme = settings.theme || 'itheme';
 	this.quality = settings.quality || 'hd720';
 	this.announceTimeout = settings.announceTimeout || 3000;
 
