@@ -433,25 +433,13 @@ body.searching #search .loader {
 	display: block;
 }
 
-#content-right > .toolbar > #search-options { 
-	width: 200px; 
-	float: left; 
-	margin: 18px 20px 0 20px; 
-}
-#content-right > .toolbar > #search-options > #search-options-options { 
-	display: block;
+#search-options > #search-options-options > input {
 	float: left;
-	border: solid 0px red;
+    margin-right: 6px;
 }
-#content-right > .toolbar > #search-options > #search-options-options > input { 
-	float: left;
-	width: 20px;
-}
-#content-right > .toolbar > #search-options > #search-options-options > label { 
+#search-options > #search-options-options > label {
 	float: left;
 	width: 60px;
-	color: #444;
-	text-shadow: 0px 1px 1px #FFF;
 }
 
 #content-right > .toolbar > #toolbar-buttons { 
@@ -1330,6 +1318,18 @@ body {
 #playlistbar .owner {
 }
 #playlistbar input {
+}
+
+/* SEARCHBAR
+*******************************/
+
+#searchbar {
+	text-shadow: 0px 1px 1px #000;
+	color: @text-color-1;
+	.playlistbar();
+    height: 30px;
+    padding: 10px 10px 3px 10px;
+	overflow: hidden;
 }
 
 
