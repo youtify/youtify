@@ -1134,11 +1134,18 @@ body {
 	font-size: 13px;
 }
 
-#playlists .remote .title {
-    background: url(/images/circle_white.png) center right no-repeat;
+#playlists .playlistElem:before {
+    content: "♫";
 }
-#playlists .selected.remote .title {
-    background-image: url(/images/circle_dark.png);
+#playlists .playlistElem.remote:before {
+    color: @selected-color;
+}
+#playlists .playlistElem.selected.remote:before {
+    color: inherit;
+}
+.playlistElem .title {
+    padding-left: 6px;
+    background-image: none;
 }
 #playlists {
 }
