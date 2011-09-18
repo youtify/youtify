@@ -201,12 +201,6 @@
                             <input type="text" class="translatable" placeholder="Search" /> 
 							<div class="loader"></div>
 						</div> 
-						<div id="search-options"> 
-							<form id="search-options-options"> 
-                                <input type="radio" name="search-options" id="search-options-videos" checked="true" /><label id="search-options-videos-lbl" class="translatable" for="search-options-videos">Videos</label> 
-                                <input type="radio" name="search-options" id="search-options-playlists" /><label id="search-options-playlists-lbl" class="translatable" for="search-options-playlists">Playlists</label> 
-							</form> 
-						</div> 
 						
 						<a id="yt-power" href="http://www.youtube.com"></a>
                         <div id="logo"></div> 
@@ -220,11 +214,22 @@
 						</div>
 					</div> 
 					<div id="results-container" class="droppable"> 
+                        <div id="playlistbar"></div>
+                        <div id="searchbar">
+                            <div id="search-options">
+                                <form id="search-options-options">
+                                    <input type="radio" name="search-options" id="search-options-videos" checked="true" />
+                                    <label id="search-options-videos-lbl" class="translatable" for="search-options-videos">Videos</label>
+
+                                    <input type="radio" name="search-options" id="search-options-playlists" />
+                                    <label id="search-options-playlists-lbl" class="translatable" for="search-options-playlists">Playlists</label>
+                                </form>
+                            </div>
+                        </div>
 						<ol id="results" class="results"></ol> 
 						<ol id="toplist" class="results"></ol>
 						<ol id="bestof" class="results"></ol>
 						<ol id="queue" class="results"></ol>
-                        <div id="playlistbar"></div>
 						<ol id="playlist" class="results"></ol>
 					</div> 
                     <div id="translator-panel" style="display:none">

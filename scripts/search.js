@@ -67,6 +67,11 @@ var Search = {
         }
     },
 
+    createSearchBar: function() {
+        var div = $('<div id="topbar" class="search"></div>');
+        return div;
+    },
+
 	searchPlaylists: function(q, loadMore) {
 		if (loadMore === undefined || loadMore === false)  {
 			Search.q = q;
@@ -175,6 +180,7 @@ var Search = {
 	selectSearchResults: function() {
         history.pushState(null, null, '/');
         $('#playlistbar').hide();
+        $('#searchbar').show();
 		$('#left-menu li').removeClass('selected');
 		$('#results-tab').addClass('selected');
 		$('#results-container ol').hide();

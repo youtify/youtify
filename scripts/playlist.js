@@ -118,6 +118,7 @@ function createPlaylistBar(playlist) {
 function loadPlaylistView(playlist) {
 	$('#results-container ol').hide();
     $('#playlistbar').replaceWith(createPlaylistBar(playlist)).show();
+    $('#searchbar').hide();
     $('#playlist').html('');
 
     $.each(playlist.videos, function(i, item) {

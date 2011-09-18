@@ -11,6 +11,7 @@ var BestOfYouTube = {
 	select: function() {
         history.pushState(null, null, '/');
         $('#playlistbar').hide();
+        $('#searchbar').hide();
 		$('#left-menu li').removeClass('selected');
 		$('#bestof-tab').addClass('selected');
 		if ($('#bestof').html().length === 0) {
@@ -41,6 +42,7 @@ var TopList = {
 	select: function() {
         history.pushState(null, null, '/');
         $('#playlistbar').hide();
+        $('#searchbar').hide();
 		$('#left-menu li').removeClass('selected');
 		$('#toplist-tab').addClass('selected');
 		if ($('#toplist').html().length === 0) {
