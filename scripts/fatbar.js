@@ -1,6 +1,9 @@
 function fatBar_Init() {
     $('#fatbar-toggle .show').click(FatBar.show);
     $('#fatbar-toggle .hide').click(FatBar.hide);
+
+    $('#fatbar .close').click(FatBar.hide);
+
     if (JSON.parse(localStorage['fatbar-toggle'] || "false")) {
         FatBar.show();
     } else {

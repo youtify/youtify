@@ -837,6 +837,7 @@ body.searching #search .loader {
 *******************************/
 
 #fatbar {
+    position: relative;
 	height: 280px;
 	cursor: default;
 }
@@ -871,6 +872,19 @@ body.searching #search .loader {
 #fatbar #video-info-box .description {
     margin: 10px 0;
 }
+#fatbar .close {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+}
+#fatbar .close:after {
+    content: "x";
+}
+
 
 /* TIME LINE
 *******************************/
