@@ -17,20 +17,13 @@ var IGNORE_PATTERN = /less|shuffle|featuredetection.*.js/;
 
 var files = [];
 
-function uglify(data) {
-    data = data.replace(/\/\/.*/g, '');
-    data = data.replace(/\/\*.*?\*\//g, '');
-    data = data.replace(/^[ \t]+/g, '');
-    return data;
-}
-
 function startUglification() {
     var i;
     var file;
     for (i = 0; i < files.length; i += 1) {
         file = files[i];
-        file.content = uglify(file.content);
-        file.tr.find('td.uglify').text("✓");
+        file.content = jsmin(file.content);
+        file.tr.find('td.jsmin').text("✓");
     }
 }
 
@@ -90,7 +83,7 @@ function createTr(filename) {
     var tr = $('<tr></tr>');
     $('<td class="filename"></td>').text(filename).appendTo(tr);
     $('<td class="jslint"></td>').appendTo(tr);
-    $('<td class="uglify"></td>').appendTo(tr);
+    $('<td class="jsmin"></td>').appendTo(tr);
 
     if (filename.match(IGNORE_PATTERN)) {
         tr.addClass('ignore');
