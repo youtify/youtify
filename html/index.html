@@ -217,13 +217,12 @@
                         <div id="playlistbar"></div>
                         <div id="searchbar">
                             <div id="search-options">
-                                <form id="search-options-options">
-                                    <input type="radio" name="search-options" id="search-options-videos" checked="true" />
-                                    <label id="search-options-videos-lbl" class="translatable" for="search-options-videos">Videos</label>
-
-                                    <input type="radio" name="search-options" id="search-options-playlists" />
-                                    <label id="search-options-playlists-lbl" class="translatable" for="search-options-playlists">Playlists</label>
-                                </form>
+                                <span class="tab videos selected" id="search-options-videos">
+                                    <span class="translatable title">Videos</span>
+                                </span>
+                                <span class="tab playlists" id="search-options-playlists">
+                                    <span class="translatable title">Playlists</span>
+                                </span>
                             </div>
                         </div>
 						<ol id="results" class="results"></ol> 

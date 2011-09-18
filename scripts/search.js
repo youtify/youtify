@@ -1,20 +1,19 @@
 function search_Init() {
     var timeoutId = null;
 
-	// SEARCH OPTIONS
-    $('#search-options input').each(function(i, elem) {
-        if (localStorage['search-options'] === $(elem).attr('id')) {
-            $(elem).attr('checked', 'checked');
-        }
-    });
-
-	$('#search-options input').change(function() {
-        if ($(this).is(':checked')) {
-            localStorage['search-options'] = $(this).attr('id');
-			Search.q = ''; // Clear search
-            $('#search input').keyup();
-        }
+	$('#searchbar .tab').click(function() {
+        $('#searchbar .tab').removeClass('selected');
+        $(this).addClass('selected');
+        localStorage['search-options'] = $(this).attr('id');
+        Search.q = ''; // Clear search
+        $('#search input').keyup();
 	});
+
+	// SEARCH OPTIONS
+    if (localStorage['search-options']) {
+        $('#searchbar .tab').removeClass('selected');
+        $('#' + localStorage['search-options']).addClass('selected');
+    }
 
 	// SEARCH
 	$('#search input').keyup(function(event) {
@@ -60,7 +59,7 @@ var Search = {
 
         $('#results').html('');
         
-        if ($('#search-options-playlists').is(':checked')) {
+        if ($('#searchbar .tab.playlists').hasClass('selected')) {
             Search.searchPlaylists(q);
         } else {
             Search.searchVideos(q);
