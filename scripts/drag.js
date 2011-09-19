@@ -264,6 +264,6 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.hasClass('video') && sourceElem.hasClass('video')) {
         playlist.moveVideo(sourceElem.index(), targetElem.index());
         playlistManager.save();
-        loadPlaylistView(playlist);
+        sourceElem.detach().insertBefore(targetElem);
     }
 });

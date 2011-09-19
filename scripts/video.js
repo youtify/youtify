@@ -69,7 +69,7 @@ function createRatingBar(rating) {
     return ratingOuter;
 }
  
-function createResultsItem(title, videoId, rating) {
+function createResultsItem(title, videoId, rating, isPlaylistItem) {
     var artist = extractArtist(title);
     var additionalMenuButtons = [];
 	
@@ -127,7 +127,17 @@ function createResultsItem(title, videoId, rating) {
     }
 
     li.data('additionalMenuButtons', additionalMenuButtons);
-
+    
+    if (isPlaylistItem) {
+        li.data('additionalMenuButtons').push({
+            title: 'Delete',
+            li: li,
+            callback: deleteVideoButtonClicked
+        });
+        li.addClass('droppable');
+        li.addClass('draggable');
+        li.addClass('reorderable');
+    }
     return li;
 }
 
