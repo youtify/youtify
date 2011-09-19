@@ -98,6 +98,9 @@ function createResultsItem(title, videoId, rating, isPlaylistItem) {
 
 	$('<span/>')
 		.addClass("icon")
+        .click(function() {
+            $(this).parent().play();
+        })
 		.appendTo(li);
 	
 	$('<span/>')
