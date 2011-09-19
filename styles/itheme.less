@@ -58,16 +58,6 @@
 	color: #FFF;
 }
 
-.songPlaying() {
-    text-shadow: none;
-    background: url('/images/playing.png') no-repeat top left, -webkit-gradient(linear, left bottom, left top, color-stop(0%, #57A4F2), color-stop(100%, #4794E2));
-    background: url('/images/playing.png') no-repeat top left, -moz-linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
-    background: url('/images/playing.png') no-repeat top left, -o-linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
-    background: url('/images/playing.png') no-repeat top left, -ms-linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
-    background: url('/images/playing.png') no-repeat top left, linear-gradient(bottom, #57A4F2 0%, #4794E2 100%);
-}
-
-
 .fatbar() {
     background:#DCE3EB;
     border-bottom: 1px solid #5E6570;
@@ -110,14 +100,6 @@
 .results .disabled {
     color: @text-color-1;
 } 
-
-/* PLAYING */
-.results .playing,
-.results .playing:nth-child(odd),
-.results > .playlist > ul > .playing,
-.results > .playlist > ul > .playing:nth-child(odd) { 
-    .songPlaying();
-}
 
 #search > input[type=text] {
     box-shadow: 1px 1px 1px rgba(255,255,255,0.5), -1px -1px 1px rgba(0,0,0,0.5);

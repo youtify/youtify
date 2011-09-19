@@ -95,6 +95,10 @@ function createResultsItem(title, videoId, rating, isPlaylistItem) {
 		event.stopPropagation();
 		$(this).play();
 	});
+
+	$('<span/>')
+		.addClass("icon")
+		.appendTo(li);
 	
 	$('<span/>')
 		.addClass("title")

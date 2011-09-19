@@ -9,9 +9,6 @@ body:after {
         url(/images/pause.png)
         url(/images/next.png)
         url(/images/prev.png)
-        url(/images/song.png)
-        url(/images/playing.png)
-        url(/images/disabled.png)
 		url(/images/shuffle-off.png)
 		url(/images/shuffle-on.png);
 
@@ -644,10 +641,7 @@ body.searching #search .loader {
 }
 
 .results .video {
-    background-image: url('/images/song.png');
-    background-repeat: no-repeat;
-    background-position: top left;
-    padding: 3px 4px 3px 20px;
+    padding: 3px 4px 3px;
     cursor: default;
 }
 .results .video .rating {
@@ -671,22 +665,35 @@ body.searching #search .loader {
 }
 .results .playing,
 .results .playing:nth-child(odd) {
-	background-repeat: no-repeat;
-	background-image: url('/images/playing.png');
 } 
 .results .selected, 
 .results .selected:nth-child(odd) {
 }
-.results .disabled {
-    background-image: url('/images/disabled.png');
+
+.results .video > .icon {
+	text-shadow: none;
+    width: 16px;
+    display: inline-block;
+}
+.results .video > .icon:before {
+    content: "♪";
+}
+.results .video.playing > .icon:before {
+    content: "▶";
+    font-size: 10px;
+}
+.results .disabled > .icon {
+    color: red;
 } 
 
+.results .playlist:before {
+    content: "♫";
+    width: 16px;
+    display: inline-block;
+}
 .results .playlist {
 	text-shadow: none;
-    background-image: url('/images/list.png');
-    background-repeat: no-repeat;
-    background-position: top left;
-    padding: 3px 4px 3px 20px;
+    padding: 3px 4px 3px;
 }
 
 .results .loadMore {
@@ -700,17 +707,6 @@ body.searching #search .loader {
 
 .results .playlist ul {
 	margin: 5px 0 0 25px; 
-}
-.results > .playlist > ul > .playing,
-.results > .playlist > ul > .playing:nth-child(odd) { 
-	background-repeat: no-repeat;
-	background-image: url('/images/playing.png');
-} 
-.results > .playlist > ul > .selected, 
-.results > .playlist > ul > .selected:nth-child(odd) { 
-}
-.results > .playlist > ul > .disabled { 
-	background-image: url('/images/disabled.png'); 
 }
 
 .alternatives { 
@@ -1271,6 +1267,9 @@ body {
     background-image: url('/images/loading.gif');
     background-position: center left;
     background-repeat: no-repeat;
+}
+.results .playlist.loading:before {
+    content: "";
 }
 
 .results .playlist ul {
