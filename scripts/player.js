@@ -256,8 +256,13 @@ var Player = {
             150: 'The rights holder has decided not to share this video on Youtify'
         };
 		var elem = $('.results li.playing'); //$('.results li.playing, .results li.paused')
+        // No playitem found
+        if (elem.length === 0) {
+            Notification.show(messages[event.data]);
+            return;
+        }
 		if (elem.hasClass('alternative')) {
-			if (elem.next()) {
+			if (elem.next().length > 0) {
 				elem.next().play();
 			} else {
 				Player.next();
