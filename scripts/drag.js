@@ -252,7 +252,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.hasClass('playlistElem') && sourceElem.attr('id') === 'info') {
         var playlist = targetElem.data('model');
-        playlist.addVideo(sourceElem.text(), Player.getCurrentVideoId());
+        playlist.addVideo(sourceElem.find('.title').text(), Player.getCurrentVideoId());
         playlistManager.save();
         constructPlaylistsMenu();
     }
