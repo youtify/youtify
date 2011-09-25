@@ -32,6 +32,10 @@
             left -= (popupRightSide - windowRightSide);
         }
 
+        if (left < 0) {
+            left = 0;
+        }
+
         // Display a blocker div that removes the popup when clicked
         $('<div id="arrow-popup-blocker"></div>').mousedown(function(event) {
             $(this).remove();
