@@ -75,10 +75,9 @@ function showPlaylistContextMenu(event) {
                 var input = $('<input type="text"/>')
                     .addClass('rename')
                     .val(li.text())
-                    .data('original', li.text())
                     .data('li', li)
                     .blur(function(event) {
-                        li.text($(this).data('original'));
+                        li.find('.title').show();
                         input.remove();
                     })
                     .keyup(function(event) {
@@ -97,7 +96,7 @@ function showPlaylistContextMenu(event) {
                         event.stopPropagation();
                     });
 
-                li.html('');
+                li.find('.title').hide();
                 li.append(input);
                 input.focus().select();
             }
