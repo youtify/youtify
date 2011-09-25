@@ -14,14 +14,17 @@ handlers:
 - url: /export
   static_files: html/export.html
   upload: html/export.html
+  expiration: "1d"
 
 - url: /import
   static_files: html/import.html
   upload: html/import.html
+  expiration: "1d"
 
 - url: /heart
   static_files: html/popups/heart.html
   upload: html/popups/heart.html
+  expiration: "1d"
 
 - url: /test.*
   script: gaeunit.py
@@ -35,9 +38,6 @@ handlers:
 - url: /minimizer
   script: minimizer.py
   login: admin
-
-- url: /beta
-  script: beta.py
 
 - url: /your.*
   script: sucks.py
@@ -67,6 +67,7 @@ handlers:
 
 - url: /images
   static_dir: images
+  expiration: "1d"
 
 - url: /translations.*
   script: translations.py
@@ -74,6 +75,7 @@ handlers:
 - url: /robots.*
   static_files: robots.txt
   upload: robots.txt
+  expiration: "1d"
 
 - url: /.*
   script: main.py
