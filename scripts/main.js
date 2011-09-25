@@ -207,7 +207,10 @@ $(document).ready(function() {
     url_Init();
 });
 
+var youTubeApiReady = false;
+
 function onYouTubePlayerAPIReady() {
+    youTubeApiReady = true;
 	// 
 	// Player cannot be loaded before
 	// $(window).load()
