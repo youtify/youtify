@@ -108,6 +108,7 @@
 		<script src="/scripts/fatbar.js"></script>
 		<script src="/scripts/uploader.js"></script>
 		<script src="/scripts/spotifyimport.js"></script>
+		<script src="/scripts/heart.js"></script>
 		<script src="/scripts/main.js"></script>
         {% endif %}
         
@@ -125,7 +126,6 @@
             </script>
 		{% endif %}
 		
-		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 		<script src="http://www.youtube.com/player_api"></script>
 	</head> 
 	<body> 
@@ -134,6 +134,7 @@
         {% include "./popups/spotify_importer.html" %}
         {% include "./popups/share_playlist.html" %}
         {% include "./popups/share_video.html" %}
+		<div id="heartPopup" style="display:none" class="popup"></div>
         <div id="notification">
             <span class="content"></span>
             <button class="close translatable">Close</button>
@@ -147,16 +148,9 @@
                 <span id="heart">♥</span>
 				<div id="content-left"> 
                     <div class="toolbar"> 
-                        <a id="flattr" href="http://flattr.com/thing/186638/Youtify" target="_blank">
-                            <img class="translatable" src="/images/flattr.png" alt="Flattr us!" title="Flattr us!" border="0" />
-                        </a>
-                        <a id="twitter" href="http://twitter.com/#!/Youtify" target="_blank">
-                            <img class="translatable" src="/images/twitter.png" alt="Follow us on Twitter!" title="Follow us on Twitter!" border="0" />
-                        </a>
-                        <a id="facebook" href="http://facebook.com/Youtify" target="_blank">
-                            <img class="translatable" src="/images/facebook.png" alt="Like us on Facebook!" title="Like us on Facebook!" border="0" />
-                        </a>
-						<g:plusone size="medium" count="false" href="http://www.youtify.com"></g:plusone>
+						<div id="infomenu">
+                            <span id="infomenu-text" class="translatable">About</span>
+						</div>
                     </div> 
 					<div id="left-menu"> 
                         {% include "loginbox.html" %}
@@ -203,15 +197,8 @@
 							<div class="loader"></div>
 						</div> 
 						
-						<a id="yt-power" href="http://www.youtube.com"></a>
-                        <div id="logo"></div> 
-						
 						<div id="settings">
                             <span id="settings-text" class="translatable">Settings</span>
-						</div>
-
-						<div id="infomenu">
-                            <span id="infomenu-text" class="translatable">Legal & Information</span>
 						</div>
 					</div> 
 					<div id="results-container" class="droppable"> 

@@ -112,9 +112,9 @@ body {
 #heart {
     position: absolute; 
     left: 220px; 
-    top: 5px; 
-    color: red; 
-    font-size: 30px; 
+    top: 12px;
+    color: #DD0000;
+    font-size: 22px; 
     z-index: 10; 
     cursor: pointer;
     opacity: 0.8;
@@ -122,10 +122,45 @@ body {
     text-align: center;
 }
 #heart:hover {
-    font-size: 34px;
-    top: 4px;
+    font-size: 28px;
+    top: 10px;
     left: 219px;
     opacity: 1;
+}
+#heartPopup {
+	width: 250px;
+	vertical-align: top;
+	text-align: center;
+}
+#heartPopup .logos {
+	height: 60px;
+	width: auto;
+	background: #FFF;
+	margin-bottom: 10px;
+	.border(10px);
+}
+#heartPopup .logo {
+	padding: 5px;
+    background: url('/images/logo.gif') center center no-repeat;
+    width: 135px;
+	height: 50px;
+	float: left;
+}
+#heartPopup .yt-power {
+	padding: 5px;
+	background: url('/images/powered_by_yt.gif') center center no-repeat;
+	width: 63px;
+	height: 50px;
+	float: right;
+}
+
+#heartPopup .like {
+	width: 55px;
+	overflow: hidden;
+	display: inline-block;
+}
+#heartPopup .margin {
+	margin-right: 10px;
 }
 #content-left {
 	width: 230px;
@@ -138,15 +173,6 @@ body {
     overflow: hidden;
     .lightGradient;
 	text-align: center;
-}
-
-#content-left .toolbar a {
-    margin: 15px 5px 0 0;
-	opacity: 0.75;
-	display: inline-block;
-}
-#content-left .toolbar a:hover {
-	opacity: 1;
 }
 
 /* PLAYLISTS
@@ -461,18 +487,8 @@ body.searching #search .loader {
 	cursor: pointer;
 }
 
-#logo {
-    float: right;
-    background: url('/images/logo.gif') no-repeat center center;
-    margin-right: 5px;
-	cursor: pointer;
-	width: 135px;
-	height: 50px;
-}
-
 @media all and (max-width: 1150px) {
 	#content-right > .toolbar { overflow: hidden; }
-	#logo { display: none; }
 }
 
 .popup {
@@ -542,7 +558,7 @@ body.searching #search .loader {
 }
 
 #infomenu {
-	float: right;
+	display: inline-block;
 }
 #infomenu-text { 
 	display: block;
@@ -632,15 +648,6 @@ body.searching #search .loader {
 	color: white;
 	font-size: 11px;
     text-align: center;
-}
-
-#yt-power {
-	display: block;
-	background: url('/images/powered_by_yt.gif') center center no-repeat;
-	float: right;
-	width: 63px;
-	height: 50px;
-	margin-right: 5px;
 }
 
 #results-container {

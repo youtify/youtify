@@ -19,6 +19,10 @@ handlers:
   static_files: html/import.html
   upload: html/import.html
 
+- url: /heart
+  static_files: html/popups/heart.html
+  upload: html/popups/heart.html
+
 - url: /test.*
   script: gaeunit.py
   login: admin

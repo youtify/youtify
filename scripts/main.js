@@ -202,7 +202,8 @@ $(document).ready(function() {
     notification_Init();
     leftmenu_Init();
     fatBar_Init();
-    
+    heart_Init();
+	
     url_Init();
 });
 
