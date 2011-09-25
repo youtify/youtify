@@ -190,18 +190,6 @@ body {
 #left-menu > .selected:nth-child(odd) {
 }
 
-#login {
-	margin-bottom: 10px;
-}
-#login a {
-	display: block;
-	padding: 5px 4px;
-	text-decoration: underline;
-	white-space: nowrap;
-	width: 200px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
 
 #playlists .remote .title {
     display: inline-block;
@@ -1126,13 +1114,17 @@ body {
 }
 
 #login {
-	border-bottom: 1px solid @border-color-2;
+	float: right;
+    height: 32px;
+    padding: 18px 5px 0 0;
 }
 #login a {
+    text-align: right;
     color: @text-color-1;
-	text-shadow: 0px 1px 1px #000;
-	border: 1px solid transparent;
+	text-shadow: 0px 1px 1px #FFF;
 	font-size: 13px;
+    text-decoration: underline;
+	white-space: nowrap;
 }
 
 #playlists .playlistElem:before {
