@@ -88,7 +88,7 @@ function changeLanguage(code) {
     $('#settings .language option[value=' + code + ']').attr('selected', 'selected');
 
     if (autoDetectedLanguageByServer === code) {
-        updateMarkup(autoDetectedTranslations)
+        updateMarkup(autoDetectedTranslations);
     } else {
         $.getJSON('/translations/' + code, function(data, textStatus) {
             updateMarkup(data);
