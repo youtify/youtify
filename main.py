@@ -6,6 +6,7 @@ from google.appengine.ext.webapp import util
 import toplist
 from model import get_current_youtify_user
 from model import create_youtify_user
+from playlists import get_playlists_json_for_user
 import random
 import re
 
@@ -14,7 +15,11 @@ class MainHandler(webapp.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
         youtify_user = get_current_youtify_user()
+
+        playlists = '[]';
+
         if youtify_user is not None:
+            playlists = get_playlists_json_for_user(youtify_user)
             youtify_user.device = str(random.random())
             youtify_user.save()
 
@@ -29,12 +34,13 @@ class MainHandler(webapp.RequestHandler):
             og_tag = '<meta property="og:video" content="http://www.youtube.com/v/' + match.groups()[0] + '?version=3&amp;autohide=1"/><meta property="og:video:type" content="application/x-shockwave-flash"/><meta property="og:video:width" content="396"/><meta property="og:video:height" content="297"/>'
         else:
             og_tag = ''
-        
+
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
             'user': current_user,
             'youtify_user': youtify_user,
+            'playlistsFromServer': playlists,
             'accept_language_header': self.request.headers.get('Accept-Language', ''),
             'logged_in': int(current_user is not None),
             'login_url': users.create_login_url('/'),

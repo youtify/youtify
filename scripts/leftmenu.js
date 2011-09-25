@@ -1,9 +1,5 @@
 function leftmenu_Init() {
-    if (logged_in) {
-        playlistManager.pull(constructPlaylistsMenu);
-    } else {
-        constructPlaylistsMenu();
-    }
+    constructPlaylistsMenu();
 
     // LOGIN/LOGOUT BUTTON
     $('#logout-link').click(function() {

@@ -61,23 +61,25 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         else:
             self.error(403)
 
+def get_playlists_json_for_user(youtify_user):
+    playlists = []
+
+    for playlist in Playlist.all().filter('owner =', youtify_user):
+        if playlist.json is None:
+            logging.error("Playlist " + str(playlist.key().id()) + " has invalid JSON, skipping...")
+        else:
+            playlists.append(playlist.json)
+
+    return '[' + ','.join(playlists) + ']'
+
 class PlaylistsHandler(webapp.RequestHandler):
 
     def get(self):
         """Get playlists for logged in user"""
         youtify_user = get_current_youtify_user()
 
-        playlists = []
-        for playlist in Playlist.all().filter('owner =', youtify_user):
-            if playlist.json is None:
-                logging.error("Playlist " + str(playlist.key().id()) + " has invalid JSON, skipping...")
-            else:
-                playlists.append(playlist.json)
-
-        output = '[' + ','.join(playlists) + ']'
-
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(output)
+        self.response.out.write(get_playlists_json_for_user(youtify_user))
 
     def post(self):
         """Create new playlist"""

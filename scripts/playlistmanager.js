@@ -17,8 +17,9 @@ function PlaylistsManager() {
         } catch (e) {
             alert('Error parsing playlists from localStorage: ' + e); 
         }
+
+        this.mergePlaylists(playlistsFromServer);
     };
-    this.load();
 
     this.removeRemotePlaylistsFromLocalStorage = function() {
         var localPlaylists = [];
@@ -44,31 +45,28 @@ function PlaylistsManager() {
     };
 
     /**
-     * Download stored playlists and place them in localStorage if
-     * they don't already exist.
+     * Merge the passed in playlists and saves the end result to localStorage.
      *
-     * @param callback The function to be called when done.
+     * @param playlists The playlists to merge.
      */
-    this.pull = function(callback) {
+    this.mergePlaylists = function(playlists) {
         var self = this,
             remoteIds = this.getPlaylistsMap();
 
-        $.getJSON('/api/playlists', {}, function(data) {
-            $.each(data, function(i, item) {
-                var title = item.title,
-                    videos = item.videos,
-                    remoteId = item.remoteId,
-                    owner = item.owner,
-                    isPrivate = false,
-                    shuffle = false;
+        $.each(playlists, function(i, item) {
+            var title = item.title,
+                videos = item.videos,
+                remoteId = item.remoteId,
+                owner = item.owner,
+                isPrivate = false,
+                shuffle = false;
 
-                if (!remoteIds.hasOwnProperty(remoteId)) {
-                    self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate));
-                }
-            });
-            self.saveToLocalStorage();
-            callback();
+            if (!remoteIds.hasOwnProperty(remoteId)) {
+                self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate));
+            }
         });
+
+        self.saveToLocalStorage();
     };
 
     this.save = function() {
@@ -166,5 +164,7 @@ function PlaylistsManager() {
 
         this.playlists.splice(index, 1);
     };
+
+    this.load();
 }
 
