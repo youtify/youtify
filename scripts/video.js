@@ -17,9 +17,17 @@ function video_Init() {
 }
 
 jQuery.fn.play = function() {
+    var owner = $(this).parents().data('owner');
+    if (owner) {
+        Player.addSiblingsToPlayorder(this, owner.find('.shuffle-on').length === 1);
+    } else {
+        Player.addSiblingsToPlayorder(this, false);
+    }
+
 	$('#results-container .playing').removeClass('playing');
 	$(this[0]).addClass("playing");
 	Player.play($(this[0]).data('videoId'), $(this[0]).find('.title').text());
+
 	return this;
 };
 
@@ -85,16 +93,17 @@ function createResultsItem(title, videoId, rating, isPlaylistItem) {
             event.stopPropagation();
         });
 
-	li.dblclick(function(event) {		
-        var owner = $(this).parents().data('owner');
-		if (owner) {
-            Player.addSiblingsToPlayorder(this, owner.find('.shuffle-on').length === 1);
-        } else {
-			Player.addSiblingsToPlayorder(this, false);
-		}
-		event.stopPropagation();
-		$(this).play();
-	});
+    var hasTouch = /android|iphone|ipad/i.test(navigator.userAgent.toLowerCase());
+
+    if (hasTouch) {
+        li.doubletap(function(event) {
+            $(this).play();
+        });
+    } else {
+        li.dblclick(function(event) {
+            $(this).play();
+        });
+    }
 
 	$('<span/>')
 		.addClass("icon")
