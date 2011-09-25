@@ -30,28 +30,10 @@ function settings_Init() {
 	});
 }
 
-function autoDetectLanguage() {
-    var supportedLangs = {
-        'en': 'en_US',
-        'sv': 'sv_SE',
-        'fi': 'fi_FI'
-    };
-
-    try {
-        var lang = accept_language_header.substring(0, 2);
-        if (supportedLangs.hasOwnProperty(lang)) {
-            return supportedLangs[lang];
-        } 
-    } catch (e) {
-    }
-
-    return 'en_US';
-}
-
 function Settings() {
     var settings = JSON.parse(localStorage.settings || '{}');
 
-    this.language = settings.language || autoDetectLanguage();
+    this.language = settings.language || autoDetectedLanguageByServer;
     this.translatorMode = settings.translatorMode || false;
     this.theme = settings.theme || 'itheme';
 	this.quality = settings.quality || 'hd720';

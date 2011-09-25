@@ -173,6 +173,32 @@ translations['ro_SE'] = {
 	'Less': u'Mominondodrore',
 }
 
+lang_map = {
+    'en-us': 'en_US',
+    'en': 'en_US',
+    'sv': 'sv_SE',
+    'fi': 'fi_FI',
+    'fi-fi': 'fi_FI',
+}
+
+def auto_detect_language(request):
+    global lang_map
+    header = request.headers.get('Accept-Language', '')
+    header = header.lower()
+
+    accepted_languages = header.split(';')[0]
+    accepted_languages = accepted_languages.split(',')
+
+    for lang in accepted_languages:
+        if lang in lang_map:
+            return lang_map[lang]
+
+    return 'en_US'
+
+def get_translations_json_for(code):
+    result = dict(translations['en_US'].items() + translations[code].items())
+    return simplejson.dumps(result)
+
 class TranslationsHandler(webapp.RequestHandler):
     def get(self):
         code = self.request.path.split('/')[-1]
@@ -180,11 +206,8 @@ class TranslationsHandler(webapp.RequestHandler):
         if not code in translations:
             raise Exception('Unknown language code')
 
-        result = dict(translations['en_US'].items() + translations[code].items())
-        result = simplejson.dumps(result)
-
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(result)
+        self.response.out.write(get_translations_json_for(code))
 
     def post(self):
         code = self.request.path.split('/')[-2]

@@ -46,46 +46,54 @@ var translations,
         'placeholder'
     ];
 
-function changeLanguage(code) {
-    $.getJSON('/translations/' + code, function(data, textStatus) {
-        translations = data;
+function updateMarkup(translations) {
+    $('.translatable').each(function(i, elem) {
+        elem = $(elem);
 
-        $('.translatable').each(function(i, elem) {
-            elem = $(elem);
-            var translationKeys = elem.data('translationKeys') || {},
-                key;
+        var translationKeys = elem.data('translationKeys') || {},
+            key;
 
-            if (translationKeys.hasOwnProperty('text')) {
-                key = translationKeys.text;
-            } else {
-                key = elem.text();
-                translationKeys.text = key;
-            }
+        if (translationKeys.hasOwnProperty('text')) {
+            key = translationKeys.text;
+        } else {
+            key = elem.text();
+            translationKeys.text = key;
+        }
 
-            if (translations.hasOwnProperty(key)) {
-                elem.text(translations[key]);
-            }
+        if (translations.hasOwnProperty(key)) {
+            elem.text(translations[key]);
+        }
 
-            $.each(TRANSLATABLE_ATTRIBUTES, function(j, attr) {
-                if (elem.attr(attr) !== undefined) {
-                    if (translationKeys.hasOwnProperty(attr)) {
-                        key = translationKeys[attr];
-                    } else {
-                        key = elem.attr(attr);
-                        translationKeys[attr] = key;
-                    }
-                    if (translations.hasOwnProperty(key)) {
-                        elem.attr(attr, translations[key]);
-                    }
+        $.each(TRANSLATABLE_ATTRIBUTES, function(j, attr) {
+            if (elem.attr(attr) !== undefined) {
+                if (translationKeys.hasOwnProperty(attr)) {
+                    key = translationKeys[attr];
+                } else {
+                    key = elem.attr(attr);
+                    translationKeys[attr] = key;
                 }
-            });
-
-            elem.data('translationKeys', translationKeys);
+                if (translations.hasOwnProperty(key)) {
+                    elem.attr(attr, translations[key]);
+                }
+            }
         });
 
-        $('#settings .language option[value=' + code + ']').attr('selected', 'selected');
-        loadTranslatorPanel();
+        elem.data('translationKeys', translationKeys);
     });
+
+    loadTranslatorPanel();
+}
+
+function changeLanguage(code) {
+    $('#settings .language option[value=' + code + ']').attr('selected', 'selected');
+
+    if (autoDetectedLanguageByServer === code) {
+        updateMarkup(autoDetectedTranslations)
+    } else {
+        $.getJSON('/translations/' + code, function(data, textStatus) {
+            updateMarkup(data);
+        });
+    }
 }
 
 /**

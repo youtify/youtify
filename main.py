@@ -1,14 +1,16 @@
 import os
+import random
+import re
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
-import toplist
+from toplist import get_or_create_toplist_json
 from model import get_current_youtify_user
 from model import create_youtify_user
 from playlists import get_playlists_json_for_user
-import random
-import re
+from translations import auto_detect_language
+from translations import get_translations_json_for
 
 class MainHandler(webapp.RequestHandler):
 
@@ -35,17 +37,21 @@ class MainHandler(webapp.RequestHandler):
         else:
             og_tag = ''
 
+        lang = auto_detect_language(self.request)
+
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
             'user': current_user,
             'youtify_user': youtify_user,
             'playlistsFromServer': playlists,
-            'accept_language_header': self.request.headers.get('Accept-Language', ''),
+            'autoDetectedLanguageByServer': lang,
+            'autoDetectedTranslations': get_translations_json_for(lang),
+            'accept_language_header': self.request.headers.get('Accept-Language', ''), # todo remove
             'logged_in': int(current_user is not None),
             'login_url': users.create_login_url('/'),
             'logout_url': users.create_logout_url('/'),
-            'toplist': toplist.get_or_create_toplist_json(),
+            'toplist': get_or_create_toplist_json(),
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,
             'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
