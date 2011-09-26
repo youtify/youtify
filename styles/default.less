@@ -600,8 +600,6 @@ body.searching #search .loader {
 
 #settings .language > select {
 	min-width: 150px;
-	margin: 4px 0;
-	padding: 2px;
 }
 #settings .quality > span {
 	display: inline-block;
@@ -655,6 +653,7 @@ body.searching #search .loader {
 .results .video {
     padding: 3px 4px 3px;
     cursor: default;
+    position: relative;
 }
 .results .video .rating {
     float: right;
@@ -664,7 +663,8 @@ body.searching #search .loader {
     padding: 1px;
 }
 .results .video .contextmenu {
-    float: right;
+    position: absolute;
+    right: 4px;
 }
 .results .video .rating div {
     height: 100%;
@@ -779,6 +779,10 @@ body.searching #search .loader {
 #playlistbar .share {
     float: none;
     margin: 10px;
+}
+#playlistbar button,
+#playlistbar input {
+    margin: 5px 10px;
 }
 
 /* SHARE VIDEO POPUP
