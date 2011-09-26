@@ -261,7 +261,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 // VIDEO DROPPED ON ANOTHER VIDEO
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     var playlist = $('#playlistbar').data('playlist');
-    if (targetElem.hasClass('video') && sourceElem.hasClass('video')) {
+    if (targetElem.hasClass('video') && sourceElem.hasClass('video') && sourceElem.attr('rel') !== targetElem.attr('rel')) {
         playlist.moveVideo(sourceElem.index(), targetElem.index());
         playlistManager.save();
         sourceElem.detach().insertBefore(targetElem);
