@@ -46,7 +46,9 @@ var translations,
         'placeholder'
     ];
 
-function updateMarkup(translations) {
+function updateMarkup(data) {
+    translations = data;
+
     $('.translatable').each(function(i, elem) {
         elem = $(elem);
 
