@@ -114,7 +114,14 @@ var FatBar = {
             $('#video-info-box').removeClass('loading');
             $('#video-info-box span').show();
 			var author = data.entry.author[0].name.$t;
+			var title = data.entry.title.$t;
 			var uri = data.entry.author[0].uri.$t;
+
+            if (title !== video.title) {
+                // @todo: do this even when FatBar is not showing
+                renameCurrentlyPlayingVideo(title);
+            }
+
             try {
                 var description = data.entry.media$group.media$description.$t;
                 $('#video-info-box .description').html(linkify(description));
