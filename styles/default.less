@@ -486,6 +486,9 @@ body.searching #search .loader {
 	box-shadow: 0px 0px 20px #FFF;
 	.border(10px);
 }
+.popup a {
+    color: #fff;
+}
 
 .point-up:before {
 	content: url('/images/theme-up.png');
@@ -493,7 +496,8 @@ body.searching #search .loader {
 	height: 9px;
 	position: absolute;
 	top: -11px;
-	left: 135px;
+	left: 50%;
+    margin-left: -10px;
 }
 
 #spotify-importer.point-left:before {
@@ -1125,6 +1129,19 @@ body {
 	text-shadow: 0px 1px 1px #FFF;
 	text-decoration: underline;
 	white-space: nowrap;
+}
+#login #nickname {
+	background: url(/images/expand.png) center right no-repeat;
+	cursor: pointer;
+    padding: 1px 20px 1px 0px;
+    color: #333;
+	text-shadow: 0px 1px 1px #FFF;
+	white-space: nowrap;
+}
+#logout-popup {
+    width: 100px;
+    text-align: center;
+    width: auto;
 }
 
 #playlists .playlistElem:before {

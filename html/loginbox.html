@@ -1,6 +1,6 @@
 <div id="login">
     {% if logged_in %}
-    <a id="logout-link" href="{{ logout_url }}">Logout {{ user.nickname }}</a>
+    <span id="nickname">{{ user.nickname }}</span>
     {% else %}
     <a id="login-link" href="{{ login_url }}">Login</a>
     {% endif %}

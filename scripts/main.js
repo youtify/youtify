@@ -185,6 +185,11 @@ $(document).ready(function() {
 	$('#logo').click(function() {
 		Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
 	});
+
+    // LOGOUT POPUP
+    $('#nickname').click(function() {
+        $(this).arrowPopup('#logout-popup');
+    });
 	
 	//Notification.show('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 	
