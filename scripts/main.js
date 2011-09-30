@@ -180,11 +180,6 @@ $(document).ready(function() {
 			$('#about-box').hide();
 		});
 	});
-	
-	// FUNNY LOGO
-	$('#logo').click(function() {
-		Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
-	});
 
     // LOGOUT POPUP
     $('#nickname').click(function() {
