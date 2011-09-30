@@ -303,7 +303,7 @@ body {
 #info {
     position: relative;
     text-align: center;
-    padding: 5px;
+    padding: 5px 5px 5px 5px;
     overflow: hidden;
     height: 40px;
     .lightGradient;
@@ -315,9 +315,12 @@ body {
     text-align: center;
     cursor: default;
     height: 1.3em;
-	text-overflow: ellipsis;
-    overflow: hidden;
+    margin-right: 20px;
+    min-width: 100%;
+	display: inline;
+    white-space: nowrap;
 }
+
 #info #fatbar-toggle {
     position: absolute;
     margin: 4px;
