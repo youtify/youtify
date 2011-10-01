@@ -134,7 +134,7 @@ function createResultsItem(title, videoId, rating, isPlaylistItem) {
     if (artist) {
         additionalMenuButtons.push({
             title: 'More from ' + artist,
-            li: li,
+            args: li,
             callback: function(li) {
                 var artist = extractArtist(li.text());
                 $('#search input').val(artist).keyup();
@@ -147,7 +147,7 @@ function createResultsItem(title, videoId, rating, isPlaylistItem) {
     if (isPlaylistItem) {
         li.data('additionalMenuButtons').push({
             title: 'Delete',
-            li: li,
+            args: li,
             callback: deleteVideoButtonClicked
         });
         li.addClass('droppable');

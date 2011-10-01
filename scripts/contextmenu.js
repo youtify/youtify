@@ -10,10 +10,10 @@ function showContextMenu(buttons, x, y) {
     $.each(buttons, function(i, item) {
         $('<li class="option" />')
             .text(item.title)
-            .data('li', item.li)
+            .data('args', item.args)
             .data('callback', item.callback)
             .click(function() {
-                $(this).data('callback')($(this).data('li'));
+                $(this).data('callback')($(this).data('args'));
                 $('#context-menu-blocker, #contextmenu').remove();
             })
             .appendTo(contextmenu);
@@ -52,14 +52,14 @@ function showPlaylistContextMenu(event) {
     var buttons = [
 		{
             title: 'Import from Spotify',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 li.arrowPopup('#spotify-importer', 'left');
             }
         },
         {
             title: 'Remove duplicate videos',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 var index = li.index(),
                     playlist = playlistManager.getPlaylist(index);
@@ -70,7 +70,7 @@ function showPlaylistContextMenu(event) {
         },
         {
             title: 'Rename',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 var input = $('<input type="text"/>')
                     .addClass('rename')
@@ -103,7 +103,7 @@ function showPlaylistContextMenu(event) {
         },
         {
             title: 'Delete',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 var index = li.index(),
                     playlist = playlistManager.getPlaylist(index);
@@ -120,7 +120,7 @@ function showPlaylistContextMenu(event) {
     if (logged_in && $(this).data('model').remoteId) {
         buttons.push({
             title: 'Share',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 showPlaylistSharePopup(li.data('model'), li, 'left');
             }
@@ -130,7 +130,7 @@ function showPlaylistContextMenu(event) {
     if (logged_in && !$(this).data('model').remoteId) {
         buttons.push({
             title: 'Sync',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 li.data('model').sync(function() {
                     playlistManager.save();
@@ -143,7 +143,7 @@ function showPlaylistContextMenu(event) {
     if (logged_in && $(this).data('model').remoteId) {
         buttons.push({
             title: 'Unsync',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 li.data('model').unsync();
                 playlistManager.save();
@@ -155,7 +155,7 @@ function showPlaylistContextMenu(event) {
     if (ON_DEV) {
         buttons.push({
             title: 'View JSON',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 var playlist = li.data('model');
                 alert(JSON.stringify(playlist.toJSON()));
@@ -170,31 +170,36 @@ function showPlaylistContextMenu(event) {
 function showResultsItemContextMenu(event) {
     event.preventDefault();
 
+    var allSelectedVideos = $(this).parent().find('.video.selected');
+
     var buttons = [
         {
             title: 'Play',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 li.play();
             }
         },
         {
             title: 'Watch on YouTube',
-            li: $(this),
+            args: $(this),
             callback: function(li) {
                 window.open('http://www.youtube.com/watch?v=' + li.data('videoId'));
             }
         },
 		{
             title: 'Queue',
-            li: $(this),
-            callback: function(li) {
-                Player.addToPlayOrder(li);
+            args: allSelectedVideos,
+            callback: function(allSelectedVideos) {
+                $.each(allSelectedVideos, function(index, li) {
+                    li = $(li);
+                    Player.addToPlayOrder(li);
+                });
             }
         },
 		{
 			title: 'Show related',
-			li: $(this),
+			args: $(this),
 			callback: function(li) {
 				$('#results').html('');
 				var videoId = li.data('videoId');
@@ -222,7 +227,7 @@ function showResultsItemContextMenu(event) {
 		},
 		{
 			title: 'Share',
-			li: $(this),
+			args: $(this),
 			callback: function(li) {
                 var videoId = li.data('videoId');
                 var title = $.trim(li.find('.title').text());
