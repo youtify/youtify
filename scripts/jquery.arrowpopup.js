@@ -1,13 +1,14 @@
 (function($){
 
     $.fn.arrowPopup = function(popupSelector, arrowDirection) {
+        arrowDirection = arrowDirection || 'up';
+
         var popup = $(popupSelector);
         var arrow = $('<span class="arrow"></span>').addClass(arrowDirection);
         var offset = $(this).offset();
-        arrowDirection = arrowDirection || 'up';
 
         var arrowWidth = 20;
-        var arrowHeight = 9;
+        var arrowHeight = 10;
 
         var left = 0;
         var top = 0;

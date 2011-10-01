@@ -509,11 +509,11 @@ body.searching #search .loader {
     display: block;
 	position: absolute;
     z-index: 201;
-
-    width: 20px;
-    height: 9px;
-
-	background: url(/images/theme-up.png);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #444;
 }
 .arrow.left {
     -webkit-transform: rotate(270deg);
