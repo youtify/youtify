@@ -17,9 +17,9 @@ function video_Init() {
 }
 
 jQuery.fn.play = function() {
-    var owner = $(this).parents().data('owner');
+    var owner = $(this).parent().data('model');
     if (owner) {
-        Player.addSiblingsToPlayorder(this, owner.find('.shuffle-on').length === 1);
+        Player.addSiblingsToPlayorder(this, owner.shuffle);
     } else {
         Player.addSiblingsToPlayorder(this, false);
     }

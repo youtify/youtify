@@ -133,7 +133,6 @@ function loadPlaylistView(playlist) {
     $('#searchbar').hide();
 
     if (playlist.playlistDOMHandle.children('.video').length !== playlist.videos.length) {
-        console.log('adding videos to playlist.playlistDOMHandle (' + playlist.playlistDOMHandle.children('.video').length + ' !== ' + playlist.videos.length + ')');
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
             if (item) {
@@ -392,7 +391,8 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.createDOMRepresentations = function() {
         var ul = $('<ul/>')
             .addClass('results')
-            .appendTo('#results-container'),
+            .appendTo('#results-container')
+            .data('model', this),
             li = $('<li/>')
             .addClass("playlistElem")
             .addClass('droppable')
