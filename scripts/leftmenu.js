@@ -47,15 +47,14 @@ function leftmenu_Init() {
                         videos.push(pendingVideo);
                     }
                     playlist = new Playlist($(this).val(), videos);
+                    playlist.createDOMRepresentations();
                     playlistManager.addPlaylist(playlist);
                     if (logged_in) {
                         playlist.createNewPlaylistOnRemote(function() {
                             playlistManager.save();
-                            constructPlaylistsMenu();
                         });
                     } else {
                         playlistManager.save();
-                        constructPlaylistsMenu();
                     }
                 } else {
                     return;
@@ -91,8 +90,7 @@ function constructPlaylistsMenu() {
 
     for (i = 0; i < playlistManager.playlists.length; i += 1) {
         playlist = playlistManager.getPlaylist(i);
-        li = playlist.createListElem();
-        li.appendTo('#playlists');
+        li = playlist.createDOMRepresentations();
     }
 }
 

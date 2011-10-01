@@ -87,7 +87,6 @@ function showPlaylistContextMenu(event) {
                             var playlist = li.data('model');
                             playlist.rename(input.val());
                             playlistManager.save();
-                            constructPlaylistsMenu();
                             break;
                             case 27: // ESC
                             $(this).blur();
@@ -111,7 +110,6 @@ function showPlaylistContextMenu(event) {
                 if (confirm("Are you sure you want to delete this playlist (" + playlist.title + ")?")) {
                     playlistManager.deletePlaylist(index);
                     playlistManager.save();
-                    constructPlaylistsMenu();
                 }
             }
         }

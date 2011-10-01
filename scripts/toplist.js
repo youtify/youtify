@@ -18,8 +18,8 @@ var BestOfYouTube = {
 			$('#bestof-tab').addClass('loading');
 			BestOfYouTube.load();
 		}
-		$('#results-container ol').hide();
-		$('#bestof').show();
+		$('.results').hide().removeClass('active');
+		$('#bestof').show().addClass('active');
 	},
 
 	load: function() {
@@ -49,8 +49,8 @@ var TopList = {
 			$('#toplist-tab').addClass('loading');
 			TopList.load();
 		}
-		$('#results-container ol').hide();
-		$('#toplist').show();
+		$('.results').hide().removeClass('active');
+		$('#toplist').show().addClass('active');
 	},
 
 	load: function() {

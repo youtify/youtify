@@ -48,7 +48,7 @@ function savePlaylistButtonClicked(event) {
     var playlist = playlistBar.data('playlist');
     playlistManager.addPlaylist(playlist.copy()); // create copy without connection to remote
     playlistBar.replaceWith(createPlaylistBar(playlist));
-    constructPlaylistsMenu();
+    playlist.createDOMRepresentations();
 }
 
 function syncPlaylistButtonClicked(event) {
@@ -57,7 +57,6 @@ function syncPlaylistButtonClicked(event) {
     playlist.sync(function() {
         playlistBar.replaceWith(createPlaylistBar(playlist));
         history.pushState(null, null, playlist.getUrl());
-        constructPlaylistsMenu();
     });
 }
 
@@ -128,19 +127,21 @@ function createPlaylistBar(playlist) {
 }
 
 function loadPlaylistView(playlist) {
-	$('#results-container ol').hide();
+	$('.results').hide().removeClass('active');
+    playlist.playlistDOMHandle.addClass('active');
     $('#playlistbar').replaceWith(createPlaylistBar(playlist)).show();
     $('#searchbar').hide();
-    $('#playlist').html('');
-    $('#playlist').data('model', playlist);
 
-    $.each(playlist.videos, function(i, item) {
-        if (item) {
-            var li = createResultsItem(item.title, item.videoId, null, true).appendTo('#playlist');
-        }
-    });
-
-	$('#playlist').show();
+    if (playlist.playlistDOMHandle.children('.video').length !== playlist.videos.length) {
+        console.log('adding videos to playlist.playlistDOMHandle (' + playlist.playlistDOMHandle.children('.video').length + ' !== ' + playlist.videos.length + ')');
+        playlist.playlistDOMHandle.html('');
+        $.each(playlist.videos, function(i, item) {
+            if (item) {
+                var li = createResultsItem(item.title, item.videoId, null, true).appendTo(playlist.playlistDOMHandle);
+            }
+        });
+    }
+	playlist.playlistDOMHandle.show();
 }
 
 /**
@@ -155,8 +156,6 @@ function playlistClicked(event) {
     } else {
         history.pushState(null, null, '/');
     }
-
-	$('#playlist').data('owner', $(this));
 
     loadPlaylistView(playlist);
 }
@@ -192,6 +191,8 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.owner = owner;
     this.synced = true; // not part of JSON structure
     this.syncing = false; // not part of JSON structure
+    this.leftMenuDOMHandle = null;
+    this.playlistDOMHandle = null;
 
     this.getTwitterShareUrl = function() {
         var url = this.getUrl(),
@@ -218,6 +219,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
             this.title = newTitle;
         }
         this.synced = false;
+        if (this.leftMenuDOMHandle) {
+            this.leftMenuDOMHandle.find('.title').text(newTitle);
+        }
     };
 
     this.unsync = function(callback) {
@@ -339,7 +343,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
             videoId: videoId,
             title: title
         });
-
+        if (this.playlistDOMHandle) {
+            var li = createResultsItem(title, videoId);
+            li.appendTo(this.playlistDOMHandle);
+        }
         this.synced = false;
     };
 
@@ -382,8 +389,11 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         };
     };
 
-    this.createListElem = function() {
-        var li = $('<li/>')
+    this.createDOMRepresentations = function() {
+        var ul = $('<ul/>')
+            .addClass('results')
+            .appendTo('#results-container'),
+            li = $('<li/>')
             .addClass("playlistElem")
             .addClass('droppable')
             .data('model', this)
@@ -402,8 +412,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         if (this.isPrivate) {
             li.addClass('private');
         }
-        
-        return li;
+        li.appendTo('#playlists');
+        this.leftMenuDOMHandle = li;
+        this.playlistDOMHandle = ul;
     };
 	
 	this.removeDuplicates = function() {

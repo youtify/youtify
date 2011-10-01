@@ -161,7 +161,12 @@ function PlaylistsManager() {
         if (logged_in && this.playlists[index].remoteId) {
             this.playlists[index].unsync();
         }
-
+        if (this.playlists[index].leftMenuDOMHandle) {
+            this.playlists[index].leftMenuDOMHandle.remove();
+        }
+        if (this.playlists[index].playlistDOMHandle) {
+            this.playlists[index].playlistDOMHandle.remove();
+        }
         this.playlists.splice(index, 1);
     };
 

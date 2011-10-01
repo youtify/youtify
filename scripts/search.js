@@ -182,8 +182,8 @@ var Search = {
         $('#searchbar').show();
 		$('#left-menu li').removeClass('selected');
 		$('#results-tab').addClass('selected');
-		$('#results-container ol').hide();
-		$('#results').show();
+		$('.results').hide().removeClass('active');
+		$('#results').show().addClass('active');
 	},
 	
 	findAndPlayAlternative: function(elem) {

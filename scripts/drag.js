@@ -184,7 +184,7 @@ $(window).keyup(function (event) {
 
 mouseDraggedCallback = function(targetElem, sourceElem) {
     if (targetElem.attr('id') === 'results-container' && sourceElem.hasClass('video')) {
-        $('#playlist .video:last').addClass('insert-after');
+        $('#results-container .results.active .video:last').addClass('insert-after');
     }
 };
 
@@ -199,7 +199,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
         playlistElem = $('.playlistElem.selected');
         if (targetElem.attr('id') === 'results-container' && sourceElem.hasClass('video') && playlistElem.length) {
             sourceIndex = sourceElem.index();
-            destIndex = $('#playlist .video:last').index() + 1;
+            destIndex = $('#results-container .results.active .video:last').index() + 1;
 
             playlist = playlistElem.data('model');
             playlist.moveVideo(sourceIndex, destIndex);
@@ -222,7 +222,6 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
             }
         });
         playlistManager.save();
-        constructPlaylistsMenu();
     }
 });
 
@@ -254,7 +253,6 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
         var playlist = targetElem.data('model');
         playlist.addVideo(sourceElem.find('.title').text(), Player.getCurrentVideoId());
         playlistManager.save();
-        constructPlaylistsMenu();
     }
 });
 

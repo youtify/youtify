@@ -9,9 +9,9 @@ var Queue = {
 	select: function() {
 		$('#left-menu li').removeClass('selected');
 		$('#queue-tab').addClass('selected');
-		$('#results-container ol').hide();
+		$('.results').hide().removeClass('active');
 		Queue.updateView();
-		$('#queue').show();
+		$('#queue').show().addClass('active');
 	},
 	updateView: function() {
 		var q = $('#queue').html('');
