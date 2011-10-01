@@ -262,8 +262,13 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     var playlist = $('#playlistbar').data('playlist');
     if (targetElem.hasClass('video') && sourceElem.hasClass('video') && sourceElem.attr('rel') !== targetElem.attr('rel')) {
-        playlist.moveVideo(sourceElem.index(), targetElem.index());
+        var selectedVideos = sourceElem.parent().find('.video.selected');
+
+        $.each(selectedVideos, function(index, elem) {
+            playlist.moveVideo(sourceElem.index(), targetElem.index());
+            $(elem).detach().insertBefore(targetElem);
+        });
+
         playlistManager.save();
-        sourceElem.detach().insertBefore(targetElem);
     }
 });
