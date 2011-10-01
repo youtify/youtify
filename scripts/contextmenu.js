@@ -170,6 +170,12 @@ function showPlaylistContextMenu(event) {
 function showResultsItemContextMenu(event) {
     event.preventDefault();
 
+    li = $(this);
+    if (!$(li).hasClass('selected')) {
+        li.parent().find('.selected').removeClass('selected');
+        li.addClass('selected');
+    }
+
     var allSelectedVideos = $(this).parent().find('.video.selected');
 
     var buttons = [
