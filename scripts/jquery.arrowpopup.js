@@ -17,7 +17,7 @@
 
         switch (arrowDirection) {
             case 'up':
-            left = targetCenterX - (popup.outerWidth()/2),
+            left = targetCenterX - (popup.outerWidth()/2);
             top = offset.top + $(this).outerHeight() + (arrowHeight + 5); 
             arrow.css({
                 top: top - arrowHeight,
@@ -30,7 +30,7 @@
             left = 230;
             arrow.css({ // the arrow is flipped 270 degrees here
                 top: top + (popup.outerHeight()/2) - (arrowWidth/2) + 5,
-                left: left - (arrowHeight + 5),
+                left: left - (arrowHeight + 5)
             });
             break;
         }
