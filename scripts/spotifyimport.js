@@ -13,7 +13,7 @@ function spotifyImport_Init() {
     $('#spotify-importer .cancel').click(function() {
         importer.cancel();
         $('#spotify-importer').hide();
-        $('#blocker').remove();
+        $('#blocker, .arrow').remove();
     });
 
     // start
