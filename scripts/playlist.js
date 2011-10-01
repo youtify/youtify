@@ -11,10 +11,15 @@ loadPlaylistView: true,
 
 function deleteVideoButtonClicked(li) {
     var playlist = $('#playlistbar').data('playlist');
+    var allSelectedVideos = li.parent().find('.video.selected');
 
-    playlist.deleteVideo(li.index());
+    $.each(allSelectedVideos, function(index, li) {
+        li = $(li);
+        playlist.deleteVideo(li.index());
+        li.remove();
+    });
+
     playlistManager.save();
-    li.remove();
 }
 
 function playlistMouseDown(event) {
