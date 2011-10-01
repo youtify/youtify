@@ -1,3 +1,7 @@
+function player_Init() {
+    Player.init();
+}
+
 var Player = { 
 	_player: null,
 	_playerReady: false,
@@ -17,6 +21,10 @@ var Player = {
 	_playOrderIndex: 0,
 	_playOrderList: [],
 	_queue: [],
+    
+    init: function() {
+        setInterval(Player.scrollTitle, 12000);
+    },
 
     getCurrentVideoId: function() {
         return Player._currentVideoId;
@@ -193,7 +201,21 @@ var Player = {
         document.title = "Youtify - " + title;
 		$('#info .title').text(title).attr('title', title);
 	},
-
+    
+    scrollTitle: function() {
+        var X = 0;
+        if ($('#info .title').hasClass('move')) {
+            $('#info .title').removeClass('move');
+            X = parseInt($('#info').width()) - parseInt($('#info .title').width());
+            if (X < 0) {
+                $('#info .title').attr('style', '-webkit-transform:translateX(' + X + 'px);-moz-transform:translateX(' + X + 'px);-o-transform:translateX(' + X + 'px);-ms-transform:translateX(' + X + 'px);transform:translateX(' + X + 'px);');
+            }
+        } else {
+            $('#info .title').addClass('move');
+            $('#info .title').attr('style', '-webkit-transform:translateX(' + X + 'px);-moz-transform:translateX(' + X + 'px);-o-transform:translateX(' + X + 'px);-ms-transform:translateX(' + X + 'px);transform:translateX(' + X + 'px);');
+        }
+    },
+    
     _startedPlayingVideoSuccessfully: function() {
         var title = $('#info .title').text();
         Notification.announce(title);
