@@ -15,16 +15,15 @@ def scrape_toplist():
     """
     json = []
 
-    for i in range(1, 6):
-        url = 'http://www.youtube.com/charts/videos_views/music?p=%s' % i
-        result = urlfetch.fetch(url)
-        soup = BeautifulSoup(result.content)
+    url = 'http://www.youtube.com/charts/videos_views/music'
+    result = urlfetch.fetch(url)
+    soup = BeautifulSoup(result.content)
 
-        for a in soup.findAll('a', 'video-link'):
-            json.append({
-                'title': a.find('span', 'video-title').text,
-                'videoId': a.get('href').split('=')[1]
-            })
+    for a in soup.findAll('a', 'video-link'):
+        json.append({
+            'title': a.find('span', 'video-title').text,
+            'videoId': a.get('href').split('=')[1]
+        })
 
     return simplejson.dumps(json)
 
