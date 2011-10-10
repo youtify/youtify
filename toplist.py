@@ -20,10 +20,10 @@ def scrape_toplist():
         result = urlfetch.fetch(url)
         soup = BeautifulSoup(result.content)
 
-        for a in soup.findAll('a', 'video-title'):
+        for a in soup.findAll('a', 'video-link'):
             json.append({
-                'title': a.get('title'),
-                'videoId': a.get('href').split('=')[1],
+                'title': a.find('span', 'video-title').text,
+                'videoId': a.get('href').split('=')[1]
             })
 
     return simplejson.dumps(json)
