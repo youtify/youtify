@@ -18,8 +18,13 @@ function video_Init() {
 
 jQuery.fn.play = function() {
     var owner = $(this).parent().data('model');
+    
+    $('#left-menu li').removeClass('playing');
     if (owner) {
         Player.addSiblingsToPlayorder(this, owner.shuffle);
+        if (owner.leftMenuDOMHandle) {
+            owner.leftMenuDOMHandle.addClass('playing');
+        }
     } else {
         Player.addSiblingsToPlayorder(this, false);
     }
