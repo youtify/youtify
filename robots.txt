@@ -10,3 +10,4 @@ Disallow: /styles
 Disallow: /scripts
 Disallow: /tests
 Disallow: /toplist
+Disallow: /api
