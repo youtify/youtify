@@ -343,7 +343,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
             title: title
         });
         if (this.playlistDOMHandle) {
-            var li = createResultsItem(title, videoId);
+            var li = createResultsItem(title, videoId, null, true);
             li.appendTo(this.playlistDOMHandle);
         }
         this.synced = false;
