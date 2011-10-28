@@ -34,6 +34,7 @@ function loadPlaylist(playlistId) {
         statusCode: {
             200: function(data) {
                 var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
+                playlist.createDOMRepresentations();
                 loadPlaylistView(playlist);
             },
             404: function(data) {
