@@ -14,15 +14,14 @@ def scrape_toplist():
     http://www.crummy.com/software/BeautifulSoup/documentation.html#Searching by CSS class
     """
     json = []
-
     url = 'http://www.youtube.com/charts/videos_views/music'
     result = urlfetch.fetch(url)
     soup = BeautifulSoup(result.content)
 
-    for a in soup.findAll('a', 'video-link'):
+    for a in soup.findAll('a', 'video-title'):
         json.append({
-            'title': a.find('span', 'video-title').text,
-            'videoId': a.get('href').split('=')[1]
+            'title': a.get('title'),
+            'videoId': a.get('href').split('=')[1],
         })
 
     return simplejson.dumps(json)
