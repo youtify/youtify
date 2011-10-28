@@ -25,6 +25,10 @@ url_Init: true,
 
 */
 
+// GLOBALS
+var playlistManager;
+var youTubeApiReady = false;
+
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
@@ -144,9 +148,6 @@ $(window).load(function() {
 	$('#loading').fadeOut();
 });
 
-// GLOBALS
-var playlistManager;
-
 $(document).ready(function() {
     var settings = new Settings();
 
@@ -207,8 +208,6 @@ $(document).ready(function() {
 	
     url_Init();
 });
-
-var youTubeApiReady = false;
 
 function onYouTubePlayerAPIReady() {
     youTubeApiReady = true;
