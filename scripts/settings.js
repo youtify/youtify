@@ -4,6 +4,9 @@ function settings_Init() {
     });
 	
 	var settings = new Settings();
+
+    // QUALITY
+
     $('#qualityLowRadio')
 		.attr('checked', (settings.quality === 'small'))
 		.change(function() { 
@@ -11,6 +14,7 @@ function settings_Init() {
 			settings.quality = 'small'; 
 			settings.save(); 
 		});
+
 	$('#qualityHighRadio')
 		.attr('checked', (settings.quality === 'hd720'))
 		.change(function() { 
@@ -19,6 +23,8 @@ function settings_Init() {
 			settings.save(); 
 		});
 		
+    // NOTIFICATIONS
+
 	if (!window.webkitNotifications) {
 		$('#settings .notifications').hide();
     }
@@ -28,13 +34,41 @@ function settings_Init() {
 		settings.announceTimeout = parseInt(this.value, 10) * 1000;
 		settings.save(); 
 	});
+
+    // LANGUAGE
+
+    $('#settings .language select').change(function() {
+        var code = $(this).val();
+        var settings = new Settings();
+        settings.language = code;
+        settings.save();
+        changeLanguage(code);
+    });
+
+    // TRANSLATION TOOL
+
+    $('#settings input[name=enableTranslationTool]').click(function() {
+        if (this.checked) {
+            $("#translations").show();
+            settings.enableTranslationTool = true;
+        } else {
+            $("#translations").hide();
+            settings.enableTranslationTool = false;
+        }
+        settings.save();
+    });
+
+    if (settings.enableTranslationTool) {
+        $("#translations").show();
+        $('#settings input[name=enableTranslationTool]').attr('checked', 'checked');
+    }
 }
 
 function Settings() {
     var settings = JSON.parse(localStorage.settings || '{}');
 
     this.language = settings.language || autoDetectedLanguageByServer;
-    this.translatorMode = settings.translatorMode || false;
+	this.enableTranslationTool = settings.enableTranslationTool || false;
     this.theme = settings.theme || 'itheme';
 	this.quality = settings.quality || 'hd720';
 	this.announceTimeout = settings.announceTimeout || 3000;
@@ -42,7 +76,7 @@ function Settings() {
     this.save = function() {
         localStorage.settings = JSON.stringify({
             'language': this.language,
-            'translatorMode': this.translatorMode,
+            'enableTranslationTool': this.enableTranslationTool,
             'theme': this.theme,
 			'quality': this.quality,
 			'announceTimeout': this.announceTimeout

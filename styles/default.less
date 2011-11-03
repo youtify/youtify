@@ -557,10 +557,12 @@ body.searching #search .loader {
 	margin-bottom: 0;
 }
 
+#translations,
 #settings {
 	float: right;
 }
-#settings-text { 
+#settings-text,
+#translations {
 	display: block;
 	margin: 18px 10px 0 0;
 	background: url(/images/expand.png) center right no-repeat;
@@ -568,8 +570,6 @@ body.searching #search .loader {
     color: #333;
 	cursor: pointer;
 	text-shadow: 0px 1px 1px #FFF; 
-}
-#settings {
 }
 #settings > div {
     margin-bottom: 10px;
@@ -962,46 +962,16 @@ body.searching #search .loader {
     background: transparent;
 }
 
-/* TRANSLATOR PANEL
+/* TRANSLATOR TOOL
 *******************************/
 
-#translator-panel {
-    width: 100%;
-    background: white;
-    color: black;
-    border: 1px solid #ccc;
+#translationsPopup {
+    width: auto;
 }
-#translator-panel table {
-    padding: 8px;
-    width: 100%;
+
+#translationsPopup .wrapper {
+    height: 500px;
     overflow-y: scroll;
-    height: 100%;
-}
-#translator-panel thead td {
-    font-weight: bold;
-    text-align: left;
-}
-#translator-panel tbody td {
-    width: 50%;
-}
-#translator-panel table tbody tr:nth-child(odd) {
-	background-color: gainsboro;
-}
-#translator-panel table tbody tr input[type=text] {
-	background:rgba(255, 255, 255, 0.5);
-    width: 80%;
-    color: #000;
-	border: solid 1px #444;
-}
-#translator-panel .actionbar {
-    background: #eee;
-    border-bottom: 1px solid #ccc;
-    padding: 8px;
-}
-#translator-panel .actionbar .close {
-    float: right;
-}
-.selected-translation {
 }
 
 /*************************************************************************************************/

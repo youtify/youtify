@@ -2,41 +2,9 @@ function translations_Init() {
     var settings = new Settings();
     changeLanguage(settings.language);
 
-    $('#settings .language select').change(function() {
-        var code = $(this).val();
-        var settings = new Settings();
-        settings.language = code;
-        settings.save();
-        changeLanguage(code);
+    $('#translations').click(function() {
+        $(this).arrowPopup("#translationsPopup");
     });
-
-    $('#translator-panel .close').click(function() {
-        $('#translatorMode').removeAttr('checked').change();
-    });
-    $('#translatorMode').change(function() {
-        var mode = $(this).is(':checked');
-        var settings = new Settings();
-
-        settings.translatorMode = mode;
-        settings.save();
-
-        if (mode) {
-            $('#translator-panel').show();
-            $('html').addClass('translator');
-            $('#results-container').hide();
-            loadTranslatorPanel();
-        } else {
-            $('#translator-panel').hide();
-            $('html').removeClass('translator');
-            $('#results-container').show();
-        }
-        
-        $(window).resize();
-    });
-
-    if (settings.translatorMode) {
-        $('#translatorMode').attr('checked', 'checked').change();
-    }
 }
 
 var translations,
@@ -131,7 +99,7 @@ function loadTranslatorPanel() {
         tr,
         input;
 
-    $('#translator-panel tbody').html('');
+    $('#translationsPopup tbody').html('');
 
     inputBlurHandler = function() {
         $('.selected-translation').removeClass('selected-translation');
@@ -153,7 +121,7 @@ function loadTranslatorPanel() {
             input.focus(inputFocusHandler);
             input.blur(inputBlurHandler);
             $('<td/>').append(input).appendTo(tr);
-            tr.appendTo('#translator-panel tbody');
+            tr.appendTo('#translationsPopup tbody');
         }
     }
 }

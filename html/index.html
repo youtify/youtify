@@ -133,6 +133,7 @@
 		<script src="http://www.youtube.com/player_api"></script>
 	</head> 
 	<body> 
+        {% include "./popups/translations.html" %}
         {% include "./popups/settings.html" %}
         {% include "./popups/infomenu.html" %}
         {% include "./popups/spotify_importer.html" %}
@@ -204,6 +205,7 @@
 						<div id="settings">
                             <span id="settings-text" class="translatable">Settings</span>
 						</div>
+						<p id="translations" style="display:none">Translations</p>
 					</div> 
 					<div id="results-container" class="droppable"> 
                         <div id="playlistbar" style="display:none"></div>
@@ -222,22 +224,6 @@
 						<ol id="bestof" class="results"></ol>
 						<ol id="queue" class="results"></ol>
 					</div> 
-                    <div id="translator-panel" style="display:none">
-                        <div class="actionbar">
-                            <button class="save">Save</button>
-                            <button class="close clickable">Close</button>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>English</td>
-                                    <td>Swedish</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
 					<div id="fatbar">
                         <span class="close translatable" title="Close"></span>
                         <div class="box" id="video-info-box">
