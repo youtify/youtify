@@ -60,7 +60,7 @@ function changeLanguage(code) {
     if (autoDetectedLanguageByServer === code) {
         updateMarkup(autoDetectedTranslations);
     } else {
-        $.getJSON('/translations/' + code, function(data, textStatus) {
+        $.getJSON('/api/translations/' + code, function(data, textStatus) {
             updateMarkup(data);
         });
     }

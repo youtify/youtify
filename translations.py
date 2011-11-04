@@ -229,7 +229,7 @@ class TranslationsHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/translations.*', TranslationsHandler),
+        ('/api/translations.*', TranslationsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
