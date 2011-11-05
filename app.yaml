@@ -71,6 +71,7 @@ handlers:
 
 - url: /translations.*
   script: translations.py
+  login: required
 
 - url: /api/translations.*
   script: translations.py
