@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Youtify Translation Tool</title>
+        <link rel="stylesheet" media="all" href="/styles/translationtool.css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+        <script src="/scripts/translationtool.js"></script>
+    </head>
+    <body>
+        <div id="top">
+            <span>{{ name }}</span>
+            <a href="{{ logout_url }}">logout</a>
+        </div>
+
+        <select id="language">
+            {% for language in languages %}
+            <option value="{{ language.code }}">{{ language.label }}</option>
+            {% endfor %}
+        </select>
+
+        <dl id="info">
+            <dt>Leaders:</dt>
+            <dd></dd>
+            <dt>Top users:</dt>
+            <dd></dd>
+        </dl>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Original</th>
+                    <th>Translation</th>
+                    <th>Suggestions</th>
+                    <th>Approved</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+html, *, table, tbody, tr, th {
+    margin: 0;
+    padding: 0;
+}
+body {
+    padding: 0;
+    margin: 10px;
+}
+#top {
+    text-align: right;
+}
+#info {
+    margin: 20px 0;
+}
+thead {
+    display: none;
+}
+table {
+    width: 100%;
+}
+.approved input {
+    margin-right: 10px;
+}
+td {
+    padding: 10px;
+}
+td.translation input {
+    width: 100%;
+}
+tr:nth-child(odd) {
+    background: #eee;
+}

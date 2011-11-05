@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import os
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
+from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from django.utils import simplejson
 from model import Phrase
@@ -227,9 +229,30 @@ class TranslationsHandler(webapp.RequestHandler):
         suggestions.append(suggestion)
         phrase.save()
 
+class TranslationsToolHandler(webapp.RequestHandler):
+    def get(self):
+        user = get_current_youtify_user()
+        path = os.path.join(os.path.dirname(__file__), 'html', 'translations.html')
+        self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
+        self.response.out.write(template.render(path, {
+            'name': user.google_user.nickname(),
+            'logout_url': users.create_logout_url('/'),
+            'languages': [
+                {
+                    'code': 'sv_SE',
+                    'label': 'Swedish',
+                },
+                {
+                    'code': 'en_US',
+                    'label': 'English',
+                },
+            ],
+        }))
+
 def main():
     application = webapp.WSGIApplication([
         ('/api/translations.*', TranslationsHandler),
+        ('/translations.*', TranslationsToolHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
