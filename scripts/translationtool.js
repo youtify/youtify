@@ -37,11 +37,60 @@ function createTableBody(data) {
     return tbody;
 }
 
+function closePopup() {
+    $('#blocker').hide();
+    $('.popup.open').removeClass('open');
+}
+
+function loadTranslations() {
+    var code = $('#language').val();
+    $.getJSON('/api/translations/' + code, function(data) {
+        $('tbody').replaceWith(createTableBody(data));
+    });
+}
+
 $(document).ready(function() {
-    $('#language').change(function() {
-        var code = $(this).val();
-        $.getJSON('/api/translations/' + code, function(data) {
-            $('tbody').replaceWith(createTableBody(data));
+    $('#language').change(loadTranslations);
+    loadTranslations();
+
+    $('.popup .close').click(closePopup);
+
+    $('#addPhraseButton').click(function() {
+        $('#blocker').show();
+        $('#addPhrasePopup input[type=text]').val('');
+        $('#addPhrasePopup').addClass('open');
+    });
+
+    $('#addPhrasePopup input[type=submit]').click(function() {
+        var original, args;
+
+        original = $.trim($('#addPhrasePopup input[type=text]').val());
+        if (original.length === 0) {
+            return;
+        }
+
+        args = {
+            original: original,
+        };
+
+        $.post('/translations/template', args, function() {
+            loadTranslations();
+            closePopup();
         });
-    }).change();
+    });
+
+    var $blocker = $('#blocker');
+
+    $(window).keyup(function(e) {
+        if ($blocker.is(':visible') && e.keyCode == 27) {
+            closePopup();
+        }
+    });
 });
+
+$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
+    if (r.status === 500 && $.trim(r.responseText).length > 0) {
+        $('body').html(r.responseText);
+    }
+});
+

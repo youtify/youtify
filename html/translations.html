@@ -8,35 +8,47 @@
         <script src="/scripts/translationtool.js"></script>
     </head>
     <body>
-        <div id="top">
-            <span>{{ name }}</span>
-            <a href="{{ logout_url }}">logout</a>
+        <div id="blocker" style="display:none">
         </div>
 
-        <select id="language">
-            {% for language in languages %}
-            <option value="{{ language.code }}">{{ language.label }}</option>
-            {% endfor %}
-        </select>
+        <div class="popup" id="addPhrasePopup">
+            <span class="close">X</span>
+            <input type="text" />
+            <input type="submit" value="Add phrase" />
+        </div>
 
-        <dl id="info">
-            <dt>Leaders:</dt>
-            <dd></dd>
-            <dt>Top users:</dt>
-            <dd></dd>
-        </dl>
+        <div id="wrapper">
+            <div id="top">
+                <button id="addPhraseButton">Add phrase</button>
+                <span>{{ name }}</span>
+                <a href="{{ logout_url }}">logout</a>
+            </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Original</th>
-                    <th>Translation</th>
-                    <th>Suggestions</th>
-                    <th>Approved</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+            <select id="language">
+                {% for language in languages %}
+                <option value="{{ language.code }}">{{ language.label }}</option>
+                {% endfor %}
+            </select>
+
+            <dl id="info">
+                <dt>Leaders:</dt>
+                <dd></dd>
+                <dt>Top users:</dt>
+                <dd></dd>
+            </dl>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Original</th>
+                        <th>Translation</th>
+                        <th>Suggestions</th>
+                        <th>Approved</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
