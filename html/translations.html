@@ -4,6 +4,10 @@
     <head>
         <title>Youtify Translation Tool</title>
         <link rel="stylesheet" media="all" href="/styles/translationtool.css" />
+        <script>
+            var my_user_id = "{{ my_user_id }}";
+            var my_user_name = "{{ my_user_name }}";
+        </script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
         <script src="/scripts/translationtool.js"></script>
     </head>
@@ -17,10 +21,19 @@
             <input type="submit" value="Add phrase" />
         </div>
 
+        <div class="popup" id="commentsPopup">
+            <h2></h2>
+            <span class="close">X</span>
+            <textarea></textarea>
+            <input type="submit" value="Comment" />
+            <ul>
+            </ul>
+        </div>
+
         <div id="wrapper">
             <div id="top">
                 <button id="addPhraseButton">Add phrase</button>
-                <span>{{ name }}</span>
+                <span>{{ my_user_name }}</span>
                 <a href="{{ logout_url }}">logout</a>
             </div>
 

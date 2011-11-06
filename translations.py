@@ -8,6 +8,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from django.utils import simplejson
 from model import get_current_youtify_user
+from model import YoutifyUser
 
 class Phrase(db.Model):
     original = db.StringProperty(required=True)
@@ -15,6 +16,19 @@ class Phrase(db.Model):
     sv_SE = db.StringProperty()
     ro_SE = db.StringProperty()
     fi_FI = db.StringProperty()
+
+class HistoryItem(db.Model):
+    TYPE_COMMENT = 1
+    TYPE_SUGGESTION = 2
+    TYPE_APPROVED = 3
+    TYPE_ORIGINAL_CHANGED = 3
+
+    phrase = db.ReferenceProperty(reference_class=Phrase)
+    user = db.ReferenceProperty(reference_class=YoutifyUser)
+    date = db.DateTimeProperty(auto_now_add=True)
+    type = db.IntegerProperty(required=True)
+    text = db.StringProperty()
+    lang = db.StringProperty()
 
 languages = [
     {
@@ -35,7 +49,12 @@ languages = [
     },
 ]
 
-enabled_languages = ['en_US', 'sv_SE', 'ro_SE', 'fi_FI']
+enabled_languages = [
+    'en_US',
+    'sv_SE',
+    'ro_SE',
+    'fi_FI',
+]
 
 def auto_detect_language(request):
     lang_map = {
@@ -58,10 +77,31 @@ def auto_detect_language(request):
 
     return 'en_US'
 
+def get_history(phrase, code):
+    json = []
+    items = HistoryItem.all().filter('phrase =', phrase).filter('lang =', code)
+    if items is not None:
+        for item in items:
+            json.append({
+                'date': item.date.strftime('%Y-%M-%d %H:%m'),
+                'type': item.type,
+                'text': item.text,
+                'user': {
+                    'name': item.user.google_user.nickname().split('@')[0],
+                    'id': int(item.user.key().id()),
+                },
+            })
+    return json
+
 def get_translations(code):
-    json = {}
+    json = []
     for phrase in Phrase.all():
-        json[phrase.original] = getattr(phrase, code, phrase.original)
+        json.append({
+            'id': phrase.key().id(),
+            'original': phrase.original,
+            'translation': getattr(phrase, code, phrase.original),
+            'history': get_history(phrase, code),
+        })
     return json
 
 def get_translations_json_for(code):
@@ -103,7 +143,8 @@ class TranslationsToolHandler(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', 'translations.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
-            'name': user.google_user.nickname(),
+            'my_user_name': user.google_user.nickname().split('@')[0],
+            'my_user_id': user.key().id(),
             'logout_url': users.create_logout_url('/'),
             'languages': languages,
         }))
@@ -121,10 +162,24 @@ class TranslationTemplateHandler(webapp.RequestHandler):
             phrase = Phrase(original=original)
             phrase.put()
 
+class CommentsHandler(webapp.RequestHandler):
+    def post(self):
+        phrase_id = self.request.path.split('/')[-2]
+        lang = self.request.get('lang')
+        text = self.request.get('text')
+        phrase = Phrase.get_by_id(int(phrase_id))
+
+        if phrase is None:
+            raise Exception("No phrase with id %s found", phrase_id);
+
+        history_item = HistoryItem(lang=lang, text=text, type=HistoryItem.TYPE_COMMENT, phrase=phrase, user=get_current_youtify_user())
+        history_item.put()
+
 def main():
     application = webapp.WSGIApplication([
         ('/api/translations.*', TranslationsHandler),
         ('/translations/template', TranslationTemplateHandler),
+        ('/translations/.*/comments', CommentsHandler),
         ('/translations.*', TranslationsToolHandler),
     ], debug=True)
     util.run_wsgi_app(application)
