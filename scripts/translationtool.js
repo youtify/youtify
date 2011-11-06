@@ -1,3 +1,22 @@
+var currentLanguage;
+var phrases = [];
+
+function sendSuggestion() {
+    var translation = $(this).val();
+    var original = $(this).parents('tr').find('.original').text();
+
+    var args = {
+        original: original,
+        translation: translation
+    };
+
+    if (translation.length > 0) {
+        $.post('/api/translations/' + currentLanguage, args, function() {
+            alert('thanks for your suggestion :)');
+        });
+    }
+}
+
 function createTableRow(key, translation) {
     var tr = $('<tr></tr>');
 
@@ -7,6 +26,7 @@ function createTableRow(key, translation) {
     var td4 = $('<td></td').attr('class', 'approved');
 
     var input = $('<input type="text" />').val(translation);
+    input.blur(sendSuggestion);
     input.appendTo(td2);
 
     var comment = $('<a href="#"></a>').text('Comment');
@@ -43,8 +63,8 @@ function closePopup() {
 }
 
 function loadTranslations() {
-    var code = $('#language').val();
-    $.getJSON('/api/translations/' + code, function(data) {
+    currentLanguage = $('#language').val(); // global
+    $.getJSON('/api/translations/' + currentLanguage, function(data) {
         $('tbody').replaceWith(createTableBody(data));
     });
 }

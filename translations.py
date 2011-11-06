@@ -16,14 +16,6 @@ class Phrase(db.Model):
     ro_SE = db.StringProperty()
     fi_FI = db.StringProperty()
 
-lang_map = {
-    'en-us': 'en_US',
-    'en': 'en_US',
-    'sv': 'sv_SE',
-    'fi': 'fi_FI',
-    'fi-fi': 'fi_FI',
-}
-
 languages = [
     {
         'code': 'en_US',
@@ -46,7 +38,14 @@ languages = [
 enabled_languages = ['en_US', 'sv_SE', 'ro_SE', 'fi_FI']
 
 def auto_detect_language(request):
-    global lang_map
+    lang_map = {
+        'en-us': 'en_US',
+        'en': 'en_US',
+        'sv': 'sv_SE',
+        'fi': 'fi_FI',
+        'fi-fi': 'fi_FI',
+    }
+
     header = request.headers.get('Accept-Language', '')
     header = header.lower()
 
@@ -83,20 +82,19 @@ class TranslationsHandler(webapp.RequestHandler):
         if not users.is_current_user_admin():
             raise Exception('Permission denied')
 
-        code = self.request.path.split('/')[-2]
+        lang_code = self.request.path.split('/')[-1]
         original = self.request.get('original')
         translation = self.request.get('translation')
 
-        if not code in enabled_languages:
-            raise Exception('Unknown language code "%s"' % code)
+        if not lang_code in enabled_languages:
+            raise Exception('Unknown language code "%s"' % lang_code)
 
-        phrase = Phrase.all().filter(original=original)
+        phrase = Phrase.all().filter('original =', original).get()
 
         if phrase is None:
             raise Exception('No phrase matching "%s" found' % original)
 
-        setattr(phrase, code, translation)
-
+        setattr(phrase, lang_code, translation)
         phrase.save()
 
 class TranslationsToolHandler(webapp.RequestHandler):
@@ -107,16 +105,7 @@ class TranslationsToolHandler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {
             'name': user.google_user.nickname(),
             'logout_url': users.create_logout_url('/'),
-            'languages': [
-                {
-                    'code': 'sv_SE',
-                    'label': 'Swedish',
-                },
-                {
-                    'code': 'en_US',
-                    'label': 'English',
-                },
-            ],
+            'languages': languages,
         }))
 
 class TranslationTemplateHandler(webapp.RequestHandler):
