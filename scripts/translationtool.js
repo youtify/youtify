@@ -150,29 +150,6 @@ $(document).ready(function() {
 
     $('.popup .close').click(closePopup);
 
-    $('#addPhraseButton').click(function() {
-        showPopup('addPhrasePopup');
-        $('#addPhrasePopup input[type=text]').val('');
-    });
-
-    $('#addPhrasePopup input[type=submit]').click(function() {
-        var original, args;
-
-        original = $.trim($('#addPhrasePopup input[type=text]').val());
-        if (original.length === 0) {
-            return;
-        }
-
-        args = {
-            original: original,
-        };
-
-        $.post('/translations/template', args, function() {
-            loadTranslations();
-            closePopup();
-        });
-    });
-
     var $blocker = $('#blocker');
 
     $(window).keyup(function(e) {

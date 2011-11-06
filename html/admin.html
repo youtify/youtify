@@ -9,19 +9,16 @@
             var my_user_name = "{{ my_user_name }}";
         </script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
-        <script src="/scripts/translationtool.js"></script>
+        <script src="/scripts/admin.js"></script>
     </head>
     <body>
         <div id="blocker" style="display:none">
         </div>
 
-        <div class="popup" id="commentsPopup">
-            <h2></h2>
+        <div class="popup" id="addPhrasePopup">
             <span class="close">X</span>
-            <textarea></textarea>
-            <input type="submit" value="Comment" />
-            <ul>
-            </ul>
+            <input type="text" />
+            <input type="submit" value="Add phrase" />
         </div>
 
         <div id="wrapper">
@@ -30,26 +27,12 @@
                 <a href="{{ logout_url }}">logout</a>
             </div>
 
-            <select id="language">
-                {% for language in languages %}
-                <option value="{{ language.code }}">{{ language.label }}</option>
-                {% endfor %}
-            </select>
-
-            <dl id="info">
-                <dt>Leaders:</dt>
-                <dd></dd>
-                <dt>Top users:</dt>
-                <dd></dd>
-            </dl>
+            <button id="addPhraseButton">Add phrase</button>
 
             <table>
                 <thead>
                     <tr>
-                        <th>Original</th>
-                        <th>Translation</th>
-                        <th>Suggestions</th>
-                        <th>Approved</th>
+                        <th>Phrase</th>
                     </tr>
                 </thead>
                 <tbody>
