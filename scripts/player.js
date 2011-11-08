@@ -56,7 +56,7 @@ var Player = {
 					Player._player.loadVideoById(videoId, 0, quality);
 				} catch (ex) { 
 					console.log(ex);
-					Notification.show('An error has occurred with the player. Please reload the page.');
+					Notification.say('An error has occurred with the player. Please reload the page.');
 				}
 			}
 			
@@ -289,7 +289,7 @@ var Player = {
 		var elem = $('.results li.playing'); //$('.results li.playing, .results li.paused')
         // No playitem found
         if (elem.length === 0) {
-            Notification.show(messages[event.data]);
+            Notification.say(messages[event.data]);
             return;
         }
 		if (elem.hasClass('alternative')) {
@@ -307,7 +307,7 @@ var Player = {
 		}
 		elem.addClass('disabled');
 		Search.findAndPlayAlternative(elem);
-		Notification.show(messages[event.data]);
+		Notification.say(messages[event.data]);
 	},
 	
 	playPrevAlternative: function() {
