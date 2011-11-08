@@ -8,6 +8,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from django.utils import simplejson
 from model import get_current_youtify_user
+from model import create_youtify_user
 from model import YoutifyUser
 
 class Phrase(db.Model):
@@ -139,12 +140,15 @@ class TranslationsHandler(webapp.RequestHandler):
 
 class TranslationsToolHandler(webapp.RequestHandler):
     def get(self):
-        user = get_current_youtify_user()
+        current_user = users.get_current_user()
+        youtify_user = get_current_youtify_user()
+        if (current_user is not None) and (youtify_user is None):
+            youtify_user = create_youtify_user()
         path = os.path.join(os.path.dirname(__file__), 'html', 'translations.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
-            'my_user_name': user.google_user.nickname().split('@')[0],
-            'my_user_id': user.key().id(),
+            'my_user_name': current_user.nickname().split('@')[0],
+            'my_user_id': youtify_user.key().id(),
             'logout_url': users.create_logout_url('/'),
             'languages': languages,
         }))
