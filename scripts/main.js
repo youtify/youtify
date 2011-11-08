@@ -32,7 +32,7 @@ var youTubeApiReady = false;
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
-            Notification.show('Connection error! <i>' + r.responseText + '</i>');
+            Notification.say('Connection error! <i>' + r.responseText + '</i>');
         } else {
             $('body').html(r.responseText);
         }
@@ -187,7 +187,7 @@ $(document).ready(function() {
         $(this).arrowPopup('#logout-popup');
     });
 	
-	//Notification.show('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
+	//Notification.say('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 	
     playlistManager = new PlaylistsManager();
 	volume_Init();

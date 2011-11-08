@@ -1,12 +1,12 @@
 function notification_Init() {
 	$('#notification').click( Notification.hide );
-    $('#notification .content a').live('click', function(event) { 
+    $('#notification .content a, #notification .content input').not('.close').live('click', function(event) { 
         event.stopPropagation(); 
     });
 }
 
 var Notification = {
-	show: function(message) {
+	say: function(message) {
 		$('#notification .content').html(message);
 		
 		if (!$('#notification').is(':visible')) {
