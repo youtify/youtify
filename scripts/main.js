@@ -204,6 +204,7 @@ $(document).ready(function() {
     leftmenu_Init();
     fatBar_Init();
     heart_Init();
+    webstore_Init();
     player_Init();
 	
     url_Init();
