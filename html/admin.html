@@ -4,6 +4,7 @@
     <head>
         <title>Youtify Translation Tool</title>
         <link rel="stylesheet" media="all" href="/styles/translationtool.css" />
+        <link rel="stylesheet" media="all" href="/styles/admin.css" />
         <script>
             var my_user_id = "{{ my_user_id }}";
             var my_user_name = "{{ my_user_name }}";
@@ -21,18 +22,47 @@
             <input type="submit" value="Add phrase" />
         </div>
 
+        <div class="popup" id="addLeaderPopup">
+            <span class="close">X</span>
+
+            <label for="lang">Lang</label>
+            <select name="lang">
+                {% for lang in languages %}
+                <option value="{{ lang.code }}">{{ lang.label }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="user">User</label>
+            <input type="text" name="user" />
+
+            <input type="submit" value="Add leader" />
+        </div>
+
         <div id="wrapper">
             <div id="top">
                 <span>{{ my_user_name }}</span>
                 <a href="{{ logout_url }}">logout</a>
             </div>
 
+            <h2>Phrases</h2>
             <button id="addPhraseButton">Add phrase</button>
-
-            <table>
+            <table id="phrases">
                 <thead>
                     <tr>
                         <th>Phrase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <h2>Team leaders</h2>
+            <button id="addLeaderButton">Add leader</button>
+            <table id="leaders">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Name</th>
                     </tr>
                 </thead>
                 <tbody>

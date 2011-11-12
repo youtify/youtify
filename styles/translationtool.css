@@ -26,6 +26,14 @@ ol, ul { list-style: none; }
 #info {
     margin: 20px 0;
 }
+#info h2,
+#info ul {
+    display: inline-block;
+}
+#info ul li {
+    display: inline-block;
+    margin-right: 8px;
+}
 thead {
     display: none;
 }
@@ -46,7 +54,7 @@ tr:nth-child(odd) {
 }
 
 #blocker {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background: black;

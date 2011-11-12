@@ -11,6 +11,10 @@ from model import get_current_youtify_user
 from model import create_youtify_user
 from model import YoutifyUser
 
+class Leader(db.Model):
+    lang = db.StringProperty(required=True)
+    user = db.ReferenceProperty(reference_class=YoutifyUser)
+
 class Phrase(db.Model):
     original = db.StringProperty(required=True)
     en_US = db.StringProperty()
@@ -179,9 +183,53 @@ class CommentsHandler(webapp.RequestHandler):
         history_item = HistoryItem(lang=lang, text=text, type=HistoryItem.TYPE_COMMENT, phrase=phrase, user=get_current_youtify_user())
         history_item.put()
 
+class SpecificLeadersHandler(webapp.RequestHandler):
+    def get(self):
+        lang_code = self.request.path.split('/')[-1]
+        json = []
+        leaders = Leader.all().filter('lang =', lang_code)
+        for leader in leaders:
+            json.append({
+                'lang': leader.lang,
+                'user': {
+                    'id': int(leader.user.key().id()),
+                    'name': leader.user.google_user.nickname(),
+                },
+            })
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
+class LeadersHandler(webapp.RequestHandler):
+    def post(self):
+        lang = self.request.get('lang')
+        user_id = self.request.get('user')
+        user = YoutifyUser.get_by_id(int(user_id))
+
+        if user is None:
+            raise Exception("No user with id %s found" % user_id);
+
+        leader = Leader(lang=lang, user=user)
+        leader.put()
+
+    def get(self):
+        json = []
+        leaders = Leader.all()
+        for leader in leaders:
+            json.append({
+                'lang': leader.lang,
+                'user': {
+                    'id': int(leader.user.key().id()),
+                    'name': leader.user.google_user.nickname(),
+                },
+            })
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
 def main():
     application = webapp.WSGIApplication([
         ('/api/translations.*', TranslationsHandler),
+        ('/translations/leaders/.*', SpecificLeadersHandler),
+        ('/translations/leaders', LeadersHandler),
         ('/translations/template', TranslationTemplateHandler),
         ('/translations/.*/comments', CommentsHandler),
         ('/translations.*', TranslationsToolHandler),

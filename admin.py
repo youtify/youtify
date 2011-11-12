@@ -8,6 +8,7 @@ from google.appengine.api import users
 from django.utils import simplejson
 from model import get_current_youtify_user
 from translations import Phrase
+from translations import languages
 
 class PhrasesHandler(webapp.RequestHandler):
     def get(self):
@@ -29,6 +30,7 @@ class AdminHandler(webapp.RequestHandler):
             'my_user_name': user.google_user.nickname().split('@')[0],
             'my_user_id': user.key().id(),
             'logout_url': users.create_logout_url('/'),
+            'languages': languages,
         }))
 
 def main():

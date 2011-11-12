@@ -136,17 +136,32 @@ function closePopup() {
     $('.popup.open').removeClass('open');
 }
 
-function loadTranslations() {
+function loadLanguage() {
     currentLanguage = $('#language').val(); // global
-    $.getJSON('/api/translations/' + currentLanguage, function(data) {
-        phrases = data; // global
-        $('tbody').replaceWith(createTableBody(data));
-    });
+
+    function loadLeaders() {
+        $("#leaders").html('');
+        $.getJSON('/translations/leaders/' + currentLanguage, function(data) {
+            $.each(data, function(i, item) {
+                $('<li></li').text(item.user.name).appendTo('#leaders');
+            });
+        });
+    }
+
+    function loadTranslations() {
+        $.getJSON('/api/translations/' + currentLanguage, function(data) {
+            phrases = data; // global
+            $('tbody').replaceWith(createTableBody(data));
+        });
+    }
+
+    loadLeaders();
+    loadTranslations();
 }
 
 $(document).ready(function() {
-    $('#language').change(loadTranslations);
-    loadTranslations();
+    $('#language').change(loadLanguage);
+    loadLanguage();
 
     $('.popup .close').click(closePopup);
 
