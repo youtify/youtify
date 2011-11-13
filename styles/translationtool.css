@@ -46,8 +46,13 @@ table {
 td {
     padding: 10px;
 }
-td.translation input {
-    width: 100%;
+td.translation input[type=text] {
+    display: inline-block;
+    width: 500px;
+    margin-right: 8px;
+}
+td.translation input[type=submit] {
+    display: inline-block;
 }
 tr:nth-child(odd) {
     background: #eee;

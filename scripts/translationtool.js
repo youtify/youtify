@@ -12,8 +12,9 @@ function showPopup(id) {
 }
 
 function sendSuggestion() {
-    var translation = $(this).val();
-    var original = $(this).parents('tr').find('.original').text();
+    var $tr = $(this).parents('tr');
+    var translation = $tr.find('input[type=text]').val();
+    var original = $tr.find('.original').text();
 
     var args = {
         original: original,
@@ -101,9 +102,8 @@ function createTableRow(phraseIndex, original, translation) {
     var td3 = $('<td></td').attr('class', 'comments');
     var td4 = $('<td></td').attr('class', 'approved');
 
-    var input = $('<input type="text" />').val(translation);
-    input.blur(sendSuggestion);
-    input.appendTo(td2);
+    $('<input type="text" />').val(translation).appendTo(td2);
+    $('<input type="submit" />').val("Send suggestion").click(sendSuggestion).appendTo(td2);
 
     createCommentsElement(phraseIndex).appendTo(td3);
 
