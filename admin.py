@@ -25,7 +25,7 @@ class AdminHandler(webapp.RequestHandler):
     def get(self):
         user = get_current_youtify_user()
         path = os.path.join(os.path.dirname(__file__), 'html', 'admin.html')
-        self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
+        self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {
             'my_user_name': user.google_user.nickname().split('@')[0],
             'my_user_id': user.key().id(),

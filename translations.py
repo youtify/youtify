@@ -152,7 +152,7 @@ class TranslationsToolHandler(webapp.RequestHandler):
         if (current_user is not None) and (youtify_user is None):
             youtify_user = create_youtify_user()
         path = os.path.join(os.path.dirname(__file__), 'html', 'translations.html')
-        self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
+        self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {
             'my_user_name': current_user.nickname().split('@')[0],
             'my_user_id': youtify_user.key().id(),
@@ -162,7 +162,7 @@ class TranslationsToolHandler(webapp.RequestHandler):
 
 class TranslationTemplateHandler(webapp.RequestHandler):
     def get(self):
-        self.response.headers['Content-Type'] = 'text/plain; charset=utf-8';
+        self.response.headers['Content-Type'] = 'text/plain; charset=utf-8'
         self.response.out.write('hello world')
 
     def post(self):
@@ -181,7 +181,7 @@ class CommentsHandler(webapp.RequestHandler):
         phrase = Phrase.get_by_id(int(phrase_id))
 
         if phrase is None:
-            raise Exception("No phrase with id %s found", phrase_id);
+            raise Exception("No phrase with id %s found", phrase_id)
 
         history_item = HistoryItem(lang=lang, text=text, type=HistoryItem.TYPE_COMMENT, phrase=phrase, user=get_current_youtify_user())
         history_item.put()
@@ -193,7 +193,7 @@ class ApproveHandler(webapp.RequestHandler):
         phrase = Phrase.get_by_id(int(phrase_id))
 
         if phrase is None:
-            raise Exception("No phrase with id %s found", phrase_id);
+            raise Exception("No phrase with id %s found", phrase_id)
 
         user = get_current_youtify_user()
         translation = getattr(phrase, lang)
@@ -234,7 +234,7 @@ class LeadersHandler(webapp.RequestHandler):
         user = YoutifyUser.get_by_id(int(user_id))
 
         if user is None:
-            raise Exception("No user with id %s found" % user_id);
+            raise Exception("No user with id %s found" % user_id)
 
         leader = Leader(lang=lang, user=user)
         leader.put()
