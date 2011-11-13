@@ -94,7 +94,21 @@ function createCommentsElement(phraseIndex) {
     return $('<span class="clickable"></span>').text(text).click(showComments);
 }
 
-function createTableRow(phraseIndex, original, translation) {
+function changeApproveState() {
+    var $tr = $(this).parents('tr');
+    var index = $tr.index();
+    var phrase = phrases[index];
+
+    var args = {
+        lang: currentLanguage,
+    };
+
+    $.post("/translations/" + phrase.id + "/approve", args, function(data) {
+        alert("Translation state changed");
+    });
+}
+
+function createTableRow(phraseIndex, original, translation, approved) {
     var tr = $('<tr></tr>');
 
     var td1 = $('<td></td').attr('class', 'original').text(original);
@@ -109,6 +123,10 @@ function createTableRow(phraseIndex, original, translation) {
 
     var checkbox = $('<input type="checkbox" />').val(false);
     checkbox.appendTo(td4);
+    if (approved) {
+        checkbox.attr('checked', 'checked');
+    }
+    checkbox.change(changeApproveState);
 
     var label = $('<label></label>').text('Approved');
     label.appendTo(td4);
@@ -125,7 +143,7 @@ function createTableBody(data) {
     var tbody = $('<tbody></tbody>');
 
     $.each(data, function(i, item) {
-        createTableRow(i, item.original, item.translation).appendTo(tbody);
+        createTableRow(i, item.original, item.translation, item.approved).appendTo(tbody);
     });
 
     return tbody;

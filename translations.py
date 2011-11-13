@@ -17,6 +17,8 @@ class Leader(db.Model):
 
 class Phrase(db.Model):
     original = db.StringProperty(required=True)
+    approved_translations = db.StringListProperty()
+
     en_US = db.StringProperty()
     sv_SE = db.StringProperty()
     ro_SE = db.StringProperty()
@@ -103,6 +105,7 @@ def get_translations(code):
     for phrase in Phrase.all():
         json.append({
             'id': phrase.key().id(),
+            'approved': code in phrase.approved_translations,
             'original': phrase.original,
             'translation': getattr(phrase, code, phrase.original),
             'history': get_history(phrase, code),
@@ -183,6 +186,31 @@ class CommentsHandler(webapp.RequestHandler):
         history_item = HistoryItem(lang=lang, text=text, type=HistoryItem.TYPE_COMMENT, phrase=phrase, user=get_current_youtify_user())
         history_item.put()
 
+class ApproveHandler(webapp.RequestHandler):
+    def post(self):
+        phrase_id = self.request.path.split('/')[-2]
+        lang = self.request.get('lang')
+        phrase = Phrase.get_by_id(int(phrase_id))
+
+        if phrase is None:
+            raise Exception("No phrase with id %s found", phrase_id);
+
+        user = get_current_youtify_user()
+        translation = getattr(phrase, lang)
+        text = None
+
+        if lang in phrase.approved_translations:
+            phrase.approved_translations.remove(lang)
+            text = '%s removed the approved state for the translation "%s"' % (user.google_user.nickname(), translation)
+        else:
+            phrase.approved_translations.append(lang)
+            text = '%s approved the translation "%s"' % (user.google_user.nickname(), translation)
+
+        history_item = HistoryItem(lang=lang, text=text, type=HistoryItem.TYPE_APPROVED, phrase=phrase, user=user)
+        history_item.put()
+
+        phrase.save()
+
 class SpecificLeadersHandler(webapp.RequestHandler):
     def get(self):
         lang_code = self.request.path.split('/')[-1]
@@ -231,6 +259,7 @@ def main():
         ('/translations/leaders/.*', SpecificLeadersHandler),
         ('/translations/leaders', LeadersHandler),
         ('/translations/template', TranslationTemplateHandler),
+        ('/translations/.*/approve', ApproveHandler),
         ('/translations/.*/comments', CommentsHandler),
         ('/translations.*', TranslationsToolHandler),
     ], debug=True)
