@@ -73,6 +73,10 @@ handlers:
   script: admin.py
   login: admin
 
+- url: /import_old_translations
+  script: import_old_translations.py
+  login: required
+
 - url: /translations.*
   script: translations.py
   login: required
