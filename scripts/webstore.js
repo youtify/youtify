@@ -4,7 +4,7 @@ function webstore_Init() {
 var ChromeWebStore = {
     appLink: 'https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho',
     suggestInstall: function() {
-        if (!ChromeWebStore.isAppInstalled()) {
+        if (window.chrome && !ChromeWebStore.isAppInstalled()) {
             Notification.say('Youtify is available as an app in Chrome Web Store. Do you want to install it? <input type="button" onclick="javascript:event.stopPropagation();ChromeWebStore.installApp();" value="Install" />');
         }
     },
