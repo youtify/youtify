@@ -4,8 +4,8 @@ function webstore_Init() {
 var ChromeWebStore = {
     appLink: 'https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho',
     suggestInstall: function() {
-        if (window.chrome && !ChromeWebStore.isAppInstalled()) {
-            Notification.say('Youtify is available as an app in Chrome Web Store. Do you want to install it? <input type="button" onclick="javascript:event.stopPropagation();ChromeWebStore.installApp();" value="Install" />');
+        if (window.chrome && !localStorage.neverSuggestWebStore && !ChromeWebStore.isAppInstalled()) {
+            Notification.say('Youtify is available as an app in Chrome Web Store. Do you want to install it? <input type="button" onclick="javascript:event.stopPropagation();ChromeWebStore.installApp();" value="Install" />&nbsp;<a href="javascript:ChromeWebStore.neverSuggest();">Don\'t remind me again</a>');
         }
     },
     isAppInstalled: function() {
@@ -18,11 +18,15 @@ var ChromeWebStore = {
         };
         var success = function() {
             Notification.say('Installation succeded!');
+            ChromeWebStore.neverSuggest();
         };
         if (window.chrome && window.chrome.webstore) {
             window.chrome.webstore.install(ChromeWebStore.appLink, success, fail);
         } else {
             fail();
         }
+    },
+    neverSuggest: function() {
+        localStorage.neverSuggestWebStore = 'true';
     }
 };
