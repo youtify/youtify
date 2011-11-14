@@ -175,11 +175,25 @@ function loadLanguage() {
 
     loadLeaders();
     loadTranslations();
+
+    history.pushState(null, null, '/translations/' + currentLanguage);
 }
 
 $(document).ready(function() {
     $('#language').change(loadLanguage);
-    loadLanguage();
+
+    var path = window.location.pathname.split('/');
+    if (path.length === 3) { // e.g. /translations/sv_SE
+        $.each($('#language option'), function(i, elem) {
+            if ($(elem).attr('value') === path[2]) {
+                $(elem).attr('selected', 'selected');
+                $('#language').change();
+                return false;
+            }
+        });
+    } else {
+        $('#language').change();
+    }
 
     $('.popup .close').click(closePopup);
 

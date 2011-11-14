@@ -1,7 +1,12 @@
 h2 {
     border-bottom: 1px solid #ccc;
+    font-weight: bold;
 }
 
 button {
     margin: 10px 0;
+}
+
+table {
+    margin-bottom: 20px;
 }
