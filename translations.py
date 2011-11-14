@@ -56,22 +56,15 @@ languages = [
     },
 ]
 
-enabled_languages = [
-    'en_US',
-    'sv_SE',
-    'ro_SE',
-    'fi_FI',
-]
+LANG_CODES = [i['code'] for i in languages]
+
+# This map is used when detecting the user agents locale settings.
+LANG_MAP = {}
+for lang in languages:
+    LANG_MAP[lang['code'].lower().replace('_', '-')] = lang['code']
+    LANG_MAP[lang['code'].split('_')[0]] = lang['code']
 
 def auto_detect_language(request):
-    lang_map = {
-        'en-us': 'en_US',
-        'en': 'en_US',
-        'sv': 'sv_SE',
-        'fi': 'fi_FI',
-        'fi-fi': 'fi_FI',
-    }
-
     header = request.headers.get('Accept-Language', '')
     header = header.lower()
 
@@ -79,8 +72,8 @@ def auto_detect_language(request):
     accepted_languages = accepted_languages.split(',')
 
     for lang in accepted_languages:
-        if lang in lang_map:
-            return lang_map[lang]
+        if lang in LANG_MAP:
+            return LANG_MAP[lang]
 
     return 'en_US'
 
@@ -120,7 +113,7 @@ class TranslationsHandler(webapp.RequestHandler):
     def get(self):
         code = self.request.path.split('/')[-1]
 
-        if not code in enabled_languages:
+        if not code in LANG_CODES:
             raise Exception('Unknown language code "%s"' % code)
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -134,7 +127,7 @@ class TranslationsHandler(webapp.RequestHandler):
         original = self.request.get('original')
         translation = self.request.get('translation')
 
-        if not lang_code in enabled_languages:
+        if not lang_code in LANG_CODES:
             raise Exception('Unknown language code "%s"' % lang_code)
 
         phrase = Phrase.all().filter('original =', original).get()
