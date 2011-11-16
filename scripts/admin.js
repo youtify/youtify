@@ -59,6 +59,17 @@ function loadTeamLeaders() {
     });
 }
 
+var tabCallbacks = {
+    phrases: function() {
+    },
+    teams: function() {
+    },
+    snapshots: function() {
+    },
+    deploy: function() {
+    },
+}
+
 $(document).ready(function() {
     $('.popup .close').click(closePopup);
 
@@ -69,6 +80,20 @@ $(document).ready(function() {
             closePopup();
         }
     });
+
+    $('#tabs li').click(function() {
+        var rel = $(this).attr('rel');
+
+        $('#tabs .selected').removeClass('selected');
+        $(this).addClass('selected');
+
+        $('.pane.selected').removeClass('selected');
+        $('#' + rel).addClass('selected');
+
+        tabCallbacks[rel]();
+    });
+
+    $('#tabs li').first().click();
 
     $('#addPhraseButton').click(function() {
         showPopup('addPhrasePopup');

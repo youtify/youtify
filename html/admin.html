@@ -44,30 +44,39 @@
                 <a href="{{ logout_url }}">logout</a>
             </div>
 
-            <h2>Phrases</h2>
-            <button id="addPhraseButton">Add phrase</button>
-            <table id="phrases">
-                <thead>
-                    <tr>
-                        <th>Phrase</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <ul id="tabs">
+                <li rel="phrases">Phrases</li>
+                <li rel="teams">Teams</li>
+                <li rel="snapshots">Snapshots</li>
+                <li rel="deploy">Deploy</li>
+            </ul>
 
-            <h2>Team leaders</h2>
-            <button id="addLeaderButton">Add leader</button>
-            <table id="leaders">
-                <thead>
-                    <tr>
-                        <th>Language</th>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div id="phrases" class="pane">
+                <button id="addPhraseButton">Add phrase</button>
+                <table id="phrases">
+                    <thead>
+                        <tr>
+                            <th>Phrase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="teams" class="pane">
+                <button id="addLeaderButton">Add leader</button>
+                <table id="leaders">
+                    <thead>
+                        <tr>
+                            <th>Language</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
 </html>
