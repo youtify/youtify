@@ -22,7 +22,7 @@ function loadPhrases() {
     }
 
     $('#phrases tbody').html('');
-    $.getJSON('/admin/phrases', function(data) {
+    $.getJSON('/translations/phrases', function(data) {
         $.each(data, function(i, item) {
             createTableRow(item).appendTo('#phrases tbody');
         });
@@ -90,10 +90,17 @@ $(document).ready(function() {
         $('.pane.selected').removeClass('selected');
         $('#' + rel).addClass('selected');
 
+        history.pushState(null, null, '/admin/' + rel);
+
         tabCallbacks[rel]();
     });
 
-    $('#tabs li').first().click();
+    var path = window.location.pathname.split('/');
+    if (path.length === 3) { // e.g. /admin/deploy
+        $('#tabs li[rel=' + path[2] + ']').click();
+    } else {
+        $('#tabs li').first().click();
+    }
 
     $('#addPhraseButton').click(function() {
         showPopup('addPhrasePopup');

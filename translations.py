@@ -246,9 +246,21 @@ class LeadersHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
+class PhrasesHandler(webapp.RequestHandler):
+    def get(self):
+        json = []
+        phrases = Phrase.all()
+        for phrase in phrases:
+            json.append({
+                'original': phrase.original,
+            })
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
 def main():
     application = webapp.WSGIApplication([
         ('/api/translations.*', TranslationsHandler),
+        ('/translations/phrases', PhrasesHandler),
         ('/translations/leaders/.*', SpecificLeadersHandler),
         ('/translations/leaders', LeadersHandler),
         ('/translations/template', TranslationTemplateHandler),

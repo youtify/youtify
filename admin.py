@@ -5,21 +5,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
-from django.utils import simplejson
 from model import get_current_youtify_user
-from translations import Phrase
 from translations import languages
-
-class PhrasesHandler(webapp.RequestHandler):
-    def get(self):
-        json = []
-        phrases = Phrase.all()
-        for phrase in phrases:
-            json.append({
-                'original': phrase.original,
-            })
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(json))
 
 class AdminHandler(webapp.RequestHandler):
     def get(self):
@@ -35,8 +22,7 @@ class AdminHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/admin/phrases', PhrasesHandler),
-        ('/admin', AdminHandler),
+        ('/admin.*', AdminHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
