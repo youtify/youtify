@@ -115,9 +115,9 @@ def get_translations(code):
     return json
 
 def get_deployed_translations_json(code):
-    snapshot = Snapshot.all().filter('active =', True).get()
-    if snapshot:
-        return snapshot.json
+    global deployed_translations
+    if code in deployed_translations:
+        return simplejson.dumps(deployed_translations[code])
     return '{}'
 
 class TranslationsHandler(webapp.RequestHandler):
@@ -297,6 +297,11 @@ class SnapshotsHandler(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('success')
+
+deployed_translations = {}
+snapshot = Snapshot.all().filter('active =', True).get()
+if snapshot:
+    deployed_translations = simplejson.loads(snapshot.json)
 
 def main():
     application = webapp.WSGIApplication([
