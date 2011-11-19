@@ -11,6 +11,11 @@ from model import get_current_youtify_user
 from model import create_youtify_user
 from model import YoutifyUser
 
+class Snapshot(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    json = db.TextProperty(required=True)
+    active = db.BooleanProperty()
+
 class Leader(db.Model):
     lang = db.StringProperty(required=True)
     user = db.ReferenceProperty(reference_class=YoutifyUser)
@@ -41,18 +46,22 @@ languages = [
     {
         'code': 'en_US',
         'label': 'English',
+        'enabled': True,
     },
     {
         'code': 'sv_SE',
         'label': 'Svenska',
+        'enabled': True,
     },
     {
         'code': 'ro_SE',
         'label': 'Rövarspråket',
+        'enabled': True,
     },
     {
         'code': 'fi_FI',
         'label': 'Suomi',
+        'enabled': True,
     },
 ]
 
@@ -105,9 +114,11 @@ def get_translations(code):
         })
     return json
 
-def get_translations_json_for(code):
-    result = get_translations(code)
-    return simplejson.dumps(result)
+def get_deployed_translations_json(code):
+    snapshot = Snapshot.all().filter('active =', True).get()
+    if snapshot:
+        return snapshot.json
+    return '{}'
 
 class TranslationsHandler(webapp.RequestHandler):
     def get(self):
@@ -117,7 +128,7 @@ class TranslationsHandler(webapp.RequestHandler):
             raise Exception('Unknown language code "%s"' % code)
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(get_translations_json_for(code))
+        self.response.out.write(get_deployed_translations_json(code))
 
     def post(self):
         if not users.is_current_user_admin():
@@ -257,9 +268,40 @@ class PhrasesHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
+class SnapshotsHandler(webapp.RequestHandler):
+    def get(self):
+        json = [];
+        for snapshot in Snapshot.all().order('-date'):
+            json.append({
+                'key': str(snapshot.key()),
+                'date': snapshot.date.strftime('%Y-%M-%d %H:%m'),
+                'active': snapshot.active,
+            })
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
+    def post(self):
+        """Deploy action"""
+        json = {}
+        for code in LANG_CODES:
+            json[code] = translations = get_translations(code)
+        json = simplejson.dumps(json)
+
+        active_snapshot = Snapshot.all().filter('active =', True).get()
+        if active_snapshot:
+            active_snapshot.active = False
+            active_snapshot.save()
+
+        new_snapshot = Snapshot(json=json, active=True)
+        new_snapshot.put()
+
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write('success')
+
 def main():
     application = webapp.WSGIApplication([
         ('/api/translations.*', TranslationsHandler),
+        ('/translations/snapshots', SnapshotsHandler),
         ('/translations/phrases', PhrasesHandler),
         ('/translations/leaders/.*', SpecificLeadersHandler),
         ('/translations/leaders', LeadersHandler),

@@ -59,12 +59,32 @@ function loadTeamLeaders() {
     });
 }
 
+function loadSnapshots() {
+    function createRow(item) {
+        var $tr = $('<tr></tr>');
+        $('<td></td>').text(item.date).appendTo($tr);
+        $('<td><button class="restore">Restore</button></td>').appendTo($tr);
+        if (item.active) {
+            $tr.addClass('active');
+        }
+        return $tr;
+    }
+
+    $('#snapshots tbody').html('');
+    $.getJSON('/translations/snapshots', function(data) {
+        $.each(data, function(i, item) {
+            createRow(item).appendTo('#snapshots tbody');
+        });
+    });
+}
+
 var tabCallbacks = {
     phrases: function() {
     },
     teams: function() {
     },
     snapshots: function() {
+        loadSnapshots();
     },
     deploy: function() {
     },
@@ -138,6 +158,12 @@ $(document).ready(function() {
         $.post('/translations/leaders', args, function() {
             loadTeamLeaders();
             closePopup();
+        });
+    });
+
+    $('#deployButton').click(function() {
+        $.post('/translations/snapshots', function(data) {
+            alert(data);
         });
     });
 

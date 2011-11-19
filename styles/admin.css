@@ -26,5 +26,11 @@ button {
 }
 
 table {
-    margin-bottom: 20px;
+}
+
+#snapshots table {
+    margin-top: 20px;
+}
+#snapshots .active .restore {
+    display: none;
 }

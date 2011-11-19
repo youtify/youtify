@@ -10,7 +10,7 @@ from model import get_current_youtify_user
 from model import create_youtify_user
 from playlists import get_playlists_json_for_user
 from translations import auto_detect_language
-from translations import get_translations_json_for
+from translations import get_deployed_translations_json
 
 class MainHandler(webapp.RequestHandler):
 
@@ -46,7 +46,7 @@ class MainHandler(webapp.RequestHandler):
             'youtify_user': youtify_user,
             'playlistsFromServer': playlists,
             'autoDetectedLanguageByServer': lang,
-            'autoDetectedTranslations': get_translations_json_for(lang),
+            'autoDetectedTranslations': get_deployed_translations_json(lang),
             'accept_language_header': self.request.headers.get('Accept-Language', ''), # todo remove
             'logged_in': int(current_user is not None),
             'login_url': users.create_login_url('/'),
