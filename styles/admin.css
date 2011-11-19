@@ -24,6 +24,9 @@
 button {
     margin: 10px 0;
 }
+table button {
+    margin: 0;
+}
 
 table {
 }
