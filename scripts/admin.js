@@ -80,8 +80,10 @@ function loadSnapshots() {
 
 var tabCallbacks = {
     phrases: function() {
+        loadPhrases();
     },
     teams: function() {
+        loadTeamLeaders();
     },
     snapshots: function() {
         loadSnapshots();
@@ -166,7 +168,4 @@ $(document).ready(function() {
             alert(data);
         });
     });
-
-    loadPhrases();
-    loadTeamLeaders();
 });
