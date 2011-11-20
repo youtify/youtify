@@ -26,6 +26,7 @@ button {
 }
 table button {
     margin: 0;
+    float: right;
 }
 
 table {
@@ -58,6 +59,23 @@ table {
     border-radius: 5px;
     border-color: solid rgb(163, 26, 20);
     border: 1px;
+}
+
+/* ADD PHRASE POPUP
+ ****************************************************************************/
+
+#addPhrasePopup {
+    width: 400px;
+    height: auto;
+    margin-left: -200px;
+}
+#addPhrasePopup textarea {
+    width: 100%;
+    height: 100px;
+}
+#addPhrasePopup input[type=submit] {
+    margin-top: 10px;
+    float: right;
 }
 
 /* ADD LEADER POPUP

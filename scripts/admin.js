@@ -223,8 +223,8 @@ $(document).ready(function() {
     }
 
     $('#addPhraseButton').click(function() {
+        $('#addPhrasePopup textarea').val('');
         showPopup('addPhrasePopup');
-        $('#addPhrasePopup input[type=text]').val('');
     });
 
     $('#addLeaderButton').click(function() {
@@ -235,7 +235,7 @@ $(document).ready(function() {
     $('#addPhrasePopup input[type=submit]').click(function() {
         var original, args;
 
-        original = $.trim($('#addPhrasePopup input[type=text]').val());
+        original = $.trim($('#addPhrasePopup textarea').val());
         if (original.length === 0) {
             return;
         }
