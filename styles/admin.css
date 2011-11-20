@@ -38,6 +38,14 @@ table {
     display: none;
 }
 
+#teams select {
+    display: block;
+    margin: 20px 0;
+}
+#teams button {
+    margin-top: 0;
+}
+
 #loading {
     text-align: center;
     position: fixed;
@@ -50,4 +58,44 @@ table {
     border-radius: 5px;
     border-color: solid rgb(163, 26, 20);
     border: 1px;
+}
+
+/* ADD LEADER POPUP
+ ****************************************************************************/
+
+#addLeaderPopup {
+    width: 300px;
+    height: 70px;
+    margin-left: -150px;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+}
+#addLeaderPopup label {
+    display: block;
+}
+#addLeaderPopup input[type=email] {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+#addLeaderPopup input[type=submit] {
+    display: none;
+    float: right;
+}
+#addLeaderPopup .noMatch {
+    color: #ccc;
+}
+#addLeaderPopup .userFound {
+    color: green;
+    display: none;
+}
+#addLeaderPopup.success {
+    height: 90px;
+}
+#addLeaderPopup.success .noMatch {
+    display: none;
+}
+#addLeaderPopup.success .userFound,
+#addLeaderPopup.success input[type=submit] {
+    display: block;
 }

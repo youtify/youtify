@@ -21,23 +21,19 @@
         <div class="popup" id="addPhrasePopup">
             <span class="close">X</span>
             <input type="text" />
-            <input type="submit" value="Add phrase" />
+            <input type="submit" value="Ok" />
         </div>
 
         <div class="popup" id="addLeaderPopup">
             <span class="close">X</span>
 
-            <label for="lang">Lang</label>
-            <select name="lang">
-                {% for lang in languages %}
-                <option value="{{ lang.code }}">{{ lang.label }}</option>
-                {% endfor %}
-            </select>
+            <label for="user">Email</label>
+            <input type="email" name="user" />
 
-            <label for="user">User</label>
-            <input type="text" name="user" />
+            <p class="userFound">User found</p>
+            <p class="noMatch">No match</p>
 
-            <input type="submit" value="Add leader" />
+            <input type="submit" value="Ok" />
         </div>
 
         <div id="wrapper">
@@ -54,7 +50,7 @@
             </ul>
 
             <div id="phrases" class="pane">
-                <button id="addPhraseButton">Add phrase</button>
+                <button id="addPhraseButton">Add Phrase</button>
                 <table id="phrases">
                     <thead>
                         <tr>
@@ -67,11 +63,15 @@
             </div>
 
             <div id="teams" class="pane">
-                <button id="addLeaderButton">Add leader</button>
+                <select name="lang">
+                    {% for lang in languages %}
+                    <option value="{{ lang.code }}">{{ lang.label }}</option>
+                    {% endfor %}
+                </select>
+                <button id="addLeaderButton">Add Team Leader</button>
                 <table id="leaders">
                     <thead>
                         <tr>
-                            <th>Language</th>
                             <th>Name</th>
                         </tr>
                     </thead>

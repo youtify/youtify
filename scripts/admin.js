@@ -4,6 +4,8 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     }
 });
 
+var userIdFromLookupOnServer;
+
 function showLoadingBar() {
     $('#loading').show();
 }
@@ -53,22 +55,34 @@ function getLanguageByCode(code) {
     return ret;
 }
 
-function loadTeamLeaders() {
+function loadTeamLanguage(langCode) {
+    history.pushState(null, null, '/admin/teams/' + langCode);
+
     function createRow(item) {
         var $tr = $('<tr></tr>');
-        $('<td></td>').text(getLanguageByCode(item.lang)).appendTo($tr);
         $('<td></td>').text(item.user.name).appendTo($tr);
         return $tr;
     }
 
     showLoadingBar();
     $('#leaders tbody').html('');
-    $.getJSON('/translations/leaders', function(data) {
+    $.getJSON('/translations/leaders/' + langCode, function(data) {
         $.each(data, function(i, item) {
             createRow(item).appendTo('#leaders tbody');
         });
         hideLoadingBar();
     });
+}
+
+function loadTeamLeaders() {
+    var path = window.location.pathname.split('/');
+
+    if (path.length > 3) { // e.g. /admin/teams/sv_SE
+        loadTeamLanguage(path[3]);
+        $('#teams select option[value|="' + path[3] + '"]').attr('selected', 'selected');
+    } else {
+        loadTeamLanguage($('#teams select').val());
+    }
 }
 
 function loadSnapshots() {
@@ -106,6 +120,12 @@ var tabCallbacks = {
     },
 }
 
+function resetLeaderPopup() {
+    $('#addLeaderPopup').removeClass('success');
+    $('#addLeaderPopup input[type=email]').val('');
+    userIdFromLookupOnServer = null; // global
+}
+
 $(document).ready(function() {
     $('.popup .close').click(closePopup);
 
@@ -126,13 +146,20 @@ $(document).ready(function() {
         $('.pane.selected').removeClass('selected');
         $('#' + rel).addClass('selected');
 
-        history.pushState(null, null, '/admin/' + rel);
+        if (rel === 'teams') {
+            var path = window.location.pathname.split('/');
+            path[2] = rel;
+            path = path.join('/');
+            history.pushState(null, null, path);
+        } else {
+            history.pushState(null, null, '/admin/' + rel);
+        }
 
         tabCallbacks[rel]();
     });
 
     var path = window.location.pathname.split('/');
-    if (path.length === 3) { // e.g. /admin/deploy
+    if (path.length > 2) { // e.g. /admin/deploy
         $('#tabs li[rel=' + path[2] + ']').click();
     } else {
         $('#tabs li').first().click();
@@ -144,6 +171,7 @@ $(document).ready(function() {
     });
 
     $('#addLeaderButton').click(function() {
+        resetLeaderPopup();
         showPopup('addLeaderPopup');
     });
 
@@ -165,11 +193,24 @@ $(document).ready(function() {
         });
     });
 
+    $('#addLeaderPopup input[type=email]').keyup(function() {
+        showLoadingBar();
+        $.getJSON('/admin/userlookup', {email:$(this).val()}, function(data) {
+            hideLoadingBar();
+            if (data.success) {
+                $('#addLeaderPopup').addClass('success');
+                userIdFromLookupOnServer = data.id; // global
+            } else {
+                $('#addLeaderPopup').removeClass('success');
+            }
+        });
+    });
+
     $('#addLeaderPopup input[type=submit]').click(function() {
         var args = {};
 
-        args.lang = $.trim($('#addLeaderPopup select[name=lang]').val());
-        args.user = $.trim($('#addLeaderPopup input[name=user]').val());
+        args.lang = window.location.pathname.split('/')[3];
+        args.user = userIdFromLookupOnServer; // global
 
         $.post('/translations/leaders', args, function() {
             loadTeamLeaders();
@@ -182,5 +223,9 @@ $(document).ready(function() {
         $.post('/translations/snapshots', function(data) {
             hideLoadingBar();
         });
+    });
+
+    $('#teams select').change(function() {
+        loadTeamLanguage($(this).val());
     });
 });
