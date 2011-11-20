@@ -212,7 +212,7 @@ $(document).ready(function() {
             original: original,
         };
 
-        $.post('/translations/template', args, function() {
+        $.post('/translations/phrases', args, function() {
             loadPhrases();
             closePopup();
         });

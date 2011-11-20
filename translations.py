@@ -21,6 +21,7 @@ class Leader(db.Model):
     user = db.ReferenceProperty(reference_class=YoutifyUser)
 
 class Phrase(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
     original = db.StringProperty(required=True)
     approved_translations = db.StringListProperty()
 
@@ -164,19 +165,6 @@ class TranslationsToolHandler(webapp.RequestHandler):
             'languages': languages,
         }))
 
-class TranslationTemplateHandler(webapp.RequestHandler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/plain; charset=utf-8'
-        self.response.out.write('hello world')
-
-    def post(self):
-        if not users.is_current_user_admin():
-            raise Exception('Permission denied')
-        else:
-            original = self.request.get('original')
-            phrase = Phrase(original=original)
-            phrase.put()
-
 class CommentsHandler(webapp.RequestHandler):
     def post(self):
         phrase_id = self.request.path.split('/')[-2]
@@ -260,14 +248,24 @@ class LeadersHandler(webapp.RequestHandler):
 
 class PhrasesHandler(webapp.RequestHandler):
     def get(self):
+        """Get all phrases"""
         json = []
-        phrases = Phrase.all()
+        phrases = Phrase.all().order('-date')
         for phrase in phrases:
             json.append({
                 'original': phrase.original,
             })
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
+
+    def post(self):
+        """Create a new phrase"""
+        if not users.is_current_user_admin():
+            self.error(403)
+        else:
+            original = self.request.get('original')
+            phrase = Phrase(original=original)
+            phrase.put()
 
 class SnapshotsHandler(webapp.RequestHandler):
     def get(self):
@@ -310,7 +308,6 @@ def main():
         ('/translations/snapshots', SnapshotsHandler),
         ('/translations/phrases', PhrasesHandler),
         ('/translations/leaders.*', LeadersHandler),
-        ('/translations/template', TranslationTemplateHandler),
         ('/translations/.*/approve', ApproveHandler),
         ('/translations/.*/comments', CommentsHandler),
         ('/translations.*', TranslationsToolHandler),
