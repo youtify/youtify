@@ -276,10 +276,16 @@ $(document).ready(function() {
     });
 
     $('#deployButton').click(function() {
-        showLoadingBar();
-        $.post('/translations/snapshots', function(data) {
-            hideLoadingBar();
-        });
+        if (confirm("Are you sure?")) {
+            var button = $(this);
+            showLoadingBar();
+            button.attr('disabled', 'disabled');
+            $.post('/translations/snapshots', function(data) {
+                hideLoadingBar();
+                button.removeAttr('disabled');
+                $('#tabs li[rel=snapshots]').click();
+            });
+        }
     });
 
     $('#teams select').change(function() {
