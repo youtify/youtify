@@ -25,9 +25,41 @@ function closePopup() {
 }
 
 function loadPhrases() {
+    function hoverIn() {
+        $(this).find('.delete').css('visibility', 'visible');
+    }
+
+    function hoverOut() {
+        $(this).find('.delete').css('visibility', 'hidden');
+    }
+
+    function deleteButtonClicked() {
+        var $tr = $(this).parents('tr');
+        var id = $tr.data('id');
+        var $tr = $(this).parents('tr');
+        var id = $tr.data('id');
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/translations/phrases/' + id,
+                statusCode: {
+                    200: function(data) {
+                         loadPhrases();
+                    },
+                }
+            });
+        }
+    }
+
     function createTableRow(item) {
-        var $tr = $('<tr></tr>');
+        var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
         $('<td class="original"></td>').text(item.original).appendTo($tr);
+        $('<td><button class="delete">Delete</button></td>')
+            .find('.delete')
+            .css('visibility', 'hidden')
+            .click(deleteButtonClicked)
+            .end()
+            .appendTo($tr);
         return $tr;
     }
 

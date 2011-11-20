@@ -253,6 +253,7 @@ class PhrasesHandler(webapp.RequestHandler):
         phrases = Phrase.all().order('-date')
         for phrase in phrases:
             json.append({
+                'id': phrase.key().id(),
                 'original': phrase.original,
             })
         self.response.headers['Content-Type'] = 'application/json'
@@ -266,6 +267,21 @@ class PhrasesHandler(webapp.RequestHandler):
             original = self.request.get('original')
             phrase = Phrase(original=original)
             phrase.put()
+
+    def delete(self):
+        """Delete a specific phrase"""
+        if not users.is_current_user_admin():
+            self.error(403)
+
+        phrase_id = self.request.path.split('/')[-1]
+        phrase = Phrase.get_by_id(int(phrase_id))
+
+        if phrase:
+            phrase.delete()
+            self.response.headers['Content-Type'] = 'text/plain'
+            self.response.out.write('success');
+        else:
+            self.error(404)
 
 class SnapshotsHandler(webapp.RequestHandler):
     def get(self):
@@ -306,7 +322,7 @@ def main():
     application = webapp.WSGIApplication([
         ('/api/translations.*', TranslationsHandler),
         ('/translations/snapshots', SnapshotsHandler),
-        ('/translations/phrases', PhrasesHandler),
+        ('/translations/phrases.*', PhrasesHandler),
         ('/translations/leaders.*', LeadersHandler),
         ('/translations/.*/approve', ApproveHandler),
         ('/translations/.*/comments', CommentsHandler),
