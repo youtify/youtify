@@ -55,34 +55,53 @@ function getLanguageByCode(code) {
     return ret;
 }
 
-function loadTeamLanguage(langCode) {
+function loadTeamLeaders(langCode) {
     history.pushState(null, null, '/admin/teams/' + langCode);
 
+    function deleteButtonClicked() {
+        var $tr = $(this).parents('tr');
+        var id = $tr.data('id');
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/translations/leaders/' + id,
+                statusCode: {
+                    200: function(data) {
+                         loadTeamLeaders(langCode);
+                    },
+                }
+            });
+        }
+    }
+
+    function hoverIn() {
+        $(this).find('.delete').css('visibility', 'visible');
+    }
+
+    function hoverOut() {
+        $(this).find('.delete').css('visibility', 'hidden');
+    }
+
     function createRow(item) {
-        var $tr = $('<tr></tr>');
+        var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
         $('<td></td>').text(item.user.name).appendTo($tr);
+        $('<td><button class="delete">Delete</button></td>')
+            .find('.delete')
+            .css('visibility', 'hidden')
+            .click(deleteButtonClicked)
+            .end()
+            .appendTo($tr);
         return $tr;
     }
 
     showLoadingBar();
     $('#leaders tbody').html('');
-    $.getJSON('/translations/leaders/' + langCode, function(data) {
+    $.getJSON('/translations/leaders', {lang:langCode}, function(data) {
         $.each(data, function(i, item) {
             createRow(item).appendTo('#leaders tbody');
         });
         hideLoadingBar();
     });
-}
-
-function loadTeamLeaders() {
-    var path = window.location.pathname.split('/');
-
-    if (path.length > 3) { // e.g. /admin/teams/sv_SE
-        loadTeamLanguage(path[3]);
-        $('#teams select option[value|="' + path[3] + '"]').attr('selected', 'selected');
-    } else {
-        loadTeamLanguage($('#teams select').val());
-    }
 }
 
 function loadSnapshots() {
@@ -111,7 +130,13 @@ var tabCallbacks = {
         loadPhrases();
     },
     teams: function() {
-        loadTeamLeaders();
+        var path = window.location.pathname.split('/');
+        if (path.length > 3) { // e.g. /admin/teams/sv_SE
+            loadTeamLeaders(path[3]);
+            $('#teams select option[value|="' + path[3] + '"]').attr('selected', 'selected');
+        } else {
+            loadTeamLeaders($('#teams select').val());
+        }
     },
     snapshots: function() {
         loadSnapshots();
@@ -213,7 +238,7 @@ $(document).ready(function() {
         args.user = userIdFromLookupOnServer; // global
 
         $.post('/translations/leaders', args, function() {
-            loadTeamLeaders();
+            loadTeamLeaders(args.lang);
             closePopup();
         });
     });
@@ -226,6 +251,6 @@ $(document).ready(function() {
     });
 
     $('#teams select').change(function() {
-        loadTeamLanguage($(this).val());
+        loadTeamLeaders($(this).val());
     });
 });

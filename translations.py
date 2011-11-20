@@ -215,22 +215,6 @@ class ApproveHandler(webapp.RequestHandler):
 
         phrase.save()
 
-class SpecificLeadersHandler(webapp.RequestHandler):
-    def get(self):
-        lang_code = self.request.path.split('/')[-1]
-        json = []
-        leaders = Leader.all().filter('lang =', lang_code)
-        for leader in leaders:
-            json.append({
-                'lang': leader.lang,
-                'user': {
-                    'id': int(leader.user.key().id()),
-                    'name': leader.user.google_user.nickname(),
-                },
-            })
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(json))
-
 class LeadersHandler(webapp.RequestHandler):
     def post(self):
         lang = self.request.get('lang')
@@ -244,11 +228,13 @@ class LeadersHandler(webapp.RequestHandler):
         leader.put()
 
     def get(self):
+        lang_code = self.request.get('lang')
         json = []
-        leaders = Leader.all()
+        leaders = Leader.all().filter('lang =', lang_code)
         for leader in leaders:
             json.append({
                 'lang': leader.lang,
+                'id': str(leader.key().id()),
                 'user': {
                     'id': int(leader.user.key().id()),
                     'name': leader.user.google_user.nickname(),
@@ -256,6 +242,21 @@ class LeadersHandler(webapp.RequestHandler):
             })
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
+
+    def delete(self):
+        """Delete a specific leader"""
+        if not users.is_current_user_admin():
+            self.error(403)
+
+        leader_id = self.request.path.split('/')[-1]
+        leader = Leader.get_by_id(int(leader_id))
+
+        if leader:
+            leader.delete()
+            self.response.headers['Content-Type'] = 'text/plain'
+            self.response.out.write('success');
+        else:
+            self.error(404)
 
 class PhrasesHandler(webapp.RequestHandler):
     def get(self):
@@ -308,8 +309,7 @@ def main():
         ('/api/translations.*', TranslationsHandler),
         ('/translations/snapshots', SnapshotsHandler),
         ('/translations/phrases', PhrasesHandler),
-        ('/translations/leaders/.*', SpecificLeadersHandler),
-        ('/translations/leaders', LeadersHandler),
+        ('/translations/leaders.*', LeadersHandler),
         ('/translations/template', TranslationTemplateHandler),
         ('/translations/.*/approve', ApproveHandler),
         ('/translations/.*/comments', CommentsHandler),

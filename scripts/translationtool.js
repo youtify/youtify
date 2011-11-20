@@ -159,7 +159,7 @@ function loadLanguage() {
 
     function loadLeaders() {
         $("#leaders").html('');
-        $.getJSON('/translations/leaders/' + currentLanguage, function(data) {
+        $.getJSON('/translations/leaders', {lang:currentLanguage}, function(data) {
             $.each(data, function(i, item) {
                 $('<li></li').text(item.user.name).appendTo('#leaders');
             });
