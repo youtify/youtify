@@ -37,3 +37,17 @@ table {
 #snapshots .active .restore {
     display: none;
 }
+
+#loading {
+    text-align: center;
+    position: fixed;
+    width: 200px;
+    top: 0;
+    left: 50%;
+    margin-left: -100px;
+    background: rgb(163, 26, 20);
+    color: white;
+    border-radius: 5px;
+    border-color: solid rgb(163, 26, 20);
+    border: 1px;
+}

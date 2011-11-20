@@ -4,6 +4,14 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     }
 });
 
+function showLoadingBar() {
+    $('#loading').show();
+}
+
+function hideLoadingBar() {
+    $('#loading').hide();
+}
+
 function showPopup(id) {
     $('#blocker').show();
     $('#' + id).addClass('open');
@@ -22,10 +30,12 @@ function loadPhrases() {
     }
 
     $('#phrases tbody').html('');
+    showLoadingBar();
     $.getJSON('/translations/phrases', function(data) {
         $.each(data, function(i, item) {
             createTableRow(item).appendTo('#phrases tbody');
         });
+        hideLoadingBar();
     });
 }
 
@@ -51,11 +61,13 @@ function loadTeamLeaders() {
         return $tr;
     }
 
+    showLoadingBar();
     $('#leaders tbody').html('');
     $.getJSON('/translations/leaders', function(data) {
         $.each(data, function(i, item) {
             createRow(item).appendTo('#leaders tbody');
         });
+        hideLoadingBar();
     });
 }
 
@@ -70,11 +82,13 @@ function loadSnapshots() {
         return $tr;
     }
 
+    showLoadingBar();
     $('#snapshots tbody').html('');
     $.getJSON('/translations/snapshots', function(data) {
         $.each(data, function(i, item) {
             createRow(item).appendTo('#snapshots tbody');
         });
+        hideLoadingBar();
     });
 }
 
@@ -164,8 +178,9 @@ $(document).ready(function() {
     });
 
     $('#deployButton').click(function() {
+        showLoadingBar();
         $.post('/translations/snapshots', function(data) {
-            alert(data);
+            hideLoadingBar();
         });
     });
 });
