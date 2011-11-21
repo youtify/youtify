@@ -6,11 +6,6 @@ var TYPE_SUGGESTION = 2;
 var TYPE_APPROVED = 3;
 var TYPE_ORIGINAL_CHANGED = 3;
 
-function showPopup(id) {
-    $('#blocker').show();
-    $('#' + id).addClass('open');
-}
-
 function sendSuggestion() {
     var $tr = $(this).parents('tr');
     var translation = $tr.find('input[type=text]').val();
@@ -22,8 +17,9 @@ function sendSuggestion() {
     };
 
     if (translation.length > 0) {
+        showLoadingBar();
         $.post('/api/translations/' + currentLanguage, args, function() {
-            alert('thanks for your suggestion :)');
+            hideLoadingBar();
         });
     }
 }
@@ -60,7 +56,12 @@ function showComments() {
             lang: currentLanguage,
             text: $textarea.val()
         };
+        showLoadingBar();
+        $button = $(this);
+        $button.attr('disabled', 'disabled');
         $.post('/translations/' + phrase.id + '/comments', args, function() {
+            hideLoadingBar();
+            $button.removeAttr('disabled');
             phrases[index].history.push({
                 user: {
                     id: my_user_id,
@@ -139,11 +140,6 @@ function createTableRow(phraseIndex, original, translation, approved) {
     return tr;
 }
 
-function closePopup() {
-    $('#blocker').hide();
-    $('.popup.open').removeClass('open');
-}
-
 function loadLanguage() {
     currentLanguage = $('#language').val(); // global
 
@@ -157,7 +153,9 @@ function loadLanguage() {
     }
 
     function loadTranslations() {
+        showLoadingBar();
         $.getJSON('/api/translations/' + currentLanguage, {comments:1}, function(data) {
+            hideLoadingBar();
             var $tbody = $('<tbody></tbody>');
             phrases = data; // global
 
@@ -190,21 +188,4 @@ $(document).ready(function() {
     } else {
         $('#language').change();
     }
-
-    $('.popup .close').click(closePopup);
-
-    var $blocker = $('#blocker');
-
-    $(window).keyup(function(e) {
-        if ($blocker.is(':visible') && e.keyCode == 27) {
-            closePopup();
-        }
-    });
 });
-
-$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
-    if (r.status === 500 && $.trim(r.responseText).length > 0) {
-        $('body').html(r.responseText);
-    }
-});
-

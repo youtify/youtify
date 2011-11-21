@@ -1,28 +1,4 @@
-$(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
-    if (r.status === 500 && $.trim(r.responseText).length > 0) {
-        $('body').html(r.responseText);
-    }
-});
-
 var userIdFromLookupOnServer;
-
-function showLoadingBar() {
-    $('#loading').show();
-}
-
-function hideLoadingBar() {
-    $('#loading').hide();
-}
-
-function showPopup(id) {
-    $('#blocker').show();
-    $('#' + id).addClass('open');
-}
-
-function closePopup() {
-    $('#blocker').hide();
-    $('.popup.open').removeClass('open');
-}
 
 function loadPhrases() {
     function hoverIn() {
@@ -184,16 +160,6 @@ function resetLeaderPopup() {
 }
 
 $(document).ready(function() {
-    $('.popup .close').click(closePopup);
-
-    var $blocker = $('#blocker');
-
-    $(window).keyup(function(e) {
-        if ($blocker.is(':visible') && e.keyCode == 27) {
-            closePopup();
-        }
-    });
-
     $('#tabs li').click(function() {
         var rel = $(this).attr('rel');
 
