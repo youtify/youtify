@@ -167,7 +167,7 @@ class TranslationsToolHandler(webapp.RequestHandler):
 
 class CommentsHandler(webapp.RequestHandler):
     def post(self):
-        phrase_id = self.request.path.split('/')[-2]
+        phrase_id = int(self.request.path.split('/')[-2])
         lang = self.request.get('lang')
         text = self.request.get('text')
         phrase = Phrase.get_by_id(int(phrase_id))
