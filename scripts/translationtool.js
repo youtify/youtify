@@ -139,16 +139,6 @@ function createTableRow(phraseIndex, original, translation, approved) {
     return tr;
 }
 
-function createTableBody(data) {
-    var tbody = $('<tbody></tbody>');
-
-    $.each(data, function(i, item) {
-        createTableRow(i, item.original, item.translation, item.approved).appendTo(tbody);
-    });
-
-    return tbody;
-}
-
 function closePopup() {
     $('#blocker').hide();
     $('.popup.open').removeClass('open');
@@ -167,9 +157,15 @@ function loadLanguage() {
     }
 
     function loadTranslations() {
-        $.getJSON('/api/translations/' + currentLanguage, function(data) {
+        $.getJSON('/api/translations/' + currentLanguage, {comments:1}, function(data) {
+            var $tbody = $('<tbody></tbody>');
             phrases = data; // global
-            $('tbody').replaceWith(createTableBody(data));
+
+            $.each(data, function(i, item) {
+                createTableRow(i, item.original, item.translation, item.approved).appendTo($tbody);
+            });
+
+            $('tbody').replaceWith($tbody);
         });
     }
 

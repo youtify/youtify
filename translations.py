@@ -129,7 +129,11 @@ class TranslationsHandler(webapp.RequestHandler):
             raise Exception('Unknown language code "%s"' % code)
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(get_deployed_translations_json(code))
+
+        if self.request.get('comments'):
+            self.response.out.write(simplejson.dumps(get_translations(code)))
+        else:
+            self.response.out.write(get_deployed_translations_json(code))
 
     def post(self):
         if not users.is_current_user_admin():
