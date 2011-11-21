@@ -104,8 +104,9 @@ function changeApproveState() {
         lang: currentLanguage,
     };
 
+    showLoadingBar();
     $.post("/translations/" + phrase.id + "/approve", args, function(data) {
-        alert("Translation state changed");
+        hideLoadingBar();
     });
 }
 
