@@ -1,0 +1,88 @@
+/* RESET
+*******************************/
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ""; content: none; }
+ins { background-color: #ff9; color: #000; text-decoration: none; }
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+del { text-decoration: line-through; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+input, select { vertical-align: middle; }
+a, input, a:hover, a:active { outline: none; }
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea { margin: 0; }
+/* Hand cursor on clickable input elements */
+input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+ol, ul { list-style: none; }
+
+#wrapper {
+    margin: 10px;
+}
+#top {
+    text-align: right;
+}
+thead {
+    display: none;
+}
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.approved input {
+    margin-right: 10px;
+}
+td {
+    padding: 10px;
+}
+tr:nth-child(odd) {
+    background: #eee;
+}
+
+#blocker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: black;
+    opacity: 0.4;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    margin: 0;
+    padding: 0;
+}
+.popup {
+    z-index: 100;
+
+    display: none;
+    position: fixed;
+    width: 480px;
+    height: auto;
+    padding: 10px;
+
+    top: 100px;
+    left: 50%;
+    margin-left: -250px;
+    max-height: 400px;
+
+    border: 5px solid #ccc;
+    background: white;
+}
+.popup.open {
+    display: block;
+}
+.popup .close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    cursor: pointer;
+    background: #333;
+    color: white;
+    padding: 5px;
+}
+.clickable {
+    color: blue;
+    cursor: pointer;
+}
