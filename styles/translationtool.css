@@ -13,7 +13,7 @@
 }
 td.translation input[type=text] {
     display: inline-block;
-    width: 500px;
+    width: 250px;
     margin-right: 8px;
 }
 td.translation input[type=submit] {

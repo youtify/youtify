@@ -105,7 +105,7 @@ def get_history(phrase, code):
 
 def get_translations(code):
     json = []
-    for phrase in Phrase.all():
+    for phrase in Phrase.all().order('-date'):
         json.append({
             'id': phrase.key().id(),
             'approved': code in phrase.approved_translations,
