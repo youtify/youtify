@@ -42,6 +42,7 @@ class AdminHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {
             'my_user_name': user.google_user.nickname().split('@')[0],
+            'my_user_email': user.google_user.email(),
             'my_user_id': user.key().id(),
             'logout_url': users.create_logout_url('/'),
             'languages': languages,

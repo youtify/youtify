@@ -159,6 +159,7 @@ class TranslationsToolHandler(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', 'translations.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {
+            'my_user_email': current_user.email(),
             'my_user_name': current_user.nickname().split('@')[0],
             'my_user_id': youtify_user.key().id(),
             'logout_url': users.create_logout_url('/'),
