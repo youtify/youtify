@@ -154,6 +154,12 @@ class TranslationsHandler(webapp.RequestHandler):
         setattr(phrase, lang_code, translation)
         phrase.save()
 
+def get_leader_langs_for_user(youtify_user):
+    ret = []
+    for leader in Leader.all().filter('user =', youtify_user):
+        ret.append(leader.lang)
+    return ret
+
 class TranslationsToolHandler(webapp.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
@@ -163,6 +169,8 @@ class TranslationsToolHandler(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', 'translations.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {
+            'is_admin': simplejson.dumps(users.is_current_user_admin()),
+            'my_langs': simplejson.dumps(get_leader_langs_for_user(youtify_user)),
             'my_user_email': current_user.email(),
             'my_user_name': current_user.nickname().split('@')[0],
             'my_user_id': youtify_user.key().id(),
@@ -188,11 +196,15 @@ class ApproveHandler(webapp.RequestHandler):
         phrase_id = self.request.path.split('/')[-2]
         lang = self.request.get('lang')
         phrase = Phrase.get_by_id(int(phrase_id))
+        user = get_current_youtify_user()
+
+        if not (lang in get_leader_langs_for_user(user) or users.is_current_user_admin()):
+            self.error(403)
+            return
 
         if phrase is None:
             raise Exception("No phrase with id %s found", phrase_id)
 
-        user = get_current_youtify_user()
         translation = getattr(phrase, lang)
         text = None
 

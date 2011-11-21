@@ -110,6 +110,10 @@ function changeApproveState() {
     });
 }
 
+function isUserLeaderOfCurrentLang() {
+    return my_langs.indexOf(currentLanguage) !== -1;
+}
+
 function createTableRow(phraseIndex, original, translation, approved) {
     var tr = $('<tr></tr>');
 
@@ -127,6 +131,9 @@ function createTableRow(phraseIndex, original, translation, approved) {
     checkbox.appendTo(td4);
     if (approved) {
         checkbox.attr('checked', 'checked');
+    }
+    if ((isUserLeaderOfCurrentLang() || is_admin) === false) {
+        checkbox.attr('disabled', 'disabled');
     }
     checkbox.change(changeApproveState);
 
