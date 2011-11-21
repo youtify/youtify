@@ -136,9 +136,11 @@ class TranslationsHandler(webapp.RequestHandler):
             self.response.out.write(get_deployed_translations_json(code))
 
     def post(self):
-        if not users.is_current_user_admin():
-            raise Exception('Permission denied')
+        """Suggest a new translation
 
+        Only team leaders and admins are allowed to change the translation
+        if a suggestion has already been made.
+        """
         lang_code = self.request.path.split('/')[-1]
         original = self.request.get('original')
         translation = self.request.get('translation')
@@ -150,6 +152,11 @@ class TranslationsHandler(webapp.RequestHandler):
 
         if phrase is None:
             raise Exception('No phrase matching "%s" found' % original)
+
+        if getattr(phrase, lang_code):
+            user = get_current_youtify_user()
+            if not (lang in get_leader_langs_for_user(user) or users.is_current_user_admin()):
+                self.error(403)
 
         setattr(phrase, lang_code, translation)
         phrase.save()

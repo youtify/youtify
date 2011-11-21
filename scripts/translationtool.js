@@ -6,6 +6,13 @@ var TYPE_SUGGESTION = 2;
 var TYPE_APPROVED = 3;
 var TYPE_ORIGINAL_CHANGED = 3;
 
+function replaceTranslationColumnWithLabel($tr) {
+    $td = $tr.find('td.translation');
+    var translation = $td.find('input[type=text]').val();
+    $td.html('');
+    $('<p></p>').text(translation).appendTo($td);
+}
+
 function sendSuggestion() {
     var $tr = $(this).parents('tr');
     var translation = $tr.find('input[type=text]').val();
@@ -20,6 +27,9 @@ function sendSuggestion() {
         showLoadingBar();
         $.post('/api/translations/' + currentLanguage, args, function() {
             hideLoadingBar();
+            if (!(is_admin || isUserLeaderOfCurrentLang())) {
+                replaceTranslationColumnWithLabel($tr);
+            }
         });
     }
 }
@@ -122,8 +132,12 @@ function createTableRow(phraseIndex, original, translation, approved) {
     var td3 = $('<td></td').attr('class', 'comments');
     var td4 = $('<td></td').attr('class', 'approved');
 
-    $('<input type="text" />').val(translation).appendTo(td2);
-    $('<input type="submit" />').val("Send suggestion").click(sendSuggestion).appendTo(td2);
+    if (translation && !(is_admin || isUserLeaderOfCurrentLang())) {
+        $('<p></p>').text(translation).appendTo(td2);
+    } else {
+        $('<input type="text" />').val(translation).appendTo(td2);
+        $('<input type="submit" />').val("Send suggestion").click(sendSuggestion).appendTo(td2);
+    }
 
     createCommentsElement(phraseIndex).appendTo(td3);
 
