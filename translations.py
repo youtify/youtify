@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 from google.appengine.ext import db
 from google.appengine.ext import webapp
@@ -10,6 +8,7 @@ from django.utils import simplejson
 from model import get_current_youtify_user
 from model import create_youtify_user
 from model import YoutifyUser
+from languages import languages
 
 class SnapshotMetadata(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
@@ -45,29 +44,6 @@ class HistoryItem(db.Model):
     type = db.IntegerProperty(required=True)
     text = db.StringProperty()
     lang = db.StringProperty()
-
-languages = [
-    {
-        'code': 'en_US',
-        'label': 'English',
-        'enabled': True,
-    },
-    {
-        'code': 'sv_SE',
-        'label': 'Svenska',
-        'enabled': True,
-    },
-    {
-        'code': 'ro_SE',
-        'label': 'Rövarspråket',
-        'enabled': True,
-    },
-    {
-        'code': 'fi_FI',
-        'label': 'Suomi',
-        'enabled': True,
-    },
-]
 
 LANG_CODES = [i['code'] for i in languages]
 
@@ -185,7 +161,7 @@ class TranslationsToolHandler(webapp.RequestHandler):
             'my_user_name': current_user.nickname().split('@')[0],
             'my_user_id': youtify_user.key().id(),
             'logout_url': users.create_logout_url('/'),
-            'languages': languages,
+            'languages': [lang for lang in languages if lang['enabled_in_tool']],
         }))
 
 class CommentsHandler(webapp.RequestHandler):
