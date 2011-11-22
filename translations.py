@@ -11,10 +11,13 @@ from model import get_current_youtify_user
 from model import create_youtify_user
 from model import YoutifyUser
 
-class Snapshot(db.Model):
+class SnapshotMetadata(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
-    json = db.TextProperty(required=True)
     active = db.BooleanProperty()
+
+class SnapshotContent(db.Model):
+    json = db.TextProperty(required=True)
+    metadata = db.ReferenceProperty(reference_class=SnapshotMetadata)
 
 class Leader(db.Model):
     lang = db.StringProperty(required=True)
@@ -310,7 +313,7 @@ class PhrasesHandler(webapp.RequestHandler):
 class SnapshotsHandler(webapp.RequestHandler):
     def get(self):
         json = [];
-        for snapshot in Snapshot.all().order('-date'):
+        for snapshot in SnapshotMetadata.all().order('-date'):
             json.append({
                 'key': str(snapshot.key()),
                 'date': snapshot.date.strftime('%Y-%M-%d %H:%m'),
@@ -326,20 +329,23 @@ class SnapshotsHandler(webapp.RequestHandler):
             json[code] = translations = get_translations(code)
         json = simplejson.dumps(json)
 
-        active_snapshot = Snapshot.all().filter('active =', True).get()
+        active_snapshot = SnapshotMetadata.all().filter('active =', True).get()
         if active_snapshot:
             active_snapshot.active = False
             active_snapshot.save()
 
-        new_snapshot = Snapshot(json=json, active=True)
-        new_snapshot.put()
+        metadata = SnapshotMetadata(active=True)
+        metadata.put()
+        content = SnapshotContent(metadata=metadata, json=json)
+        content.put()
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('success')
 
 deployed_translations = {}
-snapshot = Snapshot.all().filter('active =', True).get()
-if snapshot:
+metadata = SnapshotMetadata.all().filter('active =', True).get()
+if metadata:
+    snapshot = SnapshotContent.all().filter('metadata =', metadata).get()
     deployed_translations = simplejson.loads(snapshot.json)
 
 def main():
