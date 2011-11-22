@@ -339,6 +339,8 @@ class SnapshotsHandler(webapp.RequestHandler):
         content = SnapshotContent(metadata=metadata, json=json)
         content.put()
 
+        init_cached_translations()
+
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('success')
 
@@ -359,11 +361,38 @@ class SnapshotsHandler(webapp.RequestHandler):
         else:
             self.error(404)
 
+    def put(self):
+        """Mark a specific snapshot as active"""
+        if not users.is_current_user_admin():
+            self.error(403)
+
+        snapshot_id = self.request.path.split('/')[-1]
+        metadata = SnapshotMetadata.get_by_id(int(snapshot_id))
+
+        if metadata is None:
+            self.error(404)
+        else:
+            current = SnapshotMetadata().all().filter('active =', True).get()
+            if current:
+                current.active = False
+                current.save()
+            metadata.active = True
+            metadata.save()
+
+            init_cached_translations()
+
+            self.response.headers['Content-Type'] = 'text/plain'
+            self.response.out.write('success');
+
 deployed_translations = {}
-metadata = SnapshotMetadata.all().filter('active =', True).get()
-if metadata:
-    snapshot = SnapshotContent.all().filter('metadata =', metadata).get()
-    deployed_translations = simplejson.loads(snapshot.json)
+
+def init_cached_translations():
+    """This method initializes the app cached translations"""
+    global deployed_translations
+    metadata = SnapshotMetadata.all().filter('active =', True).get()
+    if metadata:
+        snapshot = SnapshotContent.all().filter('metadata =', metadata).get()
+        deployed_translations = simplejson.loads(snapshot.json)
 
 def main():
     application = webapp.WSGIApplication([

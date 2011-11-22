@@ -40,7 +40,7 @@ table {
 #snapshots .active {
     font-weight: bold;
 }
-#snapshots .active .restore,
+#snapshots .active .activate,
 #snapshots .active .delete {
     display: none;
 }

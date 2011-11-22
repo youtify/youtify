@@ -114,11 +114,11 @@ function loadTeamLeaders(langCode) {
 
 function loadSnapshots() {
     function hoverIn() {
-        $(this).find('.delete, .restore').css('visibility', 'visible');
+        $(this).find('.delete, .activate').css('visibility', 'visible');
     }
 
     function hoverOut() {
-        $(this).find('.delete, .restore').css('visibility', 'hidden');
+        $(this).find('.delete, .activate').css('visibility', 'hidden');
     }
 
     function deleteButtonClicked() {
@@ -137,20 +137,32 @@ function loadSnapshots() {
         }
     }
 
-    function restoreButtonClicked() {
-        alert("restore!");
+    function activateButtonClicked() {
+        var $tr = $(this).parents('tr');
+        var id = $tr.data('id');
+        if (confirm("All publicly visible translations will be updated. Continue?")) {
+            $.ajax({
+                type: 'PUT',
+                url: '/translations/snapshots/' + id,
+                statusCode: {
+                    200: function(data) {
+                         loadSnapshots();
+                    },
+                }
+            });
+        }
     }
 
     function createRow(item) {
         var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
         $('<td></td>').text(item.date).appendTo($tr);
-        $('<td><button class="delete">Delete</button><button class="restore">Restore</button></td>')
+        $('<td><button class="delete">Delete</button><button class="activate">Activate</button></td>')
             .find('.delete')
             .click(deleteButtonClicked)
             .css('visibility', 'hidden')
             .end()
-            .find('.restore')
-            .click(restoreButtonClicked)
+            .find('.activate')
+            .click(activateButtonClicked)
             .css('visibility', 'hidden')
             .end()
             .appendTo($tr);
