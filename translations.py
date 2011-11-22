@@ -315,7 +315,7 @@ class SnapshotsHandler(webapp.RequestHandler):
         json = [];
         for snapshot in SnapshotMetadata.all().order('-date'):
             json.append({
-                'key': str(snapshot.key()),
+                'id': snapshot.key().id(),
                 'date': snapshot.date.strftime('%Y-%M-%d %H:%m'),
                 'active': snapshot.active,
             })
@@ -342,6 +342,23 @@ class SnapshotsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('success')
 
+    def delete(self):
+        """Delete specific snapshot"""
+        if not users.is_current_user_admin():
+            self.error(403)
+
+        snapshot_id = self.request.path.split('/')[-1]
+        metadata = SnapshotMetadata.get_by_id(int(snapshot_id))
+        content = SnapshotContent.all().filter('metadata =', metadata).get()
+
+        if metadata:
+            content.delete()
+            metadata.delete()
+            self.response.headers['Content-Type'] = 'text/plain'
+            self.response.out.write('success');
+        else:
+            self.error(404)
+
 deployed_translations = {}
 metadata = SnapshotMetadata.all().filter('active =', True).get()
 if metadata:
@@ -351,7 +368,7 @@ if metadata:
 def main():
     application = webapp.WSGIApplication([
         ('/api/translations.*', TranslationsHandler),
-        ('/translations/snapshots', SnapshotsHandler),
+        ('/translations/snapshots.*', SnapshotsHandler),
         ('/translations/phrases.*', PhrasesHandler),
         ('/translations/leaders.*', LeadersHandler),
         ('/translations/.*/approve', ApproveHandler),

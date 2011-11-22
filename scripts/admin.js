@@ -113,10 +113,47 @@ function loadTeamLeaders(langCode) {
 }
 
 function loadSnapshots() {
+    function hoverIn() {
+        $(this).find('.delete, .restore').css('visibility', 'visible');
+    }
+
+    function hoverOut() {
+        $(this).find('.delete, .restore').css('visibility', 'hidden');
+    }
+
+    function deleteButtonClicked() {
+        var $tr = $(this).parents('tr');
+        var id = $tr.data('id');
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/translations/snapshots/' + id,
+                statusCode: {
+                    200: function(data) {
+                         loadSnapshots();
+                    },
+                }
+            });
+        }
+    }
+
+    function restoreButtonClicked() {
+        alert("restore!");
+    }
+
     function createRow(item) {
-        var $tr = $('<tr></tr>');
+        var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
         $('<td></td>').text(item.date).appendTo($tr);
-        $('<td><button class="restore">Restore</button></td>').appendTo($tr);
+        $('<td><button class="delete">Delete</button><button class="restore">Restore</button></td>')
+            .find('.delete')
+            .click(deleteButtonClicked)
+            .css('visibility', 'hidden')
+            .end()
+            .find('.restore')
+            .click(restoreButtonClicked)
+            .css('visibility', 'hidden')
+            .end()
+            .appendTo($tr);
         if (item.active) {
             $tr.addClass('active');
         }
