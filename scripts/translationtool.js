@@ -168,9 +168,11 @@ function loadLanguage() {
     function loadLeaders() {
         $("#leaders").html('');
         $.getJSON('/translations/leaders', {lang:currentLanguage}, function(data) {
+            var names = [];
             $.each(data, function(i, item) {
-                $('<li></li').text(item.user.name).appendTo('#leaders');
+                names.push(item.user.name);
             });
+            $('#leaders').text(names.join(', '));
         });
     }
 
