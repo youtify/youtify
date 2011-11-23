@@ -72,7 +72,7 @@ def get_history(phrase, code):
     if items is not None:
         for item in items:
             json.append({
-                'date': item.date.strftime('%Y-%M-%d %H:%m'),
+                'date': item.date.strftime('%Y-%m-%d %H:%m'),
                 'type': item.type,
                 'text': item.text,
                 'user': {
@@ -292,7 +292,7 @@ class SnapshotsHandler(webapp.RequestHandler):
         for snapshot in SnapshotMetadata.all().order('-date'):
             json.append({
                 'id': snapshot.key().id(),
-                'date': snapshot.date.strftime('%Y-%M-%d %H:%m'),
+                'date': snapshot.date.strftime('%Y-%m-%d %H:%m'),
                 'active': snapshot.active,
             })
         self.response.headers['Content-Type'] = 'application/json'
