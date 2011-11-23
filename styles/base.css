@@ -61,7 +61,7 @@ tr:nth-child(odd) {
     z-index: 100;
 
     display: none;
-    position: fixed;
+    position: absolute;
     width: 480px;
     height: auto;
     padding: 10px;

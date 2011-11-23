@@ -14,7 +14,7 @@ function hideLoadingBar() {
 
 function showPopup(id) {
     $('#blocker').show();
-    $('#' + id).addClass('open');
+    $('#' + id).addClass('open').css('top', $(window).scrollTop() + 100);
 }
 
 function closePopup() {
