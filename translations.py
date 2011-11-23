@@ -82,9 +82,11 @@ def get_history(phrase, code):
             })
     return json
 
-def get_translations(code):
+def get_translations(code, only_approved=False):
     json = []
     for phrase in Phrase.all().order('-date'):
+        if only_approved and code not in phrase.approved_translations:
+            continue
         json.append({
             'id': phrase.key().id(),
             'approved': code in phrase.approved_translations,
@@ -302,7 +304,7 @@ class SnapshotsHandler(webapp.RequestHandler):
         """Deploy action"""
         json = {}
         for code in LANG_CODES:
-            json[code] = translations = get_translations(code)
+            json[code] = translations = get_translations(code, only_approved=True)
         json = simplejson.dumps(json)
 
         active_snapshot = SnapshotMetadata.all().filter('active =', True).get()
