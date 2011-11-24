@@ -83,6 +83,9 @@ handlers:
 
 - url: /api/translations.*
   script: translations.py
+
+- url: /languages.*
+  script: languages.py
   
 - url: /robots.*
   static_files: robots.txt

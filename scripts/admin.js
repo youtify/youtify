@@ -12,8 +12,6 @@ function loadPhrases() {
     function deleteButtonClicked() {
         var $tr = $(this).parents('tr');
         var id = $tr.data('id');
-        var $tr = $(this).parents('tr');
-        var id = $tr.data('id');
         if (confirm("Are you sure?")) {
             $.ajax({
                 type: 'DELETE',
@@ -61,6 +59,67 @@ function getLanguageByCode(code) {
     });
 
     return ret;
+}
+
+function loadLanguages() {
+    function hoverIn() {
+        $(this).find('.actions *').css('visibility', 'visible');
+    }
+
+    function hoverOut() {
+        $(this).find('.actions *').css('visibility', 'hidden');
+    }
+
+    function deleteButtonClicked() {
+        var $tr = $(this).parents('tr');
+        var id = $tr.data('id');
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/languages/' + id,
+                statusCode: {
+                    200: function(data) {
+                         loadLanguages();
+                    },
+                }
+            });
+        }
+    }
+
+    function createTableRow(item) {
+        var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
+        var $td1 = $('<td class="label"></td>').text(item.label).attr('title', item.code).appendTo($tr);
+        var $td2 = $('<td class="actions"></td>').appendTo($tr);
+        var $button = $('<button class="delete">Delete</button>').appendTo($td2);
+
+        var $checkbox1 = $('<input type="checkbox" name="enabled_in_tool" />').attr('title', 'Enable in Tool').appendTo($td2);
+        var $label1 = $('<label for="enabled_in_tool">Enabled in Tool</label>').appendTo($td2);
+
+        var $checkbox2 = $('<input type="checkbox" name="enabled_on_site" />').attr('title', 'Enable on Site').appendTo($td2);
+        var $label2 = $('<label for="enabled_on_site">Enabled on Site</label>').appendTo($td2);
+
+        $button.click(deleteButtonClicked);
+
+        $td2.find('*').css('visibility', 'hidden');
+
+        if (item.enabled_in_tool) {
+            $checkbox1.attr('checked', 'checked');
+        }
+        if (item.enabled_on_site) {
+            $checkbox2.attr('checked', 'checked');
+        }
+
+        return $tr;
+    }
+
+    $('#languages tbody').html('');
+    showLoadingBar();
+    $.getJSON('/languages', function(data) {
+        $.each(data, function(i, item) {
+            createTableRow(item).appendTo('#languages tbody');
+        });
+        hideLoadingBar();
+    });
 }
 
 function loadTeamLeaders(langCode) {
@@ -186,6 +245,9 @@ var tabCallbacks = {
     phrases: function() {
         loadPhrases();
     },
+    languages: function() {
+        loadLanguages();
+    },
     teams: function() {
         var path = window.location.pathname.split('/');
         if (path.length > 3) { // e.g. /admin/teams/sv_SE
@@ -242,6 +304,11 @@ $(document).ready(function() {
         showPopup('addPhrasePopup');
     });
 
+    $('#addLanguageButton').live('click', function() {
+        $('#addLanguagePopup input[type="text"]').val('');
+        showPopup('addLanguagePopup');
+    });
+
     $('#addLeaderButton').click(function() {
         resetLeaderPopup();
         showPopup('addLeaderPopup');
@@ -261,6 +328,18 @@ $(document).ready(function() {
 
         $.post('/translations/phrases', args, function() {
             loadPhrases();
+            closePopup();
+        });
+    });
+
+    $('#addLanguagePopup input[type=submit]').click(function() {
+        var args = {};
+
+        args.label = $('#addLanguagePopup input[name=label]').val();
+        args.code = $('#addLanguagePopup input[name=code]').val();
+
+        $.post('/languages', args, function() {
+            loadLanguages();
             closePopup();
         });
     });

@@ -25,6 +25,18 @@
             <input type="submit" value="Ok" />
         </div>
 
+        <div class="popup" id="addLanguagePopup">
+            <span class="close">X</span>
+
+            <label>Label</label>
+            <input type="text" name="label"></textarea>
+
+            <label>Code</label>
+            <input type="text" name="code"></textarea>
+
+            <input type="submit" value="Ok" />
+        </div>
+
         <div class="popup" id="addLeaderPopup">
             <span class="close">X</span>
 
@@ -45,6 +57,7 @@
 
             <ul id="tabs">
                 <li rel="phrases">Phrases</li>
+                <li rel="languages">Languages</li>
                 <li rel="teams">Teams</li>
                 <li rel="snapshots">Snapshots</li>
                 <li rel="deploy">Deploy</li>
@@ -52,11 +65,27 @@
 
             <div id="phrases" class="pane">
                 <button id="addPhraseButton">Add Phrase</button>
-                <table id="phrases">
+                <table>
                     <thead>
                         <tr>
                             <th>Phrase</th>
                             <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="languages" class="pane">
+                <button id="addLanguageButton">Add Language</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>label</th>
+                            <th>code</th>
+                            <th>enabled in tool</th>
+                            <th>enabled on site</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,7 +100,7 @@
                     {% endfor %}
                 </select>
                 <button id="addLeaderButton">Add Team Leader</button>
-                <table id="leaders">
+                <table>
                     <thead>
                         <tr>
                             <th>Name</th>

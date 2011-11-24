@@ -53,6 +53,20 @@ table {
     margin-top: 0;
 }
 
+/* LANGUAGES TABLE
+ ****************************************************************************/
+
+#languages input[type=checkbox] {
+    display: inline-block;
+    margin: 0 5px;
+}
+#languages label {
+    margin-right: 10px;
+}
+#languages .actions {
+    text-align: right;
+}
+
 /* ADD PHRASE POPUP
  ****************************************************************************/
 
@@ -68,6 +82,14 @@ table {
 #addPhrasePopup input[type=submit] {
     margin-top: 10px;
     float: right;
+}
+
+/* ADD LEADER POPUP
+ ****************************************************************************/
+
+#addLanguagePopup input[type="text"] {
+    display: block;
+    margin-bottom: 5px;
 }
 
 /* ADD LEADER POPUP
