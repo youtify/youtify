@@ -69,7 +69,6 @@ function Settings() {
 
     this.language = settings.language || autoDetectedLanguageByServer;
 	this.enableTranslationTool = settings.enableTranslationTool || false;
-    this.theme = settings.theme || 'itheme';
 	this.quality = settings.quality || 'hd720';
 	this.announceTimeout = settings.announceTimeout || 3000;
 
@@ -77,7 +76,6 @@ function Settings() {
         localStorage.settings = JSON.stringify({
             'language': this.language,
             'enableTranslationTool': this.enableTranslationTool,
-            'theme': this.theme,
 			'quality': this.quality,
 			'announceTimeout': this.announceTimeout
         });

@@ -151,7 +151,7 @@ $(document).ready(function() {
 
     $('#info .title').data('type', 'video');
     $('#new-playlist').data('type', 'button');
-	
+
 	// Legal & Information
 	$('#infomenu-text').click(function() {
         $(this).arrowPopup('#infomenu-popup');
