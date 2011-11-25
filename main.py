@@ -9,8 +9,9 @@ from toplist import get_or_create_toplist_json
 from model import get_current_youtify_user
 from model import create_youtify_user
 from playlists import get_playlists_json_for_user
-from translations import auto_detect_language
+from languages import auto_detect_language
 from translations import get_deployed_translations_json
+from languages import get_languages
 
 class MainHandler(webapp.RequestHandler):
 
@@ -55,6 +56,7 @@ class MainHandler(webapp.RequestHandler):
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,
             'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
+            'languages': [lang for lang in get_languages() if lang['enabled_on_site']],
             #'USE_PRODUCTION_JAVASCRIPT': True, # Uncomment to try out production settings. Remember to build production.js with localhost:8080/minimizer
 			'url': self.request.url,
             'og_tag': og_tag,

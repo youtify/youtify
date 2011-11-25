@@ -8,7 +8,8 @@ from django.utils import simplejson
 from model import get_current_youtify_user
 from model import create_youtify_user
 from model import YoutifyUser
-from languages import languages
+from languages import get_languages
+from languages import get_lang_codes
 
 class SnapshotMetadata(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
@@ -44,27 +45,6 @@ class HistoryItem(db.Model):
     type = db.IntegerProperty(required=True)
     text = db.StringProperty()
     lang = db.StringProperty()
-
-LANG_CODES = [i['code'] for i in languages]
-
-# This map is used when detecting the user agents locale settings.
-LANG_MAP = {}
-for lang in languages:
-    LANG_MAP[lang['code'].lower().replace('_', '-')] = lang['code']
-    LANG_MAP[lang['code'].split('_')[0]] = lang['code']
-
-def auto_detect_language(request):
-    header = request.headers.get('Accept-Language', '')
-    header = header.lower()
-
-    accepted_languages = header.split(';')[0]
-    accepted_languages = accepted_languages.split(',')
-
-    for lang in accepted_languages:
-        if lang in LANG_MAP:
-            return LANG_MAP[lang]
-
-    return 'en_US'
 
 def get_history(phrase, code):
     json = []
@@ -106,7 +86,7 @@ class TranslationsHandler(webapp.RequestHandler):
     def get(self):
         code = self.request.path.split('/')[-1]
 
-        if not code in LANG_CODES:
+        if not code in get_lang_codes():
             raise Exception('Unknown language code "%s"' % code)
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -126,7 +106,7 @@ class TranslationsHandler(webapp.RequestHandler):
         original = self.request.get('original')
         translation = self.request.get('translation')
 
-        if not lang_code in LANG_CODES:
+        if not lang_code in get_lang_codes():
             raise Exception('Unknown language code "%s"' % lang_code)
 
         phrase = Phrase.all().filter('original =', original).get()
@@ -163,7 +143,7 @@ class TranslationsToolHandler(webapp.RequestHandler):
             'my_user_name': current_user.nickname().split('@')[0],
             'my_user_id': youtify_user.key().id(),
             'logout_url': users.create_logout_url('/'),
-            'languages': [lang for lang in languages if lang['enabled_in_tool']],
+            'languages': [lang for lang in get_languages() if lang['enabled_in_tool']],
         }))
 
 class CommentsHandler(webapp.RequestHandler):
@@ -303,7 +283,7 @@ class SnapshotsHandler(webapp.RequestHandler):
     def post(self):
         """Deploy action"""
         json = {}
-        for code in LANG_CODES:
+        for code in get_lang_codes():
             json[code] = translations = get_translations(code, only_approved=True)
         json = simplejson.dumps(json)
 

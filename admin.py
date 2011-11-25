@@ -10,7 +10,7 @@ from django.utils import simplejson
 from model import get_current_youtify_user
 from model import create_youtify_user
 from model import YoutifyUser
-from languages import languages
+from languages import get_languages
 
 def get_youtify_user_by_email(email):
     try:
@@ -49,7 +49,7 @@ class AdminHandler(webapp.RequestHandler):
             'my_user_email': user.google_user.email(),
             'my_user_id': user.key().id(),
             'logout_url': users.create_logout_url('/'),
-            'languages': [lang for lang in languages if lang['enabled_in_tool']],
+            'languages': [lang for lang in get_languages() if lang['enabled_in_tool']],
         }))
 
 def main():
