@@ -55,6 +55,26 @@ class LanguagesHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('')
 
+class SpecificLanguageHandler(webapp.RequestHandler):
+    def post(self):
+        """Update a specific language"""
+        if not users.is_current_user_admin():
+            self.error(403)
+
+        language_id = self.request.path.split('/')[-1]
+        language = Language.get_by_id(int(language_id))
+
+        if language:
+            language.enabled_in_tool = self.request.get('enabled_in_tool') == 'true'
+            language.enabled_on_site = self.request.get('enabled_on_site') == 'true'
+
+            language.save()
+
+            self.response.headers['Content-Type'] = 'text/plain'
+            self.response.out.write('success');
+        else:
+            self.error(404)
+
     def delete(self):
         """Delete a specific language"""
         if not users.is_current_user_admin():
@@ -82,7 +102,8 @@ class ImportHandler(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication([
         ('/languages/import', ImportHandler),
-        ('/languages.*', LanguagesHandler),
+        ('/languages/.*', SpecificLanguageHandler),
+        ('/languages', LanguagesHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

@@ -86,6 +86,21 @@ function loadLanguages() {
         }
     }
 
+    function update() {
+        var $tr = $(this).parents('tr');
+        var id = $tr.data('id');
+
+        var data = {
+            enabled_on_site: $tr.find('input[name=enabled_on_site]').is(':checked'),
+            enabled_in_tool: $tr.find('input[name=enabled_in_tool]').is(':checked')
+        };
+
+        showLoadingBar();
+        $.post('/languages/' + id, data, function() {
+            hideLoadingBar();
+        });
+    }
+
     function createTableRow(item) {
         var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
         var $td1 = $('<td class="label"></td>').text(item.label).attr('title', item.code).appendTo($tr);
@@ -97,6 +112,9 @@ function loadLanguages() {
 
         var $checkbox2 = $('<input type="checkbox" name="enabled_on_site" />').attr('title', 'Enable on Site').appendTo($td2);
         var $label2 = $('<label for="enabled_on_site">Enabled on Site</label>').appendTo($td2);
+
+        $checkbox1.change(update);
+        $checkbox2.change(update);
 
         $button.click(deleteButtonClicked);
 
