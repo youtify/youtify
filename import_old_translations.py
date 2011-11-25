@@ -2,8 +2,10 @@
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+from languages import Language
+from languages import init_cached_languages
 from translations import Phrase
+from translations import init_cached_translations
 
 old_translations = {}
 
@@ -172,6 +174,17 @@ old_translations['ro_SE'] = {
 
 class Handler(webapp.RequestHandler):
     def get(self):
+        LANGUAGES = [
+            (u'en_US', u'English'),
+            (u'sv_SE', u'Svenska'),
+            (u'ro_SE', u'Rövarspråket'),
+            (u'fi_FI', u'Suomi'),
+        ]
+        for lang in LANGUAGES:
+            m = Language.all().filter('code =', lang[0]).get()
+            m = Language(code=lang[0], label=lang[1], enabled_on_site=False, enabled_in_tool=True)
+            m.put()
+
         for lang_code in old_translations:
             for i in old_translations[lang_code].items():
                 original = i[0]
@@ -181,8 +194,11 @@ class Handler(webapp.RequestHandler):
                     p = Phrase(original=original)
                 setattr(p, lang_code, translation)
                 p.put()
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write('done')
+
+        init_cached_languages()
+        init_cached_translations()
+
+        self.redirect('/admin/languages')
 
 def main():
     application = webapp.WSGIApplication([

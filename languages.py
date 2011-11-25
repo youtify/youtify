@@ -139,28 +139,8 @@ class SpecificLanguageHandler(webapp.RequestHandler):
         else:
             self.error(404)
 
-class ImportHandler(webapp.RequestHandler):
-    def get(self):
-        LANGUAGES = [
-            (u'en_US', u'English'),
-            (u'sv_SE', u'Svenska'),
-            (u'ro_SE', u'Rövarspråket'),
-            (u'fi_FI', u'Suomi'),
-        ]
-        for lang in LANGUAGES:
-            m = Language.all().filter('code =', lang[0]).get()
-            m = Language(code=lang[0], label=lang[1], enabled_on_site=False, enabled_in_tool=True)
-            m.put()
-
-        init_cached_languages()
-
-        self.redirect('/admin/languages')
-
-init_cached_languages()
-
 def main():
     application = webapp.WSGIApplication([
-        ('/languages/import', ImportHandler),
         ('/languages/.*', SpecificLanguageHandler),
         ('/languages', LanguagesHandler),
     ], debug=True)

@@ -75,7 +75,7 @@ handlers:
 
 - url: /import_old_translations
   script: import_old_translations.py
-  login: required
+  login: admin
 
 - url: /translations.*
   script: translations.py
