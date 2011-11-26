@@ -128,17 +128,17 @@
                 <div id="menus">
                     <span id="heart">♥</span>
                     <div id="heart-popup" style="display:none" class="popup"></div>
-                    &nbsp;&nbsp;
+                    <span class="spacings">&nbsp;&nbsp;</span>
                     <div id="infomenu">
                         <span id="infomenu-text" class="translatable">About</span>
                         {% include "./popups/infomenu.html" %}
                     </div>
-                    &nbsp;|&nbsp;
+                    <span class="spacings">&nbsp;|&nbsp;</span>
                     <div id="settings">
                         <span id="settings-text" class="translatable">Settings</span>
                         {% include "./popups/settings.html" %}
                     </div>
-                    &nbsp;&nbsp;
+                    <span class="spacings">&nbsp;</span>
                     <div id="login">
                         {% if logged_in %}
                         <span id="nickname">{{ user.nickname }}</span>
@@ -352,9 +352,9 @@
             
             <div id="bottom">
                 <div id="controls"> 
-                    <div id="prev"></div> 
-                    <div id="playpause"></div> 
-                    <div id="next"></div> 
+                    <div class="border"><div id="prev"></div></div>
+                    <div class="border middle"><div id="playpause"></div></div>
+                    <div class="border"><div id="next"></div></div>
                 </div>
 
                 <div id="info" class="draggable">

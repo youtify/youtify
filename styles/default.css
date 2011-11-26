@@ -113,7 +113,7 @@ html, body, #content {
                     width: 200px;
                     padding: 2px 28px 2px 6px; /* padding-right: .loader */
                     box-shadow: inset 3px 3px 3px #D0D0D0;
-                    border-radius: 7px 0 0 7px;
+                    border-radius: 10px 0 0 10px;
                     border: 1px solid rgba(128, 128, 128, 0.5);
                     border-right: none;
                     outline: none;
@@ -135,9 +135,13 @@ html, body, #content {
                     height: 100%;
                     border-width: 0;
                     border-left: 1px solid #8B9594;
-                    border-radius: 0 7px 7px 0;
+                    border-radius: 0 10px 10px 0;
                     outline: none;
-                    background: rgba(106, 147, 149, 0.5);
+                    background:-webkit-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                    background:-moz-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                    background:-ms-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                    background:-o-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                    background:linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
                 }
             #notifications {
                 position: absolute;
@@ -152,9 +156,9 @@ html, body, #content {
                     max-width: 200px;
                     padding: 10px 10px 10px 10px;
                     margin-bottom: 15px;
-                    border-radius: 7px;
+                    border-radius: 10px;
                     border: 1px solid rgba(128, 128, 128, 0.5);
-                    background: rgb(157, 178, 179);
+                    background: #A7C0C1;
                     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
                     
                     opacity: 1;
@@ -169,11 +173,6 @@ html, body, #content {
                 }
                 #notification.hidden {
                     opacity: 0;
-                    -webkit-transform: scale(0.8);
-                    -moz-transform: scale(0.8);
-                    -o-transform: scale(0.8);
-                    -ms-transform: scale(0.8);
-                    transform: scale(0.8);
                 }
                     #notification .content {
                         line-height: 33px;
@@ -207,31 +206,37 @@ html, body, #content {
                     display: inline;
                 }
                     #infomenu-text {
-                        cursor: pointer;
-                        text-transform: uppercase;
-                        font-size: 14px;
-                        text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+                        
                     }
                 #settings {
                     display: inline;
                 }
+                    #menus .spacings,
+                    #nickname, 
+                    #infomenu-text,
                     #settings-text {
                         cursor: pointer;
                         text-transform: uppercase;
-                        font-size: 14px;
+                        font-size: 13px;
                         text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
                     }
                 #login {
                     display: inline;
                 }
-                    #nickname, #login-link {
+                    #login-link {
                         cursor: pointer;
                         font-size: 14px;
                         text-transform: uppercase;
+                        text-decoration: none;
+                        color: #000;
                         text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-                        background: rgba(106, 147, 149, 0.5);
-                        padding: 9px;
-                        border-radius: 7px;
+                        padding: 8px;
+                        border-radius: 10px;
+                        background:-webkit-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                        background:-moz-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                        background:-ms-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                        background:-o-linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
+                        background:linear-gradient(bottom, rgba(115, 164, 166, 0.5) 0%, rgba(115, 164, 166, 0.5) 50%, rgba(115, 164, 166, 0.2) 50%, rgba(115, 164, 166, 0.2) 100%);
                     }
         #leftcolumn {
             -moz-box-sizing: border-box;
@@ -269,6 +274,7 @@ html, body, #content {
                     #queue-tab,
                     #search-tab,
                     #playlists li {
+                        cursor: pointer;
                         margin-right: 5px;
                         padding: 8px 0px 8px 0px;
                         border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
@@ -284,10 +290,10 @@ html, body, #content {
                     
                     }
                     #new-playlist {
-                        background: rgba(106, 147, 149, 0.5);
+                        background: rgba(115, 164, 166, 0.5);
                         padding: 9px;
                         margin: 10px 0px 5px 0px;
-                        border-radius: 7px;
+                        border-radius: 10px;
                     }
                         #new-playlist-label {
                             cursor: pointer;
@@ -344,15 +350,15 @@ html, body, #content {
                         content: '';
                         display: block;
                         height: 10px;
-                        background: rgba(106, 147, 149, 0.2);
+                        background: rgba(115, 164, 166, 0.2);
                         margin-bottom: 2px;
                     }
                         #right .tabs li {
                             display: inline-block;
                             margin-left: 10px;
                             padding: 10px;
-                            background: rgba(106, 147, 149, 0.5);
-                            border-radius: 7px 7px 0px 0px;
+                            background: rgba(115, 164, 166, 0.5);
+                            border-radius: 10px 10px 0px 0px;
                             font-size: 13px;
                             text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
                             cursor: pointer;
@@ -361,10 +367,10 @@ html, body, #content {
                             margin-left: 0;
                         }
                         #right .tabs li.active {
-                            background: rgba(106, 147, 149, 0.2);
+                            background: rgba(115, 164, 166, 0.2);
                         }
                         #right .tabs li:hover {
-                            background: rgba(106, 147, 149, 0.2);
+                            background: rgba(115, 164, 166, 0.2);
                         }
                         #right .pane {
                             width: 100%;
@@ -402,10 +408,10 @@ html, body, #content {
                                     width: 110px;
                                 }
                                 #right .pane tr:nth-of-type(odd) td {
-                                    background: rgba(106, 147, 149, 0.2);
+                                    background: rgba(115, 164, 166, 0.2);
                                 }
                                 #right .pane tr:nth-of-type(even) td {
-                                    background: rgba(106, 147, 149, 0.5);
+                                    background: rgba(115, 164, 166, 0.5);
                                 }
                                 #right .pane tr:nth-of-type(odd) td.space,
                                 #right .pane tr:nth-of-type(even) td.space,
@@ -419,7 +425,7 @@ html, body, #content {
                             content: '';
                             display: block;
                             height: 10px;
-                            background: rgba(106, 147, 149, 0.2);
+                            background: rgba(115, 164, 166, 0.2);
                             margin-bottom: 2px;
                         }
                             #playlist-controls-title,
@@ -427,7 +433,7 @@ html, body, #content {
                             #playlist-controls-playlist-subscribe {
                                 display: inline-block;
                                 padding: 10px;
-                                background: rgba(106, 147, 149, 0.2);
+                                background: rgba(115, 164, 166, 0.2);
                                 border-radius: 7px 7px 0px 0px;
                                 font-size: 13px;
                                 text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
@@ -436,18 +442,18 @@ html, body, #content {
                             #playlist-controls-user {
                                 margin-left: 10px;
                                 cursor: pointer;
-                                background: rgba(106, 147, 149, 0.5);
+                                background: rgba(115, 164, 166, 0.5);
                             }
                             #playlist-controls-user:hover {
-                                background: rgba(106, 147, 149, 0.2);
+                                background: rgba(115, 164, 166, 0.2);
                             }
                             #playlist-controls-playlist-subscribe {
                                 float: right;
                                 cursor: pointer;
-                                background: rgba(106, 147, 149, 0.5);
+                                background: rgba(115, 164, 166, 0.5);
                             }
                             #playlist-controls-playlist-subscribe:hover {
-                                background: rgba(106, 147, 149, 0.2);
+                                background: rgba(115, 164, 166, 0.2);
                             }
                         #user-controls {
                         }
@@ -455,14 +461,14 @@ html, body, #content {
                             content: '';
                             display: block;
                             height: 10px;
-                            background: rgba(106, 147, 149, 0.2);
+                            background: rgba(115, 164, 166, 0.2);
                             margin-bottom: 2px;
                         }
                             #user-controls-name,
                             #user-controls-follow-user {
                                 display: inline-block;
                                 padding: 10px;
-                                background: rgba(106, 147, 149, 0.2);
+                                background: rgba(115, 164, 166, 0.2);
                                 border-radius: 7px 7px 0px 0px;
                                 font-size: 13px;
                                 text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
@@ -471,10 +477,10 @@ html, body, #content {
                             #user-controls-follow-user {
                                 float: right;
                                 cursor: pointer;
-                                background: rgba(106, 147, 149, 0.5);
+                                background: rgba(115, 164, 166, 0.5);
                             }
                             #user-controls-follow-user:hover {
-                                background: rgba(106, 147, 149, 0.2);
+                                background: rgba(115, 164, 166, 0.2);
                             }
                         #fatbar {
                             display: none;
@@ -514,38 +520,79 @@ html, body, #content {
             z-index: 10;
             border-top: 2px solid rgb(98, 98, 98);
             
-            background:-webkit-gradient(linear, center bottom, center top, color-stop(0%, rgba(0, 0, 0, 0.7)), color-stop(50%, rgba(0, 0, 0, 0.48)), color-stop(100%, rgba(0, 0, 0, 0.4)));
-            background:-moz-linear-gradient(center bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
-            background:-ms-linear-gradient(center bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
-            background:-o-linear-gradient(center bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
-            background:linear-gradient(center bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
+            background:-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
+            background:-moz-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
+            background:-ms-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
+            background:-o-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
+            background:linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
         }
             #controls {
                 width: 230px;
                 height: 80px;
-                padding-top: 20px;
+                padding-top: 15px;
                 text-align: center;
                 display: inline-block;
             }
-                #prev, #playpause, #next {
+                #controls .border {
                     display: inline-block;
-                    margin: 0 5px 8px 5px;
+                    margin: 5px 0px 8px 0px;
+                    
+                    border-radius: 50px;
+                    background:-webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+                    background:-moz-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+                    background:-ms-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+                    background:-o-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+                    background:linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+                }
+                #controls .border.middle {
+                    margin: 5px 5px 0px 5px;
+                }
+                
+                #prev, #playpause, #next {
+                    cursor: pointer;
+                    display: block;
                     width: 33px;
                     height: 33px;
-                    border: 5px solid #C0C0C0;
+                    margin: 5px;
                     border-radius: 50px;
+                    position: relative;
+                    
+                    background: -webkit-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
+                    background: -moz-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
+                    background: -ms-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
+                    background: -o-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
+                    background: linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
                 }
-                #prev {
-                    background: red;
+                #prev:active, #playpause:active, #next:active {
+                    box-shadow: 0px 0px 5px #000, inset 0px 0px 5px #000;
+                }
+                #prev:after {
+                    content: url(/images/prev.png);
+                    width: 14px;
+                    height: 13px;
+                    position: absolute;
+                    top: 10px;
+                    left: 8px;
                 }
                 #playpause {
-                    background: red;
                     width: 50px;
                     height: 50px;
-                    margin: 0;
                 }
-                #next {
-                    background: red;
+                #playpause:after {
+                    content: url(/images/play.png);
+                    width: 17px;
+                    height: 15px;
+                    position: absolute;
+                    top: 18px;
+                    left: 18px;
+                }
+                #next:after {
+                    content: url(/images/next.png);
+                    width: 13px;
+                    height: 13px;
+                    position: absolute;
+                    top: 11px;
+                    left: 11px;
                 }
             #info {
                 position: absolute;
@@ -617,17 +664,22 @@ html, body, #content {
                         width: 50%;
                         position: relative;
                         border-radius: 50px;
-                        background: yellow;
+                        box-shadow: inset 3px 3px 3px #2C2C2C;
+                        background:-webkit-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:-moz-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:-ms-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
                     }
                         #inner-timeline-knob {
                             position: absolute;
-                            top: -3px;
+                            top: -4px;
                             right: -5px;
-                            width: 20px;
-                            height: 20px;
-                            border: 1px solid #000;
+                            width: 22px;
+                            height: 22px;
                             border-radius: 50px;
-                            background: turquoise;
+                            background: url("/images/knob.png") no-repeat -1px 0 transparent;
+                            box-shadow: 0px 3px 3px #2C2C2C;
                         }
             #volume-container {
                 position: absolute;
@@ -635,7 +687,6 @@ html, body, #content {
                 top: 43px;
                 width: 190px;
                 height: 15px;
-                background: pink;
             }
                 #outer-volume-slider {
                     width: auto;
@@ -650,17 +701,22 @@ html, body, #content {
                         width: 50%;
                         position: relative;
                         border-radius: 50px;
-                        background: yellow;
+                        box-shadow: inset 3px 3px 3px #2C2C2C;
+                        background:-webkit-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:-moz-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:-ms-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+                        background:linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
                     }
                         #volume-slider-knob {
                             position: absolute;
-                            top: -3px;
+                            top: -4px;
                             right: -5px;
-                            width: 20px;
-                            height: 20px;
-                            border: 1px solid #000;
+                            width: 22px;
+                            height: 22px;
                             border-radius: 50px;
-                            background: turquoise;
+                            background: url("/images/knob.png") no-repeat -1px 0 transparent;
+                            box-shadow: 0px 3px 3px #2C2C2C;
                         }
             #fullscreen {
 
