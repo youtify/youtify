@@ -120,6 +120,7 @@ html, body, #content {
                     background-color: #FFF;
                 }
                 #search .loader {
+                    display: none;
                     position: absolute;
                     right: 40px;
                     top: 11px;
@@ -328,13 +329,13 @@ html, body, #content {
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
-                overflow-y: scroll;
             }
                 #search-container,
                 #top100-container,
                 #queue-container,
                 #playlist-container,
                 #user-container {
+                    display: none;
                     -moz-box-sizing: border-box;
                     -webkit-box-sizing: border-box;
                     box-sizing: border-box;
