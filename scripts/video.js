@@ -186,9 +186,11 @@ function showVideoSharePopup(videoId, title, elem, arrowDirection) {
     elem.arrowPopup('#share-video-popup', arrowDirection);
 }
 
-function Video(videoId, title) {
+function Video(videoId, title, type, rating) {
     this.videoId = videoId;
     this.title = title;
+    this.type = type;
+    this.rating = rating;
 
     this.getUrl = function() {
         return location.protocol + '//' + location.host + '/videos/' + this.videoId;
@@ -203,5 +205,27 @@ function Video(videoId, title) {
     this.getFacebookShareUrl = function() {
         var url = this.getUrl();
         return 'http://facebook.com/sharer.php?u=' + url;
+    };
+    
+    this.createListView = function() {
+        var tr = $('<tr/>'),
+            space = $('<td class="space"></td>');
+        
+        $('<td class="play">&#9654;</td>').appendTo(tr);
+        space.clone().appendTo(tr);
+        
+        $('<td class="title"/>').text(this.title).appendTo(tr);
+        space.clone().appendTo(tr);
+        
+        $('<td class="like">&hearts;</td>').appendTo(tr);
+        space.clone().appendTo(tr);
+        
+        $('<td class="rating"/>').text(this.getRatingAsString()).appendTo(tr);
+        
+        return tr;
+    };
+    
+    this.getRatingAsString = function() {
+        return '&#8902;&#8902;&#8902;&#8902;&#8902;';
     };
 }
