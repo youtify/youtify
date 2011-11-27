@@ -38,7 +38,7 @@
             var logged_in = {{ logged_in }};
             var playlistsFromServer = {{ playlistsFromServer }};
 			var device = "{{ youtify_user.device }}";
-			var toplist = {{ toplist }};
+			var youtubeTopList = {{ toplist }};
             var autoDetectedLanguageByServer = "{{ autoDetectedLanguageByServer }}";
             var autoDetectedTranslations = {{ autoDetectedTranslations }};
             var accept_language_header = "{{ accept_language_header }}";
@@ -76,6 +76,7 @@
 		<script src="/scripts/spotifyimport.js"></script>
 		<script src="/scripts/heart.js"></script>
         <script src="/scripts/webstore.js"></script>
+        <script src="/scripts/lefttabs.js"></script>
 		<script src="/scripts/main.js"></script>
         {% endif %}
         
@@ -99,277 +100,152 @@
         {% include "./popups/spotify_importer.html" %}
         {% include "./popups/share_playlist.html" %}
         {% include "./popups/share_video.html" %}
+        {% include "./popups/infomenu.html" %}
+        {% include "./popups/settings.html" %}
+        {% include "./popups/logout.html" %}
+        <div id="heart-popup" style="display:none" class="popup"></div>
         
-        <div id="content">
-            <div id="top">
-                <div id="search"> 
-                    <input type="text" class="translatable" placeholder="Search" /> 
-                    <div class="loader"></div>
-                    <input type="button" />
-                </div>
-                
-                <div id="notifications">
-                    <div id="notification">
-                        <span class="content">This is a notification! With a <a href="#">link!</a></span>
-                        <span class="close" onclick="javascript:var parent = $(this).parent(); parent.addClass('hidden');setTimeout(function() {parent.remove();}, 1000);">X</span>
-                    </div>
-                </div>
-                
-                <div id="menus">
-                    <span id="heart">♥</span>
-                    <div id="heart-popup" style="display:none" class="popup"></div>
-                    <span class="spacings">&nbsp;&nbsp;</span>
-                    <div id="infomenu">
-                        <span id="infomenu-text" class="translatable">About</span>
-                        {% include "./popups/infomenu.html" %}
-                    </div>
-                    <span class="spacings">&nbsp;|&nbsp;</span>
-                    <div id="settings">
-                        <span id="settings-text" class="translatable">Settings</span>
-                        {% include "./popups/settings.html" %}
-                    </div>
-                    <span class="spacings">&nbsp;</span>
-                    <div id="login">
-                        {% if logged_in %}
-                        <span id="nickname">{{ user.nickname }}</span>
-                        {% else %}
-                        <a id="login-link" href="{{ login_url }}">Login</a>
-                        {% endif %}
-                    </div>
-                    {% include "./popups/logout.html" %}
-                </div>
+        <div id="top">
+            <div class="search"> 
+                <input type="text" class="translatable" placeholder="Search" /> 
+                <div class="loader"></div>
+                <button />
             </div>
             
-            <div id="leftcolumn">
-                <div id="left">
-                    <ul id="tabs">
-                        <li id="toplist-tab" class="playlistElem translatable">Top 100</li>
-                        <li id="queue-tab" class="playlistElem translatable">Play Queue</li>
-                        <li id="search-tab" class="playlistElem translatable">Search Results</li>
-                        <ul id="playlists">
+            <ul class="notifications">
+                <li>
+                    <div class="content">This is a notification! With a <a href="#">link!</a></div>
+                    <span class="close" onclick="javascript:var parent = $(this).parent(); parent.addClass('hidden');setTimeout(function() {parent.remove();}, 1000);">X</span>
+                </li>
+            </ul>
+            
+            <div class="menus">
+                <span class="heart">♥</span>
+                <span class="spacings">&nbsp;&nbsp;</span>
+                <span class="about" class="translatable">About</span>
+                <span class="spacings">&nbsp;|&nbsp;</span>
+                <span class="settings" class="translatable">Settings</span>
+                <span class="spacings">&nbsp;</span>
+                {% if logged_in %}
+                <span class="username">{{ user.nickname }}</span>
+                {% else %}
+                <a class="login-link" href="{{ login_url }}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="left-wrapper">
+            <div id="left">
+                <ul class="tabs">
+                    <li class="toplist translatable">Toplist</li>
+                    <li class="queue translatable">Play Queue</li>
+                    <li class="search translatable">Search Results</li>
+                    <li class="playlists">
+                        <ul>
                             <li>A playlist :)</li>
                         </ul>
-                        <div id="new-playlist" class="droppable">
-                            <span id="new-playlist-label" class="translatable">New playlist...</span> 
+                        <div class="new droppable">
+                            <span class="translatable">New playlist...</span> 
                             <input type="text" style="display:none" /> 
                         </div> 
-                    </ul> 
-                    <div id="youtube-container"><div id="youtube"></div></div>
-                </div>
+                    </li>
+                </ul> 
+                <div class="players"><div class="youtube"></div></div>
             </div>
-            
-            <div id="rightcolumn">
-                <div id="right">
-                    <div id="search-container">
-                        <ul class="tabs">
-                            <li rel="youtube-videos-pane" class="active">YouTube Videos</li>
-                            <li rel="youtube-playlists-pane">YouTube Playlists</li>
-                        </ul>
-                        <table id="youtube-videos-pane" class="pane">
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                        </table>
-                        <table id="youtube-playlists-pane" class="pane"></table>
-                    </div>
-                    
-                    <div id="top100-container">
-                        <ul class="tabs">
-                            <li rel="youtify-top100-pane">Youtify Top 100</li>
-                            <li rel="youtube-top100-pane" class="active">YouTube Top 100</li>
-                            <li rel="youtube-top100indie-pane">YouTube Top 100</li>
-                        </ul>
-                        <table id="youtify-top100-pane" class="pane"></table>
-                        <table id="youtube-top100-pane" class="pane"></table>
-                        <table id="youtube-top100indie-pane" class="pane"></table>
-                    </div>
-                    
-                    <div id="queue-container">
-                        <ul class="tabs">
-                            <li rel="queue-pane" class="active translatable">Play Queue</li>
-                        </ul>
-                        <table id="queue-pane" class="pane"></table>
-                    </div>
-                    
-                    <div id="playlist-container">
-                        <div id="playlist-controls">
-                            <span id="playlist-controls-title">Playlist title :) :)</span>
-                            <a id="playlist-controls-user">Clark Kent</a>
-                            <span id="playlist-controls-playlist-subscribe" class="translatable">Subscribe</span>
-                        </div>
-                        <table id="playlist-pane" class="pane">
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <div id="user-container">
-                        <div id="user-controls">
-                            <span id="user-controls-name">Clark Kent's playlists</span>
-                            <span id="user-controls-follow-user" class="translatable">Follow User</span>
-                        </div>
-                        <table id="user-playlist-pane" class="pane">
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                            <tr>
-                                <td class="play">></td><td class="space"></td>
-                                <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
-                                <td class="like">&hearts;</td><td class="space"></td>
-                                <td class="views">1,000,000 views</td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <div id="fatbar">
-                        <span class="close translatable" title="Close"></span>
-                        <div class="box" id="video-info-box">
-                            <div class="content">
-                                <span class="translatable" style="display:none">Uploader:</span>
-                                <span class="uploader clickable"></span>
-                                <div class="description"></div>
-                            </div>
-                        </div>
-                        <div class="box" id="related-box">
-                            <div class="content">
-                                <ul id="related" class="results"></ul>
-                            </div>
-                        </div>
-                        <div class="box" id="linko-box">
-                            <div class="content">
-                                <strong class="name"></strong>
-                                <ul class="links">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+        </div>
+        
+        <div class="right-wrapper">
+            <div id="right">
+                <div class="search">
+                    <ul class="tabs">
+                        <li rel=".youtube.videos.pane" class="active">YouTube Videos</li>
+                        <li rel=".youtube.playlists.pane">YouTube Playlists</li>
+                    </ul>
+                    <table class="youtube videos pane">
+                        <tr>
+                            <td class="play">></td><td class="space"></td>
+                            <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
+                            <td class="like">&hearts;</td><td class="space"></td>
+                            <td class="views">1,000,000 views</td>
+                        </tr>
+                    </table>
+                    <table class="youtube playlists pane"></table>
                 </div>
-            </div>
-            
-            <div id="bottom">
-                <div id="controls"> 
-                    <div class="border"><div id="prev"></div></div>
-                    <div class="border middle"><div id="playpause"></div></div>
-                    <div class="border"><div id="next"></div></div>
+                
+                <div class="toplists">
+                    <ul class="tabs">
+                        <li rel=".youtify.pane">Youtify Toplist</li>
+                        <li rel=".youtube.top100.pane" class="active">YouTube Toplist</li>
+                        <li rel=".youtube.indie.pane">YouTube Indie Toplist</li>
+                    </ul>
+                    <table class="youtify pane"></table>
+                    <table class="youtube top100 pane"></table>
+                    <table class="youtube indie pane"></table>
                 </div>
+                
+                <div class="queue">
+                    <div class="info">
+                        <span class="title translatable">Play Queue</span>
+                    </div>
+                    <table class="pane"></table>
+                </div>
+                
+                <div class="playlists">
+                    <div class="info">
+                        <span class="title">Playlist title :) :)</span>
+                        <span class="subscribe translatable">Subscribe</span>
+                        <a class="owner">Clark Kent</a>
+                    </div>
+                    <table class="pane">
+                        <tr>
+                            <td class="play">></td><td class="space"></td>
+                            <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
+                            <td class="like">&hearts;</td><td class="space"></td>
+                            <td class="views">1,000,000 views</td>
+                        </tr>
+                        <tr>
+                            <td class="play">></td><td class="space"></td>
+                            <td class="title">Infected Mushroom - Muse Breaks</td><td class="space"></td>
+                            <td class="like">&hearts;</td><td class="space"></td>
+                            <td class="views">1,000,000 views</td>
+                        </tr>
 
-                <div id="info" class="draggable">
-                    <div class="title">title!!!</div>
-                    <div id="care-package">
-                        <span class="translatable clickable share">Share</span>
-                        <span class="flattr"></span>
-                    </div>
-                </div>
-                
-                <div id="timeline-container"> 
-                    <span id="position-label">0:00</span>
-                    <div id="timeline">
-                        <div id="inner-timeline"><div id="inner-timeline-knob"></div></div>
-                    </div>
-                    <span id="end-label">0:00</span>
-                </div>
-                
-                <div id="volume-container">
-                    <div id="outer-volume-slider"> 
-                        <div id="volume-slider"><div id="volume-slider-knob"></div></div> 
-                    </div> 
-                    <div id="fullscreen" class="translatable" title="Toggle fullscreen"></div> 
+                    </table>
                 </div>
             </div>
+        </div>
+        
+        <div id="bottom">
+            <div class="controls"> 
+                <div class="border"><div class="prev"></div></div>
+                <div class="border middle"><div class="playpause"></div></div>
+                <div class="border"><div class="next"></div></div>
+            </div>
+
+            <div class="info">
+                <div class="title">title!!!</div>
+            </div>
+
+            <div class="share-wrapper">
+                <span class="translatable share">Share</span>
+                <span class="flattr"></span>
+            </div>
+            
+            <div class="timeline-wrapper"> 
+                <span class="position">0:00</span>
+                <div class="timeline">
+                    <div class="slider"><div class="knob"></div></div>
+                </div>
+                <span class="length">0:00</span>
+            </div>
+            
+            <div class="volume-wrapper">
+                <div class="volume"> 
+                    <div class="slider"><div class="knob"></div></div> 
+                </div> 
+            </div>
+            
+            <div class="fullscreen translatable" title="Toggle fullscreen"></div> 
         </div> 
 	</body> 
 </html> 

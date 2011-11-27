@@ -6,13 +6,11 @@ Notification: true,
 createResultsItem: true,
 Player: true,
 Settings: true,
-changeTheme: true,
 PlaylistsManager: true,
 video_Init: true,
 volume_Init: true,
 translations_Init: true,
 toplist_Init: true,
-themes_Init: true,
 spotifyImport_Init: true,
 settings_Init: true,
 search_Init: true,
@@ -153,8 +151,6 @@ $(document).ready(function() {
 
     $('#info .title').data('type', 'video');
     $('#new-playlist').data('type', 'button');
-
-    changeTheme(settings.theme);
 	
 	// Legal & Information
 	$('#infomenu-text').click(function() {
@@ -194,7 +190,6 @@ $(document).ready(function() {
 	video_Init();
 	translations_Init();
     toplist_Init();
-    themes_Init();
     spotifyImport_Init();
     settings_Init();
     search_Init();
@@ -205,6 +200,7 @@ $(document).ready(function() {
     fatBar_Init();
     heart_Init();
     webstore_Init();
+    LeftTabs.init();
     player_Init();
 	
     url_Init();
