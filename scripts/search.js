@@ -16,12 +16,13 @@ function search_Init() {
     }
 
 	// SEARCH
-	$('#search input').keyup(function(event) {
-		
+	$('#top .search input').keyup(function(event) {
 		Search.selectSearchResults();
         var timeout = 0;
 
-        if ($('#search input').val().length > 1 && event.keyCode !== 13) {
+        var $searchInput = $('#top .search input');
+
+        if ($searchInput.val().length > 1 && event.keyCode !== 13) {
             timeout = 500;
         }
         if (timeoutId) {
@@ -30,7 +31,7 @@ function search_Init() {
         timeoutId = setTimeout(function() {
 			var url = null,
                 params = null,
-                q = $.trim($('#search input').val());
+                q = $.trim($searchInput.val());
 
             if ((q && q !== Search.q) || event.keyCode === 13) {
                 Search.search(q);
@@ -38,7 +39,7 @@ function search_Init() {
         }, timeout);
     });
 	
-	$('#results-tab').click(function() {
+	$('#left .search').click(function() {
 		Search.selectSearchResults();
 	});
 }
@@ -134,6 +135,8 @@ var Search = {
 			Search.videosStart = 0;
         }
 
+        var $tbody = $('#right .search table.youtube.videos tbody');
+
 		var url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
 		var params = {
 			'alt': 'json-in-script',
@@ -161,7 +164,7 @@ var Search = {
 					var rating = item.gd$rating.average;
                 }
 				var resultItem = createResultsItem(title, videoId, rating);
-				resultItem.appendTo('#results');
+				resultItem.appendTo($tbody);
 				
 				if (i === 0 && continuePlaying === true) {
 					resultItem.dblclick();
@@ -172,18 +175,18 @@ var Search = {
 				$('<li/>').addClass('loadMore').text('Load more').click(function(event) {
                     $(this).addClass('loading');
                     Search.searchVideos('', true);
-                }).appendTo('#results');
+                }).appendTo($tbody);
             }
 		});
 	},
 	selectSearchResults: function() {
         history.pushState(null, null, '/');
-        $('#playlistbar').hide();
-        $('#searchbar').show();
-		$('#left-menu li').removeClass('selected');
-		$('#results-tab').addClass('selected');
-		$('.results').hide().removeClass('active');
-		$('#results').show().addClass('active');
+
+		$('#left .tabs li').removeClass('selected');
+		$('#left .tabs li.search').addClass('selected');
+
+		$('#right > .selected').removeClass('selected');
+		$('#right > .search').addClass('selected');
 	},
 	
 	findAndPlayAlternative: function(elem) {
