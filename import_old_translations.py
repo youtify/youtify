@@ -192,7 +192,7 @@ class Handler(webapp.RequestHandler):
             (u'fi_FI', u'Suomi'),
         ]
         for lang in LANGUAGES:
-            m = Language(code=lang[0], label=lang[1], enabled_on_site=False, enabled_in_tool=True)
+            m = Language(code=lang[0], label=lang[1], enabled_on_site=True, enabled_in_tool=True)
             m.put()
 
         self.response.headers['Content-Type'] = 'text/plain'

@@ -32,8 +32,6 @@
     transform: rotate(270deg);
 }
 
-/****************************************************************************/
-
 /* BLOCKER
  ****************************************************************************/
 
@@ -48,4 +46,35 @@
     background: transparent;
 }
 
-/****************************************************************************/
+/** SETTINGS POPUP
+ ****************************************************************************/
+
+#settings {
+	float: right;
+}
+#settings > div {
+    margin-bottom: 10px;
+}
+#settings > div:last-child {
+    margin-bottom: 0;
+}
+#settings > div h2 {
+    border-bottom: 1px solid rgba(255,255,255,0.7);
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#settings .language > select {
+	min-width: 150px;
+}
+#settings .quality > span {
+	display: inline-block;
+	padding: 4px 8px 0 0;
+}
+#settings .quality > input {
+	vertical-align: baseline;
+}
+#settings .language a {
+    display: block;
+}

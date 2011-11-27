@@ -1,5 +1,5 @@
 function settings_Init() {
-    $('#settings-text').click(function() {
+    $('#top .settings').click(function() {
         $(this).arrowPopup('#settings');
     });
 	
