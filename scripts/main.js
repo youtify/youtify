@@ -114,11 +114,6 @@ $(document).ready(function() {
     $('#info .title').data('type', 'video');
     $('#new-playlist').data('type', 'button');
 
-	// Legal & Information
-	$('#infomenu-text').click(function() {
-        $(this).arrowPopup('#infomenu-popup');
-    });
-
 	// CONTROLS
 	$('#playpause').click(Player.playPause);
 	$('#next').click(Player.next);
@@ -133,11 +128,8 @@ $(document).ready(function() {
 	$('#timeline').click(Player.timelineClick);
 	
 	// ABOUT
-	$('#about-link').click(function() {
-		$('#about-box').show();
-		$('#about-box').click(function() {
-			$('#about-box').hide();
-		});
+	$('#top .about').click(function() {
+        $(this).arrowPopup('#infomenu-popup');
 	});
 
     // LOGOUT POPUP

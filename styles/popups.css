@@ -78,3 +78,20 @@
 #settings .language a {
     display: block;
 }
+
+/** INFOMENU POPUP
+ ****************************************************************************/
+
+#infomenu-popup {
+}
+#infomenu-popup a {
+	display: block;
+	color: #FFF;
+	margin: 10px 0;
+}
+#infomenu-popup a:first-child {
+	margin-top: 0;
+}
+#infomenu-popup a:last-child {
+	margin-bottom: 0;
+}
