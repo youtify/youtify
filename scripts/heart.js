@@ -5,7 +5,7 @@ function heart_Init() {
 var Heart = {
 	htmlLoaded: false,
 	init: function() {
-		$('#heart').click(function() {
+		$('#top .heart').click(function() {
 			Heart.show();
 			if (!Heart.htmlLoaded) {
 				Heart.loadHTML();
@@ -18,11 +18,11 @@ var Heart = {
 			statusCode: {
 				200: function(data) {
 					Heart.htmlLoaded = true;
-					$('#heartPopup').html(data);
-					$('#heartPopup iframe').css('height', '62px').css('width', '55px');
+					$('#heart-popup').html(data);
+					$('#heart-popup iframe').css('height', '62px').css('width', '55px');
 
                     // FUNNY LOGO
-                    $('#heartPopup .logo').click(function() {
+                    $('#heart-popup .logo').click(function() {
                         Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
                     });
 				}
@@ -30,9 +30,9 @@ var Heart = {
 		});
 	},
 	show: function() {
-		$('#heart').arrowPopup('#heartPopup');
+		$('#top .heart').arrowPopup('#heart-popup');
 	},
 	hide: function() {
-		$('#heartPopup').hide();
+		$('#heart-popup').hide();
 	}
 };

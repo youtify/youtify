@@ -95,3 +95,42 @@
 #infomenu-popup a:last-child {
 	margin-bottom: 0;
 }
+
+/** HEART POPUP
+ ****************************************************************************/
+
+#heart-popup {
+	width: 250px;
+	vertical-align: top;
+	text-align: center;
+}
+#heart-popup .logos {
+	height: 60px;
+	width: auto;
+	background: #FFF;
+	margin-bottom: 10px;
+	.border(10px);
+}
+#heart-popup .logo {
+	padding: 5px;
+    background: url('/images/logo.gif') center center no-repeat;
+    width: 135px;
+	height: 50px;
+	float: left;
+}
+#heart-popup .yt-power {
+	padding: 5px;
+	background: url('/images/powered_by_yt.gif') center center no-repeat;
+	width: 63px;
+	height: 50px;
+	float: right;
+}
+
+#heart-popup .like {
+	width: 55px;
+	overflow: hidden;
+	display: inline-block;
+}
+#heart-popup .margin {
+	margin-right: 10px;
+}
