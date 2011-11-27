@@ -2,7 +2,7 @@ function leftmenu_Init() {
     constructPlaylistsMenu();
 
     // NEW PLAYLIST BUTTON
-    $('#new-playlist span').click(function() {
+    $('#left .playlists .new span').click(function() {
         var suggestedTitle = '',
             artist;
 
@@ -14,27 +14,27 @@ function leftmenu_Init() {
         }
 
         $(this).hide();
-        $('#new-playlist input').show()
+        $('#left .playlists .new input').show()
             .focus()
             .select()
             .val(suggestedTitle);
     });
-    $('#new-playlist input').blur(function() { 
-        $('#new-playlist span').show();
+    $('#left .playlists .new input').blur(function() {
+        $('#left .playlists .new span').show();
         $(this).hide();
         pendingVideo = null;
     });
 
     // NEW PLAYLIST INPUT FIELD
-    $('#new-playlist input').keyup(function(event) {
+    $('#left .playlists .new input').keyup(function(event) {
         var title,
             playlist,
             videos = [];
 
         switch (event.keyCode) {
             case 13: // RETURN
-                $('#new-playlist input').hide();
-                $('#new-playlist span').show();
+                $('#left .playlists .new input').hide();
+                $('#left .playlists .new span').show();
 
                 title = $.trim($(this).val());
                 if (title.length > 0 && title.length < 50) {
@@ -60,8 +60,8 @@ function leftmenu_Init() {
                 pendingVideo = null;
                 break;
             case 27: // ESC
-                $(this).hide();
-                $('#new-playlist span').show();
+                $('#left .playlists .new input').hide();
+                $('#left .playlists .new span').show();
                 $(this).val('');
                 pendingVideo = null;
                 break;
