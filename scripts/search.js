@@ -58,18 +58,13 @@ var Search = {
 
         $('body').addClass('searching');
 
-        $('#results').html('');
+        $('#right .search tbody').html('');
         
-        if ($('#searchbar .tab.playlists').hasClass('selected')) {
+        if ($('#right .search .tabs .youtube.playlists').hasClass('selected')) {
             Search.searchPlaylists(q);
         } else {
             Search.searchVideos(q);
         }
-    },
-
-    createSearchBar: function() {
-        var div = $('<div id="topbar" class="search"></div>');
-        return div;
     },
 
 	searchPlaylists: function(q, loadMore) {
@@ -160,11 +155,14 @@ var Search = {
 				var url = item.id.$t;
 				var videoId = url.match('videos/(.*)$')[1];
 				var title = item.title.$t;
+                var rating;
+
 				if (item.gd$rating) {
-					var rating = item.gd$rating.average;
+					rating = item.gd$rating.average;
                 }
-				var resultItem = createResultsItem(title, videoId, rating);
-				resultItem.appendTo($tbody);
+
+                var video = new Video(videoId, title, 'youtube', rating);
+				video.createListView().appendTo($tbody)
 				
 				if (i === 0 && continuePlaying === true) {
 					resultItem.dblclick();

@@ -226,6 +226,6 @@ function Video(videoId, title, type, rating) {
     };
     
     this.getRatingAsString = function() {
-        return '&#8902;&#8902;&#8902;&#8902;&#8902;';
+        return this.rating.toFixed(1);
     };
 }
