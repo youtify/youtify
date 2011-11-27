@@ -134,3 +134,11 @@
 #heart-popup .margin {
 	margin-right: 10px;
 }
+
+/** LOGOUT POPUP
+ ****************************************************************************/
+
+#logout-popup {
+    text-align: center;
+    width: auto;
+}
