@@ -136,6 +136,9 @@ $(document).ready(function() {
     $('#top .username').click(function() {
         $(this).arrowPopup('#logout-popup');
     });
+    $('#logout-popup a').click(function(e) {
+        playlistManager.removeRemotePlaylistsFromLocalStorage();
+    });
 	
 	//Notification.say('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 	

@@ -1,11 +1,6 @@
 function leftmenu_Init() {
     constructPlaylistsMenu();
 
-    // LOGIN/LOGOUT BUTTON
-    $('#logout-link').click(function() {
-        playlistManager.removeRemotePlaylistsFromLocalStorage();
-    });
-
     // NEW PLAYLIST BUTTON
     $('#new-playlist span').click(function() {
         var suggestedTitle = '',
