@@ -103,45 +103,7 @@ function getVidsInPlaylist(playlistId, callback, parameters, start, feed) {
     });
 }
 
-// -webkit-calc is not working
-$(window).resize(function() {
-	var windowHeight = $(window).height();
-	var windowWidth = $(window).width();
-	if (windowWidth < 650) {
-		windowWidth = 650;
-    }
-
-    // height
-	$('#content').height(windowHeight);
-
-	var leftMenuSiblingHeights = 0;
-	$('#left-menu').siblings().each(function(index, item) {
-        leftMenuSiblingHeights += $(item).height();
-    });
-	$('#left-menu').height(windowHeight - leftMenuSiblingHeights);
-	
-	var resultsContainerSiblingsHeights = 0;
-	$('#results-container').siblings(':visible').each(function(index, item) {
-        resultsContainerSiblingsHeights += $(item).height();
-    });
-	$('#results-container').height(windowHeight - resultsContainerSiblingsHeights);
-	
-    // width
-	$('#content-right').width(windowWidth - $('#content-left').width());
-	$('#timeline-container').width($('#content-right').width());
-	$('#timeline').width($('#content-right').width() - 102);
-	
-	if (Player._isFullscreen) {
-		Player.startFullscreen();
-	} else {
-		var offset = $('#youtube-container').offset();
-		$('#youtube').css('left', offset.left);
-		$('#youtube').css('top', offset.top);
-	}
-});
-
 $(window).load(function() {
-	$(window).resize();
 	$('#loading span').text('Done');
 	$('#loading').fadeOut();
 });
