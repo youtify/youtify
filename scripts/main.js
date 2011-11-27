@@ -141,7 +141,7 @@ $(document).ready(function() {
 	});
 
     // LOGOUT POPUP
-    $('#nickname').click(function() {
+    $('#top .username').click(function() {
         $(this).arrowPopup('#logout-popup');
     });
 	
