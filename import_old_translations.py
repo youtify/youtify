@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
+
 from languages import Language
+from languages import Translation
 from languages import init_cached_languages
-from translations import Phrase
-from translations import init_cached_translations
+from phrases import Phrase
+
+from snapshots import init_cached_translations
 
 old_translations = {}
 
@@ -39,7 +44,6 @@ old_translations['en_US'] = {
 	'How to import from Spotify': u'How to import from Spotify',
 	'Import from Spotify': u'Import from Spotify',
 	'Notifications': u'Notifications',
-	'Hide after %s seconds:': u'Hide after:',
 	'seconds': u'seconds',
 	'Instructions': u'Instructions',
 	'No such playlist found': u'No such playlist found',
@@ -174,6 +178,13 @@ old_translations['ro_SE'] = {
 
 class Handler(webapp.RequestHandler):
     def get(self):
+        for m in Language.all():
+            m.delete()
+        for m in Phrase.all():
+            m.delete()
+        for m in Translation.all():
+            m.delete()
+
         LANGUAGES = [
             (u'en_US', u'English'),
             (u'sv_SE', u'Svenska'),
@@ -181,24 +192,33 @@ class Handler(webapp.RequestHandler):
             (u'fi_FI', u'Suomi'),
         ]
         for lang in LANGUAGES:
-            m = Language.all().filter('code =', lang[0]).get()
             m = Language(code=lang[0], label=lang[1], enabled_on_site=False, enabled_in_tool=True)
             m.put()
 
+        self.response.headers['Content-Type'] = 'text/plain'
+
         for lang_code in old_translations:
+            diff = set(old_translations['en_US'].keys()) - set(old_translations[lang_code].keys());
+            #logging.info("Diff for %s is %s" % (lang_code, diff))
+            self.response.out.write("Diff for %s is %s\n\n" % (lang_code, diff))
+            language = Language.all().filter('code =', lang_code).get()
             for i in old_translations[lang_code].items():
-                original = i[0]
+                text = i[0]
                 translation = i[1]
-                p = Phrase.all().filter('original =', original).get()
+                p = Phrase.all().filter('text =', text).get()
                 if p is None:
-                    p = Phrase(original=original)
-                setattr(p, lang_code, translation)
-                p.put()
+                    p = Phrase(text=text)
+                    p.put()
+                if translation:
+                    t = Translation(phrase=p, text=translation)
+                    t.put()
+                    language.translations.append(t.key())
+                    language.save()
 
         init_cached_languages()
         init_cached_translations()
 
-        self.redirect('/admin/languages')
+        #self.redirect('/admin/languages')
 
 def main():
     application = webapp.WSGIApplication([

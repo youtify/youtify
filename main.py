@@ -10,7 +10,7 @@ from model import get_current_youtify_user
 from model import create_youtify_user
 from playlists import get_playlists_json_for_user
 from languages import auto_detect_language
-from translations import get_deployed_translations_json
+from snapshots import get_deployed_translations_json
 from languages import get_languages
 
 class MainHandler(webapp.RequestHandler):

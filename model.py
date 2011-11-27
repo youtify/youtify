@@ -10,6 +10,31 @@ class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
     json = db.TextProperty()
 
+class Phrase(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    text = db.StringProperty(required=True)
+
+class SnapshotMetadata(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    active = db.BooleanProperty()
+
+class SnapshotContent(db.Model):
+    json = db.TextProperty(required=True)
+    metadata = db.ReferenceProperty(reference_class=SnapshotMetadata)
+
+class Language(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    code = db.StringProperty()
+    label = db.StringProperty()
+    enabled_on_site = db.BooleanProperty()
+    enabled_in_tool = db.BooleanProperty()
+    translations = db.ListProperty(db.Key)
+    leaders = db.ListProperty(db.Key)
+
+class Translation(db.Model):
+    phrase = db.ReferenceProperty(Phrase)
+    text = db.StringProperty()
+
 # HELPERS
 ##############################################################################
 

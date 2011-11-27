@@ -69,23 +69,26 @@ handlers:
   static_dir: images
   expiration: "1d"
 
-- url: /admin.*
-  script: admin.py
-  login: admin
-
 - url: /import_old_translations
   script: import_old_translations.py
+  login: admin
+
+- url: /admin.*
+  script: admin.py
   login: admin
 
 - url: /translations.*
   script: translations.py
   login: required
 
-- url: /api/translations.*
-  script: translations.py
+- url: /phrases.*
+  script: phrases.py
 
 - url: /languages.*
   script: languages.py
+
+- url: /snapshots.*
+  script: snapshots.py
   
 - url: /robots.*
   static_files: robots.txt

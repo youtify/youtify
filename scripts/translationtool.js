@@ -1,11 +1,6 @@
 var currentLanguage;
 var phrases = [];
 
-var TYPE_COMMENT = 1;
-var TYPE_SUGGESTION = 2;
-var TYPE_APPROVED = 3;
-var TYPE_ORIGINAL_CHANGED = 3;
-
 function replaceTranslationColumnWithLabel($tr) {
     $td = $tr.find('td.translation');
     var translation = $td.find('input[type=text]').val();
@@ -15,17 +10,16 @@ function replaceTranslationColumnWithLabel($tr) {
 
 function sendSuggestion() {
     var $tr = $(this).parents('tr');
+    var id = $tr.data('id')
     var translation = $tr.find('input[type=text]').val();
-    var original = $tr.find('.original').text();
 
     var args = {
-        original: original,
-        translation: translation
+        text: translation
     };
 
     if (translation.length > 0) {
         showLoadingBar();
-        $.post('/api/translations/' + currentLanguage, args, function() {
+        $.post('/languages/' + currentLanguage + '/translations/' + id, args, function() {
             hideLoadingBar();
             if (!(is_admin || isUserLeaderOfCurrentLang())) {
                 replaceTranslationColumnWithLabel($tr);
@@ -34,130 +28,25 @@ function sendSuggestion() {
     }
 }
 
-function showComments() {
-    var $tr = $(this).parents('tr');
-    var $popup = $('#commentsPopup');
-    var $submit = $popup.find('input[type=submit]');
-    var $textarea = $popup.find('textarea');
-
-    var index = $tr.index();
-    var phrase = phrases[index];
-    var original = $tr.find('.original').text();
-    var commentText = $textarea.val();
-
-    function loadHistory() {
-        $popup.find('ul').html('');
-        $.each(phrases[index].history.reverse(), function(i, item) {
-            var $li = $('<li></li>');
-            $('<span class="date"></span>').text(item.date).appendTo($li);
-            $('<span class="user"></span>').text(item.user.name).appendTo($li);
-            $('<span class="text"></span>').text(item.text).appendTo($li);
-            $popup.find('ul').append($li);
-        });
-    }
-
-    loadHistory();
-
-    $textarea.val('');
-    $popup.find('h2').text(original);
-    $submit.unbind('click');
-    $submit.click(function(data) {
-        var args = {
-            lang: currentLanguage,
-            text: $textarea.val()
-        };
-        showLoadingBar();
-        $button = $(this);
-        $button.attr('disabled', 'disabled');
-        $.post('/translations/' + phrase.id + '/comments', args, function() {
-            hideLoadingBar();
-            $button.removeAttr('disabled');
-            phrases[index].history.push({
-                user: {
-                    id: my_user_id,
-                    name: my_user_name,
-                },
-                date: 'Just now...',
-                type: TYPE_COMMENT,
-                text: args.text,
-            });
-            $textarea.val('');
-            loadHistory();
-            $tr.find('.comments').html('').append(createCommentsElement(index));
-        });
-    });
-
-    showPopup('commentsPopup');
-}
-
-function createCommentsElement(phraseIndex) {
-    var text;
-    var numComments = phrases[phraseIndex].history.length;
-
-    if (numComments === 1) {
-        text = '1 comment';
-    } else if (numComments > 1) {
-        text = numComments + ' comments';
-    } else {
-        text = 'Comment';
-    }
-
-    return $('<span class="clickable"></span>').text(text).click(showComments);
-}
-
-function changeApproveState() {
-    var $tr = $(this).parents('tr');
-    var index = $tr.index();
-    var phrase = phrases[index];
-
-    var args = {
-        lang: currentLanguage,
-    };
-
-    showLoadingBar();
-    $.post("/translations/" + phrase.id + "/approve", args, function(data) {
-        hideLoadingBar();
-    });
-}
-
 function isUserLeaderOfCurrentLang() {
     return my_langs.indexOf(currentLanguage) !== -1;
 }
 
-function createTableRow(phraseIndex, original, translation, approved) {
-    var tr = $('<tr></tr>');
+function createTableRow(item) {
+    var tr = $('<tr></tr>').data('id', item.id);
 
-    var td1 = $('<td></td').attr('class', 'original').text(original);
+    var td1 = $('<td></td').attr('class', 'original').text(item.original);
     var td2 = $('<td></td').attr('class', 'translation');
-    var td3 = $('<td></td').attr('class', 'comments');
-    var td4 = $('<td></td').attr('class', 'approved');
 
-    if (translation && !(is_admin || isUserLeaderOfCurrentLang())) {
-        $('<p></p>').text(translation).appendTo(td2);
-    } else {
-        $('<input type="text" />').val(translation).appendTo(td2);
+    if (is_admin || isUserLeaderOfCurrentLang()) {
+        $('<input type="text" />').val(item.translation).appendTo(td2);
         $('<input type="submit" />').val("Send suggestion").click(sendSuggestion).appendTo(td2);
+    } else {
+        $('<p></p>').text(item.translation).appendTo(td2);
     }
-
-    createCommentsElement(phraseIndex).appendTo(td3);
-
-    var checkbox = $('<input type="checkbox" />').val(false);
-    checkbox.appendTo(td4);
-    if (approved) {
-        checkbox.attr('checked', 'checked');
-    }
-    if ((isUserLeaderOfCurrentLang() || is_admin) === false) {
-        checkbox.attr('disabled', 'disabled');
-    }
-    checkbox.change(changeApproveState);
-
-    var label = $('<label></label>').text('Approved');
-    label.appendTo(td4);
 
     td1.appendTo(tr);
     td2.appendTo(tr);
-    td3.appendTo(tr);
-    td4.appendTo(tr);
 
     return tr;
 }
@@ -167,10 +56,10 @@ function loadLanguage() {
 
     function loadLeaders() {
         $("#leaders").html('');
-        $.getJSON('/translations/leaders', {lang:currentLanguage}, function(data) {
+        $.getJSON('/languages/' + currentLanguage + '/leaders', function(data) {
             var names = [];
             $.each(data, function(i, item) {
-                names.push(item.user.name);
+                names.push(item.name);
             });
             $('#leaders').text(names.join(', '));
         });
@@ -178,13 +67,13 @@ function loadLanguage() {
 
     function loadTranslations() {
         showLoadingBar();
-        $.getJSON('/api/translations/' + currentLanguage, {comments:1}, function(data) {
+        $.getJSON('/languages/' + currentLanguage + '/translations', function(data) {
             hideLoadingBar();
             var $tbody = $('<tbody></tbody>');
             phrases = data; // global
 
             $.each(data, function(i, item) {
-                createTableRow(i, item.original, item.translation, item.approved).appendTo($tbody);
+                createTableRow(item).appendTo($tbody);
             });
 
             $('tbody').replaceWith($tbody);

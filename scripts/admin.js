@@ -15,7 +15,7 @@ function loadPhrases() {
         if (confirm("Are you sure?")) {
             $.ajax({
                 type: 'DELETE',
-                url: '/translations/phrases/' + id,
+                url: '/phrases/' + id,
                 statusCode: {
                     200: function(data) {
                          loadPhrases();
@@ -27,7 +27,7 @@ function loadPhrases() {
 
     function createTableRow(item) {
         var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
-        $('<td class="original"></td>').text(item.original).appendTo($tr);
+        $('<td class="text"></td>').text(item.text).appendTo($tr);
         $('<td><button class="delete">Delete</button></td>')
             .find('.delete')
             .css('visibility', 'hidden')
@@ -39,7 +39,7 @@ function loadPhrases() {
 
     $('#phrases tbody').html('');
     showLoadingBar();
-    $.getJSON('/translations/phrases', function(data) {
+    $.getJSON('/phrases', function(data) {
         $.each(data, function(i, item) {
             createTableRow(item).appendTo('#phrases tbody');
         });
@@ -149,7 +149,7 @@ function loadTeamLeaders(langCode) {
         if (confirm("Are you sure?")) {
             $.ajax({
                 type: 'DELETE',
-                url: '/translations/leaders/' + id,
+                url: '/languages/' + langCode + '/leaders/' + id,
                 statusCode: {
                     200: function(data) {
                          loadTeamLeaders(langCode);
@@ -169,23 +169,24 @@ function loadTeamLeaders(langCode) {
 
     function createRow(item) {
         var $tr = $('<tr></tr>').data('id', item.id).hover(hoverIn, hoverOut);
-        $('<td></td>').text(item.user.name).appendTo($tr);
+        $('<td></td>').text(item.name).appendTo($tr);
         $('<td><button class="delete">Delete</button></td>')
             .find('.delete')
             .css('visibility', 'hidden')
             .click(deleteButtonClicked)
             .end()
             .appendTo($tr);
+        console.log($tr);
         return $tr;
     }
 
     showLoadingBar();
-    $('#leaders tbody').html('');
-    $.getJSON('/translations/leaders', {lang:langCode}, function(data) {
-        $.each(data, function(i, item) {
-            createRow(item).appendTo('#leaders tbody');
-        });
+    $('#teams tbody').html('');
+    $.getJSON('/languages/' + langCode + '/leaders', function(data) {
         hideLoadingBar();
+        $.each(data, function(i, item) {
+            createRow(item).appendTo('#teams tbody');
+        });
     });
 }
 
@@ -204,7 +205,7 @@ function loadSnapshots() {
         if (confirm("Are you sure?")) {
             $.ajax({
                 type: 'DELETE',
-                url: '/translations/snapshots/' + id,
+                url: '/snapshots/' + id,
                 statusCode: {
                     200: function(data) {
                          loadSnapshots();
@@ -220,7 +221,7 @@ function loadSnapshots() {
         if (confirm("All publicly visible translations will be updated. Continue?")) {
             $.ajax({
                 type: 'PUT',
-                url: '/translations/snapshots/' + id,
+                url: '/snapshots/' + id,
                 statusCode: {
                     200: function(data) {
                          loadSnapshots();
@@ -251,7 +252,7 @@ function loadSnapshots() {
 
     showLoadingBar();
     $('#snapshots tbody').html('');
-    $.getJSON('/translations/snapshots', function(data) {
+    $.getJSON('/snapshots', function(data) {
         $.each(data, function(i, item) {
             createRow(item).appendTo('#snapshots tbody');
         });
@@ -333,28 +334,28 @@ $(document).ready(function() {
     });
 
     $('#addPhrasePopup input[type=submit]').click(function() {
-        var original, args;
+        var text, args;
 
-        original = $.trim($('#addPhrasePopup textarea').val());
-        if (original.length === 0) {
+        text = $.trim($('#addPhrasePopup textarea').val());
+        if (text.length === 0) {
             return;
         }
 
         args = {
-            original: original,
+            text: text,
         };
 
-        $.post('/translations/phrases', args, function() {
+        $.post('/phrases', args, function() {
             loadPhrases();
             closePopup();
         });
     });
 
     $('#addLanguagePopup input[type=submit]').click(function() {
-        var args = {};
-
-        args.label = $('#addLanguagePopup input[name=label]').val();
-        args.code = $('#addLanguagePopup input[name=code]').val();
+        var args = {
+            label: $('#addLanguagePopup input[name=label]').val(),
+            code: $('#addLanguagePopup input[name=code]').val()
+        };
 
         $.post('/languages', args, function() {
             loadLanguages();
@@ -376,13 +377,14 @@ $(document).ready(function() {
     });
 
     $('#addLeaderPopup input[type=submit]').click(function() {
-        var args = {};
+        var args = {
+            user: userIdFromLookupOnServer // global
+        };
 
-        args.lang = window.location.pathname.split('/')[3];
-        args.user = userIdFromLookupOnServer; // global
+        var currentLanguage = window.location.pathname.split('/')[3];
 
-        $.post('/translations/leaders', args, function() {
-            loadTeamLeaders(args.lang);
+        $.post('/languages/' + currentLanguage + '/leaders', args, function() {
+            loadTeamLeaders(currentLanguage);
             closePopup();
         });
     });
@@ -392,7 +394,7 @@ $(document).ready(function() {
             var button = $(this);
             showLoadingBar();
             button.attr('disabled', 'disabled');
-            $.post('/translations/snapshots', function(data) {
+            $.post('/snapshots', function(data) {
                 hideLoadingBar();
                 button.removeAttr('disabled');
                 $('#tabs li[rel=snapshots]').click();
