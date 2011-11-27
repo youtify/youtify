@@ -2,9 +2,6 @@ function toplist_Init() {
 	$('#toplist-tab').click(function() {
 		TopList.select();
 	});
-	$('#bestof-tab').click(function() {
-		BestOfYouTube.select();
-	});
 }
 
 var BestOfYouTube = { 
@@ -41,25 +38,25 @@ var BestOfYouTube = {
 var TopList = { 
 	select: function() {
         history.pushState(null, null, '/');
-        $('#playlistbar').hide();
-        $('#searchbar').hide();
-		$('#left-menu li').removeClass('selected');
+        $('#right').children().hide();
+		$('#tabs li').removeClass('selected');
+
 		$('#toplist-tab').addClass('selected');
-		if ($('#toplist').html().length === 0) {
-			$('#toplist-tab').addClass('loading');
-			TopList.load();
-		}
-		$('.results').hide().removeClass('active');
-		$('#toplist').show().addClass('active');
 	},
 
 	load: function() {
         $('#toplist').html('');
 
-        $.each(toplist, function (i, item) {
-            createResultsItem(item.title, item.videoId).appendTo('#toplist');
-        });
+        
 
         $('#toplist-tab').removeClass('loading');
 	}
+};
+
+var TopLists = {
+    init: function() {
+        $.each(youtubeTopList, function (i, item) {
+            createResultsItem(item.title, item.videoId, item.type).appendTo('#youtube-toplist-pane');
+        });
+    }
 };
