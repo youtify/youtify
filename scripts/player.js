@@ -42,7 +42,7 @@ var Player = {
             FatBar.clear();
         }
 
-        $('#video-actions').show();
+        $('#bottom .info, #bottom .share-wrapper').show();
 
 		if (videoId !== undefined) {
             history.pushState(null, null, '/videos/' + videoId);
@@ -146,7 +146,7 @@ var Player = {
 				return;
 			}
 		} else {
-			elem = $('#results-container li.playing').next();
+			elem = $('#right .playing').next();
 		}
 		if (elem.hasClass('alternative')) {
 			elem = elem.parent().parent().next();
@@ -199,25 +199,11 @@ var Player = {
 	setTitle: function(title) {
 		var videoId = Player.getCurrentVideoId();
         document.title = "Youtify - " + title;
-		$('#info .title').text(title).attr('title', title);
+		$('#bottom .info .title').text(title).attr('title', title);
 	},
     
-    scrollTitle: function() {
-        var x = 0;
-        if ($('#info .title').hasClass('move')) {
-            $('#info .title').removeClass('move');
-            x = $('#info').width() - $('#info .title').width();
-            if (x < 0) {
-                $('#info .title').attr('style', '-webkit-transform:translateX(' + x + 'px);-moz-transform:translateX(' + x + 'px);-o-transform:translateX(' + x + 'px);-ms-transform:translateX(' + x + 'px);transform:translateX(' + x + 'px);');
-            }
-        } else {
-            $('#info .title').addClass('move');
-            $('#info .title').attr('style', '-webkit-transform:translateX(' + x + 'px);-moz-transform:translateX(' + x + 'px);-o-transform:translateX(' + x + 'px);-ms-transform:translateX(' + x + 'px);transform:translateX(' + x + 'px);');
-        }
-    },
-    
     _startedPlayingVideoSuccessfully: function() {
-        var title = $('#info .title').text();
+        var title = $('#bottom .info .title').text();
         Notification.announce(title);
         if (FatBar.isVisible()) {
             FatBar.loadFromVideo(new Video(Player._currentVideoId, title));
@@ -286,7 +272,7 @@ var Player = {
             100: 'The rights holder has decided not to share this video on Youtify',
             150: 'The rights holder has decided not to share this video on Youtify'
         };
-		var elem = $('.results li.playing'); //$('.results li.playing, .results li.paused')
+		var elem = $('#right .playing');
         // No playitem found
         if (elem.length === 0) {
             Notification.say(messages[event.data]);
@@ -311,14 +297,14 @@ var Player = {
 	},
 	
 	playPrevAlternative: function() {
-		var elem = $('.alternatives li.playing');
+		var elem = $('.alternatives .playing');
 		if (elem && elem.prev()) {
 			elem.prev().play();
         }
 	},
 	
 	playNextAlternative: function() {
-		var elem = $('.alternatives li.playing');
+		var elem = $('.alternatives .playing');
 		if (elem && elem.next()) {
 			elem.next().play();
         }
@@ -361,10 +347,10 @@ var Player = {
 		}
 		
 		var len = Player._player.getDuration(); 
-		var clickpos = event.pageX - $('#timeline').offset().left;
+		var clickpos = event.pageX - $('#bottom .timeline').offset().left;
 		var wasMuted = Player._player.isMuted();
 		Player._player.mute();
-		Player._player.seekTo(len * (clickpos / $('#timeline').width()), true); 
+		Player._player.seekTo(len * (clickpos / $('#bottom .timeline').width()), true); 
 		if (!wasMuted) {
 			Player._player.unMute();
 		}
@@ -376,9 +362,11 @@ var Player = {
 		
 		var pos = Player._player.getCurrentTime();
 		var len = Player._player.getDuration();
-		$('#inner-timeline').show();
-		$('#position-label').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-		$('#end-label').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
+
+		$('#bottom .timeline .knob').show();
+		$('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
+		$('#bottom .timeline-wrapper .length').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
+
 		Player._timelineUpdateVar = setInterval(Player._updateTimeline, 100);
 	},
 
@@ -387,10 +375,12 @@ var Player = {
 			clearInterval(Player._timelineUpdateVar);
 			return;
 		}
+
 		var pos = Player._player.getCurrentTime(); 
 		var len = Player._player.getDuration(); 
-		$('#position-label').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60)); 
-		$('#inner-timeline').width(pos/len*$('#timeline').width()); 
+
+		$('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
+		$('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
 	},
 
 	_stopTimelineUpdate: function() {
@@ -412,29 +402,31 @@ var Player = {
 		if (!Player._playerReady) {
 			return;
 		}
+        var $youtubePlayerElem = $('#left .players .youtube');
 		// Must set style, not class (and not position).
 		Player._isFullscreen = true;
-		$('#youtube').css('left',0);
-		$('#youtube').css('top',0);
+		$($youtubePlayerElem).css('left',0);
+		$($youtubePlayerElem).css('top',0);
 		var width = $(window).width();
 		var height = $(window).height() -45;
-		$('#youtube').width(width);
-		$('#youtube').height(height);
+		$($youtubePlayerElem).width(width);
+		$($youtubePlayerElem).height(height);
 		Player._player.setSize(width, height);
 		
-		$('#fullscreen').addClass('minimize');
+		$('#bottom .fullscreen').addClass('minimize'); // TODO create elem in index.html
 	},
 	
 	stopFullscreen: function() { 
 		Player._isFullscreen = false;
+        var $youtubePlayerElem = $('#left .players .youtube');
 		var width = 230;
 		var height = 230;
-		$('#youtube').width(width);
-		$('#youtube').height(height);
+		$($youtubePlayerElem).width(width);
+		$($youtubePlayerElem).height(height);
 		Player._player.setSize(width, height);
 
 		$(window).resize();
-		$('#fullscreen').removeClass('minimize');
+		$('#bottom .fullscreen').removeClass('minimize'); // TODO create elem in index.html
 	},
 	
 	volumeUp: function(step) {
@@ -511,7 +503,9 @@ var Player = {
 	},
 
 	loadIFramePlayer: function() {
-		$('#youtube').html(''); // remove old iframe
+        $youtubePlayerElem = $('#left .players .youtube');
+        $youtubePlayerElem.html(''); // remove old iframe
+
 		var videoId = Player.getCurrentVideoId() || '';
 		var origin = document.location.origin || document.location.protocol + '//' + document.location.host;
 		Player._player = new YT.Player('youtube', {

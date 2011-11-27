@@ -115,9 +115,9 @@ $(document).ready(function() {
     $('#new-playlist').data('type', 'button');
 
 	// CONTROLS
-	$('#playpause').click(Player.playPause);
-	$('#next').click(Player.next);
-	$('#prev').click(Player.prev);
+	$('#bottom .controls .playpause').click(Player.playPause);
+	$('#bottom .controls .next').click(Player.next);
+	$('#bottom .controls .prev').click(Player.prev);
 	
 	// FULLSCREEN
 	$('#fullscreen').click(function() {

@@ -637,8 +637,8 @@ cursor: pointer;
 }
 #bottom .timeline-wrapper .slider {
     height: 15px;
-    width: 50%;
     position: relative;
+    width: 0;
     border-radius: 50px;
     box-shadow: inset 3px 3px 3px #2C2C2C;
     background:-webkit-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
@@ -649,6 +649,7 @@ cursor: pointer;
 }
 #bottom .timeline-wrapper .slider .knob {
     position: absolute;
+    display: none;
     top: -4px;
     right: -5px;
     width: 22px;
