@@ -25,6 +25,15 @@
             });
             break;
 
+            case 'down':
+            left = targetCenterX - (popup.outerWidth()/2);
+            top = offset.top - (popup.outerHeight() + arrowHeight + 5);
+            arrow.css({
+                top: top + popup.outerHeight() - 1,
+                left: targetCenterX - (arrowWidth/2)
+            });
+            break;
+
             case 'left':
             top = offset.top + ($(this).outerHeight()/2) - (popup.outerHeight()/2);
             left = 230;

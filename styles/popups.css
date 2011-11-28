@@ -30,6 +30,13 @@
 	-ms-transform: rotate(270deg);
     transform: rotate(270deg);
 }
+.arrow.down {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
 
 /* BLOCKER
  ****************************************************************************/
