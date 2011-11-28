@@ -114,8 +114,7 @@ var Search = {
 			});
 
 			if (data.feed.entry.length > 0) {
-				$('<li/>').addClass('loadMore').text('Load more').click(function(event) {
-                    $(this).addClass('loading');
+                LoadMore.createView(function(event) {
                     Search.searchPlaylists('', true);
                 }).appendTo('#results');
             }
@@ -170,8 +169,7 @@ var Search = {
 			});
 
 			if (data.feed.entry.length > 0) {
-				$('<li/>').addClass('loadMore').text('Load more').click(function(event) {
-                    $(this).addClass('loading');
+				LoadMore.createView(function(event) {
                     Search.searchVideos('', true);
                 }).appendTo($tbody);
             }
