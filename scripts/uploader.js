@@ -18,7 +18,7 @@ var Uploader = {
 				if (item.gd$rating) {
 					var rating = item.gd$rating.average;
                 }
-				var resultItem = createResultsItem(title, videoId, rating);
+				var resultItem = new Video(title, videoId, 'yt', rating).createListView();
 				resultItem.appendTo('#results');				
 			});
 		});

@@ -222,7 +222,7 @@ function showResultsItemContextMenu(event) {
 						if (item.gd$rating) {
 							var rating = item.gd$rating.average;
                         }
-						var resultItem = createResultsItem(title, videoId, rating);
+						var resultItem = new Video(videoId, title, 'yt', rating).createListView();
 						resultItem.appendTo($('#results'));
 					}); 
 				});

@@ -30,10 +30,18 @@ var Player = {
         return Player._currentVideoId;
     },
 	
-	play: function(videoId, title) {
+	play: function(video) {
+        var videoId, title;
+        if (typeof video === typeof 'string') {
+            videoId = video;
+        } else {
+            videoId = video.videoId;
+            title = video.title;
+        }
+            
         if (!youTubeApiReady) {
             setTimeout(function() {
-                Player.play(videoId);
+                Player.play(video);
             }, 1000);
             return;
         }
@@ -132,7 +140,7 @@ var Player = {
 				elem = elem.originalElem;
 				elem.play();
 			} else {
-				Player.play(elem.videoId, elem.title);
+				Player.play(elem.data('model'));
 			}
 			return;
 		}

@@ -137,7 +137,7 @@ function loadPlaylistView(playlist) {
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
             if (item) {
-                var li = createResultsItem(item.title, item.videoId, null, true).appendTo(playlist.playlistDOMHandle);
+                item.createListView().appendTo(playlist.playlistDOMHandle);
             }
         });
     }
@@ -339,14 +339,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
             throw "videoId param must be string";
         }
 
-        this.videos.push({
-            videoId: videoId,
-            title: title
-        });
-        if (this.playlistDOMHandle) {
-            var li = createResultsItem(title, videoId, null, true);
-            li.appendTo(this.playlistDOMHandle);
-        }
+        var video = new Video(videoId, title, 'yt');
+        this.videos.push(video);
+        
+        video.createListView().appendTo(this.playlistDOMHandle);
         this.synced = false;
     };
 

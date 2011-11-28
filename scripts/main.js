@@ -3,7 +3,6 @@
 $: true,
 ON_PRODUCTION: true,
 Notification: true,
-createResultsItem: true,
 Player: true,
 Settings: true,
 PlaylistsManager: true,
@@ -67,15 +66,15 @@ function toggle(feed, parameters) {
 	var event = parameters.event;
 	var playlist = parameters.playlist;
 
-	if (playlist.find('ul').length) {
-		playlist.find('ul').toggle();
+	if (playlist.find('table').length) {
+		playlist.find('table').toggle();
 	} else {
-		$('<ul/>').appendTo($(playlist));
+		$('<table/>').appendTo($(playlist));
 		if (feed) {
 			$.each(feed, function(i, item) { 
                 var videoId = item.media$group.yt$videoid.$t;
                 var title = item.title.$t;
-                createResultsItem(title, videoId).appendTo(playlist.find('ul'));
+                new Video(videoId, title, 'yt').createListView().appendTo(playlist.find('table'));
             });
 		}
 	}

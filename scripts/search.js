@@ -212,7 +212,7 @@ var Search = {
 				var videoId = url.match('videos/(.*)$')[1];
                 if (videoId !== elem.data('videoId')) {
                     var title = item.title.$t;
-                    var alternativeItem = createResultsItem(title, videoId).addClass('alternative');
+                    var alternativeItem = new Video(title, videoId, 'yt').createListView().addClass('alternative');
 
                     $('<input type="button" value="Next alternative &raquo" />')
                         .addClass('next')

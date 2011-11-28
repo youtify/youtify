@@ -27,7 +27,7 @@ var BestOfYouTube = {
             $.each(data.feed.entry, function(i, item) {
                 var videoId = item.media$group.yt$videoid.$t;
                 var title = item.title.$t;
-                createResultsItem(title, videoId).appendTo('#bestof');
+                new Video(title, videoId, 'yt').createListView().appendTo('#bestof');
             });
             $('#bestof-tab').removeClass('loading');
         });
@@ -56,7 +56,7 @@ var TopList = {
 var TopLists = {
     init: function() {
         $.each(youtubeTopList, function (i, item) {
-            createResultsItem(item.title, item.videoId, item.type).appendTo('#youtube-toplist-pane');
+            new Video(title, videoId, 'yt').createListView(item.title, item.videoId, item.type).appendTo('#youtube-toplist-pane');
         });
     }
 };
