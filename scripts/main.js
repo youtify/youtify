@@ -124,7 +124,7 @@ $(document).ready(function() {
 	});
 		
 	// TIMELINE
-	$('#timeline').click(Player.timelineClick);
+	$('#bottom .timeline').click(Player.timelineClick);
 	
 	// ABOUT
 	$('#top .about').click(function() {
