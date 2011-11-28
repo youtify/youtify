@@ -1,8 +1,8 @@
 function volume_Init() {
-    $('#outer-volume-slider').mousedown(function(event) {
+    $('#bottom .volume .slider').mousedown(function(event) {
         Volume.setVolume(event);
     });
-    $('#volume-slider-knob').mousedown(function(event) {
+    $('#bottom .volume .slider .knob').mousedown(function(event) {
         Volume.startDrag(event);
     });
     $(window).mouseup(function(event) {
@@ -29,8 +29,8 @@ var Volume = {
     },
     setVolume: function(event) {
         var paddingLeft = 7;
-        var maxW = $('#outer-volume-slider').width();
-        var mX = event.pageX - $('#outer-volume-slider').offset().left;
+        var maxW = $('#bottom .volume').width();
+        var mX = event.pageX - $('#bottom .volume .slider').offset().left;
         if (mX < 0) {
             mX = 0;
         }
@@ -43,6 +43,6 @@ var Volume = {
         if (mX < paddingLeft) {
             mX = paddingLeft;
         }
-        $('#volume-slider').css({'width': mX});
+        $('#bottom .volume .slider').css({'width': mX});
     }
 };
