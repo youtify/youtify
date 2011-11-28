@@ -1,5 +1,5 @@
 function volume_Init() {
-    $('#bottom .volume .slider').mousedown(function(event) {
+    $('#bottom .volume').mousedown(function(event) {
         Volume.setVolume(event);
     });
     $('#bottom .volume .slider .knob').mousedown(function(event) {
