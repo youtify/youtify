@@ -23,7 +23,7 @@ var Player = {
 	_queue: [],
     
     init: function() {
-        setInterval(Player.scrollTitle, 12000);
+        
     },
 
     getCurrentVideoId: function() {
@@ -32,11 +32,13 @@ var Player = {
 	
 	play: function(video) {
         var videoId, title;
-        if (typeof video === typeof 'string') {
-            videoId = video;
-        } else {
-            videoId = video.videoId;
-            title = video.title;
+        if (video) {
+            if (typeof video === typeof 'string') {
+                videoId = video;
+            } else {
+                videoId = video.videoId;
+                title = video.title;
+            }
         }
             
         if (!youTubeApiReady) {
@@ -164,7 +166,7 @@ var Player = {
 			Search.searchVideos('', true, true);
 		}
 		if (elem.length > 0) {
-			elem.play();
+			elem.data('model').play();
 		}
 	},
 	
