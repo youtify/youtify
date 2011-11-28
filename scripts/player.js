@@ -214,7 +214,7 @@ var Player = {
     
     _startedPlayingVideoSuccessfully: function() {
         var title = $('#bottom .info .title').text();
-        Notification.announce(title);
+        Notification.say(title);
         if (FatBar.isVisible()) {
             FatBar.loadFromVideo(new Video(Player._currentVideoId, title));
         }

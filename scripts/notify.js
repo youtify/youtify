@@ -1,46 +1,59 @@
 function notification_Init() {
-	$('#notification').click( Notification.hide );
-    $('#notification .content a, #notification .content input').not('.close').live('click', function(event) { 
-        event.stopPropagation(); 
+	$('.notifications .close').live('click', function(event) { 
+        var parent = $(this).parent(); 
+        parent.addClass('hidden');
+        setTimeout(function() { parent.remove(); }, 1000);
     });
 }
 
 var Notification = {
 	say: function(message) {
-		$('#notification .content').html(message);
-		
-		if (!$('#notification').is(':visible')) {
-			$('#notification').slideDown();	
+		if (Notification.useWebkitNotifications()) {
+            Notification.webkitSay(message);
+        } else {
+            var settings = new Settings(),
+                notification = $('<li/>'),
+                content = $('<div class="content"/>').text(message),
+                close = $('<span class="close"/>').text('X');
+            content.appendTo(notification);
+            close.appendTo(notification);    
+            notification.appendTo('.notifications');
+            
+            setTimeout(function() { 
+                notification.find('close').click(); 
+            }, settings.announceTimeout);
         }
 	},
-	hide: function() {
-		if ($('#notification').is(':visible')) {
-			$('#notification').slideUp('normal');
+    useWebkitNotifications: function() {
+        if (window.webkitNotifications) {
+            return (window.webkitNotifications.checkPermission() < 2);
+        } else {
+            return false;
         }
-	},
-	announce: function(message) {
+    },
+	webkitSay: function(message) {
+        var announceFunction = (function(message) {
+            try
+            {
+                var settings = new Settings();
+                var popup = window.webkitNotifications.createNotification(
+                    '/images/logo32x32.png',
+                    'Youtify',
+                    message);
+                popup.show();
+                setTimeout(function(){ popup.cancel(); }, settings.announceTimeout);
+            } catch(err) {
+                console.log(err.message);
+            }
+        });
 		if (window.webkitNotifications) {
 			if (window.webkitNotifications.checkPermission() === 1) { // 0=OK, 1=Not Allowed, 2=Denied
 				window.webkitNotifications.requestPermission(function() { 
-					Notification._announce(message); 
+					announceFunction(message); 
 				});
 			} else { 
-				Notification._announce(message); 
+				announceFunction(message); 
 			}
-		}
-	},
-	_announce: function(message) {
-		try
-		{
-			var settings = new Settings();
-			var popup = window.webkitNotifications.createNotification(
-				'/images/logo32x32.png',
-				'Youtify',
-				message);
-			popup.show();
-			setTimeout(function(){ popup.cancel(); }, settings.announceTimeout);
-		} catch(err) {
-			console.log(err.message);
 		}
 	},
 	error: function(message) {
