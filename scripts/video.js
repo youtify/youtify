@@ -166,7 +166,7 @@ function Video(videoId, title, type, rating) {
             Player.addSiblingsToPlayorder(this.listView, false);
         }*/
 
-        $('#right .videos').removeClass('playing');
+        $('#right .video').removeClass('playing');
         this.listView.addClass("playing");
 
         Player.play(this);
