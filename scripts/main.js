@@ -156,7 +156,7 @@ $(document).ready(function() {
     LeftTabs.init();
     player_Init();
     Timeline.init();
-	
+    Flattr.init();
     url_Init();
 });
 

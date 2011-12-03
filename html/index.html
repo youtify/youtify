@@ -37,6 +37,7 @@
         <script>
             var my_user_id = "{{ youtify_user.key.id }}";
             var logged_in = {{ logged_in }};
+            var has_flattr_access_token = {{ has_flattr_access_token }};
             var playlistsFromServer = {{ playlistsFromServer }};
 			var device = "{{ youtify_user.device }}";
 			var youtubeTopList = {{ toplist }};
@@ -80,6 +81,7 @@
         <script src="/scripts/lefttabs.js"></script>
         <script src="/scripts/LoadMore.js"></script>
         <script src="/scripts/Timeline.js"></script>
+        <script src="/scripts/Flattr.js"></script>
 		<script src="/scripts/main.js"></script>
         {% endif %}
         
@@ -106,6 +108,7 @@
         {% include "./popups/infomenu.html" %}
         {% include "./popups/settings.html" %}
         {% include "./popups/logout.html" %}
+        {% include "./popups/flattr.html" %}
         <div id="heart-popup" style="display:none" class="popup"></div>
         
         <div id="top">

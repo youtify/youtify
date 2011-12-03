@@ -95,6 +95,10 @@ handlers:
   upload: robots.txt
   expiration: "1d"
 
+- url: /flattr.*
+  script: flattr.py
+  login: required
+
 - url: /.*
   script: main.py
 

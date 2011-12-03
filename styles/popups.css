@@ -147,3 +147,36 @@
     text-align: center;
     width: auto;
 }
+
+/** FLATTR POPUP
+ ****************************************************************************/
+
+#flattr-popup {
+    height: auto;
+}
+#flattr-popup h2 {
+    font-weight: bold;
+    border-bottom: 1px solid white;
+    margin-bottom: 5px;
+}
+#flattr-popup button {
+    display: block;
+}
+#flattr-popup .disconnected button {
+    margin: 10px auto 0 auto;
+    width: 150px;
+    font-size: 10px;
+}
+#flattr-popup .twitter {
+    margin: 10px 0;
+}
+#flattr-popup .twitter img {
+    float: left;
+    margin-right: bold;
+}
+#flattr-popup .twitter .username {
+    font-weight: bold;
+    display: block;
+}
+#flattr-popup .twitter .description {
+}

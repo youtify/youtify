@@ -1,0 +1,5 @@
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+FLATTR_URL = 'http://flattr.dev'
+#FLATTR_URL = 'https://flattr.com'
+REDIRECT_URL = 'http://localhost:8080/flattrback'
