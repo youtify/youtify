@@ -58,7 +58,7 @@ var Search = {
 
         $('body').addClass('searching');
 
-        $('#right .search tbody').html('');
+        $('#right .search .pane').html('');
         
         if ($('#right .search .tabs .youtube.playlists').hasClass('selected')) {
             Search.searchPlaylists(q);
@@ -129,7 +129,7 @@ var Search = {
 			Search.videosStart = 0;
         }
 
-        var $tbody = $('#right .search table.youtube.videos tbody');
+        var $pane = $('#right .search table.youtube.videos');
 
 		var url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
 		var params = {
@@ -161,7 +161,7 @@ var Search = {
                 }
 
                 var video = new Video(videoId, title, 'youtube', rating);
-				video.createListView().appendTo($tbody)
+				video.createListView().appendTo($pane)
 				
 				if (i === 0 && continuePlaying === true) {
 					resultItem.dblclick();
@@ -171,7 +171,7 @@ var Search = {
 			if (data.feed.entry.length > 0) {
 				LoadMore.createView(function(event) {
                     Search.searchVideos('', true);
-                }).appendTo($tbody);
+                }).appendTo($pane);
             }
 		});
 	},
