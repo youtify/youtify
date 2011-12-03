@@ -774,14 +774,14 @@ cursor: pointer;
 #bottom .volume-wrapper:before {
     content: url(/images/volume-down-small.png);
     position: absolute;
-    top: -5px;
-    left: 0px;
+    top: -3px;
+    left: 6px;
 }
 #bottom .volume-wrapper:after {
     content: url(/images/volume-up-small.png);
     position: absolute;
-    top: -5px;
-    right: 0px;
+    top: -2px;
+    right: 5px;
 }
 #bottom .volume-wrapper .volume {
     width: auto;
