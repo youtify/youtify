@@ -104,12 +104,11 @@
 	text-align: center;
 }
 #heart-popup .logos {
-	height: 60px;
+	height: 100px;
 	width: auto;
 	background: #FFF;
 	margin-bottom: 10px;
-	.border(10px);
-}
+
 #heart-popup .logo {
 	padding: 5px;
     background: url('/images/logo.gif') center center no-repeat;
