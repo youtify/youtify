@@ -12,24 +12,63 @@ var Flattr = {
         });
 
         $('#flattr-popup .disconnected button').click(function() {
-            alert("yes");
             window.open('/flattrconnect');
         });
 
+        EventSystem.attachEventHandler('video_started_playing_successfully', Flattr.clearPopup);
         EventSystem.attachEventHandler('video_info_fetched', Flattr.loadVideo);
-        EventSystem.attachEventHandler('video_info_fetched', Flattr.loadVideo);
+        EventSystem.attachEventHandler('artist_twitter_account_found', Flattr.loadTwitter);
     },
 
-    loadTwitter: function(payload) {
-        var screenName = 'JLo';
+	clearPopup: function(video) {
+        $('#flattr-popup .things').html('');
+    },
+
+    createPopupFlattrItem: function(args) {
+        var $li = $('<li></li>').addClass(args.className).addClass('found');
+
+        $('<h2></h2>').text(args.title).appendTo($li);
+        $('<a class="subtitle" target="_blank"></a>').attr('href', args.a.link).text(args.a.text).appendTo($li);
+
+        if (args.image) {
+            $('<img></img>').attr('src', args.image).appendTo($li);
+        }
+
+        $('<span class="button"><span class="count">' + args.flattres + '</span><span class="text">Flattr</span></span>').appendTo($li);
+
+        return $li;
+    },
+
+    createNotFoundItem: function(args) {
+        var $li = $('<li></li>').addClass(args.className).addClass('notfound');
+
+        $('<h2></h2>').text(args.title).appendTo($li);
+        $('<span class="content"></span>').text(args.content).appendTo($li);
+
+        return $li;
+    },
+
+    loadTwitter: function(twitterUrl) {
+        console.log('looking up flattr thing for ' + twitterUrl);
+
+        var screenName = twitterUrl.split('/')[3];
         var url = 'https://api.twitter.com/1/users/show.json?screen_name=' + screenName +'&include_entities=true&callback=?';
         var $twitter = $('#flattr-popup .twitter');
 
         $twitter.html('');
 
         $.getJSON(url, function(data) {
-            $('<img></img>').attr('src', data.profile_image_url).appendTo($twitter);
-            $('<span class="username"></span>').text(data.name + ' (@' + screenName + ')').appendTo($twitter);
+            Flattr.createPopupFlattrItem({
+                className: 'twitter',
+                a: {
+                    text: '@' + screenName,
+                    link: twitterUrl
+                },
+                subtitle: '@' + screenName,
+                title: 'Artist Twitter Account',
+                image: data.profile_image_url,
+                flattres: 0
+            }).appendTo('#flattr-popup .things');
         });
     },
 
@@ -38,22 +77,20 @@ var Flattr = {
         // the jsonp callback in the redirect if a thing is found,
         // alternatively pass along the jsonp callback.
 
-        console.log(info);
-
-        var $li = $('#flattr-popup .things .video');
         //var thingUrl = "http://www.youtify.com"; // does not work
         //var thingUrl = "blog.perthulin.com"; // not found
         var thingUrl = info.video.getYouTubeUrl();
         var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(thingUrl) + '&jsonp=?';
 
-        $li.removeClass('found').removeClass('loading');
-        $li.addClass('loading');
+        console.log('looking up flattr thing for ' + thingUrl);
 
         $.getJSON(url, function(data) {
-            $li.removeClass('loading');
             if (data.message !== undefined && data.message === 'not_found') {
-                $li.addClass('notfound');
-                $li.find('.content').text("No flattr thing registered for " + thingUrl);
+                Flattr.createNotFoundItem({
+                    className: 'video',
+                    title: 'YouTube Video',
+                    content: 'No flattr thing registered for ' + thingUrl
+                }).appendTo('#flattr-popup .things');
             } else {
                 $li.addClass('found');
                 $li.find('.flattres').text(data.flattres);

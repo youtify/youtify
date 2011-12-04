@@ -1,6 +1,7 @@
 var VideoInfo = {
     init: function() {
         EventSystem.attachEventHandler('video_started_playing_successfully', VideoInfo.loadYouTubeVideoInfo);
+        EventSystem.attachEventHandler('video_info_fetched', VideoInfo.loadLinko);
     },
 
 	loadYouTubeVideoInfo: function(video) {
@@ -29,4 +30,21 @@ var VideoInfo = {
             EventSystem.callEventHandlers('video_info_fetched', info);
 		});
 	},
+
+    loadLinko: function(info) {
+        var artist = extractArtist(info.title);
+
+        if (artist) {
+            var url = 'http://linko.fruktsallad.net/artist/' + (artist.replace(/ /g, '_')) + '.json?callback=?';
+            $.getJSON(url, {}, function(data) {
+                if (!data || !data.links || !data.hasOwnProperty('artist_name')) {
+                    return;
+                } else {
+                    if ('Twitter' in data.links) {
+                        EventSystem.callEventHandlers('artist_twitter_account_found', data.links.Twitter);
+                    }
+                }
+            });
+        }
+    }
 };

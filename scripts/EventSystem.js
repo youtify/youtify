@@ -5,6 +5,7 @@ var EventSystem = {
     events: {
         'video_started_playing_successfully': [],
         'video_info_fetched': [],
+        'artist_twitter_account_found': [],
     },
 
     attachEventHandler: function(type, fn) {
