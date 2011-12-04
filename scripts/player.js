@@ -79,7 +79,9 @@ var Player = {
 			Player.assertPlayerLoaded();
 		}
 
-		Player._player.playVideo();
+        if (Player._player.playVideo) {
+            Player._player.playVideo();
+        }
 	},
 	
 	pause: function() {
@@ -208,11 +210,13 @@ var Player = {
 		var videoId = Player.getCurrentVideoId();
         document.title = "Youtify - " + title;
 		$('#bottom .info .title').text(title).attr('title', title);
+        if (title && title.length > 0) {
+            Notification.say(title);
+        }
 	},
     
     _startedPlayingVideoSuccessfully: function() {
         var title = $('#bottom .info .title').text();
-        Notification.say(title);
         if (FatBar.isVisible()) {
             FatBar.loadFromVideo(new Video(Player._currentVideoId, title));
         }
