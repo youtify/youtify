@@ -42,7 +42,7 @@ function leftmenu_Init() {
                         videos.push(pendingVideo);
                     }
                     playlist = new Playlist($(this).val(), videos);
-                    playlist.createDOMRepresentations();
+                    playlist.createViews();
                     playlistManager.addPlaylist(playlist);
                     if (logged_in) {
                         playlist.createNewPlaylistOnRemote(function() {
@@ -85,7 +85,7 @@ function constructPlaylistsMenu() {
 
     for (i = 0; i < playlistManager.playlists.length; i += 1) {
         playlist = playlistManager.getPlaylist(i);
-        li = playlist.createDOMRepresentations();
+        li = playlist.createViews();
     }
 }
 
