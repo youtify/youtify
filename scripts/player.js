@@ -214,14 +214,14 @@ var Player = {
             Notification.say(title);
         }
 	},
-    
+
     _startedPlayingVideoSuccessfully: function() {
         var title = $('#bottom .info .title').text();
-        if (FatBar.isVisible()) {
-            FatBar.loadFromVideo(new Video(Player._currentVideoId, title));
-        }
+        var video = new Video(Player._currentVideoId, title);
+        EventSystem.callEventHandlers('video_started_playing_successfully', video);
+        Notification.say(title);
     },
-	
+
 	onPlayerStateChange: function(event) {
 		//unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5)
 

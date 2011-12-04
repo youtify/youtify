@@ -54,6 +54,10 @@ function Video(videoId, title, type, rating) {
         return location.protocol + '//' + location.host + '/videos/' + this.videoId;
     };
 
+    this.getYouTubeUrl = function() {
+        return 'http://www.youtube.com/watch?v=' + this.videoId;
+    },
+
     this.getTwitterShareUrl = function() {
         var url = this.getUrl(),
             text = "Check out this video!" + ' -- ' + this.title;

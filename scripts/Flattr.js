@@ -1,17 +1,26 @@
 var Flattr = {
     init: function() {
         $('#bottom .flattr').click(function() {
+            if (has_flattr_access_token) { // global
+                $('#flattr-popup .connected').show();
+                $('#flattr-popup .disconnected').hide();
+            } else {
+                $('#flattr-popup .connected').hide();
+                $('#flattr-popup .disconnected').show();
+            }
             $(this).arrowPopup('#flattr-popup', 'down');
-            Flattr.initPopup();
         });
 
         $('#flattr-popup .disconnected button').click(function() {
             alert("yes");
             window.open('/flattrconnect');
         });
+
+        EventSystem.attachEventHandler('video_info_fetched', Flattr.loadVideo);
+        EventSystem.attachEventHandler('video_info_fetched', Flattr.loadVideo);
     },
 
-    loadTwitter: function() {
+    loadTwitter: function(payload) {
         var screenName = 'JLo';
         var url = 'https://api.twitter.com/1/users/show.json?screen_name=' + screenName +'&include_entities=true&callback=?';
         var $twitter = $('#flattr-popup .twitter');
@@ -24,44 +33,32 @@ var Flattr = {
         });
     },
 
-    loadCurrentVideo: function() {
+    loadVideo: function(info) {
         // WIP, flattr needs to fix so that the lookup resource does not loose
         // the jsonp callback in the redirect if a thing is found,
         // alternatively pass along the jsonp callback.
 
+        console.log(info);
+
         var $li = $('#flattr-popup .things .video');
-        //var thingUrl = encodeURIComponent("http://www.youtify.com"); // does not work
-        var thingUrl = encodeURIComponent("blog.perthulin.com");
-        var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + thingUrl + '&jsonp=?';
+        //var thingUrl = "http://www.youtify.com"; // does not work
+        //var thingUrl = "blog.perthulin.com"; // not found
+        var thingUrl = info.video.getYouTubeUrl();
+        var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(thingUrl) + '&jsonp=?';
 
         $li.removeClass('found').removeClass('loading');
         $li.addClass('loading');
 
-        console.log('loading ' + url);
-
         $.getJSON(url, function(data) {
-              console.log(data);
-              $li.removeClass('loading');
-              if (data.message !== undefined && data.message === 'not_found') {
-                  $li.addClass('notfound');
-                  $li.find('.content').text("Not found");
-              } else {
-                  $li.addClass('found');
-                  $li.find('.flattres').text(data.flattres);
-                  $li.find('.content').text(thingUrl);
-              }
-          },
+            $li.removeClass('loading');
+            if (data.message !== undefined && data.message === 'not_found') {
+                $li.addClass('notfound');
+                $li.find('.content').text("No flattr thing registered for " + thingUrl);
+            } else {
+                $li.addClass('found');
+                $li.find('.flattres').text(data.flattres);
+                $li.find('.content').text(thingUrl);
+            }
         });
     },
-
-    initPopup: function() {
-        if (has_flattr_access_token) { // global
-            this.loadCurrentVideo();
-            $('#flattr-popup .connected').show();
-            $('#flattr-popup .disconnected').hide();
-        } else {
-            $('#flattr-popup .connected').hide();
-            $('#flattr-popup .disconnected').show();
-        }
-    }
 };
