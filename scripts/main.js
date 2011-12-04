@@ -123,9 +123,6 @@ $(document).ready(function() {
 		Player.toggleFullscreen();
 	});
 		
-	// TIMELINE
-	$('#bottom .timeline').click(Player.timelineClick);
-	
 	// ABOUT
 	$('#top .about').click(function() {
         $(this).arrowPopup('#infomenu-popup');
@@ -158,6 +155,7 @@ $(document).ready(function() {
     webstore_Init();
     LeftTabs.init();
     player_Init();
+    Timeline.init();
 	
     url_Init();
 });

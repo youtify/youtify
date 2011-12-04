@@ -5,7 +5,6 @@ function player_Init() {
 var Player = { 
 	_player: null,
 	_playerReady: false,
-	_timelineUpdateVar: null,
 	_hiddenPlaylist: ['',
 		'','','','','','','','','','',
 		'','','','','','','sIakSu5VGF0', 'fWucPckXbIw','ypWr6pwoZmI','Tg4u7ko333U',
@@ -133,7 +132,6 @@ var Player = {
 	next: function() {
 		Player.assertPlayerLoaded();
 		
-		Notification.hide();
 		var elem = null; 
 		// Queue
 		if (Player._queue.length > 0) {
@@ -223,7 +221,7 @@ var Player = {
 	onPlayerStateChange: function(event) {
 		//unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5)
 
-		Player._stopTimelineUpdate();
+		Timeline.stop();
 		
 		if (event.data !== 5) {
 			if ($('body').hasClass('playing')) {
@@ -252,7 +250,7 @@ var Player = {
 					$('body').removeClass('paused');
                 }
 				$('body').addClass('playing');
-				Player._startTimelineUpdate();
+				Timeline.start();
                 if (Player._lastVideoId !== Player._currentVideoId) {
                     Player._startedPlayingVideoSuccessfully();
                     Player._lastVideoId = Player._currentVideoId;
@@ -349,55 +347,6 @@ var Player = {
 			pos = 0;
         }
 		Player._player.seekTo(pos, true);
-	},
-	
-	timelineClick: function(event) {
-		if (!Player._playerReady) {
-			return;
-		}
-		
-		var len = Player._player.getDuration(); 
-		var clickpos = event.pageX - $('#bottom .timeline').offset().left;
-		var wasMuted = Player._player.isMuted();
-		Player._player.mute();
-		Player._player.seekTo(len * (clickpos / $('#bottom .timeline').width()), true); 
-		if (!wasMuted) {
-			Player._player.unMute();
-		}
-		Player._updateTimeline();
-	},
-	
-	_startTimelineUpdate: function() {
-		Player.assertPlayerLoaded();
-		
-		var pos = Player._player.getCurrentTime();
-		var len = Player._player.getDuration();
-
-		$('#bottom .timeline .knob').show();
-		$('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-		$('#bottom .timeline-wrapper .length').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
-
-		Player._timelineUpdateVar = setInterval(Player._updateTimeline, 100);
-	},
-
-	_updateTimeline: function() { 
-		if (!Player.assertPlayerLoaded()) { 
-			clearInterval(Player._timelineUpdateVar);
-			return;
-		}
-
-		var pos = Player._player.getCurrentTime(); 
-		var len = Player._player.getDuration(); 
-
-		$('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-		$('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
-	},
-
-	_stopTimelineUpdate: function() {
-		if (Player._timelineUpdateVar) {
-			clearInterval(Player._timelineUpdateVar);
-			Player._timelineUpdateVar = null;
-		}
 	},
 	
 	toggleFullscreen: function() { 
