@@ -217,7 +217,6 @@ var Player = {
 
     _startedPlayingVideoSuccessfully: function() {
         var title = $('#bottom .info .title').text();
-        }
         var video = new Video(Player._currentVideoId, title);
         EventSystem.callEventHandlers('video_started_playing_successfully', video);
         Notification.say(title);
