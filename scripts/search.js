@@ -160,7 +160,7 @@ var Search = {
 					rating = item.gd$rating.average;
                 }
 
-                var video = new Video(videoId, title, 'youtube', rating);
+                var video = new Video(videoId, title, 'yt', rating);
 				video.createListView().appendTo($pane)
 				
 				if (i === 0 && continuePlaying === true) {

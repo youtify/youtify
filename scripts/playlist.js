@@ -132,7 +132,6 @@ function loadPlaylistView(playlist) {
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
             if (item) {
-                console.log(item);
                 item.createListView().appendTo(playlist.playlistDOMHandle);
             }
         });
@@ -182,9 +181,9 @@ function shuffleButtonClicked(event) {
 function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.title = title;
     this.videos = [];
-    for (var video in videos) {
-        self.videos.push(new Video(video.videoId, video.title, 'yt'));
-        console.log('this.videos.length ' + self.videos.length);
+    for (var i = 0; i < videos.length; i++) {
+        var video = new Video(videos[i].videoId, videos[i].title, videos[i].type, videos[i].rating);
+        this.videos.push(video);
     }
     this.remoteId = remoteId || null;
     this.isPrivate = isPrivate || false;
@@ -327,23 +326,16 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         }
     };
 
-    this.addVideo = function(title, videoId) {
+    this.addVideo = function(video) {
         if (this.syncing) {
             alert("Please wait until the playlist is synced");
             return;
         }
 
-        if (typeof title !== 'string') {
-            throw "title param must be string";
-        }
-        if (typeof videoId !== 'string') {
-            throw "videoId param must be string";
-        }
-
-        var video = new Video(videoId, title, 'yt');
-        this.videos.push(video);
+        var newVideo = video.clone();
+        this.videos.push(newVideo);
         
-        video.createListView().appendTo(this.playlistDOMHandle);
+        newVideo.createListView().appendTo(this.playlistDOMHandle);
         this.synced = false;
     };
 

@@ -60,6 +60,7 @@ div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td
  *   top: 10
  *     blocker: 20
  *      contextmenu: 25
+ *      dragElem: 25
  *    notifications: 15
  *     popups: 20
  *      notification: 25
@@ -110,6 +111,15 @@ html, body {
     cursor: pointer;
 }
 #contextmenu .option:hover {
+}
+#dragElem {
+    position: absolute;
+    padding: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    background-color: #7DAFB4;
+	box-shadow: 0px 0px 20px #FFF;
+	border-radius: 10px;
+    z-index: 25;
 }
 
 #top {

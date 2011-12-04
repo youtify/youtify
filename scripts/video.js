@@ -44,11 +44,15 @@ function showVideoSharePopup(videoId, title, elem, arrowDirection) {
 
 function Video(videoId, title, type, rating) {
     this.videoId = videoId;
-    this.title = title;
-    this.artist = extractArtist(title);
+    this.title = title || '';
+    this.artist = extractArtist(this.title);
     this.type = type;
     this.rating = rating;
     this.listView = null;
+    
+    this.clone = function() {
+        return new Video(this.videoId, this.title, this.type, this.rating);
+    };
 
     this.getUrl = function() {
         return location.protocol + '//' + location.host + '/videos/' + this.videoId;
@@ -94,8 +98,8 @@ function Video(videoId, title, type, rating) {
         space.clone().appendTo(this.listView);
         
         var titleElem = $('<td class="title"/>')
-            .text(this.title)
             .click(select)
+            .text(this.title)
             .appendTo(this.listView);
         space.clone().appendTo(this.listView);
         

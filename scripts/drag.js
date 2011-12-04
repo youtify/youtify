@@ -100,7 +100,7 @@ function findDraggable(elem) {
 	if (draggable.hasClass('selected')) {
 		draggable = draggable.parent().children('.selected');
 	} else {
-		selectVideo(draggable);
+		draggable.data('model').listViewSelect();
 	}
     return draggable;
 }
@@ -217,7 +217,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
         $.each(sourceElem, function(index, item) {
             item = $(item);
             if (item.hasClass('video')) {
-                playlist.addVideo(item.find('.title').text(), item.data('videoId'));
+                playlist.addVideo(item.data('model'));
                 item.removeClass('selected');
             }
         });
@@ -239,10 +239,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 // VIDEO TITLE DROPPED ON #new-playlist
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.attr('id') === 'new-playlist' && sourceElem.attr('id') === 'info') {
-        pendingVideo = {
-            title: sourceElem.find('.title').text(),
-            videoId: Player.getCurrentVideoId()
-        };
+        pendingVideo = sourceElem.data('model');
         $('#new-playlist span').click();
     }
 });
@@ -251,7 +248,7 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.hasClass('playlistElem') && sourceElem.attr('id') === 'info') {
         var playlist = targetElem.data('model');
-        playlist.addVideo(sourceElem.find('.title').text(), Player.getCurrentVideoId());
+        playlist.addVideo(sourceElem.data('model'));
         playlistManager.save();
     }
 });
