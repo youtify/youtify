@@ -17,10 +17,10 @@ var Notification = {
                 close = $('<span class="close"/>').text('X');
             content.appendTo(notification);
             close.appendTo(notification);    
-            notification.appendTo('.notifications');
+            notification.appendTo('#top .notifications');
             
             setTimeout(function() { 
-                notification.find('close').click(); 
+                notification.find('.close').click(); 
             }, settings.announceTimeout);
         }
 	},
