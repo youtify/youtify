@@ -182,8 +182,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     this.title = title;
     this.videos = [];
     for (var i = 0; i < videos.length; i++) {
-        var video = new Video(videos[i].videoId, videos[i].title, videos[i].type, videos[i].rating);
-        this.videos.push(video);
+        if (videos[i]) {
+            var video = new Video(videos[i].videoId, videos[i].title, videos[i].type, videos[i].rating);
+            this.videos.push(video);
+        }
     }
     this.remoteId = remoteId || null;
     this.isPrivate = isPrivate || false;

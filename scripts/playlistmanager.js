@@ -10,7 +10,7 @@ function PlaylistsManager() {
             data = JSON.parse(localStorage.playlists || '[]');
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
-                if (!item.remoteId) {
+                if (item && !item.remoteId) {
                     this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.shuffle));
                 }
             }
