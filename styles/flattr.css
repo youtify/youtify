@@ -1,7 +1,7 @@
 #flattr-popup .things li {
     position: relative;
     height: 100px;
-    padding-right: 30px;
+    padding-right: 60px;
     padding-left: 55px;
 }
 #flattr-popup .things img {
@@ -17,10 +17,13 @@
     border: 1px solid black;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 25px;
     cursor: pointer;
 }
 #flattr-popup .things .button .count {
     margin-right: 5px;
     color: green;
+}
+#settings .flattr .disconnect {
+    display: block;
 }

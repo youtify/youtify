@@ -5,6 +5,16 @@ function settings_Init() {
 	
 	var settings = new Settings();
 
+    // FLATTR
+
+    if (has_flattr_access_token) {
+        $('<span>Connected as </span>').appendTo('#settings > .flattr');
+        $('<a class="username" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings > .flattr');
+        $('<a class="disconnect" href="/flattrdisconnect">Disconnect</a>').appendTo('#settings > .flattr');
+    } else {
+        $('<a href="/flattrconnect">Connect to Flattr</a>').appendTo('#settings > .flattr');
+    }
+
     // QUALITY
 
     $('#qualityLowRadio')
