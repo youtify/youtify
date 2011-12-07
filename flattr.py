@@ -1,3 +1,4 @@
+import logging
 import urllib
 import base64
 from google.appengine.api import urlfetch
@@ -5,8 +6,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user
-from config import FLATTR_URL
-from config import FLATTR_API_URL
 from config import CLIENT_ID
 from config import CLIENT_SECRET
 from config import REDIRECT_URL
@@ -15,7 +14,7 @@ class ClickHandler(webapp.RequestHandler):
     """Flattrs a specified thing"""
     def post(self):
         thing_id = self.request.get('thing_id')
-        url = FLATTR_API_URL + '/rest/v2/things/' + thing_id + '/flattr'
+        url = 'https://api.flattr.com/rest/v2/things/' + thing_id + '/flattr'
         user = get_current_youtify_user()
 
         headers = {
@@ -32,21 +31,36 @@ class DisconnectHandler(webapp.RequestHandler):
     def get(self):
         user = get_current_youtify_user()
         user.flattr_access_token = None
+        user.flattr_user_name = None
         user.save()
         self.redirect('/')
 
 class ConnectHandler(webapp.RequestHandler):
     """Initiate the OAuth dance"""
     def get(self):
-        url = FLATTR_URL + '/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=flattr' % (CLIENT_ID, urllib.quote(REDIRECT_URL))
+        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=flattr' % (CLIENT_ID, urllib.quote(REDIRECT_URL))
         self.redirect(url)
+
+def update_fattr_user_info(user):
+    """Note, this function does not save the user model"""
+    url = 'https://api.flattr.com/rest/v2/user'
+    headers = {
+        'Authorization': 'Bearer %s' % user.flattr_access_token,
+    }
+    response = urlfetch.fetch(url=url, method=urlfetch.GET, headers=headers)
+    response = simplejson.loads(response.content)
+    user.flattr_user_name = response['username']
+    try:
+        pass
+    except:
+        logging.error("Failed to fetch flattr user name for user %s" % user)
 
 class BackHandler(webapp.RequestHandler):
     """Retrieve the access token"""
     def get(self):
         code = self.request.get('code')
 
-        url = FLATTR_URL + '/oauth/token'
+        url = 'https://flattr.com/oauth/token'
 
         headers = {
             'Authorization': 'Basic %s' % base64.b64encode(CLIENT_ID + ":" + CLIENT_SECRET),
@@ -64,6 +78,9 @@ class BackHandler(webapp.RequestHandler):
         if 'access_token' in response:
             user = get_current_youtify_user()
             user.flattr_access_token = response['access_token']
+
+            update_fattr_user_info(user)
+
             user.save()
             self.redirect('/')
         else:

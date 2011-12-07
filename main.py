@@ -51,6 +51,7 @@ class MainHandler(webapp.RequestHandler):
             'accept_language_header': self.request.headers.get('Accept-Language', ''), # todo remove
             'logged_in': int(current_user is not None),
             'has_flattr_access_token': int(youtify_user is not None and youtify_user.flattr_access_token is not None),
+            'flattr_user_name': youtify_user is not None and youtify_user.flattr_user_name,
             'login_url': users.create_login_url('/'),
             'logout_url': users.create_logout_url('/'),
             'toplist': get_or_create_toplist_json(),
