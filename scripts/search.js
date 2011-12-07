@@ -178,8 +178,8 @@ var Search = {
 	selectSearchResults: function() {
         history.pushState(null, null, '/');
 
-		$('#left .tabs li').removeClass('selected');
-		$('#left .tabs li.search').addClass('selected');
+		$('#left .menu li').removeClass('selected');
+		$('#left .menu li.search').addClass('selected');
 
 		$('#right > .selected').removeClass('selected');
 		$('#right > .search').addClass('selected');

@@ -150,11 +150,10 @@ $(document).ready(function() {
     queue_Init();
     ping_Init();
     notification_Init();
-    leftmenu_Init();
     fatBar_Init();
     heart_Init();
     webstore_Init();
-    LeftTabs.init();
+    Menus.init();
     player_Init();
     Timeline.init();
     Flattr.init();

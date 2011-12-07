@@ -121,7 +121,7 @@ function loadPlaylistView(playlist) {
     $('#right > div').hide();
     
 	$('#right .playlists .pane').hide().removeClass('active');
-    $('#left .tabs li').removeClass('selected');
+    $('#left .menu li').removeClass('selected');
     
     playlist.playlistDOMHandle.addClass('active');
     playlist.leftMenuDOMHandle.addClass('selected');
