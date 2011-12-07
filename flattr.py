@@ -27,7 +27,15 @@ class ClickHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
 
-class Handler(webapp.RequestHandler):
+class DisconnectHandler(webapp.RequestHandler):
+    """Remove the current users access token"""
+    def get(self):
+        user = get_current_youtify_user()
+        user.flattr_access_token = None
+        user.save()
+        self.redirect('/')
+
+class ConnectHandler(webapp.RequestHandler):
     """Initiate the OAuth dance"""
     def get(self):
         url = FLATTR_URL + '/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=flattr' % (CLIENT_ID, urllib.quote(REDIRECT_URL))
@@ -64,7 +72,8 @@ class BackHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/flattrconnect', Handler),
+        ('/flattrdisconnect', DisconnectHandler),
+        ('/flattrconnect', ConnectHandler),
         ('/flattrback', BackHandler),
         ('/flattrclick', ClickHandler),
     ], debug=True)
