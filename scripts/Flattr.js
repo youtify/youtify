@@ -12,7 +12,7 @@ var Flattr = {
         });
 
         $('#flattr-popup .disconnected button').click(function() {
-            window.open('/flattrconnect');
+            location.href = '/flattrconnect';
         });
 
         EventSystem.attachEventHandler('video_started_playing_successfully', Flattr.clearPopup);
@@ -34,7 +34,12 @@ var Flattr = {
             $('<img></img>').attr('src', args.image).appendTo($li);
         }
 
-        $('<span class="button"><span class="count">' + args.flattres + '</span><span class="text">Flattr</span></span>').appendTo($li);
+        $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
+            .click(function() {
+                $.post('/flattrclick', {thing_id:args.thingId}, function(data) {
+                    console.log(data);
+                });
+            }).appendTo($li);
 
         return $li;
     },
@@ -67,7 +72,7 @@ var Flattr = {
                 subtitle: '@' + screenName,
                 title: 'Artist Twitter Account',
                 image: data.profile_image_url,
-                flattres: 0
+                flattrs: 0
             }).appendTo('#flattr-popup .things');
         });
     },
@@ -92,9 +97,16 @@ var Flattr = {
                     content: 'No flattr thing registered for ' + thingUrl
                 }).appendTo('#flattr-popup .things');
             } else {
-                $li.addClass('found');
-                $li.find('.flattres').text(data.flattres);
-                $li.find('.content').text(thingUrl);
+                Flattr.createPopupFlattrItem({
+                    className: 'video',
+                    title: 'YouTube Video',
+                    thingId: data.id,
+                    a: {
+                        text: data.title,
+                        link: data.link
+                    },
+                    flattrs: data.flattrs,
+                }).appendTo('#flattr-popup .things');
             }
         });
     },
