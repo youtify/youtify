@@ -717,6 +717,20 @@ cursor: pointer;
 #bottom .share-wrapper .flattr:active {
     background: url(/images/flattr-active.png) no-repeat center center;
 }
+#bottom .share-wrapper .flattr .badge {
+    display: none;
+
+    background: red;
+    color: white;
+
+    border: 2px solid red;
+    border-radius: 5px;
+    font-size: 9px;
+
+    position: absolute;
+    top: -2px;
+    right: -2px;
+}
 #bottom .timeline-wrapper {
     position: absolute;
     top: 43px;

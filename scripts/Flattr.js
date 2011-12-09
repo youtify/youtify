@@ -1,6 +1,12 @@
 var Flattr = {
+    $badge: null,
+
     init: function() {
+        Flattr.$badge = $('#bottom .flattr .badge');
+
         $('#bottom .flattr').click(function() {
+            Flattr.$badge.text('0').hide();
+
             if (has_flattr_access_token) { // global
                 $('#flattr-popup .connected').show();
                 $('#flattr-popup .disconnected').hide();
@@ -21,6 +27,7 @@ var Flattr = {
     },
 
 	clearPopup: function(video) {
+        Flattr.$badge.text('0').hide();
         $('#flattr-popup .things').html('');
     },
 
@@ -63,6 +70,7 @@ var Flattr = {
         $twitter.html('');
 
         $.getJSON(url, function(data) {
+            Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
             Flattr.createPopupFlattrItem({
                 className: 'twitter',
                 a: {
@@ -90,6 +98,7 @@ var Flattr = {
         console.log('looking up flattr thing for ' + thingUrl);
 
         $.getJSON(url, function(data) {
+            Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
             if (data.message !== undefined && data.message === 'not_found') {
                 Flattr.createNotFoundItem({
                     className: 'video',
