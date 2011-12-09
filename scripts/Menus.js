@@ -4,9 +4,12 @@ var Menus = {
     left: [],
     init: function() {
         /* Create new menus */
-        Menus.left.push(new Menu('toplist').init());
-        Menus.left.push(new Menu('queue').init());
-        Menus.left.push(new Menu('search').init());
+        var leftMenus = ['toplist', 'queue', 'search'];
+        $.each(leftMenus, function(i, name) {
+            var menu = new Menu(name);
+            menu.init();
+            Menus.left.push(menu);
+        });
         
         /* Bind events */
         $('#left .playlists .new span').click(Menus.newPlaylistClick);
@@ -89,36 +92,44 @@ var Menus = {
 
 function Menu(type) {
     var self = this;
-    var type = type;
-    var leftView = null;
-    var rightView = null;
+    self.type = type;
+    self.leftView = null;
+    self.rightView = null;
+    self.tabs = [];
     
-    var init = function() {
-        /* Set click event */
-        self.leftView.click(self.select);
+    self.init = function() {
         /* Bind views */
         switch(self.type) {
             case 'toplist':
                 self.leftView = $('#left .menu .toplist');
                 self.rightView = $('#right .toplists');
+                self.addTabs(['youtify', 'youtube-top100', 'youtube-indie']);
                 break;
             case 'queue':
                 self.leftView = $('#left .menu .queue');
                 self.rightView = $('#right .queue');
+                self.addTabs(['queue']);
                 break;
             case 'search':
                 self.leftView = $('#left .menu .search');
                 self.rightView = $('#right .search');
+                self.addTabs(['youtube-videos', 'youtube-playlists']);
+                /* Bind search menu to this */
+                Search.menu = self;
                 break;
             case 'favorites':
                 self.leftView = $('#left .menu .favorites');
                 self.rightView = $('#right .favorites');
+                self.addTabs(['favorites']);
                 break;
         }
-        return self;
+        /* Set click event */
+        self.leftView.click(self.select);
+        self.leftView.data('model', self);
+        self.rightView.data('model', self);
     };
     
-    var select = function() {
+    self.select = function() {
         /* Remove selected on all menus*/
         $('#left .menu li').removeClass('selected');
         self.leftView.addClass('selected');
@@ -128,11 +139,26 @@ function Menu(type) {
         self.rightView.show();
         
         /* Display the right video list*/
-        if (self.rightView.find('.panel.active').length === 0) {
-            self.rightView.find('.panel:first')
-                .show()
-                .addClass('active');
+        if (self.tabs.length > 0) {
+            var selectedTab = null;
+            $.each(self.tabs, function(i, item) {
+                if (item.view.hasClass('selected')) {
+                    selectedTab = item;
+                    return false;
+                }
+            });
+            /* No selected tab was found. Select the first. */
+            if (selectedTab === null) {
+                self.tabs[0].select();
+            }
         }
-        return self;
+    };
+    
+    self.addTabs = function(tabList) {
+        $.each(tabList, function(i, type) {
+            var tab = new Tab(type, self);
+            tab.init();
+            self.tabs.push(tab);
+        });
     };
 }

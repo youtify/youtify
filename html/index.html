@@ -79,6 +79,7 @@
 		<script src="/scripts/heart.js"></script>
         <script src="/scripts/webstore.js"></script>
         <script src="/scripts/menus.js"></script>
+        <script src="/scripts/tab.js"></script>
         <script src="/scripts/LoadMore.js"></script>
         <script src="/scripts/Timeline.js"></script>
         <script src="/scripts/EventSystem.js"></script>
@@ -160,8 +161,8 @@
             <div id="right">
                 <div class="search">
                     <ul class="tabs">
-                        <li rel=".youtube.videos.pane" class="active">YouTube Videos</li>
-                        <li rel=".youtube.playlists.pane">YouTube Playlists</li>
+                        <li class="youtube videos" rel=".youtube.videos.pane" class="active">YouTube Videos</li>
+                        <li class="youtube playlists" rel=".youtube.playlists.pane">YouTube Playlists</li>
                     </ul>
                     <table class="youtube videos pane">
                     </table>
@@ -170,9 +171,9 @@
                 
                 <div class="toplists">
                     <ul class="tabs">
-                        <li rel=".youtify.pane">Youtify Toplist</li>
-                        <li rel=".youtube.top100.pane" class="active">YouTube Toplist</li>
-                        <li rel=".youtube.indie.pane">YouTube Indie Toplist</li>
+                        <li class="youtify" rel=".youtify.pane">Youtify Toplist</li>
+                        <li class="youtube top100" rel=".youtube.top100.pane" class="active">YouTube Toplist</li>
+                        <li class="youtube indie" rel=".youtube.indie.pane">YouTube Indie Toplist</li>
                     </ul>
                     <table class="youtify pane"></table>
                     <table class="youtube top100 pane"></table>
@@ -181,9 +182,9 @@
                 
                 <div class="queue">
                     <div class="info">
-                        <span class="title translatable">Play Queue</span>
+                        <span class="queue" class="title translatable">Play Queue</span>
                     </div>
-                    <table class="pane"></table>
+                    <table class="queue pane"></table>
                 </div>
                 
                 <div class="playlists">

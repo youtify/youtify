@@ -226,7 +226,7 @@ function showResultsItemContextMenu(event) {
 						resultItem.appendTo($('#results'));
 					}); 
 				});
-				Search.selectSearchResults();
+				$('#right .search .tab .youtube.videos').data('model').select();
 			}
 		},
 		{

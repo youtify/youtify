@@ -293,7 +293,7 @@ cursor: pointer;
     padding-bottom: 230px; /* #youtube.height */
     overflow: hidden;
 }
-#left .tabs {
+#left .menu {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -303,26 +303,26 @@ cursor: pointer;
     padding: 0 5px 5px 10px;
     overflow-y: scroll;
 }
-#left .tabs .toplist, 
-#left .tabs .queue,
-#left .tabs .search,
-#left .tabs .playlists li {
+#left .menu .toplist, 
+#left .menu .queue,
+#left .menu .search,
+#left .menu .playlists li {
     cursor: pointer;
     margin-right: 5px;
     padding: 8px 0px 8px 0px;
     border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
 }
-#left .tabs .toplist:before, 
-#left .tabs .queue:before,
-#left .tabs .search:before,
-#left .tabs .playlists li:before {
+#left .menu .toplist:before, 
+#left .menu .queue:before,
+#left .menu .search:before,
+#left .menu .playlists li:before {
     content: url(/images/playlist.png);
     margin-right: 3px;
 }
-#left .tabs li.selected {
+#left .menu li.selected {
     font-weight: bold;
 }
-#left .tabs .playlists .new:before {
+#left .menu .playlists .new:before {
     content: '+';
     cursor: default;
     position: absolute;
@@ -339,7 +339,7 @@ cursor: pointer;
     background: -o-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
     background: linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
 }
-#left .tabs .playlists .new {
+#left .menu .playlists .new {
     position: relative;
     background: rgba(0, 124, 137, 0.2);
     margin: 10px 0px 5px 24px;
@@ -348,10 +348,10 @@ cursor: pointer;
     border: 1px solid rgba(128, 128, 128, 0.5);
     border-left: none;
 }
-#left .tabs .playlists .new:hover {
+#left .menu .playlists .new:hover {
     background: rgba(0, 124, 137, 0.4);
 }
-#left .tabs .playlists .new span {
+#left .menu .playlists .new span {
     cursor: pointer;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     display: inline-block;
@@ -359,7 +359,7 @@ cursor: pointer;
     width: 100%;
     height: 100%;
 }
-#left .tabs .playlists .new input[type=text] {
+#left .menu .playlists .new input[type=text] {
     font-size: 12px;
     display: inline-block;
     padding: 2px 2px 1px 2px;
@@ -428,7 +428,7 @@ cursor: pointer;
 #right .tabs li:nth-of-type(1) {
     margin-left: 0;
 }
-#right .tabs li.active {
+#right .tabs li.selected {
     background: rgba(0, 124, 137, 0.1);
 }
 #right .tabs li:hover {

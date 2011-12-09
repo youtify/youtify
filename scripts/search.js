@@ -1,24 +1,9 @@
 function search_Init() {
     var timeoutId = null;
-
-	$('#searchbar .tab').click(function() {
-        $('#searchbar .tab').removeClass('selected');
-        $(this).addClass('selected');
-        localStorage['search-options'] = $(this).attr('id');
-        Search.q = ''; // Clear search
-        $('#search input').keyup();
-	});
-
-	// SEARCH OPTIONS
-    if (localStorage['search-options']) {
-        $('#searchbar .tab').removeClass('selected');
-        $('#' + localStorage['search-options']).addClass('selected');
-    }
-
+    
 	// SEARCH
 	$('#top .search input').keyup(function(event) {
-		Search.selectSearchResults();
-        var timeout = 0;
+		var timeout = 0;
 
         var $searchInput = $('#top .search input');
 
@@ -38,13 +23,10 @@ function search_Init() {
             }
         }, timeout);
     });
-	
-	$('#left .search').click(function() {
-		Search.selectSearchResults();
-	});
 }
 
 var Search = {
+    menu: null,
 	q: '',
 	playlistsStart: 0,
 	videosStart: 0,
@@ -58,7 +40,7 @@ var Search = {
 
         $('body').addClass('searching');
 
-        $('#right .search .pane').html('');
+        Search.menu.select();
         
         if ($('#right .search .tabs .youtube.playlists').hasClass('selected')) {
             Search.searchPlaylists(q);
@@ -99,12 +81,12 @@ var Search = {
 				var title = item.title.$t;
 				var url = item.id.$t;
 				var playlistId = item.yt$playlistId.$t;
-				$('<li/>').addClass('playlist').text(title).data('playlistId', playlistId).click(function(event) {
+				$('<tr/>').addClass('playlist').text(title).data('playlistId', playlistId).click(function(event) {
 					var parameters = {
                         'event': event,
                         'playlist': $(this)
                     };
-					if ($(this).find('ul').length) {
+					if ($(this).find('table').length) {
 						toggle(null, parameters);
 					} else {
 						getVidsInPlaylist($(this).data('playlistId'), toggle, parameters);
@@ -175,16 +157,6 @@ var Search = {
             }
 		});
 	},
-	selectSearchResults: function() {
-        history.pushState(null, null, '/');
-
-		$('#left .menu li').removeClass('selected');
-		$('#left .menu li.search').addClass('selected');
-
-		$('#right > .selected').removeClass('selected');
-		$('#right > .search').addClass('selected');
-	},
-	
 	findAndPlayAlternative: function(elem) {
 		var url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
 		var params = {
