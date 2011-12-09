@@ -44,7 +44,7 @@ function showVideoSharePopup(videoId, title, elem, arrowDirection) {
 
 function Video(videoId, title, type, rating) {
     this.videoId = videoId;
-    this.title = title || '';
+    this.title = $.trim(title) || '';
     this.artist = extractArtist(this.title);
     this.type = type;
     this.rating = rating;
