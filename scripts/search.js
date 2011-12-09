@@ -26,7 +26,7 @@ function search_Init() {
 }
 
 var Search = {
-    menu: null,
+    menuItem: null,
 	q: '',
 	playlistsStart: 0,
 	videosStart: 0,
@@ -40,7 +40,7 @@ var Search = {
 
         $('body').addClass('searching');
 
-        Search.menu.select();
+        Search.menuItem.select();
         
         if ($('#right .search .tabs .youtube.playlists').hasClass('selected')) {
             Search.searchPlaylists(q);

@@ -1,20 +1,20 @@
 var pendingVideo;
 
-var Menus = {
+var Menu = {
     left: [],
     init: function() {
-        /* Create new menus */
-        var leftMenus = ['toplist', 'queue', 'search'];
-        $.each(leftMenus, function(i, name) {
-            var menu = new Menu(name);
-            menu.init();
-            Menus.left.push(menu);
+        /* Create new menuitems */
+        var leftMenuItems = ['toplist', 'queue', 'search'];
+        $.each(leftMenuItems, function(i, name) {
+            var menuItem = new MenuItem(name);
+            menuItem.init();
+            Menu.left.push(menuItem);
         });
         
         /* Bind events */
-        $('#left .playlists .new span').click(Menus.newPlaylistClick);
-        $('#left .playlists .new input').keyup(Menus.newPlaylistNameKeyUp);
-        $('#left .playlists .new input').blur(Menus.newPlaylistNameBlur);
+        $('#left .playlists .new span').click(Menu.newPlaylistClick);
+        $('#left .playlists .new input').keyup(Menu.newPlaylistNameKeyUp);
+        $('#left .playlists .new input').blur(Menu.newPlaylistNameBlur);
     },
     createPlaylistViews: function() {
         $('#left .menu .playlists').html('');
@@ -90,7 +90,7 @@ var Menus = {
 
 };
 
-function Menu(type) {
+function MenuItem(type) {
     var self = this;
     self.type = type;
     self.leftView = null;
@@ -115,7 +115,7 @@ function Menu(type) {
                 self.rightView = $('#right .search');
                 self.addTabs(['youtube-videos', 'youtube-playlists']);
                 /* Bind search menu to this */
-                Search.menu = self;
+                Search.menuItem = self;
                 break;
             case 'favorites':
                 self.leftView = $('#left .menu .favorites');
@@ -130,15 +130,15 @@ function Menu(type) {
     };
     
     self.select = function() {
-        /* Remove selected on all menus*/
+        /* Remove selected on all menuItems */
         $('#left .menu li').removeClass('selected');
         self.leftView.addClass('selected');
         
-        /* Display right tabs */
+        /* Display right view */
         self.rightView.siblings().hide();
         self.rightView.show();
         
-        /* Display the right video list*/
+        /* Display the right video list */
         if (self.tabs.length > 0) {
             var selectedTab = null;
             $.each(self.tabs, function(i, item) {

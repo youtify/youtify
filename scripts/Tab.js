@@ -58,7 +58,7 @@
             }
         }
         
-        /* Remove selected on all menus */
+        /* Remove selected on all menuItems */
         self.view.siblings().removeClass('selected');
         self.view.addClass('selected');
                 

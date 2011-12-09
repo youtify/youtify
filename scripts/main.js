@@ -16,7 +16,6 @@ search_Init: true,
 queue_Init: true,
 ping_Init: true,
 notification_Init: true,
-leftmenu_Init: true,
 fatBar_Init: true,
 url_Init: true,
 
@@ -153,7 +152,7 @@ $(document).ready(function() {
     fatBar_Init();
     heart_Init();
     webstore_Init();
-    Menus.init();
+    Menu.init();
     player_Init();
     Timeline.init();
     Flattr.init();
