@@ -518,7 +518,9 @@ cursor: pointer;
 #right .info {
     display: block;
     margin-bottom: 2px;
+
 }
+#right .info .queue,
 #right .info .title,
 #right .info .owner,
 #right .info .subscribe,

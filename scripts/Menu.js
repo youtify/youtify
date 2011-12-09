@@ -107,7 +107,7 @@ function MenuItem(type) {
                 break;
             case 'queue':
                 self.leftView = $('#left .menu .queue');
-                self.rightView = $('#right .queue');
+                self.rightView = $('#right > .queue');
                 self.addTabs(['queue']);
                 break;
             case 'search':
