@@ -27,6 +27,12 @@ var VideoInfo = {
                 info.description = '';
             }
 
+            try {
+                info.thumbnail = data.entry.media$group.media$thumbnail[0].url;
+            } catch (e) {
+                info.thumbnail = null;
+            }
+
             EventSystem.callEventHandlers('video_info_fetched', info);
 		});
 	},

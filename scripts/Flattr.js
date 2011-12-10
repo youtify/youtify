@@ -95,6 +95,7 @@ var Flattr = {
                             text: data.title,
                             link: data.link
                         },
+                        image: info.thumbnail,
                         thingId: data.id,
                         flattrs: data.flattrs,
                     })

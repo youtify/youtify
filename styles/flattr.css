@@ -8,6 +8,7 @@
     padding-left: 55px;
 }
 #flattr-popup .things img {
+    width: 48px;
     position: absolute;
     left: 0;
     top: 0;
