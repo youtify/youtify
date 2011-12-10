@@ -1,6 +1,9 @@
+/* POPUP */
 #flattr-popup .things li {
-    position: relative;
     height: 100px;
+}
+#flattr-popup .things li .content.found {
+    position: relative;
     padding-right: 60px;
     padding-left: 55px;
 }
@@ -17,13 +20,15 @@
     border: 1px solid black;
     position: absolute;
     right: 0;
-    top: 25px;
+    top: 0;
     cursor: pointer;
 }
 #flattr-popup .things .button .count {
     margin-right: 5px;
     color: green;
 }
+
+/* SETTINGS */
 #settings .flattr .disconnect {
     display: block;
 }
