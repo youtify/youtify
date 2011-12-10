@@ -43,9 +43,15 @@ var Flattr = {
 
         $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
             .click(function() {
+                var $button = $(this);
                 $.post('/flattrclick', {thing_id:args.thingId}, function(data) {
-                    alert('flattr click');
-                    console.log(data);
+                    if ('error_description' in data) {
+                        alert(data.error_description);
+                    } else {
+                        var $count = $button.find('.count');
+                        $count.text(String(Number($count.text()) + 1));
+                        alert('Thanks, you rock, and frankly you are very handsome as well');
+                    }
                 });
             }).appendTo($div);
 
