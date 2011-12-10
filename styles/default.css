@@ -223,12 +223,12 @@ html, body {
     position: relative;
 }
 #top .menus .heart {
-display: inline;
-color: #DD0000;
-opacity: 0.8;
-text-shadow: 0 0 5px #FFF;
-font-size: 22px;
-cursor: pointer;
+    display: inline;
+    color: #DD0000;
+    opacity: 0.8;
+    text-shadow: 0 0 5px #FFF;
+    font-size: 22px;
+    cursor: pointer;
 }
 #top .menus .spacings,
 #top .menus .username,
