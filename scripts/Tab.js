@@ -42,6 +42,10 @@
         self.view.data('model', self);
     };
     
+    self.isSelected = function() {
+        return self.view.hasClass('selected');
+    };
+    
     self.select = function() {
         /* Select parent? */
         if (!self.parent.leftView.hasClass('selected')) {
