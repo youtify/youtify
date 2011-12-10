@@ -76,7 +76,6 @@ function Video(videoId, title, type, rating) {
     this.createListView = function() {
         var space = $('<td class="space"></td>'),
             self = this,
-            hasTouch = /android|iphone|ipad/i.test(navigator.userAgent.toLowerCase()),
             select = (function(event) {
                     self.listViewSelect(event);
                     event.stopPropagation();
@@ -111,13 +110,8 @@ function Video(videoId, title, type, rating) {
             .text(this.getRatingAsString())
             .appendTo(this.listView);
 
-        if (hasTouch) {
-            this.listView.doubletap(play);
-            titleElem.doubletap(play);
-        } else {
-            this.listView.dblclick(play);
-            titleElem.dblclick(play);
-        }
+        this.listView.dblclick(play);
+        titleElem.dblclick(play);
         
         return this.listView;
     };
