@@ -20,7 +20,7 @@ function showContextMenu(buttons, x, y) {
     });
 
     // Set up a blocker div that closes the menu when clicked
-    var blocker = $('<div id="context-menu-blocker"></div>').mousedown(function(event) {
+    var blocker = $('<div id="context-menu-blocker" class="blocker"></div>').mousedown(function(event) {
         $('#context-menu-blocker, #contextmenu').remove();
         event.stopPropagation();
     });
@@ -166,8 +166,6 @@ function showPlaylistContextMenu(event) {
 }
 
 function showResultsItemContextMenu(event) {
-    event.preventDefault();
-
     li = $(this);
     if (!$(li).hasClass('selected')) {
         li.parent().find('.selected').removeClass('selected');
@@ -241,7 +239,11 @@ function showResultsItemContextMenu(event) {
 		}
     ];
 
-    buttons = $.merge(buttons, $(this).data('additionalMenuButtons'));
+    if ($(this).data('additionalMenuButtons')) {
+        buttons = $.merge(buttons, $(this).data('additionalMenuButtons'));
+    }
 
     showContextMenu(buttons, (event.pageX || $(this).offset().left + $(this).width()) , (event.pageY || $(this).offset().top));
+
+    return false;
 }

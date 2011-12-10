@@ -87,6 +87,7 @@ function Video(videoId, title, type, rating) {
         this.listView = $('<tr/>')
             .addClass("draggable")
             .addClass("video")
+            .bind('contextmenu', showResultsItemContextMenu)
             .click(select)
             .data('model', self);
         

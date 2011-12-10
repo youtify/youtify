@@ -38,20 +38,6 @@
     transform: rotate(180deg);
 }
 
-/* BLOCKER
- ****************************************************************************/
-
-#context-menu-blocker,
-#arrow-popup-blocker {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 199;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-}
-
 /** SETTINGS POPUP
  ****************************************************************************/
 
