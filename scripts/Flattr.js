@@ -23,6 +23,7 @@ var Flattr = {
 
         EventSystem.attachEventHandler('video_started_playing_successfully', Flattr.clearPopup);
         EventSystem.attachEventHandler('video_info_fetched', Flattr.loadVideo);
+        EventSystem.attachEventHandler('uploader_info_fetched', Flattr.loadUploader);
         EventSystem.attachEventHandler('artist_twitter_account_found', Flattr.loadTwitter);
     },
 
@@ -103,4 +104,29 @@ var Flattr = {
             }
         });
     },
+
+    loadUploader: function(info) {
+        var thingUrl = 'http://www.youtube.com/user/' + info.name;
+        var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(thingUrl) + '&jsonp=?';
+        var $uploader = $('#flattr-popup .things .uploader');
+
+        console.log('looking up flattr thing for ' + thingUrl);
+
+        $.getJSON(url, function(data) {
+            if (data.message !== 'not_found') {
+                Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
+                $uploader.find('.content').replaceWith(
+                    Flattr.createThingElem({
+                        a: {
+                            text: data.title,
+                            link: data.link
+                        },
+                        image: info.thumbnail,
+                        thingId: data.id,
+                        flattrs: data.flattrs,
+                    })
+                );
+            }
+        });
+    }
 };

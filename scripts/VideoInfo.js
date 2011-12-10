@@ -2,6 +2,23 @@ var VideoInfo = {
     init: function() {
         EventSystem.attachEventHandler('video_started_playing_successfully', VideoInfo.loadYouTubeVideoInfo);
         EventSystem.attachEventHandler('video_info_fetched', VideoInfo.loadLinko);
+        EventSystem.attachEventHandler('video_info_fetched', VideoInfo.loadYouTubeUploader);
+    },
+
+    loadYouTubeUploader: function(videoInfo) {
+		var url = videoInfo.author.uri + "?callback=?";
+		var params = {
+			'alt': 'json-in-script',
+			'prettyprint': true,
+			'v': 2
+		};
+
+        var info = videoInfo.author;
+
+		$.getJSON(url, params, function(data) {
+            info.thumbnail = data.entry.media$thumbnail.url;
+            EventSystem.callEventHandlers('uploader_info_fetched', info);
+        });
     },
 
 	loadYouTubeVideoInfo: function(video) {
@@ -17,9 +34,11 @@ var VideoInfo = {
         };
 
 		$.getJSON(url, params, function(data) {
-			info.author = data.entry.author[0].name.$t;
+			info.author = {
+                name: data.entry.author[0].name.$t,
+                uri: data.entry.author[0].uri.$t
+            };
 			info.title = data.entry.title.$t;
-			info.author_uri = data.entry.author[0].uri.$t;
 
             try {
                 info.description = data.entry.media$group.media$description.$t;
