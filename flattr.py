@@ -49,18 +49,18 @@ def update_fattr_user_info(user):
     }
     response = urlfetch.fetch(url=url, method=urlfetch.GET, headers=headers)
     response = simplejson.loads(response.content)
-    user.flattr_user_name = response['username']
-    try:
-        pass
-    except:
-        logging.error("Failed to fetch flattr user name for user %s" % user)
+
+    if 'error_description' in response:
+        raise Exception('Failed to update flattr user info for user %s - %s' % (user.google_user.email(), response['error_description']))
+    else:
+        user.flattr_user_name = response['username']
 
 class BackHandler(webapp.RequestHandler):
     """Retrieve the access token"""
     def get(self):
         code = self.request.get('code')
 
-        url = 'https://flattr.com/oauth/token'
+        url = 'https://flattr.dev/oauth/token'
 
         headers = {
             'Authorization': 'Basic %s' % base64.b64encode(CLIENT_ID + ":" + CLIENT_SECRET),
