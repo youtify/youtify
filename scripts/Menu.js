@@ -141,8 +141,8 @@ function MenuItem(type) {
         /* Display the right video list */
         if (self.tabs.length > 0) {
             var selectedTab = null;
-            $.each(self.tabs, function(i, item) {
-                if (item.view.hasClass('selected')) {
+            $.each(self.tabs, function(i, tab) {
+                if (tab.isSelected()) {
                     selectedTab = item;
                     return false;
                 }
