@@ -1,4 +1,3 @@
-import logging
 import urllib
 import base64
 from google.appengine.api import urlfetch
@@ -10,6 +9,8 @@ from config import CLIENT_ID
 from config import CLIENT_SECRET
 from config import REDIRECT_URL
 
+VALIDATE_CERTIFICATE = True
+
 class ClickHandler(webapp.RequestHandler):
     """Flattrs a specified thing"""
     def post(self):
@@ -18,10 +19,10 @@ class ClickHandler(webapp.RequestHandler):
         user = get_current_youtify_user()
 
         headers = {
-            'Authorization': 'Bearer %s' % user.flattr_access_token,
+            'Authorization': 'Bearer %s' % user.flattr_access_token
         }
 
-        response = urlfetch.fetch(url=url, method=urlfetch.POST, headers=headers)
+        response = urlfetch.fetch(url=url, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
@@ -47,7 +48,7 @@ def update_fattr_user_info(user):
     headers = {
         'Authorization': 'Bearer %s' % user.flattr_access_token,
     }
-    response = urlfetch.fetch(url=url, method=urlfetch.GET, headers=headers)
+    response = urlfetch.fetch(url=url, method=urlfetch.GET, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
     response = simplejson.loads(response.content)
 
     if 'error_description' in response:
@@ -60,7 +61,7 @@ class BackHandler(webapp.RequestHandler):
     def get(self):
         code = self.request.get('code')
 
-        url = 'https://flattr.dev/oauth/token'
+        url = 'https://flattr.com/oauth/token'
 
         headers = {
             'Authorization': 'Basic %s' % base64.b64encode(CLIENT_ID + ":" + CLIENT_SECRET),
@@ -72,7 +73,7 @@ class BackHandler(webapp.RequestHandler):
             'grant_type': 'authorization_code',
         })
 
-        response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers)
+        response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
         response = simplejson.loads(response.content)
 
         if 'access_token' in response:
