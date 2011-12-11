@@ -45,14 +45,14 @@ function loadPlaylist(playlistId) {
 }
 
 function savePlaylistButtonClicked(event) {
-    var playlist = $('#right .playlists .pane.active').data('model');
+    var playlist = $('#right > .playlists .pane.active').data('model');
     playlistManager.addPlaylist(playlist.copy()); // create copy without connection to remote
     updatePlaylistBar(playlist);
     playlist.createViews();
 }
 
 function syncPlaylistButtonClicked(event) {
-    var playlist = $('#right .playlists .pane.active').data('model');
+    var playlist = $('#right > .playlists .pane.active').data('model');
     playlist.sync(function() {
         updatePlaylistBar(playlist);
         history.pushState(null, null, playlist.getUrl());
@@ -88,21 +88,21 @@ function shareButtonClicked(event) {
 }
 
 function updatePlaylistBar(playlist) {
-    $('#right .playlists .info .title').text(playlist.title);
-    $('#right .playlists .info .owner').hide();
-    $('#right .playlists .info .subscribe').hide();
-    $('#right .playlists .info .copy').hide();
-    $('#right .playlists .info .sync').hide();
+    $('#right > .playlists .info .title').text(playlist.title);
+    $('#right > .playlists .info .owner').hide();
+    $('#right > .playlists .info .subscribe').hide();
+    $('#right > .playlists .info .copy').hide();
+    $('#right > .playlists .info .sync').hide();
     
     if (playlist.owner) {
         if (playlist.owner.id != my_user_id) { /* number != string */
-            $('#right .playlists .info .owner').text(playlist.owner.name).show();
+            $('#right > .playlists .info .owner').text(playlist.owner.name).show();
 
             // Add save button if not already saved
             if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
-               $('#right .playlists .info .copy').show().click(savePlaylistButtonClicked);
+               $('#right > .playlists .info .copy').show().click(savePlaylistButtonClicked);
             }
-            $('#right .playlists .info .subscribe')
+            $('#right > .playlists .info .subscribe')
                 .show()
                 .unbind('click')
                 .click(function() {
@@ -110,7 +110,7 @@ function updatePlaylistBar(playlist) {
                 });
         }
     } else if (logged_in) {
-        $('#right .playlists .info .sync')
+        $('#right > .playlists .info .sync')
             .show()
             .unbind('click')
             .click(syncPlaylistButtonClicked);
@@ -120,7 +120,7 @@ function updatePlaylistBar(playlist) {
 function loadPlaylistView(playlist) {
     $('#right > div').hide();
     
-	$('#right .playlists .pane').hide().removeClass('active');
+	$('#right > .playlists .pane').hide().removeClass('active');
     $('#left .menu li').removeClass('selected');
     
     playlist.playlistDOMHandle.addClass('active');
@@ -137,7 +137,7 @@ function loadPlaylistView(playlist) {
         });
     }
 	playlist.playlistDOMHandle.show();
-    $('#right .playlists').show();
+    $('#right > .playlists').show();
 }
 
 /**
@@ -391,7 +391,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         var self = this,
             table = $('<table/>')
                 .addClass('pane')
-                .appendTo('#right .playlists')
+                .appendTo('#right > .playlists')
                 .data('model', self),
             li = $('<li/>')
                 .addClass("playlistElem")
