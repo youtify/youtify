@@ -436,7 +436,8 @@ html, body {
 #right .tabs li:hover {
     background: rgba(0, 124, 137, 0.4);
 }
-#right .pane {
+#right .pane,
+#right .pane table {
     width: 100%;
     max-height: 100%;
     border-spacing: 0px;
@@ -445,13 +446,13 @@ html, body {
 #right .pane tr {
     margin: 0px 0px 0px 10px;
 }
-#right .pane tr:hover .playlist,
-#right .pane tr:hover .play,
-#right .pane tr:hover .title,
-#right .pane tr:hover .like,
-#right .pane tr:hover .views,
-#right .pane tr:hover .videoCountHint,
-#right .pane tr:hover .rating {
+#right .pane .video:hover > .playlist,
+#right .pane .video:hover > .play,
+#right .pane .video:hover > .title,
+#right .pane .video:hover > .like,
+#right .pane .video:hover > .views,
+#right .pane .video:hover > .videoCountHint,
+#right .pane .video:hover > .rating {
     background-color: rgba(0, 124, 137, 0.4);
 }
 #right .pane tr td {

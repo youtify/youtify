@@ -77,7 +77,9 @@ var YouTubePlaylist = function(id, title, videoCountHint) {
                 var results = Search.getVideosFromYouTubeSearchData(data);
                 self.videos = $.merge(self.videos, results);
                 $.each(results, function(i, video) {
-                    video.createListView().appendTo(videoView);
+                    if (video) {
+                        video.createListView().appendTo(videoView);
+                    }
                 });
                 self.loadVideos();
             } else {

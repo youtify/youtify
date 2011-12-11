@@ -9,6 +9,13 @@ var Search = {
     init: function() {
         /* Search on key up */
         $('#top .search input').keyup(function(event) {
+            var deadKeys = [9,16,17,18,37,38,39,40];
+            for (var i in deadKeys) {
+                if (event.keyCode === deadKeys[i]) {
+                    return;
+                }
+            }
+            
             var timeout = 700,
                 q = $.trim($('#top .search input').val());
 
@@ -24,12 +31,14 @@ var Search = {
                 }, timeout);
             }
         });
+        $('#top .search button').click(function() {
+            Search.search($.trim($('#top .search input').val()));
+        });
     },
     getType: function() {
         return Search.youtubeVideosTab.isSelected() ? 'youtube-videos' : 'youtube-playlists';
     },
     search: function(q, loadMore) {
-        console.log('Search.search: q=' + q + ' loadMore=' + loadMore);
         history.pushState(null, null, encodeURI('/search?q=' + q));
         Search.menuItem.select();
         Search.currentQuery = q;
@@ -39,7 +48,7 @@ var Search = {
             case 'youtube-videos':
                 /* Get the results */
                 var url = 'http://gdata.youtube.com/feeds/api/videos?callback=?',
-                    start = (loadMore) ? Search.youtubeVideosTab.paneView.find('.video').length + 1 : 1,
+                    start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1,
                     params = {
                         'alt': 'json-in-script', 'max-results': 30,
                         'start-index': start,
@@ -57,10 +66,13 @@ var Search = {
                     /* Parse the results and create the views */
                     var results = Search.getVideosFromYouTubeSearchData(data);
                     $.each(results, function(i, video) {
-                        video.createListView().appendTo(Search.youtubeVideosTab.paneView);
+                        if (video) {
+                            video.createListView().appendTo(Search.youtubeVideosTab.paneView);
+                        }
                     });
                     /* Add load more row */
                     if (results.length) {
+                        Search.youtubeVideosTab.paneView.data('results-count', results.length);
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubeVideosTab.paneView);
                     }
                     $('body').removeClass('searching');
@@ -69,7 +81,7 @@ var Search = {
                 break;
             case 'youtube-playlists':
                 var url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?",
-                    start = (loadMore) ? Search.youtubeVideosTab.paneView.find('.video').length + 1 : 1,
+                    start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1,
                     params = {
                         'alt': 'json-in-script', 'max-results': 30,
                         'start-index': start, 'format': 5, 'v': 2, 'q': q
@@ -90,6 +102,7 @@ var Search = {
                     });
                     /* Add load more row */
                     if (results.length) {
+                        Search.youtubePlaylistsTab.paneView.data('results-count', results.length);
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubePlaylistsTab.paneView);
                     }
                     $('body').removeClass('searching');
@@ -120,8 +133,13 @@ var Search = {
         if (data.feed.entry === undefined) {
             return results;
         }
-
         $.each(data.feed.entry, function(i, item) {
+            if (item.media$group.media$content === undefined || item.media$group.media$content === null) {
+                /* Content is blocked. Move on... */
+                results.push(null);
+                return;
+            }
+            
             var url = item.id.$t,
                 title = item.title.$t,
                 rating,
