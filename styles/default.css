@@ -407,22 +407,10 @@ html, body {
 #right > div.selected {
     display: block !important;
 }
-#right .tabs {
-
-}
-#right .tabs:after {
-    content: '';
-    display: block;
-    height: 10px;
-    background: rgba(0, 124, 137, 0.1);
-    margin-bottom: 2px;
-}
 #right .tabs li {
     display: inline-block;
     margin-left: 10px;
     padding: 10px;
-    background: rgba(0, 124, 137, 0.2);
-    border-radius: 10px 10px 0px 0px;
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     cursor: pointer;
@@ -431,10 +419,8 @@ html, body {
     margin-left: 0;
 }
 #right .tabs li.selected {
-    background: rgba(0, 124, 137, 0.1);
-}
-#right .tabs li:hover {
-    background: rgba(0, 124, 137, 0.4);
+    background-color: rgba(0, 124, 137, 0.1);
+    font-weight: bold;
 }
 #right .pane,
 #right .pane table {
