@@ -1,8 +1,8 @@
 var VideoInfo = {
     init: function() {
-        EventSystem.attachEventHandler('video_started_playing_successfully', VideoInfo.loadYouTubeVideoInfo);
-        EventSystem.attachEventHandler('video_info_fetched', VideoInfo.loadLinko);
-        EventSystem.attachEventHandler('video_info_fetched', VideoInfo.loadYouTubeUploader);
+        EventSystem.addEventListener('video_started_playing_successfully', VideoInfo.loadYouTubeVideoInfo);
+        EventSystem.addEventListener('video_info_fetched', VideoInfo.loadLinko);
+        EventSystem.addEventListener('video_info_fetched', VideoInfo.loadYouTubeUploader);
     },
 
     loadYouTubeUploader: function(videoInfo) {
@@ -17,7 +17,7 @@ var VideoInfo = {
 
 		$.getJSON(url, params, function(data) {
             info.thumbnail = data.entry.media$thumbnail.url;
-            EventSystem.callEventHandlers('uploader_info_fetched', info);
+            EventSystem.callEventListeners('uploader_info_fetched', info);
         });
     },
 
@@ -52,7 +52,7 @@ var VideoInfo = {
                 info.thumbnail = null;
             }
 
-            EventSystem.callEventHandlers('video_info_fetched', info);
+            EventSystem.callEventListeners('video_info_fetched', info);
 		});
 	},
 
@@ -66,7 +66,7 @@ var VideoInfo = {
                     return;
                 } else {
                     if ('Twitter' in data.links) {
-                        EventSystem.callEventHandlers('artist_twitter_account_found', data.links.Twitter);
+                        EventSystem.callEventListeners('artist_twitter_account_found', data.links.Twitter);
                     }
                 }
             });

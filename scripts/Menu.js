@@ -11,7 +11,7 @@ var Menu = {
             Menu.left.push(menuItem);
         });
 
-        EventSystem.attachEventHandler('playlists_loaded', this.createPlaylistViews);
+        EventSystem.addEventListener('playlists_loaded', this.createPlaylistViews);
 
         /* Bind events */
         $('#left .playlists .new span').click(Menu.newPlaylistClick);

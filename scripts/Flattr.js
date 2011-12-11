@@ -21,10 +21,10 @@ var Flattr = {
             location.href = '/flattrconnect';
         });
 
-        EventSystem.attachEventHandler('video_started_playing_successfully', Flattr.clearPopup);
-        EventSystem.attachEventHandler('video_info_fetched', Flattr.loadVideo);
-        EventSystem.attachEventHandler('uploader_info_fetched', Flattr.loadUploader);
-        EventSystem.attachEventHandler('artist_twitter_account_found', Flattr.loadTwitter);
+        EventSystem.addEventListener('video_started_playing_successfully', Flattr.clearPopup);
+        EventSystem.addEventListener('video_info_fetched', Flattr.loadVideo);
+        EventSystem.addEventListener('uploader_info_fetched', Flattr.loadUploader);
+        EventSystem.addEventListener('artist_twitter_account_found', Flattr.loadTwitter);
     },
 
 	clearPopup: function(video) {

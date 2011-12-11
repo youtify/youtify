@@ -20,7 +20,7 @@ function PlaylistsManager() {
 
         this.mergePlaylists(playlistsFromServer);
 
-        EventSystem.callEventHandlers('playlists_loaded', this.playlists);
+        EventSystem.callEventListeners('playlists_loaded', this.playlists);
     };
 
     this.removeRemotePlaylistsFromLocalStorage = function() {
