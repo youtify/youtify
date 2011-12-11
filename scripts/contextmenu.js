@@ -178,15 +178,16 @@ function showResultsItemContextMenu(event) {
         {
             title: 'Play',
             args: $(this),
-            callback: function(li) {
-                li.play();
+            callback: function(elem) {
+                //li.play();
+                elem.data('model').play();
             }
         },
         {
             title: 'Watch on YouTube',
             args: $(this),
-            callback: function(li) {
-                window.open('http://www.youtube.com/watch?v=' + li.data('videoId'));
+            callback: function(elem) {
+                window.open('http://www.youtube.com/watch?v=' + elem.data('model').videoId);
             }
         },
 		{
@@ -230,11 +231,9 @@ function showResultsItemContextMenu(event) {
 		{
 			title: 'Share',
 			args: $(this),
-			callback: function(li) {
-                var videoId = li.data('videoId');
-                var title = $.trim(li.find('.title').text());
-                var elem = li.find('.title');
-                showVideoSharePopup(videoId, title, elem, 'up');
+			callback: function(elem) {
+                var video = $(elem).data('model');
+                showVideoSharePopup(video.videoId, video.title, elem, 'up');
 			}
 		}
     ];
