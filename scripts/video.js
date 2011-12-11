@@ -153,6 +153,7 @@ function Video(videoId, title, type, rating) {
                 $(item).addClass('selected');
             });
         } else {
+            console.log('got here', this.listView);
             this.listView.siblings().removeClass('selected');
             this.listView.addClass('selected');
         }

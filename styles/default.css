@@ -322,7 +322,7 @@ html, body {
     margin-right: 3px;
 }
 #left .menu li.selected {
-    font-weight: bold;
+    background-color: rgba(0, 124, 137, 0.4);
 }
 #left .menu .playlists .new:before {
     content: '+';
@@ -446,13 +446,13 @@ html, body {
 #right .pane tr {
     margin: 0px 0px 0px 10px;
 }
-#right .pane .video:hover > .playlist,
-#right .pane .video:hover > .play,
-#right .pane .video:hover > .title,
-#right .pane .video:hover > .like,
-#right .pane .video:hover > .views,
-#right .pane .video:hover > .videoCountHint,
-#right .pane .video:hover > .rating {
+#right .pane .video.selected .playlist,
+#right .pane .video.selected .play,
+#right .pane .video.selected .title,
+#right .pane .video.selected .like,
+#right .pane .video.selected .views,
+#right .pane .video.selected .videoCountHint,
+#right .pane .video.selected .rating {
     background-color: rgba(0, 124, 137, 0.4);
 }
 #right .pane tr td {
