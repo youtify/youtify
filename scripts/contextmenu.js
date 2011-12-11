@@ -190,7 +190,7 @@ function showResultsItemContextMenu(event) {
                 window.open('http://www.youtube.com/watch?v=' + elem.data('model').videoId);
             }
         },
-		{
+		/*{
             title: 'Queue',
             args: allSelectedVideos,
             callback: function(allSelectedVideos) {
@@ -199,7 +199,7 @@ function showResultsItemContextMenu(event) {
                     Player.addToPlayOrder(li);
                 });
             }
-        },
+        },*/
 		{
 			title: 'Share',
 			args: $(this),
