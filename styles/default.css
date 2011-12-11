@@ -443,10 +443,12 @@ cursor: pointer;
 #right .pane tr {
     margin: 0px 0px 0px 10px;
 }
+#right .pane tr:hover .playlist,
 #right .pane tr:hover .play,
 #right .pane tr:hover .title,
 #right .pane tr:hover .like,
 #right .pane tr:hover .views,
+#right .pane tr:hover .videoCountHint,
 #right .pane tr:hover .rating {
     background-color: rgba(0, 124, 137, 0.4);
 }
@@ -454,6 +456,13 @@ cursor: pointer;
     line-height: 40px;
     text-align: center;
     cursor: default;
+}
+#right .pane tr .playlist {
+    width: 40px;
+    cursor: pointer;
+    background-image: url(/images/playlist.png);
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 #right .pane .play {
     width: 40px;
@@ -493,6 +502,7 @@ cursor: pointer;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     width: 110px;
 }
+#right .pane .videoCountHint,
 #right .pane .rating {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     width: 40px;

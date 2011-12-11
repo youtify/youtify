@@ -61,46 +61,6 @@ Date.prototype.getWeek = function (dowOffset) {
 	return weeknum;
 };
 
-function toggle(feed, parameters) {
-	var event = parameters.event;
-	var playlist = parameters.playlist;
-
-	if (playlist.find('table').length) {
-		playlist.find('table').toggle();
-	} else {
-		$('<table/>').appendTo($(playlist));
-		if (feed) {
-			$.each(feed, function(i, item) { 
-                var videoId = item.media$group.yt$videoid.$t;
-                var title = item.title.$t;
-                new Video(videoId, title, 'yt').createListView().appendTo(playlist.find('table'));
-            });
-		}
-	}
-}
-
-function getVidsInPlaylist(playlistId, callback, parameters, start, feed) {
-	if (!parameters.playlist.hasClass('loading')) {
-		parameters.playlist.addClass('loading');
-    }
-	if (start === undefined) {
-		start = 1;
-    }
-	if (feed === undefined) {
-		feed = [];
-    }
-    var url = 'http://gdata.youtube.com/feeds/api/playlists/' + playlistId + '?start-index='+start+'&max-results=50&v=2&alt=json&callback=?';
-    $.getJSON(url, {}, function(data) {
-		if (data.feed.entry && data.feed.entry.length > 0) {
-			feed = $.merge(feed, data.feed.entry);
-			getVidsInPlaylist(playlistId, callback, parameters, start+50, feed);
-		} else {
-			callback(feed, parameters);
-			parameters.playlist.removeClass('loading');
-		}
-    });
-}
-
 $(window).load(function() {
 	$('#loading span').text('Done');
 	$('#loading').fadeOut();
@@ -145,7 +105,7 @@ $(document).ready(function() {
     toplist_Init();
     spotifyImport_Init();
     settings_Init();
-    search_Init();
+    Search.init();
     queue_Init();
     ping_Init();
     notification_Init();

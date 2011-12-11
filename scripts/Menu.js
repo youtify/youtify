@@ -143,7 +143,7 @@ function MenuItem(type) {
             var selectedTab = null;
             $.each(self.tabs, function(i, tab) {
                 if (tab.isSelected()) {
-                    selectedTab = item;
+                    selectedTab = tab;
                     return false;
                 }
             });

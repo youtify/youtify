@@ -27,10 +27,12 @@
             case 'youtube-videos':
                 self.view = $('#right .search .tabs .youtube.videos');
                 self.paneView = $('#right .search .pane.youtube.videos');
+                Search.youtubeVideosTab = self;
                 break;
             case 'youtube-playlists':
                 self.view = $('#right .search .tabs .youtube.playlists');
                 self.paneView = $('#right .search .pane.youtube.playlists');
+                Search.youtubePlaylistsTab = self;
                 break;
             case 'favorites':
                 self.view = $('#right .favorites .tabs .favorites');
