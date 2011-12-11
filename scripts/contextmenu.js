@@ -201,34 +201,6 @@ function showResultsItemContextMenu(event) {
             }
         },
 		{
-			title: 'Show related',
-			args: $(this),
-			callback: function(li) {
-				$('#results').html('');
-				var videoId = li.data('videoId');
-				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId + "/related?callback=?";
-				var params = {
-					'alt': 'json-in-script',
-					'max-results': 50,
-					'prettyprint': true,
-					'v': 2
-				};
-				$.getJSON(url, params, function(data) {
-					$.each(data.feed.entry, function(i, item) {
-						var url = item.id.$t;
-						var videoId = url.match('video:(.*)$')[1];
-						var title = item.title.$t;
-						if (item.gd$rating) {
-							var rating = item.gd$rating.average;
-                        }
-						var resultItem = new Video(videoId, title, 'yt', rating).createListView();
-						resultItem.appendTo($('#results'));
-					}); 
-				});
-				$('#right .search .tab .youtube.videos').data('model').select();
-			}
-		},
-		{
 			title: 'Share',
 			args: $(this),
 			callback: function(elem) {
