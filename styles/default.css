@@ -547,29 +547,29 @@ html, body {
     border: 0;
 }
 #right .info .title {
-    background: rgba(0, 124, 137, 0.1);
-    border-radius: 0 10px 0 0;
+    font-weight: bold;
+    font-size: 18px;
 }
-#right .info .owner,
-#right .info .subscribe {
-    float: right;
-    cursor: pointer;
-    padding: 8px;
-    margin-top: 2px;
-    border-radius: 10px;
+#right .info .button {
     background:-webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
     background:-moz-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
     background:-ms-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
     background:-o-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
     background:linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    margin: 10px 0px 5px 24px;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-left: none;
     text-align: center;
-    min-width: 80px;
+    min-width: 60px;
+    cursor: pointer;
+    float: right;
 }
 #right .info .subscribe {
     margin-left: 10px;
 }
-#right .info .owner:hover,
-#right .info .subscribe:hover {
+#right .info .button:hover {
     background: rgba(0, 124, 137, 0.1);
 }
 #bottom {
