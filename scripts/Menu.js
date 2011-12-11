@@ -10,17 +10,21 @@ var Menu = {
             menuItem.init();
             Menu.left.push(menuItem);
         });
-        
+
+        EventSystem.attachEventHandler('playlists_loaded', this.createPlaylistViews);
+
         /* Bind events */
         $('#left .playlists .new span').click(Menu.newPlaylistClick);
         $('#left .playlists .new input').keyup(Menu.newPlaylistNameKeyUp);
         $('#left .playlists .new input').blur(Menu.newPlaylistNameBlur);
     },
-    createPlaylistViews: function() {
-        $('#left .menu .playlists').html('');
-        for (var i = 0; i < playlistManager.playlists.length; i += 1) {
-            playlistManager.getPlaylist(i).createViews();
-        }
+    createPlaylistViews: function(playlists) {
+        $playlists = $('#left .menu .playlists ul');
+        $playlists.html('');
+
+        $.each(playlists, function(i, playlist) {
+            $playlists.append(playlist.getMenuView());
+        });
     },
     newPlaylistClick: function() {
         var suggestedTitle = '',

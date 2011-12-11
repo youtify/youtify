@@ -97,8 +97,11 @@ $(document).ready(function() {
 	
 	//Notification.say('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 	
-    playlistManager = new PlaylistsManager();
     EventSystem.init();
+    Menu.init();
+
+    playlistManager = new PlaylistsManager();
+
 	volume_Init();
 	video_Init();
 	translations_Init();
@@ -112,7 +115,6 @@ $(document).ready(function() {
     fatBar_Init();
     heart_Init();
     webstore_Init();
-    Menu.init();
     player_Init();
     Timeline.init();
     Flattr.init();

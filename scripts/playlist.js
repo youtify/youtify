@@ -215,6 +215,13 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
         return new Playlist(this.title, this.videos);
     };
 
+    this.getMenuView = function() {
+        if (this.leftMenuDOMHandle === null) {
+            this.createViews();
+        }
+        return this.leftMenuDOMHandle;
+    };
+
     this.rename = function(newTitle) {
         var title = $.trim(newTitle);
         if (title.length > 0 && title.length < 50) {
