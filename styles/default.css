@@ -114,15 +114,8 @@ html, body {
 #contextmenu .option:hover {
     background: rgba(0, 124, 137, 0.4);
 }
-#dragElem {
-    position: absolute;
-    padding: 5px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-    background-color: #7DAFB4;
-	box-shadow: 0px 0px 20px #FFF;
-	border-radius: 10px;
-    z-index: 25;
-}
+
+/****************************/
 
 #top {
     -moz-box-sizing: border-box;
@@ -322,6 +315,9 @@ html, body {
     margin-right: 3px;
 }
 #left .menu li.selected {
+    background-color: rgba(0, 124, 137, 0.1);
+}
+#left .menu li.target {
     background-color: rgba(0, 124, 137, 0.4);
 }
 #left .menu .playlists .new:before {
@@ -843,4 +839,28 @@ html, body {
 }
 #fullscreen {
 
+}
+
+/* DRAG N DROP
+*******************************/
+
+#dragElem {
+    position: absolute;
+    padding: 5px;
+    background: white;
+	box-shadow: 0px 0px 20px #888;
+    z-index: 25;
+}
+.target {
+    background-color: rgba(0, 124, 137, 0.4);
+}
+.reorderable {
+}
+.results > .insert-before,
+#playlists > .insert-before {
+    border-top: 1px solid blue;
+}
+.insert-after,
+.insert-after {
+    border-bottom: 1px solid blue;
 }
