@@ -175,6 +175,13 @@ function Video(videoId, title, type, rating) {
 
         Player.play(this);
     };
+
+    this.toJSON = function() {
+        return {
+            'videoId': this.videoId,
+            'title': this.title
+        };
+    };
 }
 
 
