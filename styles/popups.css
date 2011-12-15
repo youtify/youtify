@@ -101,7 +101,7 @@
 	text-align: center;
 }
 #heart-popup .logos {
-	height: 100px;
+	height: 50px;
 	width: auto;
 	background: #FFF;
 	margin-bottom: 10px;
@@ -119,6 +119,12 @@
 	width: 63px;
 	height: 50px;
 	float: right;
+}
+#heart-popup p {
+    margin: 20px 0;
+    background: url(/images/kiss_32.png) right bottom no-repeat;
+    text-align: left;
+    padding-right: 32px;
 }
 
 #heart-popup .like {
