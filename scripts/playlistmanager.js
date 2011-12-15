@@ -36,6 +36,10 @@ function PlaylistsManager() {
         this.saveToLocalStorage();
     };
 
+    this.getCurrentlySelectedPlaylist = function() {
+        return $('#left .playlists .selected').data('model');
+    };
+
     this.getPlaylistsMap = function() {
         var ret = {};
         $.each(this.playlists, function(i, item) {

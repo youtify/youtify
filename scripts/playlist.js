@@ -10,13 +10,13 @@ loadPlaylistView: true,
  ****************************************************************************/
 
 function deleteVideoButtonClicked(li) {
-    var playlist = $('#playlistbar').data('playlist');
+    var playlist = playlistManager.getCurrentlySelectedPlaylist();
     var allSelectedVideos = li.parent().find('.video.selected');
 
-    $.each(allSelectedVideos, function(index, li) {
-        li = $(li);
-        playlist.deleteVideo(li.index());
-        li.remove();
+    $.each(allSelectedVideos, function(index, item) {
+        $video = $(item);
+        playlist.deleteVideo($video.index());
+        $video.remove();
     });
 
     playlistManager.save();
@@ -132,7 +132,13 @@ function loadPlaylistView(playlist) {
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
             if (item) {
-                item.createListView().appendTo(playlist.playlistDOMHandle);
+                $video = item.createListView();
+                $video.data('additionalMenuButtons', [{
+                    title: 'Delete',
+                    args: $video,
+                    callback: deleteVideoButtonClicked
+                }]);
+                $video.appendTo(playlist.playlistDOMHandle);
             }
         });
     }
