@@ -138,6 +138,9 @@ function loadPlaylistView(playlist) {
                     args: $video,
                     callback: deleteVideoButtonClicked
                 }]);
+                $video.addClass('droppable');
+                $video.addClass('draggable');
+                $video.addClass('reorderable');
                 $video.appendTo(playlist.playlistDOMHandle);
             }
         });

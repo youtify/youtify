@@ -133,7 +133,7 @@ function mouseDragged(event) {
             droppable.addClass('target');
         }
         
-        if (droppable.hasClass('reorderable') && droppable.data('type') === sourceElem.data('type')) {
+        if (droppable.hasClass('reorderable') && typeof(droppable.data('model')) === typeof(sourceElem.data('model'))) {
             droppable.addClass('insert-before');
         }
     }
@@ -255,11 +255,12 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 
 // VIDEO DROPPED ON ANOTHER VIDEO
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    var playlist = $('#playlistbar').data('playlist');
-    if (targetElem.hasClass('video') && sourceElem.hasClass('video') && sourceElem.attr('rel') !== targetElem.attr('rel')) {
+    if (targetElem.hasClass('video') && sourceElem.hasClass('video') && sourceElem.data('model') !== targetElem.data('model')) {
+        var playlist = playlistManager.getCurrentlySelectedPlaylist();
         var selectedVideos = sourceElem.parent().find('.video.selected');
 
         $.each(selectedVideos, function(index, elem) {
+            console.log('moving ', sourceElem.index(), targetElem.index());
             playlist.moveVideo(sourceElem.index(), targetElem.index());
             $(elem).detach().insertBefore(targetElem);
         });

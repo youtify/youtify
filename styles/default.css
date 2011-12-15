@@ -449,6 +449,9 @@ html, body {
     background-repeat: no-repeat;
     background-position: center center;
 }
+#right .video.insert-before {
+    border-top: 1px solid black;
+}
 #right .pane .play {
     width: 40px;
     cursor: pointer;
