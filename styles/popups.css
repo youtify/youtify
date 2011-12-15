@@ -5,13 +5,18 @@
 	width: 270px;
 	padding: 10px;
 	position: absolute;
-	background-color: #7DAFB4;
+	background-color: white;
+    color: #333;
     z-index:200;
-	box-shadow: 0px 0px 20px #FFF;
+	box-shadow: 0px 0px 20px #888;
 	border-radius: 10px;
 }
 .popup a {
-    color: #fff;
+    color: #333;
+    text-decoration: none;
+}
+.popup a:hover {
+    text-decoration: underline;
 }
 .arrow {
     display: block;
@@ -21,7 +26,7 @@
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 10px solid #7DAFB4;
+    border-bottom: 10px solid white;
 }
 .arrow.left {
     -webkit-transform: rotate(270deg);
@@ -38,6 +43,13 @@
     transform: rotate(180deg);
 }
 
+.popup h2 {
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
 /** SETTINGS POPUP
  ****************************************************************************/
 
@@ -50,13 +62,6 @@
 #settings > div:last-child {
     margin-bottom: 0;
 }
-#settings > div h2 {
-    border-bottom: 1px solid rgba(255,255,255,0.7);
-    text-align: left;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
 #settings .language > select {
 	min-width: 150px;
 }
@@ -78,7 +83,6 @@
 }
 #infomenu-popup a {
 	display: block;
-	color: #FFF;
 	margin: 10px 0;
 }
 #infomenu-popup a:first-child {
@@ -139,9 +143,4 @@
 
 #flattr-popup {
     height: auto;
-}
-#flattr-popup h2 {
-    font-weight: bold;
-    border-bottom: 1px solid white;
-    margin-bottom: 5px;
 }
