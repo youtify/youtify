@@ -54,24 +54,6 @@ function settings_Init() {
         settings.save();
         changeLanguage(code);
     });
-
-    // TRANSLATION TOOL
-
-    $('#settings input[name=enableTranslationTool]').click(function() {
-        if (this.checked) {
-            $("#translations").show();
-            settings.enableTranslationTool = true;
-        } else {
-            $("#translations").hide();
-            settings.enableTranslationTool = false;
-        }
-        settings.save();
-    });
-
-    if (settings.enableTranslationTool) {
-        $("#translations").show();
-        $('#settings input[name=enableTranslationTool]').attr('checked', 'checked');
-    }
 }
 
 function Settings() {
