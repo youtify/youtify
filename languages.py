@@ -210,7 +210,7 @@ class SpecificLanguageHandler(webapp.RequestHandler):
 
 class TranslationsHandler(webapp.RequestHandler):
     def get(self):
-        """Get all translations"""
+        """Get all translations for a specific language"""
         lang_code = self.request.path.split('/')[-2]
         language = Language.all().filter('code =', lang_code).get()
 
