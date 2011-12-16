@@ -108,6 +108,13 @@ function MenuItem(type) {
                 self.leftView = $('#left .menu .toplist');
                 self.rightView = $('#right .toplists');
                 self.addTabs(['youtify', 'youtube-top100', 'youtube-indie']);
+
+                // Init YouTube top 100
+                var $pane = $('#right .pane.youtube.top100')
+                $.each(youtubeTopList, function (i, item) {
+                    new Video(item.videoId, item.title, 'yt').createListView().appendTo($pane);
+                });
+
                 break;
             case 'queue':
                 self.leftView = $('#left .menu .queue');
