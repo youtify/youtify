@@ -15,10 +15,7 @@ var translations,
     ];
 
 function updateMarkup(data) {
-    translations = {}; // global
-    $.each(data, function(i, item) {
-        translations[item.original] = item.translation;
-    });
+    translations = data; // global
 
     $('.translatable').each(function(i, elem) {
         elem = $(elem);

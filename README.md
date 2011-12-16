@@ -27,3 +27,10 @@ Variables are camelCased. Example:
 Global functions and variables should be avoided and are only allowed in main.js
 
 Namespaces and classes are always put in files with the same name.
+
+How to get translations working on your development setup
+---------------------------------------------------------
+
+1. Make sure you are logged in as admin and run http://localhost:8080/import_old_translations
+2. Go to /admin and select the deploy tab. Press the deploy button.
+3. Done!

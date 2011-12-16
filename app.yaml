@@ -89,6 +89,9 @@ handlers:
 
 - url: /snapshots.*
   script: snapshots.py
+
+- url: /api/translations/.*
+  script: snapshots.py
   
 - url: /robots.*
   static_files: robots.txt

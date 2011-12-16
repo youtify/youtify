@@ -25,6 +25,12 @@ def get_deployed_translations_json(code):
         return simplejson.dumps(deployed_translations[code])
     return '{}'
 
+class LatestHandler(webapp.RequestHandler):
+    def get(self):
+        lang_code = self.request.path.split('/')[-1]
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(get_deployed_translations_json(lang_code))
+
 class SnapshotsHandler(webapp.RequestHandler):
     def get(self):
         json = [];
@@ -107,6 +113,7 @@ init_cached_translations()
 
 def main():
     application = webapp.WSGIApplication([
+        ('/api/translations/.*', LatestHandler),
         ('/snapshots.*', SnapshotsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
