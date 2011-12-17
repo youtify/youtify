@@ -319,6 +319,21 @@ html, body {
 #left .menu li.target {
     background-color: rgba(0, 124, 137, 0.4);
 }
+#left .menu .playlists li.remote {
+    position: relative;
+    padding-right: 10px;
+}
+#left .menu .playlists li.remote:after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: rgba(128, 128, 128, 0.5);
+    position: absolute;
+    right: 8px;
+    top: 14px;
+    border-radius: 4px;
+}
 #left .menu .playlists .new:before {
     content: '+';
     cursor: default;
