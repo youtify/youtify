@@ -72,6 +72,7 @@ var Menu = {
                     if (logged_in) {
                         playlist.createNewPlaylistOnRemote(function() {
                             playlistManager.save();
+                            playlist.getMenuView().addClass('remote');
                         });
                     } else {
                         playlistManager.save();
