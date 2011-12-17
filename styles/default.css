@@ -303,15 +303,9 @@ html, body {
 #left .menu .playlists li {
     cursor: pointer;
     margin-right: 5px;
-    padding: 8px 0px 8px 0px;
+    padding: 8px 20px;
     border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
-}
-#left .menu .toplist:before, 
-#left .menu .queue:before,
-#left .menu .search:before,
-#left .menu .playlists li:before {
-    content: url(/images/playlist.png);
-    margin-right: 3px;
+    background: url(/images/playlist.png) no-repeat center left;
 }
 #left .menu li.selected {
     background-color: rgba(0, 124, 137, 0.1);
