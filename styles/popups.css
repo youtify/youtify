@@ -162,3 +162,49 @@
     width: 100%;
     margin-bottom: 4px;
 }
+
+/** SPOTIFY IMPORTER POPUP
+ ****************************************************************************/
+
+#spotify-importer {
+	width: 300px;
+	text-shadow: 0px 1px 1px transparent;
+}
+#spotify-importer h2 {
+    border-bottom: 1px solid rgba(255,255,255,0.7);
+    text-align: left;
+    margin-bottom: 5px;
+	text-shadow: 0px 1px 1px transparent;
+	float: left;
+}
+
+#spotify-importer a {
+	float: right;
+}
+
+#spotify-importer textarea {
+	width: 298px;
+	height: 150px;
+	outline: 0;
+	resize: none;
+}
+#spotify-importer .added {
+	display: block;
+	margin-left: 65px;
+	margin-top: 10px;
+	float: left;
+	text-align: right;
+}
+#spotify-importer .max {
+	margin-top: 10px;
+	display: block;
+	float: left;
+}
+#spotify-importer .cancel {
+	float: left;
+	margin-top: 5px;
+}
+#spotify-importer .start {
+	float: right;
+	margin-top: 5px;
+}

@@ -18,7 +18,7 @@ function spotifyImport_Init() {
 
     // start
     $('#spotify-importer .start').click(function() {
-        var li = $('#playlists .selected');
+        var li = $('#left .playlists ul .selected');
         var playlist = li.data('model');
         importer.start(
             $('#spotify-importer textarea').val(),
@@ -31,9 +31,9 @@ function spotifyImport_Init() {
             },
             function() {
                 // callbackDone
+                importer.cancel();
                 $('#spotify-importer').hide();
-                $('#blocker').remove();
-                loadPlaylistView(playlist);
+                $('#blocker, .arrow').remove();
             }
         );
     });
