@@ -119,6 +119,7 @@ $(document).ready(function() {
     Timeline.init();
     Flattr.init();
     VideoInfo.init();
+    BottomPanel.init();
     url_Init();
 });
 

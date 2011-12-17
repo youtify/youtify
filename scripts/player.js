@@ -209,7 +209,6 @@ var Player = {
 	setTitle: function(title) {
 		var videoId = Player.getCurrentVideoId();
         document.title = "Youtify - " + title;
-		$('#bottom .info .title').text(title).attr('title', title);
 	},
 
     _startedPlayingVideoSuccessfully: function() {
