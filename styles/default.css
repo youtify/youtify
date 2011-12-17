@@ -212,9 +212,7 @@ html, body {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 #top .menus {
-    display: inline-block;
     float: right;
-    position: relative;
 }
 #top .menus .heart {
     display: inline;
@@ -223,6 +221,8 @@ html, body {
     text-shadow: 0 0 5px #FFF;
     font-size: 22px;
     cursor: pointer;
+    position: relative;
+    top: 2px;
 }
 #top .menus .spacings,
 #top .menus .username,
