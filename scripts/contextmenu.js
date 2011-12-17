@@ -83,11 +83,9 @@ function showPlaylistContextMenu(event) {
                     .keyup(function(event) {
                         switch (event.keyCode) {
                             case 13: // RETURN
-                            input.remove();
                             var playlist = li.data('model');
                             playlist.rename(input.val());
                             playlistManager.save();
-                            break;
                             case 27: // ESC
                             $(this).blur();
                             break;
