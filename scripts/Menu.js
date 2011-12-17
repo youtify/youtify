@@ -69,6 +69,7 @@ var Menu = {
                     playlist = new Playlist($(this).val(), videos);
                     playlist.createViews();
                     playlistManager.addPlaylist(playlist);
+                    playlist.getMenuView().appendTo('#left .playlists ul');
                     if (logged_in) {
                         playlist.createNewPlaylistOnRemote(function() {
                             playlistManager.save();
