@@ -210,16 +210,12 @@ var Player = {
 		var videoId = Player.getCurrentVideoId();
         document.title = "Youtify - " + title;
 		$('#bottom .info .title').text(title).attr('title', title);
-        if (title && title.length > 0) {
-            Notification.say(title);
-        }
 	},
 
     _startedPlayingVideoSuccessfully: function() {
         var title = $('#bottom .info .title').text();
         var video = new Video(Player._currentVideoId, title);
         EventSystem.callEventListeners('video_started_playing_successfully', video);
-        Notification.say(title);
     },
 
 	onPlayerStateChange: function(event) {

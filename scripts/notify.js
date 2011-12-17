@@ -4,6 +4,10 @@ function notification_Init() {
         parent.addClass('hidden');
         setTimeout(function() { parent.remove(); }, 1000);
     });
+
+    EventSystem.addEventListener('video_info_fetched', function(info) {
+        Notification.say(info.title);
+    });
 }
 
 var Notification = {
