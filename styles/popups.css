@@ -12,7 +12,7 @@
 	border-radius: 10px;
 }
 .popup a {
-    color: #333;
+    color: rgb(0, 124, 137);
     text-decoration: none;
 }
 .popup a:hover {
@@ -149,4 +149,8 @@
 
 #flattr-popup {
     height: auto;
+}
+#flattr-popup a {
+    display: block;
+    margin-top: 10px;
 }

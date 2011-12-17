@@ -12,7 +12,7 @@ function settings_Init() {
         $('<a class="username" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings > .flattr');
         $('<a class="disconnect" href="/flattrdisconnect">Disconnect</a>').appendTo('#settings > .flattr');
     } else {
-        $('<a href="/flattrconnect">Connect to Flattr</a>').appendTo('#settings > .flattr');
+        $('<a href="/flattrconnect">Connect your Flattr account</a>').appendTo('#settings > .flattr');
     }
 
     // QUALITY
