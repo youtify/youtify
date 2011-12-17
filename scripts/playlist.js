@@ -285,7 +285,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
 						self.remoteId = data.remoteId;
 						self.owner = data.owner;
 						self.synced = true;
-					 } else {
+                    } else {
 						alert('Failed to create new playlist ' + self.title);
 					}
 					if (callback) {
