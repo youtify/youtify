@@ -154,3 +154,11 @@
     display: block;
     margin-top: 10px;
 }
+
+/** SHARE PLAYLIST POPUP
+ ****************************************************************************/
+
+#share-playlist-popup input {
+    width: 100%;
+    margin-bottom: 4px;
+}
