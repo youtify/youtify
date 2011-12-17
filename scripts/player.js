@@ -30,13 +30,12 @@ var Player = {
     },
 	
 	play: function(video) {
-        var videoId, title;
+        var videoId;
         if (video) {
             if (typeof video === typeof 'string') {
                 videoId = video;
             } else {
                 videoId = video.videoId;
-                title = video.title;
             }
         }
             
@@ -69,11 +68,6 @@ var Player = {
 				}
 			}
 			
-			if (title !== undefined) {
-				Player.setTitle(title);
-			} else {
-				Player.loadTitle(videoId);
-			}
 			// avoid buffer hang at start
 		} else {
 			Player.assertPlayerLoaded();
@@ -205,15 +199,9 @@ var Player = {
 			originalElem: elem 
 		});
 	},
-	
-	setTitle: function(title) {
-		var videoId = Player.getCurrentVideoId();
-        document.title = "Youtify - " + title;
-	},
 
     _startedPlayingVideoSuccessfully: function() {
-        var title = $('#bottom .info .title').text();
-        var video = new Video(Player._currentVideoId, title);
+        var video = new Video(Player._currentVideoId);
         EventSystem.callEventListeners('video_started_playing_successfully', video);
     },
 
@@ -433,31 +421,6 @@ var Player = {
 			volume = 0;
         }
 		Player._player.setVolume(volume);
-	},
-	
-	loadTitle: function(videoId) {
-		var url = "http://gdata.youtube.com/feeds/api/videos?callback=?";
-		var params = {
-			'alt': 'json-in-script',
-			'max-results': 1,
-			'prettyprint': true,
-			'fields': 'entry(title)',
-			'v': 2,
-			'q': videoId
-		};
-		Player.setTitle('');
-		$.getJSON(url, params, function(data) {
-            
-			if (data.feed.entry) {
-                var title;
-                if (data.feed.entry[0].title.$t) {
-                    title = data.feed.entry[0].title.$t;
-                } else {
-                    return;
-                }
-                Player.setTitle(title);
-            }
-		});
 	},
 
 	loadIFramePlayer: function() {

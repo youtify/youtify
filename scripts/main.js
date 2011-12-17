@@ -61,41 +61,8 @@ Date.prototype.getWeek = function (dowOffset) {
 	return weeknum;
 };
 
-$(window).load(function() {
-	$('#loading span').text('Done');
-	$('#loading').fadeOut();
-});
-
 $(document).ready(function() {
     var settings = new Settings();
-
-    $('#info .title').data('type', 'video');
-    $('#new-playlist').data('type', 'button');
-
-	// CONTROLS
-	$('#bottom .controls .playpause').click(Player.playPause);
-	$('#bottom .controls .next').click(Player.next);
-	$('#bottom .controls .prev').click(Player.prev);
-	
-	// FULLSCREEN
-	$('#fullscreen').click(function() {
-		Player.toggleFullscreen();
-	});
-		
-	// ABOUT
-	$('#top .about').click(function() {
-        $(this).arrowPopup('#infomenu-popup');
-	});
-
-    // LOGOUT POPUP
-    $('#top .username').click(function() {
-        $(this).arrowPopup('#logout-popup');
-    });
-    $('#logout-popup a').click(function(e) {
-        playlistManager.removeRemotePlaylistsFromLocalStorage();
-    });
-	
-	//Notification.say('We are experiencing connection issues with YouTube at the moment. Sorry for the inconvenience.');
 	
     EventSystem.init();
     Menu.init();
@@ -120,6 +87,8 @@ $(document).ready(function() {
     Flattr.init();
     VideoInfo.init();
     BottomPanel.init();
+    Window.init();
+    TopMenu.init();
     url_Init();
 });
 
