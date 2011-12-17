@@ -47,6 +47,8 @@ function showContextMenu(buttons, x, y) {
 }
 
 function showPlaylistContextMenu(event) {
+    $('#left .selected').removeClass('selected');
+    $(this).addClass('selected');
     event.preventDefault();
 
     var buttons = [
