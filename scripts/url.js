@@ -20,7 +20,7 @@ var URIManager = {
         } else if (location.href.indexOf('search') !== -1) {
             $('#search input').val(URIManager.getSearchQueryFromUrl()).keyup();
         } else {
-            TopList.select();
+            Menu.find('toplist').select();
         }
     },
     getPlaylistIdFromUrl: function() {

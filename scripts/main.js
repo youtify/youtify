@@ -9,7 +9,6 @@ PlaylistsManager: true,
 video_Init: true,
 volume_Init: true,
 translations_Init: true,
-toplist_Init: true,
 spotifyImport_Init: true,
 settings_Init: true,
 search_Init: true,
@@ -72,7 +71,6 @@ $(document).ready(function() {
 	volume_Init();
 	video_Init();
 	translations_Init();
-    toplist_Init();
     spotifyImport_Init();
     settings_Init();
     Search.init();

@@ -5,8 +5,8 @@ var Menu = {
     init: function() {
         /* Create new menuitems */
         var leftMenuItems = ['toplist', 'queue', 'search'];
-        $.each(leftMenuItems, function(i, name) {
-            var menuItem = new MenuItem(name);
+        $.each(leftMenuItems, function(i, type) {
+            var menuItem = new MenuItem(type);
             menuItem.init();
             Menu.left.push(menuItem);
         });
@@ -17,6 +17,14 @@ var Menu = {
         $('#left .playlists .new span').click(Menu.newPlaylistClick);
         $('#left .playlists .new input').keyup(Menu.newPlaylistNameKeyUp);
         $('#left .playlists .new input').blur(Menu.newPlaylistNameBlur);
+    },
+    find: function(type) {
+        for(var i = 0; i < Menu.left.length; i++) {
+            if (Menu.left[i].type === type) {
+                return Menu.left[i];
+            }
+        }
+        return null;
     },
     createPlaylistViews: function(playlists) {
         $playlists = $('#left .menu .playlists ul');
