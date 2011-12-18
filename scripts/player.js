@@ -43,10 +43,6 @@ var Player = {
             return;
         }
 
-        if (Player._lastVideoId !== Player._currentVideoId) {
-            FatBar.clear();
-        }
-
         $('#bottom .info, #bottom .share-wrapper').show();
 
 		if (videoId !== undefined) {
@@ -155,6 +151,12 @@ var Player = {
     
     _startedPlayingVideoSuccessfully: function() {
         var video = new Video(Player._currentVideoId);
+
+        if (Search.alternatives !== undefined) {
+            EventSystem.callEventListeners('alternative_started_playing_successfully', video);
+            alert('alternative_started_playing_successfully');
+        }
+
         EventSystem.callEventListeners('video_started_playing_successfully', video);
     },
 
@@ -213,48 +215,26 @@ var Player = {
 	
 	onError: function(event) {
 		var messages = {
-            2: 'Sorry, the video requested cannot be played. Invalid video ID.',
+            2: 'Could not play video: invalid video id',
             //100: 'The requested video was not found. The video is removed or marked as private.',
             //101: 'The 101 error code is broadcast when the video requested does not allow playback in the embedded players.',
             //150: 'The 150 error code is broadcast when the video requested does not allow playback in the embedded players.'
-            100: 'The rights holder has decided not to share this video on Youtify',
-            150: 'The rights holder has decided not to share this video on Youtify'
+            100: 'Could not play video',
+            150: 'Could not play video'
         };
+        var message = messages[event.data];
 		var elem = $('#right .playing');
-        // No playitem found
-        if (elem.length === 0) {
-            Notification.say(messages[event.data]);
-            return;
-        }
-		if (elem.hasClass('alternative')) {
-			if (elem.next().length > 0) {
-				elem.next().play();
-			} else {
-				Player.next();
-			}
-			elem.remove();
-			return;
-		}
-		if (elem.hasClass('fake') && elem.find('ul').length) {
-			elem.find('li:first-child').play();
-			return;
-		}
-		elem.addClass('disabled');
-		Search.findAndPlayAlternative(elem);
-		Notification.say(messages[event.data]);
-	},
-	
-	playPrevAlternative: function() {
-		var elem = $('.alternatives .playing');
-		if (elem && elem.prev()) {
-			elem.prev().play();
-        }
-	},
-	
-	playNextAlternative: function() {
-		var elem = $('.alternatives .playing');
-		if (elem && elem.next()) {
-			elem.next().play();
+		var video = elem.data('model');
+
+        if (video) {
+            elem.addClass('alternative');
+            Search.findAlternative(video, function(alt) {
+                if (alt === false) {
+                    Player.next();
+                } else {
+                    Player.play(alt);
+                }
+            });
         }
 	},
 	

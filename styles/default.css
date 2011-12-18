@@ -503,6 +503,9 @@ html, body {
     background-repeat: no-repeat;
     background-position: center center;
 }
+#right .video.alternative .title {
+    text-decoration: line-through;
+}
 #right .video.insert-before {
     border-top: 1px solid black;
 }

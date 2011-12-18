@@ -5,6 +5,7 @@ var Search = {
     youtubePlaylistsTab: null,
     searchTimeoutHandle: null,
     currentQuery: '',
+    alternatives: undefined,
     
     init: function() {
         /* Search on key up */
@@ -33,6 +34,9 @@ var Search = {
         });
         $('#top .search button').click(function() {
             Search.search($.trim($('#top .search input').val()));
+        });
+        EventSystem.addEventListener('video_started_playing_successfully', function() {
+            Search.alternatives = undefined;
         });
     },
     getType: function() {
@@ -174,7 +178,24 @@ var Search = {
         });
         return results;
     },
-    findAlternativeToVideo: function(video, callback) {
+    findAlternative: function(video, callback) {
+        console.log('finding alternative for ' + video.title);
+        if (Search.alternatives === undefined) {
+            Search.findAlternativesToVideo(video, function(videos) {
+                Search.alternatives = videos;
+                if (videos.length) {
+                    callback(Search.alternatives.shift());
+                } else {
+                    callback(false);
+                }
+            });
+        } else if (Search.alternatives.length) {
+            callback(Search.alternatives.shift());
+        } else {
+            callback(false);
+        }
+    },
+    findAlternativesToVideo: function(video, callback) {
         var results = [],
             url = 'http://gdata.youtube.com/feeds/api/videos?callback=?',
             params = {
