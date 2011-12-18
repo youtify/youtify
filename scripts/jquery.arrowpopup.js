@@ -48,6 +48,13 @@
         var popupRightSide = left + popup.outerWidth();
         var windowRightSide = $(window).width() - 25; // assuming scrollbar takes up 25px;
 
+        // Make sure popup is not overflowing height
+        if (top < 0) {
+            popup.css('height', popup.height() + top - 20);
+            popup.css('overflow-y', 'scroll');
+            top = 20;
+        }
+
         if (popupRightSide > windowRightSide) {
             left -= (popupRightSide - windowRightSide);
         }
