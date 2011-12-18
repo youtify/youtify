@@ -109,7 +109,7 @@ function MenuItem(type) {
             case 'toplist':
                 self.leftView = $('#left .menu .toplist');
                 self.rightView = $('#right .toplists');
-                self.addTabs(['youtify', 'youtube-top100', 'youtube-indie']);
+                self.addTabs(['youtube-top100']);
 
                 // Init YouTube top 100
                 var $pane = $('#right .pane.youtube.top100')
@@ -140,6 +140,8 @@ function MenuItem(type) {
         self.leftView.click(self.select);
         self.leftView.data('model', self);
         self.rightView.data('model', self);
+
+        $('#left .toplist').click();
     };
     
     self.select = function() {
