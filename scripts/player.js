@@ -17,9 +17,6 @@ var Player = {
 	_lastVideoId: null,
 	_currentVideoId: null,
 	_loadingNewVideo: null, // avoid buffer hang at start
-	_playOrderIndex: 0,
-	_playOrderList: [],
-	_queue: [],
     
     init: function() {
         
@@ -106,21 +103,8 @@ var Player = {
 		if (Player._player.getCurrentTime() > 3) {
 			Player._player.seekTo(0);
 		} else {
-			var elem = null; 
-			if (Player._playOrderList.length > 0) {
-				if (Player._playOrderIndex-1 >= 0) {
-					elem = $(Player._playOrderList[Player._playOrderIndex -= 1]);
-				} else {
-					return;
-				}
-			} else {
-				elem = $('#results-container li.playing').prev();
-			}
-			if (elem.hasClass('alternative')) {
-				elem = elem.parent().parent().prev();
-			}
-			if (elem.length > 0) {
-				elem.play();
+            if (Queue.playPrev()) {
+                return;
             }
 		}
 	},
@@ -130,28 +114,11 @@ var Player = {
 		
 		var elem = null; 
 		// Queue
-		if (Player._queue.length > 0) {
-			elem = Player._queue.shift();
-			if (elem.originalElem.parent().length > 0) {
-				elem = elem.originalElem;
-				elem.play();
-			} else {
-				Player.play(elem.data('model'));
-			}
+		if (Queue.playNext()) {
 			return;
 		}
-		// Playlist
-		if (Player._playOrderList.length > 0) {
-			if (Player._playOrderIndex+1 <= Player._playOrderList.length) {
-				elem = $(Player._playOrderList[Player._playOrderIndex += 1]);
-			} else if (Player._playOrderIndex+1 > Player._playOrderList.length) {
-				Player._playOrderList = [];
-				Player._playOrderIndex = 0;
-				return;
-			}
-		} else {
-			elem = $('#right .playing').next();
-		}
+		
+        elem = $('#right .playing').next();
 		if (elem.hasClass('alternative')) {
 			elem = elem.parent().parent().next();
 		} else if (elem.hasClass('loadMore')) {
@@ -165,41 +132,27 @@ var Player = {
 	},
 	
 	addSiblingsToPlayorder: function(startElem, shuffle) {
-		if (startElem === undefined) {
+        if (startElem === undefined) {
 			return;
         }
-		Player._playOrderList = [];
-		Player._playOrderIndex = 0;
+		var list = [];
+        
 		if (shuffle) {
-			// add all siblings to the list
-			$(startElem).siblings().each(function(index, item) {
-				Player._playOrderList.push(item);
-			});
-			$.shuffle(Player._playOrderList);
-			// find the start elem and move it to the top of the list
-			$.each(Player._playOrderList, function(index, item) {
-				if (item === startElem) {
-					Player._playOrderList.splice(index, 1);
-					Player._playOrderList.unshift(startElem);
-				}
-			});
+            /* Add all videos */
+            $(startElem).siblings('.video').each(function(index, item) {
+                list.push($(item).data('model'));
+            });
+			$.shuffle(list);
 		} else {
-			var elem = startElem;
-			while(elem.length > 0) {
-				Player._playOrderList.push(elem);
-				elem = $(elem).next();
-			}
-		}
+            /* Add videos after this */
+            $(startElem).nextAll('.video').each(function(index, item) {
+                list.push($(item).data('model'));
+            });
+        }
+        list.unshift($(startElem).data('model'));
+        Queue.setAutoQueue(list);
 	},
-	
-	addToPlayOrder: function(elem) {
-		Player._queue.push({ 
-			videoId: elem.data('videoId'), 
-			title: elem.find('.title').text(), 
-			originalElem: elem 
-		});
-	},
-
+    
     _startedPlayingVideoSuccessfully: function() {
         var video = new Video(Player._currentVideoId);
         EventSystem.callEventListeners('video_started_playing_successfully', video);

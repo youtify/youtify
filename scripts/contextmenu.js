@@ -190,16 +190,18 @@ function showResultsItemContextMenu(event) {
                 window.open('http://www.youtube.com/watch?v=' + elem.data('model').videoId);
             }
         },
-		/*{
+		{
             title: 'Queue',
             args: allSelectedVideos,
             callback: function(allSelectedVideos) {
                 $.each(allSelectedVideos, function(index, li) {
-                    li = $(li);
-                    Player.addToPlayOrder(li);
+                    var model = $(li).data('model');
+                    if (model) {
+                        Queue.addManual(model);
+                    }
                 });
             }
-        },*/
+        },
 		{
 			title: 'Share',
 			args: $(this),

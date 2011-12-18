@@ -151,7 +151,14 @@ function MenuItem(type) {
 
         $('#left .toplist').click();
     };
-    
+    self.findTab = function(type) {
+        for(var i = 0; i < self.tabs.length; i++) {
+            if (self.tabs[i].type === type) {
+                return self.tabs[i];
+            }
+        }
+        return null;
+    };
     self.select = function() {
         /* Remove selected on all menuItems */
         $('#left .menu li').removeClass('selected');

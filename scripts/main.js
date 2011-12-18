@@ -74,7 +74,7 @@ $(document).ready(function() {
     spotifyImport_Init();
     settings_Init();
     Search.init();
-    queue_Init();
+    Queue.init();
     ping_Init();
     notification_Init();
     fatBar_Init();

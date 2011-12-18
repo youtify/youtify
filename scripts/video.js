@@ -81,7 +81,7 @@ function Video(videoId, title, type, rating) {
                     event.stopPropagation();
                 }),
             play = (function(event) {
-                    self.play();
+                    self.play(event);
                 });
         
         this.listView = $('<tr/>')
@@ -158,20 +158,16 @@ function Video(videoId, title, type, rating) {
         }
     };
     
-    this.play = function() {
+    this.play = function(event) {
         $('#left li').removeClass('playing');
-/*        if (owner) { // playlist
-            Player.addSiblingsToPlayorder(this.listView);
-            if (owner.leftMenuDOMHandle) {
-                owner.leftMenuDOMHandle.addClass('playing');
-            }
-        } else {
-            Player.addSiblingsToPlayorder(this.listView, false);
-        }*/
-
         $('#right .video').removeClass('playing');
         this.listView.addClass("playing");
-
+        
+        /* if user clicked on view */
+        if (event) {
+            Player.addSiblingsToPlayorder(this.listView, false);
+        }
+        
         Player.play(this);
     };
 
