@@ -154,7 +154,6 @@ var Player = {
 
         if (Search.alternatives !== undefined) {
             EventSystem.callEventListeners('alternative_started_playing_successfully', video);
-            alert('alternative_started_playing_successfully');
         }
 
         EventSystem.callEventListeners('video_started_playing_successfully', video);
