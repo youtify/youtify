@@ -32,7 +32,14 @@ var BottomPanel = {
             $title.unbind('click');
             $title.click(function() {
                 var $popup = $('#video-info-popup');
+
                 $popup.find('.description').html(linkify(info.description));
+                $popup.find('.uploader').text(info.author.name);
+                $popup.find('.uploader').unbind('click');
+                $popup.find('.uploader').click(function() {
+                    Uploader.loadVideosFromURI(info.author.uri);
+                });
+
                 $title.arrowPopup('#video-info-popup', 'down');
             });
         });

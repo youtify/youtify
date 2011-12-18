@@ -6,11 +6,18 @@ var Uploader = {
 			'v': 2
 		};
 
+        $('#left .search').data('model').select();
+        $('#right .search .tabs .youtube.videos').data('model').select();
+
 		$.getJSON(url, params, function(data) {			
+            var $table = $('#right .pane.youtube.videos');
+
 			if (data.feed.entry === undefined) {
 				return;
             }
-			$('#results').html('');
+
+            $table.html('');
+
 			$.each(data.feed.entry, function(i, item) {
 				var url = item.id.$t;
 				var videoId = url.match('video:(.*)$')[1];
@@ -18,10 +25,9 @@ var Uploader = {
 				if (item.gd$rating) {
 					var rating = item.gd$rating.average;
                 }
-				var resultItem = new Video(title, videoId, 'yt', rating).createListView();
-				resultItem.appendTo('#results');				
+				var resultItem = new Video(videoId, title, 'yt', rating).createListView();
+				resultItem.appendTo($table);
 			});
 		});
-		$('#right .search .tab .youtube.videos').data('model').select();
 	}
 };

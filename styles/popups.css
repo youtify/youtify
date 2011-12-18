@@ -208,3 +208,13 @@
 	float: right;
 	margin-top: 5px;
 }
+
+/** VIDEO INFO POPUP
+ ****************************************************************************/
+
+#video-info-popup .description {
+    margin-top: 10px;
+}
+#video-info-popup .uploader {
+    cursor: pointer;
+}
