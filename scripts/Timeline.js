@@ -83,10 +83,16 @@ var Timeline = {
         }
         var pos = Player._player.getCurrentTime(),
             len = Player._player.getDuration();
-
-		$('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-        $('#bottom .timeline-wrapper .length').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
-		$('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
+        
+        if (pos && len) {
+            $('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
+            $('#bottom .timeline-wrapper .length').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
+            $('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
+        } else {
+            $('#bottom .timeline-wrapper .position').html('0:00');
+            $('#bottom .timeline-wrapper .length').html('0:00');
+            $('#bottom .timeline-wrapper .slider').width(0);
+        }
 	},
 
 	stop: function() {
