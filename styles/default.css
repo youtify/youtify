@@ -726,6 +726,8 @@ html, body {
     font-weight: bold;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
     cursor: pointer;
+    height: 16px;
+    overflow: hidden;
 }
 #bottom .share-wrapper {
     position: absolute;

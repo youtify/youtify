@@ -28,7 +28,7 @@ var BottomPanel = {
         // TITLE
         EventSystem.addEventListener('video_info_fetched', function(info) {
             var  $title = $('#bottom .info .title');
-            $title.text(info.title);
+            $title.text(info.title).attr('title', info.title);
             $title.unbind('click');
             $title.click(function() {
                 var $popup = $('#video-info-popup');
