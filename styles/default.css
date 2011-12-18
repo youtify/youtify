@@ -245,7 +245,7 @@ html, body {
 }
 #top .menus .login-link {
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
     text-decoration: none;
     color: #000;
@@ -265,8 +265,8 @@ html, body {
     position: absolute;
     display: inline-block;
     width: 25px;
-    height: 29px;
-    margin: 3px 0px 0px 9px;
+    height: 28px;
+    margin: 4px 0px 0px 9px;
     border: 1px solid #8B9594;
     border-radius: 0 10px 10px 0;
     background: -webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
