@@ -243,3 +243,12 @@
 #device-error-popup button {
     margin-top: 10px;
 }
+
+/** CHROME WEB STORE POPUP
+ ****************************************************************************/
+
+#webstore-popup a {
+    display: block;
+    margin-top: 10px;
+}
+

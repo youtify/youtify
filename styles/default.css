@@ -234,9 +234,19 @@ html, body {
     position: relative;
     top: 2px;
 }
+#top .menus .webstore {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 3px;
+    right: 3px;
+    background: url(/images/chrome_16.png);
+}
 #top .menus .spacings,
 #top .menus .username,
 #top .menus .about,
+#top .menus .webstore,
 #top .menus .settings{
     cursor: pointer;
     text-transform: uppercase;
