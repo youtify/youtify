@@ -331,6 +331,9 @@ html, body {
     background-color: rgba(0, 124, 137, 0.1);
 }
 #left .menu li.target {
+    background-color: rgba(0, 124, 137, 1);
+    color: white;
+    text-shadow: none;
 }
 #left .menu .playlists li.remote {
     position: relative;
