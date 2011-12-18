@@ -45,10 +45,24 @@ function loadPlaylist(playlistId) {
 }
 
 function savePlaylistButtonClicked(event) {
-    var playlist = playlistManager.getCurrentlySelectedPlaylist();
-    playlistManager.addPlaylist(playlist.copy()); // create copy without connection to remote
-    updatePlaylistBar(playlist);
-    playlist.createViews();
+    var $playlistBar = $('#right > .playlists .info');
+    var playlist = $playlistBar.data('model');
+    var newPlaylist = playlist.copy(); // create copy without connection to remote
+
+    newPlaylist.createViews();
+    playlistManager.addPlaylist(newPlaylist);
+    newPlaylist.getMenuView().appendTo('#left .playlists ul');
+
+    if (logged_in) {
+        newPlaylist.createNewPlaylistOnRemote(function() {
+            playlistManager.save();
+            newPlaylist.getMenuView().addClass('remote');
+        });
+    } else {
+        playlistManager.save();
+    }
+
+    $playlistBar.find('.copy').hide();
 }
 
 function syncPlaylistButtonClicked(event) {
@@ -92,6 +106,7 @@ function shareButtonClicked(event) {
 
 function updatePlaylistBar(playlist) {
     var $playlistBar = $('#right > .playlists .info');
+    $playlistBar.data('model', playlist);
     $playlistBar.find('.title').text(playlist.title);
     $playlistBar.find('.owner').hide();
     $playlistBar.find('.copy').hide().unbind('click');
