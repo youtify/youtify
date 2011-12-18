@@ -6,6 +6,8 @@ var Search = {
     searchTimeoutHandle: null,
     currentQuery: '',
     alternatives: undefined,
+    lastVideosSearchQuery: undefined,
+    lastPlaylistsSearchQuery: undefined,
     
     init: function() {
         /* Search on key up */
@@ -50,6 +52,11 @@ var Search = {
 
         switch(Search.getType()) {
             case 'youtube-videos':
+                if (Search.lastVideosSearchQuery === q && !loadMore) {
+                    return;
+                } else {
+                    Search.lastVideosSearchQuery = q;
+                }
                 /* Get the results */
                 var url = 'http://gdata.youtube.com/feeds/api/videos?callback=?',
                     start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1,
@@ -84,6 +91,11 @@ var Search = {
                 
                 break;
             case 'youtube-playlists':
+                if (Search.lastPlaylistsSearchQuery === q && !loadMore) {
+                    return;
+                } else {
+                    Search.lastPlaylistsSearchQuery = q;
+                }
                 var url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?",
                     start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1,
                     params = {
