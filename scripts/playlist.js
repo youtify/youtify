@@ -137,7 +137,7 @@ function loadPlaylistView(playlist) {
 
     updatePlaylistBar(playlist);
     
-    if (playlist.playlistDOMHandle.children('.video').length !== playlist.videos.length) {
+    if (playlist.playlistDOMHandle.find('.video').length !== playlist.videos.length) {
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
             if (item) {
