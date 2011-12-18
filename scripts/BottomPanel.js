@@ -51,6 +51,7 @@ var BottomPanel = {
         
         // FULLSCREEN
         $('#bottom .fullscreen').click(function() {
+            $(this).toggleClass('on');
             Player.toggleFullscreen();
         });
     }

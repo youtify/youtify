@@ -896,8 +896,18 @@ html, body {
     background: url(/images/knob.png) no-repeat -1px 0 transparent;
     box-shadow: 0px 3px 3px #2C2C2C;
 }
-#fullscreen {
-
+#bottom .fullscreen {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    position: absolute;
+    left: 210px;
+    bottom: 40px;
+    cursor: pointer;
+    background: url(/images/fullscreen.png);
+}
+#bottom .fullscreen.on {
+    background: url(/images/minimize.png);
 }
 
 /* DRAG N DROP

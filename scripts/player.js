@@ -348,31 +348,33 @@ var Player = {
 		if (!Player._playerReady) {
 			return;
 		}
+
         var $youtubePlayerElem = $('#left .players .youtube');
-		// Must set style, not class (and not position).
-		Player._isFullscreen = true;
-		$($youtubePlayerElem).css('left',0);
-		$($youtubePlayerElem).css('top',0);
 		var width = $(window).width();
 		var height = $(window).height() -45;
-		$($youtubePlayerElem).width(width);
-		$($youtubePlayerElem).height(height);
+
+		// Must set style, not class (and not position).
+		$youtubePlayerElem.css('left',0);
+		$youtubePlayerElem.css('top',0);
+		$youtubePlayerElem.width(width);
+		$youtubePlayerElem.height(height);
+
+		Player._isFullscreen = true;
 		Player._player.setSize(width, height);
-		
-		$('#bottom .fullscreen').addClass('minimize'); // TODO create elem in index.html
 	},
 	
 	stopFullscreen: function() { 
 		Player._isFullscreen = false;
+
         var $youtubePlayerElem = $('#left .players .youtube');
 		var width = 230;
 		var height = 230;
-		$($youtubePlayerElem).width(width);
-		$($youtubePlayerElem).height(height);
-		Player._player.setSize(width, height);
 
+		$youtubePlayerElem.width(width);
+		$youtubePlayerElem.height(height);
+
+		Player._player.setSize(width, height);
 		$(window).resize();
-		$('#bottom .fullscreen').removeClass('minimize'); // TODO create elem in index.html
 	},
 	
 	volumeUp: function(step) {
