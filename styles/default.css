@@ -531,11 +531,14 @@ html, body {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     padding-left: 15px;
 }
-#right .pane .playing .title {
-    font-weight: bold;
-}
-#right .pane .like {
+
+/* todo: remove when we have implemented favorites */
+#right .pane .like,
+#right tr .space:nth-child(4) {
     display: none;
+}
+
+#right .pane .like {
     width: 40px;
     font-size: 20px;
     cursor: pointer;
