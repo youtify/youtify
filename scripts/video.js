@@ -140,7 +140,7 @@ function Video(videoId, title, type, rating) {
                 }
             }
             if (!found) {
-                elements = [li];
+                elements = [this.listView];
                 // search up
                 while (!found && $(elements[0]).prev().length > 0) {
                     elements.unshift(elements[0].prev());
