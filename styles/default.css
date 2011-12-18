@@ -427,8 +427,8 @@ html, body {
 }
 #right .tabs li {
     display: inline-block;
-    margin-left: 10px;
     padding: 10px;
+    margin-left: 10px;
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     cursor: pointer;
@@ -436,10 +436,21 @@ html, body {
 #right .tabs li:nth-of-type(1) {
     margin-left: 0;
 }
+
+#right .tabs li.selected:before {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    height: 1px;
+    background: #8B9594;
+    cursor: default;
+    width: 10000px;
+    margin-left: -10010px;
+}
 #right .tabs li.selected {
     background-color: rgba(0, 124, 137, 0.1);
     border: 1px solid #8B9594;
-    border-bottom: none;
+    border-bottom: 1px solid transparent;
 }
 #right .tabs li.selected:after {
     content: '';
@@ -695,12 +706,12 @@ html, body {
     box-sizing: border-box;
 }
 #bottom .info .title {
-    margin-top: 20px;
+    margin-top: 15px;
     padding: 0 45px;
     text-align: center;
     font-size: 13px;
     font-weight: bold;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
     cursor: pointer;
 }
 #bottom .share-wrapper {
