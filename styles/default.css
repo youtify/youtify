@@ -563,8 +563,6 @@ html, body {
 }
 #right .info {
     display: block;
-    margin-bottom: 2px;
-
 }
 #right .info .queue,
 #right .info .title,
@@ -580,8 +578,7 @@ html, body {
     border: 0;
 }
 #right .info .title {
-    font-weight: bold;
-    font-size: 18px;
+    font-size: 14px;
 }
 #right .info .button {
     background:-webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
