@@ -278,14 +278,12 @@ var Player = {
 	},
 	
 	startFullscreen: function() { 
-		if (!Player._playerReady) {
-			return;
-		}
+		var $youtubePlayerElem = $('#left .players'),
+            width = $(window).width(),
+            height = $(window).height() - $('#bottom').outerHeight();
 
-        var $youtubePlayerElem = $('#left .players .youtube');
-		var width = $(window).width();
-		var height = $(window).height() -45;
-
+        $('#top, #right').hide();
+        
 		// Must set style, not class (and not position).
 		$youtubePlayerElem.css('left',0);
 		$youtubePlayerElem.css('top',0);
@@ -297,17 +295,18 @@ var Player = {
 	},
 	
 	stopFullscreen: function() { 
-		Player._isFullscreen = false;
-
-        var $youtubePlayerElem = $('#left .players .youtube');
+        var $youtubePlayerElem = $('#left .players');
 		var width = 230;
 		var height = 230;
 
+        $('#top, #right').show();
+        
+		$youtubePlayerElem.removeAttr('style');
 		$youtubePlayerElem.width(width);
 		$youtubePlayerElem.height(height);
 
+		Player._isFullscreen = false;
 		Player._player.setSize(width, height);
-		$(window).resize();
 	},
 	
 	volumeUp: function(step) {
