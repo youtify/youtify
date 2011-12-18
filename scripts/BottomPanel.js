@@ -54,5 +54,10 @@ var BottomPanel = {
             $(this).toggleClass('on');
             Player.toggleFullscreen();
         });
+        
+        // SHUFFLE
+        $('#bottom .shuffle').click(function() {
+            $(this).toggleClass('on');
+        });
     }
 };

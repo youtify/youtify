@@ -167,7 +167,7 @@ function Video(videoId, title, type, rating) {
         
         /* if user clicked on view */
         if (event) {
-            Player.addSiblingsToPlayorder(this.listView, false);
+            Player.addSiblingsToPlayorder(this.listView);
         }
         
         Player.play(this);

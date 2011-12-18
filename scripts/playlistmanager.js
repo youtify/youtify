@@ -11,7 +11,7 @@ function PlaylistsManager() {
             for (i = 0; i < data.length; i += 1) {
                 item = data[i];
                 if (item && !item.remoteId) {
-                    this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.shuffle));
+                    this.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate));
                 }
             }
         } catch (e) {
@@ -64,8 +64,7 @@ function PlaylistsManager() {
                 videos = item.videos,
                 remoteId = item.remoteId,
                 owner = item.owner,
-                isPrivate = false,
-                shuffle = false;
+                isPrivate = false;
 
             if (!remoteIds.hasOwnProperty(remoteId)) {
                 self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate));

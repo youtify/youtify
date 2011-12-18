@@ -174,29 +174,10 @@ function playlistClicked(event) {
     loadPlaylistView(playlist);
 }
 
-function shuffleButtonClicked(event) {
-	var playlist = $('#playlistbar').data('playlist');
-
-    if ($(this).hasClass('shuffle-on')) {
-        playlist.shuffle = false;
-        $(this).addClass('shuffle-off');
-        $(this).removeClass('shuffle-on');
-        Player.addSiblingsToPlayorder($('#results-container li.playing, #results-container li.paused'), false);
-    } else {
-        playlist.shuffle = true;
-        $(this).addClass('shuffle-on');
-        $(this).removeClass('shuffle-off');
-        Player.addSiblingsToPlayorder($('#results-container li.playing, #results-container li.paused'), true);
-    }
-
-	playlistManager.save();
-    event.stopPropagation();
-}
-
 /** CLASS PLAYLIST
  ****************************************************************************/
 
-function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
+function Playlist(title, videos, remoteId, owner, isPrivate) {
     this.title = title;
     this.videos = [];
     for (var i = 0; i < videos.length; i++) {
@@ -207,7 +188,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
     }
     this.remoteId = remoteId || null;
     this.isPrivate = isPrivate || false;
-    this.shuffle = shuffle;
     this.owner = owner;
     this.synced = true; // not part of JSON structure
     this.syncing = false; // not part of JSON structure
@@ -400,8 +380,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, shuffle) {
             videos: this.videos,
             remoteId: this.remoteId,
             owner: this.owner,
-            isPrivate: this.isPrivate,
-			shuffle: this.shuffle
+            isPrivate: this.isPrivate
         };
     };
 

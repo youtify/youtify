@@ -9,7 +9,6 @@ body:after {
         url(/images/next.png)
         url(/images/prev.png)
 		url(/images/shuffle-off.png)
-		url(/images/shuffle-on.png)
         url(/images/flattr.png)
         url(/images/flattr-active.png)
         url(/images/flattr-color.png)
@@ -732,7 +731,7 @@ html, body {
 #bottom .share-wrapper {
     position: absolute;
     top: 35px;
-    right: 200px;
+    right: 235px;
     z-index: 15;
 }
 #bottom .share-wrapper .flattr,
@@ -787,13 +786,14 @@ html, body {
     background: red;
     color: white;
 
-    border: 2px solid red;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 9px;
+    text-align: center;
+    padding: 1px 5px;
 
     position: absolute;
-    top: -2px;
-    right: -2px;
+    top: -4px;
+    right: -4px;
 }
 #bottom .timeline-wrapper {
     position: absolute;
@@ -801,7 +801,7 @@ html, body {
     left: 230px;
     height: 15px;
     width: 100%;
-    padding-right: 465px; /* #controls.width + volume.width */
+    padding-right: 500px; /* #controls.width + volume.width */
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -819,7 +819,7 @@ html, body {
     left: 0px;
 }
 #bottom .timeline-wrapper .length {
-    right: 465px; /* #controls.width + volume.width + 5 */
+    right: 500px; /* #controls.width + volume.width + 5 */
 }
 #bottom .timeline-wrapper .timeline {
     width: auto;
@@ -854,9 +854,8 @@ html, body {
 }
 #bottom .volume-wrapper {
     position: absolute;
-    right: 5px;
+    right: 44px;
     top: 43px;
-/*    width: 190px; */
     width: 150px;
     padding: 0 20px 0 20px;
     height: 15px;
@@ -910,12 +909,35 @@ html, body {
     display: inline-block;
     position: absolute;
     left: 210px;
-    bottom: 40px;
+    bottom: 38px;
     cursor: pointer;
     background: url(/images/fullscreen.png);
 }
 #bottom .fullscreen.on {
     background: url(/images/minimize.png);
+}
+
+#bottom .shuffle {
+    position: absolute;
+    right: -6px;
+    top: 22px;
+    width: 28px;
+    height: 28px;
+        
+    cursor: pointer;
+    margin: 15px;
+    border-radius: 50px;
+
+    background: url('/images/shuffle-off.png') center center no-repeat;
+    box-shadow: inset 1px 2px 3px rgba(255,255,255, 0.5), 1px 2px 3px #000;
+}
+#bottom .shuffle.on {
+    background: url('/images/shuffle-off.png') center center no-repeat;
+    box-shadow: inset 1px 2px 3px #000, 1px 2px 3px rgba(255,255,255, 0.5);
+}
+#bottom .shuffle.on:active,
+#bottom .shuffle:active {
+    box-shadow: inset 0px 0px 3px #000;
 }
 
 /* DRAG N DROP

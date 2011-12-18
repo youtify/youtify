@@ -127,13 +127,13 @@ var Player = {
 		}
 	},
 	
-	addSiblingsToPlayorder: function(startElem, shuffle) {
+	addSiblingsToPlayorder: function(startElem) {
         if (startElem === undefined) {
 			return;
         }
 		var list = [];
         
-		if (shuffle) {
+		if ($('#bottom .shuffle').hasClass('on')) {
             /* Add all videos */
             $(startElem).siblings('.video').each(function(index, item) {
                 list.push($(item).data('model'));
