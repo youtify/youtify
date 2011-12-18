@@ -117,6 +117,9 @@ html, body {
 
 /****************************/
 
+#device-error-popup {
+}
+
 #top {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -486,10 +489,14 @@ html, body {
     font-weight: bold;
 }
 #right .pane .like {
+    display: none;
     width: 40px;
     font-size: 20px;
     cursor: pointer;
     color: rgba(0, 0, 0, 0.6);
+}
+#right .toplists .youtube.top100 .video .rating {
+    display: none;
 }
 #right .pane .like:hover {
     color: #000;

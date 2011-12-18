@@ -64,7 +64,12 @@ var Notification = {
 		try {
 			Player.pause();
 		} catch (err) { }
-		$('#loading span').text(message);
-		$('#loading').css('backgroundImage', 'url(/images/null.png)').show();
+
+        $('#device-error-popup button').one('click', function(){ 
+            location.reload();
+        });
+
+        $('#device-error-popup p').text(message);
+        $('#device-error-popup').show();
 	}
 };
