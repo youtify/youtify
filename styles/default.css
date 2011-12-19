@@ -147,7 +147,7 @@ html, body {
     width: 200px;
     padding: 2px 28px 2px 6px; /* padding-right: .loader */
     border-radius: 10px 0 0 10px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
+    border: 1px solid #8B9594;
     border-right: none;
     outline: none;
     background-color: #FFF;
@@ -167,8 +167,7 @@ html, body {
     top: 0;
     width: 35px;
     height: 100%;
-    border-width: 0;
-    border-left: 1px solid #8B9594;
+    border: 1px solid #8B9594;
     border-radius: 0 10px 10px 0;
     outline: none;
     background: url(/images/search.png) center center no-repeat, -webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
@@ -593,6 +592,7 @@ html, body {
     cursor: default;
     border: 0;
 }
+#right .info .queue,
 #right .info .title {
     font-size: 14px;
 }
