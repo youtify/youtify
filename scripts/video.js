@@ -159,14 +159,13 @@ function Video(videoId, title, type, rating) {
     };
     
     this.play = function(event) {
-        event.stopPropagation();
-
         $('#left li').removeClass('playing');
         $('#right .video').removeClass('playing');
         this.listView.addClass("playing");
         
         /* if user clicked on view */
         if (event) {
+            event.stopPropagation();
             Player.addSiblingsToPlayorder(this.listView);
         }
         
