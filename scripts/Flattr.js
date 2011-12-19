@@ -45,12 +45,14 @@ var Flattr = {
             .click(function() {
                 var $button = $(this);
                 $.post('/flattrclick', {thing_id:args.thingId}, function(data) {
-                    if (data.hasOwnProperty('error_description')) {
+                    if (data === null) {
+                        alert("Error: response from Flattr was null");
+                    } else if (data.hasOwnProperty('error_description')) {
                         alert(data.error_description);
                     } else {
                         var $count = $button.find('.count');
                         $count.text(String(Number($count.text()) + 1));
-                        alert('Thanks, you rock, and frankly you are very handsome as well');
+                        $button.find('.text').text('Flarred');
                     }
                 });
             }).appendTo($div);
