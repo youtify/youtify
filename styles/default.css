@@ -441,6 +441,7 @@ html, body {
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     cursor: pointer;
+    border: 1px solid transparent;
 }
 #right .tabs li:nth-of-type(1) {
     margin-left: 0;
