@@ -8,11 +8,13 @@
         </select>
         <a href="/translations">Help out with translations</a>
     </div>
+    {% if logged_in %}
     <div class="flattr">
         <h2>Flattr</h2>
         <div class="content">
         </div>
     </div>
+    {% endif %}
     <div class="quality">
         <h2 class="translatable">Quality (Sound & Video)</h2>
         <input id="qualityLowRadio" type="radio" name="quality" value="Low" />

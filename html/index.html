@@ -214,9 +214,11 @@
 
             <div class="share-wrapper">
                 <span class="translatable share">Share</span>
+                {% if logged_in %}
                 <span class="flattr">
                     <span class="badge"></span>
                 </span>
+                {% endif %}
             </div>
             
             <div class="timeline-wrapper"> 
