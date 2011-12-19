@@ -113,7 +113,7 @@ function updatePlaylistBar(playlist) {
     $playlistBar.find('.sync').hide().unbind('click');
     
     if (playlist.owner) {
-        if (playlist.owner.id != my_user_id) { /* number != string */
+        if (my_user_id === '' || playlist.owner.id !== parseInt(my_user_id, 10)) {
             $playlistBar.find('.owner').text(playlist.owner.name).show();
 
             // Add save button if not already saved
@@ -178,9 +178,10 @@ function playlistClicked(event) {
  ****************************************************************************/
 
 function Playlist(title, videos, remoteId, owner, isPrivate) {
+    var i;
     this.title = title;
     this.videos = [];
-    for (var i = 0; i < videos.length; i++) {
+    for (i = 0; i < videos.length; i+= 1) {
         if (videos[i]) {
             var video = new Video(videos[i].videoId, videos[i].title, videos[i].type, videos[i].rating);
             this.videos.push(video);

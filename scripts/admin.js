@@ -19,7 +19,7 @@ function loadPhrases() {
                 statusCode: {
                     200: function(data) {
                          loadPhrases();
-                    },
+                    }
                 }
             });
         }
@@ -80,7 +80,7 @@ function loadLanguages() {
                 statusCode: {
                     200: function(data) {
                          loadLanguages();
-                    },
+                    }
                 }
             });
         }
@@ -153,7 +153,7 @@ function loadTeamLeaders(langCode) {
                 statusCode: {
                     200: function(data) {
                          loadTeamLeaders(langCode);
-                    },
+                    }
                 }
             });
         }
@@ -209,7 +209,7 @@ function loadSnapshots() {
                 statusCode: {
                     200: function(data) {
                          loadSnapshots();
-                    },
+                    }
                 }
             });
         }
@@ -225,7 +225,7 @@ function loadSnapshots() {
                 statusCode: {
                     200: function(data) {
                          loadSnapshots();
-                    },
+                    }
                 }
             });
         }

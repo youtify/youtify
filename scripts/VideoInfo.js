@@ -42,13 +42,13 @@ var VideoInfo = {
 
             try {
                 info.description = data.entry.media$group.media$description.$t;
-            } catch (e) {
+            } catch (e1) {
                 info.description = '';
             }
 
             try {
                 info.thumbnail = data.entry.media$group.media$thumbnail[0].url;
-            } catch (e) {
+            } catch (e2) {
                 info.thumbnail = null;
             }
 
@@ -65,7 +65,7 @@ var VideoInfo = {
                 if (!data || !data.links || !data.hasOwnProperty('artist_name')) {
                     return;
                 } else {
-                    if ('Twitter' in data.links) {
+                    if (data.links.hasOwnProperty('Twitter')) {
                         EventSystem.callEventListeners('artist_twitter_account_found', data.links.Twitter);
                     }
                 }

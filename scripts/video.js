@@ -60,7 +60,7 @@ function Video(videoId, title, type, rating) {
 
     this.getYouTubeUrl = function() {
         return 'http://www.youtube.com/watch?v=' + this.videoId;
-    },
+    };
 
     this.getTwitterShareUrl = function() {
         var url = this.getUrl(),
@@ -76,13 +76,13 @@ function Video(videoId, title, type, rating) {
     this.createListView = function() {
         var space = $('<td class="space"></td>'),
             self = this,
-            select = (function(event) {
+            select = function(event) {
                     self.listViewSelect(event);
                     event.stopPropagation();
-                }),
-            play = (function(event) {
+                },
+            play = function(event) {
                     self.play(event);
-                });
+                };
         
         this.listView = $('<tr/>')
             .addClass("draggable")

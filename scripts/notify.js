@@ -36,7 +36,7 @@ var Notification = {
         }
     },
 	webkitSay: function(message) {
-        var announceFunction = (function(message) {
+        var announceFunction = function(message) {
             try
             {
                 var settings = new Settings();
@@ -49,7 +49,7 @@ var Notification = {
             } catch(err) {
                 console.log(err.message);
             }
-        });
+        };
 		if (window.webkitNotifications) {
 			if (window.webkitNotifications.checkPermission() === 1) { // 0=OK, 1=Not Allowed, 2=Denied
 				window.webkitNotifications.requestPermission(function() { 

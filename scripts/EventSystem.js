@@ -24,5 +24,5 @@ var EventSystem = {
            fn = handlers[i];
            fn(payload);
         }
-    },
+    }
 };

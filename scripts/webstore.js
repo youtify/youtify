@@ -16,7 +16,7 @@ var ChromeWebStore = {
     appLink: 'https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho',
 
     isBrowserChrome: function() {
-        return navigator && navigator.userAgent && navigator.userAgent.indexOf('Chrome') != -1;
+        return navigator && navigator.userAgent && navigator.userAgent.indexOf('Chrome') !== -1;
     },
 
     isAppInstalled: function() {
@@ -25,12 +25,12 @@ var ChromeWebStore = {
 
     installApp: function() {
         var fail = function() {
-            Notification.say('Failed to install App.');
-        }
-        var success = function() {
-            Notification.say('Installation succeded!');
-            $('#top .menu .webstore').hide();
-        }
+                Notification.say('Failed to install App.');
+            },
+            success = function() {
+                Notification.say('Installation succeded!');
+                $('#top .menu .webstore').hide();
+            };
         if (window.chrome && window.chrome.webstore) {
             window.chrome.webstore.install(ChromeWebStore.appLink, success, fail);
         } else {

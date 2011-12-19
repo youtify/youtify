@@ -74,7 +74,8 @@ function showPlaylistContextMenu(event) {
             title: 'Rename',
             args: $(this),
             callback: function(li) {
-                var input = $('<input type="text"/>')
+                var playlist = null,
+                    input = $('<input type="text"/>')
                     .addClass('rename')
                     .val(li.text())
                     .data('li', li)
@@ -85,11 +86,15 @@ function showPlaylistContextMenu(event) {
                     .keyup(function(event) {
                         switch (event.keyCode) {
                             case 13: // RETURN
-                            var playlist = li.data('model');
-                            playlist.rename(input.val());
-                            playlistManager.save();
+                                playlist = li.data('model');
+                                playlist.rename(input.val());
+                                playlistManager.save();
+                                break;
                             case 27: // ESC
-                            $(this).blur();
+                                playlist = li.data('model');
+                                playlist.rename(input.val());
+                                playlistManager.save();
+                                $(this).blur();
                             break;
                         }
                         event.stopPropagation();

@@ -45,7 +45,7 @@ var Flattr = {
             .click(function() {
                 var $button = $(this);
                 $.post('/flattrclick', {thing_id:args.thingId}, function(data) {
-                    if ('error_description' in data) {
+                    if (data.hasOwnProperty('error_description')) {
                         alert(data.error_description);
                     } else {
                         var $count = $button.find('.count');
@@ -78,7 +78,7 @@ var Flattr = {
                             },
                             image: twitterData.profile_image_url,
                             thingId: flattrData.id,
-                            flattrs: flattrData.flattrs,
+                            flattrs: flattrData.flattrs
                         })
                     );
                 }
@@ -104,7 +104,7 @@ var Flattr = {
                         },
                         image: info.thumbnail,
                         thingId: data.id,
-                        flattrs: data.flattrs,
+                        flattrs: data.flattrs
                     })
                 );
             }
@@ -129,7 +129,7 @@ var Flattr = {
                         },
                         image: info.thumbnail,
                         thingId: data.id,
-                        flattrs: data.flattrs,
+                        flattrs: data.flattrs
                     })
                 );
             }

@@ -9,14 +9,14 @@ var YouTubePlaylist = function(id, title, videoCountHint) {
         
     self.createView = function() {
         var space = $('<td class="space"></td>'),
-            select = (function(event) {
+            select = function(event) {
                     self.viewSelect(event);
                     event.stopPropagation();
-                }),
-            toggle = (function(event) {
+                },
+            toggle = function(event) {
                 self.togglePlaylistView();
                 event.stopPropagation();
-                });
+                };
         
         self.view = $('<tr/>')
             /*.addClass("draggable")*/

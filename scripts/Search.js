@@ -12,8 +12,9 @@ var Search = {
     init: function() {
         /* Search on key up */
         $('#top .search input').keyup(function(event) {
-            var deadKeys = [9,16,17,18,37,38,39,40];
-            for (var i in deadKeys) {
+            var i, 
+                deadKeys = [9,16,17,18,37,38,39,40];
+            for (i = 0; i < deadKeys.length; i += 1) {
                 if (event.keyCode === deadKeys[i]) {
                     return;
                 }
@@ -45,6 +46,9 @@ var Search = {
         return Search.youtubeVideosTab.isSelected() ? 'youtube-videos' : 'youtube-playlists';
     },
     search: function(q, loadMore) {
+        var url = null,
+            start = null,
+            params = null;
         history.pushState(null, null, encodeURI('/search?q=' + q));
         Search.menuItem.select();
         Search.currentQuery = q;
@@ -58,13 +62,14 @@ var Search = {
                     Search.lastVideosSearchQuery = q;
                 }
                 /* Get the results */
-                var url = 'http://gdata.youtube.com/feeds/api/videos?callback=?',
-                    start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1,
-                    params = {
-                        'alt': 'json-in-script', 'max-results': 30,
-                        'start-index': start,
-                        'format': 5, 'q': q
-                    };
+                url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
+                start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1;
+                params = {
+                    'alt': 'json-in-script', 'max-results': 30,
+                    'start-index': start,
+                    'format': 5, 'q': q
+                };
+                
                 /* Clean up destination */
                 if (loadMore) {
                     Search.youtubeVideosTab.paneView.find('.loadMore').remove();
@@ -96,12 +101,12 @@ var Search = {
                 } else {
                     Search.lastPlaylistsSearchQuery = q;
                 }
-                var url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?",
-                    start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1,
-                    params = {
-                        'alt': 'json-in-script', 'max-results': 30,
-                        'start-index': start, 'format': 5, 'v': 2, 'q': q
-                    };
+                url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?";
+                start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1;
+                params = {
+                    'alt': 'json-in-script', 'max-results': 30,
+                    'start-index': start, 'format': 5, 'v': 2, 'q': q
+                };
                 /* Clean up destination */
                 if (loadMore) {
                     Search.youtubePlaylistsTab.paneView.find('.loadMore').remove();

@@ -100,5 +100,5 @@ var Timeline = {
 			clearInterval(Timeline.updateHandle);
 			Timeline.updateHandle = null;
 		}
-	},
+	}
 };

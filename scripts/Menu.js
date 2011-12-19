@@ -19,7 +19,8 @@ var Menu = {
         $('#left .playlists .new input').blur(Menu.newPlaylistNameBlur);
     },
     find: function(type) {
-        for(var i = 0; i < Menu.left.length; i++) {
+        var i;
+        for(i = 0; i < Menu.left.length; i += 1) {
             if (Menu.left[i].type === type) {
                 return Menu.left[i];
             }
@@ -120,7 +121,7 @@ function MenuItem(type) {
                 self.addTabs(['youtube-top100']);
 
                 // Init YouTube top 100
-                var $pane = $('#right .pane.youtube.top100')
+                var $pane = $('#right .pane.youtube.top100');
                 $.each(youtubeTopList, function (i, item) {
                     new Video(item.videoId, item.title, 'yt').createListView().appendTo($pane);
                 });
@@ -152,7 +153,8 @@ function MenuItem(type) {
         $('#left .toplist').click();
     };
     self.findTab = function(type) {
-        for(var i = 0; i < self.tabs.length; i++) {
+        var i;
+        for(i = 0; i < self.tabs.length; i += 1) {
             if (self.tabs[i].type === type) {
                 return self.tabs[i];
             }
