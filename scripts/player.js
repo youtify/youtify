@@ -222,7 +222,7 @@ var Player = {
             150: 'Could not play video'
         };
         var message = messages[event.data];
-		var elem = $('#right .playing');
+		var elem = $('#right .video.playing:visible');
 		var video = elem.data('model');
 
         if (video) {
