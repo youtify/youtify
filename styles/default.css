@@ -289,6 +289,7 @@ input, textarea, button {
     background-color: rgba(0, 124, 137, 1);
     color: white;
     text-shadow: none;
+    cursor: default;
 }
 #left .menu .playlists li.remote {
     position: relative;
@@ -945,9 +946,11 @@ input, textarea, button {
     background: white;
 	box-shadow: 0px 0px 20px #888;
     z-index: 25;
+    cursor: default;
 }
 .target {
     background-color: rgba(0, 124, 137, 0.4);
+    cursor: default;
 }
 .reorderable {
 }
