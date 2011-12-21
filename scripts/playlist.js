@@ -342,8 +342,18 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
 
         var newVideo = video.clone();
         this.videos.push(newVideo);
-        
-        newVideo.createListView().appendTo(this.playlistDOMHandle);
+
+        var $video = newVideo.createListView();
+        $video.data('additionalMenuButtons', [{
+            title: 'Delete',
+            args: $video,
+            callback: deleteVideoButtonClicked
+        }]);
+        $video.addClass('droppable');
+        $video.addClass('draggable');
+        $video.addClass('reorderable');
+        $video.appendTo(this.playlistDOMHandle);
+
         this.synced = false;
     };
 
