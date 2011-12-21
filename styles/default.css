@@ -1176,6 +1176,13 @@ input, textarea, button {
 
 #video-info-popup .description {
     margin-top: 10px;
+    -moz-user-select: text;
+    -moz-user-select: -moz-text;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -o-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 #video-info-popup .uploader {
     cursor: pointer;
