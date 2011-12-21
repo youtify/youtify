@@ -84,18 +84,17 @@ function showPlaylistContextMenu(event) {
                         input.remove();
                     })
                     .keyup(function(event) {
+                        var playlist;
                         switch (event.keyCode) {
                             case 13: // RETURN
                                 playlist = li.data('model');
                                 playlist.rename(input.val());
                                 playlistManager.save();
+                                $(this).blur();
                                 break;
                             case 27: // ESC
-                                playlist = li.data('model');
-                                playlist.rename(input.val());
-                                playlistManager.save();
                                 $(this).blur();
-                            break;
+                                break;
                         }
                         event.stopPropagation();
                     });
