@@ -852,7 +852,7 @@ input, textarea, button {
 
 #bottom .volume-wrapper .slider {
     height: 15px;
-    width: 50%;
+    width: 100%;
     position: relative;
     border-radius: 50px;
     box-shadow: inset 3px 3px 3px #2C2C2C;
