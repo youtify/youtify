@@ -1,4 +1,3 @@
-
 var Queue = { 
 	manualList: [],
     autoList: [],
@@ -124,6 +123,10 @@ var Queue = {
             /* Bind actions */
             clone.dblclick(play);
             clone.find('.play').click(play);
+            
+            /* Make movable */
+            clone.data('model', video);
+            clone.addClass('draggable');
             
             clone.appendTo(view);
 		});
