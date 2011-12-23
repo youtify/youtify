@@ -52,7 +52,7 @@ var Flattr = {
                     } else {
                         var $count = $button.find('.count');
                         $count.text(String(Number($count.text()) + 1));
-                        $button.find('.text').text('Flarred');
+                        $button.find('.text').text('Flattred');
                     }
                 });
             }).appendTo($div);
