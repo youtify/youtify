@@ -1,4 +1,3 @@
-
 var Timeline = {
     init: function() {
         $('#bottom .timeline').mousedown(function(event) {
@@ -59,8 +58,8 @@ var Timeline = {
         }
         pos = mouseX / maxWidth * len;
 
-        $('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-        $('#bottom .timeline-wrapper .length').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
+        $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
+        $('#bottom .timeline-wrapper .length').html(Math.floor(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
 		$('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
         
         if (!Timeline.isDragging) {
@@ -85,8 +84,8 @@ var Timeline = {
             len = Player._player.getDuration();
         
         if (pos && len) {
-            $('#bottom .timeline-wrapper .position').html(Math.round(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-            $('#bottom .timeline-wrapper .length').html(Math.round(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
+            $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
+            $('#bottom .timeline-wrapper .length').html(Math.floor(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
             $('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
         } else {
             $('#bottom .timeline-wrapper .position').html('0:00');
