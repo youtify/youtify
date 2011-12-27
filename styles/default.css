@@ -806,8 +806,8 @@ input, textarea, button {
     box-shadow: inset 3px 3px 3px #2C2C2C;
     background:-webkit-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
     background:-moz-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
     background:-ms-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+    background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
     background:linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
 }
 #bottom .timeline-wrapper .slider .knob {
@@ -858,8 +858,8 @@ input, textarea, button {
     box-shadow: inset 3px 3px 3px #2C2C2C;
     background:-webkit-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
     background:-moz-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
     background:-ms-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+    background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
     background:linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
 }
 #bottom .volume-wrapper .knob {
