@@ -1,6 +1,6 @@
 /** DRAG N DROP FRAMEWORK
  ****************************************************************************/
-
+ 
 var mousedown = false,
     mousedrag = false,
     sourceElem = null, // the REAL dragged element
@@ -169,6 +169,7 @@ $('.draggable').live('mousedown', function (event) {
     if ($(event.target).hasClass('draggable') || 
 		$(event.target).parents('.draggable') ) {
         mousedown = true;
+        event.preventDefault();
     }
 });
 
