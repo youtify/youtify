@@ -152,7 +152,7 @@ function SpotifyImporter() {
 				var url = item.id.$t;
 				var videoId = url.match('videos/(.*)$')[1];
 				var title = item.title.$t;
-				playlist.addVideo(new Video(videoId, title, 'yt'));
+				playlist.addVideo(new Video(videoId, title, 'yt', null, playlist.setAsPlaying));
 				self.added += 1;
 			});
 			

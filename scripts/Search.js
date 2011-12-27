@@ -83,6 +83,9 @@ var Search = {
                     var results = Search.getVideosFromYouTubeSearchData(data);
                     $.each(results, function(i, video) {
                         if (video) {
+                            video.onPlayCallback = function() {
+                                Menu.find('search').setAsPlaying();
+                            };
                             video.createListView().appendTo(Search.youtubeVideosTab.paneView);
                         }
                     });
@@ -119,6 +122,9 @@ var Search = {
                     /* Parse the results and create the views */
                     var results = Search.getPlaylistsFromYouTubeSearchData(data);
                     $.each(results, function(i, playlist) {
+                        playlist.videoOnPlayCallback = function() {
+                            Menu.find('search').setAsPlaying();
+                        };
                         playlist.createView().appendTo(Search.youtubePlaylistsTab.paneView);
                     });
                     /* Add load more row */

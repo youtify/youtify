@@ -123,7 +123,7 @@ function MenuItem(type) {
                 // Init YouTube top 100
                 var $pane = $('#right .pane.youtube.top100');
                 $.each(youtubeTopList, function (i, item) {
-                    new Video(item.videoId, item.title, 'yt').createListView().appendTo($pane);
+                    new Video(item.videoId, item.title, 'yt', null, self.setAsPlaying).createListView().appendTo($pane);
                 });
 
                 break;
@@ -184,6 +184,11 @@ function MenuItem(type) {
                 self.tabs[0].select();
             }
         }
+    };
+    self.setAsPlaying = function() {
+        /* Remove playing on all menuItems */
+        $('#left .menu li').removeClass('playing');
+        self.leftView.addClass('playing');
     };
     
     self.addTabs = function(tabList) {

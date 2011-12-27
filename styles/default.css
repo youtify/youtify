@@ -282,6 +282,9 @@ input, textarea, button {
     border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
     background: url(/images/playlist.png) no-repeat center left;
 }
+#left .menu li.playing {
+    background: url(/images/playing.png) no-repeat center left;
+}
 #left .menu li.selected {
     background-color: rgba(0, 124, 137, 0.1);
 }

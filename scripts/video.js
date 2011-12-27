@@ -42,16 +42,17 @@ function showVideoSharePopup(videoId, title, elem, arrowDirection) {
     elem.arrowPopup('#share-video-popup', arrowDirection);
 }
 
-function Video(videoId, title, type, rating) {
+function Video(videoId, title, type, rating, onPlayCallback) {
     this.videoId = videoId;
     this.title = $.trim(title) || '';
     this.artist = extractArtist(this.title);
     this.type = type;
     this.rating = rating;
     this.listView = null;
+    this.onPlayCallback = onPlayCallback;
     
     this.clone = function() {
-        return new Video(this.videoId, this.title, this.type, this.rating);
+        return new Video(this.videoId, this.title, this.type, this.rating, this.onPlayCallback);
     };
 
     this.getUrl = function() {
@@ -118,7 +119,11 @@ function Video(videoId, title, type, rating) {
     };
     
     this.getRatingAsString = function() {
-        return (this.rating === undefined ? 0 : this.rating.toFixed(1));
+        if (this.rating === undefined || this.rating === null) {
+            return "";
+        } else {
+            return this.rating.toFixed(1);
+        }
     };
     
     this.listViewSelect = function(event) {
@@ -159,7 +164,6 @@ function Video(videoId, title, type, rating) {
     };
     
     this.play = function(event) {
-        $('#left li').removeClass('playing');
         $('#right .video').removeClass('playing');
         this.listView.addClass("playing");
         
@@ -167,6 +171,10 @@ function Video(videoId, title, type, rating) {
         if (event) {
             event.stopPropagation();
             Player.addSiblingsToPlayorder(this.listView);
+        }
+        
+        if (this.onPlayCallback) {
+            this.onPlayCallback();
         }
         
         Player.play(this);

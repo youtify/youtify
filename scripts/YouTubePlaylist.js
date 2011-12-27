@@ -1,11 +1,12 @@
 ﻿
-var YouTubePlaylist = function(id, title, videoCountHint) {
+var YouTubePlaylist = function(id, title, videoCountHint, videoOnPlayCallback) {
     var self = this;
     self.id = id;
     self.title = title;
     self.view = null;
     self.videos = [];
     self.videoCountHint = videoCountHint;
+    self.videoOnPlayCallback = videoOnPlayCallback;
         
     self.createView = function() {
         var space = $('<td class="space"></td>'),
@@ -78,6 +79,7 @@ var YouTubePlaylist = function(id, title, videoCountHint) {
                 self.videos = $.merge(self.videos, results);
                 $.each(results, function(i, video) {
                     if (video) {
+                        video.onPlayCallback = self.videoOnPlayCallback;
                         video.createListView().appendTo(videoView);
                     }
                 });
