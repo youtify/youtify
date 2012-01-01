@@ -257,8 +257,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     };
 
     self.createNewPlaylistOnRemote = function(callback) {
-        var self = self,
-            params = {
+        var params = {
                 'json': JSON.stringify(self.toJSON()),
 				'device': device
             };
@@ -291,8 +290,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     };
 
     self.updatePlaylistOnRemote = function(callback) {
-        var self = self,
-            params = {
+        var params = {
                 'json': JSON.stringify(self.toJSON()),
 				'device': device
             };
