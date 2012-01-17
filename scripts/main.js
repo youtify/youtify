@@ -88,6 +88,7 @@ $(document).ready(function() {
     Window.init();
     TopMenu.init();
     url_Init();
+    SOPA.init();
 });
 
 function onYouTubePlayerAPIReady() {
