@@ -12,6 +12,7 @@ from playlists import get_playlists_json_for_user
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
 from languages import get_languages
+import flattr_toplist
 
 class MainHandler(webapp.RequestHandler):
 
@@ -44,6 +45,7 @@ class MainHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
             'user': current_user,
+            'is_admin': int(users.is_current_user_admin()),
             'youtify_user': youtify_user,
             'playlistsFromServer': playlists,
             'autoDetectedLanguageByServer': lang,
@@ -55,6 +57,7 @@ class MainHandler(webapp.RequestHandler):
             'login_url': users.create_login_url('/'),
             'logout_url': users.create_logout_url('/'),
             'toplist': get_or_create_toplist_json(),
+            'flattr_toplist': flattr_toplist.get_or_create_toplist_json(),
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,
             'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,

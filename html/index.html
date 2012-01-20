@@ -46,6 +46,7 @@
             var playlistsFromServer = {{ playlistsFromServer }};
 			var device = "{{ youtify_user.device }}";
 			var youtubeTopList = {{ toplist }};
+            var flattrTopList = {{ flattr_toplist }};
             var autoDetectedLanguageByServer = "{{ autoDetectedLanguageByServer }}";
             var autoDetectedTranslations = {{ autoDetectedTranslations }};
             var accept_language_header = "{{ accept_language_header }}";
@@ -183,9 +184,13 @@
                 <div class="toplists">
                     <ul class="tabs">
                         <li class="youtube top100" rel=".youtube.top100.pane" class="active">YouTube Toplist</li>
+                        {% if is_admin %}
+                            <li class="flattr" rel=".flattr">Flattr Toplist</li>
+                        {% endif %}
                     </ul>
                     <table class="youtify pane"></table>
                     <table class="youtube top100 pane"></table>
+                    <table class="flattr pane"></table>
                     <table class="youtube indie pane"></table>
                 </div>
                 

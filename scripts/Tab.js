@@ -16,6 +16,10 @@
                 self.view = $('#right .toplists .tabs .youtube.top100');
                 self.paneView = $('#right .toplists .pane.youtube.top100');
                 break;
+            case 'flattr-toplist':
+                self.view = $('#right .toplists .tabs .flattr');
+                self.paneView = $('#right .toplists .pane.flattr');
+                break;
             case 'youtube-indie':
                 self.view = $('#right .toplists .tabs .youtube.indie');
                 self.paneView = $('#right .toplists .pane.youtube.indie');
