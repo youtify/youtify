@@ -376,14 +376,17 @@ var Player = {
 			'onError': Player.onError
           }
         });
+        console.log(Player._player);
 	},
 
 	onIFramePlayerReady: function(event) {
 		Player._playerReady = true;
+        //Player._player = event.target;
+        console.log(event);
 	},
 	
 	assertPlayerLoaded: function() {
-		if (Player._player === undefined || Player._player === null || Player._player.getPlayerState === undefined) { 
+		if (Player._player === undefined || Player._player === null) { 
 			Player._playerReady = false;
 			
 			console.log("Reloading player");
