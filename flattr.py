@@ -30,15 +30,19 @@ class ClickHandler(webapp.RequestHandler):
 class DisconnectHandler(webapp.RequestHandler):
     """Remove the current users access token"""
     def get(self):
+        redirect_uri = self.request.get('redirect_uri', '/')
         user = get_current_youtify_user()
         user.flattr_access_token = None
         user.flattr_user_name = None
         user.save()
-        self.redirect('/')
+        self.redirect(redirect_uri)
 
 class ConnectHandler(webapp.RequestHandler):
     """Initiate the OAuth dance"""
     def get(self):
+        redirect_uri = self.request.get('redirect_uri')
+        if redirect_uri and redirect_uri != 'deleted':
+            self.response.headers['Set-Cookie'] = 'redirect_uri=' + redirect_uri
         url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=flattr' % (CLIENT_ID, urllib.quote(REDIRECT_URL))
         self.redirect(url)
 
@@ -83,7 +87,13 @@ class BackHandler(webapp.RequestHandler):
             update_fattr_user_info(user)
 
             user.save()
-            self.redirect('/')
+
+            redirect_uri = self.request.cookies.get('redirect_uri')
+            if redirect_uri:
+                self.response.headers['Set-Cookie'] = 'redirect_uri=deleted; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+                self.redirect(redirect_uri)
+            else:
+                self.redirect('/')
         else:
             self.response.headers['Content-Type'] = 'text/plain'
             self.response.out.write('Flattr connection failed')
