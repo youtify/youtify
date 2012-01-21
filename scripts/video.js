@@ -170,7 +170,7 @@ function Video(videoId, title, type, rating, onPlayCallback) {
         /* if user clicked on view */
         if (event) {
             event.stopPropagation();
-            Player.addSiblingsToPlayorder(this.listView);
+            Queue.addSiblingsToPlayorder(this.listView);
         }
         
         if (this.onPlayCallback) {

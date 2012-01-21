@@ -130,5 +130,27 @@ var Queue = {
             
             clone.appendTo(view);
 		});
-	}
+	},
+    
+    addSiblingsToPlayorder: function(startElem) {
+        if (startElem === undefined) {
+			return;
+        }
+		var list = [];
+        
+		if ($('#bottom .shuffle').hasClass('on')) {
+            /* Add all videos */
+            $(startElem).siblings('.video').each(function(index, item) {
+                list.push($(item).data('model'));
+            });
+			$.shuffle(list);
+		} else {
+            /* Add videos after this */
+            $(startElem).nextAll('.video').each(function(index, item) {
+                list.push($(item).data('model'));
+            });
+        }
+        list.unshift($(startElem).data('model'));
+        Queue.setAutoQueue(list);
+	},
 };

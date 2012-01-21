@@ -6,6 +6,9 @@ var URIManager = {
     init: function() {
         URIManager.loadWarnings();
         URIManager.loadState();
+        EventSystem.addEventListener('video_started_playing_successfully', function(video) {
+            URIManager.setURLFromVideo(video);
+        });
     },
     loadWarnings: function() {
         if (window.top !== window.self) {
@@ -37,6 +40,12 @@ var URIManager = {
     },
     getSearchQueryFromUrl: function() {
         return decodeURI(location.href.match('q=(.*)')[1]);
+    },
+    setURLFromVideo(video) {
+        if (video.type === null || video.type.length === 0) {
+            video.type = 'yt';
+        }
+        history.pushState(null, null, '/videos/' + video.type + '/' + video.videoId);
     }
 };
     
