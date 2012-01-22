@@ -38,7 +38,7 @@ var Volume = {
             mX = maxW;
         }
 
-        Player.setVolume(mX/maxW*100.0);
+        player.setVolume(mX/maxW*100.0);
 
         if (mX < paddingLeft) {
             mX = paddingLeft;

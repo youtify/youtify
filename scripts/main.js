@@ -3,7 +3,6 @@
 $: true,
 ON_PRODUCTION: true,
 Notification: true,
-Player: true,
 Settings: true,
 PlaylistsManager: true,
 video_Init: true,
@@ -23,6 +22,7 @@ url_Init: true,
 // GLOBALS
 var playlistManager;
 var youTubeApiReady = false;
+var player = null;
 
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
@@ -80,7 +80,8 @@ $(document).ready(function() {
     fatBar_Init();
     heart_Init();
     webstore_Init();
-    player_Init();
+    player = new Player();
+    player.init();
     Timeline.init();
     Flattr.init();
     VideoInfo.init();

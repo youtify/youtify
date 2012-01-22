@@ -1,6 +1,6 @@
 ﻿function AbstractPlayer() {
-    self = this;
-    //self.prototype = new AbstractPlayer;
+    //this.prototype = new AbstractPlayer;
+    var self = this;
     
     /* Init the player */
     self.init = function(callback) {

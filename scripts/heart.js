@@ -23,7 +23,7 @@ var Heart = {
 
                     // FUNNY LOGO
                     $('#heart-popup .logo').click(function() {
-                        Player.play(Player._hiddenPlaylist[new Date().getWeek()]);
+                        player.play(new Video(player._hiddenPlaylist[new Date().getWeek()]));
                     });
 				}
 			}

@@ -62,7 +62,7 @@ var Notification = {
 	},
 	error: function(message) {
 		try {
-			Player.pause();
+			player.pause();
 		} catch (err) { }
 
         $('#device-error-popup button').one('click', function(){ 

@@ -4,6 +4,7 @@ var EventSystem = {
 
     listeners: {
         'playlists_loaded': [],
+        'player_initialized': [],
         'video_started_playing_successfully': [],
         'video_failed_to_play': [],
         'video_played_to_end': [],

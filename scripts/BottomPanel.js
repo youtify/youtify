@@ -45,14 +45,14 @@ var BottomPanel = {
         });
 
         // CONTROLS
-        $('#bottom .controls .playpause').click(Player.playPause);
-        $('#bottom .controls .next').click(Player.next);
-        $('#bottom .controls .prev').click(Player.prev);
+        $('#bottom .controls .playpause').click(player.playPause);
+        $('#bottom .controls .next').click(player.next);
+        $('#bottom .controls .prev').click(player.prev);
         
         // FULLSCREEN
         $('#bottom .fullscreen').click(function() {
             $(this).toggleClass('on');
-            Player.toggleFullscreen();
+            player.toggleFullScreen();
         });
         
         // SHUFFLE

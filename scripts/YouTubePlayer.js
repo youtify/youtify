@@ -1,6 +1,6 @@
-﻿function YTPlayer() {
-    self = this;
-    self.prototype = new AbstractPlayer;
+﻿function YouTubePlayer() {
+    this.prototype = new AbstractPlayer;
+    var self = this;
     
     self.player = null;
     self.view = null;

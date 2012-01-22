@@ -1,6 +1,7 @@
 ﻿
 function Player() {
-    self = this;
+    var self = this;
+    self.initialized = false;
     self.players = [];
     self.currentVideo = null;
     self.currentVideoLength = 0;
@@ -9,16 +10,16 @@ function Player() {
     self.inFullScreen = false;
     
     /* Init the player */
-    self.init = function(callback) {
+    self.init = function() {
         /* Wait for APIs */
         if (!youTubeApiReady) {
             setTimeout(function() {
-                self.init(callback);
+                self.init();
             }, 1000);
             return;
         }
     
-        self.players.push({type: 'yt', player : new YTPlayer(), initialized: false});
+        self.players.push({type: 'yt', player : new YouTubePlayer(), initialized: false});
         
         EventSystem.addEventListener('video_failed_to_play', self.findAndPlayAlternative);
         EventSystem.addEventListener('video_played_to_end', function() {
@@ -34,9 +35,8 @@ function Player() {
             }
         });
         
-        if (callback) {
-            callback();
-        }
+        self.initialized = true;
+        EventSystem.callEventListeners('player_initialized', self);
     };
         
     /* Start (or if video is null resume) playback of a video */
@@ -64,7 +64,7 @@ function Player() {
             
             /* Display the right player and init if uninitialized */
             for (i = 0; i < self.players.length; i+=1) {
-                if (self.players[i].type === self.currentVideo.type) {
+                if (self.players[i].type === video.type) {
                     /* Init the player and start playing the video on callback */
                     if (self.players[i].initialized === false) {
                         self.players[i].player.init(function() {
@@ -105,7 +105,7 @@ function Player() {
             return;
         }
         
-        playerItem.player.setVolume(volume);
+        playerItem.player.setVolume(self.volume);
         if (self.inFullScreen) {
             playerItem.player.fullScreenOn();
         } else {
@@ -177,7 +177,7 @@ function Player() {
     };
     
     /* Toggles the fullscreen */
-    self.fullScreenOn = function() {
+    self.toggleFullScreen = function() {
         if (self.inFullScreen) {
             self.fullScreenOff();
         } else {
@@ -210,6 +210,10 @@ function Player() {
     /* Set volume (0-100) */
     self.setVolume = function(volume) {
         var i;
+        if (volume < 0 || volume > 100) {
+            console.log("Player.setVolume("+ volume + "): argument must be >= 0 && <= 100");
+            return;
+        }
         self.volume = volume;
         
         for (i = 0; i < self.players.length; i+=1) {
@@ -224,10 +228,22 @@ function Player() {
         return self.volume;
     };
     
+    /* Increase or decrease the volume */
+    self.setRelativeVolume = function(volume) {
+        volume += self.getVolume();
+        if (volume <= 0) {
+            self.setVolume(0);
+        } else if (volume >= 100) {
+            self.setVolume(100);
+        } else {
+            self.setVolume(volume);
+        }
+    }
+    
     /* Seek to time (seconds) in video */
     self.seekTo = function(time) {
-        if (self.currentPlayer === null) {
-            console.log("Player.seekTo(): currentPlayer is null");
+        if (self.currentPlayer === null || self.currentVideo === null) {
+            console.log("Player.seekTo(): currentPlayer or currentVideo is null");
             return;
         } else {
             if (time >= 0 && time <= self.getTotalPlaybackTime()) {
@@ -235,6 +251,23 @@ function Player() {
             } else {
                 console.log("Player.seekTo("+ time + "): argument must be >= 0 and <= than " + self.getTotalPlaybackTime());
                 return;
+            }
+        }
+    };
+    
+    /* Seek in the video. A negative number seeks backwards and a positive seeks forward */
+    self.seek = function(time) {
+        if (self.currentPlayer === null || self.currentVideo === null) {
+            console.log("Player.seekTo(): currentPlayer or currentVideo is null");
+            return;
+        } else {
+            time += self.getCurrentPlaybackTime();
+            if (time <= 0) {
+                self.seekTo(0);
+            } else if (time >= self.getTotalPlaybackTime()) {
+                self.seekTo(self.getTotalPlaybackTime());
+            } else {
+                self.seekTo(time);
             }
         }
     };
@@ -264,8 +297,9 @@ function Player() {
     
     /* Find an alternative to the current video and play it */
     self.findAndPlayAlternative = function(video) {
-        video.view.addClass('alternative');
-        
+        if (video.view) {
+            video.view.addClass('alternative');
+        }
         Search.findAlternative(video, function(alternative) {
             if (alternative) {
                 self.play(alternative);
@@ -274,5 +308,9 @@ function Player() {
             }
         });
     };
-    
+
+    /* Get the current playing video (if any) */
+    self.getCurrentVideo = function() {
+        return self.currentVideo;
+    }
 };

@@ -6,11 +6,11 @@ $(window).keydown(function(event) {
 	//console.log(event.keyCode);
     switch(event.keyCode) {
         case 32: // Space
-            Player.playPause();
+            player.playPause();
             event.preventDefault();
             break;
         case 27: // ESC
-            Player.stopFullscreen();
+            player.fullscreenOff();
             event.preventDefault();
             break;
         case 13: // Enter
@@ -18,35 +18,49 @@ $(window).keydown(function(event) {
             break;
         case 37: // Left
             if (event.ctrlKey || event.metaKey) {
-                Player.prev();
+                player.prev();
             }
             if (event.shiftKey) {
-                Player.seekBackward();
+                player.seek(-5);
             }
             break;
         case 38: // Up
             if (event.ctrlKey || event.metaKey) {
-                Player.volumeUp();
+                player.setRelativeVolume(10);
             }
             else {
-                selectVideo($('#results-container li.selected').prev());
+                var model = $('#right .pane.selected .video.selected:first').prev().data('model');
+                if (model) {
+                    if (event.shiftKey) {
+                        model.listViewSelect(event);
+                    } else {
+                        model.listViewSelect();
+                    }
+                }
             }
 			event.preventDefault();
             break;
         case 39: // Right
             if (event.ctrlKey || event.metaKey) {
-                Player.next();
+                player.next();
             }
             if (event.shiftKey) {
-                Player.seekForward();
+                player.seek(5);
             }
             break;
         case 40: // Down
             if (event.ctrlKey || event.metaKey) {
-                Player.volumeDown();
+                player.setRelativeVolume(-10);
             }
             else {
-                selectVideo($('#results-container li.selected').next());
+                var model = $('#right .pane.selected .video.selected:last').next().data('model');
+                if (model) {
+                    if (event.shiftKey) {
+                        model.listViewSelect(event);
+                    } else {
+                        model.listViewSelect();
+                    }
+                }
             }
 			event.preventDefault();
             break;

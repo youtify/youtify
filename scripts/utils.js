@@ -20,7 +20,6 @@ function renameCurrentlyPlayingVideo(title) {
     }
 
     video.find('.title').text(title);
-    Player.setTitle(title);
 
     if (playlist) {
         videoModel = playlist.videos[video.index()];

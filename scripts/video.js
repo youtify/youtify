@@ -1,7 +1,7 @@
 /*global
 
 $: true,
-Player: true,
+player: true,
 extractArtist: true,
 showResultsItemContextMenu: true,
 
@@ -9,10 +9,12 @@ showResultsItemContextMenu: true,
 
 function video_Init() {
     $('#info .share').click(function() {
-        var videoId = Player.getCurrentVideoId();
-        var title = $('#info .title').text();
-        var elem = $('#info');
-        showVideoSharePopup(videoId, title, elem, 'left');
+        var video = player.getCurrentVideo(),
+            title = $('#info .title').text(),
+            elem = $('#info');
+        if (video) {
+            showVideoSharePopup(video.videoId, title, elem, 'left');
+        }
     });
 }
 
@@ -46,7 +48,7 @@ function Video(videoId, title, type, rating, onPlayCallback) {
     this.videoId = videoId;
     this.title = $.trim(title) || '';
     this.artist = extractArtist(this.title);
-    this.type = type;
+    this.type = type || 'yt';
     this.rating = rating;
     this.listView = null;
     this.onPlayCallback = onPlayCallback;
@@ -177,7 +179,7 @@ function Video(videoId, title, type, rating, onPlayCallback) {
             this.onPlayCallback();
         }
         
-        Player.play(this);
+        player.play(this);
     };
 
     this.toJSON = function() {

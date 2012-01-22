@@ -33,22 +33,14 @@ var Timeline = {
         Timeline.manualUpdate(event);
     },
 	start: function() {
-		if (!Player.assertPlayerLoaded()) { 
-			return;
-		}
-		
 		$('#bottom .timeline .knob').show();
 		Timeline.updateHandle = setInterval(Timeline.update, 100);
 	},
     manualUpdate: function(event) {
-        if (!Player.assertPlayerLoaded()) { 
-			return;
-		}
-        
         var maxWidth = $('#bottom .timeline').width(),
             mouseX = event.pageX - $('#bottom .timeline .slider').offset().left,
             pos = null,
-            len = Player._player.getDuration();
+            len = player.getTotalPlaybackTime();
         
         if (mouseX < 0) {
             mouseX = 0;
@@ -63,25 +55,15 @@ var Timeline = {
 		$('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
         
         if (!Timeline.isDragging) {
-            var wasMuted = Player._player.isMuted();
-            Player._player.mute();
-            
-            Player._player.seekTo(pos, true);
-            if (!wasMuted) {
-                Player._player.unMute();
-            }
+            player.seekTo(pos);
         }
     },
 	update: function(percent) { 
-		if (!Player.assertPlayerLoaded()) { 
-			clearInterval(Timeline.updateHandle);
-			return;
-		}
-        if (Timeline.isDragging) {
+		if (Timeline.isDragging) {
             return;
         }
-        var pos = Player._player.getCurrentTime(),
-            len = Player._player.getDuration();
+        var pos = player.getCurrentPlaybackTime(),
+            len = player.getTotalPlaybackTime();
         
         if (pos && len) {
             $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
