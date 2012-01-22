@@ -1,0 +1,57 @@
+li, ul, ol {
+    padding: 0;
+    margin: 0;
+}
+.step {
+    margin: 10px 0;
+    padding-left: 60px;
+    min-height: 48px;
+}
+.step .title {
+    font-weight: bold;
+}
+.step.active .title {
+    font-size: 20px;
+}
+.step.ok {
+    background: url(/images/green_check.png) left top no-repeat;
+}
+.step.disabled {
+    opacity: 0.5;
+}
+.step .only-active,
+.step .only-ok {
+    display: none;
+}
+.step.active .only-active,
+.step.ok .only-ok {
+    display: block;
+}
+
+.videos {
+    margin: 10px 0;
+}
+.videos li {
+    list-style-type: none;
+    display: inline-block;
+    width: 120px;
+    margin: 10px 10px 10px 0;
+    text-align: center;
+    position: relative;
+}
+.videos li.ok:after {
+    display: block;
+    content: "";
+    width: 120px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url(/images/green_check.png) center center no-repeat white;
+    opacity: 0.9;
+}
+
+button.go {
+    display: block;
+    margin: 10px 0;
+}

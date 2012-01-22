@@ -48,6 +48,9 @@ handlers:
 - url: /flattr_toplist.*
   script: flattr_toplist.py
 
+- url: /flattr_submit.*
+  script: flattr_submit.py
+
 - url: /api/playlists.*
   script: playlists.py
 
