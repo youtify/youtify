@@ -1,5 +1,4 @@
-from urlparse import urlparse
-from urlparse import parse_qsl
+import urlparse
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 from google.appengine.ext import webapp
@@ -17,9 +16,9 @@ def fetch_toplist():
         result = simplejson.loads(result.content)
         if i < 5 and 'things' in result and len(result['things']) > 0:
             for thing in result['things']:
-                url = urlparse(thing['url'])
+                url = urlparse.urlparse(thing['url'])
                 if url.netloc.startswith('www.youtube.com'):
-                    params = dict(parse_qsl(url.query))
+                    params = dict(urlparse.parse_qsl(url.query))
                     if 'v' in params:
                         json.append({
                             'title': thing['title'],
