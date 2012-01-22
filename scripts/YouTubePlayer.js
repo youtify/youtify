@@ -12,8 +12,6 @@
         var videoId = 'cpvty-isRCk',
             origin = document.location.origin || document.location.protocol + '//' + document.location.host;
         
-        self.view = $('#youtube');
-        
         if (callback === null || callback === undefined) {
             callback = function() { console.log("YouTube player loaded"); };
         }
@@ -28,7 +26,13 @@
             origin: origin,
             playerVars: { 'autoplay': 0, 'controls': 0 },
             events: {
-                'onReady': callback,
+                'onReady': function(data) {
+                        if (callback) {
+                            callback();
+                        }
+                        /* Must be set onReady because the div is replaced with an iFrame */
+                        self.view = $('#youtube');
+                    },
                 'onStateChange': self.onPlayerStateChange,
                 'onError': self.onError
             }
@@ -116,16 +120,15 @@
     
     /* Enter fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOn = function() {
+        console.log(self.view);
         var width = $(window).width(),
             height = $(window).height() - $('#bottom').outerHeight();
 
 		/* Must set style, not class */
-		self.view.css('left',0);
-		self.view.css('top',0);
+		$('#left .players').css('top',0);
 		self.view.width(width);
 		self.view.height(height);
-        
-		self.player.setSize(width, height);
+        $('#top').hide();
     };
     
     /* Exit fullScreen (must respect self.show() & self.hide()) */
@@ -134,11 +137,10 @@
             height = 230;
         
 		/* Must set style, not class */
-		self.view.removeAttr('style');
+		$('#left .players').removeAttr('style');
 		self.view.width(width);
 		self.view.height(height);
-        
-		self.player.setSize(width, height);
+        $('#top').show();
     };
     
     /* Set volume (0-100) */
