@@ -297,12 +297,18 @@ function Player() {
     
     /* Find an alternative to the current video and play it */
     self.findAndPlayAlternative = function(video) {
-        if (video.view) {
-            video.view.addClass('alternative');
+        if (video.listView) {
+            video.listView.addClass('alternative');
         }
         Search.findAlternative(video, function(alternative) {
             if (alternative) {
                 self.play(alternative);
+                
+                /* Update the model linked to the view so the 
+                   alternative is dragged instead of the unplayable video */
+                if (video.listView) {
+                    video.listView.data('model', alternative);
+                }
             } else {
                 self.next();
             }

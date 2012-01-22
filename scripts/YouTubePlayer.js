@@ -6,6 +6,7 @@
     self.view = null;
     self.loadedNewVideo = false;
     self.currentVideo = null;
+    self.inFullScreen = false;
     
     /* Init the player */
     self.init = function(callback) {
@@ -32,6 +33,9 @@
                         }
                         /* Must be set onReady because the div is replaced with an iFrame */
                         self.view = $('#youtube');
+                        if (self.inFullScreen) {
+                            self.fullScreenOn();
+                        }
                     },
                 'onStateChange': self.onPlayerStateChange,
                 'onError': self.onError
@@ -43,12 +47,12 @@
     
     /* Hide the player from the UI. Must be callable without prior init */
     self.hide = function() {
-        self.view.hide();
+        $('#youtube').hide();
     };
 
     /* Show the player. Must be callable without prior init */
     self.show = function() {
-        self.view.show();
+        $('#youtube').show();
     };
     
     /* Player changed state */
@@ -120,27 +124,35 @@
     
     /* Enter fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOn = function() {
-        console.log(self.view);
         var width = $(window).width(),
             height = $(window).height() - $('#bottom').outerHeight();
+        
+        if (self.view === null) {
+            return;
+        }
 
 		/* Must set style, not class */
 		$('#left .players').css('top',0);
 		self.view.width(width);
 		self.view.height(height);
         $('#top').hide();
+        self.inFullScreen = true;
     };
     
     /* Exit fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOff = function() {
         var width = 230,
             height = 230;
+        if (self.view === null) {
+            return;
+        }
         
 		/* Must set style, not class */
 		$('#left .players').removeAttr('style');
 		self.view.width(width);
 		self.view.height(height);
         $('#top').show();
+        self.inFullScreen = false;
     };
     
     /* Set volume (0-100) */
