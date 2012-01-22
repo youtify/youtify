@@ -1,5 +1,4 @@
 from urlparse import urlparse
-from urlparse import parse_qsl
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 from google.appengine.ext import webapp
