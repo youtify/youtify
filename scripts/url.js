@@ -50,8 +50,8 @@ var URIManager = {
         return decodeURI(location.href.match('q=(.*)')[1]);
     },
     setURLFromVideo: function(video) {
-        if (video.type === null || video.type.length === 0) {
-            video.type = 'yt';
+        if (video.type === null || video.type.length === 0 || video.type === 'yt') {
+            video.type = 'youtube';
         }
         history.pushState(null, null, '/tracks/' + video.type + '/' + video.videoId);
     }

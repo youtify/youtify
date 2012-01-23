@@ -48,7 +48,7 @@ function Video(videoId, title, type, rating, onPlayCallback) {
     this.videoId = videoId;
     this.title = $.trim(title) || '';
     this.artist = extractArtist(this.title);
-    this.type = type || 'yt';
+    this.type = type || 'youtube';
     this.rating = rating;
     this.listView = null;
     this.onPlayCallback = onPlayCallback;
@@ -58,7 +58,7 @@ function Video(videoId, title, type, rating, onPlayCallback) {
     };
 
     this.getUrl = function() {
-        return location.protocol + '//' + location.host + '/videos/' + this.videoId;
+        return location.protocol + '//' + location.host + '/tracks/' + this.type + '/' + this.videoId;
     };
 
     this.getYouTubeUrl = function() {

@@ -2,7 +2,7 @@
     this.prototype = new AbstractPlayer();
     var self = this;
     self.initialized = false;
-    self.type = 'yt';
+    self.type = 'youtube';
     
     self.player = null;
     self.view = null;

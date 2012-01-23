@@ -95,7 +95,7 @@ var FatBar = {
 				if (item.gd$rating) {
 					var rating = item.gd$rating.average;
                 }
-				var resultItem = new Video(videoId, title, 'yt', rating).createListView();
+				var resultItem = new Video(videoId, title, 'youtube', rating).createListView();
 				resultItem.appendTo($('#related'));
 			}); 
 		});

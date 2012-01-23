@@ -59,8 +59,8 @@ function Player() {
             };
             
             /* Assume YouTube video type if not set */
-            if (video.type === null || video.type.length === 0) {
-                video.type = 'yt';
+            if (video.type === null || video.type.length === 0 || video.type === 'yt') {
+                video.type = 'youtube';
             }
             
             /* Remove reference to currentPlayer to discover an eventual video type error */

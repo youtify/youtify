@@ -124,13 +124,13 @@ function MenuItem(type) {
                 // Init YouTube top 100
                 $pane = $('#right .pane.youtube.top100');
                 $.each(youtubeTopList, function (i, item) {
-                    new Video(item.videoId, item.title, 'yt', null, self.setAsPlaying).createListView().appendTo($pane);
+                    new Video(item.videoId, item.title, 'youtube', null, self.setAsPlaying).createListView().appendTo($pane);
                 });
 
                 // Init Flattr Toplist
                 $pane = $('#right .pane.flattr');
                 $.each(flattrTopList, function (i, item) {
-                    new Video(item.videoId, item.title, 'yt', null, self.setAsPlaying).createListView().appendTo($pane);
+                    new Video(item.videoId, item.title, 'youtube', null, self.setAsPlaying).createListView().appendTo($pane);
                 });
 
                 break;

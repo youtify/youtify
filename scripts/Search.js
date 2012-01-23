@@ -181,7 +181,7 @@ var Search = {
                 rating = item.gd$rating.average;
             }
 
-            var video = new Video(videoId, title, 'yt', rating);
+            var video = new Video(videoId, title, 'youtube', rating);
             results.push(video);
         });
         return results;
