@@ -1,6 +1,8 @@
 ﻿function YouTubePlayer() {
-    this.prototype = new AbstractPlayer;
+    this.prototype = new AbstractPlayer();
     var self = this;
+    self.initialized = false;
+    self.type = 'yt';
     
     self.player = null;
     self.view = null;
@@ -28,13 +30,13 @@
             playerVars: { 'autoplay': 0, 'controls': 0 },
             events: {
                 'onReady': function(data) {
-                        if (callback) {
-                            callback();
-                        }
+                        self.initialized = true;
+                        
                         /* Must be set onReady because the div is replaced with an iFrame */
                         self.view = $('#youtube');
-                        if (self.inFullScreen) {
-                            self.fullScreenOn();
+                        
+                        if (callback) {
+                            callback();
                         }
                     },
                 'onStateChange': self.onPlayerStateChange,
@@ -92,7 +94,7 @@
 		if (self.currentVideo) {
             EventSystem.callEventListeners('video_failed_to_play', self.currentVideo);
         }
-	},
+	};
     
     /* Start (or if video is null resume) playback of a video */
     self.play = function(video) {
@@ -189,4 +191,4 @@
             return 0;
         }
     };
-};
+}

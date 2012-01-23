@@ -18,7 +18,7 @@ var URIManager = {
     loadState: function() {
         if (location.href.indexOf('playlists') !== -1 && location.href.indexOf('videos') === -1) { // /playlists/123
             loadPlaylist(URIManager.getPlaylistIdFromUrl());
-        } else if (location.href.indexOf('videos') !== -1 || location.href.indexOf('track') !== -1) {
+        } else if (location.href.indexOf('videos') !== -1 || location.href.indexOf('tracks') !== -1) {
             if (player.initialized) {
                 player.play(new Video(URIManager.getVideoIdFromUrl()));
             } else {
@@ -41,8 +41,8 @@ var URIManager = {
     getVideoIdFromUrl: function() {
         if (location.href.indexOf('videos') !== -1) { // /playlists/123/videos/456, // /videos/456
             return location.href.match('videos/(.*)')[1];
-        } else if (location.href.indexOf('track') !== -1) { // /playlists/123/videos/456, // /videos/456
-            return location.href.match('track/(.*)/(.*)')[2];
+        } else if (location.href.indexOf('tracks') !== -1) { // /playlists/123/videos/456, // /videos/456
+            return location.href.match('tracks/(.*)/(.*)')[2];
         }
         return false;
     },
@@ -53,7 +53,7 @@ var URIManager = {
         if (video.type === null || video.type.length === 0) {
             video.type = 'yt';
         }
-        history.pushState(null, null, '/track/' + video.type + '/' + video.videoId);
+        history.pushState(null, null, '/tracks/' + video.type + '/' + video.videoId);
     }
 };
     

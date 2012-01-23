@@ -19,7 +19,7 @@ function Player() {
             return;
         }
     
-        self.players.push({type: 'yt', player : new YouTubePlayer(), initialized: false});
+        self.players.push(new YouTubePlayer());
         
         EventSystem.addEventListener('video_failed_to_play', self.findAndPlayAlternative);
         EventSystem.addEventListener('video_played_to_end', function() {
@@ -54,6 +54,10 @@ function Player() {
                 return;
             }
         } else {
+            var callback = function() {
+                self.play(video);
+            };
+            
             /* Assume YouTube video type if not set */
             if (video.type === null || video.type.length === 0) {
                 video.type = 'yt';
@@ -67,20 +71,17 @@ function Player() {
                 if (self.players[i].type === video.type) {
                     /* Init the player and start playing the video on callback */
                     if (self.players[i].initialized === false) {
-                        self.players[i].player.init(function() {
-                            self.players[i].initialized = true;
-                            self.configurePlayer(self.players[i]);
-                            self.play(video);
-                        });
+                        self.players[i].init(callback);
                         return;
                     } else {
                         /* We found the right player! */
-                        self.currentPlayer = self.players[i].player;
+                        self.currentPlayer = self.players[i];
+                        self.configurePlayer(self.currentPlayer);
                         self.currentPlayer.show();
                     }
                 } else {
                     /* Hide other players */
-                    self.players[i].player.hide();
+                    self.players[i].hide();
                 }
             }
             
@@ -99,17 +100,17 @@ function Player() {
     };
     
     /* Configure the player to match other players */
-    self.configurePlayer = function(playerItem) {
-        if (!playerItem.initialized) {
-            console.log("Player.configurePlayer(playerItem): playerItem is not initialized");
+    self.configurePlayer = function(backendPlayer) {
+        if (!backendPlayer.initialized) {
+            console.log("Player.configurePlayer(backendPlayer): backendPlayer is not initialized");
             return;
         }
         
-        playerItem.player.setVolume(self.volume);
+        backendPlayer.setVolume(self.volume);
         if (self.inFullScreen) {
-            playerItem.player.fullScreenOn();
+            backendPlayer.fullScreenOn();
         } else {
-            playerItem.player.fullScreenOff();
+            backendPlayer.fullScreenOff();
         }
     };
     
@@ -191,7 +192,7 @@ function Player() {
         
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {
-                self.players[i].player.fullScreenOn();
+                self.players[i].fullScreenOn();
             }
         }
     };
@@ -202,7 +203,7 @@ function Player() {
         
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {
-                self.players[i].player.fullScreenOff();
+                self.players[i].fullScreenOff();
             }
         }
     };
@@ -218,7 +219,7 @@ function Player() {
         
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {
-                self.players[i].player.setVolume(volume);
+                self.players[i].setVolume(volume);
             }
         }
     };

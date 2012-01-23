@@ -1,13 +1,16 @@
 ﻿function AbstractPlayer() {
     //this.prototype = new AbstractPlayer;
     var self = this;
+    self.initialized = false;
+    self.type = 'abstract';
     
     /* Init the player */
     self.init = function(callback) {
         throw 'Error in AbstractPlayer: This method must be overridden.';
         
         /*if (success) {
-            callback();
+            self.initialized = true;
+            callback(self);
         } else {
             EventSystem.callEventListeners('player_error', self);
         }*/
@@ -80,4 +83,4 @@
     self.getTotalPlaybackTime = function() {
         throw 'Error in AbstractPlayer: This method must be overridden.';
     };
-};
+}
