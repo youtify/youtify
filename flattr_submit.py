@@ -6,6 +6,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
+from google.appengine.api import urlfetch
 from django.utils import simplejson
 from model import get_current_youtify_user
 from model import create_youtify_user
@@ -35,18 +36,36 @@ class Handler(webapp.RequestHandler):
             'my_user_email': my_user_email,
             'my_flattr_username': my_flattr_username,
             'logout_url': logout_url,
-            'flattr_connect_url': '/flattrconnect?redirect_uri=' + urllib.quote(self.request.url),
+            'flattr_connect_url': '/flattrconnect?redirect_uri=%s&scope=%s' % (urllib.quote(self.request.url), urllib.quote('flattr thing')),
             'flattr_disconnect_url': '/flattrdisconnect?redirect_uri=' + urllib.quote(self.request.url),
             'login_url': login_url,
         }))
 
     def post(self):
-        ret = {
-            'css_class': 'ok',
-            'message': 'Thing submitted',
+        video_id = self.request.get('video_id')
+        title = self.request.get('title')
+        description = self.request.get('description')
+
+        url = 'https://api.flattr.com/rest/v2/things/'
+        user = get_current_youtify_user()
+
+        headers = {
+            'Authorization': 'Bearer %s' % user.flattr_access_token,
+            'Content-Type': 'application/json',
         }
+
+        data = simplejson.dumps({
+            'url': 'http://www.youtube.com/watch?v=' + video_id,
+            'title': title,
+            'description': description,
+            'tags': 'music',
+            'category': 'audio',
+        })
+
+        response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers)
+
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(ret))
+        self.response.out.write(response.content)
 
 def main():
     application = webapp.WSGIApplication([

@@ -40,10 +40,11 @@ class DisconnectHandler(webapp.RequestHandler):
 class ConnectHandler(webapp.RequestHandler):
     """Initiate the OAuth dance"""
     def get(self):
+        scope = urllib.quote(self.request.get('scope', 'flattr'))
         redirect_uri = self.request.get('redirect_uri')
         if redirect_uri and redirect_uri != 'deleted':
             self.response.headers['Set-Cookie'] = 'redirect_uri=' + redirect_uri
-        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=flattr' % (CLIENT_ID, urllib.quote(REDIRECT_URL))
+        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=%s' % (CLIENT_ID, urllib.quote(REDIRECT_URL), scope)
         self.redirect(url)
 
 def update_fattr_user_info(user):

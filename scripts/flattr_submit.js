@@ -65,11 +65,13 @@ function loadVideos(nickname) {
             var url = item.id.$t;
             var videoId = url.match('video:(.*)$')[1];
             var title = item.title.$t;
+            var description = item.media$group.media$description.$t;
             var thumbnail = item.media$group.media$thumbnail[0];
             var elem = createVideoElem(title, videoId, thumbnail).data('index', i);
 
             videos.push({
                 title: title,
+                description: description,
                 videoId: videoId,
                 elem: elem
             });
@@ -113,12 +115,21 @@ function startSubmitProcess() {
         if (i < videos.length) {
             var item = videos[i];
             if (item.elem.find('input').is(':checked')) {
-                console.log('submitting', item.title);
                 item.elem.addClass('loading');
-                $.post('/flattr_submit', function(data) {
+                var params = {
+                    title: item.title,
+                    description: item.description,
+                    video_id: item.videoId
+                };
+                $.post('/flattr_submit', params, function(data) {
                     item.elem.removeClass('loading');
-                    item.elem.addClass(data.css_class);
-                    submitVideo(i+1);
+                    if (data.hasOwnProperty('error_description')) {
+                        alert(data.error_description);
+                        return;
+                    } else {
+                        item.elem.addClass(data.message);
+                        submitVideo(i+1);
+                    }
                 });
             } else {
                 submitVideo(i+1);
