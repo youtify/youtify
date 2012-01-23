@@ -1,17 +1,62 @@
+/* RESET
+*******************************/
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ""; content: none; }
+ins { background-color: #ff9; color: #000; text-decoration: none; }
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+del { text-decoration: line-through; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+input, select { vertical-align: middle; }
+a, input, a:hover, a:active { outline: none; }
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea { margin: 0; }
+/* Hand cursor on clickable input elements */
+input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+ol, ul { list-style: none; }
+
+html, body {
+    font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+}
+
+#wrapper {
+    margin: 10px auto;
+    width: 600px;
+}
+
+#footer {
+    border-top: 1px solid #eee;
+    text-align: right;
+    padding: 5px;
+    color: #aaa;
+}
+#footer .logo.youtify {
+    background: url(/images/favicon.png) left center no-repeat;
+    padding-left: 20px;
+}
+
+h1 {
+    font-size: 16px;
+}
+
 li, ul, ol {
     padding: 0;
     margin: 0;
 }
 .step {
     margin: 10px 0;
-    padding-left: 60px;
+    padding-left: 35px;
     min-height: 48px;
 }
 .step .title {
     font-weight: bold;
 }
-.step.active .title {
-    font-size: 20px;
+.step.active {
+    box-shadow: inset 0 0 10px #ccc;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .step.ok {
     background: url(/images/green_check.png) left top no-repeat;
