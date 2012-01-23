@@ -1,4 +1,6 @@
 $(window).keydown(function(event) {
+    var model = null;
+    
     if ($('input, textarea').is(":focus")) {
         return; // Shouldn't the other keypresses make sure the event isn't propagated here?
     }
@@ -29,7 +31,7 @@ $(window).keydown(function(event) {
                 player.setRelativeVolume(10);
             }
             else {
-                var model = $('#right .pane.selected .video.selected:first').prev().data('model');
+                model = $('#right .pane.selected .video.selected:first').prev().data('model');
                 if (model) {
                     if (event.shiftKey) {
                         model.listViewSelect(event);
@@ -53,7 +55,7 @@ $(window).keydown(function(event) {
                 player.setRelativeVolume(-10);
             }
             else {
-                var model = $('#right .pane.selected .video.selected:last').next().data('model');
+                model = $('#right .pane.selected .video.selected:last').next().data('model');
                 if (model) {
                     if (event.shiftKey) {
                         model.listViewSelect(event);

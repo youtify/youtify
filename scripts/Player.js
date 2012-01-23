@@ -239,7 +239,7 @@ function Player() {
         } else {
             self.setVolume(volume);
         }
-    }
+    };
     
     /* Seek to time (seconds) in video */
     self.seekTo = function(time) {
@@ -319,5 +319,5 @@ function Player() {
     /* Get the current playing video (if any) */
     self.getCurrentVideo = function() {
         return self.currentVideo;
-    }
-};
+    };
+}

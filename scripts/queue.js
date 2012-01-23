@@ -152,5 +152,5 @@ var Queue = {
         }
         list.unshift($(startElem).data('model'));
         Queue.setAutoQueue(list);
-	},
+	}
 };

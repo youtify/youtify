@@ -106,7 +106,8 @@ var Menu = {
 };
 
 function MenuItem(type) {
-    var self = this;
+    var self = this,
+        $pane;
     self.type = type;
     self.leftView = null;
     self.rightView = null;
@@ -121,13 +122,13 @@ function MenuItem(type) {
                 self.addTabs(['youtube-top100', 'flattr-toplist']);
 
                 // Init YouTube top 100
-                var $pane = $('#right .pane.youtube.top100');
+                $pane = $('#right .pane.youtube.top100');
                 $.each(youtubeTopList, function (i, item) {
                     new Video(item.videoId, item.title, 'yt', null, self.setAsPlaying).createListView().appendTo($pane);
                 });
 
                 // Init Flattr Toplist
-                var $pane = $('#right .pane.flattr')
+                $pane = $('#right .pane.flattr');
                 $.each(flattrTopList, function (i, item) {
                     new Video(item.videoId, item.title, 'yt', null, self.setAsPlaying).createListView().appendTo($pane);
                 });
