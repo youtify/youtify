@@ -57,7 +57,7 @@ var FatBar = {
         $('#linko-box .links').html('');
     },
     show: function() {
-        if (player.getCurrentVideo()) {
+        if (player && player.getCurrentVideo()) {
             FatBar.loadFromVideo(player.getCurrentVideo());
         }
         $("#fatbar-toggle .show").hide();
