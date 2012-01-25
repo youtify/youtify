@@ -11,6 +11,9 @@ error_handlers:
 
 handlers:
 
+- url: /me.*
+  script: me.py
+
 - url: /export
   static_files: html/export.html
   upload: html/export.html

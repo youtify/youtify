@@ -22,11 +22,14 @@ class Handler(webapp.RequestHandler):
         login_url = ''
         my_user_email = ''
         my_flattr_username = ''
+        my_youtube_username = ''
         if (user is not None):
             my_user_email = user.google_user.email()
             logout_url = users.create_logout_url('/flattr_submit')
             if user.flattr_user_name:
                 my_flattr_username = user.flattr_user_name
+            if user.youtube_username:
+                my_youtube_username = user.youtube_username
         else:
             login_url = users.create_login_url('/flattr_submit')
 
@@ -35,6 +38,7 @@ class Handler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {
             'my_user_email': my_user_email,
             'my_flattr_username': my_flattr_username,
+            'my_youtube_username': my_youtube_username,
             'logout_url': logout_url,
             'flattr_connect_url': '/flattrconnect?redirect_uri=%s&scope=%s' % (urllib.quote(self.request.url), urllib.quote('flattr thing')),
             'flattr_disconnect_url': '/flattrdisconnect?redirect_uri=' + urllib.quote(self.request.url),

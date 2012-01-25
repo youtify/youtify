@@ -7,6 +7,7 @@ class YoutifyUser(db.Model):
     device = db.StringProperty()
     flattr_access_token = db.StringProperty()
     flattr_user_name = db.StringProperty()
+    youtube_username = db.StringProperty()
 
 class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)

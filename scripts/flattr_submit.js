@@ -30,13 +30,13 @@ function activateStep4() {
 
     $('.step.submit input, .step.submit button').attr('disabled', 'disabled');
 
-    loadVideos(localStorage.youtube_nickname)
-    $('.step.youtube .only-ok .nickname').text(localStorage.youtube_nickname);
-    $('.step.youtube .only-ok .nickname').attr('href', 'http://www.youtube.com/user/' + localStorage.youtube_nickname);
+    loadVideos(my_youtube_username);
+    $('.step.youtube .only-ok .nickname').text(my_youtube_username);
+    $('.step.youtube .only-ok .nickname').attr('href', 'http://www.youtube.com/user/' + my_youtube_username);
 }
 
 function selectActiveStep() {
-    if (my_user_email.length && my_flattr_username && localStorage.youtube_nickname) {
+    if (my_user_email.length && my_flattr_username && my_youtube_username) {
         activateStep4();
     } else if (my_user_email && my_flattr_username) {
         activateStep3();
@@ -146,18 +146,28 @@ $(document).ready(function() {
     selectActiveStep();
 
     $('button.save-youtube-nickname').click(function() {
-        var nickname = $.trim($('.step.youtube input.nickname').val());
-        if (nickname.length) {
-            localStorage.youtube_nickname = nickname;
-            location.reload();
+        var username = $.trim($('.step.youtube input.nickname').val());
+        if (username.length) {
+            $.post('/me/youtube_username', {'username': username}, function(data) {
+                if (data === 'ok') {
+                    location.reload();
+                } else {
+                    alert("Error saving YouTube username");
+                }
+            });
         } else {
             alert("Enter a valid YouTube nickname");
         }
     });
     
     $('.youtube .action.change').click(function() {
-        localStorage.removeItem('youtube_nickname');
-        location.reload();
+        $.post('/me/youtube_username', {'username': ''}, function(data) {
+            if (data === 'ok') {
+                location.reload();
+            } else {
+                alert("Error deleting YouTube username");
+            }
+        });
     });
 
     $('button.go').click(function() {

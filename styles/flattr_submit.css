@@ -39,6 +39,8 @@ html, body {
 
 h1 {
     font-size: 16px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
 }
 
 li, ul, ol {
@@ -62,7 +64,7 @@ li, ul, ol {
     background: url(/images/green_check.png) left top no-repeat;
 }
 .step.disabled {
-    opacity: 0.5;
+    opacity: 0.3;
 }
 .step .only-active,
 .step .only-ok {
