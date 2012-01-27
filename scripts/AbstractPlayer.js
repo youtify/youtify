@@ -44,11 +44,6 @@
         throw 'Error in AbstractPlayer: This method must be overridden.';
     };
     
-    /* Pauses or plays the current video */
-    self.playPause = function() {
-        throw 'Error in AbstractPlayer: This method must be overridden.';
-    };
-    
     /* Enter fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOn = function() {
         throw 'Error in AbstractPlayer: This method must be overridden.';

@@ -115,15 +115,6 @@
         self.player.pauseVideo();
     };
     
-    /* Pauses or plays the current video */
-    self.playPause = function() {
-        if (self.player.getPlayerState() === 1) {
-			self.pause();
-		} else {
-			self.play();
-		}
-    };
-    
     /* Enter fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOn = function() {
         var width = $(window).width(),

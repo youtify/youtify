@@ -8,6 +8,7 @@ function PlayerManager() {
     self.volume = 100;
     self.currentPlayer = null;
     self.inFullScreen = false;
+    self.isPlaying = false;
     
     /* Init the player */
     self.init = function() {
@@ -23,12 +24,15 @@ function PlayerManager() {
         
         EventSystem.addEventListener('video_failed_to_play', self.findAndPlayAlternative);
         EventSystem.addEventListener('video_played_to_end', function() {
+            self.isPlaying = false;
             Timeline.stop();
             self.next();
 			$('body').removeClass('playing');
         });
         EventSystem.addEventListener('video_started_playing_successfully', function() {
             Timeline.start();
+            self.isPlaying = true;
+            $('body').addClass('playing');
             $('#bottom .info, #bottom .share-wrapper').show();
             if (self.currentPlayer) {
                 self.currentVideoLength = self.currentPlayer.getTotalPlaybackTime();
@@ -46,6 +50,7 @@ function PlayerManager() {
         /* Play called without argument */
         if (video === null || video === undefined) {
             if (self.currentPlayer) {
+                self.isPlaying = true;
                 self.currentPlayer.play();
                 Timeline.start();
                 $('body').addClass('playing');
@@ -92,9 +97,8 @@ function PlayerManager() {
             } else {
                 /* Everything seems to be in order. Play the video! */
                 self.currentVideo = video;
+                self.isPlaying = true;
                 self.currentPlayer.play(video);
-                Timeline.start();
-                $('body').addClass('playing');
             }
         }
     };
@@ -120,6 +124,7 @@ function PlayerManager() {
             console.log("Player.pause(): currentPlayer or currentVideo is null");
             return;
         } else {
+            self.isPlaying = false;
             Timeline.stop();
             $('body').removeClass('playing');
             $('body').addClass('paused');
@@ -133,7 +138,11 @@ function PlayerManager() {
             console.log("Player.playPause(): currentPlayer or currentVideo is null");
             return;
         } else {
-            self.currentPlayer.playPause();
+            if (self.isPlaying) {
+                self.pause();
+            } else {
+                self.play();
+            }
         }
     };
     
@@ -189,6 +198,7 @@ function PlayerManager() {
     /* Enter fullScreen */
     self.fullScreenOn = function() {
         self.inFullScreen = true;
+        $('body').addClass('fullscreen');
         
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {
@@ -200,6 +210,7 @@ function PlayerManager() {
     /* Exit fullScreen */
     self.fullScreenOff = function() {
         self.inFullScreen = false;
+        $('body').removeClass('fullscreen');
         
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {
