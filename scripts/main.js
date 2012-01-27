@@ -77,14 +77,14 @@ $(document).ready(function() {
     Queue.init();
     ping_Init();
     notification_Init();
-    fatBar_Init();
     heart_Init();
     webstore_Init();
-    player = new Player();
+    player = new PlayerManager();
     player.init();
     Timeline.init();
     Flattr.init();
     VideoInfo.init();
+    fatBar_Init();
     BottomPanel.init();
     Window.init();
     TopMenu.init();

@@ -1,5 +1,5 @@
 ﻿
-function Player() {
+function PlayerManager() {
     var self = this;
     self.initialized = false;
     self.players = [];
