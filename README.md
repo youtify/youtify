@@ -6,9 +6,9 @@ Youtify is an online music player.
 Code Style
 ----------
 
-Filenames are always lowercase with no spaces or underscores. Example:
+Filenames are PascalCased and match the class name. Example:
 
-    contextmenu.js
+    ContextMenu.js
 
 Namespaces are always PascalCased. Example:
 
@@ -24,7 +24,7 @@ Variables are camelCased. Example:
 
     var playlistManager = ...;
 
-Global functions and variables should be avoided and are only allowed in main.js
+Global functions and variables should be avoided and are only allowed in Main.js
 
 Namespaces and classes are always put in files with the same name.
 
