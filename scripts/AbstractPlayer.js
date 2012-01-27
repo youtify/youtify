@@ -2,7 +2,7 @@
     //this.prototype = new AbstractPlayer;
     var self = this;
     self.initialized = false;
-    self.type = 'abstract';
+    self.type = undefined;
     
     /* Init the player */
     self.init = function(callback) {
