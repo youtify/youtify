@@ -10,6 +10,7 @@ from google.appengine.api import urlfetch
 from django.utils import simplejson
 from model import get_current_youtify_user
 from model import create_youtify_user
+from model import SubmittedVideo
 
 class Handler(webapp.RequestHandler):
     def get(self):
@@ -40,6 +41,7 @@ class Handler(webapp.RequestHandler):
             'my_flattr_username': my_flattr_username,
             'my_youtube_username': my_youtube_username,
             'logout_url': logout_url,
+            'nr_of_submitted_vides':  SubmittedVideo.all().count(),
             'flattr_connect_url': '/flattrconnect?redirect_uri=%s' % urllib.quote(self.request.url),
             'flattr_disconnect_url': '/flattrdisconnect?redirect_uri=' + urllib.quote(self.request.url),
             'login_url': login_url,
@@ -67,6 +69,17 @@ class Handler(webapp.RequestHandler):
         })
 
         response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers)
+
+        if response.status_code == 201:
+            json = simplejson.loads(response.content)
+            log_entry = SubmittedVideo(
+                youtify_user=user,
+                flattr_user_name=user.flattr_user_name,
+                title=title,
+                thing_id=str(json['id']),
+                video_id=video_id
+            )
+            log_entry.put()
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)

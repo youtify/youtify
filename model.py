@@ -39,6 +39,13 @@ class Translation(db.Model):
     phrase = db.ReferenceProperty(Phrase)
     text = db.StringProperty()
 
+class SubmittedVideo(db.Model):
+    youtify_user = db.ReferenceProperty(reference_class=YoutifyUser)
+    flattr_user_name = db.StringProperty()
+    title = db.StringProperty()
+    thing_id = db.StringProperty()
+    video_id = db.StringProperty()
+
 # HELPERS
 ##############################################################################
 
