@@ -40,7 +40,7 @@ class Handler(webapp.RequestHandler):
             'my_flattr_username': my_flattr_username,
             'my_youtube_username': my_youtube_username,
             'logout_url': logout_url,
-            'flattr_connect_url': '/flattrconnect?redirect_uri=%s&scope=%s' % (urllib.quote(self.request.url), urllib.quote('flattr thing')),
+            'flattr_connect_url': '/flattrconnect?redirect_uri=%s' % urllib.quote(self.request.url),
             'flattr_disconnect_url': '/flattrdisconnect?redirect_uri=' + urllib.quote(self.request.url),
             'login_url': login_url,
         }))

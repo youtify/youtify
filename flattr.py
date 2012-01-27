@@ -10,6 +10,7 @@ from config import CLIENT_SECRET
 from config import REDIRECT_URL
 
 VALIDATE_CERTIFICATE = True
+FLATTR_SCOPE = 'flattr thing'
 
 class ClickHandler(webapp.RequestHandler):
     """Flattrs a specified thing"""
@@ -40,11 +41,10 @@ class DisconnectHandler(webapp.RequestHandler):
 class ConnectHandler(webapp.RequestHandler):
     """Initiate the OAuth dance"""
     def get(self):
-        scope = urllib.quote(self.request.get('scope', 'flattr'))
         redirect_uri = self.request.get('redirect_uri')
         if redirect_uri and redirect_uri != 'deleted':
             self.response.headers['Set-Cookie'] = 'redirect_uri=' + redirect_uri
-        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=%s' % (CLIENT_ID, urllib.quote(REDIRECT_URL), scope)
+        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=%s' % (CLIENT_ID, urllib.quote(REDIRECT_URL), FLATTR_SCOPE)
         self.redirect(url)
 
 def update_fattr_user_info(user):
@@ -84,6 +84,7 @@ class BackHandler(webapp.RequestHandler):
         if 'access_token' in response:
             user = get_current_youtify_user()
             user.flattr_access_token = response['access_token']
+            user.flattr_scope = FLATTR_SCOPE
 
             update_fattr_user_info(user)
 
