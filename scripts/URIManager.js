@@ -22,7 +22,7 @@ var URIManager = {
             if (player.initialized) {
                 player.play(new Video(URIManager.getVideoIdFromUrl()));
             } else {
-                EventSystem.addEventListener('player_initialized', function() {
+                EventSystem.addEventListener('player_manager_initialized', function() {
                     player.play(new Video(URIManager.getVideoIdFromUrl()));
                 });
             }

@@ -4,10 +4,12 @@ var EventSystem = {
 
     listeners: {
         'playlists_loaded': [],
-        'player_initialized': [],
+        'player_manager_initialized': [],
         'video_started_playing_successfully': [],
         'video_failed_to_play': [],
         'video_played_to_end': [],
+        'backend_paused_video': [],
+        'backend_played_video': [],
         'video_info_fetched': [],
         'artist_twitter_account_found': [],
         'uploader_info_fetched': []

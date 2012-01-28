@@ -73,8 +73,13 @@
                 if (self.loadedNewVideo) {
                     self.loadedNewVideo = false;
                     EventSystem.callEventListeners('video_started_playing_successfully', self.currentVideo);
-                }
-				break;
+                } else {
+                    EventSystem.callEventListeners('backend_played_video', self.currentVideo);
+				}
+                break;
+            case 2:
+                EventSystem.callEventListeners('backend_paused_video', self.currentVideo);
+                break;
 			case 3:
 				// Avoid buffer hang at end (rare)
 				var pos = self.player.getCurrentTime();
@@ -128,7 +133,6 @@
 		$('#left .players').css('top',0);
 		self.view.width(width);
 		self.view.height(height);
-        $('#top').hide();
         self.inFullScreen = true;
     };
     
@@ -144,7 +148,6 @@
 		$('#left .players').removeAttr('style');
 		self.view.width(width);
 		self.view.height(height);
-        $('#top').show();
         self.inFullScreen = false;
     };
     

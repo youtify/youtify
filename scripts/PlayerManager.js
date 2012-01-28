@@ -29,20 +29,26 @@ function PlayerManager() {
             self.next();
 			$('body').removeClass('playing');
         });
-        EventSystem.addEventListener('video_started_playing_successfully', function() {
-            Timeline.start();
-            self.isPlaying = true;
-            $('body').addClass('playing');
-            $('#bottom .info, #bottom .share-wrapper').show();
-            if (self.currentPlayer) {
-                self.currentVideoLength = self.currentPlayer.getTotalPlaybackTime();
-            }
-        });
+        EventSystem.addEventListener('video_started_playing_successfully', self.internalPlay);
+        EventSystem.addEventListener('backend_played_video', self.internalPlay);
+        
+        EventSystem.addEventListener('backend_paused_video', self.internalPause);
         
         self.initialized = true;
-        EventSystem.callEventListeners('player_initialized', self);
+        EventSystem.callEventListeners('player_manager_initialized', self);
     };
-        
+    
+    /* Update the */
+    self.internalPlay = function() {
+        Timeline.start();
+        self.isPlaying = true;
+        $('body').addClass('playing');
+        $('#bottom .info, #bottom .share-wrapper').show();
+        if (self.currentPlayer) {
+            self.currentVideoLength = self.currentPlayer.getTotalPlaybackTime();
+        }
+    };
+    
     /* Start (or if video is null resume) playback of a video */
     self.play = function(video) {
         var i = 0;
@@ -50,10 +56,8 @@ function PlayerManager() {
         /* Play called without argument */
         if (video === null || video === undefined) {
             if (self.currentPlayer) {
-                self.isPlaying = true;
+                self.internalPlay();
                 self.currentPlayer.play();
-                Timeline.start();
-                $('body').addClass('playing');
             } else {
                 console.log("Player.play() was called but Player.currentPlayer is null");
                 return;
@@ -97,7 +101,7 @@ function PlayerManager() {
             } else {
                 /* Everything seems to be in order. Play the video! */
                 self.currentVideo = video;
-                self.isPlaying = true;
+                self.internalPlay();
                 self.currentPlayer.play(video);
             }
         }
@@ -118,8 +122,8 @@ function PlayerManager() {
         }
     };
     
-    /* Pauses the current video */
-    self.pause = function() {
+    /* Update the view and internal state for pause */
+    self.internalPause = function() {
         if (self.currentPlayer === null || self.currentVideo === null) {
             console.log("Player.pause(): currentPlayer or currentVideo is null");
             return;
@@ -128,6 +132,16 @@ function PlayerManager() {
             Timeline.stop();
             $('body').removeClass('playing');
             $('body').addClass('paused');
+        }
+    };
+    
+    /* Pauses the current video */
+    self.pause = function() {
+        if (self.currentPlayer === null || self.currentVideo === null) {
+            console.log("Player.pause(): currentPlayer or currentVideo is null");
+            return;
+        } else {
+            self.internalPause();
             self.currentPlayer.pause();
         }
     };
