@@ -332,6 +332,10 @@ function PlayerManager() {
                 
                 /* Update the model linked to the view so the 
                    alternative is dragged instead of the unplayable video */
+
+                alternative.createListView();
+                video.listView = alternative.listView;
+
                 if (video.listView) {
                     video.listView.data('model', alternative);
                 }
