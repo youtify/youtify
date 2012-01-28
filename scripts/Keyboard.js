@@ -12,7 +12,7 @@ $(window).keydown(function(event) {
             event.preventDefault();
             break;
         case 27: // ESC
-            player.fullscreenOff();
+            player.fullScreenOff();
             event.preventDefault();
             break;
         case 13: // Enter
