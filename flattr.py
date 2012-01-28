@@ -5,9 +5,10 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user
-from config import CLIENT_ID
-from config import CLIENT_SECRET
-from config import REDIRECT_URL
+try:
+    import config
+except ImportError:
+    import config_template as config
 
 VALIDATE_CERTIFICATE = True
 FLATTR_SCOPE = 'flattr thing'
@@ -44,7 +45,7 @@ class ConnectHandler(webapp.RequestHandler):
         redirect_uri = self.request.get('redirect_uri')
         if redirect_uri and redirect_uri != 'deleted':
             self.response.headers['Set-Cookie'] = 'redirect_uri=' + redirect_uri
-        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=%s' % (CLIENT_ID, urllib.quote(REDIRECT_URL), FLATTR_SCOPE)
+        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=%s' % (config.CLIENT_ID, urllib.quote(config.REDIRECT_URL), FLATTR_SCOPE)
         self.redirect(url)
 
 def update_fattr_user_info(user):
@@ -69,7 +70,7 @@ class BackHandler(webapp.RequestHandler):
         url = 'https://flattr.com/oauth/token'
 
         headers = {
-            'Authorization': 'Basic %s' % base64.b64encode(CLIENT_ID + ":" + CLIENT_SECRET),
+            'Authorization': 'Basic %s' % base64.b64encode(config.CLIENT_ID + ":" + config.CLIENT_SECRET),
             'Content-Type': 'application/json',
         }
 
