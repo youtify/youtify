@@ -45,7 +45,7 @@ class ConnectHandler(webapp.RequestHandler):
         redirect_uri = self.request.get('redirect_uri')
         if redirect_uri and redirect_uri != 'deleted':
             self.response.headers['Set-Cookie'] = 'redirect_uri=' + redirect_uri
-        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=%s' % (config.CLIENT_ID, urllib.quote(config.REDIRECT_URL), FLATTR_SCOPE)
+        url = 'https://flattr.com/oauth/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=%s' % (config.CLIENT_ID, urllib.quote(config.REDIRECT_URL), urllib.quote(FLATTR_SCOPE))
         self.redirect(url)
 
 def update_fattr_user_info(user):
