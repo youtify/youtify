@@ -1246,17 +1246,23 @@ input, textarea, button {
 #flattr-popup .things .button {
     display: block;
     padding: 4px;
-    background: white;
+    background: #eee;
     color: black;
-    border: 1px solid black;
+    border: 1px solid #ccc;
     position: absolute;
     right: 0;
     top: 0;
     cursor: pointer;
 }
+#flattr-popup .things .button:hover {
+    border: 1px solid #aaa;
+}
+#flattr-popup .things .button.loading {
+    color: #888;
+}
 #flattr-popup .things .button .count {
     margin-right: 5px;
-    color: green;
+    font-weight: bold;
 }
 #settings .flattr .disconnect {
     display: block;

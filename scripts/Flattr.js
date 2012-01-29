@@ -44,15 +44,33 @@ var Flattr = {
         $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
             .click(function() {
                 var $button = $(this);
+
+                function increaseCount() {
+                    var $count = $button.find('.count');
+                    $count.text(String(Number($count.text()) + 1));
+                }
+                function decreaseCount() {
+                    var $count = $button.find('.count');
+                    $count.text(String(Number($count.text()) - 1));
+                }
+
+                if ($button.hasClass('loading')) {
+                    return;
+                }
+
+                $button.addClass('loading');
+
+                // Always update the count
+                increaseCount();
+
                 $.post('/flattrclick', {thing_id:args.thingId}, function(data) {
+                    $button.removeClass('loading');
                     if (data === null) {
                         alert("Error: response from Flattr was null");
+                        decreaseCount();
                     } else if (data.hasOwnProperty('error_description')) {
                         alert(data.error_description);
-                    } else {
-                        var $count = $button.find('.count');
-                        $count.text(String(Number($count.text()) + 1));
-                        $button.find('.text').text('Flattred');
+                        decreaseCount();
                     }
                 });
             }).appendTo($div);
