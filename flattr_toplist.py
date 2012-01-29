@@ -13,6 +13,7 @@ except ImportError:
 MEMCACHE_KEY = 'flattr_toplist'
 
 def fetch_toplist():
+    """Fetch the top flattred YouTube videos"""
     json = []
 
     i = 0
@@ -34,6 +35,9 @@ def fetch_toplist():
                         })
         else:
             break
+
+    json = sorted(json, key=lambda thing: thing['flattrs'], reverse=True)
+
     return simplejson.dumps(json)
 
 def get_or_create_toplist_json():
