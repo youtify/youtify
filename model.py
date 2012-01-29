@@ -40,6 +40,7 @@ class Translation(db.Model):
     text = db.StringProperty()
 
 class SubmittedVideo(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
     youtify_user = db.ReferenceProperty(reference_class=YoutifyUser)
     flattr_user_name = db.StringProperty()
     title = db.StringProperty()
