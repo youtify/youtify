@@ -1,3 +1,4 @@
+import logging
 import urllib
 import base64
 from google.appengine.api import urlfetch
@@ -5,6 +6,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user
+from model import FlattrClick
 try:
     import config
 except ImportError:
@@ -25,6 +27,18 @@ class ClickHandler(webapp.RequestHandler):
         }
 
         response = urlfetch.fetch(url=url, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
+
+        json = simplejson.loads(response.content)
+        if json.get('message') == 'ok' and 'thing' in json:
+            click = FlattrClick(
+                        youtify_user=user,
+                        flattr_user_name=user.flattr_user_name,
+                        thing_id=str(json['thing'].get('id')),
+                        thing_title=json['thing'].get('title')
+                    )
+            click.put()
+        else:
+            logging.error('Error logging flattr click. Response: %s' % response.content)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)

@@ -47,6 +47,13 @@ class SubmittedVideo(db.Model):
     thing_id = db.StringProperty()
     video_id = db.StringProperty()
 
+class FlattrClick(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    youtify_user = db.ReferenceProperty(reference_class=YoutifyUser)
+    flattr_user_name = db.StringProperty()
+    thing_id = db.StringProperty()
+    thing_title = db.StringProperty()
+
 # HELPERS
 ##############################################################################
 
