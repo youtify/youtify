@@ -34,7 +34,9 @@ var Timeline = {
     },
 	start: function() {
 		$('#bottom .timeline .knob').show();
-		Timeline.updateHandle = setInterval(Timeline.update, 100);
+        if (Timeline.updateHandle === null) {
+            Timeline.updateHandle = setInterval(Timeline.update, 100);
+        }
 	},
     manualUpdate: function(event) {
         var maxWidth = $('#bottom .timeline').width(),
