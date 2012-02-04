@@ -43,6 +43,40 @@ class ClickHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
 
+class AutoSubmitHandler(webapp.RequestHandler):
+    """Flattrs a specified URL even though it may not be on flattr yet"""
+    def post(self):
+        url_to_submit = self.request.get('url')
+        url = 'https://api.flattr.com/rest/v2/flattr'
+        user = get_current_youtify_user()
+
+        headers = {
+            'Authorization': 'Bearer %s' % user.flattr_access_token,
+        }
+
+        data = {
+            'url': 'http://flattr.com/submit/auto?url=%s' % urllib.quote(url_to_submit)
+        }
+
+        data = urllib.urlencode(data)
+
+        response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
+
+        json = simplejson.loads(response.content)
+        if json.get('message') == 'ok' and 'thing' in json:
+            click = FlattrClick(
+                        youtify_user=user,
+                        flattr_user_name=user.flattr_user_name,
+                        thing_id=str(json['thing'].get('id')),
+                        thing_title=json['thing'].get('title')
+                    )
+            click.put()
+        else:
+            logging.error('Error logging flattr click. Response: %s' % response.content)
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(response.content)
+
 class DisconnectHandler(webapp.RequestHandler):
     """Remove the current users access token"""
     def get(self):
@@ -121,6 +155,7 @@ def main():
         ('/flattrconnect', ConnectHandler),
         ('/flattrback', BackHandler),
         ('/flattrclick', ClickHandler),
+        ('/flattrautosubmit', AutoSubmitHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

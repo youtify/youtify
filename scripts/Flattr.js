@@ -63,7 +63,19 @@ var Flattr = {
                 // Always update the count
                 increaseCount();
 
-                $.post('/flattrclick', {thing_id:args.thingId}, function(data) {
+                var url, postParams;
+                if (args.thingId) {
+                    url = '/flattrclick';
+                    postParams = {
+                        thing_id: args.thingId
+                    }
+                } else {
+                    url = '/flattrautosubmit';
+                    postParams = {
+                        url: args.url
+                    }
+                }
+                $.post(url, postParams, function(data) {
                     $button.removeClass('loading');
                     if (data === null) {
                         alert("Error: response from Flattr was null");
@@ -88,20 +100,18 @@ var Flattr = {
         $.getJSON(url, function(twitterData) {
             var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(twitterUrl) + '&jsonp=?';
             $.getJSON(url, function(flattrData) {
-                if (flattrData.message !== 'not_found') {
-                    Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
-                    $twitter.find('.content').replaceWith(
-                        Flattr.createThingElem({
-                            a: {
-                                text: '@' + screenName,
-                                link: twitterUrl
-                            },
-                            image: twitterData.profile_image_url,
-                            thingId: flattrData.id,
-                            flattrs: flattrData.flattrs
-                        })
-                    );
-                }
+                Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
+                $twitter.find('.content').replaceWith(
+                    Flattr.createThingElem({
+                        a: {
+                            text: '@' + screenName,
+                            link: twitterUrl
+                        },
+                        image: twitterData.profile_image_url,
+                        url: twitterUrl,
+                        flattrs: flattrData.flattrs || 0
+                    })
+                );
             });
         });
     },
