@@ -52,13 +52,20 @@ class AutoSubmitHandler(webapp.RequestHandler):
 
         headers = {
             'Authorization': 'Bearer %s' % user.flattr_access_token,
+            'Content-Type': 'application/json',
         }
 
         data = {
-            'url': 'http://flattr.com/submit/auto?url=%s' % urllib.quote(url_to_submit)
+            #'url': 'http://flattr.com/submit/auto?' + urllib.urlencode({'url': url_to_submit}),
+            #'url': urllib.quote(url_to_submit),
+            'url': url_to_submit,
         }
 
-        data = urllib.urlencode(data)
+        logging.info(url_to_submit)
+        logging.info(data['url'])
+
+        #data = urllib.urlencode(data)
+        data = simplejson.dumps(data)
 
         response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
 

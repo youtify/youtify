@@ -44,6 +44,8 @@ var Flattr = {
         $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
             .click(function() {
                 var $button = $(this);
+                var url;
+                var postParams;
 
                 function increaseCount() {
                     var $count = $button.find('.count');
@@ -63,17 +65,16 @@ var Flattr = {
                 // Always update the count
                 increaseCount();
 
-                var url, postParams;
                 if (args.thingId) {
                     url = '/flattrclick';
                     postParams = {
                         thing_id: args.thingId
-                    }
+                    };
                 } else {
                     url = '/flattrautosubmit';
                     postParams = {
                         url: args.url
-                    }
+                    };
                 }
                 $.post(url, postParams, function(data) {
                     $button.removeClass('loading');
