@@ -78,7 +78,6 @@ $(document).ready(function() {
     Queue.init();
     ping_Init();
     notification_Init();
-    heart_Init();
     webstore_Init();
     player = new PlayerManager();
     player.init();

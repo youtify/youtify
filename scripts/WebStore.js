@@ -1,6 +1,6 @@
 function webstore_Init() {
     if (ChromeWebStore.isBrowserChrome() && !ChromeWebStore.isAppInstalled()) {
-        $('#top .menus .webstore').click(function() {
+        $('#top .menu .webstore').click(function() {
             $(this).arrowPopup('#webstore-popup');
         });
 
@@ -9,7 +9,7 @@ function webstore_Init() {
             ChromeWebStore.installApp();
         });
     } else {
-        $('#top .menus .webstore').hide();
+        $('#top .menu .webstore').hide();
     }
 }
 var ChromeWebStore = {

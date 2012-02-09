@@ -85,7 +85,6 @@
         <script src="/scripts/Fatbar.js"></script>
         <script src="/scripts/Uploader.js"></script>
         <script src="/scripts/SpotifyImport.js"></script>
-        <script src="/scripts/Heart.js"></script>
         <script src="/scripts/WebStore.js"></script>
         <script src="/scripts/Menu.js"></script>
         <script src="/scripts/Tab.js"></script>
@@ -119,14 +118,13 @@
         {% include "./popups/spotify_importer.html" %}
         {% include "./popups/share_playlist.html" %}
         {% include "./popups/share_video.html" %}
-        {% include "./popups/infomenu.html" %}
         {% include "./popups/settings.html" %}
         {% include "./popups/logout.html" %}
         {% include "./popups/flattr.html" %}
         {% include "./popups/videoinfo.html" %}
         {% include "./popups/device_error_popup.html" %}
         {% include "./popups/webstore.html" %}
-        <div id="heart-popup" style="display:none" class="popup"></div>
+        <div id="about-popup" style="display:none" class="popup"></div>
         
         <div id="top">
             <div class="search"> 
@@ -137,18 +135,14 @@
             
             <ul class="notifications"></ul>
             
-            <div class="menus">
-                <span class="webstore translatable" title="Install the Youtify Chrome App now"></span>
-                <span class="heart">♥</span>
-                <span class="spacings">&nbsp;&nbsp;</span>
-                <span class="about translatable">About</span>
-                <span class="spacings">&nbsp;|&nbsp;</span>
-                <span class="settings translatable">Settings</span>
-                <span class="spacings">&nbsp;</span>
+            <div class="menu">
+                <span class="item webstore translatable" title="Install the Youtify Chrome App now"></span>
+                <span class="item about translatable">About</span>
+                <span class="item settings translatable">Settings</span>
                 {% if logged_in %}
-                <span class="username">{{ user.nickname }}</span>
+                <span class="item last username">{{ user.nickname }}</span>
                 {% else %}
-                <a class="login-link" href="{{ login_url }}">Login</a>
+                <a class="item last login-link" href="{{ login_url }}">Login</a>
                 {% endif %}
             </div>
         </div>

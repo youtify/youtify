@@ -175,39 +175,31 @@ input, textarea, button {
     font-weight: bold;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-#top .menus {
+#top .menu {
     float: right;
 }
-#top .menus .heart {
-    display: inline;
-    color: #DD0000;
-    opacity: 0.8;
-    text-shadow: 0 0 5px #FFF;
-    font-size: 22px;
-    cursor: pointer;
-    position: relative;
-    top: 2px;
-}
-#top .menus .webstore {
+#top .webstore {
     display: inline-block;
     width: 16px;
     height: 16px;
     position: relative;
     top: 3px;
-    right: 3px;
     background: url(/images/chrome_16.png);
 }
-#top .menus .spacings,
-#top .menus .username,
-#top .menus .about,
-#top .menus .webstore,
-#top .menus .settings{
+#top .settings,
+#top .about {
+    margin: 0 10px;
+}
+#top .username,
+#top .about,
+#top .webstore,
+#top .settings {
     cursor: pointer;
     text-transform: uppercase;
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-#top .menus .login-link {
+#top .menu .login-link {
     cursor: pointer;
     font-size: 13px;
     text-transform: uppercase;
@@ -220,17 +212,17 @@ input, textarea, button {
     border-radius: 10px 0 0 10px;
     background: rgba(0, 124, 137, 0.2);
 }
-#top .menus .login-link:hover {
+#top .menu .login-link:hover {
     background: rgba(0, 124, 137, 0.4);
 }
-#top .menus .login-link:after {
+#top .menu .login-link:after {
     content: '';
     cursor: default;
     position: absolute;
     display: inline-block;
     width: 25px;
     height: 28px;
-    margin: 4px 0px 0px 9px;
+    margin: -4px 0px 0px 9px;
     border: 1px solid #8B9594;
     border-radius: 0 10px 10px 0;
     background: -webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
@@ -1060,48 +1052,50 @@ input, textarea, button {
 	margin-bottom: 0;
 }
 
-/** HEART POPUP
+/** ABOUT POPUP
  ****************************************************************************/
 
-#heart-popup {
+#about-popup {
 	width: 250px;
 	vertical-align: top;
-	text-align: center;
 }
-#heart-popup .logos {
+#about-popup .logos {
 	height: 50px;
 	width: auto;
 	background: #FFF;
 	margin-bottom: 10px;
 }
-#heart-popup .logo {
+#about-popup .logo {
 	padding: 5px;
     background: url('/images/logo.gif') center center no-repeat;
     width: 135px;
 	height: 50px;
 	float: left;
 }
-#heart-popup .yt-power {
+#about-popup .yt-power {
 	padding: 5px;
 	background: url('/images/powered_by_yt.gif') center center no-repeat;
 	width: 63px;
 	height: 50px;
 	float: right;
 }
-#heart-popup p {
-    margin: 20px 0;
+#about-popup .donate p {
+    margin-bottom: 10px;
     background: url(/images/purple_heart.png) right bottom no-repeat;
     text-align: left;
     padding-right: 32px;
 }
-
-#heart-popup .like {
+#about-popup div.donate,
+#about-popup div.share {
+    text-align: center;
+}
+#about-popup div.share .button {
 	width: 55px;
 	overflow: hidden;
 	display: inline-block;
 }
-#heart-popup .margin {
-	margin-right: 10px;
+#about-popup div.links a {
+    display: block;
 }
 
 /** LOGOUT POPUP

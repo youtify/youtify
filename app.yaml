@@ -24,10 +24,10 @@ handlers:
   upload: html/import.html
   expiration: "1d"
 
-- url: /heart
-  static_files: html/popups/heart.html
-  upload: html/popups/heart.html
-  expiration: "1d"
+- url: /about
+  static_files: html/popups/about.html
+  upload: html/popups/about.html
+  #expiration: "1d"
 
 - url: /test.*
   script: gaeunit.py
