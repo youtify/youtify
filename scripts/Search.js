@@ -9,6 +9,7 @@ var Search = {
     alternatives: undefined,
     lastVideosSearchQuery: undefined,
     lastPlaylistsSearchQuery: undefined,
+    lastSoundCloudTracksQuery: undefined,
     
     init: function() {
         /* Search on key up */
@@ -140,13 +141,28 @@ var Search = {
                 });
                 break;
             case 'soundcloud-tracks':
+                if (Search.lastSoundCloudTracksQuery === q && !loadMore) {
+                    return;
+                } else {
+                    Search.lastSoundCloudTracksQuery = q;
+                }
+
+                start = (loadMore) ? Search.soundCloudTracksTab.paneView.data('results-count') + 1 : 1;
+
                 url = 'https://api.soundcloud.com/tracks.json';
                 params = {
                     'q': q,
+                    'limit': 30,
+                    'offset': start,
                     'client_id': SOUNDCLOUD_API_KEY
                 };
 
-                Search.soundCloudTracksTab.paneView.html('');
+                /* Clean up destination */
+                if (loadMore) {
+                    Search.soundCloudTracksTab.paneView.find('.loadMore').remove();
+                } else {
+                    Search.soundCloudTracksTab.paneView.html('');
+                }
                 
                 $.getJSON(url, params, function(data) {
                     var results = Search.getVideosFromSoundCloudSearchData(data);
@@ -158,6 +174,13 @@ var Search = {
                             video.createListView().appendTo(Search.soundCloudTracksTab.paneView);
                         }
                     });
+
+                    /* Add load more row */
+                    if (results.length) {
+                        Search.youtubeVideosTab.paneView.data('results-count', results.length);
+                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.soundCloudTracksTab.paneView);
+                    }
+
                     $('body').removeClass('searching');
                 });
                 break;
