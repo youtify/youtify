@@ -96,7 +96,9 @@ var Search = {
                     });
                     /* Add load more row */
                     if (results.length) {
-                        Search.youtubeVideosTab.paneView.data('results-count', results.length);
+                        var c = Search.youtubeVideosTab.paneView.data('results-count') || 0;
+                        
+                        Search.youtubeVideosTab.paneView.data('results-count', c + results.length);
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubeVideosTab.paneView);
                     }
                     $('body').removeClass('searching');
@@ -134,7 +136,9 @@ var Search = {
                     });
                     /* Add load more row */
                     if (results.length) {
-                        Search.youtubePlaylistsTab.paneView.data('results-count', results.length);
+                        var c = Search.youtubePlaylistsTab.paneView.data('results-count') || 0;
+                        
+                        Search.youtubePlaylistsTab.paneView.data('results-count', c + results.length);
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubePlaylistsTab.paneView);
                     }
                     $('body').removeClass('searching');
@@ -177,7 +181,9 @@ var Search = {
 
                     /* Add load more row */
                     if (results.length) {
-                        Search.youtubeVideosTab.paneView.data('results-count', results.length);
+                        var c = Search.soundCloudTracksTab.paneView.data('results-count') || 0;
+                        
+                        Search.soundCloudTracksTab.paneView.data('results-count', c + results.length);
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.soundCloudTracksTab.paneView);
                     }
 
