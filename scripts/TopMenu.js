@@ -11,7 +11,7 @@ var TopMenu = {
                         200: function(data) {
                             TopMenu.hasLoadedAboutPopupHtml = true;
                             $('#about-popup').html(data);
-                            $('#about-popup iframe').css('height', '62px').css('width', '55px');
+                            $('#about-popup .share iframe').css('height', '62px').css('width', '55px');
 
                             // FUNNY LOGO
                             $('#about-popup .logo').click(function() {
