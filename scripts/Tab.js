@@ -38,6 +38,11 @@
                 self.paneView = $('#right .search .pane.youtube.playlists');
                 Search.youtubePlaylistsTab = self;
                 break;
+            case 'soundcloud-tracks':
+                self.view = $('#right .search .tabs .soundcloud.tracks');
+                self.paneView = $('#right .search .pane.soundcloud.tracks');
+                Search.soundCloudTracksTab = self;
+                break;
             case 'favorites':
                 self.view = $('#right .favorites .tabs .favorites');
                 self.paneView = $('#right .favorites .pane.favorites');

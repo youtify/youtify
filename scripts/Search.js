@@ -3,6 +3,7 @@ var Search = {
     menuItem: null,
     youtubeVideosTab: null,
     youtubePlaylistsTab: null,
+    soundCloudTracksTab: null,
     searchTimeoutHandle: null,
     currentQuery: '',
     alternatives: undefined,
@@ -43,6 +44,9 @@ var Search = {
         });
     },
     getType: function() {
+        if (Search.soundCloudTracksTab.isSelected()) {
+            return 'soundcloud-tracks';
+        }
         return Search.youtubeVideosTab.isSelected() ? 'youtube-videos' : 'youtube-playlists';
     },
     search: function(q, loadMore) {
@@ -135,6 +139,28 @@ var Search = {
                     $('body').removeClass('searching');
                 });
                 break;
+            case 'soundcloud-tracks':
+                url = 'https://api.soundcloud.com/tracks.json';
+                params = {
+                    'q': q,
+                    'client_id': SOUNDCLOUD_API_KEY
+                };
+
+                Search.soundCloudTracksTab.paneView.html('');
+                
+                $.getJSON(url, params, function(data) {
+                    var results = Search.getVideosFromSoundCloudSearchData(data);
+                    $.each(results, function(i, video) {
+                        if (video) {
+                            video.onPlayCallback = function() {
+                                Menu.find('search').setAsPlaying();
+                            };
+                            video.createListView().appendTo(Search.soundCloudTracksTab.paneView);
+                        }
+                    });
+                    $('body').removeClass('searching');
+                });
+                break;
         }
     },
     createLoadMoreRow: function(callback) {
@@ -154,6 +180,14 @@ var Search = {
     },
     loadMore: function() {
         Search.search(Search.currentQuery, true);
+    },
+    getVideosFromSoundCloudSearchData: function(data) {
+        console.log(data);
+        ret = [];
+        $.each(data, function(i, track) {
+            ret.push(new Video(track['id'], track['title'], 'soundcloud'));
+        });
+        return ret;
     },
     getVideosFromYouTubeSearchData: function(data) {
         var results = [];
