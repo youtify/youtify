@@ -24,6 +24,7 @@ function Video(args) {
     this.videoId = args.videoId,
     this.title = $.trim(args.title) || '';
     this.artist = extractArtist(this.title);
+    this.duration = args.duration || null;
     this.type = args.type || 'youtube';
     this.onPlayCallback = args.onPlayCallback;
     this.listView = null;
@@ -33,6 +34,7 @@ function Video(args) {
             'videoId': this.videoId,
             'title': this.title,
             'type': this.type,
+            'duration': this.duration,
             'onPlayCallback': this.onPlayCallback
         });
     };
@@ -158,6 +160,7 @@ function Video(args) {
         return {
             'videoId': this.videoId,
             'title': this.title,
+            'duration': this.duration,
             'type': this.type
         };
     };

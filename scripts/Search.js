@@ -276,6 +276,7 @@ var Search = {
             ret.push(new Video({
                 videoId: track['id'],
                 title: track['title'],
+                duration: track['duration'],
                 type: 'soundcloud'
             }));
         });

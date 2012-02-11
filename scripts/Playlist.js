@@ -446,6 +446,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
                 videoId: videos[i].videoId,
                 title: videos[i].title,
                 type: videos[i].type,
+                duration: videos[i].duration,
                 onPlayCallback: self.setAsPlaying
             });
             self.videos.push(video);
