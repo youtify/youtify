@@ -9,6 +9,7 @@ var VideoInfo = {
                     VideoInfo.loadSoundCloudTrackInfo(video);
                     break;
                 case 'officialfm':
+                    VideoInfo.loadOfficialFmTrackInfo(video);
                     break;
             }
         });
@@ -39,6 +40,22 @@ var VideoInfo = {
 		$.getJSON(url, params, function(data) {
             info.thumbnail = data.entry.media$thumbnail.url;
             EventSystem.callEventListeners('uploader_info_fetched', info);
+        });
+    },
+
+	loadOfficialFmTrackInfo: function(video) {
+        var url = "http://api.official.fm/track/" + video.videoId;
+        var params = {
+            format: 'json',
+            key: OFFICIALFM_API_KEY
+        };
+        var info = {
+            video: video
+        };
+        $.getJSON(url, params, function(data) {
+            info.title = data[0].title;
+            info.description = data[0].description;
+            EventSystem.callEventListeners('video_info_fetched', info);
         });
     },
 
