@@ -74,6 +74,10 @@ function PlayerManager() {
                 video.type = 'youtube';
             }
             
+            if (self.currentPlayer) {
+                self.currentPlayer.stop();
+            }
+            
             /* Remove reference to currentPlayer to discover an eventual video type error */
             self.currentPlayer = null;
             
@@ -82,6 +86,7 @@ function PlayerManager() {
                 if (self.players[i].type === video.type) {
                     /* Init the player and start playing the video on callback */
                     if (self.players[i].initialized === false) {
+                        self.players[i].show();
                         self.players[i].init(callback);
                         return;
                     } else {
@@ -303,7 +308,7 @@ function PlayerManager() {
     /* Returns the current playback position in seconds */
     self.getCurrentPlaybackTime = function() {
         if (self.currentPlayer === null) {
-            console.log("Player.getCurrentPlaybackTime(): currentPlayer is null");
+            //console.log("Player.getCurrentPlaybackTime(): currentPlayer is null");
             return 0;
         } else {
             return self.currentPlayer.getCurrentPlaybackTime();
@@ -318,7 +323,7 @@ function PlayerManager() {
             self.currentVideoLength = self.currentPlayer.getTotalPlaybackTime();
             return self.currentVideoLength;
         } else {
-            console.log("Player.getTotalPlaybackTime(): currentPlayer is null");
+            //console.log("Player.getTotalPlaybackTime(): currentPlayer is null");
             return 0;
         }
     };

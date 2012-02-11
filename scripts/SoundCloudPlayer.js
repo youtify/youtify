@@ -55,6 +55,12 @@ function SoundCloudPlayer() {
 		}
     };
     
+    /* Stops the current video */
+    self.stop = function() {
+        self.video = null;
+        soundManager.stopAll();
+    };
+    
     /* Pauses the current video */
     self.pause = function() {
         soundManager.pause(self.video.videoId);

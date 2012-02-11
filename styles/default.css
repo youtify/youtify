@@ -358,6 +358,7 @@ input, textarea, button {
 #left .players .youtube {
     width: 230px;
     height: 230px;
+    position: absolute;
 }
 
 /** RIGHT
@@ -444,13 +445,16 @@ input, textarea, button {
 #right .pane tr {
     margin: 0px 0px 0px 10px;
 }
+#right .pane .video .type {
+    width: 40px;
+}
 #right .pane .video.selected .playlist,
 #right .pane .video.selected .play,
 #right .pane .video.selected .title,
 #right .pane .video.selected .like,
+#right .pane .video.selected .type,
 #right .pane .video.selected .views,
-#right .pane .video.selected .videoCountHint,
-#right .pane .video.selected .rating {
+#right .pane .video.selected .videoCountHint {
     background-color: rgba(0, 124, 137, 0.4);
 }
 #right .pane tr td {
@@ -506,9 +510,6 @@ input, textarea, button {
     cursor: pointer;
     color: rgba(0, 0, 0, 0.6);
 }
-#right .toplists .youtube.top100 .video .rating {
-    display: none;
-}
 #right .pane .like:hover {
     color: #000;
 }
@@ -516,8 +517,7 @@ input, textarea, button {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     width: 110px;
 }
-#right .pane .videoCountHint,
-#right .pane .rating {
+#right .pane .videoCountHint {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     width: 40px;
 }
@@ -538,6 +538,19 @@ input, textarea, button {
 #right .pane .space {
     background: transparent;
     width: 2px;
+}
+#right .pane .video .type {
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+#right .pane .video.youtube .type {
+    background-image: url(/images/youtube.png);
+}
+#right .pane .video.soundcloud .type {
+    background-image: url(/images/soundcloud.png);
+}
+#right .pane .video.officialfm .type {
+    background-image: url(/images/officialfm.png);
 }
 #right .info {
     display: block;

@@ -299,7 +299,6 @@ var Search = {
             
             var url = item.id.$t,
                 title = item.title.$t,
-                rating,
                 videoId;
             
             if (url.match('videos/(.*)$')) {
@@ -307,11 +306,8 @@ var Search = {
             } else {
                 videoId = item.media$group.yt$videoid.$t;
             }
-            if (item.gd$rating) {
-                rating = item.gd$rating.average;
-            }
 
-            var video = new Video(videoId, title, 'youtube', rating);
+            var video = new Video(videoId, title, 'youtube');
             results.push(video);
         });
         return results;
