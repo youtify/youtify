@@ -5,7 +5,6 @@ ON_PRODUCTION: true,
 Notification: true,
 Settings: true,
 PlaylistsManager: true,
-video_Init: true,
 volume_Init: true,
 translations_Init: true,
 spotifyImport_Init: true,
@@ -71,7 +70,6 @@ $(document).ready(function() {
     playlistManager = new PlaylistsManager();
 
 	volume_Init();
-	video_Init();
 	translations_Init();
     spotifyImport_Init();
     settings_Init();

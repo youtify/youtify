@@ -1,25 +1,3 @@
-/*global
-
-$: true,
-player: true,
-extractArtist: true,
-showResultsItemContextMenu: true,
-
-*/
-
-function video_Init() {
-    $('#info .share').click(function() {
-        var video = player.getCurrentVideo(),
-            title = $('#info .title').text(),
-            elem = $('#info');
-        if (video) {
-            showVideoSharePopup(video.videoId, title, elem, 'left');
-        }
-    });
-}
-
-
-
 function showVideoSharePopup(videoId, title, elem, arrowDirection) {
     var video = new Video(videoId, title);
 
@@ -57,6 +35,7 @@ function Video(videoId, title, type, onPlayCallback) {
     };
 
     this.getUrl = function() {
+        alert(this.title + ' || ' + this.type);
         return location.protocol + '//' + location.host + '/tracks/' + this.type + '/' + this.videoId;
     };
 
@@ -181,61 +160,3 @@ function Video(videoId, title, type, onPlayCallback) {
         };
     };
 }
-
-
-
-
-
-/* 
-function createResultsItem(title, videoId, rating, isPlaylistItem) {
-    var artist = extractArtist(title);
-    var additionalMenuButtons = [];
-	
-    var li = $('<li/>')
-        .addClass("draggable")
-        .addClass("video")
-        .data('type', 'video') // used for drag n drop
-        .data('videoId', videoId)
-        .attr('rel', videoId)
-        .bind('contextmenu', showResultsItemContextMenu)
-        .click(function(event) {
-            selectVideo($(this), event);
-            event.stopPropagation();
-        });
-
-    $('<span></span')
-        .addClass('contextmenu')
-        .addClass('clickable')
-        .text('▽')
-        .click(function(event) {
-            var li = $(this).parent();
-            li.trigger('contextmenu');
-        })
-        .appendTo(li);
-
-    if (artist) {
-        additionalMenuButtons.push({
-            title: 'More from ' + artist,
-            args: li,
-            callback: function(li) {
-                var artist = extractArtist(li.text());
-                $('#search input').val(artist).keyup();
-            }
-        });
-    }
-
-    li.data('additionalMenuButtons', additionalMenuButtons);
-    
-    if (isPlaylistItem) {
-        li.data('additionalMenuButtons').push({
-            title: 'Delete',
-            args: li,
-            callback: deleteVideoButtonClicked
-        });
-        li.addClass('droppable');
-        li.addClass('draggable');
-        li.addClass('reorderable');
-    }
-    return li;
-}
-*/
