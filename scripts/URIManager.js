@@ -20,10 +20,10 @@ var URIManager = {
             loadPlaylist(URIManager.getPlaylistIdFromUrl());
         } else if (location.href.indexOf('videos') !== -1 || location.href.indexOf('tracks') !== -1) {
             if (player.initialized) {
-                player.play(new Video(URIManager.getVideoIdFromUrl()));
+                player.play(URIManager.getTrackFromUrl());
             } else {
                 EventSystem.addEventListener('player_manager_initialized', function() {
-                    player.play(new Video(URIManager.getVideoIdFromUrl()));
+                    player.play(URIManager.getTrackFromUrl());
                 });
             }
         } else if (location.href.indexOf('search') !== -1) {
@@ -38,11 +38,12 @@ var URIManager = {
         }
         return false;
     },
-    getVideoIdFromUrl: function() {
+    getTrackFromUrl: function() {
         if (location.href.indexOf('videos') !== -1) { // /playlists/123/videos/456, // /videos/456
-            return location.href.match('videos/(.*)')[1];
+            return new Video(location.href.match('videos/(.*)')[1], '', 'youtube');
         } else if (location.href.indexOf('tracks') !== -1) { // /playlists/123/videos/456, // /videos/456
-            return location.href.match('tracks/(.*)/(.*)')[2];
+            var match = location.href.match('tracks/(.*)/(.*)');
+            return new Video(match[2], '', match[1]);
         }
         return false;
     },
