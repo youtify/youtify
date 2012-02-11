@@ -442,7 +442,12 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     
     for (i = 0; i < videos.length; i+= 1) {
         if (videos[i]) {
-            var video = new Video(videos[i].videoId, videos[i].title, videos[i].type, self.setAsPlaying);
+            var video = new Video({
+                videoId: videos[i].videoId,
+                title: videos[i].title,
+                type: videos[i].type,
+                onPlayCallback: self.setAsPlaying
+            });
             self.videos.push(video);
         }
     }

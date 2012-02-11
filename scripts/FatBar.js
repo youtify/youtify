@@ -92,7 +92,11 @@ var FatBar = {
 				var url = item.id.$t;
 				var videoId = url.match('video:(.*)$')[1];
 				var title = item.title.$t;
-				var resultItem = new Video(videoId, title, 'youtube').createListView();
+				var resultItem = new Video({
+                    videoId: videoId,
+                    title: title,
+                    type: 'youtube'
+                }).createListView();
 				resultItem.appendTo($('#related'));
 			}); 
 		});

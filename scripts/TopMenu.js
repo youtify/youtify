@@ -15,7 +15,9 @@ var TopMenu = {
 
                             // FUNNY LOGO
                             $('#about-popup .logo').click(function() {
-                                player.play(new Video(player._hiddenPlaylist[new Date().getWeek()]));
+                                player.play(new Video({
+                                    videoId: player._hiddenPlaylist[new Date().getWeek()]
+                                }));
                             });
                         }
                     }

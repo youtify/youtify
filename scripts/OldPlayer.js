@@ -150,7 +150,9 @@ var Player = {
 	},
     
     _startedPlayingVideoSuccessfully: function() {
-        var video = new Video(Player._currentVideoId);
+        var video = new Video({
+            videoId: Player._currentVideoId
+        });
 
         if (Search.alternatives !== undefined) {
             EventSystem.callEventListeners('alternative_started_playing_successfully', video);

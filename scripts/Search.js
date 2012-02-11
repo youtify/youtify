@@ -273,14 +273,22 @@ var Search = {
     getVideosFromSoundCloudSearchData: function(data) {
         ret = [];
         $.each(data, function(i, track) {
-            ret.push(new Video(track['id'], track['title'], 'soundcloud'));
+            ret.push(new Video({
+                videoId: track['id'],
+                title: track['title'],
+                type: 'soundcloud'
+            }));
         });
         return ret;
     },
     getVideosFromOfficialfmSearchData: function(data) {
         ret = [];
         $.each(data, function(i, track) {
-            ret.push(new Video(track['id'], track['title'], 'officialfm'));
+            ret.push(new Video({
+                videoId: track['id'],
+                title: track['title'],
+                type: 'officialfm'
+            }));
         });
         return ret;
     },
@@ -306,7 +314,11 @@ var Search = {
                 videoId = item.media$group.yt$videoid.$t;
             }
 
-            var video = new Video(videoId, title, 'youtube');
+            var video = new Video({
+                videoId: videoId,
+                title: title,
+                type: 'youtube'
+            });
             results.push(video);
         });
         return results;

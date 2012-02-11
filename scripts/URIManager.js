@@ -40,10 +40,16 @@ var URIManager = {
     },
     getTrackFromUrl: function() {
         if (location.href.indexOf('videos') !== -1) { // /playlists/123/videos/456, // /videos/456
-            return new Video(location.href.match('videos/(.*)')[1], '', 'youtube');
+            return new Video({
+                videoId: location.href.match('videos/(.*)')[1],
+                type: 'youtube'
+            });
         } else if (location.href.indexOf('tracks') !== -1) { // /playlists/123/videos/456, // /videos/456
             var match = location.href.match('tracks/(.*)/(.*)');
-            return new Video(match[2], '', match[1]);
+            return new Video({
+                videoId: match[2],
+                type: match[1]
+            });
         }
         return false;
     },

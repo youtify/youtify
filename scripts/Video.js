@@ -20,16 +20,21 @@ function showVideoSharePopup(video, elem, arrowDirection) {
     elem.arrowPopup('#share-video-popup', arrowDirection);
 }
 
-function Video(videoId, title, type, onPlayCallback) {
-    this.videoId = videoId;
-    this.title = $.trim(title) || '';
+function Video(args) {
+    this.videoId = args.videoId,
+    this.title = $.trim(args.title) || '';
     this.artist = extractArtist(this.title);
-    this.type = type || 'youtube';
+    this.type = args.type || 'youtube';
+    this.onPlayCallback = args.onPlayCallback;
     this.listView = null;
-    this.onPlayCallback = onPlayCallback;
     
     this.clone = function() {
-        return new Video(this.videoId, this.title, this.type, this.onPlayCallback);
+        return new Video({
+            'videoId': this.videoId,
+            'title': this.title,
+            'type': this.type,
+            'onPlayCallback': this.onPlayCallback
+        });
     };
 
     this.getUrl = function() {
