@@ -11,6 +11,7 @@ var Search = {
     lastVideosSearchQuery: undefined,
     lastPlaylistsSearchQuery: undefined,
     lastSoundCloudTracksQuery: undefined,
+    itemsPerPage: 30,
     
     init: function() {
         /* Search on key up */
@@ -76,7 +77,7 @@ var Search = {
                 url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
                 start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1;
                 params = {
-                    'alt': 'json-in-script', 'max-results': 30,
+                    'alt': 'json-in-script', 'max-results': Search.itemsPerPage,
                     'start-index': start,
                     'format': 5, 'q': q
                 };
@@ -100,11 +101,12 @@ var Search = {
                             video.createListView().appendTo(Search.youtubeVideosTab.paneView);
                         }
                     });
+
+                    var c = Search.youtubeVideosTab.paneView.data('results-count') || 0;
+                    Search.youtubeVideosTab.paneView.data('results-count', c + results.length);
+
                     /* Add load more row */
-                    if (results.length) {
-                        var c = Search.youtubeVideosTab.paneView.data('results-count') || 0;
-                        
-                        Search.youtubeVideosTab.paneView.data('results-count', c + results.length);
+                    if (results.length >= Search.itemsPerPage) {
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubeVideosTab.paneView);
                     }
                     $('body').removeClass('searching');
@@ -120,7 +122,7 @@ var Search = {
                 url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?";
                 start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1;
                 params = {
-                    'alt': 'json-in-script', 'max-results': 30,
+                    'alt': 'json-in-script', 'max-results': Search.itemsPerPage,
                     'start-index': start, 'format': 5, 'v': 2, 'q': q
                 };
                 /* Clean up destination */
@@ -140,11 +142,12 @@ var Search = {
                         };
                         playlist.createView().appendTo(Search.youtubePlaylistsTab.paneView);
                     });
+
+                    var c = Search.youtubePlaylistsTab.paneView.data('results-count') || 0;
+                    Search.youtubePlaylistsTab.paneView.data('results-count', c + results.length);
+
                     /* Add load more row */
-                    if (results.length) {
-                        var c = Search.youtubePlaylistsTab.paneView.data('results-count') || 0;
-                        
-                        Search.youtubePlaylistsTab.paneView.data('results-count', c + results.length);
+                    if (results.length >= Search.itemsPerPage) {
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubePlaylistsTab.paneView);
                     }
                     $('body').removeClass('searching');
@@ -162,7 +165,7 @@ var Search = {
                 url = 'https://api.soundcloud.com/tracks.json';
                 params = {
                     'q': q,
-                    'limit': 30,
+                    'limit': Search.itemsPerPage,
                     'offset': start,
                     'client_id': SOUNDCLOUD_API_KEY
                 };
@@ -185,11 +188,11 @@ var Search = {
                         }
                     });
 
+                    var c = Search.soundCloudTracksTab.paneView.data('results-count') || 0;
+                    Search.soundCloudTracksTab.paneView.data('results-count', c + results.length);
+
                     /* Add load more row */
-                    if (results.length) {
-                        var c = Search.soundCloudTracksTab.paneView.data('results-count') || 0;
-                        
-                        Search.soundCloudTracksTab.paneView.data('results-count', c + results.length);
+                    if (results.length >= Search.itemsPerPage) {
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.soundCloudTracksTab.paneView);
                     }
 
@@ -231,11 +234,11 @@ var Search = {
                         }
                     });
 
+                    var c = Search.officialfmTracksTab.paneView.data('results-count') || 0;
+                    Search.officialfmTracksTab.paneView.data('results-count', c + results.length);
+
                     /* Add load more row */
                     if (data.current >= data.per_page) {
-                        var c = Search.officialfmTracksTab.paneView.data('results-count') || 0;
-                        
-                        Search.officialfmTracksTab.paneView.data('results-count', c + results.length);
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.officialfmTracksTab.paneView);
                     }
 
