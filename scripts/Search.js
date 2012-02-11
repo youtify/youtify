@@ -167,6 +167,7 @@ var Search = {
                 params = {
                     'q': q,
                     'limit': Search.itemsPerPage,
+                    'filter': 'streamable',
                     'offset': start,
                     'client_id': SOUNDCLOUD_API_KEY
                 };
