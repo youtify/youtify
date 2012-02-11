@@ -271,7 +271,6 @@ var Search = {
         Search.search(Search.currentQuery, true);
     },
     getVideosFromSoundCloudSearchData: function(data) {
-        console.log(data);
         ret = [];
         $.each(data, function(i, track) {
             ret.push(new Video(track['id'], track['title'], 'soundcloud'));
