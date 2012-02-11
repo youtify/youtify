@@ -64,7 +64,6 @@ var Search = {
         history.pushState(null, null, encodeURI('/search?q=' + q));
         Search.menuItem.select();
         Search.currentQuery = q;
-        $('body').addClass('searching');
 
         switch(Search.getType()) {
             case 'youtube-videos':
@@ -90,6 +89,7 @@ var Search = {
                 }
                 
                 /* Get the results */
+                $('body').addClass('searching');
                 $.getJSON(url, params, function(data) {
                     /* Parse the results and create the views */
                     var results = Search.getVideosFromYouTubeSearchData(data);
@@ -133,6 +133,7 @@ var Search = {
                 }
 
                 /* Get the results */
+                $('body').addClass('searching');
                 $.getJSON(url, params, function(data) {
                     /* Parse the results and create the views */
                     var results = Search.getPlaylistsFromYouTubeSearchData(data);
@@ -177,6 +178,7 @@ var Search = {
                     Search.soundCloudTracksTab.paneView.html('');
                 }
                 
+                $('body').addClass('searching');
                 $.getJSON(url, params, function(data) {
                     var results = Search.getVideosFromSoundCloudSearchData(data);
                     $.each(results, function(i, video) {
@@ -223,6 +225,7 @@ var Search = {
                     Search.officialfmTracksTab.paneView.html('');
                 }
 
+                $('body').addClass('searching');
                 $.getJSON(url, params, function(data) {
                     var results = Search.getVideosFromOfficialfmSearchData(data.tracks);
                     $.each(results, function(i, video) {
