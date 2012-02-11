@@ -132,7 +132,7 @@
         var width = $(window).width(),
             height = $(window).height() - $('#bottom').outerHeight();
         
-        if (self.view === null) {
+        if (self.view === null || self.view.left < 0) {
             return;
         }
 
@@ -147,7 +147,7 @@
     self.fullScreenOff = function() {
         var width = 230,
             height = 230;
-        if (self.view === null) {
+        if (self.view === null || self.view.left < 0) {
             return;
         }
         

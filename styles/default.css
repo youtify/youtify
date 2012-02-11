@@ -355,6 +355,18 @@ input, textarea, button {
     position: absolute;
     z-index: 30;
 }
+#left .players .soundcloud {
+    width: 230px;
+    height: 230px;
+    position: absolute;
+    background: #000;
+}
+#left .players .officialfm {
+    width: 230px;
+    height: 230px;
+    position: absolute;
+    background: #000;
+}
 #left .players .youtube {
     width: 230px;
     height: 230px;
