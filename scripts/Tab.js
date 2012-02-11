@@ -64,7 +64,7 @@
         }
         
         /* Search special case */
-        if (self.type === 'youtube-videos' || self.type === 'youtube-playlists') {
+        if (self.type === 'youtube-videos' || self.type === 'youtube-playlists' || self.type === 'soundcloud-tracks') {
             history.pushState(null, null, '/');
             
             if (!self.view.hasClass('selected')) {
