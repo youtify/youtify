@@ -47,7 +47,10 @@ function SoundCloudPlayer() {
 				onfinish: function() {
 					soundManager.destroySound('soundcloud');
 					EventSystem.callEventListeners('video_played_to_end', self);
-				}
+				},
+                onload: function() {
+                    EventSystem.callEventListeners('video_completely_loaded', self);
+                }
 			});
 			soundManager.play(self.video.videoId);
 		} else {

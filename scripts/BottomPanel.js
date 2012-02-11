@@ -50,9 +50,9 @@ var BottomPanel = {
         $('#bottom .controls .prev').click(player.prev);
         
         // FULLSCREEN
-        $('#bottom .fullscreen').click(function() {
+        $('#bottom .fullscreen').click(function(event) {
             $(this).toggleClass('on');
-            player.toggleFullScreen();
+            player.toggleFullScreen(event);
         });
         
         // SHUFFLE

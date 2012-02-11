@@ -37,6 +37,12 @@ function PlayerManager() {
         
         self.initialized = true;
         EventSystem.callEventListeners('player_manager_initialized', self);
+        
+        EventSystem.addEventListener('video_completely_loaded', function() {
+            console.log('video_completely_loaded called');
+            self.currentVideoLength = 0;
+            self.getTotalPlaybackTime();
+        });
     };
     
     /* Update the */
@@ -207,16 +213,16 @@ function PlayerManager() {
     };
     
     /* Toggles the fullscreen */
-    self.toggleFullScreen = function() {
+    self.toggleFullScreen = function(event) {
         if (self.inFullScreen) {
-            self.fullScreenOff();
+            self.fullScreenOff(event);
         } else {
-            self.fullScreenOn();
+            self.fullScreenOn(event);
         }
     };
     
     /* Enter fullScreen */
-    self.fullScreenOn = function() {
+    self.fullScreenOn = function(event) {
         self.inFullScreen = true;
         $('body').addClass('fullscreen');
         
@@ -310,7 +316,14 @@ function PlayerManager() {
             //console.log("Player.getCurrentPlaybackTime(): currentPlayer is null");
             return 0;
         } else {
-            return self.currentPlayer.getCurrentPlaybackTime();
+            var currentTime = self.currentPlayer.getCurrentPlaybackTime(),
+                totalTime = self.getTotalPlaybackTime();
+            
+            if (currentTime > totalTime) {
+                currentTime = totalTime;
+                self.currentVideoLength = null;
+            }
+            return currentTime;
         }
     };
     

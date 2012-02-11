@@ -12,7 +12,8 @@ var EventSystem = {
         'backend_played_video': [],
         'video_info_fetched': [],
         'artist_twitter_account_found': [],
-        'uploader_info_fetched': []
+        'uploader_info_fetched': [],
+        'video_completely_loaded': []
     },
 
     addEventListener: function(type, fn) {
