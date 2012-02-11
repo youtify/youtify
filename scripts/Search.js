@@ -209,7 +209,7 @@ var Search = {
                 params = {
                     'format': 'json',
                     'per_page': 30,
-                    'page': (start / 30) >> 0,
+                    'page': Math.ceil(start / 30),
                     'key': OFFICIALFM_API_KEY
                 };
 
@@ -219,7 +219,7 @@ var Search = {
                 } else {
                     Search.officialfmTracksTab.paneView.html('');
                 }
-                
+
                 $.getJSON(url, params, function(data) {
                     var results = Search.getVideosFromOfficialfmSearchData(data.tracks);
                     $.each(results, function(i, video) {
@@ -232,7 +232,7 @@ var Search = {
                     });
 
                     /* Add load more row */
-                    if (results.length) {
+                    if (data.current >= data.per_page) {
                         var c = Search.officialfmTracksTab.paneView.data('results-count') || 0;
                         
                         Search.officialfmTracksTab.paneView.data('results-count', c + results.length);
@@ -272,12 +272,10 @@ var Search = {
         return ret;
     },
     getVideosFromOfficialfmSearchData: function(data) {
-        console.log(data);
         ret = [];
         $.each(data, function(i, track) {
             ret.push(new Video(track['id'], track['title'], 'officialfm'));
         });
-        console.log('officialfm', ret);
         return ret;
     },
     getVideosFromYouTubeSearchData: function(data) {
