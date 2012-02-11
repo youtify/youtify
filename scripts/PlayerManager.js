@@ -39,7 +39,6 @@ function PlayerManager() {
         EventSystem.callEventListeners('player_manager_initialized', self);
         
         EventSystem.addEventListener('video_completely_loaded', function() {
-            console.log('video_completely_loaded called');
             self.currentVideoLength = 0;
             self.getTotalPlaybackTime();
         });
