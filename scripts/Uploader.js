@@ -22,10 +22,7 @@ var Uploader = {
 				var url = item.id.$t;
 				var videoId = url.match('video:(.*)$')[1];
 				var title = item.title.$t;
-				if (item.gd$rating) {
-					var rating = item.gd$rating.average;
-                }
-				var resultItem = new Video(videoId, title, 'youtube', rating).createListView();
+				var resultItem = new Video(videoId, title, 'youtube').createListView();
 				resultItem.appendTo($table);
 			});
 		});

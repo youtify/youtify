@@ -44,17 +44,16 @@ function showVideoSharePopup(videoId, title, elem, arrowDirection) {
     elem.arrowPopup('#share-video-popup', arrowDirection);
 }
 
-function Video(videoId, title, type, rating, onPlayCallback) {
+function Video(videoId, title, type, onPlayCallback) {
     this.videoId = videoId;
     this.title = $.trim(title) || '';
     this.artist = extractArtist(this.title);
     this.type = type || 'youtube';
-    this.rating = rating;
     this.listView = null;
     this.onPlayCallback = onPlayCallback;
     
     this.clone = function() {
-        return new Video(this.videoId, this.title, this.type, this.rating, this.onPlayCallback);
+        return new Video(this.videoId, this.title, this.type, this.onPlayCallback);
     };
 
     this.getUrl = function() {
@@ -109,23 +108,11 @@ function Video(videoId, title, type, rating, onPlayCallback) {
         $('<td class="like">&hearts;</td>')
             .appendTo(this.listView);
         space.clone().appendTo(this.listView);
-        
-        $('<td class="rating"/>')
-            .text(this.getRatingAsString())
-            .appendTo(this.listView);
 
         this.listView.dblclick(play);
         titleElem.dblclick(play);
         
         return this.listView;
-    };
-    
-    this.getRatingAsString = function() {
-        if (this.rating === undefined || this.rating === null) {
-            return "";
-        } else {
-            return this.rating.toFixed(1);
-        }
     };
     
     this.listViewSelect = function(event) {
