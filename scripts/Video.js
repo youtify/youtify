@@ -176,7 +176,8 @@ function Video(videoId, title, type, onPlayCallback) {
     this.toJSON = function() {
         return {
             'videoId': this.videoId,
-            'title': this.title
+            'title': this.title,
+            'type': this.type
         };
     };
 }
