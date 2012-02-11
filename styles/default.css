@@ -444,10 +444,14 @@ input, textarea, button {
 #right .pane tr {
     margin: 0px 0px 0px 10px;
 }
+#right .pane .video .type {
+    width: 40px;
+}
 #right .pane .video.selected .playlist,
 #right .pane .video.selected .play,
 #right .pane .video.selected .title,
 #right .pane .video.selected .like,
+#right .pane .video.selected .type,
 #right .pane .video.selected .views,
 #right .pane .video.selected .videoCountHint {
     background-color: rgba(0, 124, 137, 0.4);
@@ -533,6 +537,19 @@ input, textarea, button {
 #right .pane .space {
     background: transparent;
     width: 2px;
+}
+#right .pane .video .type {
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+#right .pane .video.youtube .type {
+    background-image: url(/images/youtube.png);
+}
+#right .pane .video.soundcloud .type {
+    background-image: url(/images/soundcloud.png);
+}
+#right .pane .video.officialfm .type {
+    background-image: url(/images/officialfm.png);
 }
 #right .info {
     display: block;

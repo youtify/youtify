@@ -89,6 +89,7 @@ function Video(videoId, title, type, onPlayCallback) {
         this.listView = $('<tr/>')
             .addClass("draggable")
             .addClass("video")
+            .addClass(self.type)
             .bind('contextmenu', showResultsItemContextMenu)
             .click(select)
             .data('model', self);
@@ -108,6 +109,9 @@ function Video(videoId, title, type, onPlayCallback) {
         $('<td class="like">&hearts;</td>')
             .appendTo(this.listView);
         space.clone().appendTo(this.listView);
+
+        $('<td class="type">&nbsp;</td>')
+            .appendTo(this.listView);
 
         this.listView.dblclick(play);
         titleElem.dblclick(play);
