@@ -1,8 +1,29 @@
 var VideoInfo = {
     init: function() {
-        EventSystem.addEventListener('video_started_playing_successfully', VideoInfo.loadYouTubeVideoInfo);
+        EventSystem.addEventListener('video_started_playing_successfully', function(video) {
+            switch (video.type) {
+                case 'youtube':
+                    VideoInfo.loadYouTubeVideoInfo(video);
+                    break;
+                case 'soundcloud':
+                    VideoInfo.loadSoundCloudTrackInfo(video);
+                    break;
+                case 'officialfm':
+                    break;
+            }
+        });
         EventSystem.addEventListener('video_info_fetched', VideoInfo.loadLinko);
-        EventSystem.addEventListener('video_info_fetched', VideoInfo.loadYouTubeUploader);
+        EventSystem.addEventListener('video_info_fetched', function(videoInfo) {
+            switch (videoInfo.video.type) {
+                case 'youtube':
+                    VideoInfo.loadYouTubeUploader(videoInfo);
+                    break;
+                case 'soundcloud':
+                    break;
+                case 'officialfm':
+                    break;
+            }
+        });
     },
 
     loadYouTubeUploader: function(videoInfo) {
@@ -18,6 +39,20 @@ var VideoInfo = {
 		$.getJSON(url, params, function(data) {
             info.thumbnail = data.entry.media$thumbnail.url;
             EventSystem.callEventListeners('uploader_info_fetched', info);
+        });
+    },
+
+	loadSoundCloudTrackInfo: function(video) {
+        var url = "http://api.soundcloud.com/tracks/" + video.videoId + ".json";
+        var params = {
+            client_id: SOUNDCLOUD_API_KEY
+        };
+        var info = {
+            video: video
+        };
+        $.getJSON(url, params, function(data) {
+            info.title = data.title;
+            EventSystem.callEventListeners('video_info_fetched', info);
         });
     },
 
