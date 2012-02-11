@@ -43,6 +43,11 @@
                 self.paneView = $('#right .search .pane.soundcloud.tracks');
                 Search.soundCloudTracksTab = self;
                 break;
+            case 'officialfm-tracks':
+                self.view = $('#right .search .tabs .officialfm.tracks');
+                self.paneView = $('#right .search .pane.officialfm.tracks');
+                Search.officialfmTracksTab = self;
+                break;
             case 'favorites':
                 self.view = $('#right .favorites .tabs .favorites');
                 self.paneView = $('#right .favorites .pane.favorites');

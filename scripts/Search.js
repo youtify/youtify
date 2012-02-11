@@ -4,6 +4,7 @@ var Search = {
     youtubeVideosTab: null,
     youtubePlaylistsTab: null,
     soundCloudTracksTab: null,
+    officialfmTracksTab: null,
     searchTimeoutHandle: null,
     currentQuery: '',
     alternatives: undefined,
@@ -48,6 +49,11 @@ var Search = {
         if (Search.soundCloudTracksTab.isSelected()) {
             return 'soundcloud-tracks';
         }
+        
+        if (Search.officialfmTracksTab.isSelected()) {
+            return 'officialfm-tracks';
+        }
+        
         return Search.youtubeVideosTab.isSelected() ? 'youtube-videos' : 'youtube-playlists';
     },
     search: function(q, loadMore) {
@@ -190,6 +196,53 @@ var Search = {
                     $('body').removeClass('searching');
                 });
                 break;
+            case 'officialfm-tracks':
+                if (Search.lastOfficialfmTracksQuery === q && !loadMore) {
+                    return;
+                } else {
+                    Search.lastOfficialfmTracksQuery = q;
+                }
+
+                start = (loadMore) ? Search.officialfmTracksTab.paneView.data('results-count') + 1 : 1;
+
+                url = 'http://api.official.fm/search/tracks/' + escape(q) + '/paginate';
+                params = {
+                    'format': 'json',
+                    'per_page': 30,
+                    'page': (start / 30) >> 0,
+                    'key': OFFICIALFM_API_KEY
+                };
+
+                /* Clean up destination */
+                if (loadMore) {
+                    Search.officialfmTracksTab.paneView.find('.loadMore').remove();
+                } else {
+                    Search.officialfmTracksTab.paneView.html('');
+                }
+                
+                $.getJSON(url, params, function(data) {
+                    var results = Search.getVideosFromOfficialfmSearchData(data.tracks);
+                    $.each(results, function(i, video) {
+                        if (video) {
+                            video.onPlayCallback = function() {
+                                Menu.find('search').setAsPlaying();
+                            };
+                            video.createListView().appendTo(Search.officialfmTracksTab.paneView);
+                        }
+                    });
+
+                    /* Add load more row */
+                    if (results.length) {
+                        var c = Search.officialfmTracksTab.paneView.data('results-count') || 0;
+                        
+                        Search.officialfmTracksTab.paneView.data('results-count', c + results.length);
+                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.officialfmTracksTab.paneView);
+                    }
+
+                    $('body').removeClass('searching');
+                });
+                break;
+            
         }
     },
     createLoadMoreRow: function(callback) {
@@ -216,6 +269,15 @@ var Search = {
         $.each(data, function(i, track) {
             ret.push(new Video(track['id'], track['title'], 'soundcloud'));
         });
+        return ret;
+    },
+    getVideosFromOfficialfmSearchData: function(data) {
+        console.log(data);
+        ret = [];
+        $.each(data, function(i, track) {
+            ret.push(new Video(track['id'], track['title'], 'officialfm'));
+        });
+        console.log('officialfm', ret);
         return ret;
     },
     getVideosFromYouTubeSearchData: function(data) {
