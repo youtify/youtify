@@ -69,7 +69,7 @@
         }
         
         /* Search special case */
-        if (self.type === 'youtube-videos' || self.type === 'youtube-playlists' || self.type === 'soundcloud-tracks') {
+        if (self.type === 'youtube-videos' || self.type === 'youtube-playlists' || self.type === 'soundcloud-tracks' || self.type === 'officialfm-tracks') {
             history.pushState(null, null, '/');
             
             if (!self.view.hasClass('selected')) {
