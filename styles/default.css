@@ -52,6 +52,7 @@ div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td
  *    notifications: 15
  *     popups: 20
  *      notification: 25
+ *      loading: 25
  *  leftcolumn: 5
  *       youtube: 30
  * rightcolumn: 0
@@ -1264,3 +1265,28 @@ input, textarea, button {
     display: block;
 }
 
+/** FLATTR
+ ****************************************************************************/
+
+#loading {
+    position: absolute;
+    top: 200px;
+    width: 150px;
+    height: 120px;
+    padding-top: 30px;
+    background: url('/images/bigsnake.gif') center center no-repeat black;
+    color: white;
+    left: 50%;
+    margin-left: -100px;
+    text-align: center;
+    z-index: 25;
+    opacity: 0;
+    border-radius: 10px;
+    font-size: 16px;
+    -webkit-transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    transition: opacity 0.2s linear;
+}
+body.searching #loading {
+    opacity: 0.8;
+}
