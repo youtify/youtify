@@ -4,6 +4,9 @@
  * From http://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
  */
 function linkify(inputText) {
+    if (inputText === undefined || inputText === null) {
+        return '';
+    }
     var replaceText, replacePattern1, replacePattern2, replacePattern3;
 
     replacedText = inputText;
