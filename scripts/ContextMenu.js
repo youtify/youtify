@@ -211,7 +211,7 @@ function showResultsItemContextMenu(event) {
 			args: $(this),
 			callback: function(elem) {
                 var video = $(elem).data('model');
-                showVideoSharePopup(video.videoId, video.title, elem, 'up');
+                showVideoSharePopup(video, elem, 'up');
 			}
 		}
     ];

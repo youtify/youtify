@@ -1,6 +1,4 @@
-function showVideoSharePopup(videoId, title, elem, arrowDirection) {
-    var video = new Video(videoId, title);
-
+function showVideoSharePopup(video, elem, arrowDirection) {
     $('#share-video-popup .link input').val(video.getUrl());
 
     $('#share-video-popup .twitter')
@@ -35,7 +33,6 @@ function Video(videoId, title, type, onPlayCallback) {
     };
 
     this.getUrl = function() {
-        alert(this.title + ' || ' + this.type);
         return location.protocol + '//' + location.host + '/tracks/' + this.type + '/' + this.videoId;
     };
 
