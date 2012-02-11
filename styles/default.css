@@ -1072,28 +1072,53 @@ input, textarea, button {
  ****************************************************************************/
 
 #about-popup {
-	width: 292px;
+	width: 626px;
 	vertical-align: top;
 }
+#about-popup .column {
+	width: 300px;
+	vertical-align: top;
+    display: inline-block;
+    margin: 0 5px
+}
 #about-popup .logos {
-	height: 50px;
+	height: 110px;
 	width: auto;
 	background: #FFF;
 	margin-bottom: 10px;
+    text-align: center;
 }
 #about-popup .logo {
-	padding: 5px;
     background: url('/images/logo.gif') center center no-repeat;
-    width: 135px;
+    width: 100%;
 	height: 50px;
-	float: left;
+    display: block;
+}
+#about-popup .bottom {
+    position: absolute;
+    bottom: 0;
+    width: 300px;
 }
 #about-popup .yt-power {
 	padding: 5px;
 	background: url('/images/powered_by_yt.gif') center center no-repeat;
 	width: 63px;
 	height: 50px;
-	float: right;
+	display: inline-block;
+}
+#about-popup .sc-power {
+	padding: 5px;
+	background: url('/images/powered_by_sc.png') center center no-repeat;
+	width: 80px;
+	height: 50px;
+	display: inline-block;
+}
+#about-popup .ofm-power {
+	padding: 5px;
+	background: url('/images/powered_by_ofm.png') center center no-repeat;
+	width: 116px;
+	height: 50px;
+	display: inline-block;
 }
 #about-popup .donate p {
     margin-bottom: 10px;
