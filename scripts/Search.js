@@ -288,6 +288,7 @@ var Search = {
             ret.push(new Video({
                 videoId: track['id'],
                 title: track['title'],
+                duration: track['length'] * 1000,
                 type: 'officialfm'
             }));
         });
