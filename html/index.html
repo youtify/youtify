@@ -57,6 +57,12 @@
         		
 		<script src="/scripts/jquery.shuffle.js"></script>
 		<script src="/scripts/soundmanager2-jsmin.js"></script>
+
+		<script>
+			soundManager.url = '/scripts/swf/';
+			soundManager.flashVersion = 9;
+            soundManager.debugMode = false;
+		</script>
         {% if USE_PRODUCTION_JAVASCRIPT %}
         <script src="/scripts/production.js?v=20120210"></script>
         {% else %}
@@ -70,11 +76,6 @@
 
         <script src="/scripts/AbstractPlayer.js"></script>
         <script src="/scripts/YouTubePlayer.js"></script>
-		<script>
-			soundManager.url = '/scripts/swf/';
-			soundManager.flashVersion = 9;
-            soundManager.debugMode = false;
-		</script>
 		<script src="/scripts/SoundCloudPlayer.js"></script>
 		<script src="/scripts/OfficialfmPlayer.js"></script>
         <script src="/scripts/PlayerManager.js"></script>
