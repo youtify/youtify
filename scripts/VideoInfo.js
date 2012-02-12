@@ -55,6 +55,11 @@ var VideoInfo = {
         $.getJSON(url, params, function(data) {
             info.title = data[0].title;
             info.description = data[0].description;
+            info.author = {
+                name: data[0].artist_string,
+                user_id: data[0].user_id
+            };
+            info.thumbnail = data[0].picture_absolute_url;
             EventSystem.callEventListeners('video_info_fetched', info);
         });
     },

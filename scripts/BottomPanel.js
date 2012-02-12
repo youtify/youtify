@@ -37,11 +37,12 @@ var BottomPanel = {
                 var $popup = $('#video-info-popup');
 
                 $popup.find('.description').html(linkify(info.description));
-                $popup.find('.uploader').text(info.author.name);
-                $popup.find('.uploader').unbind('click');
-                $popup.find('.uploader').click(function() {
-                    Uploader.loadVideosFromURI(info.author.uri);
-                });
+
+                if (info.author && info.author.name) {
+                    $popup.find('.uploader').text(info.author.name);
+                } else {
+                    $popup.find('.uploader').text('');
+                }
 
                 $title.arrowPopup('#video-info-popup', 'down');
             });

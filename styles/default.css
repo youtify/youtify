@@ -1240,9 +1240,6 @@ input, textarea, button {
     -ms-user-select: text;
     user-select: text;
 }
-#video-info-popup .uploader {
-    cursor: pointer;
-}
 
 /** DEVICE ERROR POPUP
  ****************************************************************************/
