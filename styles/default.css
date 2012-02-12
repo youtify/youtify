@@ -358,6 +358,7 @@ input, textarea, button {
 #left .players .youtube {
     width: 230px;
     height: 230px;
+    position: absolute;
 }
 
 /** RIGHT

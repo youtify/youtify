@@ -49,12 +49,12 @@
     
     /* Hide the player from the UI. Must be callable without prior init */
     self.hide = function() {
-        $('#youtube').hide();
+        $('#youtube').css('left', '-100000px');
     };
 
     /* Show the player. Must be callable without prior init */
     self.show = function() {
-        $('#youtube').show();
+        $('#youtube').css('left', '0px');
     };
     
     /* Player changed state */
@@ -109,9 +109,16 @@
             self.loadedNewVideo = true;
             self.currentVideo = video;
             self.player.loadVideoById(video.videoId, 0, quality);
-            self.player.playVideo();
         } else {
             self.player.playVideo();
+        }
+    };
+    
+    /* Stops the current video */
+    self.stop = function() {
+        if (self.player) {
+            self.player.stopVideo();
+            self.currentVideo = null;
         }
     };
     

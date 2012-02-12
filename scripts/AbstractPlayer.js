@@ -39,6 +39,11 @@
         EventSystem.callEventListeners('video_played_to_end', self);*/
     };
     
+    /* Stops the current video */
+    self.stop = function() {
+        throw 'Error in AbstractPlayer: This method must be overridden.';
+    };
+    
     /* Pauses the current video */
     self.pause = function() {
         throw 'Error in AbstractPlayer: This method must be overridden.';
