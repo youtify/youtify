@@ -195,7 +195,7 @@ function Video(args) {
                     }
                 });
             });
-    }
+    };
     
     this.play = function(event) {
         $('#right .video').removeClass('playing');
