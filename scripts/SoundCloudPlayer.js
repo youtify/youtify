@@ -30,6 +30,7 @@ function SoundCloudPlayer() {
     self.play = function(video) {
 		if (video) {
 			self.video = video;
+			soundManager.stopAll();
 			soundManager.createSound({
 				id: video.videoId,
 				url: 'https://api.soundcloud.com/tracks/' + video.videoId + '/stream?consumer_key=' + SOUNDCLOUD_API_KEY + '',
