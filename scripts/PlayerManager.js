@@ -21,6 +21,7 @@ function PlayerManager() {
         }
     
         self.players.push(new YouTubePlayer());
+		self.players.push(new SoundCloudPlayer());
         
         EventSystem.addEventListener('video_failed_to_play', self.findAndPlayAlternative);
         EventSystem.addEventListener('video_played_to_end', function() {
