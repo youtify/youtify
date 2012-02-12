@@ -139,7 +139,8 @@ function MenuItem(type) {
                         videoId: item.videoId,
                         title: item.title,
                         type: item.type,
-                        onPlayCallback: self.setAsPlaying
+                        onPlayCallback: self.setAsPlaying,
+                        duration: item.duration
                     }).createListView().appendTo($pane);
                 });
 

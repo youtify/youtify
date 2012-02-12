@@ -34,6 +34,7 @@ def fetch_toplist():
                             'videoId': params['v'],
                             'flattrs': thing['flattrs'],
                             'type': 'youtube',
+                            'duration': None,
                         })
         else:
             break
@@ -59,6 +60,7 @@ def fetch_toplist():
                                 'videoId': scresult['id'],
                                 'flattrs': thing['flattrs'],
                                 'type': 'soundcloud',
+                                'duration': scresult['duration'],
                             })
                     except:
                         sleep(1)
