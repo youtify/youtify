@@ -74,6 +74,13 @@ var VideoInfo = {
         };
         $.getJSON(url, params, function(data) {
             info.title = data.title;
+            info.thumbnail = data.artwork_url;
+            info.description = data.description;
+            info.author = {
+                name: data.user.username,
+                avatar_url: data.user.avatar_url,
+                uri: data.user.uri
+            };
             EventSystem.callEventListeners('video_info_fetched', info);
         });
     },
