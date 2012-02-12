@@ -144,14 +144,14 @@ input, textarea, button {
     position: relative;
     width: 200px;
     max-width: 200px;
+    min-height: 80px;
     padding: 10px 10px 10px 10px;
     margin-bottom: 15px;
     border-radius: 10px;
     border: 1px solid rgba(128, 128, 128, 0.5);
-    background: #A7C0C1;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-
-    opacity: 1;
+    background: black;
+    color: white;
+    opacity: 0.8;
     -moz-transition: all 1s ease-in-out;
     -webkit-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
@@ -166,15 +166,16 @@ input, textarea, button {
 }
 #top .notifications li .content {
     line-height: 33px;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 #top .notifications li .close {
+    display: none;
     position: absolute;
     top: 3px;
-    right: 5px;
+    right: 10px;
     cursor: pointer;
-    font-weight: bold;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
+#top .notifications li:hover .close {
+    display: block;
 }
 #top .menu {
     float: right;
