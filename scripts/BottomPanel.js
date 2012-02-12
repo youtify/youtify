@@ -32,20 +32,6 @@ var BottomPanel = {
         EventSystem.addEventListener('video_info_fetched', function(info) {
             var  $title = $('#bottom .info .title');
             BottomPanel.setTitleText(info.title);
-            $title.unbind('click');
-            $title.click(function() {
-                var $popup = $('#video-info-popup');
-
-                $popup.find('.description').html(linkify(info.description));
-
-                if (info.author && info.author.name) {
-                    $popup.find('h2 > .uploader').text(info.author.name);
-                } else {
-                    $popup.find('h2 > .uploader').text('');
-                }
-
-                $title.arrowPopup('#video-info-popup', 'down');
-            });
         });
 
         // CONTROLS
