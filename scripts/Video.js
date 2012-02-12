@@ -21,7 +21,7 @@ function showVideoSharePopup(video, elem, arrowDirection) {
 }
 
 function Video(args) {
-    this.videoId = args.videoId,
+    this.videoId = args.videoId;
     this.title = $.trim(args.title) || '';
     this.artist = extractArtist(this.title);
     this.duration = args.duration || null;

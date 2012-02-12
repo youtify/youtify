@@ -1,5 +1,5 @@
 function SoundCloudPlayer() {
-    this.prototype = new AbstractPlayer;
+    this.prototype = new AbstractPlayer();
     var self = this;
     self.initialized = false;
     self.type = 'soundcloud';
@@ -12,7 +12,7 @@ function SoundCloudPlayer() {
 		soundManager.onready(function() {
             self.view = $('#soundcloud');
             EventSystem.addEventListener('video_info_fetched', function(info) {
-                if (self.video != null) {
+                if (self.video !== null) {
                     if (info.thumbnail) {
                         self.view.css('backgroundImage', 'url(' + info.thumbnail + ')');
                     } else if (info.author && info.author.avatar_url) {
@@ -44,7 +44,7 @@ function SoundCloudPlayer() {
 			soundManager.stopAll();
 			soundManager.createSound({
 				id: video.videoId,
-				url: 'https://api.soundcloud.com/tracks/' + video.videoId + '/stream?consumer_key=' + SOUNDCLOUD_API_KEY + '',
+				url: 'https://api.soundcloud.com/tracks/' + video.videoId + '/stream?consumer_key=' + SOUNDCLOUD_API_KEY,
 				volume: self.volume,
 				onplay: function() {
 					EventSystem.callEventListeners('video_started_playing_successfully', self.video);

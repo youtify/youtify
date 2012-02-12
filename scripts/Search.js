@@ -274,9 +274,9 @@ var Search = {
         ret = [];
         $.each(data, function(i, track) {
             ret.push(new Video({
-                videoId: track['id'],
-                title: track['title'],
-                duration: track['duration'],
+                videoId: track.id,
+                title: track.title,
+                duration: track.duration,
                 type: 'soundcloud'
             }));
         });
@@ -286,9 +286,9 @@ var Search = {
         ret = [];
         $.each(data, function(i, track) {
             ret.push(new Video({
-                videoId: track['id'],
-                title: track['title'],
-                duration: track['length'] * 1000,
+                videoId: track.id,
+                title: track.title,
+                duration: track.length * 1000,
                 type: 'officialfm'
             }));
         });
