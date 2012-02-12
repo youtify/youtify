@@ -12,6 +12,15 @@ function OfficialfmPlayer() {
     self.init = function(callback) {
         soundManager.onready(function() {
             self.view = $('#officialfm');
+            EventSystem.addEventListener('video_info_fetched', function(info) {
+                if (self.video != null) {
+                    if (info.thumbnail) {
+                        self.view.css('backgroundImage', 'url(' + info.thumbnail + ')');
+                    } else if (info.author && info.author.avatar_url) {
+                        self.view.css('backgroundImage', 'url(' + info.author.avatar_url + ')');
+                    }
+                }
+            });
             self.initialized = true;
             if (callback) {
                 callback(self);
