@@ -1238,6 +1238,9 @@ input, textarea, button {
     position: absolute;
     top: 10px;
 }
+#video-info-popup .column .things h2 {
+    position: relative;
+}
 #video-info-popup .description {
     margin-top: 10px;
     -moz-user-select: text;

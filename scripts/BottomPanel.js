@@ -39,9 +39,9 @@ var BottomPanel = {
                 $popup.find('.description').html(linkify(info.description));
 
                 if (info.author && info.author.name) {
-                    $popup.find('.uploader').text(info.author.name);
+                    $popup.find('h2 > .uploader').text(info.author.name);
                 } else {
-                    $popup.find('.uploader').text('');
+                    $popup.find('h2 > .uploader').text('');
                 }
 
                 $title.arrowPopup('#video-info-popup', 'down');
