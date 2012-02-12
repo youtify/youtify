@@ -142,16 +142,18 @@ input, textarea, button {
 }
 #top .notifications li {
     position: relative;
-    width: 200px;
-    max-width: 200px;
-    min-height: 80px;
-    padding: 10px 10px 10px 10px;
+    width: 228px;
+    max-width: 228px;
+    min-height: 32px;
+    padding: 10px 10px 10px 52px;
     margin-bottom: 15px;
     border-radius: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-    background: black;
+    background: rgba(0,0,0,0.8);
+    background-image: url('/images/logo32x32.png');
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
     color: white;
-    opacity: 0.8;
+    font-weight: bold;
     -moz-transition: all 1s ease-in-out;
     -webkit-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
@@ -165,7 +167,7 @@ input, textarea, button {
     opacity: 0;
 }
 #top .notifications li .content {
-    line-height: 33px;
+    line-height: 28px;
 }
 #top .notifications li .close {
     display: none;
