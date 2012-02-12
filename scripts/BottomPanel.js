@@ -31,7 +31,7 @@ var BottomPanel = {
         // TITLE
         EventSystem.addEventListener('video_info_fetched', function(info) {
             var  $title = $('#bottom .info .title');
-            $title.text(info.title).attr('title', info.title);
+            BottomPanel.setTitleText(info.title);
             $title.unbind('click');
             $title.click(function() {
                 var $popup = $('#video-info-popup');
@@ -63,5 +63,10 @@ var BottomPanel = {
         $('#bottom .shuffle').click(function() {
             $(this).toggleClass('on');
         });
+    },
+    setTitleText: function(titleText) {
+        $('#bottom .info .title')
+            .text(titleText)
+            .attr('title', titleText);
     }
 };

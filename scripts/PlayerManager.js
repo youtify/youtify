@@ -39,9 +39,10 @@ function PlayerManager() {
         self.initialized = true;
         EventSystem.callEventListeners('player_manager_initialized', self);
         
-        EventSystem.addEventListener('video_completely_loaded', function() {
-            self.currentVideoLength = 0;
-            self.getTotalPlaybackTime();
+        EventSystem.addEventListener('video_duration_updated', function(duration) {
+            if (self.currentVideo.duration === null || self.currentVideo.duration === 0) {
+                self.currentVideoLength = duration;
+            }
         });
     };
     
@@ -86,6 +87,8 @@ function PlayerManager() {
             /* Remove reference to currentPlayer to discover an eventual video type error */
             self.currentPlayer = null;
             
+            BottomPanel.setTitleText('Loading...');
+            
             /* Display the right player and init if uninitialized */
             for (i = 0; i < self.players.length; i+=1) {
                 if (self.players[i].type === video.type) {
@@ -109,6 +112,7 @@ function PlayerManager() {
             /* Couldn't find a player to go with the video */
             if (self.currentPlayer === null) {
                 console.log("Player.play(): Could not find matching player to video type: " + video.type);
+                BottomPanel.setTitleText('Failed to load track');
                 return;
             } else {
                 /* Everything seems to be in order. Play the video! */

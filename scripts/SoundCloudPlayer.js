@@ -51,7 +51,10 @@ function SoundCloudPlayer() {
 					EventSystem.callEventListeners('video_played_to_end', self);
 				},
                 onload: function() {
-                    EventSystem.callEventListeners('video_completely_loaded', self);
+                    EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
+                },
+                whileloading: function() {
+                    EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
                 }
 			});
 			soundManager.play(self.video.videoId);
@@ -135,7 +138,12 @@ function SoundCloudPlayer() {
     self.getTotalPlaybackTime = function() {
         if (self.video && self.video.duration) {
             return self.video.duration / 1000.0;
-		}
+		} else if (self.video) {
+            var sound = soundManager.getSoundById(self.video.videoId);
+            if (sound) {
+                return sound.durationEstimate / 1000.0;
+            }
+        }
         return 0;
     };
 }

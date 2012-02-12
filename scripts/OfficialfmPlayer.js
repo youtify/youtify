@@ -50,6 +50,12 @@ function OfficialfmPlayer() {
                 onfinish: function() {
                     soundManager.destroySound('soundcloud');
                     EventSystem.callEventListeners('video_played_to_end', self);
+                },
+                onload: function() {
+                    EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
+                },
+                whileloading: function() {
+                    EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
                 }
             });
             soundManager.play(self.video.videoId);
@@ -131,14 +137,14 @@ function OfficialfmPlayer() {
     
     /* Returns the length of the video in seconds */
     self.getTotalPlaybackTime = function() {
-        if (!self.video) {
-            return 0;
+        if (self.video && self.video.duration) {
+            return self.video.duration / 1000.0;
+		} else if (self.video) {
+            var sound = soundManager.getSoundById(self.video.videoId);
+            if (sound) {
+                return sound.durationEstimate / 1000.0;
+            }
         }
-        var sound = soundManager.getSoundById(self.video.videoId);
-        if (sound) {
-            return sound.durationEstimate / 1000.0;
-        } else {
-            return 0;
-        }
+        return 0;
     };
 }

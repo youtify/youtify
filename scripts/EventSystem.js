@@ -13,7 +13,7 @@ var EventSystem = {
         'video_info_fetched': [],
         'artist_twitter_account_found': [],
         'uploader_info_fetched': [],
-        'video_completely_loaded': []
+        'video_duration_updated': []
     },
 
     addEventListener: function(type, fn) {
