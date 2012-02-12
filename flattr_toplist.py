@@ -1,5 +1,6 @@
 import logging
 import urlparse
+from time import sleep
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 from google.appengine.ext import webapp
@@ -19,7 +20,7 @@ def fetch_toplist():
     i = 0
     while True:
         i += 1
-        url = 'https://api.flattr.com/rest/v2/things/search?query=youtube&tags=music&page=%i' % i
+        url = 'https://api.flattr.com/rest/v2/things/search?query=youtube&tags=music&sort=flattrs&page=%i' % i
         result = urlfetch.fetch(url)
         result = simplejson.loads(result.content)
         if i < 5 and 'things' in result and len(result['things']) > 0:
@@ -32,7 +33,35 @@ def fetch_toplist():
                             'title': thing['title'],
                             'videoId': params['v'],
                             'flattrs': thing['flattrs'],
+                            'type': 'youtube',
                         })
+        else:
+            break
+    
+    i = 0
+    while True:
+        i += 1
+        url = 'https://api.flattr.com/rest/v2/things/search?url=soundcloud.com&tags=music&count=10&sort=flattrs&page=%i' % i
+        result = urlfetch.fetch(url)
+        result = simplejson.loads(result.content)
+        if i < 2 and 'things' in result and len (result['things']) > 0:
+            for thing in result['things']:
+                url = urlparse.urlparse(thing['url'])
+                params = url.path.split('/')
+                if len(params) == 3:
+                    sleep(1)
+                    try:
+                        scresult = urlfetch.fetch('https://api.soundcloud.com/resolve.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d&url=' + thing['url'])
+                        scresult = simplejson.loads(scresult.content)
+                        if 'streamable' in scresult and scresult['streamable']:
+                            json.append({
+                                'title': scresult['title'],
+                                'videoId': scresult['id'],
+                                'flattrs': thing['flattrs'],
+                                'type': 'soundcloud',
+                            })
+                    except:
+                        sleep(1)
         else:
             break
 

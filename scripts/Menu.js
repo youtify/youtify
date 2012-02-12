@@ -138,7 +138,7 @@ function MenuItem(type) {
                     new Video({
                         videoId: item.videoId,
                         title: item.title,
-                        type: 'youtube',
+                        type: item.type,
                         onPlayCallback: self.setAsPlaying
                     }).createListView().appendTo($pane);
                 });
