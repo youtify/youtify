@@ -468,6 +468,7 @@ input, textarea, button {
 #right .pane .video.selected .play,
 #right .pane .video.selected .title,
 #right .pane .video.selected .like,
+#right .pane .video.selected .flattr,
 #right .pane .video.selected .type,
 #right .pane .video.selected .views,
 #right .pane .video.selected .videoCountHint {
@@ -518,6 +519,10 @@ input, textarea, button {
 #right .pane .like,
 #right tr .space:nth-child(4) {
     display: none;
+}
+
+#right tr.has-flattr .space:nth-child(4) {
+    display: table-cell;
 }
 
 #right .pane .like {
@@ -1359,4 +1364,31 @@ input, textarea, button {
 }
 body.searching #loading {
     opacity: 0.8;
+}
+
+
+
+
+
+#right .video .flattr {
+    line-height: 22px;
+}
+#right .video .flattr .button {
+    display: inline-block;
+    padding: 0 4px;
+    background: #eee;
+    color: black;
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: transparent;
+}
+#right .video .flattr .button:hover {
+    border: 1px solid #eee;
+}
+#right .video .flattr .button.loading {
+    color: #888;
+}
+#right .video .flattr .button .count {
+    margin-right: 5px;
+    font-weight: bold;
 }

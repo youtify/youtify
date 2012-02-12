@@ -33,6 +33,7 @@ def fetch_toplist():
                             'title': thing['title'],
                             'videoId': params['v'],
                             'flattrs': thing['flattrs'],
+                            'flattrThingId': thing['id'],
                             'type': 'youtube',
                             'duration': None,
                         })
@@ -59,6 +60,7 @@ def fetch_toplist():
                                 'title': scresult['title'],
                                 'videoId': scresult['id'],
                                 'flattrs': thing['flattrs'],
+                                'flattrThingId': thing['id'],
                                 'type': 'soundcloud',
                                 'duration': scresult['duration'],
                             })

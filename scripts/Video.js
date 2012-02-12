@@ -22,6 +22,8 @@ function showVideoSharePopup(video, elem, arrowDirection) {
 
 function Video(args) {
     this.videoId = args.videoId;
+    this.flattrThingId = args.flattrThingId || null;
+    this.flattrs = args.flattrs || null;
     this.title = $.trim(args.title) || '';
     this.artist = extractArtist(this.title);
     this.duration = args.duration || null;
@@ -88,6 +90,13 @@ function Video(args) {
             .text(this.title)
             .appendTo(this.listView);
         space.clone().appendTo(this.listView);
+
+        if (this.flattrThingId) {
+            this.listView.addClass('has-flattr');
+            $('<td class="flattr"></td>')
+                .append(this.createFlattrButton())
+                .appendTo(this.listView);
+        }
         
         $('<td class="like">&hearts;</td>')
             .appendTo(this.listView);
@@ -138,6 +147,55 @@ function Video(args) {
             this.listView.addClass('selected');
         }
     };
+
+    this.createFlattrButton = function() {
+        var self = this;
+        return $('<span class="button"><span class="count">' + (this.flattrs || 0) + '</span><span class="text">Flattr</span></span>')
+            .click(function() {
+                if (!has_flattr_access_token) {
+                    alert('Please connect your Flattr account (in settings)');
+                    $('#top .menu .settings').click();
+                    return;
+                }
+
+                var $button = $(this);
+                var url;
+                var postParams;
+
+                function increaseCount() {
+                    var $count = $button.find('.count');
+                    $count.text(String(Number($count.text()) + 1));
+                }
+                function decreaseCount() {
+                    var $count = $button.find('.count');
+                    $count.text(String(Number($count.text()) - 1));
+                }
+
+                if ($button.hasClass('loading')) {
+                    return;
+                }
+
+                $button.addClass('loading');
+
+                // Always update the count
+                increaseCount();
+
+                url = '/flattrclick';
+                postParams = {
+                    thing_id: self.flattrThingId
+                };
+                $.post(url, postParams, function(data) {
+                    $button.removeClass('loading');
+                    if (data === null) {
+                        alert("Error: response from Flattr was null");
+                        decreaseCount();
+                    } else if (data.hasOwnProperty('error_description')) {
+                        alert(data.error_description);
+                        decreaseCount();
+                    }
+                });
+            });
+    }
     
     this.play = function(event) {
         $('#right .video').removeClass('playing');

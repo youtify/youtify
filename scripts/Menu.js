@@ -139,6 +139,8 @@ function MenuItem(type) {
                         videoId: item.videoId,
                         title: item.title,
                         type: item.type,
+                        flattrThingId: item.flattrThingId,
+                        flattrs: item.flattrs,
                         onPlayCallback: self.setAsPlaying,
                         duration: item.duration
                     }).createListView().appendTo($pane);
