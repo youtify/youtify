@@ -710,14 +710,14 @@ input, textarea, button {
     box-sizing: border-box;
 }
 #bottom .info .title {
-    margin-top: 15px;
+    margin-top: 12px;
     padding: 0 45px;
     text-align: center;
     font-size: 13px;
     font-weight: bold;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    height: 16px;
+    height: 20px;
     overflow: hidden;
 }
 #bottom .share-wrapper {
