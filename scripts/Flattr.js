@@ -8,16 +8,16 @@ var Flattr = {
             Flattr.$badge.text('0').hide();
 
             if (has_flattr_access_token) { // global
-                $('#flattr-popup .connected').show();
-                $('#flattr-popup .disconnected').hide();
+                $('#video-info-popup .connected').show();
+                $('#video-info-popup .disconnected').hide();
             } else {
-                $('#flattr-popup .connected').hide();
-                $('#flattr-popup .disconnected').show();
+                $('#video-info-popup .connected').hide();
+                $('#video-info-popup .disconnected').show();
             }
-            $(this).arrowPopup('#flattr-popup', 'down');
+            $(this).arrowPopup('#video-info-popup', 'down');
         });
 
-        $('#flattr-popup .disconnected button').click(function() {
+        $('#video-info-popup .disconnected button').click(function() {
             location.href = '/flattrconnect';
         });
 
@@ -29,7 +29,7 @@ var Flattr = {
 
 	clearPopup: function(video) {
         Flattr.$badge.text('0').hide();
-        $('#flattr-popup .things .content').removeClass('found').text('Not found');
+        $('#video-info-popup .things .content').removeClass('found').text('Not found');
     },
 
     createThingElem: function(args) {
@@ -96,7 +96,7 @@ var Flattr = {
 
         var screenName = twitterUrl.split('/')[3];
         var url = 'https://api.twitter.com/1/users/show.json?screen_name=' + screenName +'&include_entities=true&callback=?';
-        var $twitter = $('#flattr-popup .twitter');
+        var $twitter = $('#video-info-popup .twitter');
 
         $.getJSON(url, function(twitterData) {
             var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(twitterUrl) + '&jsonp=?';
@@ -120,7 +120,7 @@ var Flattr = {
     loadVideo: function(info) {
         var thingUrl = info.video.getYouTubeUrl();
         var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(thingUrl) + '&jsonp=?';
-        var $video = $('#flattr-popup .things .video');
+        var $video = $('#video-info-popup .things .video');
 
         console.log('looking up flattr thing for ' + thingUrl);
 
@@ -145,7 +145,7 @@ var Flattr = {
     loadUploader: function(info) {
         var thingUrl = 'http://www.youtube.com/user/' + info.name;
         var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(thingUrl) + '&jsonp=?';
-        var $uploader = $('#flattr-popup .things .uploader');
+        var $uploader = $('#video-info-popup .things .uploader');
 
         console.log('looking up flattr thing for ' + thingUrl);
 

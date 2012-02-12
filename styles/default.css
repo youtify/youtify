@@ -1166,17 +1166,6 @@ input, textarea, button {
     width: auto;
 }
 
-/** FLATTR POPUP
- ****************************************************************************/
-
-#flattr-popup {
-    height: auto;
-}
-#flattr-popup a {
-    display: block;
-    margin-top: 10px;
-}
-
 /** SHARE PLAYLIST POPUP
  ****************************************************************************/
 
@@ -1233,7 +1222,22 @@ input, textarea, button {
 
 /** VIDEO INFO POPUP
  ****************************************************************************/
-
+#video-info-popup {
+    height: auto;
+    min-width: 660px;
+}
+#video-info-popup .column {
+    display: inline-block;
+    float: left;
+    height: auto;
+    width: 300px;
+    margin: 0 10px;
+    padding-top: 20px;
+}
+#video-info-popup .column h2 {
+    position: absolute;
+    top: 10px;
+}
 #video-info-popup .description {
     margin-top: 10px;
     -moz-user-select: text;
@@ -1243,6 +1247,56 @@ input, textarea, button {
     -o-user-select: text;
     -ms-user-select: text;
     user-select: text;
+}
+
+/** FLATTR POPUP
+ ****************************************************************************/
+
+#flattr-popup {
+    height: auto;
+}
+#video-info-popup  a {
+    display: block;
+    margin-top: 10px;
+}
+
+#video-info-popup  .things li {
+    height: 100px;
+}
+#video-info-popup  .things li .content.found {
+    position: relative;
+    padding-right: 60px;
+    padding-left: 55px;
+}
+#video-info-popup  .things img {
+    width: 48px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#video-info-popup  .things .button {
+    display: block;
+    padding: 4px;
+    background: #eee;
+    color: black;
+    border: 1px solid #ccc;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+#video-info-popup  .things .button:hover {
+    border: 1px solid #aaa;
+}
+#video-info-popup  .things .button.loading {
+    color: #888;
+}
+#video-info-popup  .things .button .count {
+    margin-right: 5px;
+    font-weight: bold;
+}
+#settings .flattr .disconnect {
+    display: block;
 }
 
 /** DEVICE ERROR POPUP
@@ -1276,47 +1330,6 @@ input, textarea, button {
 #webstore-popup a {
     display: block;
     margin-top: 10px;
-}
-
-/** FLATTR
- ****************************************************************************/
-#flattr-popup .things li {
-    height: 100px;
-}
-#flattr-popup .things li .content.found {
-    position: relative;
-    padding-right: 60px;
-    padding-left: 55px;
-}
-#flattr-popup .things img {
-    width: 48px;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-#flattr-popup .things .button {
-    display: block;
-    padding: 4px;
-    background: #eee;
-    color: black;
-    border: 1px solid #ccc;
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-}
-#flattr-popup .things .button:hover {
-    border: 1px solid #aaa;
-}
-#flattr-popup .things .button.loading {
-    color: #888;
-}
-#flattr-popup .things .button .count {
-    margin-right: 5px;
-    font-weight: bold;
-}
-#settings .flattr .disconnect {
-    display: block;
 }
 
 /** FLATTR
