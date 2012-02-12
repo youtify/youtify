@@ -4,7 +4,7 @@ var Flattr = {
     init: function() {
         Flattr.$badge = $('#bottom .flattr .badge');
 
-        $('#bottom .flattr').click(function() {
+        $('#bottom .flattr, #bottom .info .title').click(function() {
             Flattr.$badge.text('0').hide();
 
             if (has_flattr_access_token) { // global
