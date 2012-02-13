@@ -27,9 +27,9 @@ function PlayerManager() {
         EventSystem.addEventListener('video_failed_to_play', self.findAndPlayAlternative);
         EventSystem.addEventListener('video_played_to_end', function() {
             self.isPlaying = false;
+			$('body').removeClass('playing');
             Timeline.stop();
             self.next();
-			$('body').removeClass('playing');
         });
         EventSystem.addEventListener('video_started_playing_successfully', self.internalPlay);
         EventSystem.addEventListener('backend_played_video', self.internalPlay);
@@ -117,7 +117,6 @@ function PlayerManager() {
             } else {
                 /* Everything seems to be in order. Play the video! */
                 self.currentVideo = video;
-                self.internalPlay();
                 self.currentPlayer.play(video);
             }
         }
