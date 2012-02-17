@@ -14,11 +14,17 @@ function OfficialfmPlayer() {
             self.view = $('#officialfm');
             EventSystem.addEventListener('video_info_fetched', function(info) {
                 if (self.video !== null) {
+					var url = null;
                     if (info.thumbnail) {
-                        self.view.css('backgroundImage', 'url(' + info.thumbnail + ')');
+                        url = info.thumbnail.replace('_small.', '_large.');
                     } else if (info.author && info.author.avatar_url) {
-                        self.view.css('backgroundImage', 'url(' + info.author.avatar_url + ')');
+                        url = info.author.avatar_url.replace('_small.', '_large.');
                     }
+					if (url) {
+						self.view.css('backgroundImage', 'url(' + url + ')');
+					} else {
+						self.view..css('backgroundImage', 'none');
+					}
                 }
             });
             self.initialized = true;

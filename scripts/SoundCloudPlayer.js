@@ -13,11 +13,22 @@ function SoundCloudPlayer() {
             self.view = $('#soundcloud');
             EventSystem.addEventListener('video_info_fetched', function(info) {
                 if (self.video !== null) {
+					var url = null;
                     if (info.thumbnail) {
-                        self.view.css('backgroundImage', 'url(' + info.thumbnail + ')');
+                        url = info.thumbnail
+							.replace('default.', 't500x500.')
+							.replace('large.', 't500x500.');
                     } else if (info.author && info.author.avatar_url) {
-                        self.view.css('backgroundImage', 'url(' + info.author.avatar_url + ')');
+                        url = info.author.avatar_url;
+						if (url.indexOf('default_avatar_large') < 0) {
+							url = url.replace('large.', 't500x500.');
+						}
                     }
+					if (url) {
+						self.view.css('backgroundImage', 'url(' + url + ')');
+					} else {
+						self.view..css('backgroundImage', 'none');
+					}
                 }
             });
 			self.initialized = true;
