@@ -27,7 +27,7 @@ function SoundCloudPlayer() {
 					if (url) {
 						self.view.css('backgroundImage', 'url(' + url + ')');
 					} else {
-						self.view..css('backgroundImage', 'none');
+						self.view.css('backgroundImage', 'none');
 					}
                 }
             });
