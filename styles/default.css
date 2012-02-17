@@ -145,13 +145,13 @@ input, textarea, button {
     width: 228px;
     max-width: 228px;
     min-height: 32px;
-    padding: 10px 10px 10px 52px;
+    padding: 20px 20px 20px 52px;
     margin-bottom: 15px;
     border-radius: 10px;
     background: rgba(0,0,0,0.8);
     background-image: url('/images/logo32x32.png');
     background-repeat: no-repeat;
-    background-position: 10px 10px;
+    background-position: 10px 20px;
     color: white;
     font-weight: bold;
     -moz-transition: all 1s ease-in-out;
@@ -165,9 +165,6 @@ input, textarea, button {
 }
 #top .notifications li.hidden {
     opacity: 0;
-}
-#top .notifications li .content {
-    line-height: 28px;
 }
 #top .notifications li .close {
     display: none;
