@@ -59,17 +59,5 @@ var Notification = {
 				announceFunction(message); 
 			}
 		}
-	},
-	error: function(message) {
-		try {
-			player.pause();
-		} catch (err) { }
-
-        $('#device-error-popup button').one('click', function(){ 
-            location.reload();
-        });
-
-        $('#device-error-popup p').text(message);
-        $('#device-error-popup').show();
 	}
 };

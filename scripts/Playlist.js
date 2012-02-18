@@ -247,7 +247,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
 					Notification.warn(translations['No such playlist found']);
 				},
 				409: function(data) {
-					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+                    new ReloadDialog().show();
 				}
 			}
         });
@@ -283,7 +283,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
 					}
 				},
 				409: function(data) {
-					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+                    new ReloadDialog().show();
 				}
 			}
         });
@@ -317,7 +317,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
 					Notification.warn(translations['No such playlist found']);
 				},
 				409: function(data) {
-					Notification.error(translations['Your account has been used somewhere else. Please reload the page.']);
+                    new ReloadDialog().show();
 				}
 			}
         });

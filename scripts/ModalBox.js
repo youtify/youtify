@@ -11,10 +11,24 @@ function ModalBox(args) {
 
     this.show = function() {
         $('body').append(this.view);
-        console.log(this.view);
     };
 
     this.remove = function() {
         this.view.remove();
     };
 }
+
+function ReloadDialog() {
+}
+
+ReloadDialog.prototype = new ModalBox({
+    message: 'Your account has been used somewhere else. Please reload the page.',
+    buttons: [
+        {
+            label: 'Reload',
+            callback: function() {
+                location.reload();
+            }
+        }
+    ]
+});
