@@ -6,14 +6,6 @@ var Flattr = {
 
         $('#bottom .flattr').click(function() {
             Flattr.$badge.text('0').hide();
-
-            if (has_flattr_access_token) { // global
-                $('#video-info-popup .connected').show();
-                $('#video-info-popup .disconnected').hide();
-            } else {
-                $('#video-info-popup .connected').hide();
-                $('#video-info-popup .disconnected').show();
-            }
             $(this).arrowPopup('#video-info-popup', 'down');
         });
 
