@@ -732,15 +732,11 @@ input, textarea, button {
     right: 235px;
     z-index: 15;
 }
-#bottom .share-wrapper .flattr,
-#bottom .share-wrapper .share {
+#bottom .share-wrapper .flattr {
     float: right;
     width: 34px;
     height: 32px;
     cursor: pointer;
-}
-#bottom .share-wrapper .share {
-    display: none;
 }
 #bottom .share-wrapper .flattr {
     background: url(/images/flattr-color.png) no-repeat center center;
