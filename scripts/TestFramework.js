@@ -33,7 +33,7 @@ function runTests() {
             console.log('Test ' + (i+1) + '/' + tests.length + ' ... ' + 'OK'); 
         } catch (e) {
             console.error('Test ' + (i+1) + '/' + tests.length + ' ... ' + 'FAIL'); 
-            console.error(e);
+            console.error(e.message);
         }
     }
 

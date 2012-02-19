@@ -1,6 +1,9 @@
 var testPlaylistManager,
     tmp;
 
+playlistsFromServer = [];
+logged_in = false;
+
 tests.push(function() {
     var playlist = testPlaylistManager.getPlaylist(0);
     playlist.rename('britney n spice');
