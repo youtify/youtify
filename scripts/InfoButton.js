@@ -23,7 +23,19 @@ var InfoButton = {
     createThingElem: function(args) {
         var $div = $('<div class="content found"></div>');
 
-        $('<a class="subtitle" target="_blank"></a>').attr('href', args.a.link).text(args.a.text).appendTo($div);
+        var $titleAndDescription = $('<div class="title-and-description"></div>');
+        $('<a class="subtitle" target="_blank"></a>').attr('href', args.a.link).text(args.a.text).appendTo($titleAndDescription);
+        if (args.description) {
+            var $description = $('<p class="description"></p>');
+            $('<span></span').text(Utils.shorten(args.description, 140) + ' ').appendTo($description);
+            if (args.description.length > 140) {
+                /*$('<a class="more" href="#"></a>').text('More').click(function() {
+                    alert('show complete description');
+                }).appendTo($description);*/
+            }
+            $description.appendTo($titleAndDescription);
+        }
+        $titleAndDescription.appendTo($div);
 
         if (args.image) {
             $('<img></img>').attr('src', args.image).appendTo($div);
@@ -125,6 +137,7 @@ var InfoButton = {
                         text: data.title || info.title,
                         link: data.link || info.video.getYouTubeUrl()
                     },
+                    description: info.description,
                     image: info.thumbnail,
                     thingId: data.id || null,
                     flattrs: data.flattrs || null

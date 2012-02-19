@@ -1163,8 +1163,16 @@ input, textarea, button {
 #video-info-popup {
     height: auto;
 }
-#video-info-popup .description {
+#video-info-popup  .title-and-description {
+    display: block;
     margin-top: 10px;
+}
+#video-info-popup .title-and-description a.subtitle {
+    display: block;
+}
+#video-info-popup .title-and-description .description {
+    display: block;
+    margin: 5px 0;
     -moz-user-select: text;
     -moz-user-select: -moz-text;
     -webkit-user-select: text;
@@ -1173,14 +1181,8 @@ input, textarea, button {
     -ms-user-select: text;
     user-select: text;
 }
-
-#video-info-popup  a {
-    display: block;
-    margin-top: 10px;
-}
-
 #video-info-popup  .things li {
-    height: 100px;
+    min-height: 100px;
 }
 #video-info-popup  .things li .content.found {
     position: relative;

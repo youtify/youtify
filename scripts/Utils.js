@@ -27,6 +27,17 @@ var Utils = {
         return replacedText;
     },
 
+    shorten: function(inputText, limit) {
+        var ret = inputText;
+
+        if (ret.length > limit) {
+            ret = ret.substr(0, limit-3);
+            ret += '...';
+        }
+
+        return ret;
+    },
+
     extractArtist: function(title) {
         if (title) {
             var parts = title.split('-');
