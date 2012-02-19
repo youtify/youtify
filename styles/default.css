@@ -1356,9 +1356,6 @@ body.searching #loading {
     cursor: pointer;
     background: transparent;
 }
-#right .video .flattr .button:hover {
-    border: 1px solid #eee;
-}
 #right .video .flattr .button.loading {
     color: #888;
 }
