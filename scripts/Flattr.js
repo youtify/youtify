@@ -33,7 +33,7 @@ var Flattr = {
             $('<img></img>').attr('src', args.image).appendTo($div);
         }
 
-        if (args.thingId) {
+        if (args.flattrs !== null) {
             $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
                 .click(function() {
                     var $button = $(this);
