@@ -13,7 +13,6 @@ search_Init: true,
 queue_Init: true,
 ping_Init: true,
 notification_Init: true,
-fatBar_Init: true,
 url_Init: true,
 
 */
@@ -83,7 +82,6 @@ $(document).ready(function() {
     Timeline.init();
     Flattr.init();
     VideoInfo.init();
-    fatBar_Init();
     BottomPanel.init();
     Window.init();
     TopMenu.init();
