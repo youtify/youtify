@@ -32,3 +32,18 @@ ReloadDialog.prototype = new ModalBox({
         }
     ]
 });
+
+function WhatIsFlattrDialog() {
+}
+
+WhatIsFlattrDialog.prototype = new ModalBox({
+    message: 'Flattr is an easy way to send micropayments. With your help we can create a sustainable way for music artists to get paid.',
+    buttons: [
+        {
+            label: 'Connect your Flattr account',
+            callback: function() {
+                location.href = '/flattrconnect';
+            }
+        }
+    ]
+});

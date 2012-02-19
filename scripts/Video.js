@@ -153,8 +153,7 @@ function Video(args) {
         return $('<span class="button"><span class="count">' + (this.flattrs || 0) + '</span><span class="text">Flattr</span></span>')
             .click(function() {
                 if (!has_flattr_access_token) {
-                    alert('Please connect your Flattr account (in settings)');
-                    $('#top .menu .settings').click();
+                    new WhatIsFlattrDialog().show();
                     return;
                 }
 
