@@ -33,52 +33,54 @@ var Flattr = {
             $('<img></img>').attr('src', args.image).appendTo($div);
         }
 
-        $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
-            .click(function() {
-                var $button = $(this);
-                var url;
-                var postParams;
+        if (args.thingId) {
+            $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
+                .click(function() {
+                    var $button = $(this);
+                    var url;
+                    var postParams;
 
-                function increaseCount() {
-                    var $count = $button.find('.count');
-                    $count.text(String(Number($count.text()) + 1));
-                }
-                function decreaseCount() {
-                    var $count = $button.find('.count');
-                    $count.text(String(Number($count.text()) - 1));
-                }
-
-                if ($button.hasClass('loading')) {
-                    return;
-                }
-
-                $button.addClass('loading');
-
-                // Always update the count
-                increaseCount();
-
-                if (args.thingId) {
-                    url = '/flattrclick';
-                    postParams = {
-                        thing_id: args.thingId
-                    };
-                } else {
-                    url = '/flattrautosubmit';
-                    postParams = {
-                        url: args.url
-                    };
-                }
-                $.post(url, postParams, function(data) {
-                    $button.removeClass('loading');
-                    if (data === null) {
-                        alert("Error: response from Flattr was null");
-                        decreaseCount();
-                    } else if (data.hasOwnProperty('error_description')) {
-                        alert(data.error_description);
-                        decreaseCount();
+                    function increaseCount() {
+                        var $count = $button.find('.count');
+                        $count.text(String(Number($count.text()) + 1));
                     }
-                });
-            }).appendTo($div);
+                    function decreaseCount() {
+                        var $count = $button.find('.count');
+                        $count.text(String(Number($count.text()) - 1));
+                    }
+
+                    if ($button.hasClass('loading')) {
+                        return;
+                    }
+
+                    $button.addClass('loading');
+
+                    // Always update the count
+                    increaseCount();
+
+                    if (args.thingId) {
+                        url = '/flattrclick';
+                        postParams = {
+                            thing_id: args.thingId
+                        };
+                    } else {
+                        url = '/flattrautosubmit';
+                        postParams = {
+                            url: args.url
+                        };
+                    }
+                    $.post(url, postParams, function(data) {
+                        $button.removeClass('loading');
+                        if (data === null) {
+                            alert("Error: response from Flattr was null");
+                            decreaseCount();
+                        } else if (data.hasOwnProperty('error_description')) {
+                            alert(data.error_description);
+                            decreaseCount();
+                        }
+                    });
+                }).appendTo($div);
+        }
 
         return $div;
     },
@@ -119,18 +121,19 @@ var Flattr = {
         $.getJSON(url, function(data) {
             if (data.message !== 'not_found') {
                 Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
-                $video.find('.content').replaceWith(
-                    Flattr.createThingElem({
-                        a: {
-                            text: data.title,
-                            link: data.link
-                        },
-                        image: info.thumbnail,
-                        thingId: data.id,
-                        flattrs: data.flattrs
-                    })
-                );
             }
+
+            $video.find('.content').replaceWith(
+                Flattr.createThingElem({
+                    a: {
+                        text: data.title || info.title,
+                        link: data.link || info.video.getYouTubeUrl()
+                    },
+                    image: info.thumbnail,
+                    thingId: data.id || null,
+                    flattrs: data.flattrs || null
+                })
+            );
         });
     },
 
@@ -144,18 +147,18 @@ var Flattr = {
         $.getJSON(url, function(data) {
             if (data.message !== 'not_found') {
                 Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
-                $uploader.find('.content').replaceWith(
-                    Flattr.createThingElem({
-                        a: {
-                            text: data.title,
-                            link: data.link
-                        },
-                        image: info.thumbnail,
-                        thingId: data.id,
-                        flattrs: data.flattrs
-                    })
-                );
             }
+            $uploader.find('.content').replaceWith(
+                Flattr.createThingElem({
+                    a: {
+                        text: data.title || info.name,
+                        link: data.link || info.uri
+                    },
+                    image: info.avatar_url,
+                    thingId: data.id || null,
+                    flattrs: data.flattrs || null
+                })
+            );
         });
     }
 };

@@ -38,7 +38,7 @@ var VideoInfo = {
         var info = videoInfo.author;
 
 		$.getJSON(url, params, function(data) {
-            info.thumbnail = data.entry.media$thumbnail.url;
+            info.avatar_url = data.entry.media$thumbnail.url;
             EventSystem.callEventListeners('uploader_info_fetched', info);
         });
     },
