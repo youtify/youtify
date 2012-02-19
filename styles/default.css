@@ -1112,11 +1112,6 @@ input, textarea, button {
 	height: 50px;
     display: block;
 }
-#about-popup .bottom {
-    position: absolute;
-    bottom: 0;
-    width: 300px;
-}
 #about-popup .yt-power {
 	padding: 5px;
 	background: url('/images/powered_by_yt.gif') center center no-repeat;
@@ -1143,10 +1138,6 @@ input, textarea, button {
     background: url(/images/purple_heart.png) right bottom no-repeat;
     text-align: left;
     padding-right: 32px;
-}
-#about-popup div.donate,
-#about-popup div.share {
-    text-align: center;
 }
 #about-popup div.share .button {
 	width: 55px;
