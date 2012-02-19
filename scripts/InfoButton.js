@@ -29,9 +29,9 @@ var InfoButton = {
             var $description = $('<p class="description"></p>');
             $('<span></span').text(Utils.shorten(args.description, 140) + ' ').appendTo($description);
             if (args.description.length > 140) {
-                /*$('<a class="more" href="#"></a>').text('More').click(function() {
+                $('<a class="more" href="#"></a>').text('More').click(function() {
                     alert('show complete description');
-                }).appendTo($description);*/
+                });//.appendTo($description);
             }
             $description.appendTo($titleAndDescription);
         }

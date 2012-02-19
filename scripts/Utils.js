@@ -47,4 +47,4 @@ var Utils = {
         }
         return false;
     }
-}
+};

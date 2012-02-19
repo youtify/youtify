@@ -10,7 +10,7 @@ ModalBox.prototype.addButton = function(label, callback) {
     var self = this;
     var elem = $('<button></button>').text(label);
     elem.click(function() {
-        callback(self)
+        callback(self);
     });
     this.view.find('.buttons').append(elem);
 };
