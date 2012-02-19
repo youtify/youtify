@@ -84,6 +84,7 @@ var VideoInfo = {
                 uri: data.user.uri
             };
             EventSystem.callEventListeners('video_info_fetched', info);
+            EventSystem.callEventListeners('uploader_info_fetched', info.author);
         });
     },
 
