@@ -80,7 +80,7 @@ $(document).ready(function() {
     player = new PlayerManager();
     player.init();
     Timeline.init();
-    Flattr.init();
+    InfoButton.init();
     VideoInfo.init();
     BottomPanel.init();
     Window.init();

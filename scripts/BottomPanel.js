@@ -30,7 +30,6 @@ var BottomPanel = {
     init: function() {
         // TITLE
         EventSystem.addEventListener('video_info_fetched', function(info) {
-            var  $title = $('#bottom .info .title');
             BottomPanel.setTitleText(info.title);
         });
 
@@ -51,7 +50,7 @@ var BottomPanel = {
         });
     },
     setTitleText: function(titleText) {
-        $('#bottom .info .title')
+        $('#bottom .info .title .text')
             .text(titleText)
             .attr('title', titleText);
     }

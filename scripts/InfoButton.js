@@ -1,26 +1,22 @@
-var Flattr = {
+var InfoButton = {
     $badge: null,
 
     init: function() {
-        Flattr.$badge = $('#bottom .flattr .badge');
+        InfoButton.$badge = $('#bottom .info .badge');
 
-        $('#bottom .flattr').click(function() {
-            Flattr.$badge.text('0').hide();
+        $('#bottom .info .title').click(function() {
+            InfoButton.$badge.text('0').hide();
             $(this).arrowPopup('#video-info-popup', 'down');
         });
 
-        $('#video-info-popup .disconnected button').click(function() {
-            location.href = '/flattrconnect';
-        });
-
-        EventSystem.addEventListener('video_started_playing_successfully', Flattr.clearPopup);
-        EventSystem.addEventListener('video_info_fetched', Flattr.loadVideo);
-        EventSystem.addEventListener('uploader_info_fetched', Flattr.loadUploader);
-        EventSystem.addEventListener('artist_twitter_account_found', Flattr.loadTwitter);
+        EventSystem.addEventListener('video_started_playing_successfully', InfoButton.clearPopup);
+        EventSystem.addEventListener('video_info_fetched', InfoButton.loadVideo);
+        EventSystem.addEventListener('uploader_info_fetched', InfoButton.loadUploader);
+        EventSystem.addEventListener('artist_twitter_account_found', InfoButton.loadTwitter);
     },
 
 	clearPopup: function(video) {
-        Flattr.$badge.text('0').hide();
+        InfoButton.$badge.text('0').hide();
         $('#video-info-popup .things .content').removeClass('found').text('Not found');
     },
 
@@ -95,9 +91,9 @@ var Flattr = {
         $.getJSON(url, function(twitterData) {
             var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(twitterUrl) + '&jsonp=?';
             $.getJSON(url, function(flattrData) {
-                Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
+                InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
                 $twitter.find('.content').replaceWith(
-                    Flattr.createThingElem({
+                    InfoButton.createThingElem({
                         a: {
                             text: '@' + screenName,
                             link: twitterUrl
@@ -120,11 +116,11 @@ var Flattr = {
 
         $.getJSON(url, function(data) {
             if (data.message !== 'not_found') {
-                Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
+                InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
             }
 
             $video.find('.content').replaceWith(
-                Flattr.createThingElem({
+                InfoButton.createThingElem({
                     a: {
                         text: data.title || info.title,
                         link: data.link || info.video.getYouTubeUrl()
@@ -146,10 +142,10 @@ var Flattr = {
 
         $.getJSON(url, function(data) {
             if (data.message !== 'not_found') {
-                Flattr.$badge.text(String(Number(Flattr.$badge.text()) + 1)).show();
+                InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
             }
             $uploader.find('.content').replaceWith(
-                Flattr.createThingElem({
+                InfoButton.createThingElem({
                     a: {
                         text: data.title || info.name,
                         link: data.link || info.uri
