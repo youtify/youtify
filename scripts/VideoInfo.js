@@ -38,6 +38,7 @@ var VideoInfo = {
         var info = videoInfo.author;
 
 		$.getJSON(url, params, function(data) {
+            info.url = 'http://www.youtube.com/user/' + encodeURIComponent(data.entry.yt$username.$t);
             info.avatar_url = data.entry.media$thumbnail.url;
             EventSystem.callEventListeners('uploader_info_fetched', info);
         });
@@ -53,16 +54,19 @@ var VideoInfo = {
             video: video
         };
         $.getJSON(url, params, function(data) {
-            info.video.title = data[0].title;
-            info.video.duration = data[0].length * 1000;
-            info.title = data[0].title;
-            info.description = data[0].description;
+            data = data[0];
+            info.video.title = data.title;
+            info.video.duration = data.length * 1000;
+            info.title = data.title;
+            info.description = data.description;
+            info.thumbnail = data.picture_absolute_url;
             info.author = {
-                name: data[0].artist_string,
-                user_id: data[0].user_id
+                name: data.artist_string,
+                url: data.web_url || data.buy_url,
+                user_id: data.user_id
             };
-            info.thumbnail = data[0].picture_absolute_url;
             EventSystem.callEventListeners('video_info_fetched', info);
+            EventSystem.callEventListeners('uploader_info_fetched', info.author);
         });
     },
 
@@ -81,6 +85,7 @@ var VideoInfo = {
             info.author = {
                 name: data.user.username,
                 avatar_url: data.user.avatar_url,
+                url: data.user.permalink_url,
                 uri: data.user.uri
             };
             EventSystem.callEventListeners('video_info_fetched', info);

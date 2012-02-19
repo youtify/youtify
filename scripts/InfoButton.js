@@ -161,7 +161,7 @@ var InfoButton = {
                 InfoButton.createThingElem({
                     a: {
                         text: data.title || info.name,
-                        link: data.link || info.uri
+                        link: data.link || info.url
                     },
                     image: info.avatar_url,
                     thingId: data.id || null,
