@@ -1217,19 +1217,6 @@ input, textarea, button {
  ****************************************************************************/
 #video-info-popup {
     height: auto;
-    min-width: 660px;
-}
-#video-info-popup .column {
-    display: inline-block;
-    float: left;
-    height: auto;
-    width: 300px;
-    margin: 0 10px;
-    padding-top: 20px;
-}
-#video-info-popup .column h2 {
-    position: absolute;
-    top: 10px;
 }
 #video-info-popup .column .things h2 {
     position: relative;
