@@ -135,7 +135,7 @@ var InfoButton = {
                 InfoButton.createThingElem({
                     a: {
                         text: data.title || info.title,
-                        link: data.link || info.video.getYouTubeUrl()
+                        link: data.link || info.url || info.video.getYouTubeUrl()
                     },
                     description: info.description,
                     image: info.thumbnail,

@@ -79,6 +79,7 @@ var VideoInfo = {
             video: video
         };
         $.getJSON(url, params, function(data) {
+            info.url = data.permalink_url;
             info.title = data.title;
             info.thumbnail = data.artwork_url;
             info.description = data.description;
