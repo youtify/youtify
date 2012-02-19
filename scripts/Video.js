@@ -25,7 +25,7 @@ function Video(args) {
     this.flattrThingId = args.flattrThingId || null;
     this.flattrs = args.flattrs || null;
     this.title = $.trim(args.title) || '';
-    this.artist = extractArtist(this.title);
+    this.artist = Utils.extractArtist(this.title);
     this.duration = args.duration || null;
     this.type = args.type || 'youtube';
     this.onPlayCallback = args.onPlayCallback;

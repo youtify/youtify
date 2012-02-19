@@ -124,7 +124,7 @@ var VideoInfo = {
 	},
 
     loadLinko: function(info) {
-        var artist = extractArtist(info.title);
+        var artist = Utils.extractArtist(info.title);
 
         if (artist) {
             var url = 'http://linko.fruktsallad.net/artist/' + (artist.replace(/ /g, '_')) + '.json?callback=?';
