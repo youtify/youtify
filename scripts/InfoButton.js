@@ -48,6 +48,11 @@ var InfoButton = {
                     var url;
                     var postParams;
 
+                    if (!has_flattr_access_token) {
+                        new WhatIsFlattrDialog().show();
+                        return;
+                    }
+
                     function increaseCount() {
                         var $count = $button.find('.count');
                         $count.text(String(Number($count.text()) + 1));
