@@ -1195,13 +1195,32 @@ input, textarea, button {
 #video-info-popup  .things .button {
     display: block;
     padding: 4px;
-    background: #eee;
-    color: black;
     border: 1px solid #ccc;
     position: absolute;
     right: 0;
     top: 0;
     cursor: pointer;
+    border-radius: 2px;
+    color: #333;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.28, rgb(217,217,217)),
+        color-stop(0.64, rgb(255,255,255))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(217,217,217) 28%,
+        rgb(255,255,255) 64%
+    );
+    border-left-color: #999;
+    border-right-color: #999;
+    border-top-color: #999;
+    border-bottom-color: #888;
+}
+#video-info-popup  .things .button:active {
+    background: #ccc;
 }
 #video-info-popup  .things .button:hover {
     border: 1px solid #aaa;
