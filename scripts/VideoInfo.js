@@ -104,7 +104,8 @@ var VideoInfo = {
 		};
 
         var info = {
-            video: video
+            video: video,
+            url: video.getYouTubeUrl()
         };
 
 		$.getJSON(url, params, function(data) {

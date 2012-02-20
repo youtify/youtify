@@ -124,26 +124,41 @@ var InfoButton = {
         var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(thingUrl) + '&jsonp=?';
         var $video = $('#video-info-popup .things .video');
 
-        console.log('looking up flattr thing for ' + thingUrl);
-
-        $.getJSON(url, function(data) {
-            if (data.message !== 'not_found') {
-                InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
-            }
-
+        if (info.video.flattrThingId) {
+            InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
             $video.find('.content').replaceWith(
                 InfoButton.createThingElem({
                     a: {
-                        text: data.title || info.title,
-                        link: data.link || info.url || info.video.getYouTubeUrl()
+                        text: info.title,
+                        link: info.url
                     },
                     description: info.description,
                     image: info.thumbnail,
-                    thingId: data.id || null,
-                    flattrs: data.flattrs || null
+                    thingId: info.video.flattrThingId,
+                    flattrs: info.video.flattrs || 0
                 })
             );
-        });
+        } else {
+            console.log('looking up flattr thing for ' + thingUrl);
+            $.getJSON(url, function(data) {
+                if (data.message !== 'not_found') {
+                    InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
+                }
+
+                $video.find('.content').replaceWith(
+                    InfoButton.createThingElem({
+                        a: {
+                            text: data.title || info.title,
+                            link: data.link || info.url || info.video.getYouTubeUrl()
+                        },
+                        description: info.description,
+                        image: info.thumbnail,
+                        thingId: data.id || null,
+                        flattrs: data.flattrs || null
+                    })
+                );
+            });
+        }
     },
 
     loadUploader: function(info) {
