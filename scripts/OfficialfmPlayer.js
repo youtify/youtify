@@ -7,6 +7,7 @@ function OfficialfmPlayer() {
     self.view = null;
     self.volume = 100;
     self.mp3_url = 'http://cdn.official.fm/';
+	self.playedSuccessfully = false;
 
     /* Init the player */
     self.init = function(callback) {
@@ -49,12 +50,16 @@ function OfficialfmPlayer() {
         if (video) {
             self.video = video;
             soundManager.stopAll();
+			self.playedSuccessfully = false;
             soundManager.createSound({
                 id: video.videoId,
                 url: 'http://cdn.official.fm/mp3s/' + Math.floor(video.videoId / 1000) + '/' + video.videoId + '.mp3',
                 volume: self.volume,
                 onplay: function() {
-                    EventSystem.callEventListeners('video_started_playing_successfully', self.video);
+					if (!self.playedSuccessfully) {
+						EventSystem.callEventListeners('video_started_playing_successfully', self.video);
+						self.playedSuccessfully = true;
+					}
                 },
                 onresume: function() {
                     EventSystem.callEventListeners('backend_played_video', self.video);

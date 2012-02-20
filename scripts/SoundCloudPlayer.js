@@ -6,6 +6,7 @@ function SoundCloudPlayer() {
     self.video = null;
     self.view = null;
 	self.volume = 100;
+	self.playedSuccessfully = false;
 	
     /* Init the player */
     self.init = function(callback) {
@@ -53,12 +54,16 @@ function SoundCloudPlayer() {
 		if (video) {
 			self.video = video;
 			soundManager.stopAll();
+			self.playedSuccessfully = false;
 			soundManager.createSound({
 				id: video.videoId,
 				url: 'https://api.soundcloud.com/tracks/' + video.videoId + '/stream?consumer_key=' + SOUNDCLOUD_API_KEY,
 				volume: self.volume,
 				onplay: function() {
-					EventSystem.callEventListeners('video_started_playing_successfully', self.video);
+					if (!self.playedSuccessfully) {
+						EventSystem.callEventListeners('video_started_playing_successfully', self.video);
+						self.playedSuccessfully = true;
+					}
 				},
 				onresume: function() {
 					EventSystem.callEventListeners('backend_played_video', self.video);
