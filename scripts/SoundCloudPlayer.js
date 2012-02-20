@@ -75,8 +75,12 @@ function SoundCloudPlayer() {
 					soundManager.destroySound('soundcloud');
 					EventSystem.callEventListeners('video_played_to_end', self);
 				},
-                onload: function() {
-                    EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
+                onload: function(success) {
+					if (success) {
+						EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
+					} else {
+						EventSystem.callEventListeners('video_failed_to_play', self.video);
+					}
                 },
                 whileloading: function() {
                     EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
