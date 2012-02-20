@@ -1,5 +1,12 @@
 function ModalBox() {
+    self = this;
+    this.canBeClosed = false;
     this.view = $('<div class="modalbox"><div class="wrapper"><p></p><div class="buttons"></div></div></div>');
+    this.view.click(function(e) {
+        if ($(e.target).hasClass('modalbox') && self.canBeClosed) {
+            self.remove();
+        }
+    });
 }
 
 ModalBox.prototype.setMessage = function(message) {
@@ -46,6 +53,8 @@ function WhatIsFlattrDialog() {
     ModalBox.call(this);
 
     this.setMessage('Flattr is an easy way to send micropayments. With your help we can create a sustainable way for music artists to get paid.');
+
+    this.canBeClosed = true;
 
     this.addButton('Connect your Flattr account', function(self) {
         location.href = '/flattrconnect';
