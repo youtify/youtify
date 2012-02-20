@@ -1225,20 +1225,26 @@ input, textarea, button {
     height: 100%;
     z-index: 1000;
     position: absolute;
-    background: rgba(120, 120, 120, 0.5);
+    background: rgba(0, 0, 0, 0.4);
 }
 .modalbox .wrapper {
-    width: 250px;
+    width: 300px;
     padding: 10px;
     color: #333;
     background: white;
     text-align: center;
     margin: 100px auto;
     z-index: 300;
-	box-shadow: 0px 0px 20px #888;
+	box-shadow: 0px 0px 20px #333;
 }
 .modalbox .buttons {
     margin-top: 10px;
+}
+.modalbox .buttons button {
+    margin-right: 5px;
+}
+.modalbox .buttons button:last-child {
+    margin-right: 0;
 }
 
 /** CHROME WEB STORE POPUP
