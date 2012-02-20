@@ -12,13 +12,6 @@ var TopMenu = {
                             TopMenu.hasLoadedAboutPopupHtml = true;
                             $('#about-popup').html(data);
                             $('#about-popup .share iframe').css('height', '62px').css('width', '55px');
-
-                            // FUNNY LOGO
-                            $('#about-popup .logo').click(function() {
-                                player.play(new Video({
-                                    videoId: player._hiddenPlaylist[new Date().getWeek()]
-                                }));
-                            });
                         }
                     }
                 });
