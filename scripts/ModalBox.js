@@ -1,5 +1,5 @@
 function ModalBox() {
-    self = this;
+    var self = this;
     this.canBeClosed = false;
     this.view = $('<div class="modalbox"><div class="wrapper"><p></p><div class="buttons"></div></div></div>');
     this.view.click(function(e) {
