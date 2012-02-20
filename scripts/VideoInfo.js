@@ -57,6 +57,7 @@ var VideoInfo = {
             data = data[0];
             info.video.title = data.title;
             info.video.duration = data.length * 1000;
+            info.url = 'http://official.fm/tracks/' + data.id;
             info.title = data.title;
             info.description = data.description;
             info.thumbnail = data.picture_absolute_url;
