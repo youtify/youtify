@@ -5,7 +5,7 @@ var InfoButton = {
         InfoButton.$badge = $('#bottom .info .badge');
 
         $('#bottom .info .title').click(function() {
-            InfoButton.$badge.text('0').hide();
+            InfoButton.$badge.text('').hide();
             $(this).arrowPopup('#video-info-popup', 'down');
         });
 
@@ -16,7 +16,7 @@ var InfoButton = {
     },
 
 	clearPopup: function(video) {
-        InfoButton.$badge.text('0').hide();
+        InfoButton.$badge.text('').hide();
         $('#video-info-popup .things .content').removeClass('found').text('Not found');
     },
 
@@ -108,7 +108,7 @@ var InfoButton = {
         $.getJSON(url, function(twitterData) {
             var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(twitterUrl) + '&jsonp=?';
             $.getJSON(url, function(flattrData) {
-                InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
+                InfoButton.$badge.text('flattrable').show();
                 $twitter.find('.content').replaceWith(
                     InfoButton.createThingElem({
                         a: {
@@ -130,7 +130,7 @@ var InfoButton = {
         var $video = $('#video-info-popup .things .video');
 
         if (info.video.flattrThingId) {
-            InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
+            InfoButton.$badge.text('flattrable').show();
             $video.find('.content').replaceWith(
                 InfoButton.createThingElem({
                     a: {
@@ -147,7 +147,7 @@ var InfoButton = {
             console.log('looking up flattr thing for ' + thingUrl);
             $.getJSON(url, function(data) {
                 if (data.message !== 'not_found') {
-                    InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
+                    InfoButton.$badge.text('flattrable').show();
                 }
 
                 $video.find('.content').replaceWith(
@@ -175,7 +175,7 @@ var InfoButton = {
 
         $.getJSON(url, function(data) {
             if (data.message !== 'not_found') {
-                InfoButton.$badge.text(String(Number(InfoButton.$badge.text()) + 1)).show();
+                InfoButton.$badge.text('flattrable').show();
             }
             $uploader.find('.content').replaceWith(
                 InfoButton.createThingElem({
