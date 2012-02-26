@@ -1017,21 +1017,8 @@ input, textarea, button {
 #settings .language a {
     display: block;
 }
-
-/** INFOMENU POPUP
- ****************************************************************************/
-
-#infomenu-popup {
-}
-#infomenu-popup a {
-	display: block;
-	margin: 10px 0;
-}
-#infomenu-popup a:first-child {
-	margin-top: 0;
-}
-#infomenu-popup a:last-child {
-	margin-bottom: 0;
+#settings .flattr .disconnect {
+    display: block;
 }
 
 /** ABOUT POPUP
@@ -1184,27 +1171,34 @@ input, textarea, button {
     -ms-user-select: text;
     user-select: text;
 }
-#video-info-popup  .things li {
+#video-info-popup  .sections li {
     min-height: 100px;
 }
-#video-info-popup  .things li .content.found {
+#video-info-popup  .sections li.found {
+    position: relative;
+}
+#video-info-popup  .sections li.found .content {
     position: relative;
     padding-right: 60px;
     padding-left: 55px;
 }
-#video-info-popup  .things img {
+#video-info-popup  .sections img {
     width: 48px;
     position: absolute;
     left: 0;
     top: 0;
 }
-#video-info-popup  .things .button {
-    display: block;
-    padding: 4px;
-    border: 1px solid #ccc;
+#video-info-popup  .sections .flattr {
+    position: absolute;
+    top: 24px;
+    right: 0;
+}
+#video-info-popup  .sections .flattr .button {
     position: absolute;
     right: 0;
     top: 0;
+    padding: 4px;
+    border: 1px solid #ccc;
     cursor: pointer;
     border-radius: 2px;
     color: #333;
@@ -1225,21 +1219,18 @@ input, textarea, button {
     border-top-color: #999;
     border-bottom-color: #888;
 }
-#video-info-popup  .things .button:active {
+#video-info-popup  .sections .button:active {
     background: #ccc;
 }
-#video-info-popup  .things .button:hover {
+#video-info-popup  .sections .button:hover {
     border: 1px solid #aaa;
 }
-#video-info-popup  .things .button.loading {
+#video-info-popup  .sections .button.loading {
     color: #888;
 }
-#video-info-popup  .things .button .count {
+#video-info-popup  .sections .button .count {
     margin-right: 5px;
     font-weight: bold;
-}
-#settings .flattr .disconnect {
-    display: block;
 }
 
 /** MODAL BOXES
