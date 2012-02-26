@@ -43,6 +43,7 @@ $(document).ready(function() {
     TopMenu.init();
     UserManager.init(USER);
     URIManager.init();
+    UserManager.init(USER);
 });
 
 function onYouTubePlayerAPIReady() {
