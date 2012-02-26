@@ -747,7 +747,7 @@ input, textarea, button {
     left: 230px;
     height: 15px;
     width: 100%;
-    padding-right: 500px; /* #controls.width + volume.width */
+    padding-right: 460px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -765,7 +765,7 @@ input, textarea, button {
     left: 0px;
 }
 #bottom .timeline-wrapper .length {
-    right: 500px; /* #controls.width + volume.width + 5 */
+    right: 460px;
 }
 #bottom .timeline-wrapper .timeline {
     width: auto;
