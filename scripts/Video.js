@@ -61,32 +61,24 @@ function Video(args) {
     };
     
     this.createListView = function() {
-        var space = $('<td class="space"></td>'),
-            self = this,
-            select = function(event) {
-                    self.listViewSelect(event);
-                    event.stopPropagation();
-                },
-            play = function(event) {
-                    self.play(event);
-                };
+        var self = this;
+        var space = $('<td class="space"></td>');
         
         this.listView = $('<tr/>')
             .addClass("draggable")
             .addClass("video")
-            .addClass(self.type)
+            .addClass(this.type)
             .bind('contextmenu', showResultsItemContextMenu)
-            .click(select)
-            .data('model', self);
-        
+            .click(function(event) {self.listViewSelect(event)})
+            .dblclick(function(event){self.play(event)})
+            .data('model', this);
         
         $('<td class="play">&#9654;</td>')
-            .click(play)
+            .click(function(event){self.play(event)})
             .appendTo(this.listView);
         space.clone().appendTo(this.listView);
         
         var titleElem = $('<td class="title"/>')
-            .click(select)
             .text(this.title)
             .appendTo(this.listView);
         space.clone().appendTo(this.listView);
@@ -105,21 +97,32 @@ function Video(args) {
         $('<td class="type">&nbsp;</td>')
             .appendTo(this.listView);
 
-        this.listView.dblclick(play);
-        titleElem.dblclick(play);
-        
         return this.listView;
     };
     
-    this.listViewSelect = function(event) {
+    /**
+     * Sets the selected style etc for this list view (and others if the shift
+     * key is held down).
+     *
+     * Alternatively, another listView element can be passed which will then
+     * be used instead of this videos list view. This is used from the play
+     * queue where the listView element being pressed is a "ghost" element.
+     */
+    this.listViewSelect = function(event, $listView) {
+        if ($listView === undefined) {
+            $listView = this.listView;
+        }
+        if (event !== undefined) {
+            event.stopPropagation();
+        }
         if (event !== undefined && (event.ctrlKey || event.metaKey)) {
-            if (this.listView.hasClass('selected')) {
-                this.listView.removeClass('selected');
+            if ($listView.hasClass('selected')) {
+                $listView.removeClass('selected');
             } else {
-                this.listView.addClass('selected');
+                $listView.addClass('selected');
             }
-        } else if (event !== undefined && event.shiftKey &&  this.listView.siblings('.selected').length > 0) {
-            var elements = [this.listView],
+        } else if (event !== undefined && event.shiftKey &&  $listView.siblings('.selected').length > 0) {
+            var elements = [$listView],
                 found = false;
 
             // search down
@@ -130,7 +133,7 @@ function Video(args) {
                 }
             }
             if (!found) {
-                elements = [this.listView];
+                elements = [$listView];
                 // search up
                 while (!found && $(elements[0]).prev().length > 0) {
                     elements.unshift(elements[0].prev());
@@ -143,8 +146,8 @@ function Video(args) {
                 $(item).addClass('selected');
             });
         } else {
-            this.listView.siblings().removeClass('selected');
-            this.listView.addClass('selected');
+            $listView.siblings().removeClass('selected');
+            $listView.addClass('selected');
         }
     };
 
