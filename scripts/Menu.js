@@ -196,6 +196,11 @@ function MenuItem(type) {
         $('#left .menu li').removeClass('selected');
         self.leftView.addClass('selected');
         
+        /* Populate fields with current user */
+        if (self.type === 'profile') {
+            UserManager.populateUserProfile(UserManager.currentUser);
+        }
+        
         /* Display right view */
         self.rightView.siblings().hide();
         self.rightView.show();

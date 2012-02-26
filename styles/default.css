@@ -98,6 +98,7 @@ input, textarea, button {
     height: 65px;
     overflow: hidden;
     cursor: pointer;
+    display: none;
 }
 #top .profile .picture {
     width: 64px;

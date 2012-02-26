@@ -53,6 +53,7 @@
             var SPOTIFY_INSTRUCTIONS_VIDEO_ID = 'uLG5rWWf_rg';
             var ON_DEV = {{ ON_DEV|lower }};
             var ON_PRODUCTION = {{ ON_PRODUCTION|lower }};
+            var USER = {{ user_args }};
         </script>
         		
 		<script src="/scripts/jquery.shuffle.js"></script>
@@ -102,6 +103,8 @@
         <script src="/scripts/BottomPanel.js"></script>
         <script src="/scripts/Window.js"></script>
         <script src="/scripts/TopMenu.js"></script>
+        <script src="/scripts/User.js"></script>
+        <script src="/scripts/UserManager.js"></script>
         <script src="/scripts/ModalBox.js"></script>
 		<script src="/scripts/Main.js"></script>
         {% endif %}
@@ -137,7 +140,7 @@
         <div id="top">
             <div class="profile">
                 <img class="picture" src="/images/user.png" /><!-- Default icon from http://pixel-mixer.com/  replace later -->
-                <span class="nickname">KalluX</span>
+                <span class="nickname"></span>
             </div>
             <div class="search"> 
                 <input type="text" class="translatable" placeholder="Search" /> 
@@ -152,7 +155,7 @@
                 <span class="item about translatable">About</span>
                 <span class="item settings translatable">Settings</span>
                 {% if logged_in %}
-                <span class="item last username">{{ user.nickname }}</span>
+                <span class="item last username">Logout</span>
                 {% else %}
                 <a class="item last login-link" href="{{ login_url }}">Login</a>
                 {% endif %}

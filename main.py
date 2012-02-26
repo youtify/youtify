@@ -8,6 +8,7 @@ from google.appengine.ext.webapp import util
 from toplist import get_or_create_toplist_json
 from model import get_current_youtify_user
 from model import create_youtify_user
+from model import get_current_user_json
 from playlists import get_playlists_json_for_user
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
@@ -47,6 +48,7 @@ class MainHandler(webapp.RequestHandler):
             'user': current_user,
             'is_admin': int(users.is_current_user_admin()),
             'youtify_user': youtify_user,
+            'user_args': get_current_user_json(),
             'playlistsFromServer': playlists,
             'autoDetectedLanguageByServer': lang,
             'autoDetectedTranslations': get_deployed_translations_json(lang),

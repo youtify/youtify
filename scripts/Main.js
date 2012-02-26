@@ -85,6 +85,7 @@ $(document).ready(function() {
     BottomPanel.init();
     Window.init();
     TopMenu.init();
+    UserManager.init(USER);
     url_Init();
 });
 
