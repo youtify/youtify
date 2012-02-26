@@ -100,7 +100,7 @@ var Queue = {
             clone.dblclick(play);
             clone.find('.play').click(play);
             clone.bind('contextmenu', showResultsItemContextMenu);
-            clone.click(function(event){video.listViewSelect(event, clone)});
+            clone.click(function(event){video.listViewSelect(event, clone);});
             
             /* Only display the last 3 */
             if (Queue.manualPlayIndex !== null && index - Queue.manualPlayIndex < -2) {
@@ -126,7 +126,7 @@ var Queue = {
             clone.dblclick(play);
             clone.find('.play').click(play);
             clone.bind('contextmenu', showResultsItemContextMenu);
-            clone.click(function(event){video.listViewSelect(event, clone)});
+            clone.click(function(event){video.listViewSelect(event, clone);});
             
             /* Make movable */
             clone.data('model', video);
