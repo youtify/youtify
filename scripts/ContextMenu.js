@@ -66,7 +66,7 @@ function showPlaylistContextMenu(event) {
                 var index = li.index(),
                     playlist = playlistManager.getPlaylist(index);
 				if (confirm(translations['This will delete duplicate videos from your playlist. Continue?'])) {
-					Notification.say(playlist.removeDuplicates() + translations[' duplicates removed.']);
+					Notifications.append(playlist.removeDuplicates() + translations[' duplicates removed.']);
 				}
             }
         },
