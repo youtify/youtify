@@ -1,41 +1,33 @@
-function notification_Init() {
-	$('.notifications .close').live('click', function(event) { 
-        var parent = $(this).parent(); 
-        parent.addClass('hidden');
-        setTimeout(function() { parent.remove(); }, 1000);
-    });
+var Notifications = {
+    init: function() {
+        $('.notifications .close').live('click', function(event) {
+            var parent = $(this).parent();
+            parent.addClass('hidden');
+            setTimeout(function() { parent.remove(); }, 1000);
+        });
 
-    EventSystem.addEventListener('video_info_fetched', function(info) {
-        Notification.say(info.title);
-    });
-}
-
-var Notification = {
-	say: function(message) {
-		if (Notification.useWebkitNotifications()) {
-            Notification.webkitSay(message);
+        EventSystem.addEventListener('video_info_fetched', function(info) {
+            Notifications.append(info.title);
+        });
+    },
+	append: function(message) {
+		if (window.webkitNotifications && window.webkitNotifications.checkPermission() < 2) {
+            Notifications._webkitAppend(message);
         } else {
             var settings = new Settings(),
                 notification = $('<li/>'),
                 content = $('<div class="content"/>').text(message),
                 close = $('<span class="close"/>').text('X');
             content.appendTo(notification);
-            close.appendTo(notification);    
+            close.appendTo(notification);
             notification.appendTo('#top .notifications');
-            
-            setTimeout(function() { 
+
+            setTimeout(function() {
                 notification.find('.close').click(); 
             }, settings.announceTimeout);
         }
 	},
-    useWebkitNotifications: function() {
-        if (window.webkitNotifications) {
-            return (window.webkitNotifications.checkPermission() < 2);
-        } else {
-            return false;
-        }
-    },
-	webkitSay: function(message) {
+	_webkitAppend: function(message) {
         var announceFunction = function(message) {
             try
             {

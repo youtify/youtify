@@ -244,7 +244,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
 					}
 				},
 				404: function(data) {
-					Notification.warn(translations['No such playlist found']);
+					alert(translations['No such playlist found']);
 				},
 				409: function(data) {
                     new ReloadDialog().show();
@@ -314,7 +314,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
 					}
 				},
 				404: function(data) {
-					Notification.warn(translations['No such playlist found']);
+					alert(translations['No such playlist found']);
 				},
 				409: function(data) {
                     new ReloadDialog().show();

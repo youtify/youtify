@@ -25,10 +25,10 @@ var ChromeWebStore = {
 
     installApp: function() {
         var fail = function() {
-                Notification.say('Failed to install App.');
+                Notifications.append('Failed to install App.');
             },
             success = function() {
-                Notification.say('Installation succeded!');
+                Notifications.append('Installation succeded!');
                 $('#top .menu .webstore').hide();
             };
         if (window.chrome && window.chrome.webstore) {

@@ -2,7 +2,7 @@
 
 $: true,
 ON_PRODUCTION: true,
-Notification: true,
+Notifications: true,
 Settings: true,
 PlaylistsManager: true,
 volume_Init: true,
@@ -12,7 +12,6 @@ settings_Init: true,
 search_Init: true,
 queue_Init: true,
 ping_Init: true,
-notification_Init: true,
 url_Init: true,
 
 */
@@ -27,7 +26,7 @@ var OFFICIALFM_API_KEY = 'gLc8fHvg39ez6EAYvxFA';
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
-            Notification.say('Connection error! <i>' + r.responseText + '</i>');
+            Notifications.append('Connection error! <i>' + r.responseText + '</i>');
         } else {
             $('body').html(r.responseText);
         }
@@ -75,7 +74,7 @@ $(document).ready(function() {
     Search.init();
     Queue.init();
     ping_Init();
-    notification_Init();
+    Notifications.init();
     webstore_Init();
     player = new PlayerManager();
     player.init();
