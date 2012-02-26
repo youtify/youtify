@@ -69,12 +69,12 @@ function Video(args) {
             .addClass("video")
             .addClass(this.type)
             .bind('contextmenu', showResultsItemContextMenu)
-            .click(function(event) {self.listViewSelect(event)})
-            .dblclick(function(event){self.play(event)})
+            .click(function(event) {self.listViewSelect(event);})
+            .dblclick(function(event){self.play(event);})
             .data('model', this);
         
         $('<td class="play">&#9654;</td>')
-            .click(function(event){self.play(event)})
+            .click(function(event){self.play(event);})
             .appendTo(this.listView);
         space.clone().appendTo(this.listView);
         

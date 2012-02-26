@@ -124,7 +124,7 @@ var InfoPopup = {
                         link: twitterUrl
                     },
                     image: twitterData.profile_image_url,
-                    url: twitterUrl,
+                    url: twitterUrl
                 })
             );
         });
@@ -156,7 +156,7 @@ var InfoPopup = {
                     text: info.name,
                     link: info.url
                 },
-                image: info.avatar_url,
+                image: info.avatar_url
             })
         );
     }
