@@ -170,28 +170,21 @@ function showPlaylistContextMenu(event) {
 }
 
 function showResultsItemContextMenu(event) {
-    li = $(this);
+    var li = $(this);
+    var allSelectedVideos = $(this).parent().find('.video.selected');
+    var video = $(this).data('model');
+
     if (!$(li).hasClass('selected')) {
         li.parent().find('.selected').removeClass('selected');
         li.addClass('selected');
     }
-
-    var allSelectedVideos = $(this).parent().find('.video.selected');
 
     var buttons = [
         {
             title: 'Play',
             args: $(this),
             callback: function(elem) {
-                //li.play();
                 elem.data('model').play();
-            }
-        },
-        {
-            title: 'Watch on YouTube',
-            args: $(this),
-            callback: function(elem) {
-                window.open('http://www.youtube.com/watch?v=' + elem.data('model').videoId);
             }
         },
 		{
@@ -215,6 +208,44 @@ function showResultsItemContextMenu(event) {
 			}
 		}
     ];
+
+    switch (video.type) {
+        case 'youtube':
+        buttons.push({
+            title: 'Watch on YouTube',
+            args: $(this),
+            callback: function(elem) {
+                window.open('http://www.youtube.com/watch?v=' + video.videoId);
+            }
+        });
+        break;
+
+        case 'soundcloud':
+        buttons.push({
+            title: 'Watch on SoundCloud',
+            args: $(this),
+            callback: function(elem) {
+                var url = "http://api.soundcloud.com/tracks/" + video.videoId + ".json";
+                var params = {
+                    client_id: SOUNDCLOUD_API_KEY
+                };
+                $.getJSON(url, params, function(data) {
+                    window.open(data.permalink_url);
+                });
+            }
+        });
+        break;
+
+        case 'officialfm':
+        buttons.push({
+            title: 'Watch on Official.fm',
+            args: $(this),
+            callback: function(elem) {
+                window.open('http://www.official.fm/tracks/' + video.videoId);
+            }
+        });
+        break;
+    }
 
     if ($(this).data('additionalMenuButtons')) {
         buttons = $.merge(buttons, $(this).data('additionalMenuButtons'));
