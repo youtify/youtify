@@ -90,6 +90,29 @@ input, textarea, button {
     width: 100%;
     z-index: 10;
 }
+#top .profile {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 200px;
+    height: 65px;
+    overflow: hidden;
+    cursor: pointer;
+}
+#top .profile .picture {
+    width: 64px;
+    height: 64px;
+    border: 1px solid #8B9594;
+    background-color: #FFF;
+}
+#top .profile .nickname {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 69px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
 #top .search {
     display: inline-block;
     margin-left: 210px;  /* left column */
@@ -607,6 +630,98 @@ input, textarea, button {
 }
 #right .info .button:hover {
     background: rgba(0, 124, 137, 0.1);
+}
+
+#right .profile .picture-container {
+    width: 220px;
+    display: block;
+    margin: 0 20px;
+    float: left;
+    position: relative;
+}
+#right .profile .picture-container .picture {
+    width: 208px;
+    height: 208px;
+    border: 1px solid #8B9594;
+    background-color: #FFF;    
+}
+#right .profile .picture-container .picture-overlay {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 208px;
+    height: 208px;
+}
+#right .profile .picture-container .picture-overlay .change-picture {
+    background: rgba(0,0,0,0.8);
+    color: #FFF;
+    padding: 5px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    display: none;
+    cursor: pointer;
+}
+#right .profile .picture-container .picture-overlay:hover .change-picture {
+    display: block;
+}
+#right .profile .picture-container .change {
+    width: 210px;
+}
+#right .profile .picture-container .change .title {
+    display: block;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
+#right .profile .picture-container .change input {
+    display: block;
+    width: 204px;
+    margin: 5px 0;
+}
+#right .profile .picture-container .change .save {
+    display: block;
+    width: 80px;
+    max-width: 80px;
+    float: right;
+}
+#right .profile .information-container {
+    width: 220px;
+    display: block;
+    float: left;
+}
+#right .profile .information-container .static > span {
+    display: block;
+    margin: 10px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
+#right .profile .information-container .static .nickname {
+    font-size: 16px;
+    font-weight: bold;
+}
+#right .profile .information-container .static .fullname {
+    color: #444;
+}
+#right .profile .information-container .static .tagline {
+    font-size: 14px;
+    text-decoration: italic;
+}
+#right .profile .information-container .change > span {
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
+#right .profile .information-container .change > input {
+    display: block;
+    margin-bottom: 5px;
+    width: 204px;
+}
+#right .profile .information-container .change .optional {
+    color: #666;
+}
+#right .profile .information-container .change .save {
+    display: block;
+    width: 80px;
+    max-width: 80px;
+}
+#right .profile .playlists {
+    clear: both;
 }
 
 /** BOTTOM

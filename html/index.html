@@ -135,6 +135,10 @@
         <div id="about-popup" style="display:none" class="popup"></div>
         
         <div id="top">
+            <div class="profile">
+                <img class="picture" src="/images/user.png" /><!-- Default icon from http://pixel-mixer.com/  replace later -->
+                <span class="nickname">KalluX</span>
+            </div>
             <div class="search"> 
                 <input type="text" class="translatable" placeholder="Search" /> 
                 <div class="loader"></div>
@@ -218,6 +222,42 @@
                         <span class="copy button translatable">Copy</span>
                         <span class="sync button translatable">Sync</span>
                         <a class="owner"></a>
+                    </div>
+                </div>
+                
+                <div class="profile">
+                    <div class="picture-container">
+                        <img class="picture" src="/images/user.png" />
+                        <div class="picture-overlay">
+                            <span class="translatable change-picture">Change profile picture</span>
+                            <span class="score"></span>
+                        </div>
+                        <div class="change">
+                            <span class="translatable">Upload your profile picture at </span><a href="http://www.gravatar.com" target="_blank">gravatar.com</a><span class="translatable"> and enter your gravatar email here:</span>
+                            <input type="email" placeholder="gravatar@example.com" />
+                            <button class="translatable save">Save</button>
+                        </div>
+                    </div>
+                    <div class="information-container">
+                        <div class="static">
+                            <span class="nickname"></span>
+                            <span class="fullname"></span>
+                            <span class="tagline"></span>
+                        </div>
+                        <div class="change">
+                            <span class="translatable">Nickname: </span>
+                            <input class="nickname" type="text" /><span class="translatable nickname-status"></span>
+                            <span class="translatable">First name: </span><span class="translatable optional">(optional) </span>
+                            <input class="first-name" type="text" />
+                            <span class="translatable">Last name: </span><span class="translatable optional">(optional) </span>
+                            <input class="last-name" type="text" />
+                            <span class="translatable">Awesome tagline: </span><span class="translatable optional">(optional) </span>
+                            <input class="tagline" type="text" />
+                            <button class="translatable save">Save</button>
+                        </div>
+                    </div>
+                    <div class="playlists">
+                    
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@ var pendingVideo;
 
 var Menu = {
     left: [],
+    profile: null,
     init: function() {
         /* Create new menuitems */
         var leftMenuItems = ['toplist', 'queue', 'search'];
@@ -10,6 +11,10 @@ var Menu = {
             menuItem.init();
             Menu.left.push(menuItem);
         });
+        
+        /* Add profile */
+        Menu.profile = new MenuItem('profile');
+        Menu.profile.init();
 
         EventSystem.addEventListener('playlists_loaded', this.createPlaylistViews);
 
@@ -164,6 +169,11 @@ function MenuItem(type) {
                 self.rightView = $('#right .favorites');
                 self.addTabs(['favorites']);
                 break;
+            case 'profile':
+                self.leftView = $('#top .profile');
+                self.rightView = $('#right .profile');
+                break;
+
         }
         /* Set click event */
         self.leftView.click(self.select);
