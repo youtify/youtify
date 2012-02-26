@@ -160,7 +160,9 @@
     
     /* Set volume (0-100) */
     self.setVolume = function(volume) {
-        self.player.setVolume(volume);
+        if (self.player && self.player.setVolume) {
+            self.player.setVolume(volume);
+        }
     };
     
     /* Get volume (0-100) */

@@ -9,7 +9,6 @@ var URIManager = {
         EventSystem.addEventListener('video_started_playing_successfully', function(video) {
             URIManager.setURLFromVideo(video);
         });
-		window.onpopstate = URIManager.loadState;
     },
     loadWarnings: function() {
         if (window.top !== window.self) {
