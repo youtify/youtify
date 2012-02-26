@@ -33,11 +33,6 @@
                 self.paneView = $('#right .search .pane.youtube.videos');
                 Search.youtubeVideosTab = self;
                 break;
-            case 'youtube-playlists':
-                self.view = $('#right .search .tabs .youtube.playlists');
-                self.paneView = $('#right .search .pane.youtube.playlists');
-                Search.youtubePlaylistsTab = self;
-                break;
             case 'soundcloud-tracks':
                 self.view = $('#right .search .tabs .soundcloud.tracks');
                 self.paneView = $('#right .search .pane.soundcloud.tracks');
@@ -69,7 +64,7 @@
         }
         
         /* Search special case */
-        if (self.type === 'youtube-videos' || self.type === 'youtube-playlists' || self.type === 'soundcloud-tracks' || self.type === 'officialfm-tracks') {
+        if (self.type === 'youtube-videos' || self.type === 'soundcloud-tracks' || self.type === 'officialfm-tracks') {
             history.pushState(null, null, '/');
             
             if (!self.view.hasClass('selected')) {

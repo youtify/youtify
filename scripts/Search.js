@@ -2,7 +2,6 @@
 var Search = {
     menuItem: null,
     youtubeVideosTab: null,
-    youtubePlaylistsTab: null,
     soundCloudTracksTab: null,
     officialfmTracksTab: null,
     searchTimeoutHandle: null,
@@ -112,47 +111,6 @@ var Search = {
                     $('body').removeClass('searching');
                 });
                 
-                break;
-            case 'youtube-playlists':
-                if (Search.lastPlaylistsSearchQuery === q && !loadMore) {
-                    return;
-                } else {
-                    Search.lastPlaylistsSearchQuery = q;
-                }
-                url = "http://gdata.youtube.com/feeds/api/playlists/snippets?callback=?";
-                start = (loadMore) ? Search.youtubeVideosTab.paneView.data('results-count') + 1 : 1;
-                params = {
-                    'alt': 'json-in-script', 'max-results': Search.itemsPerPage,
-                    'start-index': start, 'format': 5, 'v': 2, 'q': q
-                };
-                /* Clean up destination */
-                if (loadMore) {
-                    Search.youtubePlaylistsTab.paneView.find('.loadMore').remove();
-                } else {
-                    Search.youtubePlaylistsTab.paneView.html('');
-                }
-
-                /* Get the results */
-                $('body').addClass('searching');
-                $.getJSON(url, params, function(data) {
-                    /* Parse the results and create the views */
-                    var results = Search.getPlaylistsFromYouTubeSearchData(data);
-                    $.each(results, function(i, playlist) {
-                        playlist.videoOnPlayCallback = function() {
-                            Menu.find('search').setAsPlaying();
-                        };
-                        playlist.createView().appendTo(Search.youtubePlaylistsTab.paneView);
-                    });
-
-                    var c = Search.youtubePlaylistsTab.paneView.data('results-count') || 0;
-                    Search.youtubePlaylistsTab.paneView.data('results-count', c + results.length);
-
-                    /* Add load more row */
-                    if (results.length >= Search.itemsPerPage) {
-                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubePlaylistsTab.paneView);
-                    }
-                    $('body').removeClass('searching');
-                });
                 break;
             case 'soundcloud-tracks':
                 if (Search.lastSoundCloudTracksQuery === q && !loadMore) {
