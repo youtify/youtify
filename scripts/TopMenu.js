@@ -25,5 +25,10 @@ var TopMenu = {
         $('#logout-popup a').click(function(e) {
             playlistManager.removeRemotePlaylistsFromLocalStorage();
         });
+
+        // SETTINGS
+        $('#top .settings').click(function() {
+            $(this).arrowPopup('#settings');
+        });
     }
 };

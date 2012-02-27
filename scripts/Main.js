@@ -1,22 +1,4 @@
-﻿/*global
-
-$: true,
-ON_PRODUCTION: true,
-Notifications: true,
-Settings: true,
-PlaylistsManager: true,
-volume_Init: true,
-translations_Init: true,
-spotifyImport_Init: true,
-settings_Init: true,
-search_Init: true,
-queue_Init: true,
-ping_Init: true,
-url_Init: true,
-
-*/
-
-// GLOBALS
+﻿// GLOBALS
 var playlistManager;
 var youTubeApiReady = false;
 var player = null;
@@ -41,15 +23,15 @@ $(document).ready(function() {
 
     playlistManager = new PlaylistsManager();
 
-	volume_Init();
-	translations_Init();
-    spotifyImport_Init();
-    settings_Init();
+	Volume.init();
+	TranslationSystem.init();
+    SpotifyImporterPopup.init();
+    SettingsPopup.init();
     Search.init();
     Queue.init();
-    ping_Init();
+    Ping.init();
     Notifications.init();
-    webstore_Init();
+    ChromeWebStore.init();
     player = new PlayerManager();
     player.init();
     Timeline.init();
@@ -60,7 +42,7 @@ $(document).ready(function() {
     Window.init();
     TopMenu.init();
     UserManager.init(USER);
-    url_Init();
+    URIManager.init();
 });
 
 function onYouTubePlayerAPIReady() {

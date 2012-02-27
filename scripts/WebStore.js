@@ -1,19 +1,20 @@
-function webstore_Init() {
-    if (ChromeWebStore.isBrowserChrome() && !ChromeWebStore.isAppInstalled()) {
-        $('#top .menu .webstore').click(function() {
-            $(this).arrowPopup('#webstore-popup');
-        });
-
-        $('#webstore-popup a').one('click', function(event) {
-            event.preventDefault();
-            ChromeWebStore.installApp();
-        });
-    } else {
-        $('#top .menu .webstore').hide();
-    }
-}
 var ChromeWebStore = {
     appLink: 'https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho',
+
+    init: function() {
+        if (ChromeWebStore.isBrowserChrome() && !ChromeWebStore.isAppInstalled()) {
+            $('#top .menu .webstore').click(function() {
+                $(this).arrowPopup('#webstore-popup');
+            });
+
+            $('#webstore-popup a').one('click', function(event) {
+                event.preventDefault();
+                ChromeWebStore.installApp();
+            });
+        } else {
+            $('#top .menu .webstore').hide();
+        }
+    },
 
     isBrowserChrome: function() {
         return navigator && navigator.userAgent && navigator.userAgent.indexOf('Chrome') !== -1;
