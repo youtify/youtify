@@ -1,7 +1,3 @@
-function url_Init() {
-    URIManager.init();
-}
-
 var URIManager = {
     init: function() {
         URIManager.loadWarnings();
