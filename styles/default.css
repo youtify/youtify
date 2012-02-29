@@ -1192,7 +1192,7 @@ input, textarea, button {
 }
 #video-info-popup  .sections .flattr {
     position: absolute;
-    top: 24px;
+    top: 28px;
     right: 0;
 }
 #video-info-popup  .sections .flattr .button {
