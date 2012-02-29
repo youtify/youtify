@@ -57,6 +57,10 @@ var Search = {
         return Search.youtubeVideosTab.isSelected() ? 'youtube-videos' : 'youtube-playlists';
     },
     search: function(q, loadMore) {
+        if (q.length === 0) {
+            return;
+        }
+
         var url = null,
             start = null,
             params = null;
