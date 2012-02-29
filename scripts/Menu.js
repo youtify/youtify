@@ -106,8 +106,14 @@ var Menu = {
                 break;
         }
         event.stopPropagation();
+    },
+    deSelectAll: function() {
+        /* Remove selected on all menuItems */
+        $('#left .menu li').removeClass('selected');
+        
+        /* Hide right view */
+        $('#right > div').hide();
     }
-
 };
 
 function MenuItem(type) {
@@ -192,18 +198,17 @@ function MenuItem(type) {
         return null;
     };
     self.select = function() {
-        /* Remove selected on all menuItems */
-        $('#left .menu li').removeClass('selected');
-        self.leftView.addClass('selected');
+        /* DeSelect left menus and hide right views */
+        Menu.deSelectAll();
         
         /* Populate fields with current user */
         if (self.type === 'profile') {
             UserManager.populateUserProfile(UserManager.currentUser);
         }
         
-        /* Display right view */
-        self.rightView.siblings().hide();
+        /* Display views */
         self.rightView.show();
+        self.leftView.addClass('selected');
         
         /* Display the right video list */
         if (self.tabs.length > 0) {
