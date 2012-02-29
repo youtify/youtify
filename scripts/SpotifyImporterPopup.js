@@ -7,7 +7,9 @@ var SpotifyImporterPopup = {
             .click(function(event) {
                 event.stopPropagation();
             });
-
+        $('#spotify-importer .instructions').click(function() {
+            player.play(new Video({ videoId: 'uLG5rWWf_rg', type: 'youtube' }));
+        });
         var importer = new SpotifyImporter();
 
         // cancel
