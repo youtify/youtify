@@ -44,6 +44,8 @@ def get_or_create_toplist_json():
 class ToplistHandler(webapp.RequestHandler):
 
     def get(self):
+        if 'flush' in self.request.arguments():
+            memcache.delete('toplist')
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(get_or_create_toplist_json())
 
