@@ -38,6 +38,11 @@ handlers:
   upload: html/tests.html
   login: admin
 
+- url: /filter
+  static_files: html/filter.html
+  upload: html/filter.html
+  login: admin
+
 - url: /minimizer
   script: minimizer.py
   login: admin

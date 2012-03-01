@@ -5,6 +5,7 @@ from google.appengine.ext.webapp import util
 
 from django.utils import simplejson
 from BeautifulSoup import BeautifulSoup
+from filter import blocked_youtube_videos
 
 def scrape_toplist():
     """ Scrape YouTube Top 100 Music Videos
@@ -19,10 +20,12 @@ def scrape_toplist():
     soup = BeautifulSoup(result.content)
 
     for a in soup.findAll('a', 'video-title'):
-        json.append({
-            'title': a.get('title'),
-            'videoId': a.get('href').split('=')[1],
-        })
+        video_id = a.get('href').split('=')[1]
+        if not video_id in blocked_youtube_videos:
+            json.append({
+                'title': a.get('title'),
+                'videoId': video_id,
+            })
 
     return simplejson.dumps(json)
 
