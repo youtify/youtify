@@ -35,11 +35,10 @@ var UserManager = {
         /* Also called from Menu.js */
         $('#right .profile .picture-container .picture').attr('src', user.imageUrls.large);
     },
-    showUserFromId: function(userId) {
-    
-    },
-    showUserFromNick: function(userNick) {
-        
+    findUser: function(nickOrId, callback) {
+        $.getJSON('/api/users/' + nickOrId, function(data) {
+             callback(data);
+        });
     },
     showUser: function(user) {
         Menu.deSelectAll();

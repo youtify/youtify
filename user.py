@@ -43,7 +43,7 @@ class UserHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/api/user/.*', UserHandler),
+        ('/api/users/.*', UserHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
