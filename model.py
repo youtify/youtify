@@ -70,6 +70,9 @@ def get_current_youtify_user():
 def get_youtify_user_for(user=None):
     return YoutifyUser.all().filter('google_user = ',user).get()
 
+def get_youtify_user_by_nick(nick=None):
+    return YoutifyUser.all().filter('nickname = ',nick).get()
+
 def create_youtify_user():
     m = YoutifyUser()
     m.put()
@@ -97,23 +100,19 @@ def get_current_user_json():
     }
     return simplejson.dumps(json)
 
-def get_youtify_user_json_for(user=None):
-    my_user = get_youtify_user_for(user)
-    if my_user is None:
-        return simplejson.dumps(None)
-    
-    gravatar_email = user.gravatar_email or user.google_user.email()
+def get_youtify_user_json_for(youtify_user):
+    gravatar_email = youtify_user.gravatar_email or youtify_user.google_user.email()
     default_image = 'http://www.youtify.com/images/user.png'
     small_size = 64
     large_size = 208
     json = {
-        'id': str(my_user.key().id()),
+        'id': str(youtify_user.key().id()),
         'email': None,
-        'nickname': my_user.nickname,
-        'firstName': my_user.first_name,
-        'lastName': my_user.last_name,
-        'tagline': my_user.tagline,
-        'gravatarEmail': gravatar_email,
+        'nickname': youtify_user.nickname,
+        'firstName': youtify_user.first_name,
+        'lastName': youtify_user.last_name,
+        'tagline': youtify_user.tagline,
+        'gravatarEmail': None,
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
     }

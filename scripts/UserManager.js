@@ -32,7 +32,7 @@ var UserManager = {
         $('#top .profile').show();
     },
     populateUserProfile: function(user) {
-        /* Called from Menu.js */
+        /* Also called from Menu.js */
         $('#right .profile .picture-container .picture').attr('src', user.imageUrls.large);
     },
     showUserFromId: function(userId) {

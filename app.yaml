@@ -14,6 +14,9 @@ handlers:
 - url: /me.*
   script: me.py
 
+- url: /api/user.*
+  script: user.py
+
 - url: /export
   static_files: html/export.html
   upload: html/export.html
