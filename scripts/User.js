@@ -16,6 +16,11 @@ function User(args) {
     self.tagline = null;
     
     self.saveGravatarAddress = function(address) {
-        alert('TODO: implement User.saveGravatarAddress ' + address);
+        var params = {
+            gravatar_email: address
+        };
+        $.post('/me/gravatar_email', params, function(data) {
+            // done
+        });
     };
 }
