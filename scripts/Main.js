@@ -23,6 +23,7 @@ $(document).ready(function() {
 
     playlistManager = new PlaylistsManager();
 
+    LoadingBar.init();
 	Volume.init();
 	TranslationSystem.init();
     SpotifyImporterPopup.init();
@@ -43,7 +44,6 @@ $(document).ready(function() {
     TopMenu.init();
     UserManager.init(USER);
     URIManager.init();
-    UserManager.init(USER);
 });
 
 function onYouTubePlayerAPIReady() {

@@ -1,5 +1,5 @@
 application: youtify
-version: 11
+version: 12
 runtime: python
 api_version: 1
 
@@ -39,6 +39,11 @@ handlers:
 - url: /jstests
   static_files: html/tests.html
   upload: html/tests.html
+  login: admin
+
+- url: /filter
+  static_files: html/filter.html
+  upload: html/filter.html
   login: admin
 
 - url: /minimizer

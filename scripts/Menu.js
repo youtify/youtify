@@ -130,7 +130,7 @@ function MenuItem(type) {
             case 'toplist':
                 self.leftView = $('#left .menu .toplist');
                 self.rightView = $('#right .toplists');
-                self.addTabs(['youtube-top100', 'flattr-toplist']);
+                self.addTabs(['flattr-toplist', 'youtube-top100']);
 
                 // Init YouTube top 100
                 $pane = $('#right .pane.youtube.top100');

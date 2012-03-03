@@ -1308,7 +1308,7 @@ input, textarea, button {
 }
 #video-info-popup  .sections .flattr {
     position: absolute;
-    top: 24px;
+    top: 28px;
     right: 0;
 }
 #video-info-popup  .sections .flattr .button {
@@ -1393,6 +1393,7 @@ input, textarea, button {
  ****************************************************************************/
 
 #loading {
+    display: none;
     position: absolute;
     top: 200px;
     width: 150px;
@@ -1404,15 +1405,8 @@ input, textarea, button {
     margin-left: -100px;
     text-align: center;
     z-index: 25;
-    opacity: 0;
     border-radius: 10px;
     font-size: 16px;
-    -webkit-transition: opacity 0.2s linear;
-    -moz-transition: opacity 0.2s linear;
-    transition: opacity 0.2s linear;
-}
-body.searching #loading {
-    opacity: 0.8;
 }
 
 

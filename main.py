@@ -60,6 +60,7 @@ class MainHandler(webapp.RequestHandler):
             'logout_url': users.create_logout_url('/'),
             'toplist': get_or_create_toplist_json(),
             'flattr_toplist': flattr_toplist.get_or_create_toplist_json(),
+            'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,
             'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,

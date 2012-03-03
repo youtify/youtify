@@ -247,6 +247,17 @@ function showResultsItemContextMenu(event) {
         break;
     }
 
+    if (ON_DEV) {
+        buttons.push({
+            title: 'View JSON',
+            args: $(this),
+            callback: function(li) {
+                alert(JSON.stringify(video.toJSON()));
+                console.log(video.toJSON());
+            }
+        });
+    }
+
     if ($(this).data('additionalMenuButtons')) {
         buttons = $.merge(buttons, $(this).data('additionalMenuButtons'));
     }

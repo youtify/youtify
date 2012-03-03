@@ -13,6 +13,17 @@ except ImportError:
 
 MEMCACHE_KEY = 'flattr_toplist'
 
+FILTER = [
+    'RCm56g1SxLw', # Berlin - Der goldene Reiter
+    'CSaRY2Fl5Pw', # Abused Romance - Sound of Violence
+    '33802859', # Previously on mobileMacs 078
+    '35304875', # Previously on mobileMacs 079
+    '30018757', # Previously on mobileMacs 077
+    '29243672', # Previously on mobileMacs 076
+    '33802859', # Previously on mobileMacs 078
+    '35304875', # Previously on mobileMacs 079
+]
+
 def fetch_toplist():
     """Fetch the top flattred YouTube videos"""
     json = []
@@ -28,7 +39,7 @@ def fetch_toplist():
                 url = urlparse.urlparse(thing['url'])
                 if url.netloc.startswith('www.youtube.com'):
                     params = dict(parse_qsl(url.query))
-                    if 'v' in params:
+                    if 'v' in params and not params['v'] in FILTER:
                         json.append({
                             'title': thing['title'],
                             'videoId': params['v'],
@@ -55,7 +66,7 @@ def fetch_toplist():
                     try:
                         scresult = urlfetch.fetch('https://api.soundcloud.com/resolve.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d&url=' + thing['url'])
                         scresult = simplejson.loads(scresult.content)
-                        if 'streamable' in scresult and scresult['streamable']:
+                        if 'streamable' in scresult and scresult['streamable'] and (str(scresult['id']) not in FILTER):
                             json.append({
                                 'title': scresult['title'],
                                 'videoId': scresult['id'],
