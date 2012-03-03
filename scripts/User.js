@@ -19,7 +19,13 @@ function User(args) {
         var params = {
             gravatar_email: address
         };
-        $.post('/me/gravatar_email', params, function(data) {
+        $.post('/me/profile', params, function(data) {
+            // done
+        });
+    };
+
+    self.saveProfile = function(params) {
+        $.post('/me/profile', params, function(data) {
             // done
         });
     };

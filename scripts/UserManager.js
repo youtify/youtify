@@ -21,6 +21,10 @@ var UserManager = {
                 $('#right .profile .picture-container .change').hide();
                 UserManager.currentUser.saveGravatarAddress($('#right .profile .picture-container .change input').val());
             });
+        $('#right .profile .information-container .change .save')
+            .click(function() {
+                UserManager.currentUser.saveProfile(UserManager.getInformationFormValues());
+            });
         
         /* Populate fields */
         if (UserManager.currentUser.nickname) {
@@ -30,6 +34,14 @@ var UserManager = {
         }
         $('#top .profile .picture').attr('src', UserManager.currentUser.imageUrls.small);
         $('#top .profile').show();
+    },
+    getInformationFormValues: function() {
+        var ret = {};
+        $.each($('#right .profile .information-container .change input'), function(i, elem) {
+            ret[elem.name] = elem.value;
+        });
+        console.log(ret);
+        return ret;
     },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
