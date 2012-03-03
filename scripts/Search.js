@@ -92,7 +92,7 @@ var Search = {
                 }
                 
                 /* Get the results */
-                $('body').addClass('searching');
+                LoadingBar.show();
                 $.getJSON(url, params, function(data) {
                     /* Parse the results and create the views */
                     var results = Search.getVideosFromYouTubeSearchData(data);
@@ -112,7 +112,7 @@ var Search = {
                     if (results.length >= Search.itemsPerPage) {
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubeVideosTab.paneView);
                     }
-                    $('body').removeClass('searching');
+                    LoadingBar.hide();
                 });
                 
                 break;
@@ -141,7 +141,7 @@ var Search = {
                     Search.soundCloudTracksTab.paneView.html('');
                 }
                 
-                $('body').addClass('searching');
+                LoadingBar.show();
                 $.getJSON(url, params, function(data) {
                     var results = Search.getVideosFromSoundCloudSearchData(data);
                     $.each(results, function(i, video) {
@@ -161,7 +161,7 @@ var Search = {
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.soundCloudTracksTab.paneView);
                     }
 
-                    $('body').removeClass('searching');
+                    LoadingBar.hide();
                 });
                 break;
             case 'officialfm-tracks':
@@ -188,7 +188,7 @@ var Search = {
                     Search.officialfmTracksTab.paneView.html('');
                 }
 
-                $('body').addClass('searching');
+                LoadingBar.show();
                 $.getJSON(url, params, function(data) {
                     var results = Search.getVideosFromOfficialfmSearchData(data.tracks);
                     $.each(results, function(i, video) {
@@ -208,7 +208,7 @@ var Search = {
                         Search.createLoadMoreRow(Search.loadMore).appendTo(Search.officialfmTracksTab.paneView);
                     }
 
-                    $('body').removeClass('searching');
+                    LoadingBar.hide();
                 });
                 break;
             

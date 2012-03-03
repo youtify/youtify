@@ -23,6 +23,7 @@ $(document).ready(function() {
 
     playlistManager = new PlaylistsManager();
 
+    LoadingBar.init();
 	Volume.init();
 	TranslationSystem.init();
     SpotifyImporterPopup.init();
