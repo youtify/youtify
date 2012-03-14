@@ -11,9 +11,9 @@ function User(args) {
         large: args.largeImageUrl || null
     };
     self.firstName = args.firstName || '';
-    self.lastName = null;
+    self.lastName = args.lastName || '';
     self.fullName = self.firstName + ' ' + self.lastName;
-    self.tagline = null;
+    self.tagline = args.tagline || '';
     
     self.saveGravatarAddress = function(address) {
         var params = {
