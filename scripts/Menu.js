@@ -203,6 +203,7 @@ function MenuItem(type) {
         
         /* Populate fields with current user */
         if (self.type === 'profile') {
+            history.pushState(null, null, '/profile');
             UserManager.populateUserProfile(UserManager.currentUser);
         }
         
