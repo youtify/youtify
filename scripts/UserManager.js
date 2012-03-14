@@ -46,6 +46,13 @@ var UserManager = {
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
         $('#right .profile .picture-container .picture').attr('src', user.imageUrls.large);
+
+        $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
+        $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
+        $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
+        $('#right .profile .information-container .change input[name=tagline]').val(user.tagline);
+
+        $('#right .profile .picture-container .change input').val(user.gravatarEmail);
     },
     findUser: function(nickOrId, callback) {
         $.getJSON('/api/users/' + nickOrId, function(data) {
