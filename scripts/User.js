@@ -25,8 +25,21 @@ function User(args) {
     };
 
     self.saveProfile = function(params) {
-        $.post('/me/profile', params, function(data) {
-            // done
+        LoadingBar.show();
+
+		$.ajax({
+            type: 'POST',
+            url: '/me/profile',
+			data: params,
+			statusCode: {
+				200: function(data, textStatus) {
+                    LoadingBar.hide();
+				},
+				409: function(data) {
+                    LoadingBar.hide();
+                    alert('Nickname is already taken');
+				}
+			}
         });
     };
 }

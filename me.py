@@ -2,6 +2,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from model import get_current_youtify_user
 from model import get_current_user_json
+from model import YoutifyUser
 
 class ProfileHandler(webapp.RequestHandler):
     def get(self):
@@ -17,6 +18,12 @@ class ProfileHandler(webapp.RequestHandler):
         first_name = self.request.get('first_name', user.first_name)
         last_name = self.request.get('last_name', user.first_name)
         tagline = self.request.get('tagline', user.tagline)
+
+        for u in YoutifyUser.all().filter('nickname = ', nickname):
+            if str(u.key().id()) != str(user.key().id()):
+                self.error(409)
+                self.response.out.write('Nickname is already taken')
+                return
 
         user.nickname = nickname
         user.gravatar_email = gravatar_email
