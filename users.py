@@ -29,10 +29,7 @@ class UserHandler(webapp.RequestHandler):
             self.error(404)
             return
         
-        if user.google_user == users.get_current_user():
-            json = get_current_user_json()
-        else:
-            json = get_youtify_user_json_for(user)
+        json = get_youtify_user_json_for(user)
         
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json)
