@@ -43,16 +43,35 @@ var UserManager = {
         console.log(ret);
         return ret;
     },
+    loadProfile: function(nickOrId) {
+        LoadingBar.show();
+        $.get('/api/users/' + nickOrId, function(data) {
+            $('#right .profile').show();
+            UserManager.populateUserProfile(data);
+            LoadingBar.hide();
+        });
+    },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
-        $('#right .profile .picture-container .picture').attr('src', user.imageUrls.large);
 
-        $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
-        $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
-        $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
-        $('#right .profile .information-container .change input[name=tagline]').val(user.tagline);
+         if (user.id === my_user_id) {
+            $('#right .profile .static').hide();
+            $('#right .profile .change').show();
 
-        $('#right .profile .picture-container .change input').val(user.gravatarEmail);
+            $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
+            $('#right .profile .picture-container .change input').val(user.gravatarEmail);
+            $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
+            $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
+            $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
+            $('#right .profile .information-container .change input[name=tagline]').val(user.tagline);
+         } else {
+            $('#right .profile .change').hide();
+            $('#right .profile .static').show();
+
+            $('#right .profile .static .nickname').text(user.nickname);
+            $('#right .profile .static .fullname').text(user.fullname);
+            $('#right .profile .static .tagline').text(user.tagline);
+         }
     },
     findUser: function(nickOrId, callback) {
         $.getJSON('/api/users/' + nickOrId, function(data) {

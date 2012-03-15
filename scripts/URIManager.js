@@ -26,6 +26,9 @@ var URIManager = {
             $('#search input').val(URIManager.getSearchQueryFromUrl()).keyup();
         } else if (location.href.indexOf('profile') !== -1) {
             Menu.profile.select();
+        } else if (location.href.indexOf('users') !== -1) {
+            Menu.deSelectAll();
+            UserManager.loadProfile((URIManager.getUserFromUrl()));
         } else {
             Menu.find('toplist').select();
         }
@@ -50,6 +53,9 @@ var URIManager = {
             });
         }
         return false;
+    },
+    getUserFromUrl: function() {
+        return decodeURI(location.href.match('/users/(.*)')[1]);
     },
     getSearchQueryFromUrl: function() {
         return decodeURI(location.href.match('q=(.*)')[1]);
