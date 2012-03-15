@@ -73,6 +73,12 @@ def get_youtify_user_for(user=None):
 def get_youtify_user_by_nick(nick=None):
     return YoutifyUser.all().filter('nickname = ',nick).get()
 
+def get_youtify_user_by_id_or_nick(id_or_nick):
+    if id_or_nick.isdigit():
+        return YoutifyUser.get_by_id(int(id_or_nick))
+    else:
+        return get_youtify_user_by_nick(id_or_nick)
+
 def create_youtify_user():
     m = YoutifyUser()
     m.put()
