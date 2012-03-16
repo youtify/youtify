@@ -56,13 +56,15 @@ var UserManager = {
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
 
-        $('#right .profile .picture').replaceWith('<img class="picture" src="'+ user.largeImageUrl + '" />');
-
         if (user.id === my_user_id) {
             $('#right .profile .static').hide();
             $('#right .profile .change').show();
 
-            $('#right .profile .picture').replaceWith('<img class="picture" src="'+ user.largeImageUrl + '" />');
+            if (user.largeImageUrl) {
+                $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
+            } else {
+                $('#right .profile .picture-container .picture').attr('src', '/images/user.png');
+            }
             $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
@@ -71,6 +73,11 @@ var UserManager = {
             $('#right .profile .change').hide();
             $('#right .profile .static').show();
 
+            if (user.largeImageUrl) {
+                $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
+            } else {
+                $('#right .profile .picture-container .picture').attr('src', '/images/user.png');
+            }
             if (user.nickname) {
                 $('#right .profile .static .nickname').text(user.nickname);
             } else {
