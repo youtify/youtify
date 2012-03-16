@@ -12,15 +12,6 @@ var UserManager = {
         UserManager.currentUser = new User(userJSON);
         
         /* Set click events */
-        $('#right .profile .picture-container .picture-overlay .change-picture')
-            .click(function() {
-                $('#right .profile .picture-container .change').show();
-            });
-        $('#right .profile .picture-container .change .save')
-            .click(function() {
-                $('#right .profile .picture-container .change').hide();
-                UserManager.currentUser.saveGravatarAddress($('#right .profile .picture-container .change input').val());
-            });
         $('#right .profile .information-container .change .save')
             .click(function() {
                 UserManager.currentUser.saveProfile(UserManager.getInformationFormValues());
@@ -32,7 +23,7 @@ var UserManager = {
         } else {
             $('#top .profile .nickname').text(UserManager.currentUser.email);
         }
-        $('#top .profile .picture').attr('src', UserManager.currentUser.imageUrls.small);
+        $('#top .profile .picture').attr('src', UserManager.currentUser.smallImageUrl);
         $('#top .profile').show();
     },
     getInformationFormValues: function() {
@@ -59,7 +50,6 @@ var UserManager = {
             $('#right .profile .change').show();
 
             $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
-            $('#right .profile .picture-container .change input').val(user.gravatarEmail);
             $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
@@ -68,9 +58,22 @@ var UserManager = {
             $('#right .profile .change').hide();
             $('#right .profile .static').show();
 
-            $('#right .profile .static .nickname').text(user.nickname);
-            $('#right .profile .static .fullname').text(user.fullname);
-            $('#right .profile .static .tagline').text(user.tagline);
+            $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
+            if (user.nickname) {
+                $('#right .profile .static .nickname').text(user.nickname);
+            } else {
+                $('#right .profile .static .nickname').text('Anonymous');
+            }
+            if (user.fullname) {
+                $('#right .profile .static .fullname').text('Full name: ' + user.fullname);
+            } else {
+                $('#right .profile .static .fullname').text('');
+            }
+            if (user.tagline) {
+                $('#right .profile .static .tagline').text('Tagline: ' + user.tagline);
+            } else {
+                $('#right .profile .static .tagline').text('');
+            }
          }
     },
     findUser: function(nickOrId, callback) {
