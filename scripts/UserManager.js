@@ -65,12 +65,12 @@ var UserManager = {
                 $('#right .profile .static .nickname').text('Anonymous');
             }
             if (user.fullname) {
-                $('#right .profile .static .fullname').text('Full name: ' + user.fullname);
+                $('#right .profile .static .fullname').text(user.fullname);
             } else {
                 $('#right .profile .static .fullname').text('');
             }
             if (user.tagline) {
-                $('#right .profile .static .tagline').text('Tagline: ' + user.tagline);
+                $('#right .profile .static .tagline').text(user.tagline);
             } else {
                 $('#right .profile .static .tagline').text('');
             }
