@@ -45,7 +45,7 @@ var UserManager = {
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
 
-         if (user.id === my_user_id) {
+        if (user.id === my_user_id) {
             $('#right .profile .static').hide();
             $('#right .profile .change').show();
 
@@ -54,7 +54,7 @@ var UserManager = {
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
             $('#right .profile .information-container .change input[name=tagline]').val(user.tagline);
-         } else {
+        } else {
             $('#right .profile .change').hide();
             $('#right .profile .static').show();
 
@@ -74,7 +74,18 @@ var UserManager = {
             } else {
                 $('#right .profile .static .tagline').text('');
             }
-         }
+        }
+
+        $.each(user.playlists, function(i, playlist) {
+           // @todo replace with playlist 'boxes'
+           $('<span></span>')
+               .click(function() {
+                   history.pushState(null, null, '/users/' + user.id + '/playlists/' + playlist.remoteId);
+                   loadPlaylist(playlist.remoteId);
+               })
+               .text(playlist.title + ' (' + playlist.videos.length + ' videos)')
+               .appendTo('#right .profile .playlists');
+        });
     },
     findUser: function(nickOrId, callback) {
         $.getJSON('/api/users/' + nickOrId, function(data) {

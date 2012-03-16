@@ -724,6 +724,10 @@ input, textarea, button {
 #right .profile .playlists {
     clear: both;
 }
+#right .profile .playlists span {
+    display: block;
+    cursor: pointer;
+}
 
 /** BOTTOM
  ****************************************************************************/

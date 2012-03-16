@@ -84,6 +84,15 @@ def create_youtify_user():
     m.put()
     return m
 
+def get_playlists_for_youtify_user(youtify_user):
+    playlists = []
+
+    for playlist in Playlist.all().filter('owner =', youtify_user):
+        if playlist.json is not None:
+            playlists.append(simplejson.loads(playlist.json))
+
+    return playlists
+
 def get_current_user_json():
     user = get_current_youtify_user()
     if user is None:
@@ -100,6 +109,7 @@ def get_current_user_json():
         'firstName': user.first_name,
         'lastName': user.last_name,
         'tagline': user.tagline,
+        'playlists': get_playlists_for_youtify_user(user),
         'gravatarEmail': gravatar_email,
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
@@ -118,6 +128,7 @@ def get_youtify_user_json_for(youtify_user):
         'firstName': youtify_user.first_name,
         'lastName': youtify_user.last_name,
         'tagline': youtify_user.tagline,
+        'playlists': get_playlists_for_youtify_user(youtify_user),
         'gravatarEmail': None,
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})

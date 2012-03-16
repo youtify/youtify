@@ -10,6 +10,7 @@ function User(args) {
     self.lastName = args.lastName || '';
     self.fullName = self.firstName + ' ' + self.lastName;
     self.tagline = args.tagline || '';
+    self.playlists = args.playlists || [];
 
     self.saveProfile = function(params) {
         LoadingBar.show();
