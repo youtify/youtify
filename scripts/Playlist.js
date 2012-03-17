@@ -113,13 +113,11 @@ function updatePlaylistBar(playlist) {
     $playlistBar.find('.sync').hide().unbind('click');
     
     if (playlist.owner) {
-        if (my_user_id === '' || playlist.owner.id !== parseInt(my_user_id, 10)) {
-            $playlistBar.find('.owner').text(playlist.owner.name).show();
+        $playlistBar.find('.owner').text(playlist.owner.name).show();
 
-            // Add save button if not already saved
-            if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
-               $playlistBar.find('.copy').show().one('click', savePlaylistButtonClicked);
-            }
+        // Add save button if not already saved
+        if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
+           $playlistBar.find('.copy').show().one('click', savePlaylistButtonClicked);
         }
     } else if (logged_in) {
         $playlistBar.find('.sync').show().one('click', syncPlaylistButtonClicked);
