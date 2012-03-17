@@ -15,7 +15,6 @@ class YoutifyUser(db.Model):
     first_name = db.StringProperty()
     last_name = db.StringProperty()
     tagline = db.StringProperty()
-    gravatar_email = db.StringProperty()
 
 class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
@@ -98,7 +97,7 @@ def get_current_user_json():
     if user is None:
         return simplejson.dumps(None)
     
-    gravatar_email = user.gravatar_email or user.google_user.email()
+    gravatar_email = user.google_user.email()
     default_image = 'http://www.youtify.com/images/user.png'
     small_size = 64
     large_size = 208
@@ -110,14 +109,13 @@ def get_current_user_json():
         'lastName': user.last_name,
         'tagline': user.tagline,
         'playlists': get_playlists_for_youtify_user(user),
-        'gravatarEmail': gravatar_email,
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
     }
     return simplejson.dumps(json)
 
 def get_youtify_user_json_for(youtify_user):
-    gravatar_email = youtify_user.gravatar_email or youtify_user.google_user.email()
+    gravatar_email = youtify_user.google_user.email()
     default_image = 'http://www.youtify.com/images/user.png'
     small_size = 64
     large_size = 208
@@ -129,7 +127,6 @@ def get_youtify_user_json_for(youtify_user):
         'lastName': youtify_user.last_name,
         'tagline': youtify_user.tagline,
         'playlists': get_playlists_for_youtify_user(youtify_user),
-        'gravatarEmail': None,
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
     }

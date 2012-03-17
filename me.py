@@ -14,7 +14,6 @@ class ProfileHandler(webapp.RequestHandler):
         user = get_current_youtify_user()
 
         nickname = self.request.get('nickname', user.nickname)
-        gravatar_email = self.request.get('gravatar_email', user.gravatar_email)
         first_name = self.request.get('first_name', user.first_name)
         last_name = self.request.get('last_name', user.first_name)
         tagline = self.request.get('tagline', user.tagline)
@@ -26,7 +25,6 @@ class ProfileHandler(webapp.RequestHandler):
                 return
 
         user.nickname = nickname
-        user.gravatar_email = gravatar_email
         user.first_name = first_name
         user.last_name = last_name
         user.tagline = tagline

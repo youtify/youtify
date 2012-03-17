@@ -3,7 +3,6 @@ function User(args) {
     self.id = args.id;
     self.nickname = args.nickname;
     self.email = args.email || '';
-    self.gravatarEmail = args.gravatarEmail || '';
     self.largeImageUrl = args.largeImageUrl || null;
     self.smallImageUrl = args.smallImageUrl || null;
     self.firstName = args.firstName || '';
