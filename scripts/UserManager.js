@@ -36,10 +36,21 @@ var UserManager = {
     },
     loadProfile: function(nickOrId) {
         LoadingBar.show();
-        $.get('/api/users/' + nickOrId, function(data) {
-            $('#right .profile').show();
-            UserManager.populateUserProfile(data);
-            LoadingBar.hide();
+        $.ajax({
+            type: 'GET',
+            url: '/api/users/' + nickOrId,
+            complete: function(jqXHR, textStatus) {
+                LoadingBar.hide();
+            },
+            statusCode: {
+                200: function(data) {
+                    $('#right .profile').show();
+                    UserManager.populateUserProfile(data);
+                },
+                404: function(data) {
+                    alert('User "' + nickOrId + '" not found');
+                },
+            }
         });
     },
     populateUserProfile: function(user) {
