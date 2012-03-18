@@ -131,3 +131,8 @@ def get_youtify_user_json_for(youtify_user):
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
     }
     return simplejson.dumps(json)
+
+def get_display_name_for_youtify_user(youtify_user):
+    if youtify_user.nickname:
+        return youtify_user.nickname
+    return youtify_user.google_user.nickname().split('@')[0] # don't leak users email

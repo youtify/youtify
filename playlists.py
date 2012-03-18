@@ -3,6 +3,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user
+from model import get_display_name_for_youtify_user
 from model import Playlist
 
 class SpecificPlaylistHandler(webapp.RequestHandler):
@@ -95,7 +96,7 @@ class PlaylistsHandler(webapp.RequestHandler):
         json['remoteId'] = playlist_model.key().id()
         json['owner'] = {
             'id': youtify_user.key().id(),
-            'name': youtify_user.google_user.nickname().split('@')[0], # don't leak users email
+            'name': get_display_name_for_youtify_user(youtify_user),
         }
         playlist_model.json = simplejson.dumps(json)
         playlist_model.save()
