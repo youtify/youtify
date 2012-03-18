@@ -87,6 +87,7 @@ var UserManager = {
             }
         }
 
+        $('#right .profile .playlists').html('');
         $.each(user.playlists, function(i, playlist) {
            // @todo replace with playlist 'boxes'
            $('<span></span>')
