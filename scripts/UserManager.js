@@ -23,7 +23,7 @@ var UserManager = {
         } else {
             $('#top .profile .nickname').text(UserManager.currentUser.email);
         }
-        $('#top .profile .picture').attr('src', UserManager.currentUser.smallImageUrl);
+        $('#top .profile .picture').replaceWith('<img class="picture" src="'+ UserManager.currentUser.smallImageUrl + '" />');
         $('#top .profile').show();
     },
     getInformationFormValues: function() {
@@ -56,11 +56,13 @@ var UserManager = {
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
 
+        $('#right .profile .picture').replaceWith('<img class="picture" src="'+ user.largeImageUrl + '" />');
+
         if (user.id === my_user_id) {
             $('#right .profile .static').hide();
             $('#right .profile .change').show();
 
-            $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
+            $('#right .profile .picture').replaceWith('<img class="picture" src="'+ user.largeImageUrl + '" />');
             $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
@@ -69,7 +71,6 @@ var UserManager = {
             $('#right .profile .change').hide();
             $('#right .profile .static').show();
 
-            $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
             if (user.nickname) {
                 $('#right .profile .static .nickname').text(user.nickname);
             } else {
