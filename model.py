@@ -1,7 +1,9 @@
+import os
+import urllib
+import hashlib
 from google.appengine.ext import db
 from google.appengine.api import users
 from django.utils import simplejson
-import urllib, hashlib
 
 class YoutifyUser(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
@@ -98,7 +100,7 @@ def get_current_user_json():
         return simplejson.dumps(None)
     
     gravatar_email = user.google_user.email()
-    default_image = 'http://www.youtify.com/images/user.png'
+    default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
     small_size = 64
     large_size = 208
     json = {
@@ -116,7 +118,7 @@ def get_current_user_json():
 
 def get_youtify_user_json_for(youtify_user):
     gravatar_email = youtify_user.google_user.email()
-    default_image = 'http://www.youtify.com/images/user.png'
+    default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
     small_size = 64
     large_size = 208
     json = {
