@@ -113,7 +113,11 @@ function updatePlaylistBar(playlist) {
     $playlistBar.find('.sync').hide().unbind('click');
     
     if (playlist.owner) {
-        $playlistBar.find('.owner').text(playlist.owner.name).show();
+        $playlistBar.find('.owner').click(function() {
+            history.pushState(null, null, '/users/' + playlist.owner.id);
+            Menu.deSelectAll();
+            UserManager.loadProfile(playlist.owner.id);
+        }).text(playlist.owner.name).show();
 
         // Add save button if not already saved
         if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
