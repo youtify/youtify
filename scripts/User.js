@@ -7,7 +7,7 @@ function User(args) {
     self.smallImageUrl = args.smallImageUrl || null;
     self.firstName = args.firstName || '';
     self.lastName = args.lastName || '';
-    self.fullName = self.firstName + ' ' + self.lastName;
+    self.fullName = $.trim(self.firstName + ' ' + self.lastName);
     self.tagline = args.tagline || '';
     self.playlists = args.playlists || [];
 

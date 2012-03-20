@@ -45,7 +45,7 @@ var UserManager = {
             statusCode: {
                 200: function(data) {
                     $('#right .profile').show();
-                    UserManager.populateUserProfile(data);
+                    UserManager.populateUserProfile(new User(data));
                 },
                 404: function(data) {
                     alert('User "' + nickOrId + '" not found');
@@ -90,10 +90,10 @@ var UserManager = {
             } else {
                 $('#right .profile .static .nickname').text('Anonymous');
             }
-            if (user.fullname) {
-                $('#right .profile .static .fullname').text(user.fullname);
+            if (user.fullName) {
+                $('#right .profile .static .full-name').text(user.fullName);
             } else {
-                $('#right .profile .static .fullname').text('');
+                $('#right .profile .static .full-name').text('');
             }
             if (user.tagline) {
                 $('#right .profile .static .tagline').text(user.tagline);
