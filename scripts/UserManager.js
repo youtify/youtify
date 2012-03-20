@@ -71,6 +71,9 @@ var UserManager = {
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
             $('#right .profile .information-container .change input[name=tagline]').val(user.tagline);
+            
+            /* Use playlists from the playlist manager to also get newly created playlists */
+            user.playlists = playlistManager.playlists;
         } else {
             $('#right .profile .change').hide();
             $('#right .profile .static').show();
