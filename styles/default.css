@@ -764,6 +764,7 @@ input, textarea, button {
     background: rgba(0, 124, 137, 0.2);
     cursor: pointer;
     line-height: 36px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
 }
 #right .profile .playlists .playlist-box .more:active {
     background: rgba(0, 124, 137, 0.4);
