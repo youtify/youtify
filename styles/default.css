@@ -735,11 +735,11 @@ input, textarea, button {
     display: block;
     margin: 10px;
     float: left;
-    min-height: 310px;
+    min-height: 270px;
 }
 #right .profile .playlists .playlist-box .tracklist-container {
     overflow: hidden;
-    height: 240px;
+    height: 200px;
     -moz-transition: all 1s ease-in-out;
     -webkit-transition: all 1s ease-in-out;
     -o-transition: all 1s ease-in-out;
@@ -761,11 +761,13 @@ input, textarea, button {
     padding: 2px;
     text-align: center;
     font-size: 18px;
-    background: rgba(0, 124, 137, 0.1);
+    background: rgba(0, 124, 137, 0.2);
     cursor: pointer;
     line-height: 36px;
 }
-
+#right .profile .playlists .playlist-box .more:active {
+    background: rgba(0, 124, 137, 0.4);
+}
 
 /** BOTTOM
  ****************************************************************************/

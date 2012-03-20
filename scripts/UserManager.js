@@ -104,14 +104,14 @@ var UserManager = {
             var i = 0,
                 $box = $('<div class="playlist-box"/>'),
                 $title = $('<span class="title"/>').text(playlist.title),
-                $tracklistContainer = $('<div class="tracklist-container"/>'),
+                $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
                 $tracklist = $('<table class="tracklist"/>'),
                 $more = $('<span class="more"/>').click(function() {
-                    if ($tracklistContainer.hasClass('large')) {
-                        $tracklistContainer.removeClass('large');
+                    if ($tracklistContainer.hasClass('minimized')) {
+                        $tracklistContainer.removeClass('minimized');
                         $tracklistContainer.css('height', $tracklist.height());
                     } else {
-                        $tracklistContainer.addClass('large');
+                        $tracklistContainer.addClass('minimized');
                         $tracklistContainer.removeAttr('style');
                     }
                 }).html('&#8661;');
