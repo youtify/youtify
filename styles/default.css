@@ -95,7 +95,7 @@ input, textarea, button {
     top: 10px;
     left: 10px;
     width: 200px;
-    height: 65px;
+    height: 66px;
     overflow: hidden;
     cursor: pointer;
     display: none;
@@ -639,7 +639,7 @@ input, textarea, button {
 #right .profile .picture-container {
     width: 220px;
     display: block;
-    margin: 0 20px;
+    margin: 0 20px 0 10px;
     float: left;
     position: relative;
 }
@@ -727,6 +727,15 @@ input, textarea, button {
     width: 80px;
     max-width: 80px;
 }
+#right .profile .playlists-heading {
+    clear: both;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+    padding-top: 20px;
+    border-bottom: 1px dashed #8B9594;
+}
+
 #right .profile .playlists {
     clear: both;
 }
@@ -737,7 +746,32 @@ input, textarea, button {
     float: left;
     min-height: 270px;
 }
+#right .profile .playlists .playlist-box > .title {
+    overflow: hidden;
+    display: inline;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px;
+    height: 26px;
+    line-height: 26px;
+    max-width: 226px;
+    float: left;
+}
+#right .profile .playlists .playlist-box .privacy {
+    display: inline;
+    max-width: 70px;
+    float: right;
+}
+#right .profile .playlists .playlist-box .privacy input {
+    margin-right: 5px;
+    vertical-align: text-top;
+    line-height: 26px;
+}
+#right .profile .playlists .playlist-box .privacy label {
+    line-height: 26px;
+}
 #right .profile .playlists .playlist-box .tracklist-container {
+    clear: both;
     overflow: hidden;
     height: 200px;
     -moz-transition: all 1s ease-in-out;
@@ -745,15 +779,6 @@ input, textarea, button {
     -o-transition: all 1s ease-in-out;
     -ms-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out;
-}
-#right .profile .playlists .playlist-box > .title {
-    overflow: hidden;
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 2px;
-    height: 26px;
-    line-height: 26px;
 }
 #right .profile .playlists .playlist-box .more {
     display: block;

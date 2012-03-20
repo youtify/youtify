@@ -64,7 +64,7 @@ function PlaylistsManager() {
                 videos = item.videos,
                 remoteId = item.remoteId,
                 owner = item.owner,
-                isPrivate = false;
+                isPrivate = item.isPrivate || false;
 
             if (!remoteIds.hasOwnProperty(remoteId)) {
                 self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate));

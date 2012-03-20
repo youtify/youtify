@@ -98,7 +98,7 @@ var UserManager = {
         $playlists.html('');
         
         $.each(user.playlists, function(i, playlist) {
-            if (playlist.isPrivate === true || playlist.videos.length === 0) {
+            if ((user.id !== my_user_id) && (playlist.isPrivate === true || playlist.videos.length === 0)) {
                 return;
             }
             var i = 0,
@@ -131,6 +131,22 @@ var UserManager = {
                 }
             }
             $box.append($title);
+            if (user.id === my_user_id && playlist.remoteId !== null) {
+                var $privacyContainer = $('<div class="privacy"/>'),
+                    $privacy = $('<input type="checkbox"/>'),
+                    $privacyLabel = $('<label class="translatable"/>').text("Public");
+                $privacy.attr('checked', !playlist.isPrivate);
+                $privacy.change(function() {
+                    /* Reversed */
+                    playlist.isPrivate = !$privacy.is(':checked');
+                    playlist.synced = false;
+                    playlist.sync();
+                })
+                $privacyContainer
+                    .append($privacy)
+                    .append($privacyLabel)
+                    .appendTo($box);
+            }
             $tracklistContainer.append($tracklist);
             $box.append($tracklistContainer);
             if (playlist.videos.length > 5) {
