@@ -55,12 +55,16 @@ var UserManager = {
     },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
-        var $playlists = $('#right .profile .playlists');
-        
-        if (user.largeImageUrl) {
-            $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
+        var $playlists = $('#right .profile .playlists'),
+            largeImageUrl = user.largeImageUrl || '/images/user.png',
+            img = $('#right .profile .picture-container .picture');
+
+        if (img.length === 0) {
+            $('<img class="picture" alt="Profile picture" />')
+                .attr('src', largeImageUrl)
+                .prependTo($('#right .profile .picture-container'));
         } else {
-            $('#right .profile .picture-container .picture').attr('src', '/images/user.png');
+            img.attr('src', largeImageUrl);
         }
 
         if (user.id === my_user_id) {
