@@ -49,7 +49,7 @@ var UserManager = {
                 },
                 404: function(data) {
                     alert('User "' + nickOrId + '" not found');
-                },
+                }
             }
         });
     },
@@ -101,7 +101,7 @@ var UserManager = {
 
         $playlists.html('');
         
-        $.each(user.playlists, function(i, playlist) {
+        $.each(user.playlists, function(index, playlist) {
             if ((user.id !== my_user_id) && (playlist.isPrivate === true || playlist.videos.length === 0)) {
                 return;
             }
@@ -120,7 +120,7 @@ var UserManager = {
                     }
                 }).html('&#8661;');
             
-            for (i = 0; i < playlist.videos.length; i++) {
+            for (i = 0; i < playlist.videos.length; i += 1) {
                 if (playlist.videos[i]) {
                     var video = new Video({
                         title: playlist.videos[i].title,
@@ -145,7 +145,7 @@ var UserManager = {
                     playlist.isPrivate = !$privacy.is(':checked');
                     playlist.synced = false;
                     playlist.sync();
-                })
+                });
                 $privacyContainer
                     .append($privacy)
                     .append($privacyLabel)
