@@ -55,6 +55,9 @@ var UserManager = {
     },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
+       
+        LoadingBar.show();
+               
         var $playlists = $('#right .profile .playlists'),
             largeImageUrl = user.largeImageUrl || '/images/user.png',
             img = $('#right .profile .picture-container .picture');
@@ -158,6 +161,7 @@ var UserManager = {
             }
             $box.appendTo($playlists);
         });
+        LoadingBar.hide();
     },
     findUser: function(nickOrId, callback) {
         $.getJSON('/api/users/' + nickOrId, function(data) {
