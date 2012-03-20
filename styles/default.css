@@ -733,8 +733,9 @@ input, textarea, button {
 #right .profile .playlists .playlist-box {
     width: 300px;
     display: block;
-    margin: 15px;
+    margin: 10px;
     float: left;
+    min-height: 310px;
 }
 #right .profile .playlists .playlist-box .tracklist-container {
     overflow: hidden;
@@ -751,6 +752,8 @@ input, textarea, button {
     font-size: 14px;
     font-weight: bold;
     padding: 2px;
+    height: 26px;
+    line-height: 26px;
 }
 #right .profile .playlists .playlist-box .more {
     display: block;
