@@ -15,13 +15,16 @@ MEMCACHE_KEY = 'flattr_toplist'
 
 FILTER = [
     'RCm56g1SxLw', # Berlin - Der goldene Reiter
-    'CSaRY2Fl5Pw', # Abused Romance - Sound of Violence
     '33802859', # Previously on mobileMacs 078
     '35304875', # Previously on mobileMacs 079
     '30018757', # Previously on mobileMacs 077
     '29243672', # Previously on mobileMacs 076
     '33802859', # Previously on mobileMacs 078
     '35304875', # Previously on mobileMacs 079
+    '9Ijq4593DQ4', # Abused Romance - Vaporize - Official music video
+    'Z59gKflk2zA', # Abused Romance - Sound of Violence
+    'cp_am5HUyic', # Emule & BitTorrent Sites & Users Ruled 100% Legal In Spain Thanks To The \" SGAE \" Music Mafia.
+    't46-zfS-pAQ', # Abused Romance - Hit and Run - Official music video
 ]
 
 def fetch_toplist():

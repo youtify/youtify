@@ -15,7 +15,7 @@
             var failedVideoIds = [];
 
             function start() {
-                $.getJSON('/toplist', function(data) {
+                $.getJSON('/toplist?flush&full', function(data) {
                     toplist = data;
                     player.loadVideoById(data[0].videoId);
                 });
