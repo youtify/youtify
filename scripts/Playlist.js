@@ -400,6 +400,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     self.createViews = function() {
         var table = $('<table/>')
                 .addClass('pane')
+                .addClass('tracklist')
                 .appendTo('#right > .playlists')
                 .data('model', self),
             li = $('<li/>')

@@ -55,16 +55,18 @@ var UserManager = {
     },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
+        var $playlists = $('#right .profile .playlists');
+        
+        if (user.largeImageUrl) {
+            $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
+        } else {
+            $('#right .profile .picture-container .picture').attr('src', '/images/user.png');
+        }
 
         if (user.id === my_user_id) {
             $('#right .profile .static').hide();
             $('#right .profile .change').show();
 
-            if (user.largeImageUrl) {
-                $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
-            } else {
-                $('#right .profile .picture-container .picture').attr('src', '/images/user.png');
-            }
             $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
@@ -73,11 +75,6 @@ var UserManager = {
             $('#right .profile .change').hide();
             $('#right .profile .static').show();
 
-            if (user.largeImageUrl) {
-                $('#right .profile .picture-container .picture').attr('src', user.largeImageUrl);
-            } else {
-                $('#right .profile .picture-container .picture').attr('src', '/images/user.png');
-            }
             if (user.nickname) {
                 $('#right .profile .static .nickname').text(user.nickname);
             } else {
@@ -95,16 +92,48 @@ var UserManager = {
             }
         }
 
-        $('#right .profile .playlists').html('');
+        $playlists.html('');
+        
         $.each(user.playlists, function(i, playlist) {
-           // @todo replace with playlist 'boxes'
-           $('<span></span>')
-               .click(function() {
-                   history.pushState(null, null, '/users/' + user.id + '/playlists/' + playlist.remoteId);
-                   loadPlaylist(playlist.remoteId);
-               })
-               .text(playlist.title + ' (' + playlist.videos.length + ' videos)')
-               .appendTo('#right .profile .playlists');
+            if (playlist.isPrivate === true || playlist.videos.length === 0) {
+                return;
+            }
+            var i = 0,
+                $box = $('<div class="playlist-box"/>'),
+                $title = $('<span class="title"/>').text(playlist.title),
+                $tracklistContainer = $('<div class="tracklist-container"/>'),
+                $tracklist = $('<table class="tracklist"/>'),
+                $more = $('<span class="more"/>').click(function() {
+                    if ($tracklistContainer.hasClass('large')) {
+                        $tracklistContainer.removeClass('large');
+                        $tracklistContainer.css('height', $tracklist.height());
+                    } else {
+                        $tracklistContainer.addClass('large');
+                        $tracklistContainer.removeAttr('style');
+                    }
+                }).html('&#8661;');
+            
+            for (i = 0; i < playlist.videos.length; i++) {
+                if (playlist.videos[i]) {
+                    var video = new Video({
+                        title: playlist.videos[i].title,
+                        type: playlist.videos[i].type,
+                        videoId: playlist.videos[i].videoId,
+                        duration: playlist.videos[i].duration
+                    });
+                    video.createListView()
+                        .addClass('droppable')
+                        .addClass('draggable')
+                        .appendTo($tracklist);
+                }
+            }
+            $box.append($title);
+            $tracklistContainer.append($tracklist);
+            $box.append($tracklistContainer);
+            if (playlist.videos.length > 5) {
+                $box.append($more);
+            }
+            $box.appendTo($playlists);
         });
     },
     findUser: function(nickOrId, callback) {
