@@ -21,6 +21,7 @@ function User(args) {
             statusCode : {
                 200 : function(data, textStatus) {
                     LoadingBar.hide();
+                    EventSystem.callEventListeners('user_profile_updated', params);
                 },
                 409 : function(data) {
                     LoadingBar.hide();

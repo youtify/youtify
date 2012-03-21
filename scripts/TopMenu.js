@@ -1,6 +1,11 @@
 var TopMenu = {
     hasLoadedAboutPopupHtml: false,
     init: function() {
+        // PROFILE
+        EventSystem.addEventListener('user_profile_updated', function(params) {
+            $('#top .profile .nickname').text(params.nickname);
+        });
+
         // ABOUT
         $('#top .about').click(function() {
             $(this).arrowPopup('#about-popup');
