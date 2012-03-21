@@ -261,9 +261,10 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
         var selectedVideos = sourceElem.parent().find('.video.selected');
 
         $.each(selectedVideos, function(index, elem) {
-            console.log('moving ', sourceElem.index(), targetElem.index());
-            playlist.moveVideo(sourceElem.index(), targetElem.index());
-            $(elem).detach().insertBefore(targetElem);
+            if (playlist !== undefined) { // hack to not crash when dragging videos on profile pages
+                playlist.moveVideo(sourceElem.index(), targetElem.index());
+                $(elem).detach().insertBefore(targetElem);
+            }
         });
 
         playlistManager.save();
