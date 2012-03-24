@@ -28,7 +28,7 @@ var UserManager = {
     },
     getInformationFormValues: function() {
         var ret = {};
-        $.each($('#right .profile .information-container .change input'), function(i, elem) {
+        $.each($('#right .profile .information-container .change input, #right .profile .information-container .change textarea'), function(i, elem) {
             ret[elem.name] = elem.value;
         });
         console.log(ret);
@@ -77,7 +77,7 @@ var UserManager = {
             $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
-            $('#right .profile .information-container .change input[name=tagline]').val(user.tagline);
+            $('#right .profile .information-container .change textarea[name=tagline]').val(user.tagline);
             
             /* Use playlists from the playlist manager to also get newly created playlists */
             user.playlists = playlistManager.playlists;

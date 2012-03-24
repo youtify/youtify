@@ -708,8 +708,7 @@ input, textarea, button {
     color: #444;
 }
 #right .profile .information-container .static .tagline {
-    font-size: 14px;
-    text-decoration: italic;
+    font-style: italic;
 }
 #right .profile .information-container .change > span {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
