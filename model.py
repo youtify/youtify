@@ -98,8 +98,8 @@ def migrate_playlists_for_youtify_user(youtify_user):
         for playlist in Playlist.all().filter('owner =', youtify_user):
             if playlist.json is not None:
                 old_playlist = simplejson.loads(playlist.json)
-                playlist.private = old_playlist.private or False
-                playlist.tracks_json = simplejson.dumps(old_playlist.videos)
+                playlist.private = old_playlist.get('isPrivate', False)
+                playlist.tracks_json = simplejson.dumps(old_playlist['videos'])
                 playlist.json = None
                 playlist.save()
         youtify_user.migrated_playlists = True
