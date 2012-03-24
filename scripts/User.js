@@ -10,6 +10,8 @@ function User(args) {
     self.fullName = $.trim(self.firstName + ' ' + self.lastName);
     self.tagline = args.tagline || '';
     self.playlists = args.playlists || [];
+    self.followings = args.followings || [];
+    self.followers = args.followers || [];
 
     self.saveProfile = function(params) {
         LoadingBar.show();

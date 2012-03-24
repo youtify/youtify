@@ -52,11 +52,22 @@ class FollowingsHandler(webapp.RequestHandler):
             self.response.out.write('You can not follow yourself')
             return
 
-        me.followings.append(other_user.key())
-        me.save()
+        if other_user.key() in me.followings:
+            self.error(400)
+            self.response.out.write('You already follow that user')
+            return
 
+        # There's currently a bug in the following two lines. After
+        # other_user.save(), the other_user gets the same google_user
+        # as "me". Have no clue why.
         other_user.followers.append(me.key())
-        other_user.save()
+        other_user.put()
+
+        me.followings.append(other_user.key())
+        me.put()
+
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write('ok')
 
 class YouTubeUserNameHandler(webapp.RequestHandler):
     def get(self):

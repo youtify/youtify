@@ -726,7 +726,7 @@ input, textarea, button {
     width: 80px;
     max-width: 80px;
 }
-#right .profile .playlists-heading {
+#right .profile .heading {
     clear: both;
     font-size: 16px;
     font-weight: bold;
@@ -792,6 +792,11 @@ input, textarea, button {
 }
 #right .profile .playlists .playlist-box .more:active {
     background: rgba(0, 124, 137, 0.4);
+}
+#right .profile .followings .user,
+#right .profile .followers .user {
+    padding: 10px;
+    cursor: pointer;
 }
 
 /** BOTTOM

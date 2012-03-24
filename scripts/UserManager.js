@@ -59,6 +59,8 @@ var UserManager = {
         LoadingBar.show();
                
         var $playlists = $('#right .profile .playlists'),
+            $followings = $('#right .profile .followings'),
+            $followers = $('#right .profile .followers'),
             largeImageUrl = user.largeImageUrl || '/images/user.png',
             img = $('#right .profile .picture-container .picture');
 
@@ -167,6 +169,25 @@ var UserManager = {
             }
             $box.appendTo($playlists);
         });
+
+        function createListElem(userId, userName) {
+            return $('<p class="user">' + userName + '</p>').click(function() {
+                history.pushState(null, null, '/users/' + userId);
+                Menu.deSelectAll();
+                UserManager.loadProfile(userId);
+            });
+        }
+
+        $followings.html('');
+        $.each(user.followings, function(i, item) {
+            $followings.append(createListElem(item.id, item.name));
+        });
+
+        $followers.html('');
+        $.each(user.followers, function(i, item) {
+            $followings.append(createListElem(item.id, item.name));
+        });
+
         LoadingBar.hide();
     },
     findUser: function(nickOrId, callback) {
