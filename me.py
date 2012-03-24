@@ -35,7 +35,7 @@ class ProfileHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
-class FollowHandler(webapp.RequestHandler):
+class FollowingsHandler(webapp.RequestHandler):
 
     def post(self):
         uid = self.request.get('uid')
@@ -78,7 +78,7 @@ def main():
     application = webapp.WSGIApplication([
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
-        ('/me/follow', FollowHandler),
+        ('/me/followings', FollowingsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
