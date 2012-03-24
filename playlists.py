@@ -27,7 +27,7 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
             return
         
         playlist_id = self.request.path.split('/')[-1]
-        playlist_model = Playlist.get_by_id(int(playlist_id))
+        playlist = Playlist.get_by_id(int(playlist_id))
         json = self.request.get('json', None)
         device = self.request.get('device')
 
@@ -35,19 +35,23 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
             self.error(400)
             return
 
-        if playlist_model.owner.key() == youtify_user.key():
+        if playlist.owner.key() == youtify_user.key():
             if youtify_user.device != device:
                 self.error(409)
                 self.response.out.write('wrong_device')
                 return
             else:
-                playlist = simplejson.loads(json)
-                playlist_model.private = playlist.private or False
-                playlist_model.tracks_json = simplejson.dumps(playlist.videos)
-                playlist_model.json = None
+                old_playlist = simplejson.loads(json)
+                playlist.private = old_playlist.get('isPrivate', False)
+                playlist.tracks_json = simplejson.dumps(old_playlist['videos'])
+                playlist.owner = youtify_user
+                playlist.title = old_playlist['title']
+                playlist.remote_id = old_playlist['remoteId']
+                playlist.json = None
+                
                 playlist_model.save()
                 
-                self.response.out.write(str(playlist_model.key().id()))
+                self.response.out.write(str(playlist.key().id()))
         else:
             self.error(403)
 

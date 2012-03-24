@@ -29,6 +29,8 @@ class Playlist(db.Model):
     json = db.TextProperty()
     private = db.BooleanProperty()
     tracks_json = db.TextProperty()
+    title = db.StringProperty()
+    remote_id = db.StringProperty()
 
 class Phrase(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
@@ -100,6 +102,9 @@ def migrate_playlists_for_youtify_user(youtify_user):
                 old_playlist = simplejson.loads(playlist.json)
                 playlist.private = old_playlist.get('isPrivate', False)
                 playlist.tracks_json = simplejson.dumps(old_playlist['videos'])
+                playlist.owner = youtify_user
+                playlist.title = old_playlist['title']
+                playlist.remote_id = old_playlist['remoteId']
                 playlist.json = None
                 playlist.save()
         youtify_user.migrated_playlists = True
