@@ -20,7 +20,7 @@ class YoutifyUser(db.Model):
     tagline = db.StringProperty()
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
-    migrated_playlists = db.BooleanProperty()
+    migrated_playlists = db.BooleanProperty(default=False)
     followings = db.ListProperty(db.Key)
     followers = db.ListProperty(db.Key)
 

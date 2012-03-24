@@ -17,6 +17,15 @@ handlers:
 - url: /api/users.*
   script: users.py
 
+- url: /api/migrate_users.*
+  script: migrate_users.py
+  login: admin
+
+- url: /migrate_users.*
+  static_files: html/migrate_users.html
+  upload: html/migrate_users.html
+  expiration: "1d"
+
 - url: /export
   static_files: html/export.html
   upload: html/export.html
