@@ -18,10 +18,15 @@ class YoutifyUser(db.Model):
     first_name = db.StringProperty()
     last_name = db.StringProperty()
     tagline = db.StringProperty()
+    playlists = db.ListProperty(db.Key)
+    playlist_subscriptions = db.ListProperty(db.Key)
+    migrated_playlists = db.BooleanProperty()
 
 class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
     json = db.TextProperty()
+    private = db.BooleanProperty()
+    tracks_json = db.TextProperty()
 
 class Phrase(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
@@ -86,14 +91,22 @@ def create_youtify_user():
     m.put()
     return m
 
+def migrate_playlists_for_youtify_user(youtify_user):
+    if not youtify_user.migrated_playlists:
+        for playlist in Playlist.all().filter('owner =', youtify_user):
+            if playlist.json is not None:
+                old_playlist = simplejson.loads(playlist.json)
+                playlist.private = old_playlist.private or False
+                playlist.tracks_json = simplejson.dumps(old_playlist.videos)
+                playlist.json = None
+                playlist.save()
+        youtify_user.migrated_playlists = True
+        youtify_user.save()
+
 def get_playlists_for_youtify_user(youtify_user):
-    playlists = []
-
-    for playlist in Playlist.all().filter('owner =', youtify_user):
-        if playlist.json is not None:
-            playlists.append(simplejson.loads(playlist.json))
-
-    return playlists
+    migrate_playlists_for_youtify_user(youtify_user)
+    
+    return db.get(youtify_user.playlists)
 
 def get_current_user_json():
     user = get_current_youtify_user()
@@ -139,3 +152,14 @@ def get_display_name_for_youtify_user(youtify_user):
     if youtify_user.nickname:
         return youtify_user.nickname
     return youtify_user.google_user.nickname().split('@')[0] # don't leak users email
+
+def get_playlist_by_id(playlist_id):
+    playlist_model = Playlist.get_by_id(int(playlist_id))
+    playlist = None
+    if playlist_model:
+        playlist = {
+            'owner': get_youtify_user(playlist_model.owner, True, False),
+            'private': playlist_model.private,
+            'tracks': playlist_model.tracks_json
+        }
+    return playlist

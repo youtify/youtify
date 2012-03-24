@@ -11,11 +11,11 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
     def get(self):
         """Get playlist"""
         playlist_id = self.request.path.split('/')[-1]
-        playlist_model = Playlist.get_by_id(int(playlist_id))
+        playlist_model = get_playlist_by_id(playlist_id)
 
         if playlist_model:
             self.response.headers['Content-Type'] = 'application/json'
-            self.response.out.write(playlist_model.json)
+            self.response.out.write(playlist_model)
         else:
             self.error(404)
 
@@ -41,8 +41,12 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
                 self.response.out.write('wrong_device')
                 return
             else:
-                playlist_model.json = json
+                playlist = simplejson.loads(json)
+                playlist_model.private = playlist.private or False
+                playlist_model.tracks_json = simplejson.dumps(playlist.videos)
+                playlist_model.json = None
                 playlist_model.save()
+                
                 self.response.out.write(str(playlist_model.key().id()))
         else:
             self.error(403)
