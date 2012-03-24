@@ -43,6 +43,18 @@
                 self.view = $('#right .favorites .tabs .favorites');
                 self.paneView = $('#right .favorites .pane.favorites');
                 break;
+            case 'profile-playlists':
+                self.view = $('#right .profile .tabs .profile-playlists');
+                self.paneView = $('#right .profile .pane.profile-playlists');
+                break;
+            case 'profile-followings':
+                self.view = $('#right .profile .tabs .profile-followings');
+                self.paneView = $('#right .profile .pane.profile-followings');
+                break;
+            case 'profile-followers':
+                self.view = $('#right .profile .tabs .profile-followers');
+                self.paneView = $('#right .profile .pane.profile-followers');
+                break;
         }
         /* Set click event */
         self.view.click(self.select);

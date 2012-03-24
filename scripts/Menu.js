@@ -178,6 +178,7 @@ function MenuItem(type) {
             case 'profile':
                 self.leftView = $('#top .profile');
                 self.rightView = $('#right .profile');
+                self.addTabs(['profile-playlists', 'profile-followings', 'profile-followers']);
                 break;
 
         }

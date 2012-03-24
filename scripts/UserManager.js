@@ -58,9 +58,12 @@ var UserManager = {
        
         LoadingBar.show();
                
-        var $playlists = $('#right .profile .playlists'),
-            $followings = $('#right .profile .followings'),
-            $followers = $('#right .profile .followers'),
+        var $playlists = $('#right .profile .pane.profile-playlists'),
+            $followings = $('#right .profile .pane.profile-followings'),
+            $followers = $('#right .profile .pane.profile-followers'),
+            $playlistsTab = $('#right .profile .tabs .profile-playlists'),
+            $followingsTab = $('#right .profile .tabs .profile-followings'),
+            $followersTab = $('#right .profile .tabs .profile-followers'),
             $followButton = $('#right .profile .follow.button'),
             $unFollowButton = $('#right .profile .unfollow.button'),
             largeImageUrl = user.largeImageUrl || '/images/user.png',
@@ -139,7 +142,7 @@ var UserManager = {
         }
 
         $playlists.html('');
-        
+        $playlistsTab.text('Playlists (' + user.playlists.length + ')');
         $.each(user.playlists, function(index, playlist) {
             if ((user.id !== my_user_id) && (playlist.isPrivate === true || playlist.videos.length === 0)) {
                 return;
@@ -207,11 +210,13 @@ var UserManager = {
         }
 
         $followings.html('');
+        $followingsTab.text('Following (' + user.followings.length + ')');
         $.each(user.followings, function(i, item) {
             $followings.append(createListElem(item.id, item.name));
         });
 
         $followers.html('');
+        $followersTab.text('Followers (' + user.followers.length + ')');
         $.each(user.followers, function(i, item) {
             $followers.append(createListElem(item.id, item.name));
         });

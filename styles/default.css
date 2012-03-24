@@ -640,8 +640,7 @@ input, textarea, button {
     width: 220px;
     display: block;
     margin: 0 20px 0 10px;
-    float: left;
-    position: relative;
+    display: inline-block;
 }
 #right .profile .picture-container .picture {
     width: 208px;
@@ -652,48 +651,10 @@ input, textarea, button {
     background-color: #FFF;
     display: block;
 }
-#right .profile .picture-container .picture-overlay {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    width: 208px;
-    height: 208px;
-}
-#right .profile .picture-container .picture-overlay .change-picture {
-    background: rgba(0,0,0,0.8);
-    color: #FFF;
-    padding: 5px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    display: none;
-    cursor: pointer;
-}
-#right .profile .picture-container .picture-overlay:hover .change-picture {
-    display: block;
-}
-#right .profile .picture-container .change {
-    width: 210px;
-}
-#right .profile .picture-container .change .title {
-    display: block;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-}
-#right .profile .picture-container .change input {
-    display: block;
-    width: 204px;
-    margin: 5px 0;
-}
-#right .profile .picture-container .change .save {
-    display: block;
-    width: 80px;
-    max-width: 80px;
-    float: right;
-}
 #right .profile .information-container {
     width: 220px;
-    display: block;
-    float: left;
+    display: inline-block;
+    vertical-align: top;
 }
 #right .profile .information-container .static > span {
     display: block;
@@ -726,26 +687,14 @@ input, textarea, button {
     width: 80px;
     max-width: 80px;
 }
-#right .profile .heading {
-    clear: both;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 10px;
-    padding-top: 20px;
-    border-bottom: 1px dashed #8B9594;
-}
-
-#right .profile .playlists {
-    clear: both;
-}
-#right .profile .playlists .playlist-box {
+#right .profile .playlist-box {
     width: 300px;
     display: block;
     margin: 10px;
     float: left;
     min-height: 270px;
 }
-#right .profile .playlists .playlist-box > .title {
+#right .profile .playlist-box > .title {
     overflow: hidden;
     display: inline;
     font-size: 14px;
@@ -756,20 +705,20 @@ input, textarea, button {
     max-width: 226px;
     float: left;
 }
-#right .profile .playlists .playlist-box .privacy {
+#right .profile .playlist-box .privacy {
     display: inline;
     max-width: 70px;
     float: right;
 }
-#right .profile .playlists .playlist-box .privacy input {
+#right .profile .playlist-box .privacy input {
     margin-right: 5px;
     vertical-align: text-top;
     line-height: 26px;
 }
-#right .profile .playlists .playlist-box .privacy label {
+#right .profile .playlist-box .privacy label {
     line-height: 26px;
 }
-#right .profile .playlists .playlist-box .tracklist-container {
+#right .profile .playlist-box .tracklist-container {
     clear: both;
     overflow: hidden;
     height: 200px;
@@ -779,7 +728,7 @@ input, textarea, button {
     -ms-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out;
 }
-#right .profile .playlists .playlist-box .more {
+#right .profile .playlist-box .more {
     display: block;
     height: 36px;
     padding: 2px;
@@ -790,13 +739,16 @@ input, textarea, button {
     line-height: 36px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
 }
-#right .profile .playlists .playlist-box .more:active {
+#right .profile .playlist-box .more:active {
     background: rgba(0, 124, 137, 0.4);
 }
-#right .profile .followings .user,
-#right .profile .followers .user {
+#right .profile .pane.profile-followings .user,
+#right .profile .pane.profile-followers .user {
     padding: 10px;
     cursor: pointer;
+}
+#right .profile .tabs {
+    margin-top: 10px;
 }
 
 /** BOTTOM
