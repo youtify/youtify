@@ -21,7 +21,7 @@ class MainHandler(webapp.RequestHandler):
         current_user = users.get_current_user()
         youtify_user_model = get_current_youtify_user_model()
         youtify_user_struct = None
-        playlist_model = '[]';
+        playlists_struct = []
 
         if youtify_user_model is not None:
             youtify_user_model.device = str(random.random())
