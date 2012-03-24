@@ -101,7 +101,7 @@ def migrate_playlists_for_youtify_user_model(youtify_user_model):
                 old_playlist = simplejson.loads(playlist.json)
                 playlist.private = old_playlist.get('isPrivate', False)
                 playlist.tracks_json = simplejson.dumps(old_playlist['videos'])
-                playlist.owner = youtify_user
+                playlist.owner = youtify_user_model
                 playlist.title = old_playlist['title']
                 playlist.remote_id = old_playlist['remoteId']
                 playlist.json = None

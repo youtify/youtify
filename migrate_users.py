@@ -2,7 +2,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from model import YoutifyUser
 from model import get_youtify_user_struct
-from model import migrate_playlists_for_youtify_user
+from model import migrate_playlists_for_youtify_user_model
 from django.utils import simplejson
 
 class MigrateUser(webapp.RequestHandler):
@@ -32,7 +32,7 @@ class MigrateUser(webapp.RequestHandler):
             self.error(404)
             return
         
-        migrate_playlists_for_youtify_user(user)
+        migrate_playlists_for_youtify_user_model(user)
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
