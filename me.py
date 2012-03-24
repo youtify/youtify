@@ -18,13 +18,14 @@ class ProfileHandler(webapp.RequestHandler):
         last_name = self.request.get('last_name', user.first_name)
         tagline = self.request.get('tagline', user.tagline)
 
-        for u in YoutifyUser.all().filter('nickname = ', nickname):
+        for u in YoutifyUser.all().filter('nickname_lower = ', nickname.lower()):
             if str(u.key().id()) != str(user.key().id()):
                 self.error(409)
                 self.response.out.write('Nickname is already taken')
                 return
 
         user.nickname = nickname
+        user.nickname_lower = nickname.lower()
         user.first_name = first_name
         user.last_name = last_name
         user.tagline = tagline

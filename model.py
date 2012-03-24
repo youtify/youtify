@@ -14,6 +14,7 @@ class YoutifyUser(db.Model):
     flattr_scope = db.StringProperty()
     youtube_username = db.StringProperty()
     nickname = db.StringProperty()
+    nickname_lower = db.StringProperty()
     first_name = db.StringProperty()
     last_name = db.StringProperty()
     tagline = db.StringProperty()
@@ -72,7 +73,7 @@ def get_youtify_user_for(user=None):
     return YoutifyUser.all().filter('google_user = ',user).get()
 
 def get_youtify_user_by_nick(nick=None):
-    return YoutifyUser.all().filter('nickname = ',nick).get()
+    return YoutifyUser.all().filter('nickname_lower = ', nick.lower()).get()
 
 def get_youtify_user_by_id_or_nick(id_or_nick):
     if id_or_nick.isdigit():
