@@ -35,6 +35,29 @@ class ProfileHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
+class FollowHandler(webapp.RequestHandler):
+
+    def post(self):
+        uid = self.request.get('uid')
+        other_user = YoutifyUser.get_by_id(int(uid))
+        me = get_current_youtify_user()
+
+        if other_user is None:
+            self.error(400)
+            self.response.out.write('Other user not found')
+            return
+
+        if me.key().id() == other_user.key().id():
+            self.error(400)
+            self.response.out.write('You can not follow yourself')
+            return
+
+        me.followings.append(other_user.key())
+        me.save()
+
+        other_user.followers.append(me.key())
+        other_user.save()
+
 class YouTubeUserNameHandler(webapp.RequestHandler):
     def get(self):
         user = get_current_youtify_user()
@@ -55,6 +78,7 @@ def main():
     application = webapp.WSGIApplication([
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
+        ('/me/follow', FollowHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

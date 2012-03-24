@@ -70,6 +70,12 @@ var UserManager = {
             img.attr('src', largeImageUrl);
         }
 
+        $('#right .profile .follow.button').unbind('click').click(function() {
+            $.post('/me/follow', {uid: user.id}, function(data) {
+                alert('yay');
+            });
+        });
+
         if (user.id === my_user_id) {
             $('#right .profile .static').hide();
             $('#right .profile .change').show();

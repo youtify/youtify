@@ -21,6 +21,8 @@ class YoutifyUser(db.Model):
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
     migrated_playlists = db.BooleanProperty()
+    followings = db.ListProperty(db.Key)
+    followers = db.ListProperty(db.Key)
 
 class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
@@ -108,6 +110,26 @@ def get_playlists_for_youtify_user(youtify_user):
     
     return db.get(youtify_user.playlists)
 
+def get_followings_for_youtify_user(youtify_user):
+    ret = []
+    for key in youtify_user.followings:
+        user = db.get(key)
+        ret.append({
+            'id': str(user.key().id()),
+            'name': get_display_name_for_youtify_user(youtify_user),
+        })
+    return ret
+
+def get_followers_for_youtify_user(youtify_user):
+    ret = []
+    for key in youtify_user.followers:
+        user = db.get(key)
+        ret.append({
+            'id': str(user.key().id()),
+            'name': get_display_name_for_youtify_user(youtify_user),
+        })
+    return ret
+
 def get_current_user_json():
     user = get_current_youtify_user()
     if user is None:
@@ -124,6 +146,8 @@ def get_current_user_json():
         'firstName': user.first_name,
         'lastName': user.last_name,
         'tagline': user.tagline,
+        'followings': get_followings_for_youtify_user(user),
+        'followers': get_followers_for_youtify_user(user),
         'playlists': get_playlists_for_youtify_user(user),
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
@@ -142,6 +166,8 @@ def get_youtify_user_json_for(youtify_user):
         'firstName': youtify_user.first_name,
         'lastName': youtify_user.last_name,
         'tagline': youtify_user.tagline,
+        'followings': get_followings_for_youtify_user(youtify_user),
+        'followers': get_followers_for_youtify_user(youtify_user),
         'playlists': get_playlists_for_youtify_user(youtify_user),
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
