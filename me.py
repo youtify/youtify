@@ -38,8 +38,16 @@ class ProfileHandler(webapp.RequestHandler):
 
 class FollowingsHandler(webapp.RequestHandler):
 
-    def post(self):
-        uid = self.request.get('uid')
+    def delete(self, uid):
+        me = get_current_youtify_user()
+        m = FollowRelation.all().filter('user1 =', me.key().id()).filter('user2 =', int(uid)).get()
+        if m:
+            m.delete()
+
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write('ok')
+
+    def post(self, uid):
         other_user = YoutifyUser.get_by_id(int(uid))
         me = get_current_youtify_user()
 
@@ -84,7 +92,7 @@ def main():
     application = webapp.WSGIApplication([
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
-        ('/me/followings', FollowingsHandler),
+        ('/me/followings/(.*)', FollowingsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

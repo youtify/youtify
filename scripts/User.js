@@ -32,4 +32,17 @@ function User(args) {
             }
         });
     };
+
+    self.isFollowingUser = function(userId) {
+        var ret = false;
+
+        $.each(self.followings, function(i, item) {
+            if (item.id === userId) {
+                ret = true;
+                return false;
+            }
+        });
+
+        return ret;
+    };
 }

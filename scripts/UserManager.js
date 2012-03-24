@@ -61,6 +61,8 @@ var UserManager = {
         var $playlists = $('#right .profile .playlists'),
             $followings = $('#right .profile .followings'),
             $followers = $('#right .profile .followers'),
+            $followButton = $('#right .profile .follow.button'),
+            $unFollowButton = $('#right .profile .unfollow.button'),
             largeImageUrl = user.largeImageUrl || '/images/user.png',
             img = $('#right .profile .picture-container .picture');
 
@@ -73,10 +75,36 @@ var UserManager = {
         }
 
         $('#right .profile .follow.button').unbind('click').click(function() {
-            $.post('/me/followings', {uid: user.id}, function(data) {
-                alert('yay');
+            $.post('/me/followings/' + user.id, function(data) {
+                $followButton.hide();
+                $unFollowButton.show();
             });
         });
+
+        $('#right .profile .unfollow.button').unbind('click').click(function() {
+            $.ajax({
+                type: 'DELETE',
+                url: '/me/followings/' + user.id,
+                statusCode: {
+                    200: function(data) {
+                        $followButton.show();
+                        $unFollowButton.hide();
+                    }
+                }
+            });
+        });
+
+        if (UserManager.currentUser.id === user.id) {
+            $followButton.hide();
+            $unFollowButton.hide();
+        }
+        else if (UserManager.currentUser.isFollowingUser(user.id)) {
+            $followButton.hide();
+            $unFollowButton.show();
+        } else {
+            $followButton.show();
+            $unFollowButton.hide();
+        }
 
         if (user.id === my_user_id) {
             $('#right .profile .static').hide();
