@@ -161,7 +161,7 @@ def get_current_user_json():
     user = get_current_youtify_user()
     if user is None:
         return simplejson.dumps(None)
-    return simplejson.dumps(get_youtify_user_struct(youtify_user, True, True))
+    return simplejson.dumps(get_youtify_user_struct(user, True, True))
 
 def get_youtify_user_json_for(youtify_user):
     return simplejson.dumps(get_youtify_user_struct(youtify_user, False, True))
