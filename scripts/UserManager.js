@@ -71,7 +71,7 @@ var UserManager = {
         }
 
         $('#right .profile .follow.button').unbind('click').click(function() {
-            $.post('/me/follow', {uid: user.id}, function(data) {
+            $.post('/me/followings', {uid: user.id}, function(data) {
                 alert('yay');
             });
         });
