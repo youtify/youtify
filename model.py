@@ -92,7 +92,7 @@ def get_youtify_user_model_by_id_or_nick(id_or_nick):
     if id_or_nick.isdigit():
         return YoutifyUser.get_by_id(int(id_or_nick))
     else:
-        return get_youtify_user_by_nick(id_or_nick)
+        return get_youtify_user_model_by_nick(id_or_nick)
 
 def create_youtify_user_model():
     m = YoutifyUser()

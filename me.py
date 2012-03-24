@@ -1,19 +1,19 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-from model import get_current_youtify_user
-from model import get_current_user_json
+from django.utils import simplejson
+from model import get_current_youtify_user_model
+from model import get_youtify_user_struct
 from model import YoutifyUser
 from model import FollowRelation
 
 class ProfileHandler(webapp.RequestHandler):
     def get(self):
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(get_current_user_json())
+        self.response.out.write(simplejson.dumps(get_youtify_user_struct(get_current_youtify_user_model())))
 
     def post(self):
-        user = get_current_youtify_user()
-
+        user = get_current_youtify_user_model()
         nickname = self.request.get('nickname', user.nickname)
         first_name = self.request.get('first_name', user.first_name)
         last_name = self.request.get('last_name', user.first_name)

@@ -1,14 +1,13 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-from model import get_youtify_user_by_id_or_nick
-from model import get_youtify_user_json_for
+from model import get_youtify_user_model_by_id_or_nick
 
 class UserHandler(webapp.RequestHandler):
 
     def get(self, id_or_nick):
         """Get user as JSON"""
         json = None
-        user = get_youtify_user_by_id_or_nick(id_or_nick)
+        user = get_youtify_user_model_by_id_or_nick(id_or_nick)
         
         if user is None:
             self.error(404)
