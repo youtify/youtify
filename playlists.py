@@ -8,6 +8,49 @@ from model import get_playlist_struct_from_playlist_model
 from model import get_playlist_structs_by_id
 from model import Playlist
 
+class FollowPlaylist(webapp.RequestHandler):
+    
+    def post(self):
+        """Follows a playlist"""
+        youtify_user_model = get_current_youtify_user_model()
+        if youtify_user_model == None:
+            self.error(403)
+            return
+        
+        playlist_id = self.request.path.split('/')[-1]
+        playlist_model = Playlist.get_by_id(int(playlist_id))
+        if playlist_model is None:
+            self.error(404)
+            return
+        
+        youtify_user_model.playlist_subscriptions.append(playlist_model.key())
+        youtify_user_model.save()
+        
+        playlist_model.followers.append(youtify_user_model.key())
+        playlist_model.save()
+        
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write('ok')
+    
+    def delete(self):
+        """Unfollows a playlist"""
+        youtify_user_mode = get_current_youtify_user_model()
+        if youtify_user_model == None:
+            self.error(403)
+            return
+        
+        playlist_id = self.request.path.split('/')[-1]
+        playlist_model = Playlist.get_by_id(int(playlist_id))
+        
+        youtify_user_model.playlist_subscriptions.remove(m.key())
+        youtify_user_model.save()
+        
+        playlist_model.followers.remove(youtify_user_model.key())
+        playlist_model.save()
+        
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write('ok')
+
 class SpecificPlaylistHandler(webapp.RequestHandler):
     
     def get(self):
@@ -67,10 +110,8 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         playlist_model = Playlist.get_by_id(int(playlist_id))
 
         if playlist_model.owner.key() == youtify_user_model.key():
-            for m in youtify_user.playlists:
-                if m.key().id() == playlist_model.key().id():
-                    youtify_user_model.playlists.remove(m.key())
-                    break
+            youtify_user_model.playlists.remove(playlist_model.key())
+            youtify_user_model.save()
             
             playlist_model.delete()
         else:
@@ -108,6 +149,7 @@ class PlaylistsHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
+        ('/api/playlists/follow/.*', FollowPlaylist),
         ('/api/playlists/.*', SpecificPlaylistHandler),
         ('/api/playlists', PlaylistsHandler),
     ], debug=True)

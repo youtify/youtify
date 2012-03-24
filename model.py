@@ -31,6 +31,7 @@ class Playlist(db.Model):
     private = db.BooleanProperty()
     tracks_json = db.TextProperty()
     title = db.StringProperty()
+    followers = db.ListProperty(db.Key)
 
 class Phrase(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
@@ -186,8 +187,14 @@ def get_playlist_struct_from_playlist_model(playlist_model):
         'videos': '',
         'remoteId': playlist_model.key().id(),
         'isPrivate': playlist_model.private,
-        'owner': get_youtify_user_struct(playlist_model.owner, False, False)
+        'owner': get_youtify_user_struct(playlist_model.owner, False, False),
+        'followers': []
     }
+    
+    for key in playlist_model.followers:
+        youtify_user_model = db.get(key)
+        playlist_struct.append(get_youtify_user_struct(youtify_user_model, False, False))
+    
     if playlist_model.tracks_json is not None:
         playlist_struct['videos'] = simplejson.loads(playlist_model.tracks_json)
     
