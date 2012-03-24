@@ -123,7 +123,7 @@ def get_followings_for_youtify_user_model(youtify_user_model):
         user = db.get(key)
         ret.append({
             'id': str(user.key().id()),
-            'name': get_display_name_for_youtify_user_model(youtify_user_model),
+            'name': get_display_name_for_youtify_user_model(user),
         })
     return ret
 
@@ -133,7 +133,7 @@ def get_followers_for_youtify_user_model(youtify_user_model):
         user = db.get(key)
         ret.append({
             'id': str(user.key().id()),
-            'name': get_display_name_for_youtify_user_model(youtify_user_model),
+            'name': get_display_name_for_youtify_user_model(user),
         })
     return ret
 
