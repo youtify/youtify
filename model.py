@@ -130,36 +130,13 @@ def get_followers_for_youtify_user(youtify_user):
         })
     return ret
 
-def get_current_user_json():
-    user = get_current_youtify_user()
-    if user is None:
-        return simplejson.dumps(None)
-    
-    gravatar_email = user.google_user.email()
+def get_youtify_user_struct(youtify_user, include_private_data=False, include_playlists=False):
+    email = youtify_user.google_user.email()
+    gravatar_email = email
     default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
     small_size = 64
     large_size = 208
-    json = {
-        'id': str(user.key().id()),
-        'email': user.google_user.email(),
-        'nickname': user.nickname,
-        'firstName': user.first_name,
-        'lastName': user.last_name,
-        'tagline': user.tagline,
-        'followings': get_followings_for_youtify_user(user),
-        'followers': get_followers_for_youtify_user(user),
-        'playlists': get_playlists_for_youtify_user(user),
-        'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
-        'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
-    }
-    return simplejson.dumps(json)
-
-def get_youtify_user_json_for(youtify_user):
-    gravatar_email = youtify_user.google_user.email()
-    default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
-    small_size = 64
-    large_size = 208
-    json = {
+    user = {
         'id': str(youtify_user.key().id()),
         'email': None,
         'nickname': youtify_user.nickname,
@@ -168,11 +145,26 @@ def get_youtify_user_json_for(youtify_user):
         'tagline': youtify_user.tagline,
         'followings': get_followings_for_youtify_user(youtify_user),
         'followers': get_followers_for_youtify_user(youtify_user),
-        'playlists': get_playlists_for_youtify_user(youtify_user),
+        'playlists': [],
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
     }
-    return simplejson.dumps(json)
+    if include_private_data:
+        user['email'] = email
+    
+    if include_playlists:
+        user['playlists'] = get_playlists_for_youtify_user(youtify_user)
+    
+    return user
+
+def get_current_user_json():
+    user = get_current_youtify_user()
+    if user is None:
+        return simplejson.dumps(None)
+    return simplejson.dumps(get_youtify_user_struct(youtify_user, True, True))
+
+def get_youtify_user_json_for(youtify_user):
+    return simplejson.dumps(get_youtify_user_struct(youtify_user, False, True))
 
 def get_display_name_for_youtify_user(youtify_user):
     if youtify_user.nickname:
@@ -184,7 +176,7 @@ def get_playlist_by_id(playlist_id):
     playlist = None
     if playlist_model:
         playlist = {
-            'owner': get_youtify_user(playlist_model.owner, True, False),
+            'owner': get_youtify_user(playlist_model.owner, False, False),
             'private': playlist_model.private,
             'tracks': playlist_model.tracks_json
         }
