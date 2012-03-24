@@ -21,9 +21,12 @@ class YoutifyUser(db.Model):
     tagline = db.StringProperty()
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
-    migrated_playlists = db.BooleanProperty(default=False)
-    followings = db.ListProperty(db.Key)
-    followers = db.ListProperty(db.Key)
+    migrated_playlists = db.BooleanProperty(default=True)
+
+class FollowRelation(db.Model):
+    """ user1 follows user2 """
+    user1 = db.IntegerProperty()
+    user2 = db.IntegerProperty()
 
 class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
@@ -119,8 +122,8 @@ def get_playlists_model_for_youtify_user_model(youtify_user_model):
 
 def get_followings_for_youtify_user_model(youtify_user_model):
     ret = []
-    for key in youtify_user_model.followings:
-        user = db.get(key)
+    for follow_relation_model in FollowRelation.all().filter('user1 =', youtify_user_model.key().id()):
+        user = YoutifyUser.get_by_id(follow_relation_model.user2)
         ret.append({
             'id': str(user.key().id()),
             'name': get_display_name_for_youtify_user_model(user),
@@ -129,8 +132,8 @@ def get_followings_for_youtify_user_model(youtify_user_model):
 
 def get_followers_for_youtify_user_model(youtify_user_model):
     ret = []
-    for key in youtify_user_model.followers:
-        user = db.get(key)
+    for follow_relation_model in FollowRelation.all().filter('user2 =', youtify_user_model.key().id()):
+        user = YoutifyUser.get_by_id(follow_relation_model.user1)
         ret.append({
             'id': str(user.key().id()),
             'name': get_display_name_for_youtify_user_model(user),

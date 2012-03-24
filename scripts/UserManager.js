@@ -185,7 +185,7 @@ var UserManager = {
 
         $followers.html('');
         $.each(user.followers, function(i, item) {
-            $followings.append(createListElem(item.id, item.name));
+            $followers.append(createListElem(item.id, item.name));
         });
 
         LoadingBar.hide();

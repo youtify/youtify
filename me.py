@@ -3,6 +3,7 @@ from google.appengine.ext.webapp import util
 from model import get_current_youtify_user
 from model import get_current_user_json
 from model import YoutifyUser
+from model import FollowRelation
 
 class ProfileHandler(webapp.RequestHandler):
     def get(self):
@@ -52,19 +53,13 @@ class FollowingsHandler(webapp.RequestHandler):
             self.response.out.write('You can not follow yourself')
             return
 
-        if other_user.key() in me.followings:
+        if FollowRelation.all().filter('user1 =', me).filter('user2 =', other_user).get():
             self.error(400)
             self.response.out.write('You already follow that user')
             return
 
-        # There's currently a bug in the following two lines. After
-        # other_user.save(), the other_user gets the same google_user
-        # as "me". Have no clue why.
-        other_user.followers.append(me.key())
-        other_user.put()
-
-        me.followings.append(other_user.key())
-        me.put()
+        m = FollowRelation(user1=me.key().id(), user2=other_user.key().id())
+        m.put()
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
