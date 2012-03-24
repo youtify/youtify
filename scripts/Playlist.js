@@ -117,7 +117,7 @@ function updatePlaylistBar(playlist) {
             history.pushState(null, null, '/users/' + playlist.owner.id);
             Menu.deSelectAll();
             UserManager.loadProfile(playlist.owner.id);
-        }).text(playlist.owner.name).show();
+        }).text(playlist.owner.nickname).show();
 
         // Add save button if not already saved
         if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {

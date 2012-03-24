@@ -5,11 +5,11 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
+from django.utils import simplejson
 from toplist import get_or_create_toplist_json
-from model import get_current_youtify_user
-from model import create_youtify_user
-from model import get_current_user_json
-from playlists import get_playlists_json_for_user
+from model import get_current_youtify_user_model
+from model import create_youtify_user_model
+from model import get_youtify_user_struct
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
 from languages import get_languages
@@ -19,17 +19,18 @@ class MainHandler(webapp.RequestHandler):
 
     def get(self):
         current_user = users.get_current_user()
-        youtify_user = get_current_youtify_user()
+        youtify_user_model = get_current_youtify_user_model()
+        youtify_user_struct = None
+        playlist_model = '[]';
 
-        playlists = '[]';
+        if youtify_user_model is not None:
+            youtify_user_model.device = str(random.random())
+            youtify_user_model.save()
+            youtify_user_struct = get_youtify_user_struct(youtify_user_model, True, True)
+            playlists_struct = youtify_user_struct['playlists']
 
-        if youtify_user is not None:
-            playlists = get_playlists_json_for_user(youtify_user)
-            youtify_user.device = str(random.random())
-            youtify_user.save()
-
-        if (current_user is not None) and (youtify_user is None):
-            youtify_user = create_youtify_user()
+        if (current_user is not None) and (youtify_user_model is None):
+            youtify_user_model = create_youtify_user_model()
 
         ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
         
@@ -47,15 +48,15 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {
             'user': current_user,
             'is_admin': int(users.is_current_user_admin()),
-            'youtify_user': youtify_user,
-            'user_args': get_current_user_json(),
-            'playlistsFromServer': playlists,
+            'youtify_user': youtify_user_model,
+            'user_args': simplejson.dumps(youtify_user_struct),
+            'playlistsFromServer': simplejson.dumps(playlists_struct),
             'autoDetectedLanguageByServer': lang,
             'autoDetectedTranslations': get_deployed_translations_json(lang),
             'accept_language_header': self.request.headers.get('Accept-Language', ''), # todo remove
             'logged_in': int(current_user is not None),
-            'has_flattr_access_token': int(youtify_user is not None and youtify_user.flattr_access_token is not None),
-            'flattr_user_name': youtify_user is not None and youtify_user.flattr_user_name,
+            'has_flattr_access_token': int(youtify_user_model is not None and youtify_user_model.flattr_access_token is not None),
+            'flattr_user_name': youtify_user_model is not None and youtify_user_model.flattr_user_name,
             'login_url': users.create_login_url('/'),
             'logout_url': users.create_logout_url('/'),
             'toplist': get_or_create_toplist_json(),

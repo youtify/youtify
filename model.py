@@ -30,7 +30,6 @@ class Playlist(db.Model):
     private = db.BooleanProperty()
     tracks_json = db.TextProperty()
     title = db.StringProperty()
-    remote_id = db.StringProperty()
 
 class Phrase(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
@@ -75,29 +74,29 @@ class FlattrClick(db.Model):
 # HELPERS
 ##############################################################################
 
-def get_current_youtify_user():
-    return get_youtify_user_for(users.get_current_user())
+def get_current_youtify_user_model():
+    return get_youtify_user_model_for(users.get_current_user())
 
-def get_youtify_user_for(user=None):
+def get_youtify_user_model_for(user=None):
     return YoutifyUser.all().filter('google_user = ',user).get()
 
-def get_youtify_user_by_nick(nick=None):
+def get_youtify_user_model_by_nick(nick=None):
     return YoutifyUser.all().filter('nickname_lower = ', nick.lower()).get()
 
-def get_youtify_user_by_id_or_nick(id_or_nick):
+def get_youtify_user_model_by_id_or_nick(id_or_nick):
     if id_or_nick.isdigit():
         return YoutifyUser.get_by_id(int(id_or_nick))
     else:
         return get_youtify_user_by_nick(id_or_nick)
 
-def create_youtify_user():
+def create_youtify_user_model():
     m = YoutifyUser()
     m.put()
     return m
 
-def migrate_playlists_for_youtify_user(youtify_user):
-    if not youtify_user.migrated_playlists:
-        for playlist in Playlist.all().filter('owner =', youtify_user):
+def migrate_playlists_for_youtify_user_model(youtify_user_model):
+    if not youtify_user_model.migrated_playlists:
+        for playlist in Playlist.all().filter('owner =', youtify_user_model):
             if playlist.json is not None:
                 old_playlist = simplejson.loads(playlist.json)
                 playlist.private = old_playlist.get('isPrivate', False)
@@ -107,49 +106,49 @@ def migrate_playlists_for_youtify_user(youtify_user):
                 playlist.remote_id = old_playlist['remoteId']
                 playlist.json = None
                 playlist.save()
-        youtify_user.migrated_playlists = True
-        youtify_user.save()
+                youtify_user_model.playlists.append(playlist.key())
 
-def get_playlists_for_youtify_user(youtify_user):
-    migrate_playlists_for_youtify_user(youtify_user)
-    
-    return db.get(youtify_user.playlists)
+        youtify_user_model.migrated_playlists = True
+        youtify_user_model.save()
 
-def get_followings_for_youtify_user(youtify_user):
+def get_playlists_model_for_youtify_user_model(youtify_user_model):
+    return db.get(youtify_user_model.playlists)
+
+def get_followings_for_youtify_user_model(youtify_user_model):
     ret = []
-    for key in youtify_user.followings:
+    for key in youtify_user_model.followings:
         user = db.get(key)
         ret.append({
             'id': str(user.key().id()),
-            'name': get_display_name_for_youtify_user(youtify_user),
+            'name': get_display_name_for_youtify_user_model(youtify_user_model),
         })
     return ret
 
-def get_followers_for_youtify_user(youtify_user):
+def get_followers_for_youtify_user_model(youtify_user_model):
     ret = []
-    for key in youtify_user.followers:
+    for key in youtify_user_model.followers:
         user = db.get(key)
         ret.append({
             'id': str(user.key().id()),
-            'name': get_display_name_for_youtify_user(youtify_user),
+            'name': get_display_name_for_youtify_user_model(youtify_user_model),
         })
     return ret
 
-def get_youtify_user_struct(youtify_user, include_private_data=False, include_playlists=False):
-    email = youtify_user.google_user.email()
+def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False):
+    email = youtify_user_model.google_user.email()
     gravatar_email = email
     default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
     small_size = 64
     large_size = 208
     user = {
-        'id': str(youtify_user.key().id()),
+        'id': str(youtify_user_model.key().id()),
         'email': None,
-        'nickname': youtify_user.nickname,
-        'firstName': youtify_user.first_name,
-        'lastName': youtify_user.last_name,
-        'tagline': youtify_user.tagline,
-        'followings': get_followings_for_youtify_user(youtify_user),
-        'followers': get_followers_for_youtify_user(youtify_user),
+        'nickname': get_display_name_for_youtify_user_model(youtify_user_model),
+        'firstName': youtify_user_model.first_name,
+        'lastName': youtify_user_model.last_name,
+        'tagline': youtify_user_model.tagline,
+        'followings': get_followings_for_youtify_user_model(youtify_user_model),
+        'followers': get_followers_for_youtify_user_model(youtify_user_model),
         'playlists': [],
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
@@ -158,31 +157,36 @@ def get_youtify_user_struct(youtify_user, include_private_data=False, include_pl
         user['email'] = email
     
     if include_playlists:
-        user['playlists'] = get_playlists_for_youtify_user(youtify_user)
+        user['playlists'] = get_playlist_structs_for_youtify_user_model(youtify_user_model)
     
     return user
 
-def get_current_user_json():
-    user = get_current_youtify_user()
-    if user is None:
-        return simplejson.dumps(None)
-    return simplejson.dumps(get_youtify_user_struct(user, True, True))
+def get_display_name_for_youtify_user_model(youtify_user_model):
+    if youtify_user_model.nickname:
+        return youtify_user_model.nickname
+    return youtify_user_model.google_user.nickname().split('@')[0] # don't leak users email
 
-def get_youtify_user_json_for(youtify_user):
-    return simplejson.dumps(get_youtify_user_struct(youtify_user, False, True))
+def get_playlist_structs_for_youtify_user_model(youtify_user_model):
+    playlist_models = youtify_user_model.playlists
+    playlist_structs = []
+    for key in playlist_models:
+        playlist_model = db.get(key)
+        playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
+    return playlist_structs
 
-def get_display_name_for_youtify_user(youtify_user):
-    if youtify_user.nickname:
-        return youtify_user.nickname
-    return youtify_user.google_user.nickname().split('@')[0] # don't leak users email
-
-def get_playlist_by_id(playlist_id):
+def get_playlist_structs_by_id(playlist_id):
     playlist_model = Playlist.get_by_id(int(playlist_id))
-    playlist = None
-    if playlist_model:
-        playlist = {
-            'owner': get_youtify_user(playlist_model.owner, False, False),
-            'private': playlist_model.private,
-            'tracks': playlist_model.tracks_json
-        }
-    return playlist
+    return get_playlist_struct_from_playlist_model(playlist_model)
+
+def get_playlist_struct_from_playlist_model(playlist_model):
+    playlist_struct = {
+        'title': playlist_model.title,
+        'videos': '',
+        'remoteId': playlist_model.key().id(),
+        'isPrivate': playlist_model.private,
+        'owner': get_youtify_user_struct(playlist_model.owner, False, False)
+    }
+    if playlist_model.tracks_json is not None:
+        playlist_struct['videos'] = simplejson.loads(playlist_model.tracks_json)
+    
+    return playlist_struct

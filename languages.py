@@ -6,7 +6,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
 from django.utils import simplejson
-from model import get_current_youtify_user
 from model import YoutifyUser
 from model import Language
 from model import Translation
