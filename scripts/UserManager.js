@@ -129,6 +129,7 @@ var UserManager = {
             $('#right .profile .static').hide();
             $('#right .profile .change').show();
 
+            $('#right .profile .picture-container .email').text(UserManager.currentUser.email);
             $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
             $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
             $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
