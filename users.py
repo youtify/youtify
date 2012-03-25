@@ -8,17 +8,17 @@ class UserHandler(webapp.RequestHandler):
 
     def get(self, id_or_nick):
         """Get user as JSON"""
-        json = None
-        user = get_youtify_user_model_by_id_or_nick(id_or_nick)
+        youtify_user_model = get_youtify_user_model_by_id_or_nick(id_or_nick)
+        youtify_user_struct = None
         
-        if user is None:
+        if youtify_user_model is None:
             self.error(404)
             return
         
-        json = get_youtify_user_struct(user)
+        youtify_user_struct = get_youtify_user_struct(youtify_user_model, False, True)
         
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(json))
+        self.response.out.write(simplejson.dumps(youtify_user_struct))
 
     def post(self):
         """Update user"""
