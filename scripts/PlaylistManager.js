@@ -64,10 +64,11 @@ function PlaylistsManager() {
                 videos = item.videos,
                 remoteId = item.remoteId,
                 owner = item.owner,
-                isPrivate = item.isPrivate || false;
+                isPrivate = item.isPrivate || false,
+                followers = item.followers || [];
 
             if (!remoteIds.hasOwnProperty(remoteId)) {
-                self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate));
+                self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate ,followers));
             }
         });
 
