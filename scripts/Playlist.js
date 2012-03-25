@@ -33,7 +33,7 @@ function loadPlaylist(playlistId) {
         type: 'GET',
         statusCode: {
             200: function(data) {
-                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
+                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate, data.followers);
                 playlist.createViews();
                 loadPlaylistView(playlist);
             },
@@ -145,10 +145,17 @@ function updatePlaylistBar(playlist) {
         if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
            $playlistBar.find('.copy').show().one('click', savePlaylistButtonClicked);
         }
-        if (Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubcription === false) {
+        /* Show subscription button */
+        if (Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubscription === false) {
+            console.log(playlist);
+            for (var i = 0; i < playlist.followers.length; i++) {
+                if (Number(playlist.followers[i].id) === Number(UserManager.currentUser.id)) {
+                    return;
+                }
+            }
             $playlistBar.find('.subscribe').click(function() {
                 playlist.subscribe();
-            });
+            }).show();
         }
     } else if (logged_in) {
         $playlistBar.find('.sync').show().one('click', syncPlaylistButtonClicked);
@@ -165,20 +172,23 @@ function loadPlaylistView(playlist) {
     playlist.leftMenuDOMHandle.addClass('selected');
 
     updatePlaylistBar(playlist);
-    
+    console.log(playlist.isSubscription);
     if (playlist.playlistDOMHandle.find('.video').length !== playlist.videos.length) {
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
             if (item) {
                 $video = item.createListView();
-                $video.data('additionalMenuButtons', [{
-                    title: 'Delete',
-                    args: $video,
-                    callback: deleteVideoButtonClicked
-                }]);
                 $video.addClass('droppable');
                 $video.addClass('draggable');
-                $video.addClass('reorderable');
+                if (!playlist.isSubscription) {
+                    $video.data('additionalMenuButtons', [{
+                        title: 'Delete',
+                        args: $video,
+                        callback: deleteVideoButtonClicked
+                    }]);
+                        
+                    $video.addClass('reorderable');
+                }
                 $video.appendTo(playlist.playlistDOMHandle);
             }
         });
@@ -218,10 +228,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     self.followers = followers || [];
     self.synced = true; // not part of JSON structure
     self.syncing = false; // not part of JSON structure
-    self.isSubcription = false;
+    self.isSubscription = false;
     for (i = 0; i < self.followers.length; i++) {
         if (Number(self.followers[i].id) === Number(my_user_id)) {
-            self.isSubcription = true;
+            self.isSubscription = true;
             break;
         }
     }
@@ -298,6 +308,12 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     };
     
     self.subscribe = function(callback) {
+        for (var i = 0; i < self.followers.length; i++) {
+            if (Number(self.followers[i].id) ===Number(UserManager.currentUser.id)) {
+                return;
+            }
+        }
+            
         var params = {
             'device': device
         };
@@ -312,7 +328,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                     self.syncing = false;
                     self.isSubscription = true;
                     self.followers.push(UserManager.currentUser);
-                    if (textStatus === 'ok') {
+                    if (textStatus === 'success') {
                         self.synced = true;
                     } else {
                         alert('Failed to create new playlist ' + self.title);
@@ -439,6 +455,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     };
 
     self.moveVideo = function(sourceIndex, destIndex) {
+        if (self.isSubscription) {
+            return;
+        }
         if (self.syncing) {
             alert("Please wait until the playlist is synced");
             return;
@@ -457,6 +476,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     };
 
     self.deleteVideo = function(index) {
+        if (self.isSubscription) {
+            return;
+        }
         if (self.syncing) {
             alert("Please wait until the playlist is synced");
             return;
@@ -484,7 +506,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                 .data('model', self),
             li = $('<li/>')
                 .addClass("playlistElem")
-                .addClass('droppable')
                 .data('model', self)
                 .bind('contextmenu', showPlaylistContextMenu)
                 .mousedown(playlistMouseDown)
@@ -494,6 +515,8 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
         if (self.isSubscription) {
             li.addClass('subscription');
+        } else {
+            li.addClass('droppable')
         }
 
         if (self.remoteId) {
