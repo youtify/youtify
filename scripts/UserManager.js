@@ -230,7 +230,7 @@ var UserManager = {
             $followings.html('');
             $followingsTab.text('Following (' + user.followings.length + ')');
             $.each(user.followings, function(i, item) {
-                $followings.append(createListElem(item.id, item.name));
+                $followings.append(createListElem(item.id, item.displayname));
             });
         }
 
@@ -238,7 +238,7 @@ var UserManager = {
             $followers.html('');
             $followersTab.text('Followers (' + user.followers.length + ')');
             $.each(user.followers, function(i, item) {
-                $followers.append(createListElem(item.id, item.name));
+                $followers.append(createListElem(item.id, item.displayname));
             });
         }
 

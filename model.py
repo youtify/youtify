@@ -124,23 +124,17 @@ def get_followings_for_youtify_user_model(youtify_user_model):
     ret = []
     for follow_relation_model in FollowRelation.all().filter('user1 =', youtify_user_model.key().id()):
         user = YoutifyUser.get_by_id(follow_relation_model.user2)
-        ret.append({
-            'id': str(user.key().id()),
-            'name': get_display_name_for_youtify_user_model(user),
-        })
+        ret.append(get_youtify_user_struct(user, include_relations=False))
     return ret
 
 def get_followers_for_youtify_user_model(youtify_user_model):
     ret = []
     for follow_relation_model in FollowRelation.all().filter('user2 =', youtify_user_model.key().id()):
         user = YoutifyUser.get_by_id(follow_relation_model.user1)
-        ret.append({
-            'id': str(user.key().id()),
-            'name': get_display_name_for_youtify_user_model(user),
-        })
+        ret.append(get_youtify_user_struct(user, include_relations=False))
     return ret
 
-def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False):
+def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False, include_relations=True):
     email = youtify_user_model.google_user.email()
     gravatar_email = email
     default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
@@ -154,14 +148,16 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False, incl
         'firstName': youtify_user_model.first_name,
         'lastName': youtify_user_model.last_name,
         'tagline': youtify_user_model.tagline,
-        'followings': get_followings_for_youtify_user_model(youtify_user_model),
-        'followers': get_followers_for_youtify_user_model(youtify_user_model),
         'playlists': [],
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
     }
     if include_private_data:
         user['email'] = email
+
+    if include_relations:
+        user['followings'] = get_followings_for_youtify_user_model(youtify_user_model)
+        user['followers'] = get_followers_for_youtify_user_model(youtify_user_model)
     
     if include_playlists:
         user['playlists'] = get_playlist_structs_for_youtify_user_model(youtify_user_model)
@@ -199,7 +195,7 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     
     for key in playlist_model.followers:
         youtify_user_model = db.get(key)
-        playlist_struct['followers'].append(get_youtify_user_struct(youtify_user_model, False, False))
+        playlist_struct.append(get_youtify_user_struct(youtify_user_model, False, False))
     
     if playlist_model.tracks_json is not None:
         playlist_struct['videos'] = simplejson.loads(playlist_model.tracks_json)

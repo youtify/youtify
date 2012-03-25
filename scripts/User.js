@@ -37,7 +37,7 @@ function User(args) {
     self.addFollower = function(userId, userDisplayName) {
         self.followers.push({
             id: userId,
-            name: userDisplayName
+            displayname: userDisplayName
         });
     };
 
@@ -64,7 +64,7 @@ function User(args) {
     self.addFollowing = function(userId, userDisplayName) {
         self.followings.push({
             id: userId,
-            name: userDisplayName
+            displayname: userDisplayName
         });
     };
 
