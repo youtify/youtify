@@ -637,19 +637,35 @@ input, textarea, button {
 }
 
 #right .profile .picture-container {
-    width: 220px;
+    width: 208px;
     display: block;
     margin: 0 20px 0 10px;
     display: inline-block;
+    position: relative;
 }
 #right .profile .picture-container .picture {
     width: 208px;
     height: 208px;
     max-width: 208px;
     max-height: 208px;
-    border: 1px solid #8B9594;
     background-color: #FFF;
     display: block;
+}
+#right .profile .picture-container .change {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+    background: black;
+    text-align: center;
+    opacity: 0;
+    padding: 7px;
+}
+#right .profile .picture-container .change a {
+    color: white;
+}
+#right .profile .picture-container:hover .change {
+    opacity: 0.8;
 }
 #right .profile .information-container {
     width: 220px;
