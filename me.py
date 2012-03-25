@@ -39,7 +39,7 @@ class ProfileHandler(webapp.RequestHandler):
 class FollowingsHandler(webapp.RequestHandler):
 
     def delete(self, uid):
-        me = get_current_youtify_user()
+        me = get_current_youtify_user_model()
         m = FollowRelation.all().filter('user1 =', me.key().id()).filter('user2 =', int(uid)).get()
         if m:
             m.delete()
@@ -49,7 +49,7 @@ class FollowingsHandler(webapp.RequestHandler):
 
     def post(self, uid):
         other_user = YoutifyUser.get_by_id(int(uid))
-        me = get_current_youtify_user()
+        me = get_current_youtify_user_model()
 
         if other_user is None:
             self.error(400)
@@ -74,14 +74,14 @@ class FollowingsHandler(webapp.RequestHandler):
 
 class YouTubeUserNameHandler(webapp.RequestHandler):
     def get(self):
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(user.youtube_username)
 
     def post(self):
         username = self.request.get('username')
 
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
         user.youtube_username = username 
         user.save()
 
