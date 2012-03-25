@@ -199,7 +199,7 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     
     for key in playlist_model.followers:
         youtify_user_model = db.get(key)
-        playlist_struct.append(get_youtify_user_struct(youtify_user_model, False, False))
+        playlist_struct['followers'].append(get_youtify_user_struct(youtify_user_model, False, False))
     
     if playlist_model.tracks_json is not None:
         playlist_struct['videos'] = simplejson.loads(playlist_model.tracks_json)
