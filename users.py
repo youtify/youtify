@@ -1,6 +1,8 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from model import get_youtify_user_model_by_id_or_nick
+from model import get_youtify_user_struct
+from django.utils import simplejson
 
 class UserHandler(webapp.RequestHandler):
 
@@ -13,10 +15,10 @@ class UserHandler(webapp.RequestHandler):
             self.error(404)
             return
         
-        json = get_youtify_user_json_for(user)
+        json = get_youtify_user_struct(user)
         
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(json)
+        self.response.out.write(simplejson.dumps(json))
 
     def post(self):
         """Update user"""
