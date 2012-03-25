@@ -34,10 +34,11 @@ function User(args) {
         });
     };
 
-    self.addFollower = function(userId, userDisplayName) {
+    self.addFollower = function(userId, userDisplayName, smallImageUrl) {
         self.followers.push({
             id: userId,
-            displayname: userDisplayName
+            displayname: userDisplayName,
+            smallImageUrl: smallImageUrl
         });
     };
 
@@ -61,10 +62,11 @@ function User(args) {
         self.followings = newFollowings;
     };
 
-    self.addFollowing = function(userId, userDisplayName) {
+    self.addFollowing = function(userId, userDisplayName, smallImageUrl) {
         self.followings.push({
             id: userId,
-            displayname: userDisplayName
+            displayname: userDisplayName,
+            smallImageUrl: smallImageUrl
         });
     };
 
