@@ -167,6 +167,7 @@ var UserManager = {
             var i = 0,
                 $box = $('<div class="playlist-box"/>'),
                 $title = $('<span class="title"/>').text(playlist.title),
+                $toggleSubscriptionButton = $('<button class="button subscribe"/>').text('Subscribe'),
                 $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
                 $tracklist = $('<table class="tracklist"/>'),
                 $more = $('<span class="more"/>').click(function() {
@@ -178,6 +179,21 @@ var UserManager = {
                         $tracklistContainer.removeAttr('style');
                     }
                 }).html('&#8661;');
+
+            if (playlist.isSubscription) {
+                $toggleSubscriptionButton.text('Unsubscribe');
+            }
+
+            $toggleSubscriptionButton.click(function() {
+                if ($toggleSubscriptionButton.text() === 'Subscribe') {
+                    playlist.subscribe(function() {
+                        $toggleSubscriptionButton.text('Unsubscribe');
+                    });
+                } else {
+                    playlistManager.deletePlaylist(index); // delete unsubscribes
+                    $toggleSubscriptionButton.text('Subscribe');
+                }
+            });
             
             for (i = 0; i < playlist.videos.length; i += 1) {
                 if (playlist.videos[i]) {
@@ -194,6 +210,11 @@ var UserManager = {
                 }
             }
             $box.append($title);
+
+            if (user.id !== UserManager.currentUser.id) {
+                $box.append($toggleSubscriptionButton);
+            }
+
             if (user.id === my_user_id && playlist.remoteId !== null) {
                 var $privacyContainer = $('<div class="privacy"/>'),
                     $privacy = $('<input type="checkbox"/>'),
