@@ -105,7 +105,7 @@ function showPlaylistContextMenu(event) {
             }
         },
         {
-            title: 'Delete',
+            title: 'Delete/Unsubscribe',
             args: $(this),
             callback: function(li) {
                 var index = li.index(),
