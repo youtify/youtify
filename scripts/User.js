@@ -10,9 +10,15 @@ function User(args) {
     self.lastName = args.lastName || '';
     self.fullName = $.trim(self.firstName + ' ' + self.lastName);
     self.tagline = args.tagline || '';
-    self.playlists = args.playlists || [];
+    self.playlists = [];
     self.followings = args.followings || [];
     self.followers = args.followers || [];
+
+    if (args.playlists) {
+        $.each(args.playlists, function(i, item) {
+            self.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.isPrivate, item.followers));
+        });
+    }
 
     self.saveProfile = function(params) {
         LoadingBar.show();
