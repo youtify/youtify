@@ -27,7 +27,7 @@ var URIManager = {
         } else if (location.href.indexOf('profile') !== -1) {
             Menu.profile.select();
         } else if (location.href.indexOf('users') !== -1) {
-            Menu.deSelectAll();
+            UserManager.doFakeProfieMenuClick();
             UserManager.loadProfile((URIManager.getUserFromUrl()));
         } else {
             Menu.find('toplist').select();

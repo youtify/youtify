@@ -34,6 +34,14 @@ var UserManager = {
         console.log(ret);
         return ret;
     },
+    doFakeProfieMenuClick: function() {
+        Menu.deSelectAll();
+
+        Menu.profile.rightView.show();
+        Menu.profile.leftView.addClass('selected');
+
+        Menu.profile.tabs[0].select();
+    },
     loadProfile: function(nickOrId) {
         LoadingBar.show();
         $.ajax({
