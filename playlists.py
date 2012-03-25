@@ -34,7 +34,7 @@ class FollowPlaylist(webapp.RequestHandler):
     
     def delete(self):
         """Unfollows a playlist"""
-        youtify_user_mode = get_current_youtify_user_model()
+        youtify_user_model = get_current_youtify_user_model()
         if youtify_user_model == None:
             self.error(403)
             return
@@ -42,7 +42,7 @@ class FollowPlaylist(webapp.RequestHandler):
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
         
-        youtify_user_model.playlist_subscriptions.remove(m.key())
+        youtify_user_model.playlist_subscriptions.remove(playlist_model.key())
         youtify_user_model.save()
         
         playlist_model.followers.remove(youtify_user_model.key())
