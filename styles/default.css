@@ -680,6 +680,9 @@ input, textarea, button {
     font-size: 16px;
     font-weight: bold;
 }
+#right .profile .information-container .static .nickname-container .button {
+    margin-left: 7px;
+}
 #right .profile .information-container .static .fullname {
     color: #444;
 }
