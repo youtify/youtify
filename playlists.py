@@ -101,7 +101,7 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
 
     def delete(self):
         """Delete playlist"""
-        youtify_user_mode = get_current_youtify_user_model()
+        youtify_user_model = get_current_youtify_user_model()
         if youtify_user_model == None:
             self.error(403)
             return
