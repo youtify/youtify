@@ -16,7 +16,7 @@ function User(args) {
 
     if (args.playlists) {
         $.each(args.playlists, function(i, item) {
-            self.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.isPrivate, item.followers));
+            self.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers));
         });
     }
 
