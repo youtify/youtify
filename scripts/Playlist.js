@@ -44,27 +44,6 @@ function loadPlaylist(playlistId) {
     });
 }
 
-function followPlaylist(event) {
-    var $playlistBar = $('#right > .playlists .info');
-    var playlist = $playlistBar.data('model');
-    
-    playlist.createViews();
-    playlistManager.addPlaylist(playlist);
-    playlist.getMenuView().appendTo('#left .playlists ul');
-
-    if (logged_in) {
-        playlist.subscribe(function() {
-            playlistManager.save();
-            playlist.getMenuView().addClass('remote');
-        });
-    } else {
-        playlist.remoteId = null;
-        playlistManager.save();
-    }
-
-    $playlistBar.find('.copy').hide();
-}
-
 function savePlaylistButtonClicked(event) {
     var $playlistBar = $('#right > .playlists .info');
     var playlist = $playlistBar.data('model');
@@ -147,14 +126,15 @@ function updatePlaylistBar(playlist) {
         }
         /* Show subscription button */
         if (Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubscription === false) {
-            console.log(playlist);
             for (var i = 0; i < playlist.followers.length; i++) {
                 if (Number(playlist.followers[i].id) === Number(UserManager.currentUser.id)) {
                     return;
                 }
             }
             $playlistBar.find('.subscribe').click(function() {
-                playlist.subscribe();
+                playlist.subscribe(function() {
+                    loadPlaylistView(playlist);
+                });
             }).show();
         }
     } else if (logged_in) {
@@ -172,7 +152,6 @@ function loadPlaylistView(playlist) {
     playlist.leftMenuDOMHandle.addClass('selected');
 
     updatePlaylistBar(playlist);
-    console.log(playlist.isSubscription);
     if (playlist.playlistDOMHandle.find('.video').length !== playlist.videos.length) {
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
@@ -308,12 +287,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     };
     
     self.subscribe = function(callback) {
-        for (var i = 0; i < self.followers.length; i++) {
-            if (Number(self.followers[i].id) ===Number(UserManager.currentUser.id)) {
-                return;
-            }
-        }
-            
         var params = {
             'device': device
         };
@@ -333,6 +306,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                     } else {
                         alert('Failed to create new playlist ' + self.title);
                     }
+                    self.createViews();
+                    self.getMenuView().addClass('remote');
+                    playlistManager.addPlaylist(self);
+                    Menu.addPlaylist(self);
                     if (callback) {
                         callback();
                     }

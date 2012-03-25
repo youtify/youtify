@@ -37,8 +37,13 @@ var Menu = {
         $playlists.html('');
 
         $.each(playlists, function(i, playlist) {
-            $playlists.append(playlist.getMenuView());
+            Menu.addPlaylist(playlist);
         });
+    },
+    addPlaylist: function(playlist) {
+        $playlists = $('#left .menu .playlists ul');
+        $playlists.append(playlist.getMenuView());
+        
     },
     newPlaylistClick: function() {
         var suggestedTitle = '',
