@@ -2,6 +2,7 @@ function User(args) {
     var self = this;
     self.id = args.id;
     self.nickname = args.nickname;
+    self.displayname = args.displayname;
     self.email = args.email || '';
     self.largeImageUrl = args.largeImageUrl || null;
     self.smallImageUrl = args.smallImageUrl || null;
@@ -30,6 +31,40 @@ function User(args) {
                     alert('Nickname is already taken');
                 }
             }
+        });
+    };
+
+    self.addFollower = function(userId, userDisplayName) {
+        self.followers.push({
+            id: userId,
+            name: userDisplayName
+        });
+    };
+
+    self.removeFollower = function(userId) {
+        var newFollowers = [];
+        $.each(self.followers, function(i, item) {
+            if (item.id !== userId) {
+                newFollowers.push(item);
+            }
+        });
+        self.followers = newFollowers;
+    };
+
+    self.removeFollowing = function(userId) {
+        var newFollowings = [];
+        $.each(self.followings, function(i, item) {
+            if (item.id !== userId) {
+                newFollowings.push(item);
+            }
+        });
+        self.followings = newFollowings;
+    };
+
+    self.addFollowing = function(userId, userDisplayName) {
+        self.followings.push({
+            id: userId,
+            name: userDisplayName
         });
     };
 

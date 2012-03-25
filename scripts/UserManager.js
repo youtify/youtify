@@ -89,6 +89,10 @@ var UserManager = {
             $.post('/me/followings/' + user.id, function(data) {
                 $followButton.hide();
                 $unFollowButton.show();
+
+                user.addFollower(UserManager.currentUser.id, UserManager.currentUser.displayname);
+                UserManager.currentUser.addFollowing(user.id, user.displayname);
+                updateFollowersView();
             });
         });
 
@@ -100,6 +104,10 @@ var UserManager = {
                     200: function(data) {
                         $followButton.show();
                         $unFollowButton.hide();
+
+                        user.removeFollower(UserManager.currentUser.id, UserManager.currentUser.displayname);
+                        UserManager.currentUser.removeFollowing(user.id, user.displayname);
+                        updateFollowersView();
                     }
                 }
             });
@@ -217,17 +225,24 @@ var UserManager = {
             });
         }
 
-        $followings.html('');
-        $followingsTab.text('Following (' + user.followings.length + ')');
-        $.each(user.followings, function(i, item) {
-            $followings.append(createListElem(item.id, item.name));
-        });
+        function updateFollowingsView() {
+            $followings.html('');
+            $followingsTab.text('Following (' + user.followings.length + ')');
+            $.each(user.followings, function(i, item) {
+                $followings.append(createListElem(item.id, item.name));
+            });
+        }
 
-        $followers.html('');
-        $followersTab.text('Followers (' + user.followers.length + ')');
-        $.each(user.followers, function(i, item) {
-            $followers.append(createListElem(item.id, item.name));
-        });
+        function updateFollowersView() {
+            $followers.html('');
+            $followersTab.text('Followers (' + user.followers.length + ')');
+            $.each(user.followers, function(i, item) {
+                $followers.append(createListElem(item.id, item.name));
+            });
+        }
+
+        updateFollowersView();
+        updateFollowingsView();
 
         LoadingBar.hide();
     },
