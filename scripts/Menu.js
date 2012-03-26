@@ -5,7 +5,13 @@ var Menu = {
     profile: null,
     init: function() {
         /* Create new menuitems */
-        var leftMenuItems = ['toplist', 'queue', 'search'];
+        var leftMenuItems = [];
+        if (logged_in) {
+            leftMenuItems.push('news-feed');
+        }
+        leftMenuItems.push('toplist');
+        leftMenuItems.push('queue');
+        leftMenuItems.push('search');
         $.each(leftMenuItems, function(i, type) {
             var menuItem = new MenuItem(type);
             menuItem.init();
@@ -184,6 +190,10 @@ function MenuItem(type) {
                 self.leftView = $('#top .profile');
                 self.rightView = $('#right .profile');
                 self.addTabs(['profile-playlists', 'profile-followings', 'profile-followers']);
+                break;
+            case 'news-feed':
+                self.leftView = $('#left .menu .news-feed');
+                self.rightView = $('#right .news-feed');
                 break;
 
         }

@@ -287,6 +287,7 @@ input, textarea, button {
     padding: 0 5px 5px 10px;
     overflow-y: scroll;
 }
+#left .menu .news-feed,
 #left .menu .toplist, 
 #left .menu .queue,
 #left .menu .search,
