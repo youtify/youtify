@@ -97,6 +97,8 @@ def get_youtify_user_model_by_id_or_nick(id_or_nick):
 def create_youtify_user_model():
     m = YoutifyUser()
     m.device = str(random.random())
+    m.migrated_playlists = True
+
     m.put()
     return m
 
