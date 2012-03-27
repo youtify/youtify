@@ -5,6 +5,8 @@ from model import get_current_youtify_user_model
 from model import get_youtify_user_struct
 from model import YoutifyUser
 from model import FollowRelation
+from model import get_activities_structs
+from activities import create_follow_activity
 
 class ProfileHandler(webapp.RequestHandler):
     def get(self):
@@ -69,8 +71,18 @@ class FollowingsHandler(webapp.RequestHandler):
         m = FollowRelation(user1=me.key().id(), user2=other_user.key().id())
         m.put()
 
+        create_follow_activity(me, other_user)
+
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
+
+class ActivitiesHandler(webapp.RequestHandler):
+
+    def get(self):
+        """ Get all users activities """
+        me = get_current_youtify_user_model()
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(get_activities_structs(me)))
 
 class YouTubeUserNameHandler(webapp.RequestHandler):
     def get(self):
@@ -92,6 +104,7 @@ def main():
     application = webapp.WSGIApplication([
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
+        ('/me/activities', ActivitiesHandler),
         ('/me/followings/(.*)', FollowingsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
