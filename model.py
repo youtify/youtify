@@ -28,6 +28,18 @@ class FollowRelation(db.Model):
     user1 = db.IntegerProperty()
     user2 = db.IntegerProperty()
 
+class Activity(db.Model):
+    """
+    user1 has flattred <track>
+    user1 now subscibes to <playlist>
+    user1 started following <user2>
+    """
+    timestamp = db.DateTimeProperty(auto_now_add=True)
+    verb = db.StringProperty() # flattr, subscribe, follow
+    user = db.TextProperty()
+    owner = db.ReferenceProperty(reference_class=YoutifyUser)
+    data = db.TextProperty() # track, playlist, user
+
 class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
     json = db.TextProperty()
@@ -203,3 +215,14 @@ def get_playlist_struct_from_playlist_model(playlist_model):
         playlist_struct['videos'] = simplejson.loads(playlist_model.tracks_json)
     
     return playlist_struct
+
+def get_activities_structs(youtify_user_model):
+    ret = []
+    for m in Activity.all().filter('owner =', youtify_user_model).order('-timestamp'):
+        ret.append({
+            'timestamp': m.timestamp.strftime('%s'),
+            'verb': m.verb,
+            'user': m.user,
+            'data': m.data,
+        })
+    return ret
