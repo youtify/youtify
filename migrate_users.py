@@ -18,7 +18,7 @@ class MigrateUser(webapp.RequestHandler):
             'users': []
         }
         for user in users:
-            if user.migrated_playlists is not True:
+            if user.migrated_playlists is False:
                 json['users'].append(get_youtify_user_struct(user))
         
         self.response.headers['Content-Type'] = 'application/json'

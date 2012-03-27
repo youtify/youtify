@@ -4,7 +4,7 @@ var page = 0;
 function init() {
     getUsers(page);
     $('#prev').click(function() {
-        page =- 1;
+        page -= 1;
         getUsers(page)
     });
     $('#reload').click(function() {
@@ -26,14 +26,14 @@ function getUsers(page) {
                     alert('Could not find users');
                     return;
                 }
-                for (var i = 0; i < data.users.length; i++) {
-                    var user = data.users[i],
-                        $user = $('<div class="user"/>'),
+                $.each(data.users, function(index, user) {
+                    var $user = $('<div class="user"/>'),
                         $title = $('<div class="title"/>')
-                            .text(user.id + ' - ' + user.nickname),
+                            .text(user.id + ' - ' + user.displayname),
                         $migrate = $('<button>')
                             .text('Migrate playlists')
                             .click(function() {
+                                alert(user.id);
                                 $.ajax({
                                     url: '/api/migrate_users/' + user.id,
                                     type: 'POST',
@@ -55,7 +55,7 @@ function getUsers(page) {
                     $title.appendTo($user);
                     $migrate.appendTo($user);
                     $user.appendTo('#users');
-                }
+                });
             },
             302: function(data) {
                 alert('Log in as admin');

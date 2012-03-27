@@ -21,7 +21,7 @@ class YoutifyUser(db.Model):
     tagline = db.StringProperty()
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
-    migrated_playlists = db.BooleanProperty(default=True)
+    migrated_playlists = db.BooleanProperty(default=False)
 
 class FollowRelation(db.Model):
     """ user1 follows user2 """
