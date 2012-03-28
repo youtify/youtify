@@ -57,6 +57,7 @@ class Playlist(db.Model):
     tracks_json = db.TextProperty()
     title = db.StringProperty()
     followers = db.ListProperty(db.Key)
+    favorite = db.BooleanProperty(default=False)
 
 class Phrase(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
@@ -220,7 +221,8 @@ def get_playlist_struct_from_playlist_model(playlist_model):
         'remoteId': playlist_model.key().id(),
         'isPrivate': playlist_model.private,
         'owner': get_youtify_user_struct(playlist_model.owner, False, False),
-        'followers': []
+        'followers': [],
+        'favorite': playlist_model.favorite
     }
     
     for key in playlist_model.followers:

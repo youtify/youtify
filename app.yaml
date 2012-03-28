@@ -78,6 +78,9 @@ handlers:
 - url: /api/playlists.*
   script: playlists.py
 
+- url: /api/favorites.*
+  script: favorites.py
+
 - url: /pingcron
   script: ping.py
   login: admin
