@@ -221,6 +221,51 @@ function MenuItem(type) {
         if (self.type === 'profile') {
             history.pushState(null, null, '/profile');
             UserManager.populateUserProfile(UserManager.currentUser);
+        } else if (self.type === 'news-feed') {
+            self.rightView.html('');
+
+            function getActivityElem(activity) {
+                var $div = $('<div class="activity"></div>');
+                var user = new User(JSON.parse(activity.user));
+                var data = new User(JSON.parse(activity.data));
+
+                function getUserActivityElem(user) {
+                    var $user = $('<span class="user"></span>');
+
+                    $('<img />').attr('src', user.smallImageUrl).appendTo($user);
+                    $('<span class="name"></span>').text(user.displayname).appendTo($user);
+
+                    $user.click(function() {
+                        history.pushState(null, null, '/users/' + user.id);
+                        Menu.deSelectAll();
+                        UserManager.loadProfile(user.id);
+                    });
+
+                    return $user;
+                }
+
+                switch (activity.verb) {
+                    case 'follow':
+                    if (data.id === UserManager.currentUser.id) {
+                        $div.append(getUserActivityElem(user));
+                        $div.append('<span> started following you</span>');
+                    } else if (user.id === UserManager.currentUser.id) {
+                        $div.append('<span>You started following </span>');
+                        $div.append(getUserActivityElem(data));
+                    }
+                    break;
+                }
+
+                return $div;
+            };
+
+            LoadingBar.show();
+            $.get('/me/activities', function(data) {
+                LoadingBar.hide();
+                $.each(data, function(i, activity) {
+                    self.rightView.append(getActivityElem(activity));
+                });
+            });
         }
         
         /* Display views */

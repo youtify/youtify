@@ -1487,3 +1487,14 @@ input, textarea, button {
     margin-right: 5px;
     font-weight: bold;
 }
+
+#right .activity .user {
+    font-weight: bold;
+    cursor: pointer;
+}
+#right .activity .user img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
