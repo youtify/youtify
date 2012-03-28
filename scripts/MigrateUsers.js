@@ -8,6 +8,7 @@ function init() {
         getUsers(page)
     });
     $('#reload').click(function() {
+        $('<div class="user"/>').html('');
         getUsers(page);
     });
     $('#next').click(function() {
@@ -33,7 +34,6 @@ function getUsers(page) {
                         $migrate = $('<button>')
                             .text('Migrate playlists')
                             .click(function() {
-                                alert(user.id);
                                 $.ajax({
                                     url: '/api/migrate_users/' + user.id,
                                     type: 'POST',
