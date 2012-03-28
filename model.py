@@ -8,7 +8,7 @@ from django.utils import simplejson
 
 class YoutifyUser(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
-    google_user = db.UserProperty(auto_current_user=True)
+    google_user = db.UserProperty()
     device = db.StringProperty()
     flattr_access_token = db.StringProperty()
     flattr_user_name = db.StringProperty()
@@ -107,10 +107,7 @@ def get_youtify_user_model_by_id_or_nick(id_or_nick):
         return get_youtify_user_model_by_nick(id_or_nick)
 
 def create_youtify_user_model():
-    m = YoutifyUser()
-    m.device = str(random.random())
-    m.migrated_playlists = True
-
+    m = YoutifyUser(google_user=users.get_current_user(), device=str(random.random()), migrated_playlists=True)
     m.put()
     return m
 
