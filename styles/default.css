@@ -1488,7 +1488,8 @@ input, textarea, button {
     font-weight: bold;
 }
 
-#right .activity .user {
+#right .activity .user,
+#right .activity .playlist {
     font-weight: bold;
     cursor: pointer;
 }

@@ -2,6 +2,7 @@ import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
+from activities import create_subscribe_activity
 from model import get_current_youtify_user_model
 from model import get_display_name_for_youtify_user_model
 from model import get_playlist_struct_from_playlist_model
@@ -28,6 +29,8 @@ class FollowPlaylist(webapp.RequestHandler):
         
         playlist_model.followers.append(youtify_user_model.key())
         playlist_model.save()
+
+        create_subscribe_activity(youtify_user_model, playlist_model)
         
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')

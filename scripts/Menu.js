@@ -226,8 +226,6 @@ function MenuItem(type) {
 
             function getActivityElem(activity) {
                 var $div = $('<div class="activity"></div>');
-                var user = new User(JSON.parse(activity.user));
-                var data = new User(JSON.parse(activity.data));
 
                 function getUserActivityElem(user) {
                     var $user = $('<span class="user"></span>');
@@ -244,14 +242,46 @@ function MenuItem(type) {
                     return $user;
                 }
 
+                function getPlaylistActivityElem(playlist) {
+                    var $playlist = $('<span class="playlist"></span>');
+
+                    $playlist.text(playlist.title);
+
+                    $playlist.click(function() {
+                        history.pushState(null, null, '/playlists/' + playlist.remoteId);
+                        Menu.deSelectAll();
+                        loadPlaylist(playlist.remoteId);
+                    });
+
+                    return $playlist;
+                }
+
                 switch (activity.verb) {
                     case 'follow':
-                    if (data.id === UserManager.currentUser.id) {
+                    var user = new User(JSON.parse(activity.user));
+                    var otherUser = new User(JSON.parse(activity.data));
+                    if (otherUser.id === UserManager.currentUser.id) {
                         $div.append(getUserActivityElem(user));
                         $div.append('<span> started following you</span>');
                     } else if (user.id === UserManager.currentUser.id) {
                         $div.append('<span>You started following </span>');
-                        $div.append(getUserActivityElem(data));
+                        $div.append(getUserActivityElem(otherUser));
+                    }
+                    break;
+
+                    case 'subscribe':
+                    var user = new User(JSON.parse(activity.user));
+                    var playlist = JSON.parse(activity.data);
+                    var playlistOwner = new User(playlist.owner);
+                    if (playlistOwner.id === UserManager.currentUser.id) {
+                        $div.append(getUserActivityElem(user));
+                        $div.append('<span> subscribed to your playlist </span>');
+                        $div.append(getPlaylistActivityElem(playlist));
+                    } else if (user.id === UserManager.currentUser.id) {
+                        $div.append('<span>You subscribed to </span>');
+                        $div.append(getPlaylistActivityElem(playlist));
+                        $div.append('<span> by </span>');
+                        $div.append(getUserActivityElem(playlistOwner));
                     }
                     break;
                 }
