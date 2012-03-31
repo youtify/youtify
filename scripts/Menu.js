@@ -284,6 +284,9 @@ function MenuItem(type) {
                         $div.append(getUserActivityElem(playlistOwner));
                     }
                     break;
+
+                    case 'signup':
+                    $div.append('<span>You joined Youtify</span>');
                 }
 
                 return $div;

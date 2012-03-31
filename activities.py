@@ -30,3 +30,10 @@ def create_subscribe_activity(youtify_user_model, playlist_model):
 
     m = Activity(owner=playlist_model.owner, verb='subscribe', user=user, data=data)
     m.put()
+
+def create_signup_activity(youtify_user_model):
+    data = simplejson.dumps({})
+    user = simplejson.dumps(get_youtify_user_struct(youtify_user_model, include_relations=False))
+
+    m = Activity(owner=youtify_user_model, verb='signup', user=user, data=data)
+    m.put()

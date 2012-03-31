@@ -30,6 +30,7 @@ class FollowRelation(db.Model):
 
 class Activity(db.Model):
     """
+    user1 signed up
     user1 has flattred <track>
     user1 now subscibes to <playlist>
     user1 started following <user2>
@@ -109,6 +110,10 @@ def get_youtify_user_model_by_id_or_nick(id_or_nick):
 def create_youtify_user_model():
     m = YoutifyUser(google_user=users.get_current_user(), device=str(random.random()), migrated_playlists=True)
     m.put()
+
+    from activities import create_signup_activity # hack to avoid recursive dependency
+    create_signup_activity(m)
+
     return m
 
 def migrate_playlists_for_youtify_user_model(youtify_user_model):
