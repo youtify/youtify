@@ -312,6 +312,8 @@ function MenuItem(type) {
                     break;
                 }
 
+                $div.append('<span class="timestamp"> ' + jQuery.timeago(new Date(Number(activity.timestamp * 1000))) + '</span>');
+
                 return $div;
             };
 
