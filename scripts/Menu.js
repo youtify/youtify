@@ -304,6 +304,10 @@ function MenuItem(type) {
                     if (user.id === UserManager.currentUser.id) {
                         $div.append('<span>You flatted </span>');
                         $div.append(getFlattrThingActivityElem(thing));
+                    } else {
+                        $div.append(getUserActivityElem(user));
+                        $div.append('<span> flattred </span>');
+                        $div.append(getFlattrThingActivityElem(thing));
                     }
                     break;
                 }

@@ -1,3 +1,5 @@
+from model import YoutifyUser
+from model import FollowRelation
 from model import Activity
 from model import get_youtify_user_struct
 from model import get_playlist_struct_from_playlist_model
@@ -47,3 +49,7 @@ def create_flattr_activity(youtify_user_model, thing_id, thing_title):
 
     m = Activity(owner=youtify_user_model, verb='flattr', user=user, data=data)
     m.put()
+
+    for relation in FollowRelation.all().filter('user2 =', youtify_user_model.key().id()):
+        m = Activity(owner=YoutifyUser.get_by_id(relation.user1), verb='flattr', user=user, data=data)
+        m.put()
