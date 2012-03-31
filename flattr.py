@@ -7,6 +7,7 @@ from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user
 from model import FlattrClick
+from activities import create_flattr_activity
 try:
     import config
 except ImportError:
@@ -38,7 +39,7 @@ class ClickHandler(webapp.RequestHandler):
                     )
             click.put()
         else:
-            logging.error('Error logging flattr click. Response: %s' % response.content)
+            logging.error('Error creating flattr click. Response: %s' % response.content)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
@@ -55,17 +56,9 @@ class AutoSubmitHandler(webapp.RequestHandler):
             'Content-Type': 'application/json',
         }
 
-        data = {
-            #'url': 'http://flattr.com/submit/auto?' + urllib.urlencode({'url': url_to_submit}),
-            #'url': urllib.quote(url_to_submit),
+        data = simplejson.dumps({
             'url': url_to_submit,
-        }
-
-        logging.info(url_to_submit)
-        logging.info(data['url'])
-
-        #data = urllib.urlencode(data)
-        data = simplejson.dumps(data)
+        })
 
         response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
 
@@ -79,7 +72,7 @@ class AutoSubmitHandler(webapp.RequestHandler):
                     )
             click.put()
         else:
-            logging.error('Error logging flattr click. Response: %s' % response.content)
+            logging.error('Error creating flattr click. Response: %s' % response.content)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
