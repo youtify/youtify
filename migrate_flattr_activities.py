@@ -14,13 +14,13 @@ class Handler(webapp.RequestHandler):
             if click.migrated:
                 continue
 
-            data = simplejson.dumps({
+            target = simplejson.dumps({
                 'thing_id': click.thing_id,
                 'thing_title': click.thing_title,
             })
-            user = simplejson.dumps(get_youtify_user_struct(click.youtify_user, include_relations=False))
+            actor = simplejson.dumps(get_youtify_user_struct(click.youtify_user, include_relations=False))
 
-            m = Activity(timestamp=click.date, owner=click.youtify_user, verb='flattr', user=user, data=data)
+            m = Activity(timestamp=click.date, owner=click.youtify_user, verb='flattr', actor=actor, target=target)
             m.put()
 
             click.migrated = True

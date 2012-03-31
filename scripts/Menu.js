@@ -267,26 +267,26 @@ function MenuItem(type) {
 
                 switch (activity.verb) {
                     case 'follow':
-                    var user = new User(JSON.parse(activity.user));
-                    var otherUser = new User(JSON.parse(activity.data));
+                    var actor = new User(JSON.parse(activity.actor));
+                    var otherUser = new User(JSON.parse(activity.target));
                     if (otherUser.id === UserManager.currentUser.id) {
-                        $div.append(getUserActivityElem(user));
+                        $div.append(getUserActivityElem(actor));
                         $div.append('<span> started following you</span>');
-                    } else if (user.id === UserManager.currentUser.id) {
+                    } else if (actor.id === UserManager.currentUser.id) {
                         $div.append('<span>You started following </span>');
                         $div.append(getUserActivityElem(otherUser));
                     }
                     break;
 
                     case 'subscribe':
-                    var user = new User(JSON.parse(activity.user));
-                    var playlist = JSON.parse(activity.data);
+                    var actor = new User(JSON.parse(activity.actor));
+                    var playlist = JSON.parse(activity.target);
                     var playlistOwner = new User(playlist.owner);
                     if (playlistOwner.id === UserManager.currentUser.id) {
-                        $div.append(getUserActivityElem(user));
+                        $div.append(getUserActivityElem(actor));
                         $div.append('<span> subscribed to your playlist </span>');
                         $div.append(getPlaylistActivityElem(playlist));
-                    } else if (user.id === UserManager.currentUser.id) {
+                    } else if (actor.id === UserManager.currentUser.id) {
                         $div.append('<span>You subscribed to </span>');
                         $div.append(getPlaylistActivityElem(playlist));
                         $div.append('<span> by </span>');
@@ -299,13 +299,13 @@ function MenuItem(type) {
                     break;
 
                     case 'flattr':
-                    var user = new User(JSON.parse(activity.user));
-                    var thing = JSON.parse(activity.data);
-                    if (user.id === UserManager.currentUser.id) {
+                    var actor = new User(JSON.parse(activity.actor));
+                    var thing = JSON.parse(activity.target);
+                    if (actor.id === UserManager.currentUser.id) {
                         $div.append('<span>You flattred </span>');
                         $div.append(getFlattrThingActivityElem(thing));
                     } else {
-                        $div.append(getUserActivityElem(user));
+                        $div.append(getUserActivityElem(actor));
                         $div.append('<span> flattred </span>');
                         $div.append(getFlattrThingActivityElem(thing));
                     }

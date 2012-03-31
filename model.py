@@ -30,16 +30,25 @@ class FollowRelation(db.Model):
 
 class Activity(db.Model):
     """
-    user1 signed up
-    user1 has flattred <track>
-    user1 now subscibes to <playlist>
-    user1 started following <user2>
+    Loosely follows the http://activitystrea.ms standard
+
+    From the spec:
+
+    "In its simplest form, an activity consists of an actor, a verb, an
+    object, and a target."
+
+    Implemented activities:
+
+    actor signed up
+    actor flattred <thing>
+    actor subscribed to <playlist>
+    actor followed <user>
     """
-    timestamp = db.DateTimeProperty(auto_now_add=True)
-    verb = db.StringProperty() # flattr, subscribe, follow
-    user = db.TextProperty()
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
-    data = db.TextProperty() # track, playlist, user
+    timestamp = db.DateTimeProperty(auto_now_add=True)
+    verb = db.StringProperty()
+    actor = db.TextProperty()
+    target = db.TextProperty()
 
 class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
@@ -225,7 +234,7 @@ def get_activities_structs(youtify_user_model):
         ret.append({
             'timestamp': m.timestamp.strftime('%s'),
             'verb': m.verb,
-            'user': m.user,
-            'data': m.data,
+            'actor': m.actor,
+            'target': m.target,
         })
     return ret
