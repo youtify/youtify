@@ -37,3 +37,13 @@ def create_signup_activity(youtify_user_model):
 
     m = Activity(owner=youtify_user_model, verb='signup', user=user, data=data)
     m.put()
+
+def create_flattr_activity(youtify_user_model, thing_id, thing_title):
+    data = simplejson.dumps({
+        'thing_id': thing_id,
+        'thing_title': thing_title,
+    })
+    user = simplejson.dumps(get_youtify_user_struct(youtify_user_model, include_relations=False))
+
+    m = Activity(owner=youtify_user_model, verb='flattr', user=user, data=data)
+    m.put()

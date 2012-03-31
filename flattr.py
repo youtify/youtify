@@ -6,7 +6,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user
-from model import FlattrClick
 from activities import create_flattr_activity
 try:
     import config
@@ -31,13 +30,9 @@ class ClickHandler(webapp.RequestHandler):
 
         json = simplejson.loads(response.content)
         if json.get('message') == 'ok' and 'thing' in json:
-            click = FlattrClick(
-                        youtify_user=user,
-                        flattr_user_name=user.flattr_user_name,
-                        thing_id=str(json['thing'].get('id')),
-                        thing_title=json['thing'].get('title')
-                    )
-            click.put()
+            thing_id = str(json['thing'].get('id'))
+            thing_title = json['thing'].get('title')
+            create_flattr_activity(user, thing_id, thing_title)
         else:
             logging.error('Error creating flattr click. Response: %s' % response.content)
 
@@ -64,13 +59,9 @@ class AutoSubmitHandler(webapp.RequestHandler):
 
         json = simplejson.loads(response.content)
         if json.get('message') == 'ok' and 'thing' in json:
-            click = FlattrClick(
-                        youtify_user=user,
-                        flattr_user_name=user.flattr_user_name,
-                        thing_id=str(json['thing'].get('id')),
-                        thing_title=json['thing'].get('title')
-                    )
-            click.put()
+            thing_id = str(json['thing'].get('id'))
+            thing_title = json['thing'].get('title')
+            create_flattr_activity(user, thing_id, thing_title)
         else:
             logging.error('Error creating flattr click. Response: %s' % response.content)
 

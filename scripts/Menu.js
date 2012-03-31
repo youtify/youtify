@@ -256,6 +256,15 @@ function MenuItem(type) {
                     return $playlist;
                 }
 
+                function getFlattrThingActivityElem(data) {
+                    var $thing = $('<a class="thing" target="_blank"></a>');
+
+                    $thing.text(data.thing_title);
+                    $thing.attr('href', 'https://flattr.com/t/' + data.thing_id);
+
+                    return $thing;
+                }
+
                 switch (activity.verb) {
                     case 'follow':
                     var user = new User(JSON.parse(activity.user));
@@ -287,6 +296,16 @@ function MenuItem(type) {
 
                     case 'signup':
                     $div.append('<span>You joined Youtify</span>');
+                    break;
+
+                    case 'flattr':
+                    var user = new User(JSON.parse(activity.user));
+                    var thing = JSON.parse(activity.data);
+                    if (user.id === UserManager.currentUser.id) {
+                        $div.append('<span>You flatted </span>');
+                        $div.append(getFlattrThingActivityElem(thing));
+                    }
+                    break;
                 }
 
                 return $div;
