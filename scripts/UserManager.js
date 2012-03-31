@@ -90,8 +90,8 @@ var UserManager = {
                 $followButton.hide();
                 $unFollowButton.show();
 
-                user.addFollower(UserManager.currentUser.id, UserManager.currentUser.displayname, UserManager.currentUser.smallImageUrl);
-                UserManager.currentUser.addFollowing(user.id, user.displayname, UserManager.currentUser.smallImageUrl);
+                user.addFollower(UserManager.currentUser.id, UserManager.currentUser.displayName, UserManager.currentUser.smallImageUrl);
+                UserManager.currentUser.addFollowing(user.id, user.displayName, UserManager.currentUser.smallImageUrl);
                 updateFollowersView();
             });
         });
@@ -105,8 +105,8 @@ var UserManager = {
                         $followButton.show();
                         $unFollowButton.hide();
 
-                        user.removeFollower(UserManager.currentUser.id, UserManager.currentUser.displayname);
-                        UserManager.currentUser.removeFollowing(user.id, user.displayname);
+                        user.removeFollower(UserManager.currentUser.id, UserManager.currentUser.displayName);
+                        UserManager.currentUser.removeFollowing(user.id, user.displayName);
                         updateFollowersView();
                     }
                 }
@@ -258,7 +258,7 @@ var UserManager = {
             $followings.html('');
             $followingsTab.text('Following (' + user.followings.length + ')');
             $.each(user.followings, function(i, item) {
-                $followings.append(createListElem(item.id, item.displayname, item.smallImageUrl));
+                $followings.append(createListElem(item.id, item.displayName, item.smallImageUrl));
             });
         }
 
@@ -266,7 +266,7 @@ var UserManager = {
             $followers.html('');
             $followersTab.text('Followers (' + user.followers.length + ')');
             $.each(user.followers, function(i, item) {
-                $followers.append(createListElem(item.id, item.displayname, item.smallImageUrl));
+                $followers.append(createListElem(item.id, item.displayName, item.smallImageUrl));
             });
         }
 

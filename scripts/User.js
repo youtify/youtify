@@ -2,7 +2,7 @@ function User(args) {
     var self = this;
     self.id = args.id;
     self.nickname = args.nickname;
-    self.displayname = args.displayname;
+    self.displayName = args.displayName;
     self.email = args.email || '';
     self.largeImageUrl = args.largeImageUrl || null;
     self.smallImageUrl = args.smallImageUrl || null;
@@ -43,7 +43,7 @@ function User(args) {
     self.addFollower = function(userId, userDisplayName, smallImageUrl) {
         self.followers.push({
             id: userId,
-            displayname: userDisplayName,
+            displayName: userDisplayName,
             smallImageUrl: smallImageUrl
         });
     };
@@ -71,7 +71,7 @@ function User(args) {
     self.addFollowing = function(userId, userDisplayName, smallImageUrl) {
         self.followings.push({
             id: userId,
-            displayname: userDisplayName,
+            displayName: userDisplayName,
             smallImageUrl: smallImageUrl
         });
     };

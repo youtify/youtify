@@ -160,7 +160,7 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False, incl
     user = {
         'id': str(youtify_user_model.key().id()),
         'email': None,
-        'displayname': get_display_name_for_youtify_user_model(youtify_user_model),
+        'displayName': get_display_name_for_youtify_user_model(youtify_user_model),
         'nickname': youtify_user_model.nickname,
         'firstName': youtify_user_model.first_name,
         'lastName': youtify_user_model.last_name,

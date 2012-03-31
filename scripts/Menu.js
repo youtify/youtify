@@ -231,7 +231,7 @@ function MenuItem(type) {
                     var $user = $('<span class="user"></span>');
 
                     $('<img />').attr('src', user.smallImageUrl).appendTo($user);
-                    $('<span class="name"></span>').text(user.displayname).appendTo($user);
+                    $('<span class="name"></span>').text(user.displayName).appendTo($user);
 
                     $user.click(function() {
                         history.pushState(null, null, '/users/' + user.id);
