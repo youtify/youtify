@@ -193,7 +193,11 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False, incl
     return user
 
 def get_display_name_for_youtify_user_model(youtify_user_model):
-    if youtify_user_model.nickname:
+    if youtify_user_model.first_name and youtify_user_model.last_name:
+        return youtify_user_model.first_name + ' ' + youtify_user_model.last_name
+    elif youtify_user_model.first_name:
+        return youtify_user_model.first_name
+    elif youtify_user_model.nickname:
         return youtify_user_model.nickname
     return youtify_user_model.google_user.nickname().split('@')[0] # don't leak users email
 
