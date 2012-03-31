@@ -88,6 +88,7 @@ class FlattrClick(db.Model):
     flattr_user_name = db.StringProperty()
     thing_id = db.StringProperty()
     thing_title = db.StringProperty()
+    migrated = db.BooleanProperty(default=False)
 
 # HELPERS
 ##############################################################################

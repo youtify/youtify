@@ -17,6 +17,10 @@ handlers:
 - url: /api/users.*
   script: users.py
 
+- url: /migrate_flattr_activities.*
+  script: migrate_flattr_activities.py
+  login: admin
+
 - url: /api/migrate_users.*
   script: migrate_users.py
   login: admin
