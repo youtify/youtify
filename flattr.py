@@ -5,7 +5,7 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
-from model import get_current_youtify_user
+from model import get_current_youtify_user_model
 from activities import create_flattr_activity
 try:
     import config
@@ -20,15 +20,15 @@ class ClickHandler(webapp.RequestHandler):
     def post(self):
         thing_id = self.request.get('thing_id')
         url = 'https://api.flattr.com/rest/v2/things/' + thing_id + '/flattr'
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
 
         headers = {
             'Authorization': 'Bearer %s' % user.flattr_access_token
         }
 
         response = urlfetch.fetch(url=url, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
-
         json = simplejson.loads(response.content)
+
         if json.get('message') == 'ok' and 'thing' in json:
             thing_id = str(json['thing'].get('id'))
             thing_title = json['thing'].get('title')
@@ -44,7 +44,7 @@ class AutoSubmitHandler(webapp.RequestHandler):
     def post(self):
         url_to_submit = self.request.get('url')
         url = 'https://api.flattr.com/rest/v2/flattr'
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
 
         headers = {
             'Authorization': 'Bearer %s' % user.flattr_access_token,
@@ -56,8 +56,8 @@ class AutoSubmitHandler(webapp.RequestHandler):
         })
 
         response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
-
         json = simplejson.loads(response.content)
+
         if json.get('message') == 'ok' and 'thing' in json:
             thing_id = str(json['thing'].get('id'))
             thing_title = json['thing'].get('title')
@@ -72,7 +72,7 @@ class DisconnectHandler(webapp.RequestHandler):
     """Remove the current users access token"""
     def get(self):
         redirect_uri = self.request.get('redirect_uri', '/')
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
         user.flattr_access_token = None
         user.flattr_user_name = None
         user.save()
@@ -122,7 +122,7 @@ class BackHandler(webapp.RequestHandler):
         response = simplejson.loads(response.content)
 
         if 'access_token' in response:
-            user = get_current_youtify_user()
+            user = get_current_youtify_user_model()
             user.flattr_access_token = response['access_token']
             user.flattr_scope = FLATTR_SCOPE
 
