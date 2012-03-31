@@ -302,7 +302,7 @@ function MenuItem(type) {
                     var user = new User(JSON.parse(activity.user));
                     var thing = JSON.parse(activity.data);
                     if (user.id === UserManager.currentUser.id) {
-                        $div.append('<span>You flatted </span>');
+                        $div.append('<span>You flattred </span>');
                         $div.append(getFlattrThingActivityElem(thing));
                     } else {
                         $div.append(getUserActivityElem(user));
