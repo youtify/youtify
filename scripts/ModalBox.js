@@ -67,3 +67,43 @@ function WhatIsFlattrDialog() {
 
 WhatIsFlattrDialog.prototype = new ModalBox();
 WhatIsFlattrDialog.prototype.constructor = WhatIsFlattrDialog;
+
+/* EDIT PROFILE DIALOG
+ ****************************************************************************/
+
+function EditProfileDialog() {
+    ModalBox.call(this);
+
+    this.view.addClass('edit-profile');
+
+    this.view.find('.wrapper p').append($('<span>Nickname:</span>'));
+    this.view.find('.wrapper p').append($('<input type="text" name="nickname" />').val(UserManager.currentUser.nickname));
+
+    this.view.find('.wrapper p').append($('<span>First name:</span>'));
+    this.view.find('.wrapper p').append($('<input type="text" name="first_name" />').val(UserManager.currentUser.firstName));
+
+    this.view.find('.wrapper p').append($('<span>Last name:</span>'));
+    this.view.find('.wrapper p').append($('<input type="text" name="last_name" />').val(UserManager.currentUser.lastName));
+
+    this.view.find('.wrapper p').append($('<span>Tagline:</span>'));
+    this.view.find('.wrapper p').append($('<textarea name="tagline"></textarea>').val(UserManager.currentUser.tagline));
+
+    this.canBeClosed = true;
+
+    this.addButton('Save', function(self) {
+        var params = {};
+        $.each(self.view.find('input, textarea'), function(i, elem) {
+            params[elem.name] = elem.value;
+        });
+        UserManager.currentUser.saveProfile(params);
+        self.remove();
+    });
+
+    this.addButton('Cancel', function(self) {
+        self.remove();
+    });
+}
+
+EditProfileDialog.prototype = new ModalBox();
+EditProfileDialog.prototype.constructor = EditProfileDialog;
+

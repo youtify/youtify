@@ -672,39 +672,38 @@ input, textarea, button {
     display: inline-block;
     vertical-align: top;
 }
-#right .profile .information-container .static > span {
+#right .profile .information-container > span {
     display: block;
     margin: 10px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-#right .profile .information-container .static .nickname {
+#right .profile .information-container .nickname {
     font-size: 16px;
     font-weight: bold;
 }
-#right .profile .information-container .static .nickname-container .button {
+#right .profile .information-container .nickname-container .button {
     margin-left: 7px;
 }
-#right .profile .information-container .static .fullname {
+#right .profile .information-container .fullname {
     color: #444;
 }
-#right .profile .information-container .static .tagline {
+#right .profile .information-container .tagline {
     font-style: italic;
 }
-#right .profile .information-container .change > span {
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+.modalbox.edit-profile .wrapper {
+    text-align: left;
 }
-#right .profile .information-container .change > input {
+.modalbox.edit-profile .buttons {
+    text-align: right;
+}
+.modalbox.edit-profile input,
+.modalbox.edit-profile textarea {
     display: block;
+    width: 294px;
     margin-bottom: 5px;
-    width: 204px;
 }
-#right .profile .information-container .change .optional {
-    color: #666;
-}
-#right .profile .information-container .change .save {
-    display: block;
-    width: 80px;
-    max-width: 80px;
+.modalbox.edit-profile textarea {
+    height: 90px;
 }
 #right .profile .playlist-box {
     width: 300px;

@@ -10,12 +10,14 @@ var UserManager = {
         }
 
         UserManager.currentUser = new User(userJSON);
-        
-        /* Set click events */
-        $('#right .profile .information-container .change .save')
-            .click(function() {
-                UserManager.currentUser.saveProfile(UserManager.getInformationFormValues());
-            });
+
+        EventSystem.addEventListener('user_profile_updated', function(params) {
+            UserManager.currentUser.nickname = params.nickname;
+            UserManager.currentUser.firstName = params.first_name;
+            UserManager.currentUser.lastName = params.last_name;
+            UserManager.currentUser.tagline = params.tagline;
+            UserManager.populateUserProfile(UserManager.currentUser);
+        });
         
         /* Populate fields */
         if (UserManager.currentUser.nickname) {
@@ -25,14 +27,6 @@ var UserManager = {
         }
         $('#top .profile .picture').replaceWith('<img class="picture" src="'+ UserManager.currentUser.smallImageUrl + '" />');
         $('#top .profile').show();
-    },
-    getInformationFormValues: function() {
-        var ret = {};
-        $.each($('#right .profile .information-container .change input, #right .profile .information-container .change textarea'), function(i, elem) {
-            ret[elem.name] = elem.value;
-        });
-        console.log(ret);
-        return ret;
     },
     doFakeProfieMenuClick: function() {
         Menu.deSelectAll();
@@ -63,7 +57,7 @@ var UserManager = {
     },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
-       
+
         LoadingBar.show();
                
         var $playlists = $('#right .profile .pane.profile-playlists'),
@@ -74,6 +68,7 @@ var UserManager = {
             $followersTab = $('#right .profile .tabs .profile-followers'),
             $followButton = $('#right .profile .follow.button'),
             $unFollowButton = $('#right .profile .unfollow.button'),
+            $editButton = $('#right .profile .edit.button'),
             largeImageUrl = user.largeImageUrl || '/images/user.png',
             img = $('#right .profile .picture-container .picture');
 
@@ -113,49 +108,42 @@ var UserManager = {
             });
         });
 
+        $('#right .profile .edit.button').unbind('click').click(function() {
+            new EditProfileDialog().show();
+        });
+
         if (UserManager.currentUser.id === user.id) {
             $followButton.hide();
             $unFollowButton.hide();
-        }
-        else if (UserManager.currentUser.isFollowingUser(user.id)) {
+            $editButton.show();
+        } else if (UserManager.currentUser.isFollowingUser(user.id)) {
             $followButton.hide();
             $unFollowButton.show();
+            $editButton.hide();
         } else {
             $followButton.show();
             $unFollowButton.hide();
+            $editButton.hide();
         }
 
         if (user.id === my_user_id) {
-            $('#right .profile .static').hide();
-            $('#right .profile .change').show();
-
-            $('#right .profile .picture-container .email').text(UserManager.currentUser.email);
-            $('#right .profile .information-container .change input[name=nickname]').val(user.nickname);
-            $('#right .profile .information-container .change input[name=first_name]').val(user.firstName);
-            $('#right .profile .information-container .change input[name=last_name]').val(user.lastName);
-            $('#right .profile .information-container .change textarea[name=tagline]').val(user.tagline);
-            
-            /* Use playlists from the playlist manager to also get newly created playlists */
             user.playlists = playlistManager.playlists;
-        } else {
-            $('#right .profile .change').hide();
-            $('#right .profile .static').show();
+        }
 
-            if (user.nickname) {
-                $('#right .profile .static .nickname').text(user.nickname);
-            } else {
-                $('#right .profile .static .nickname').text('Anonymous');
-            }
-            if (user.fullName) {
-                $('#right .profile .static .full-name').text(user.fullName);
-            } else {
-                $('#right .profile .static .full-name').text('');
-            }
-            if (user.tagline) {
-                $('#right .profile .static .tagline').text(user.tagline);
-            } else {
-                $('#right .profile .static .tagline').text('');
-            }
+        if (user.nickname) {
+            $('#right .profile .nickname').text(user.nickname);
+        } else {
+            $('#right .profile .nickname').text('Anonymous');
+        }
+        if (user.fullName) {
+            $('#right .profile .full-name').text(user.fullName);
+        } else {
+            $('#right .profile .full-name').text('');
+        }
+        if (user.tagline) {
+            $('#right .profile .tagline').text(user.tagline);
+        } else {
+            $('#right .profile .tagline').text('');
         }
 
         $playlists.html('');
