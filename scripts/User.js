@@ -30,6 +30,7 @@ function User(args) {
             statusCode : {
                 200 : function(data, textStatus) {
                     LoadingBar.hide();
+                    params.displayName = data;
                     EventSystem.callEventListeners('user_profile_updated', params);
                 },
                 409 : function(data) {

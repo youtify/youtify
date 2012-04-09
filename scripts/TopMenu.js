@@ -9,7 +9,7 @@ var TopMenu = {
             $('#top .profile').show();
 
             EventSystem.addEventListener('user_profile_updated', function(params) {
-                $('#top .profile .nickname').text(params.nickname);
+                $('#top .profile .nickname').text(params.displayName);
             });
         } else {
             $('#top .profile').hide();

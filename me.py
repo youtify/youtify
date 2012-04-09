@@ -6,6 +6,7 @@ from model import get_youtify_user_struct
 from model import YoutifyUser
 from model import FollowRelation
 from model import get_activities_structs
+from model import get_display_name_for_youtify_user_model
 from activities import create_follow_activity
 
 class ProfileHandler(webapp.RequestHandler):
@@ -36,7 +37,7 @@ class ProfileHandler(webapp.RequestHandler):
         user.save()
 
         self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write('ok')
+        self.response.out.write(get_display_name_for_youtify_user_model(user))
 
 class FollowingsHandler(webapp.RequestHandler):
 
