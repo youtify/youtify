@@ -675,7 +675,6 @@ input, textarea, button {
     opacity: 0.8;
 }
 #right .profile .information-container {
-    width: 220px;
     display: inline-block;
     vertical-align: top;
 }
