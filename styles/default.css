@@ -1492,6 +1492,14 @@ input, textarea, button {
     font-weight: bold;
 }
 
+#right .activity {
+    padding: 5px 0;
+    border-bottom: 1px solid #8B9594;
+    border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
+}
+#right .activity:first-child {
+    padding-top: 0;
+}
 #right .activity .user,
 #right .activity .playlist,
 #right .activity .thing {
