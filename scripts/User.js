@@ -33,9 +33,13 @@ function User(args) {
                     params.displayName = data;
                     EventSystem.callEventListeners('user_profile_updated', params);
                 },
-                409 : function(data) {
+                400 : function(data, textStatus) {
+                    alert(data.responseText);
                     LoadingBar.hide();
+                },
+                409 : function(data) {
                     alert('Nickname is already taken');
+                    LoadingBar.hide();
                 }
             }
         });

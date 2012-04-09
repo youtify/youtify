@@ -1,3 +1,4 @@
+import re
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
@@ -21,6 +22,11 @@ class ProfileHandler(webapp.RequestHandler):
         first_name = self.request.get('first_name', user.first_name)
         last_name = self.request.get('last_name', user.first_name)
         tagline = self.request.get('tagline', user.tagline)
+
+        if nickname and not re.match('^[a-z0-9_]{6,36}$', nickname):
+            self.error(400)
+            self.response.out.write('Nickname must be 6-36 alphanumerical characters (no whitespace)')
+            return
 
         for u in YoutifyUser.all().filter('nickname_lower = ', nickname.lower()):
             if str(u.key().id()) != str(user.key().id()):
