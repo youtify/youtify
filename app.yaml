@@ -21,6 +21,10 @@ handlers:
   script: migrate_flattr_activities.py
   login: admin
 
+- url: /migrate_signup_activities
+  script: migrate_signup_activities.py
+  login: admin
+
 - url: /api/migrate_users.*
   script: migrate_users.py
   login: admin
