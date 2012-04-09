@@ -77,6 +77,29 @@ input, textarea, button {
 	font-size: 14px;
 }
 
+/* BUTTON
+*******************************/
+
+#right .info .button,
+#right .profile .button {
+    background:-webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:-moz-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:-ms-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:-o-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    margin: 10px 0px 5px 24px;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    text-align: center;
+    min-width: 60px;
+    cursor: pointer;
+}
+#right .info .button:active,
+#right .profile .button:active {
+    background: rgba(0, 124, 137, 0.2);
+}
+
 /** TOP
  ****************************************************************************/
 
@@ -615,27 +638,11 @@ input, textarea, button {
     font-size: 14px;
 }
 #right .info .button {
-    background:-webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-moz-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-ms-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-o-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    margin: 10px 0px 5px 24px;
-    padding: 4px;
-    border-radius: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-    text-align: center;
-    min-width: 60px;
-    cursor: pointer;
     float: right;
 }
 #right .info .subscribe {
     margin-left: 10px;
 }
-#right .info .button:hover {
-    background: rgba(0, 124, 137, 0.1);
-}
-
 #right .profile .picture-container {
     width: 208px;
     display: block;
