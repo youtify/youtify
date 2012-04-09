@@ -741,6 +741,10 @@ input, textarea, button {
 #right .profile .playlist-box .privacy label {
     line-height: 26px;
 }
+#right .profile .playlist-box .button {
+    float: right;
+    margin: 0 0 5px 0;
+}
 #right .profile .playlist-box .tracklist-container {
     clear: both;
     overflow: hidden;
