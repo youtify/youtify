@@ -91,8 +91,8 @@ class LeadersHandler(webapp.RequestHandler):
             user = db.get(key)
             json.append({
                 'id': user.key().id(),
-                'name': user.google_user.nickname(),
-                'email': user.google_user.email(),
+                'name': user.google_user2.nickname(),
+                'email': user.google_user2.email(),
             })
 
         self.response.headers['Content-Type'] = 'application/json'

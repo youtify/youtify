@@ -97,7 +97,7 @@ def update_fattr_user_info(user):
     response = simplejson.loads(response.content)
 
     if 'error_description' in response:
-        raise Exception('Failed to update flattr user info for user %s - %s' % (user.google_user.email(), response['error_description']))
+        raise Exception('Failed to update flattr user info for user %s - %s' % (user.google_user2.email(), response['error_description']))
     else:
         user.flattr_user_name = response['username']
 

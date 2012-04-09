@@ -9,6 +9,7 @@ from django.utils import simplejson
 class YoutifyUser(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     google_user = db.UserProperty()
+    google_user2 = db.UserProperty()
     device = db.StringProperty()
     flattr_access_token = db.StringProperty()
     flattr_user_name = db.StringProperty()
@@ -107,7 +108,7 @@ def get_current_youtify_user_model():
     return get_youtify_user_model_for(users.get_current_user())
 
 def get_youtify_user_model_for(user=None):
-    return YoutifyUser.all().filter('google_user = ',user).get()
+    return YoutifyUser.all().filter('google_user2 = ',user).get()
 
 def get_youtify_user_model_by_nick(nick=None):
     return YoutifyUser.all().filter('nickname_lower = ', nick.lower()).get()
@@ -119,7 +120,7 @@ def get_youtify_user_model_by_id_or_nick(id_or_nick):
         return get_youtify_user_model_by_nick(id_or_nick)
 
 def create_youtify_user_model():
-    m = YoutifyUser(google_user=users.get_current_user(), device=str(random.random()), migrated_playlists=True)
+    m = YoutifyUser(google_user2=users.get_current_user(), device=str(random.random()), migrated_playlists=True)
     m.put()
 
     from activities import create_signup_activity # hack to avoid recursive dependency
@@ -162,7 +163,7 @@ def get_followers_for_youtify_user_model(youtify_user_model):
     return ret
 
 def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False, include_relations=True):
-    email = youtify_user_model.google_user.email()
+    email = youtify_user_model.google_user2.email()
     gravatar_email = email
     default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
     small_size = 64
@@ -200,7 +201,7 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
         return youtify_user_model.first_name
     elif youtify_user_model.nickname:
         return youtify_user_model.nickname
-    return youtify_user_model.google_user.nickname().split('@')[0] # don't leak users email
+    return youtify_user_model.google_user2.nickname().split('@')[0] # don't leak users email
 
 def get_playlist_structs_for_youtify_user_model(youtify_user_model):
     playlist_models = youtify_user_model.playlists
