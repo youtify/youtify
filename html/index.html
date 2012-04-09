@@ -176,7 +176,9 @@
         <div class="left-wrapper">
             <div id="left">
                 <ul class="menu">
-                    <li class="news-feed translatable">News Feed</li>
+                    {% if logged_in %}
+                        <li class="news-feed translatable">News Feed</li>
+                    {% endif %}
                     <li class="toplist translatable">Toplist</li>
                     <li class="queue translatable">Play Queue</li>
                     <li class="search translatable">Search Results</li>
