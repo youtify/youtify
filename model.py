@@ -164,7 +164,11 @@ def get_followers_for_youtify_user_model(youtify_user_model):
     return ret
 
 def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False, include_relations=True):
-    email = youtify_user_model.google_user2.email()
+    if youtify_user_model.google_user2:
+        email = youtify_user_model.google_user2.email()
+    else:
+        email = youtify_user_model.google_user.email()
+    
     gravatar_email = email
     default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
     small_size = 64
@@ -202,7 +206,10 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
         return youtify_user_model.first_name
     elif youtify_user_model.nickname:
         return youtify_user_model.nickname
-    return youtify_user_model.google_user2.nickname().split('@')[0] # don't leak users email
+    if youtify_user_model.google_user2:
+        return youtify_user_model.google_user2.nickname().split('@')[0] # don't leak users email
+    else:
+        return youtify_user_model.google_user.nickname().split('@')[0] # don't leak users email
 
 def get_playlist_structs_for_youtify_user_model(youtify_user_model):
     playlist_models = youtify_user_model.playlists

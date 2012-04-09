@@ -30,7 +30,7 @@ function getUsers(page) {
                 $.each(data.users, function(index, user) {
                     var $user = $('<div class="user"/>'),
                         $title = $('<div class="title"/>')
-                            .text(user.id + ' - ' + user.displayname),
+                            .text(user.id + ' - ' + user.displayName),
                         $migrate = $('<button>')
                             .text('Migrate playlists')
                             .click(function() {
