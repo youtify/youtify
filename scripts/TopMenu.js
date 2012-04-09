@@ -1,10 +1,20 @@
 var TopMenu = {
     hasLoadedAboutPopupHtml: false,
     init: function() {
+
         // PROFILE
-        EventSystem.addEventListener('user_profile_updated', function(params) {
-            $('#top .profile .nickname').text(params.nickname);
-        });
+        if (UserManager.currentUser) {
+            $('#top .profile .picture').replaceWith('<img class="picture" src="'+ UserManager.currentUser.smallImageUrl + '" />');
+            $('#top .profile .nickname').text(UserManager.currentUser.displayName);
+            $('#top .profile').show();
+
+            EventSystem.addEventListener('user_profile_updated', function(params) {
+                $('#top .profile .nickname').text(params.nickname);
+            });
+        } else {
+            $('#top .profile').hide();
+        }
+
 
         // ABOUT
         $('#top .about').click(function() {

@@ -41,8 +41,8 @@ $(document).ready(function() {
     FlattrFinder.init();
     BottomPanel.init();
     Window.init();
-    TopMenu.init();
     UserManager.init(USER);
+    TopMenu.init();
     URIManager.init();
 });
 

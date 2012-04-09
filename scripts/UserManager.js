@@ -4,8 +4,7 @@ var UserManager = {
     
     init: function(userJSON) {
         if (userJSON === null) {
-            /* No logged in user */
-            $('#top .profile').hide();
+            /* User is logged out */
             return;
         }
 
@@ -18,15 +17,6 @@ var UserManager = {
             UserManager.currentUser.tagline = params.tagline;
             UserManager.populateUserProfile(UserManager.currentUser);
         });
-        
-        /* Populate fields */
-        if (UserManager.currentUser.nickname) {
-            $('#top .profile .nickname').text(UserManager.currentUser.nickname);
-        } else {
-            $('#top .profile .nickname').text(UserManager.currentUser.email);
-        }
-        $('#top .profile .picture').replaceWith('<img class="picture" src="'+ UserManager.currentUser.smallImageUrl + '" />');
-        $('#top .profile').show();
     },
     doFakeProfieMenuClick: function() {
         Menu.deSelectAll();
