@@ -110,6 +110,7 @@ var UserManager = {
             $unFollowButton.hide();
             $editButton.show();
             user.playlists = playlistManager.playlists;
+            $('#right .profile .picture-container .change .email').text(UserManager.currentUser.email);
             $('#right .profile .picture-container .change').show();
         } else if (UserManager.currentUser.isFollowingUser(user.id)) {
             $followButton.hide();
