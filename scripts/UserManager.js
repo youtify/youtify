@@ -11,6 +11,7 @@ var UserManager = {
         UserManager.currentUser = new User(userJSON);
 
         EventSystem.addEventListener('user_profile_updated', function(params) {
+            UserManager.currentUser.displayName = params.displayName;
             UserManager.currentUser.nickname = params.nickname;
             UserManager.currentUser.firstName = params.first_name;
             UserManager.currentUser.lastName = params.last_name;
@@ -122,21 +123,9 @@ var UserManager = {
             $('#right .profile .picture-container .change').hide();
         }
 
-        if (user.nickname) {
-            $('#right .profile .nickname').text(user.nickname);
-        } else {
-            $('#right .profile .nickname').text('Anonymous');
-        }
-        if (user.fullName) {
-            $('#right .profile .full-name').text(user.fullName);
-        } else {
-            $('#right .profile .full-name').text('');
-        }
-        if (user.tagline) {
-            $('#right .profile .tagline').text(user.tagline);
-        } else {
-            $('#right .profile .tagline').text('');
-        }
+        $('#right .profile .information-container .display-name').text(user.displayName);
+        $('#right .profile .information-container .nickname').text(user.nickname);
+        $('#right .profile .information-container .tagline').text(user.tagline);
 
         $playlists.html('');
         $playlistsTab.text('Playlists (' + user.playlists.length + ')');

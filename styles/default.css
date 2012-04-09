@@ -128,7 +128,7 @@ input, textarea, button {
     height: 64px;
     background-color: #FFF;
 }
-#top .profile .nickname {
+#top .profile .display-name {
     font-size: 14px;
     font-weight: bold;
     position: absolute;
@@ -683,14 +683,14 @@ input, textarea, button {
     display: block;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-#right .profile .information-container .nickname {
+#right .profile .information-container .display-name {
     font-size: 16px;
     font-weight: bold;
 }
-#right .profile .information-container .nickname-container .button {
+#right .profile .information-container .display-name-container .button {
     margin-left: 5px;
 }
-#right .profile .information-container .fullname {
+#right .profile .information-container .nickname {
     color: #444;
 }
 #right .profile .information-container .tagline {

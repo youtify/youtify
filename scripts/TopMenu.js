@@ -5,11 +5,11 @@ var TopMenu = {
         // PROFILE
         if (UserManager.currentUser) {
             $('#top .profile .picture').replaceWith('<img class="picture" src="'+ UserManager.currentUser.smallImageUrl + '" />');
-            $('#top .profile .nickname').text(UserManager.currentUser.displayName);
+            $('#top .profile .display-name').text(UserManager.currentUser.displayName);
             $('#top .profile').show();
 
             EventSystem.addEventListener('user_profile_updated', function(params) {
-                $('#top .profile .nickname').text(params.displayName);
+                $('#top .profile .display-name').text(params.displayName);
             });
         } else {
             $('#top .profile').hide();
