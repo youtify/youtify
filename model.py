@@ -143,6 +143,7 @@ def migrate_playlists_for_youtify_user_model(youtify_user_model):
                 youtify_user_model.playlists.append(playlist.key())
 
         youtify_user_model.migrated_playlists = True
+        youtify_user_model.google_user2 = youtify_user_model.google_user
         youtify_user_model.save()
 
 def get_playlists_model_for_youtify_user_model(youtify_user_model):
