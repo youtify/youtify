@@ -116,18 +116,18 @@ var UserManager = {
             $followButton.hide();
             $unFollowButton.hide();
             $editButton.show();
+            user.playlists = playlistManager.playlists;
+            $('#right .profile .picture-container .change').show();
         } else if (UserManager.currentUser.isFollowingUser(user.id)) {
             $followButton.hide();
             $unFollowButton.show();
             $editButton.hide();
+            $('#right .profile .picture-container .change').hide();
         } else {
             $followButton.show();
             $unFollowButton.hide();
             $editButton.hide();
-        }
-
-        if (user.id === my_user_id) {
-            user.playlists = playlistManager.playlists;
+            $('#right .profile .picture-container .change').hide();
         }
 
         if (user.nickname) {
