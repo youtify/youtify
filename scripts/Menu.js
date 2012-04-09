@@ -219,7 +219,7 @@ function MenuItem(type) {
         
         /* Populate fields with current user */
         if (self.type === 'profile') {
-            history.pushState(null, null, '/profile');
+            history.pushState(null, null, UserManager.currentUser.getUrl());
             UserManager.populateUserProfile(UserManager.currentUser);
         } else if (self.type === 'news-feed') {
             self.rightView.html('');

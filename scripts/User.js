@@ -40,6 +40,14 @@ function User(args) {
         });
     };
 
+    self.getUrl = function() {
+        if (this.nickname) {
+            return '/users/' + this.nickname;
+        } else {
+            return '/users/' + this.id;
+        }
+    };
+
     self.addFollower = function(userId, userDisplayName, smallImageUrl) {
         self.followers.push({
             id: userId,
