@@ -16,6 +16,8 @@ var UserManager = {
             UserManager.currentUser.lastName = params.last_name;
             UserManager.currentUser.tagline = params.tagline;
             UserManager.populateUserProfile(UserManager.currentUser);
+
+            history.pushState(null, null, UserManager.currentUser.getUrl());
         });
     },
     doFakeProfieMenuClick: function() {
