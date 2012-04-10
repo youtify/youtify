@@ -13,7 +13,7 @@ var JSLINT_OPTIONS = {
 }
 
 var MATCH_PATTERN = /\/scripts\/(.*\.js)/g;
-var IGNORE_PATTERN = /less|soundmanager|shuffle|featuredetection.*.js/;
+var IGNORE_PATTERN = /jquery-1\.|jquery\.time|less|soundmanager|shuffle|featuredetection.*.js/;
 
 var files = [];
 
