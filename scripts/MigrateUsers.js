@@ -23,6 +23,7 @@ function getUsers(page) {
         statusCode: {
             200: function(data) {
                 $('#info').text(data.migrated_users + '/' + data.total_users + ' migrated users');
+                $('#users').html('');
                 if (data.users === undefined || data.users === null) {
                     alert('Could not find users');
                     return;
