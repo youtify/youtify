@@ -1,5 +1,5 @@
 application: youtify
-version: 12
+version: 13
 runtime: python
 api_version: 1
 
@@ -16,6 +16,26 @@ handlers:
 
 - url: /me.*
   script: me.py
+
+- url: /api/users.*
+  script: users.py
+
+- url: /migrate_flattr_activities.*
+  script: migrate_flattr_activities.py
+  login: admin
+
+- url: /migrate_signup_activities
+  script: migrate_signup_activities.py
+  login: admin
+
+- url: /api/migrate_users.*
+  script: migrate_users.py
+  login: admin
+
+- url: /migrate_users.*
+  static_files: html/migrate_users.html
+  upload: html/migrate_users.html
+  expiration: "1d"
 
 - url: /export
   static_files: html/export.html
@@ -64,6 +84,9 @@ handlers:
 
 - url: /api/playlists.*
   script: playlists.py
+
+- url: /api/favorites.*
+  script: favorites.py
 
 - url: /pingcron
   script: ping.py

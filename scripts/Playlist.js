@@ -33,7 +33,7 @@ function loadPlaylist(playlistId) {
         type: 'GET',
         statusCode: {
             200: function(data) {
-                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate);
+                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate, data.followers);
                 playlist.createViews();
                 loadPlaylistView(playlist);
             },
@@ -105,21 +105,38 @@ function shareButtonClicked(event) {
 }
 
 function updatePlaylistBar(playlist) {
-    var $playlistBar = $('#right > .playlists .info');
+    var i = 0,
+        $playlistBar = $('#right > .playlists .info');
     $playlistBar.data('model', playlist);
     $playlistBar.find('.title').text(playlist.title);
     $playlistBar.find('.owner').hide();
     $playlistBar.find('.copy').hide().unbind('click');
     $playlistBar.find('.sync').hide().unbind('click');
+    $playlistBar.find('.subscribe').hide().unbind('click');
     
     if (playlist.owner) {
-        if (my_user_id === '' || playlist.owner.id !== parseInt(my_user_id, 10)) {
-            $playlistBar.find('.owner').text(playlist.owner.name).show();
+        $playlistBar.find('.owner').click(function() {
+            history.pushState(null, null, '/users/' + playlist.owner.id);
+            Menu.deSelectAll();
+            UserManager.loadProfile(playlist.owner.id);
+        }).text(playlist.owner.displayName).show();
 
-            // Add save button if not already saved
-            if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
-               $playlistBar.find('.copy').show().one('click', savePlaylistButtonClicked);
+        // Add save button if not already saved
+        if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
+           $playlistBar.find('.copy').show().one('click', savePlaylistButtonClicked);
+        }
+        /* Show subscription button */
+        if (Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubscription === false) {
+            for (i = 0; i < playlist.followers.length; i+=1) {
+                if (Number(playlist.followers[i].id) === Number(UserManager.currentUser.id)) {
+                    return;
+                }
             }
+            $playlistBar.find('.subscribe').click(function() {
+                playlist.subscribe(function() {
+                    loadPlaylistView(playlist);
+                });
+            }).show();
         }
     } else if (logged_in) {
         $playlistBar.find('.sync').show().one('click', syncPlaylistButtonClicked);
@@ -136,20 +153,22 @@ function loadPlaylistView(playlist) {
     playlist.leftMenuDOMHandle.addClass('selected');
 
     updatePlaylistBar(playlist);
-    
     if (playlist.playlistDOMHandle.find('.video').length !== playlist.videos.length) {
         playlist.playlistDOMHandle.html('');
         $.each(playlist.videos, function(i, item) {
             if (item) {
                 $video = item.createListView();
-                $video.data('additionalMenuButtons', [{
-                    title: 'Delete',
-                    args: $video,
-                    callback: deleteVideoButtonClicked
-                }]);
                 $video.addClass('droppable');
                 $video.addClass('draggable');
-                $video.addClass('reorderable');
+                if (!playlist.isSubscription) {
+                    $video.data('additionalMenuButtons', [{
+                        title: 'Delete',
+                        args: $video,
+                        callback: deleteVideoButtonClicked
+                    }]);
+                        
+                    $video.addClass('reorderable');
+                }
                 $video.appendTo(playlist.playlistDOMHandle);
             }
         });
@@ -177,17 +196,25 @@ function playlistClicked(event) {
 /** CLASS PLAYLIST
  ****************************************************************************/
 
-function Playlist(title, videos, remoteId, owner, isPrivate) {
+function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     var i, 
         self = this;
     self.title = title;
     self.videos = [];
     /* The loop that adds videos to self.videos is moved to the end of the class to avoid reference errors */
     self.remoteId = remoteId || null;
-    self.isPrivate = isPrivate || false;
     self.owner = owner;
+    self.isPrivate = isPrivate || false;
+    self.followers = followers || [];
     self.synced = true; // not part of JSON structure
     self.syncing = false; // not part of JSON structure
+    self.isSubscription = false;
+    for (i = 0; i < self.followers.length; i+=1) {
+        if (Number(self.followers[i].id) === Number(my_user_id)) {
+            self.isSubscription = true;
+            break;
+        }
+    }
     self.leftMenuDOMHandle = null;
     self.playlistDOMHandle = null;
 
@@ -234,9 +261,13 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     };
 
     self.unsync = function(callback) {
+        var url = '/api/playlists/' + self.remoteId;
+        if (self.isSubscription) {
+            url = '/api/playlists/follow/' + self.remoteId;
+        }
         $.ajax({
             type: 'DELETE',
-            url: '/api/playlists/' + self.remoteId,
+            url: url,
 			statusCode: {
 				200: function(data) {
 					if (callback) {
@@ -254,6 +285,44 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
 
         self.remoteId = null;
         self.owner = null;
+    };
+    
+    self.subscribe = function(callback) {
+        var params = {
+            'device': device
+        };
+
+        self.syncing = true;
+        $.ajax({
+            type: 'POST',
+            url: '/api/playlists/follow/' + self.remoteId,
+            data: params,
+            statusCode: {
+                200: function(data, textStatus) {
+                    self.syncing = false;
+                    self.isSubscription = true;
+                    self.followers.push(UserManager.currentUser);
+                    if (textStatus === 'success') {
+                        self.synced = true;
+                    } else {
+                        alert('Failed to create new playlist ' + self.title);
+                    }
+                    self.createViews();
+                    self.getMenuView().addClass('remote');
+                    playlistManager.addPlaylist(self);
+                    Menu.addPlaylist(self);
+                    if (callback) {
+                        callback();
+                    }
+                },
+                404: function(data) {
+                    alert(TranslationSystem.translations['No such playlist found']);
+                },
+                409: function(data) {
+                    new ReloadDialog().show();
+                }
+            }
+        });
     };
 
     self.createNewPlaylistOnRemote = function(callback) {
@@ -290,6 +359,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     };
 
     self.updatePlaylistOnRemote = function(callback) {
+        if (self.isSubscription) {
+            return;
+        }
         var params = {
                 'json': JSON.stringify(self.toJSON()),
 				'device': device
@@ -334,6 +406,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     };
 
     self.addVideo = function(video) {
+        if (self.isSubscription) {
+            return;
+        }
         if (self.syncing) {
             alert("Please wait until the playlist is synced");
             return;
@@ -358,6 +433,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     };
 
     self.moveVideo = function(sourceIndex, destIndex) {
+        if (self.isSubscription) {
+            return;
+        }
         if (self.syncing) {
             alert("Please wait until the playlist is synced");
             return;
@@ -376,6 +454,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     };
 
     self.deleteVideo = function(index) {
+        if (self.isSubscription) {
+            return;
+        }
         if (self.syncing) {
             alert("Please wait until the playlist is synced");
             return;
@@ -398,17 +479,23 @@ function Playlist(title, videos, remoteId, owner, isPrivate) {
     self.createViews = function() {
         var table = $('<table/>')
                 .addClass('pane')
+                .addClass('tracklist')
                 .appendTo('#right > .playlists')
                 .data('model', self),
             li = $('<li/>')
                 .addClass("playlistElem")
-                .addClass('droppable')
                 .data('model', self)
                 .bind('contextmenu', showPlaylistContextMenu)
                 .mousedown(playlistMouseDown)
                 .click(playlistClicked);
 
         $('<span class="title"></span>').text(self.title).appendTo(li);
+
+        if (self.isSubscription) {
+            li.addClass('subscription');
+        } else {
+            li.addClass('droppable');
+        }
 
         if (self.remoteId) {
             li.addClass('remote');

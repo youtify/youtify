@@ -77,6 +77,29 @@ input, textarea, button {
 	font-size: 14px;
 }
 
+/* BUTTON
+*******************************/
+
+#right .info .button,
+#right .profile .button {
+    background:-webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:-moz-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:-ms-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:-o-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    background:linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
+    margin: 10px 0px 5px 24px;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    text-align: center;
+    min-width: 60px;
+    cursor: pointer;
+}
+#right .info .button:active,
+#right .profile .button:active {
+    background: rgba(0, 124, 137, 0.2);
+}
+
 /** TOP
  ****************************************************************************/
 
@@ -90,9 +113,32 @@ input, textarea, button {
     width: 100%;
     z-index: 10;
 }
+#top .profile {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 200px;
+    height: 66px;
+    overflow: hidden;
+    cursor: pointer;
+    display: none;
+}
+#top .profile .picture {
+    width: 64px;
+    height: 64px;
+    background-color: #FFF;
+}
+#top .profile .display-name {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 69px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
 #top .search {
     display: inline-block;
-    margin-left: 210px;  /* left column */
+    margin-left: 205px;  /* left column */
     padding-right: 34px; /* button width */
     position: relative;
 }
@@ -264,6 +310,7 @@ input, textarea, button {
     padding: 0 5px 5px 10px;
     overflow-y: scroll;
 }
+#left .menu .news-feed,
 #left .menu .toplist, 
 #left .menu .queue,
 #left .menu .search,
@@ -445,35 +492,35 @@ input, textarea, button {
     background: #8B9594;
     cursor: default;
 }
-#right .pane,
-#right .pane table {
+#right .tracklist,
+#right .tracklist table {
     width: 100%;
     max-height: 100%;
     border-spacing: 0px;
     border-collapse: collapse;
 }
-#right .pane tr {
+#right .tracklist tr {
     margin: 0px 0px 0px 10px;
 }
-#right .pane .video .type {
+#right .tracklist .video .type {
     width: 40px;
 }
-#right .pane .video.selected .playlist,
-#right .pane .video.selected .play,
-#right .pane .video.selected .title,
-#right .pane .video.selected .like,
-#right .pane .video.selected .flattr,
-#right .pane .video.selected .type,
-#right .pane .video.selected .views,
-#right .pane .video.selected .videoCountHint {
+#right .tracklist .video.selected .playlist,
+#right .tracklist .video.selected .play,
+#right .tracklist .video.selected .title,
+#right .tracklist .video.selected .like,
+#right .tracklist .video.selected .flattr,
+#right .tracklist .video.selected .type,
+#right .tracklist .video.selected .views,
+#right .tracklist .video.selected .videoCountHint {
     background-color: rgba(0, 124, 137, 0.4);
 }
-#right .pane tr td {
+#right .tracklist tr td {
     line-height: 40px;
     text-align: center;
     cursor: default;
 }
-#right .pane tr .playlist {
+#right .tracklist tr .playlist {
     width: 40px;
     cursor: pointer;
     background-image: url(/images/playlist.png);
@@ -486,31 +533,34 @@ input, textarea, button {
 #right .video.insert-before {
     border-top: 1px solid black;
 }
-#right .pane .play {
+#right .tracklist .play {
     width: 40px;
     cursor: pointer;
     color: rgba(0, 0, 0, 0.6);
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-#right .pane .play:hover {
+#right .tracklist .play:hover {
     color: #000;
 }
-#right .pane .playing .play,
-#right .pane .playing .play:hover {
+#right .tracklist .playing .play,
+#right .tracklist .playing .play:hover {
     color: transparent;
     text-shadow: none;
     background-image: url(/images/volume-up-small.png);
     background-repeat: no-repeat;
     background-position: center center;
 }
-#right .pane .title {
+#right .tracklist .title {
     text-align: left;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     padding-left: 15px;
+    max-height: 40px;
+    display: block;
+    overflow: hidden;
 }
 
 /* todo: remove when we have implemented favorites */
-#right .pane .like,
+#right .tracklist .like,
 #right tr .space:nth-child(4) {
     display: none;
 }
@@ -519,52 +569,52 @@ input, textarea, button {
     display: table-cell;
 }
 
-#right .pane .like {
+#right .tracklist .like {
     width: 40px;
     font-size: 20px;
     cursor: pointer;
     color: rgba(0, 0, 0, 0.6);
 }
-#right .pane .like:hover {
+#right .tracklist .like:hover {
     color: #000;
 }
-#right .pane .views {
+#right .tracklist .views {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     width: 110px;
 }
-#right .pane .videoCountHint {
+#right .tracklist .videoCountHint {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     width: 40px;
 }
-#right .pane .loadMore td {
+#right .tracklist .loadMore td {
     text-align: center;
     font-weight: bold;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     cursor: pointer;
 }
-#right .pane tr:nth-of-type(odd) td {
+#right .tracklist tr:nth-of-type(odd) td {
     background-color: rgba(0, 124, 137, 0.1);
 }
-#right .pane tr:nth-of-type(even) td {
+#right .tracklist tr:nth-of-type(even) td {
     background-color: rgba(0, 124, 137, 0.2);
 }
-#right .pane tr:nth-of-type(odd) td.space,
-#right .pane tr:nth-of-type(even) td.space,
-#right .pane .space {
+#right .tracklist tr:nth-of-type(odd) td.space,
+#right .tracklist tr:nth-of-type(even) td.space,
+#right .tracklist .space {
     background: transparent;
     width: 2px;
 }
-#right .pane .video .type {
+#right .tracklist .video .type {
     background-repeat: no-repeat;
     background-position: center center;
 }
-#right .pane .video.youtube .type {
+#right .tracklist .video.youtube .type {
     background-image: url(/images/youtube.png);
 }
-#right .pane .video.soundcloud .type {
+#right .tracklist .video.soundcloud .type {
     background-image: url(/images/soundcloud.png);
 }
-#right .pane .video.officialfm .type {
+#right .tracklist .video.officialfm .type {
     background-image: url(/images/officialfm.png);
 }
 #right .info {
@@ -577,36 +627,165 @@ input, textarea, button {
 #right .info .copy,
 #right .info .sync {
     display: inline-block;
-    padding: 10px;
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     cursor: default;
     border: 0;
+    margin: 0 0 5px 5px;
 }
 #right .info .queue,
 #right .info .title {
     font-size: 14px;
 }
 #right .info .button {
-    background:-webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-moz-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-ms-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-o-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    margin: 10px 0px 5px 24px;
-    padding: 4px;
-    border-radius: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-    text-align: center;
-    min-width: 60px;
-    cursor: pointer;
     float: right;
 }
 #right .info .subscribe {
     margin-left: 10px;
 }
-#right .info .button:hover {
-    background: rgba(0, 124, 137, 0.1);
+#right .profile .picture-container {
+    width: 208px;
+    display: block;
+    margin: 0 10px 0 0;
+    display: inline-block;
+    position: relative;
+}
+#right .profile .picture-container .picture {
+    width: 208px;
+    height: 208px;
+    max-width: 208px;
+    max-height: 208px;
+    background-color: #FFF;
+    display: block;
+}
+#right .profile .picture-container .change {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+    background: black;
+    text-align: center;
+    opacity: 0;
+    padding: 5px;
+}
+#right .profile .picture-container .change a {
+    color: white;
+}
+#right .profile .picture-container:hover .change {
+    opacity: 0.8;
+}
+#right .profile .information-container {
+    display: inline-block;
+    vertical-align: top;
+}
+#right .profile .information-container > span {
+    display: block;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
+#right .profile .information-container .display-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+#right .profile .information-container .display-name-container .button {
+    margin-left: 5px;
+}
+#right .profile .information-container .nickname {
+    color: #444;
+}
+#right .profile .information-container .tagline {
+    font-style: italic;
+}
+.modalbox.edit-profile .wrapper {
+    text-align: left;
+}
+.modalbox.edit-profile .buttons {
+    text-align: right;
+}
+.modalbox.edit-profile input,
+.modalbox.edit-profile textarea {
+    display: block;
+    width: 294px;
+    margin-bottom: 5px;
+}
+.modalbox.edit-profile textarea {
+    height: 90px;
+}
+#right .profile .playlist-box {
+    width: 300px;
+    display: block;
+    margin: 10px;
+    float: left;
+    min-height: 270px;
+}
+#right .profile .playlist-box > .title {
+    overflow: hidden;
+    display: inline;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px;
+    height: 26px;
+    line-height: 26px;
+    max-width: 226px;
+    float: left;
+}
+#right .profile .playlist-box .privacy {
+    display: inline;
+    max-width: 70px;
+    float: right;
+}
+#right .profile .playlist-box .privacy input {
+    margin-right: 5px;
+    vertical-align: text-top;
+    line-height: 26px;
+}
+#right .profile .playlist-box .privacy label {
+    line-height: 26px;
+}
+#right .profile .playlist-box .button {
+    float: right;
+    margin: 0 0 5px 0;
+}
+#right .profile .playlist-box .tracklist-container {
+    clear: both;
+    overflow: hidden;
+    height: 200px;
+    -moz-transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+#right .profile .playlist-box .more {
+    display: block;
+    height: 36px;
+    padding: 2px;
+    text-align: center;
+    font-size: 18px;
+    background: rgba(0, 124, 137, 0.2);
+    cursor: pointer;
+    line-height: 36px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
+}
+#right .profile .playlist-box .more:active {
+    background: rgba(0, 124, 137, 0.4);
+}
+#right .profile .pane.profile-followings .user,
+#right .profile .pane.profile-followers .user {
+    padding: 5px 5px 5px 0;
+    cursor: pointer;
+}
+#right .profile .pane.profile-followings .user img,
+#right .profile .pane.profile-followers .user img {
+    width: 40px;
+    height: 40px;
+}
+#right .profile .pane.profile-followings .user .name,
+#right .profile .pane.profile-followers .user .name {
+    vertical-align: top;
+    margin-left: 5px;
+}
+#right .profile .tabs {
+    margin-top: 10px;
 }
 
 /** BOTTOM
@@ -1314,5 +1493,29 @@ input, textarea, button {
 }
 #right .video .flattr .button .count {
     margin-right: 5px;
+    font-weight: bold;
+}
+
+#right .activity {
+    padding: 5px 0;
+    border-bottom: 1px solid #8B9594;
+    border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
+}
+#right .activity:first-child {
+    padding-top: 0;
+}
+#right .activity .user,
+#right .activity .playlist,
+#right .activity .thing {
+    font-weight: bold;
+    cursor: pointer;
+}
+#right .activity .user img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+#right .activity .timestamp {
     font-weight: bold;
 }

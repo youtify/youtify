@@ -16,6 +16,7 @@ var EventSystem = {
         'flattr_thing_for_twitter_account_found': [],
         'flattr_thing_for_track_found': [],
         'flattr_thing_for_uploader_found': [],
+        'user_profile_updated': [],
         'video_duration_updated': []
     },
 

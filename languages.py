@@ -6,7 +6,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
 from django.utils import simplejson
-from model import get_current_youtify_user
 from model import YoutifyUser
 from model import Language
 from model import Translation
@@ -92,8 +91,8 @@ class LeadersHandler(webapp.RequestHandler):
             user = db.get(key)
             json.append({
                 'id': user.key().id(),
-                'name': user.google_user.nickname(),
-                'email': user.google_user.email(),
+                'name': user.google_user2.nickname(),
+                'email': user.google_user2.email(),
             })
 
         self.response.headers['Content-Type'] = 'application/json'

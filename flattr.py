@@ -5,8 +5,8 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
-from model import get_current_youtify_user
-from model import FlattrClick
+from model import get_current_youtify_user_model
+from activities import create_flattr_activity
 try:
     import config
 except ImportError:
@@ -20,25 +20,21 @@ class ClickHandler(webapp.RequestHandler):
     def post(self):
         thing_id = self.request.get('thing_id')
         url = 'https://api.flattr.com/rest/v2/things/' + thing_id + '/flattr'
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
 
         headers = {
             'Authorization': 'Bearer %s' % user.flattr_access_token
         }
 
         response = urlfetch.fetch(url=url, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
-
         json = simplejson.loads(response.content)
+
         if json.get('message') == 'ok' and 'thing' in json:
-            click = FlattrClick(
-                        youtify_user=user,
-                        flattr_user_name=user.flattr_user_name,
-                        thing_id=str(json['thing'].get('id')),
-                        thing_title=json['thing'].get('title')
-                    )
-            click.put()
+            thing_id = str(json['thing'].get('id'))
+            thing_title = json['thing'].get('title')
+            create_flattr_activity(user, thing_id, thing_title)
         else:
-            logging.error('Error logging flattr click. Response: %s' % response.content)
+            logging.error('Error creating flattr click. Response: %s' % response.content)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
@@ -48,38 +44,26 @@ class AutoSubmitHandler(webapp.RequestHandler):
     def post(self):
         url_to_submit = self.request.get('url')
         url = 'https://api.flattr.com/rest/v2/flattr'
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
 
         headers = {
             'Authorization': 'Bearer %s' % user.flattr_access_token,
             'Content-Type': 'application/json',
         }
 
-        data = {
-            #'url': 'http://flattr.com/submit/auto?' + urllib.urlencode({'url': url_to_submit}),
-            #'url': urllib.quote(url_to_submit),
+        data = simplejson.dumps({
             'url': url_to_submit,
-        }
-
-        logging.info(url_to_submit)
-        logging.info(data['url'])
-
-        #data = urllib.urlencode(data)
-        data = simplejson.dumps(data)
+        })
 
         response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST, headers=headers, validate_certificate=VALIDATE_CERTIFICATE)
-
         json = simplejson.loads(response.content)
+
         if json.get('message') == 'ok' and 'thing' in json:
-            click = FlattrClick(
-                        youtify_user=user,
-                        flattr_user_name=user.flattr_user_name,
-                        thing_id=str(json['thing'].get('id')),
-                        thing_title=json['thing'].get('title')
-                    )
-            click.put()
+            thing_id = str(json['thing'].get('id'))
+            thing_title = json['thing'].get('title')
+            create_flattr_activity(user, thing_id, thing_title)
         else:
-            logging.error('Error logging flattr click. Response: %s' % response.content)
+            logging.error('Error creating flattr click. Response: %s' % response.content)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
@@ -88,7 +72,7 @@ class DisconnectHandler(webapp.RequestHandler):
     """Remove the current users access token"""
     def get(self):
         redirect_uri = self.request.get('redirect_uri', '/')
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
         user.flattr_access_token = None
         user.flattr_user_name = None
         user.save()
@@ -113,7 +97,7 @@ def update_fattr_user_info(user):
     response = simplejson.loads(response.content)
 
     if 'error_description' in response:
-        raise Exception('Failed to update flattr user info for user %s - %s' % (user.google_user.email(), response['error_description']))
+        raise Exception('Failed to update flattr user info for user %s - %s' % (user.google_user2.email(), response['error_description']))
     else:
         user.flattr_user_name = response['username']
 
@@ -138,7 +122,7 @@ class BackHandler(webapp.RequestHandler):
         response = simplejson.loads(response.content)
 
         if 'access_token' in response:
-            user = get_current_youtify_user()
+            user = get_current_youtify_user_model()
             user.flattr_access_token = response['access_token']
             user.flattr_scope = FLATTR_SCOPE
 

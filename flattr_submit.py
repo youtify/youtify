@@ -25,7 +25,7 @@ class Handler(webapp.RequestHandler):
         my_flattr_username = ''
         my_youtube_username = ''
         if (user is not None):
-            my_user_email = user.google_user.email()
+            my_user_email = user.google_user2.email()
             logout_url = users.create_logout_url('/flattr_submit')
             if user.flattr_user_name:
                 my_flattr_username = user.flattr_user_name

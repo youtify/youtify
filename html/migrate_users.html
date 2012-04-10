@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Migrate Users</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            if (typeof jQuery == 'undefined')
+            {
+              document.write(unescape("%3Cscript src='/scripts/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+        </script>
+        <script src="/scripts/MigrateUsers.js"></script>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 12px;
+            }
+            h1, .user, #info {
+                margin: 5px;
+            }
+            .title {
+                display: inline-block;
+                width: 30%;
+            }
+            .user {
+                border: 1px solid gainsboro;
+                padding: 5px;
+            }
+            .error {
+                border: 1px solid red;
+                color: red; 
+            }
+            .migrated {
+                color: gainsboro;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Migrate Playlists</h1>
+        <div id="info"></div>
+        <div id="users"></div>
+        <button id="prev">Previous</button>
+        <button id="reload">Reload current page</button>
+        <button id="next">Next</button>
+    </body>
+</html>

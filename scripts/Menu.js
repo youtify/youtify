@@ -2,14 +2,25 @@ var pendingVideo;
 
 var Menu = {
     left: [],
+    profile: null,
     init: function() {
         /* Create new menuitems */
-        var leftMenuItems = ['toplist', 'queue', 'search'];
+        var leftMenuItems = [];
+        if (logged_in) {
+            leftMenuItems.push('news-feed');
+        }
+        leftMenuItems.push('toplist');
+        leftMenuItems.push('queue');
+        leftMenuItems.push('search');
         $.each(leftMenuItems, function(i, type) {
             var menuItem = new MenuItem(type);
             menuItem.init();
             Menu.left.push(menuItem);
         });
+        
+        /* Add profile */
+        Menu.profile = new MenuItem('profile');
+        Menu.profile.init();
 
         EventSystem.addEventListener('playlists_loaded', this.createPlaylistViews);
 
@@ -32,8 +43,13 @@ var Menu = {
         $playlists.html('');
 
         $.each(playlists, function(i, playlist) {
-            $playlists.append(playlist.getMenuView());
+            Menu.addPlaylist(playlist);
         });
+    },
+    addPlaylist: function(playlist) {
+        $playlists = $('#left .menu .playlists ul');
+        $playlists.append(playlist.getMenuView());
+        
     },
     newPlaylistClick: function() {
         var suggestedTitle = '',
@@ -101,8 +117,14 @@ var Menu = {
                 break;
         }
         event.stopPropagation();
+    },
+    deSelectAll: function() {
+        /* Remove selected on all menuItems */
+        $('#left .menu li').removeClass('selected');
+        
+        /* Hide right view */
+        $('#right > div').hide();
     }
-
 };
 
 function MenuItem(type) {
@@ -164,6 +186,16 @@ function MenuItem(type) {
                 self.rightView = $('#right .favorites');
                 self.addTabs(['favorites']);
                 break;
+            case 'profile':
+                self.leftView = $('#top .profile');
+                self.rightView = $('#right .profile');
+                self.addTabs(['profile-playlists', 'profile-followings', 'profile-followers']);
+                break;
+            case 'news-feed':
+                self.leftView = $('#left .menu .news-feed');
+                self.rightView = $('#right .news-feed');
+                break;
+
         }
         /* Set click event */
         self.leftView.click(self.select);
@@ -182,13 +214,124 @@ function MenuItem(type) {
         return null;
     };
     self.select = function() {
-        /* Remove selected on all menuItems */
-        $('#left .menu li').removeClass('selected');
-        self.leftView.addClass('selected');
+        /* DeSelect left menus and hide right views */
+        Menu.deSelectAll();
         
-        /* Display right view */
-        self.rightView.siblings().hide();
+        /* Populate fields with current user */
+        if (self.type === 'profile') {
+            history.pushState(null, null, UserManager.currentUser.getUrl());
+            UserManager.populateUserProfile(UserManager.currentUser);
+        } else if (self.type === 'news-feed') {
+            self.rightView.html('');
+
+            var getActivityElem = function(activity) {
+                var $div = $('<div class="activity"></div>'), 
+                    getUserActivityElem = function(user) {
+                        var $user = $('<span class="user"></span>');
+    
+                        $('<img />').attr('src', user.smallImageUrl).appendTo($user);
+                        $('<span class="name"></span>').text(user.displayName).appendTo($user);
+    
+                        $user.click(function() {
+                            history.pushState(null, null, '/users/' + user.id);
+                            Menu.deSelectAll();
+                            UserManager.loadProfile(user.id);
+                        });
+    
+                        return $user;
+                    },
+                    getPlaylistActivityElem = function(playlist) {
+                        var $playlist = $('<span class="playlist"></span>');
+    
+                        $playlist.text(playlist.title);
+    
+                        $playlist.click(function() {
+                            history.pushState(null, null, '/playlists/' + playlist.remoteId);
+                            Menu.deSelectAll();
+                            loadPlaylist(playlist.remoteId);
+                        });
+    
+                        return $playlist;
+                    },
+                    getFlattrThingActivityElem = function(data) {
+                        var $thing = $('<a class="thing" target="_blank"></a>');
+    
+                        $thing.text(data.thing_title);
+                        $thing.attr('href', 'https://flattr.com/t/' + data.thing_id);
+    
+                        return $thing;
+                    },
+                    /* define vars for switch */
+                    actor = null,
+                    otherUser = null,
+                    playlist = null,
+                    playlistOwner = null,
+                    thing = null;
+
+                switch (activity.verb) {
+                    case 'follow':
+                        actor = new User(JSON.parse(activity.actor));
+                        otherUser = new User(JSON.parse(activity.target));
+                        if (otherUser.id === UserManager.currentUser.id) {
+                            $div.append(getUserActivityElem(actor));
+                            $div.append('<span> started following you</span>');
+                        } else if (actor.id === UserManager.currentUser.id) {
+                            $div.append('<span>You started following </span>');
+                            $div.append(getUserActivityElem(otherUser));
+                        }
+                        break;
+
+                    case 'subscribe':
+                        actor = new User(JSON.parse(activity.actor));
+                        playlist = JSON.parse(activity.target);
+                        playlistOwner = new User(playlist.owner);
+                        if (playlistOwner.id === UserManager.currentUser.id) {
+                            $div.append(getUserActivityElem(actor));
+                            $div.append('<span> subscribed to your playlist </span>');
+                            $div.append(getPlaylistActivityElem(playlist));
+                        } else if (actor.id === UserManager.currentUser.id) {
+                            $div.append('<span>You subscribed to </span>');
+                            $div.append(getPlaylistActivityElem(playlist));
+                            $div.append('<span> by </span>');
+                            $div.append(getUserActivityElem(playlistOwner));
+                        }
+                    break;
+
+                    case 'signup':
+                        $div.append('<span>You joined Youtify</span>');
+                        break;
+
+                    case 'flattr':
+                        actor = new User(JSON.parse(activity.actor));
+                        thing = JSON.parse(activity.target);
+                        if (actor.id === UserManager.currentUser.id) {
+                            $div.append('<span>You flattred </span>');
+                            $div.append(getFlattrThingActivityElem(thing));
+                        } else {
+                            $div.append(getUserActivityElem(actor));
+                            $div.append('<span> flattred </span>');
+                            $div.append(getFlattrThingActivityElem(thing));
+                        }
+                        break;
+                }
+
+                $div.append('<span class="timestamp"> ' + jQuery.timeago(new Date(Number(activity.timestamp * 1000))) + '</span>');
+
+                return $div;
+            };
+
+            LoadingBar.show();
+            $.get('/me/activities', function(data) {
+                LoadingBar.hide();
+                $.each(data, function(i, activity) {
+                    self.rightView.append(getActivityElem(activity));
+                });
+            });
+        }
+        
+        /* Display views */
         self.rightView.show();
+        self.leftView.addClass('selected');
         
         /* Display the right video list */
         if (self.tabs.length > 0) {

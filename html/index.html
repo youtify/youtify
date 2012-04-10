@@ -30,7 +30,14 @@
         <link href="https://plus.google.com/117221740012078743992/" rel="publisher" />
 		<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho" />
     
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            if (typeof jQuery == 'undefined')
+            {
+              document.write(unescape("%3Cscript src='/scripts/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+        </script>
+        
 		<script src="/scripts/FeatureDetection.js"></script>
         
         <link rel="icon" href="/images/favicon.png" type="image/png" />
@@ -52,6 +59,7 @@
             var accept_language_header = "{{ accept_language_header }}";
             var ON_DEV = {{ ON_DEV|lower }};
             var ON_PRODUCTION = {{ ON_PRODUCTION|lower }};
+            var USER = {{ user_args }};
         </script>
         		
 		<script src="/scripts/jquery.shuffle.js"></script>
@@ -65,6 +73,7 @@
         {% if USE_PRODUCTION_JAVASCRIPT %}
         <script src="/scripts/production.js?v={{ CURRENT_VERSION_ID }}"></script>
         {% else %}
+        <script src="/scripts/jquery.timeago.js"></script>
         <script src="/scripts/jquery.arrowpopup.js"></script>
         <script src="/scripts/Settings.js"></script>
         <script src="/scripts/SettingsPopup.js"></script>
@@ -105,6 +114,8 @@
         <script src="/scripts/BottomPanel.js"></script>
         <script src="/scripts/Window.js"></script>
         <script src="/scripts/TopMenu.js"></script>
+        <script src="/scripts/User.js"></script>
+        <script src="/scripts/UserManager.js"></script>
         <script src="/scripts/ModalBox.js"></script>
 		<script src="/scripts/Main.js"></script>
         {% endif %}
@@ -138,6 +149,10 @@
         <div id="about-popup" style="display:none" class="popup"></div>
         
         <div id="top">
+            <div class="profile">
+                <span class="picture"></span>
+                <span class="display-name"></span>
+            </div>
             <div class="search"> 
                 <input type="text" class="translatable" placeholder="Search" /> 
                 <div class="loader"></div>
@@ -151,7 +166,7 @@
                 <span class="item about translatable">About</span>
                 <span class="item settings translatable">Settings</span>
                 {% if logged_in %}
-                <span class="item last username">{{ user.nickname }}</span>
+                <span class="item last username">Logout</span>
                 {% else %}
                 <a class="item last login-link" href="{{ login_url }}">Login</a>
                 {% endif %}
@@ -161,6 +176,9 @@
         <div class="left-wrapper">
             <div id="left">
                 <ul class="menu">
+                    {% if logged_in %}
+                        <li class="news-feed translatable">News Feed</li>
+                    {% endif %}
                     <li class="toplist translatable">Toplist</li>
                     <li class="queue translatable">Play Queue</li>
                     <li class="search translatable">Search Results</li>
@@ -189,9 +207,13 @@
                         <li class="soundcloud tracks" rel=".soundcloud.playlists.pane">SoundCloud</li>
                         <li class="officialfm tracks" rel=".officialfm.playlists.pane">Official.fm</li>
                     </ul>
-                    <table class="youtube videos pane"></table>
-                    <table class="soundcloud tracks pane"></table>
-                    <table class="officialfm tracks pane"></table>
+                    <table class="youtube videos pane tracklist"></table>
+                    <table class="soundcloud tracks pane tracklist"></table>
+                    <table class="officialfm tracks pane tracklist"></table>
+                </div>
+
+                <div class="news-feed">
+                    <div class="activities pane"></div>
                 </div>
                 
                 <div class="toplists">
@@ -199,23 +221,57 @@
                         <li class="flattr" rel=".flattr">Most Flattred</li>
                         <li class="youtube top100" rel=".youtube.top100.pane">YouTube Top 100</li>
                     </ul>
-                    <table class="flattr pane"></table>
-                    <table class="youtube top100 pane"></table>
+                    <table class="flattr pane tracklist"></table>
+                    <table class="youtube top100 pane tracklist"></table>
                 </div>
                 
                 <div class="queue">
                     <div class="info">
                         <span class="queue" class="title translatable">Play Queue</span>
                     </div>
-                    <table class="queue pane"></table>
+                    <table class="queue pane tracklist"></table>
                 </div>
                 
                 <div class="playlists">
                     <div class="info">
                         <span class="title"></span>
+                        <span class="subscribe button translatable">Subscribe</span>
                         <span class="copy button translatable">Copy</span>
                         <span class="sync button translatable">Sync</span>
                         <a class="owner"></a>
+                    </div>
+                </div>
+                
+                <div class="profile">
+                    <div class="picture-container">
+                        <div class="change">
+                            <span class="translatable">Configure your profile picture for <span class="email"></span> at </span><a href="http://www.gravatar.com" target="_blank">gravatar.com</a>
+                        </div>
+                    </div>
+                    <div class="information-container">
+                        <div class="display-name-container">
+                            <span class="display-name"></span>
+                            <button class="follow button">Follow</button>
+                            <button class="unfollow button">Unfollow</button>
+                            <button class="edit button">Edit</button>
+                        </div>
+                        <span class="nickname"></span>
+                        <span class="tagline"></span>
+                    </div>
+
+                    <ul class="tabs">
+                        <li class="profile-playlists" rel=".profile-playlists.pane">Playlists</li>
+                        <li class="profile-followings" rel=".profile-followings.pane">Following</li>
+                        <li class="profile-followers" rel=".profile-followers.pane">Followers</li>
+                    </ul>
+
+                    <div class="pane profile-playlists">
+                    </div>
+
+                    <div class="pane profile-followings">
+                    </div>
+
+                    <div class="pane profile-followers">
                     </div>
                 </div>
             </div>
