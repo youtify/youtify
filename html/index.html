@@ -71,6 +71,7 @@
             soundManager.debugMode = false;
 		</script>
         {% if USE_PRODUCTION_JAVASCRIPT %}
+        <script src="/scripts/jquery.timeago.js"></script>
         <script src="/scripts/production.js?v={{ CURRENT_VERSION_ID }}"></script>
         {% else %}
         <script src="/scripts/jquery.timeago.js"></script>
