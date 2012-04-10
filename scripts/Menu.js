@@ -224,92 +224,95 @@ function MenuItem(type) {
         } else if (self.type === 'news-feed') {
             self.rightView.html('');
 
-            function getActivityElem(activity) {
-                var $div = $('<div class="activity"></div>');
-
-                function getUserActivityElem(user) {
-                    var $user = $('<span class="user"></span>');
-
-                    $('<img />').attr('src', user.smallImageUrl).appendTo($user);
-                    $('<span class="name"></span>').text(user.displayName).appendTo($user);
-
-                    $user.click(function() {
-                        history.pushState(null, null, '/users/' + user.id);
-                        Menu.deSelectAll();
-                        UserManager.loadProfile(user.id);
-                    });
-
-                    return $user;
-                }
-
-                function getPlaylistActivityElem(playlist) {
-                    var $playlist = $('<span class="playlist"></span>');
-
-                    $playlist.text(playlist.title);
-
-                    $playlist.click(function() {
-                        history.pushState(null, null, '/playlists/' + playlist.remoteId);
-                        Menu.deSelectAll();
-                        loadPlaylist(playlist.remoteId);
-                    });
-
-                    return $playlist;
-                }
-
-                function getFlattrThingActivityElem(data) {
-                    var $thing = $('<a class="thing" target="_blank"></a>');
-
-                    $thing.text(data.thing_title);
-                    $thing.attr('href', 'https://flattr.com/t/' + data.thing_id);
-
-                    return $thing;
-                }
+            var getActivityElem = function(activity) {
+                var $div = $('<div class="activity"></div>'), 
+                    getUserActivityElem = function(user) {
+                        var $user = $('<span class="user"></span>');
+    
+                        $('<img />').attr('src', user.smallImageUrl).appendTo($user);
+                        $('<span class="name"></span>').text(user.displayName).appendTo($user);
+    
+                        $user.click(function() {
+                            history.pushState(null, null, '/users/' + user.id);
+                            Menu.deSelectAll();
+                            UserManager.loadProfile(user.id);
+                        });
+    
+                        return $user;
+                    },
+                    getPlaylistActivityElem = function(playlist) {
+                        var $playlist = $('<span class="playlist"></span>');
+    
+                        $playlist.text(playlist.title);
+    
+                        $playlist.click(function() {
+                            history.pushState(null, null, '/playlists/' + playlist.remoteId);
+                            Menu.deSelectAll();
+                            loadPlaylist(playlist.remoteId);
+                        });
+    
+                        return $playlist;
+                    },
+                    getFlattrThingActivityElem = function(data) {
+                        var $thing = $('<a class="thing" target="_blank"></a>');
+    
+                        $thing.text(data.thing_title);
+                        $thing.attr('href', 'https://flattr.com/t/' + data.thing_id);
+    
+                        return $thing;
+                    },
+                    /* define vars for switch */
+                    actor = null,
+                    otherUser = null,
+                    playlist = null,
+                    playlistOwner = null,
+                    thing = null;
 
                 switch (activity.verb) {
                     case 'follow':
-                    var actor = new User(JSON.parse(activity.actor));
-                    var otherUser = new User(JSON.parse(activity.target));
-                    if (otherUser.id === UserManager.currentUser.id) {
-                        $div.append(getUserActivityElem(actor));
-                        $div.append('<span> started following you</span>');
-                    } else if (actor.id === UserManager.currentUser.id) {
-                        $div.append('<span>You started following </span>');
-                        $div.append(getUserActivityElem(otherUser));
-                    }
-                    break;
+                        actor = new User(JSON.parse(activity.actor));
+                        otherUser = new User(JSON.parse(activity.target));
+                        if (otherUser.id === UserManager.currentUser.id) {
+                            $div.append(getUserActivityElem(actor));
+                            $div.append('<span> started following you</span>');
+                        } else if (actor.id === UserManager.currentUser.id) {
+                            $div.append('<span>You started following </span>');
+                            $div.append(getUserActivityElem(otherUser));
+                        }
+                        break;
 
                     case 'subscribe':
-                    var actor = new User(JSON.parse(activity.actor));
-                    var playlist = JSON.parse(activity.target);
-                    var playlistOwner = new User(playlist.owner);
-                    if (playlistOwner.id === UserManager.currentUser.id) {
-                        $div.append(getUserActivityElem(actor));
-                        $div.append('<span> subscribed to your playlist </span>');
-                        $div.append(getPlaylistActivityElem(playlist));
-                    } else if (actor.id === UserManager.currentUser.id) {
-                        $div.append('<span>You subscribed to </span>');
-                        $div.append(getPlaylistActivityElem(playlist));
-                        $div.append('<span> by </span>');
-                        $div.append(getUserActivityElem(playlistOwner));
-                    }
+                        actor = new User(JSON.parse(activity.actor));
+                        playlist = JSON.parse(activity.target);
+                        playlistOwner = new User(playlist.owner);
+                        if (playlistOwner.id === UserManager.currentUser.id) {
+                            $div.append(getUserActivityElem(actor));
+                            $div.append('<span> subscribed to your playlist </span>');
+                            $div.append(getPlaylistActivityElem(playlist));
+                        } else if (actor.id === UserManager.currentUser.id) {
+                            $div.append('<span>You subscribed to </span>');
+                            $div.append(getPlaylistActivityElem(playlist));
+                            $div.append('<span> by </span>');
+                            $div.append(getUserActivityElem(playlistOwner));
+                        }
                     break;
 
                     case 'signup':
-                    $div.append('<span>You joined Youtify</span>');
-                    break;
+                        $div.append('<span>You joined Youtify</span>');
+                        break;
 
                     case 'flattr':
-                    var actor = new User(JSON.parse(activity.actor));
-                    var thing = JSON.parse(activity.target);
-                    if (actor.id === UserManager.currentUser.id) {
-                        $div.append('<span>You flattred </span>');
-                        $div.append(getFlattrThingActivityElem(thing));
-                    } else {
-                        $div.append(getUserActivityElem(actor));
-                        $div.append('<span> flattred </span>');
-                        $div.append(getFlattrThingActivityElem(thing));
-                    }
-                    break;
+                        actor = new User(JSON.parse(activity.actor));
+                        thing = JSON.parse(activity.target);
+                        if (actor.id === UserManager.currentUser.id) {
+                            $div.append('<span>You flattred </span>');
+                            $div.append(getFlattrThingActivityElem(thing));
+                        } else {
+                            $div.append(getUserActivityElem(actor));
+                            $div.append('<span> flattred </span>');
+                            $div.append(getFlattrThingActivityElem(thing));
+                        }
+                        break;
                 }
 
                 $div.append('<span class="timestamp"> ' + jQuery.timeago(new Date(Number(activity.timestamp * 1000))) + '</span>');

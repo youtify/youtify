@@ -105,7 +105,8 @@ function shareButtonClicked(event) {
 }
 
 function updatePlaylistBar(playlist) {
-    var $playlistBar = $('#right > .playlists .info');
+    var i = 0,
+        $playlistBar = $('#right > .playlists .info');
     $playlistBar.data('model', playlist);
     $playlistBar.find('.title').text(playlist.title);
     $playlistBar.find('.owner').hide();
@@ -126,7 +127,7 @@ function updatePlaylistBar(playlist) {
         }
         /* Show subscription button */
         if (Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubscription === false) {
-            for (var i = 0; i < playlist.followers.length; i++) {
+            for (i = 0; i < playlist.followers.length; i+=1) {
                 if (Number(playlist.followers[i].id) === Number(UserManager.currentUser.id)) {
                     return;
                 }
@@ -208,7 +209,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     self.synced = true; // not part of JSON structure
     self.syncing = false; // not part of JSON structure
     self.isSubscription = false;
-    for (i = 0; i < self.followers.length; i++) {
+    for (i = 0; i < self.followers.length; i+=1) {
         if (Number(self.followers[i].id) === Number(my_user_id)) {
             self.isSubscription = true;
             break;
@@ -262,7 +263,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     self.unsync = function(callback) {
         var url = '/api/playlists/' + self.remoteId;
         if (self.isSubscription) {
-            url = '/api/playlists/follow/' + self.remoteId
+            url = '/api/playlists/follow/' + self.remoteId;
         }
         $.ajax({
             type: 'DELETE',
@@ -493,7 +494,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         if (self.isSubscription) {
             li.addClass('subscription');
         } else {
-            li.addClass('droppable')
+            li.addClass('droppable');
         }
 
         if (self.remoteId) {
