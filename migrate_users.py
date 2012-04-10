@@ -9,7 +9,7 @@ class MigrateUser(webapp.RequestHandler):
 
     def get(self, page):
         """Get users as JSON"""
-        page_size = 10
+        page_size = 200
         users = YoutifyUser.all().fetch(page_size, page_size * int(page))
         
         json = {

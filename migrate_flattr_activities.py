@@ -7,12 +7,14 @@ from model import get_youtify_user_struct
 
 class Handler(webapp.RequestHandler):
 
-    def get(self):
+    def get(self, page):
         count = 0
+        page_size = 30
+        clicks = FlattrClick.all().fetch(page_size, page_size * int(page))
 
-        for click in FlattrClick.all():
-            if click.migrated:
-                continue
+        for click in clicks:
+            #if click.migrated:
+                #continue
 
             target = simplejson.dumps({
                 'thing_id': click.thing_id,
@@ -29,11 +31,11 @@ class Handler(webapp.RequestHandler):
             count += 1
         
         self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write('Migrated %s flattr clicks' % count)
+        self.response.out.write('Migrated page %s (%s flattr clicks)' % (page, count))
 
 def main():
     application = webapp.WSGIApplication([
-        ('/migrate_flattr_activities', Handler),
+        ('/migrate_flattr_activities/(.*)', Handler),
     ], debug=True)
     util.run_wsgi_app(application)
 
