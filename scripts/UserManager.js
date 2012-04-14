@@ -41,7 +41,7 @@ var UserManager = {
         UserManager.$changePictureBox = $('#right .profile .picture-container .change');
         UserManager.$gravatarEmail = $('#right .profile .picture-container .change .email');
     },
-    doFakeProfieMenuClick: function() {
+    doFakeProfileMenuClick: function() {
         Menu.deSelectAll();
 
         Menu.profile.rightView.show();
