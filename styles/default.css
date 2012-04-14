@@ -138,7 +138,7 @@ input, textarea, button {
 }
 #top .search {
     display: inline-block;
-    margin-left: 205px;  /* left column */
+    margin-left: 208px;  /* left column */
     padding-right: 34px; /* button width */
     position: relative;
 }
