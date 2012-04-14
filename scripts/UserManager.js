@@ -105,7 +105,12 @@ var UserManager = {
             new EditProfileDialog().show();
         });
 
-        if (UserManager.currentUser.id === user.id) {
+        if (!logged_in) {
+            $followButton.hide();
+            $unFollowButton.hide();
+            $editButton.hide();
+            $('#right .profile .picture-container .change').hide();
+        } else if (UserManager.currentUser.id === user.id) {
             $followButton.hide();
             $unFollowButton.hide();
             $editButton.show();
@@ -181,7 +186,7 @@ var UserManager = {
             }
             $box.append($title);
 
-            if (user.id !== UserManager.currentUser.id) {
+            if (logged_in && user.id !== UserManager.currentUser.id) {
                 $box.append($toggleSubscriptionButton);
             }
 
