@@ -727,6 +727,7 @@ input, textarea, button {
     line-height: 26px;
     max-width: 226px;
     float: left;
+    cursor: pointer;
 }
 #right .profile .playlist-box .privacy {
     display: inline;

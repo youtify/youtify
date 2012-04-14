@@ -169,6 +169,14 @@ var UserManager = {
                         $tracklistContainer.removeAttr('style');
                     }
                 }).html('&#8661;');
+            
+            /* Title click */
+            $title.click(function() {
+                if (playlist.playlistDOMHandle === null) {
+                    playlist.createViews();
+                }
+                PlaylistView.loadPlaylistView(playlist);
+            });
 
             if (playlist.isSubscription) {
                 $toggleSubscriptionButton.text('Unsubscribe');
