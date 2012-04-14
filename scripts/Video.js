@@ -61,42 +61,60 @@ function Video(args) {
     };
     
     this.createListView = function() {
-        var self = this;
-        var space = $('<td class="space"></td>');
+        var self = this,
+            $fragment = document.createDocumentFragment();
+            $space = document.createElement('td'),
+            $play = document.createElement('td'),
+            $title = document.createElement('td'),
+            $heart = document.createElement('td'),
+            $flattr = null,
+            $type = document.createElement('td');
+            
         
-        this.listView = $('<tr/>')
-            .addClass("draggable")
-            .addClass("video")
-            .addClass(this.type)
+        $space.setAttribute('class', 'space');
+
+        $play.innerHTML = '&#9654;';
+        $play.setAttribute('class', 'play');
+        $play.onclick = function(event){self.play(event);};
+        $fragment.appendChild($play);
+        $fragment.appendChild($space.cloneNode(false));
+
+        $title.innerHTML = this.title;
+        $title.setAttribute('class', 'title');
+        $fragment.appendChild($title);
+        $fragment.appendChild($space.cloneNode(false));
+
+        if (this.flattrThingId) {
+            $flattr = document.createElement('td');
+            $flattr.setAttribute('class', 'flattr');
+            $fragment.appendChild(
+                $($flattr)
+                .append(this.createFlattrButton())
+                [0]);
+        }
+        
+        $heart.setAttribute('class', 'like');
+        $heart.innerHTML = '&hearts;';
+        $fragment.appendChild($heart);
+        $fragment.appendChild($space.cloneNode(false));
+
+        $type.setAttribute('class', 'type');
+        $type.innerHTML = '&nbsp;';
+        $fragment.appendChild($type);
+        
+        
+        this.listView = document.createElement('tr');
+        this.listView.setAttribute('class', 'draggable video ' + this.type);
+        this.listView.appendChild($fragment);
+        this.listView = $(this.listView)
             .bind('contextmenu', showResultsItemContextMenu)
             .click(function(event) {self.listViewSelect(event);})
             .dblclick(function(event){self.play(event);})
             .data('model', this);
         
-        $('<td class="play">&#9654;</td>')
-            .click(function(event){self.play(event);})
-            .appendTo(this.listView);
-        space.clone().appendTo(this.listView);
-        
-        var titleElem = $('<td class="title"/>')
-            .text(this.title)
-            .appendTo(this.listView);
-        space.clone().appendTo(this.listView);
-
         if (this.flattrThingId) {
             this.listView.addClass('has-flattr');
-            $('<td class="flattr"></td>')
-                .append(this.createFlattrButton())
-                .appendTo(this.listView);
         }
-        
-        $('<td class="like">&hearts;</td>')
-            .appendTo(this.listView);
-        space.clone().appendTo(this.listView);
-
-        $('<td class="type">&nbsp;</td>')
-            .appendTo(this.listView);
-
         return this.listView;
     };
     
