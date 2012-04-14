@@ -30,7 +30,7 @@ var SpotifyImporterPopup = {
                     // callbackUpdate
                     $('#spotify-importer .added').text(importer.added);
                     $('#spotify-importer .max').text('/'+importer.max);
-                    loadPlaylistView(playlist);
+                    PlaylistView.loadPlaylistView(playlist);
                 },
                 function() {
                     // callbackDone

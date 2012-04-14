@@ -124,7 +124,7 @@ function showPlaylistContextMenu(event) {
             title: 'Share',
             args: $(this),
             callback: function(li) {
-                showPlaylistSharePopup(li.data('model'), li, 'left');
+                PlaylistView.showPlaylistSharePopup(li.data('model'), li, 'left');
             }
         });
     }
