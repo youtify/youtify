@@ -275,7 +275,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         $video.data('additionalMenuButtons', [{
             title: 'Delete',
             args: $video,
-            callback: deleteVideoButtonClicked
+            callback: PlaylistView.deleteVideoButtonClicked
         }]);
         $video.addClass('droppable');
         $video.addClass('draggable');
