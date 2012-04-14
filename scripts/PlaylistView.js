@@ -12,7 +12,11 @@ var PlaylistView = {
         
         if (playlist.owner) {
             $playlistBar.find('.owner').click(function() {
-                history.pushState(null, null, '/users/' + playlist.owner.id);
+                if (playlist.owner.nickname) {
+                    history.pushState(null, null, '/users/' + playlist.owner.nickname);
+                } else {
+                    history.pushState(null, null, '/users/' + playlist.owner.id);
+                }
                 Menu.deSelectAll();
                 UserManager.loadProfile(playlist.owner.id);
             }).text(playlist.owner.displayName).show();

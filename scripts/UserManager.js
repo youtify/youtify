@@ -236,7 +236,11 @@ var UserManager = {
             $('<span class="name"></span>').text(userName).appendTo($user);
 
             $user.click(function() {
-                history.pushState(null, null, '/users/' + userId);
+                if (user.nickname) {
+                    history.pushState(null, null, '/users/' + user.nickname);
+                } else {
+                    history.pushState(null, null, '/users/' + userId);
+                }
                 Menu.deSelectAll();
                 UserManager.loadProfile(userId);
             });
