@@ -22,7 +22,7 @@ var PlaylistView = {
                $playlistBar.find('.copy').show().one('click', PlaylistView.savePlaylistButtonClicked);
             }
             /* Show subscription button */
-            if (Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubscription === false) {
+            if (logged_in && Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubscription === false) {
                 for (i = 0; i < playlist.followers.length; i+=1) {
                     if (Number(playlist.followers[i].id) === Number(UserManager.currentUser.id)) {
                         return;
