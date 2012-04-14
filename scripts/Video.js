@@ -62,7 +62,7 @@ function Video(args) {
     
     this.createListView = function() {
         var self = this,
-            $fragment = document.createDocumentFragment();
+            $fragment = document.createDocumentFragment(),
             $space = document.createElement('td'),
             $play = document.createElement('td'),
             $title = document.createElement('td'),
@@ -87,10 +87,7 @@ function Video(args) {
         if (this.flattrThingId) {
             $flattr = document.createElement('td');
             $flattr.setAttribute('class', 'flattr');
-            $fragment.appendChild(
-                $($flattr)
-                .append(this.createFlattrButton())
-                [0]);
+            $fragment.appendChild( $($flattr).append(this.createFlattrButton())[0]);
         }
         
         $heart.setAttribute('class', 'like');
