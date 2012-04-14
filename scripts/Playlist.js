@@ -1,19 +1,6 @@
 /** EVENTS
  ****************************************************************************/
 
-function deleteVideoButtonClicked(li) {
-    var playlist = playlistManager.getCurrentlySelectedPlaylist();
-    var allSelectedVideos = li.parent().find('.video.selected');
-
-    $.each(allSelectedVideos, function(index, item) {
-        $video = $(item);
-        playlist.deleteVideo($video.index());
-        $video.remove();
-    });
-
-    playlistManager.save();
-}
-
 function playlistMouseDown(event) {
 	$('#left-menu li').removeClass('selected');
 	$(this).addClass('selected');

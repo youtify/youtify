@@ -131,5 +131,18 @@ var PlaylistView = {
         var playlistBar = $(this).parent();
         var playlist = playlistBar.data('playlist');
         PlaylistView.showPlaylistSharePopup(playlist, $(this), 'up');
+    },
+    
+    deleteVideoButtonClicked: function(li) {
+        var playlist = playlistManager.getCurrentlySelectedPlaylist();
+        var allSelectedVideos = li.parent().find('.video.selected');
+    
+        $.each(allSelectedVideos, function(index, item) {
+            $video = $(item);
+            playlist.deleteVideo($video.index());
+            $video.remove();
+        });
+    
+        playlistManager.save();
     }
 }
