@@ -121,6 +121,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 			statusCode: {
 				200: function(data) {
 					if (callback) {
+                        self.isSubscription = false;
 						callback();
 					}
 				},
@@ -133,8 +134,10 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 			}
         });
 
-        self.remoteId = null;
-        self.owner = null;
+        if (!self.isSubscription) {
+            self.remoteId = null;
+            self.owner = null;
+        }
     };
     
     self.subscribe = function(callback) {

@@ -624,7 +624,7 @@ input, textarea, button {
 #right .info .title,
 #right .info .owner,
 #right .info .subscribe,
-#right .info .copy,
+#right .info .unsubscribe,
 #right .info .sync {
     display: inline-block;
     font-size: 13px;

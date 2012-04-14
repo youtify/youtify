@@ -6,9 +6,9 @@ var PlaylistView = {
         $playlistBar.data('model', playlist);
         $playlistBar.find('.title').text(playlist.title);
         $playlistBar.find('.owner').hide();
-        $playlistBar.find('.copy').hide().unbind('click');
         $playlistBar.find('.sync').hide().unbind('click');
         $playlistBar.find('.subscribe').hide().unbind('click');
+        $playlistBar.find('.unsubscribe').hide().unbind('click');
         
         if (playlist.owner) {
             $playlistBar.find('.owner').click(function() {
@@ -21,25 +21,23 @@ var PlaylistView = {
                 UserManager.loadProfile(playlist.owner.id);
             }).text(playlist.owner.displayName).show();
 
-            // Add save button if not already saved
-            if (!playlistManager.getPlaylistsMap().hasOwnProperty(playlist.remoteId)) {
-               $playlistBar.find('.copy').show().one('click', PlaylistView.savePlaylistButtonClicked);
-            }
             /* Show subscription button */
-            if (logged_in && Number(playlist.owner.id) !== Number(UserManager.currentUser.id) && logged_in && playlist.isSubscription === false) {
-                for (i = 0; i < playlist.followers.length; i+=1) {
-                    if (Number(playlist.followers[i].id) === Number(UserManager.currentUser.id)) {
-                        return;
-                    }
-                }
-                $playlistBar.find('.subscribe').click(function() {
-                    playlist.subscribe(function() {
-                        PlaylistView.loadPlaylistView(playlist);
+            if (logged_in) {
+                if (playlist.isSubscription) {
+                    $playlistBar.find('.unsubscribe').show().click(function() {
+                        playlist.unsync(function() {
+                            playlist.leftMenuDOMHandle.remove();
+                            PlaylistView.updatePlaylistBar(playlist);
+                        });
                     });
-                }).show();
+                } else if (Number(playlist.owner.id) !== Number(UserManager.currentUser.id)) {
+                    $playlistBar.find('.subscribe').click(function() {
+                        playlist.subscribe(function() {
+                            PlaylistView.updatePlaylistBar(playlist);
+                        });
+                    }).show();
+                }
             }
-        } else if (logged_in) {
-            $playlistBar.find('.sync').show().one('click', PlaylistView.syncPlaylistButtonClicked);
         }
     },
 
@@ -76,27 +74,6 @@ var PlaylistView = {
         playlist.playlistDOMHandle.show();
         $('#right > .playlists').show();
     },
-
-    savePlaylistButtonClicked: function(event) {
-        var $playlistBar = $('#right > .playlists .info');
-        var playlist = $playlistBar.data('model');
-        var newPlaylist = playlist.copy(); // create copy without connection to remote
-
-        newPlaylist.createViews();
-        playlistManager.addPlaylist(newPlaylist);
-        newPlaylist.getMenuView().appendTo('#left .playlists ul');
-
-        if (logged_in) {
-            newPlaylist.createNewPlaylistOnRemote(function() {
-                playlistManager.save();
-                newPlaylist.getMenuView().addClass('remote');
-            });
-        } else {
-            playlistManager.save();
-        }
-
-        $playlistBar.find('.copy').hide();
-   },
 
     syncPlaylistButtonClicked: function(event) {
         var playlist = playlistManager.getCurrentlySelectedPlaylist();
