@@ -1,25 +1,45 @@
 
 var UserManager = {
     currentUser: null,
+    $playlists: null,
+    $followings: null,
+    $followers: null,
+    $playlistsTab: null,
+    $followingsTab: null,
+    $followersTab: null,
+    $followButton: null,
+    $unFollowButton: null,
+    $editButton: null,
+    $img: null,
+    $changePictureBox: null,
+    $gravatarEmail: null,
     
     init: function(userJSON) {
-        if (userJSON === null) {
-            /* User is logged out */
-            return;
+        if (userJSON) {
+            UserManager.currentUser = new User(userJSON);
+            EventSystem.addEventListener('user_profile_updated', function(params) {
+                UserManager.currentUser.displayName = params.displayName;
+                UserManager.currentUser.nickname = params.nickname;
+                UserManager.currentUser.firstName = params.first_name;
+                UserManager.currentUser.lastName = params.last_name;
+                UserManager.currentUser.tagline = params.tagline;
+                UserManager.loadCurrentUser();
+                history.pushState(null, null, UserManager.currentUser.getUrl());
+            });
         }
 
-        UserManager.currentUser = new User(userJSON);
-
-        EventSystem.addEventListener('user_profile_updated', function(params) {
-            UserManager.currentUser.displayName = params.displayName;
-            UserManager.currentUser.nickname = params.nickname;
-            UserManager.currentUser.firstName = params.first_name;
-            UserManager.currentUser.lastName = params.last_name;
-            UserManager.currentUser.tagline = params.tagline;
-            UserManager.populateUserProfile(UserManager.currentUser);
-
-            history.pushState(null, null, UserManager.currentUser.getUrl());
-        });
+        UserManager.$playlists = $('#right .profile .pane.profile-playlists');
+        UserManager.$followings = $('#right .profile .pane.profile-followings');
+        UserManager.$followers = $('#right .profile .pane.profile-followers');
+        UserManager.$playlistsTab = $('#right .profile .tabs .profile-playlists');
+        UserManager.$followingsTab = $('#right .profile .tabs .profile-followings');
+        UserManager.$followersTab = $('#right .profile .tabs .profile-followers');
+        UserManager.$followButton = $('#right .profile .follow.button');
+        UserManager.$unFollowButton = $('#right .profile .unfollow.button');
+        UserManager.$editButton = $('#right .profile .edit.button');
+        UserManager.$img = $('#right .profile .picture-container .picture');
+        UserManager.$changePictureBox = $('#right .profile .picture-container .change');
+        UserManager.$gravatarEmail = $('#right .profile .picture-container .change .email');
     },
     doFakeProfieMenuClick: function() {
         Menu.deSelectAll();
@@ -29,8 +49,15 @@ var UserManager = {
 
         Menu.profile.tabs[0].select();
     },
+    loadCurrentUser: function() {
+        UserManager.resetUserProfileView();
+        UserManager.populateUserProfile(UserManager.currentUser);
+    },
     loadProfile: function(nickOrId) {
+        UserManager.resetUserProfileView();
+
         LoadingBar.show();
+
         $.ajax({
             type: 'GET',
             url: '/api/users/' + nickOrId,
@@ -42,41 +69,43 @@ var UserManager = {
                     $('#right .profile').show();
                     UserManager.populateUserProfile(new User(data));
                 },
-                404: function(data) {
+                404: function(data, textStatus) {
                     alert('User "' + nickOrId + '" not found');
                 }
             }
         });
     },
+    resetUserProfileView: function() {
+        UserManager.$followButton.hide();
+        UserManager.$unFollowButton.hide();
+        UserManager.$editButton.hide();
+        UserManager.$changePictureBox.hide();
+        UserManager.$gravatarEmail.text('');
+        UserManager.$playlists.html('');
+        UserManager.$followings.html('');
+        UserManager.$followers.html('');
+
+        $('#right .profile .information-container .display-name').text('');
+        $('#right .profile .information-container .nickname').text('');
+        $('#right .profile .information-container .tagline').text('');
+    },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
-
-        LoadingBar.show();
                
-        var $playlists = $('#right .profile .pane.profile-playlists'),
-            $followings = $('#right .profile .pane.profile-followings'),
-            $followers = $('#right .profile .pane.profile-followers'),
-            $playlistsTab = $('#right .profile .tabs .profile-playlists'),
-            $followingsTab = $('#right .profile .tabs .profile-followings'),
-            $followersTab = $('#right .profile .tabs .profile-followers'),
-            $followButton = $('#right .profile .follow.button'),
-            $unFollowButton = $('#right .profile .unfollow.button'),
-            $editButton = $('#right .profile .edit.button'),
-            largeImageUrl = user.largeImageUrl || '/images/user.png',
-            img = $('#right .profile .picture-container .picture');
+        var largeImageUrl = user.largeImageUrl;
 
-        if (img.length === 0) {
-            $('<img class="picture" alt="Profile picture" />')
+        if (UserManager.$img.length === 0) {
+            UserManager.$img = $('<img class="picture" alt="Profile picture" />')
                 .attr('src', largeImageUrl)
                 .prependTo($('#right .profile .picture-container'));
         } else {
-            img.attr('src', largeImageUrl);
+            UserManager.$img.attr('src', largeImageUrl);
         }
 
-        $('#right .profile .follow.button').unbind('click').click(function() {
+        UserManager.$followButton.unbind('click').click(function() {
             $.post('/me/followings/' + user.id, function(data) {
-                $followButton.hide();
-                $unFollowButton.show();
+                UserManager.$followButton.hide();
+                UserManager.$unFollowButton.show();
 
                 user.addFollower(UserManager.currentUser.id, UserManager.currentUser.displayName, UserManager.currentUser.smallImageUrl);
                 UserManager.currentUser.addFollowing(user.id, user.displayName, UserManager.currentUser.smallImageUrl);
@@ -84,14 +113,14 @@ var UserManager = {
             });
         });
 
-        $('#right .profile .unfollow.button').unbind('click').click(function() {
+        UserManager.$unFollowButton.unbind('click').click(function() {
             $.ajax({
                 type: 'DELETE',
                 url: '/me/followings/' + user.id,
                 statusCode: {
                     200: function(data) {
-                        $followButton.show();
-                        $unFollowButton.hide();
+                        UserManager.$followButton.show();
+                        UserManager.$unFollowButton.hide();
 
                         user.removeFollower(UserManager.currentUser.id, UserManager.currentUser.displayName);
                         UserManager.currentUser.removeFollowing(user.id, user.displayName);
@@ -101,40 +130,26 @@ var UserManager = {
             });
         });
 
-        $('#right .profile .edit.button').unbind('click').click(function() {
+        UserManager.$editButton.unbind('click').click(function() {
             new EditProfileDialog().show();
         });
 
-        if (!logged_in) {
-            $followButton.hide();
-            $unFollowButton.hide();
-            $editButton.hide();
-            $('#right .profile .picture-container .change').hide();
-        } else if (UserManager.currentUser.id === user.id) {
-            $followButton.hide();
-            $unFollowButton.hide();
-            $editButton.show();
+        if (logged_in && UserManager.currentUser.id === user.id) {
             user.playlists = playlistManager.playlists;
-            $('#right .profile .picture-container .change .email').text(UserManager.currentUser.email);
-            $('#right .profile .picture-container .change').show();
-        } else if (UserManager.currentUser.isFollowingUser(user.id)) {
-            $followButton.hide();
-            $unFollowButton.show();
-            $editButton.hide();
-            $('#right .profile .picture-container .change').hide();
-        } else {
-            $followButton.show();
-            $unFollowButton.hide();
-            $editButton.hide();
-            $('#right .profile .picture-container .change').hide();
+            UserManager.$editButton.show();
+            UserManager.$gravatarEmail.text(UserManager.currentUser.email);
+            UserManager.$changePictureBox.show();
+        } else if (logged_in && UserManager.currentUser.isFollowingUser(user.id)) {
+            UserManager.$unFollowButton.show();
+        } else if (logged_in) {
+            UserManager.$followButton.show();
         }
 
         $('#right .profile .information-container .display-name').text(user.displayName);
         $('#right .profile .information-container .nickname').text(user.nickname);
         $('#right .profile .information-container .tagline').text(user.tagline);
 
-        $playlists.html('');
-        $playlistsTab.text('Playlists (' + user.playlists.length + ')');
+        UserManager.$playlistsTab.text('Playlists (' + user.playlists.length + ')');
         $.each(user.playlists, function(index, playlist) {
             if ((user.id !== my_user_id) && (playlist.isPrivate === true || playlist.videos.length === 0)) {
                 return;
@@ -211,7 +226,7 @@ var UserManager = {
             if (playlist.videos.length > 5) {
                 $box.append($more);
             }
-            $box.appendTo($playlists);
+            $box.appendTo(UserManager.$playlists);
         });
 
         function createListElem(userId, userName, imgUrl) {
@@ -230,33 +245,27 @@ var UserManager = {
         }
 
         function updateFollowingsView() {
-            $followings.html('');
-            $followingsTab.text('Following (' + user.followings.length + ')');
+            UserManager.$followings.html('');
+            UserManager.$followingsTab.text('Following (' + user.followings.length + ')');
             $.each(user.followings, function(i, item) {
-                $followings.append(createListElem(item.id, item.displayName, item.smallImageUrl));
+                UserManager.$followings.append(createListElem(item.id, item.displayName, item.smallImageUrl));
             });
         }
 
         function updateFollowersView() {
-            $followers.html('');
-            $followersTab.text('Followers (' + user.followers.length + ')');
+            UserManager.$followers.html('');
+            UserManager.$followersTab.text('Followers (' + user.followers.length + ')');
             $.each(user.followers, function(i, item) {
-                $followers.append(createListElem(item.id, item.displayName, item.smallImageUrl));
+                UserManager.$followers.append(createListElem(item.id, item.displayName, item.smallImageUrl));
             });
         }
 
         updateFollowersView();
         updateFollowingsView();
-
-        LoadingBar.hide();
     },
     findUser: function(nickOrId, callback) {
         $.getJSON('/api/users/' + nickOrId, function(data) {
              callback(data);
         });
-    },
-    showUser: function(user) {
-        Menu.deSelectAll();
-        UserManager.populateUserProfile(user);
     }
 };

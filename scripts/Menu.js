@@ -220,7 +220,7 @@ function MenuItem(type) {
         /* Populate fields with current user */
         if (self.type === 'profile') {
             history.pushState(null, null, UserManager.currentUser.getUrl());
-            UserManager.populateUserProfile(UserManager.currentUser);
+            UserManager.loadCurrentUser();
         } else if (self.type === 'news-feed') {
             self.rightView.html('');
 
@@ -353,7 +353,6 @@ function MenuItem(type) {
         $('#left .menu li').removeClass('playing');
         self.leftView.addClass('playing');
     };
-    
     self.addTabs = function(tabList) {
         $.each(tabList, function(i, type) {
             var tab = new Tab(type, self);
