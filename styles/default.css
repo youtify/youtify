@@ -492,6 +492,9 @@ input, textarea, button {
     display: block;
     margin: 5px 0;
 }
+#right .playlist-list > .playlist {
+    margin: 5px 0;
+}
 #right .tracklist,
 #right .tracklist table {
     width: 100%;

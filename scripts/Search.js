@@ -293,7 +293,7 @@ var Search = {
                     var results = data;
 
                     $.each(results, function(i, playlist) {
-                        $('<div class="playlist link"></div>').text(playlist.title).appendTo(Search.youtifyPlaylistsTab.paneView);
+                        new Playlist(playlist.title, playlist.videos, playlist.remoteId, playlist.owner, playlist.isPrivate).getSearchView().appendTo(Search.youtifyPlaylistsTab.paneView);
                     });
 
                     var c = Search.youtifyPlaylistsTab.paneView.data('results-count') || 0;

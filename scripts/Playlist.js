@@ -399,6 +399,16 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
         return $playlist;
     };
+
+    self.getSearchView = function() {
+        var $playlist = $('<div class="playlist"></div>');
+
+        $playlist.append(self.getSmallView());
+        $playlist.append($('<span> by </span>'));
+        $playlist.append(self.owner.getSmallView());
+
+        return $playlist;
+    };
     
     for (i = 0; i < videos.length; i+= 1) {
         if (videos[i]) {
