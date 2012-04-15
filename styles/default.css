@@ -704,6 +704,10 @@ input, textarea, button {
 #right .profile .information-container .tagline {
     font-style: italic;
 }
+#right .profile .information-container .flattr-user-name {
+    padding-left: 20px;
+    background: url(/images/flattr_16.png) no-repeat center left;
+}
 .modalbox.edit-profile .wrapper {
     text-align: left;
 }

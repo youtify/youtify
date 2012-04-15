@@ -3,6 +3,7 @@ function User(args) {
     self.id = args.id;
     self.nickname = args.nickname;
     self.displayName = args.displayName;
+    self.flattrUserName = args.flattr_user_name;
     self.email = args.email || '';
     self.largeImageUrl = args.largeImageUrl || null;
     self.smallImageUrl = args.smallImageUrl || null;

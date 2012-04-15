@@ -85,6 +85,7 @@ var UserManager = {
         UserManager.$followings.html('');
         UserManager.$followers.html('');
 
+        $('#right .profile .information-container .flattr-user-name').text('').hide();
         $('#right .profile .information-container .display-name').text('');
         $('#right .profile .information-container .nickname').text('');
         $('#right .profile .information-container .tagline').text('');
@@ -145,6 +146,13 @@ var UserManager = {
             UserManager.$unFollowButton.show();
         } else if (logged_in) {
             UserManager.$followButton.show();
+        }
+
+        if (user.flattrUserName) {
+            $('#right .profile .information-container .flattr-user-name')
+                .text(user.flattrUserName)
+                .attr('href', 'http://flattr.com/profile/' + user.flattrUserName)
+                .show();
         }
 
         $('#right .profile .information-container .display-name').text(user.displayName);
