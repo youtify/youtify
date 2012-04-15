@@ -14,6 +14,10 @@ error_handlers:
 
 handlers:
 
+- url: /migrations.*
+  script: migrations.py
+  login: admin
+
 - url: /me.*
   script: me.py
 
