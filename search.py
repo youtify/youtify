@@ -12,7 +12,7 @@ class PlaylistSearchHandler(webapp.RequestHandler):
     def get(self):
         q = self.request.get('q')
         ret = []
-        for m in Playlist.all().search(q, properties=['title']):
+        for m in Playlist.all().search(q, properties=['title']).filter('private =', False):
             ret.append(get_playlist_struct_from_playlist_model(m))
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
