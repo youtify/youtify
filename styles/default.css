@@ -636,6 +636,7 @@ input, textarea, button {
 #right .info .queue,
 #right .info .title {
     font-size: 14px;
+    font-weight: bold;
 }
 #right .info .button {
     float: right;
