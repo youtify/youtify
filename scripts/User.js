@@ -107,7 +107,7 @@ function User(args) {
         });
 
         return $user;
-    },
+    };
 
     self.isFollowingUser = function(userId) {
         var ret = false;
