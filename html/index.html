@@ -138,6 +138,11 @@
 		
 		<script src="http://www.youtube.com/player_api"></script>
 	</head> 
+    {% if logged_in %}
+	<body class="logged-in">
+    {% else %}
+	<body class="logged-out">
+    {% endif %}
 	<body>
         <div id="loading">Loading...</div>
 

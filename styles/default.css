@@ -333,28 +333,17 @@ input, textarea, button {
     text-shadow: none;
     cursor: default;
 }
-#left .menu .playlists li.remote {
-    position: relative;
-    padding-right: 10px;
+.logged-in #left .menu .playlists li {
+    opacity: 0.8;
 }
-#left .menu .playlists li.remote:after {
-    content: "";
-    display: block;
-    width: 8px;
-    height: 8px;
-    background: rgba(128, 128, 128, 0.5);
-    position: absolute;
-    right: 8px;
-    top: 14px;
-    border-radius: 4px;
+.logged-in #left .menu .playlists li.remote {
+    opacity: 1;
 }
 #left .menu .playlists li.subscription .owner {
     width: 16px;
     height: 16px;
     float: right;
-}
-#left .menu .playlists li.subscription:after {
-    display: none;
+    border-radius: 16px;
 }
 #left .menu .playlists .new:before {
     content: '+';
