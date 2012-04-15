@@ -38,8 +38,12 @@ class UsersHandler(webapp.RequestHandler):
         if (page_size * page) >= total:
             self.response.out.write(COMPLETE)
         else:
+            progress = page * page_size
+            progress = float(page) / float(page_size)
+            progress = progress * 100
+            progress = int(progress)
             self.response.out.write(Template(TEMPLATE).substitute({
-                'progress': (page * page_size)/total,
+                'progress': progress,
                 'next': page + 1,
             }))
 
@@ -58,8 +62,12 @@ class PlaylistsHandler(webapp.RequestHandler):
         if (page_size * page) >= total:
             self.response.out.write(COMPLETE)
         else:
+            progress = page * page_size
+            progress = float(page) / float(page_size)
+            progress = progress * 100
+            progress = int(progress)
             self.response.out.write(Template(TEMPLATE).substitute({
-                'progress': (page * page_size)/total,
+                'progress': progress,
                 'next': page + 1,
             }))
 
