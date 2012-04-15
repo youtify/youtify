@@ -23,6 +23,11 @@ class FollowPlaylist(webapp.RequestHandler):
         if playlist_model is None:
             self.error(404)
             return
+
+        if playlist_model.owner.key().id() == youtify_user_model.key().id():
+            self.error(400)
+            self.response.out.write('You can not subscribe to your own playlists')
+            return
         
         youtify_user_model.playlist_subscriptions.append(playlist_model.key())
         youtify_user_model.save()
