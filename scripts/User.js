@@ -89,6 +89,25 @@ function User(args) {
         });
     };
 
+    self.getSmallView = function() {
+        var $user = $('<span class="user small"></span>');
+
+        $('<img />').attr('src', self.smallImageUrl).appendTo($user);
+        $('<span class="name"></span>').text(self.displayName).appendTo($user);
+
+        $user.click(function() {
+            history.pushState(null, null, self.getUrl());
+            UserManager.doFakeProfileMenuClick();
+            if (logged_in && self.id === UserManager.currentUser.id) {
+                UserManager.loadCurrentUser();
+            } else {
+                UserManager.loadProfile(self.id);
+            }
+        });
+
+        return $user;
+    },
+
     self.isFollowingUser = function(userId) {
         var ret = false;
 

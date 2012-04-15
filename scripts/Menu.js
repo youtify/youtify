@@ -226,20 +226,6 @@ function MenuItem(type) {
 
             var getActivityElem = function(activity) {
                 var $div = $('<div class="activity"></div>'), 
-                    getUserActivityElem = function(user) {
-                        var $user = $('<span class="user"></span>');
-    
-                        $('<img />').attr('src', user.smallImageUrl).appendTo($user);
-                        $('<span class="name"></span>').text(user.displayName).appendTo($user);
-    
-                        $user.click(function() {
-                            history.pushState(null, null, '/users/' + user.id);
-                            Menu.deSelectAll();
-                            UserManager.loadProfile(user.id);
-                        });
-    
-                        return $user;
-                    },
                     getPlaylistActivityElem = function(playlist) {
                         var $playlist = $('<span class="playlist"></span>');
     
@@ -273,11 +259,11 @@ function MenuItem(type) {
                         actor = new User(JSON.parse(activity.actor));
                         otherUser = new User(JSON.parse(activity.target));
                         if (otherUser.id === UserManager.currentUser.id) {
-                            $div.append(getUserActivityElem(actor));
+                            $div.append(actor.getSmallView());
                             $div.append('<span> started following you</span>');
                         } else if (actor.id === UserManager.currentUser.id) {
                             $div.append('<span>You started following </span>');
-                            $div.append(getUserActivityElem(otherUser));
+                            $div.append(otherUser.getSmallView());
                         }
                         break;
 
@@ -286,14 +272,14 @@ function MenuItem(type) {
                         playlist = JSON.parse(activity.target);
                         playlistOwner = new User(playlist.owner);
                         if (playlistOwner.id === UserManager.currentUser.id) {
-                            $div.append(getUserActivityElem(actor));
+                            $div.append(actor.getSmallView());
                             $div.append('<span> subscribed to your playlist </span>');
                             $div.append(getPlaylistActivityElem(playlist));
                         } else if (actor.id === UserManager.currentUser.id) {
                             $div.append('<span>You subscribed to </span>');
                             $div.append(getPlaylistActivityElem(playlist));
                             $div.append('<span> by </span>');
-                            $div.append(getUserActivityElem(playlistOwner));
+                            $div.append(playlistOwner.getSmallView());
                         }
                     break;
 
@@ -308,7 +294,7 @@ function MenuItem(type) {
                             $div.append('<span>You flattred </span>');
                             $div.append(getFlattrThingActivityElem(thing));
                         } else {
-                            $div.append(getUserActivityElem(actor));
+                            $div.append(actor.getSmallView());
                             $div.append('<span> flattred </span>');
                             $div.append(getFlattrThingActivityElem(thing));
                         }
