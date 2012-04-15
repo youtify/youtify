@@ -1,3 +1,4 @@
+import logging
 import os
 import random
 import urllib
@@ -196,7 +197,10 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False, incl
         user['playlists'] = get_playlist_structs_for_youtify_user_model(youtify_user_model)
         for key in youtify_user_model.playlist_subscriptions:
             playlist_model = db.get(key)
-            user['playlists'].append(get_playlist_struct_from_playlist_model(playlist_model))
+            if playlist_model is not None:
+                user['playlists'].append(get_playlist_struct_from_playlist_model(playlist_model))
+            else:
+                logging.error('User %s subscribes to deleted playlist %s' % (user['id'], key))
     return user
 
 def get_display_name_for_youtify_user_model(youtify_user_model):
