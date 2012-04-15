@@ -39,16 +39,6 @@
                 self.paneView = $('#right .search .pane.officialfm.tracks');
                 Search.officialfmTracksTab = self;
                 break;
-            case 'youtify-users':
-                self.view = $('#right .search .tabs .youtify.users');
-                self.paneView = $('#right .search .pane.youtify.users');
-                Search.youtifyUsersTab = self;
-                break;
-            case 'youtify-playlists':
-                self.view = $('#right .search .tabs .youtify.playlists');
-                self.paneView = $('#right .search .pane.youtify.playlists');
-                Search.youtifyPlaylistsTab = self;
-                break;
             case 'favorites':
                 self.view = $('#right .favorites .tabs .favorites');
                 self.paneView = $('#right .favorites .pane.favorites');
@@ -82,9 +72,7 @@
         }
         
         /* Search special case */
-        if (self.type === 'youtube-videos' || self.type === 'soundcloud-tracks' ||
-            self.type === 'officialfm-tracks' || self.type === 'youtify-users' || 
-            self.type === 'youtify-playlists') {
+        if (self.type === 'youtube-videos' || self.type === 'soundcloud-tracks' || self.type === 'officialfm-tracks') {
             history.pushState(null, null, '/');
             
             if (!self.view.hasClass('selected')) {
