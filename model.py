@@ -4,10 +4,11 @@ import random
 import urllib
 import hashlib
 from google.appengine.ext import db
+from google.appengine.ext import search
 from google.appengine.api import users
 from django.utils import simplejson
 
-class YoutifyUser(db.Model):
+class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
     google_user = db.UserProperty()
     google_user2 = db.UserProperty()
@@ -24,6 +25,10 @@ class YoutifyUser(db.Model):
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
     migrated_playlists = db.BooleanProperty(default=False)
+
+    @classmethod
+    def SearchableProperties(cls):
+      return [['nickname', 'flattr_user_name', 'first_name', 'last_name', 'tagline']]
 
 class FollowRelation(db.Model):
     """ user1 follows user2 """
@@ -52,7 +57,7 @@ class Activity(db.Model):
     actor = db.TextProperty()
     target = db.TextProperty()
 
-class Playlist(db.Model):
+class Playlist(search.SearchableModel):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
     json = db.TextProperty()
     private = db.BooleanProperty()
@@ -60,6 +65,10 @@ class Playlist(db.Model):
     title = db.StringProperty()
     followers = db.ListProperty(db.Key)
     favorite = db.BooleanProperty(default=False)
+
+    @classmethod
+    def SearchableProperties(cls):
+      return [['title']]
 
 class Phrase(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)

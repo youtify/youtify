@@ -177,7 +177,7 @@ function MenuItem(type) {
             case 'search':
                 self.leftView = $('#left .menu .search');
                 self.rightView = $('#right .search');
-                self.addTabs(['youtube-videos', 'soundcloud-tracks', 'officialfm-tracks']);
+                self.addTabs(['youtube-videos', 'soundcloud-tracks', 'officialfm-tracks', 'youtify-users', 'youtify-playlists']);
                 /* Bind search menu to this */
                 Search.menuItem = self;
                 break;
@@ -227,19 +227,6 @@ function MenuItem(type) {
 
             var getActivityElem = function(activity) {
                 var $div = $('<div class="activity"></div>'), 
-                    getPlaylistActivityElem = function(playlist) {
-                        var $playlist = $('<span class="playlist link"></span>');
-    
-                        $playlist.text(playlist.title);
-    
-                        $playlist.click(function() {
-                            history.pushState(null, null, '/playlists/' + playlist.remoteId);
-                            Menu.deSelectAll();
-                            loadPlaylist(playlist.remoteId);
-                        });
-    
-                        return $playlist;
-                    },
                     getFlattrThingActivityElem = function(data) {
                         var $thing = $('<a class="thing link" target="_blank"></a>');
     
@@ -252,7 +239,6 @@ function MenuItem(type) {
                     actor = null,
                     otherUser = null,
                     playlist = null,
-                    playlistOwner = null,
                     thing = null;
 
                 switch (activity.verb) {
@@ -271,16 +257,16 @@ function MenuItem(type) {
                     case 'subscribe':
                         actor = new User(JSON.parse(activity.actor));
                         playlist = JSON.parse(activity.target);
-                        playlistOwner = new User(playlist.owner);
-                        if (playlistOwner.id === UserManager.currentUser.id) {
+                        playlist = new Playlist(playlist.title, playlist.videos, playlist.remoteId, playlist.owner, playlist.isPrivate);
+                        if (playlist.owner.id === UserManager.currentUser.id) {
                             $div.append(actor.getSmallView());
                             $div.append('<span> subscribed to your playlist </span>');
-                            $div.append(getPlaylistActivityElem(playlist));
+                            $div.append(playlist.getSmallView());
                         } else if (actor.id === UserManager.currentUser.id) {
                             $div.append('<span>You subscribed to </span>');
-                            $div.append(getPlaylistActivityElem(playlist));
+                            $div.append(playlist.getSmallView());
                             $div.append('<span> by </span>');
-                            $div.append(playlistOwner.getSmallView());
+                            $div.append(playlist.owner.getSmallView());
                         }
                     break;
 
