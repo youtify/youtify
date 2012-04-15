@@ -49,7 +49,12 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     self.videos = [];
     /* The loop that adds videos to self.videos is moved to the end of the class to avoid reference errors */
     self.remoteId = remoteId || null;
+
     self.owner = owner;
+    if (owner) {
+        self.owner = new User(owner);
+    }
+
     self.isPrivate = isPrivate || false;
     self.followers = followers || [];
     self.synced = true; // not part of JSON structure

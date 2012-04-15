@@ -5,21 +5,13 @@ var PlaylistView = {
 
         $playlistBar.data('model', playlist);
         $playlistBar.find('.title').text(playlist.title);
-        $playlistBar.find('.owner').hide();
+        $playlistBar.find('.user').hide();
         $playlistBar.find('.sync').hide().unbind('click');
         $playlistBar.find('.subscribe').hide().unbind('click');
         $playlistBar.find('.unsubscribe').hide().unbind('click');
         
         if (playlist.owner) {
-            $playlistBar.find('.owner').click(function() {
-                if (playlist.owner.nickname) {
-                    history.pushState(null, null, '/users/' + playlist.owner.nickname);
-                } else {
-                    history.pushState(null, null, '/users/' + playlist.owner.id);
-                }
-                Menu.deSelectAll();
-                UserManager.loadProfile(playlist.owner.id);
-            }).text(playlist.owner.displayName).show();
+            $playlistBar.find('.user').replaceWith(playlist.owner.getSmallView()).show();
 
             /* Show subscription button */
             if (logged_in) {
