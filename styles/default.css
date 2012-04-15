@@ -488,6 +488,10 @@ input, textarea, button {
     background: #8B9594;
     cursor: default;
 }
+#right .user-list .user {
+    display: block;
+    margin: 5px 0;
+}
 #right .tracklist,
 #right .tracklist table {
     width: 100%;
