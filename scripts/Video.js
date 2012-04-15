@@ -105,7 +105,7 @@ function Video(args) {
         this.listView.appendChild($fragment);
         this.listView = $(this.listView)
             .bind('contextmenu', showResultsItemContextMenu)
-            .click(function(event) {self.listViewSelect(event);})
+            .mousedown(function(event) {self.listViewSelect(event);})
             .dblclick(function(event){self.play(event);})
             .data('model', this);
         

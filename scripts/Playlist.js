@@ -345,7 +345,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                 .data('model', self)
                 .bind('contextmenu', showPlaylistContextMenu)
                 .mousedown(playlistMouseDown)
-                .click(playlistClicked);
+                .mousedown(playlistClicked);
 
         $('<span class="title"></span>').text(self.title).appendTo(li);
 
