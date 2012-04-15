@@ -88,6 +88,8 @@ var UserManager = {
         $('#right .profile .information-container .display-name').text('');
         $('#right .profile .information-container .nickname').text('');
         $('#right .profile .information-container .tagline').text('');
+
+        Menu.profile.tabs[0].select();
     },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
