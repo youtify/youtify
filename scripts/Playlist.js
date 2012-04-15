@@ -200,7 +200,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 					self.syncing = false;
 					if (textStatus === 'success') {
 						self.remoteId = data.remoteId;
-						self.owner = data.owner;
+						self.owner = new User(data.owner);
 						self.synced = true;
                     } else {
 						alert('Failed to create new playlist ' + self.title);
