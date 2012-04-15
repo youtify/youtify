@@ -211,7 +211,7 @@ var UserManager = {
             }
             $box.append($title);
 
-            if (logged_in && user.id !== UserManager.currentUser.id) {
+            if (logged_in && user.id !== UserManager.currentUser.id && playlist.owner.id !== UserManager.currentUser.id) {
                 $box.append($toggleSubscriptionButton);
             }
 
