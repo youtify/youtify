@@ -230,8 +230,9 @@ var Search = {
 
                 start = (loadMore) ? Search.youtifyUsersTab.paneView.data('results-count') + 1 : 1;
 
-                url = 'http://localhost:8080/api/users/search/' + escape(q);
+                url = 'http://localhost:8080/api/search/users';
                 params = {
+                    'q': q,
                     'format': 'json',
                     'per_page': 30,
                     'page': Math.ceil(start / 30)
@@ -271,8 +272,9 @@ var Search = {
 
                 start = (loadMore) ? Search.youtifyPlaylistsTab.paneView.data('results-count') + 1 : 1;
 
-                url = 'http://localhost:8080/api/playlists/search/' + escape(q);
+                url = 'http://localhost:8080/api/search/playlists';
                 params = {
+                    'q': q,
                     'format': 'json',
                     'per_page': 30,
                     'page': Math.ceil(start / 30)
