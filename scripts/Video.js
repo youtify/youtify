@@ -127,6 +127,9 @@ function Video(args) {
         if ($listView === undefined) {
             $listView = this.listView;
         }
+        if ($listView.hasClass('selected')) {
+            return;
+        }
         if (event !== undefined) {
             event.stopPropagation();
         }
