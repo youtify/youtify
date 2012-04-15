@@ -622,7 +622,7 @@ input, textarea, button {
 }
 #right .info .queue,
 #right .info .title,
-#right .info .owner,
+#right .info .user,
 #right .info .subscribe,
 #right .info .unsubscribe,
 #right .info .sync {
@@ -1506,20 +1506,20 @@ input, textarea, button {
 #right .activity:first-child {
     padding-top: 0;
 }
-#right .activity .user,
-#right .activity .playlist,
-#right .activity .thing {
+#right .activity .timestamp {
+    font-weight: bold;
+}
+
+#right .link {
     font-weight: bold;
     cursor: pointer;
     color: rgb(0, 90, 100);
     text-decoration: none;
 }
-#right .activity .user img {
+
+.user.small img {
     width: 24px;
     height: 24px;
     vertical-align: middle;
     margin-right: 5px;
-}
-#right .activity .timestamp {
-    font-weight: bold;
 }

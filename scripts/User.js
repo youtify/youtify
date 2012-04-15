@@ -90,7 +90,7 @@ function User(args) {
     };
 
     self.getSmallView = function() {
-        var $user = $('<span class="user small"></span>');
+        var $user = $('<span class="user small link"></span>');
 
         $('<img />').attr('src', self.smallImageUrl).appendTo($user);
         $('<span class="name"></span>').text(self.displayName).appendTo($user);

@@ -227,7 +227,7 @@ function MenuItem(type) {
             var getActivityElem = function(activity) {
                 var $div = $('<div class="activity"></div>'), 
                     getPlaylistActivityElem = function(playlist) {
-                        var $playlist = $('<span class="playlist"></span>');
+                        var $playlist = $('<span class="playlist link"></span>');
     
                         $playlist.text(playlist.title);
     
@@ -240,7 +240,7 @@ function MenuItem(type) {
                         return $playlist;
                     },
                     getFlattrThingActivityElem = function(data) {
-                        var $thing = $('<a class="thing" target="_blank"></a>');
+                        var $thing = $('<a class="thing link" target="_blank"></a>');
     
                         $thing.text(data.thing_title);
                         $thing.attr('href', 'https://flattr.com/t/' + data.thing_id);
