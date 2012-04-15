@@ -15,6 +15,13 @@ var TranslationSystem = {
         });
     },
 
+    get: function(original) {
+        if (TranslationSystem.translations.hasOwnProperty(original)) {
+            return TranslationSystem.translations[original];
+        }
+        return original;
+    },
+
     updateMarkup: function(data) {
         TranslationSystem.translations = data; // global
 
