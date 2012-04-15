@@ -247,30 +247,11 @@ var UserManager = {
             $box.appendTo(UserManager.$playlists);
         });
 
-        function createListElem(userId, userName, imgUrl) {
-            var $user = $('<div class="user"></div>');
-
-            $('<img class="avatar"></span>').attr('src', imgUrl).appendTo($user);
-            $('<span class="name"></span>').text(userName).appendTo($user);
-
-            $user.click(function() {
-                if (user.nickname) {
-                    history.pushState(null, null, '/users/' + user.nickname);
-                } else {
-                    history.pushState(null, null, '/users/' + userId);
-                }
-                Menu.deSelectAll();
-                UserManager.loadProfile(userId);
-            });
-
-            return $user;
-        }
-
         function updateFollowingsView() {
             UserManager.$followings.html('');
             UserManager.$followingsTab.text('Following (' + user.followings.length + ')');
             $.each(user.followings, function(i, item) {
-                UserManager.$followings.append(createListElem(item.id, item.displayName, item.smallImageUrl));
+                UserManager.$followings.append(new User(item).getSmallView());
             });
         }
 
@@ -278,7 +259,7 @@ var UserManager = {
             UserManager.$followers.html('');
             UserManager.$followersTab.text('Followers (' + user.followers.length + ')');
             $.each(user.followers, function(i, item) {
-                UserManager.$followers.append(createListElem(item.id, item.displayName, item.smallImageUrl));
+                UserManager.$followers.append(new User(item).getSmallView());
             });
         }
 

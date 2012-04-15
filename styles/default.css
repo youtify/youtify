@@ -781,10 +781,9 @@ input, textarea, button {
     width: 40px;
     height: 40px;
 }
-#right .profile .pane.profile-followings .user .name,
-#right .profile .pane.profile-followers .user .name {
-    vertical-align: top;
-    margin-left: 5px;
+#right .profile .pane.profile-followings .user,
+#right .profile .pane.profile-followers .user {
+    display: block;
 }
 #right .profile .tabs {
     margin-top: 10px;
