@@ -247,9 +247,10 @@ var Search = {
 
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
-                    var results = data.users;
+                    var results = data;
+
                     $.each(results, function(i, user) {
-                        console.log(user);
+                        new User(user).getSmallView().appendTo(Search.youtifyUsersTab.paneView);
                     });
 
                     var c = Search.youtifyUsersTab.paneView.data('results-count') || 0;
@@ -289,9 +290,10 @@ var Search = {
 
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
-                    var results = data.playlists;
+                    var results = data;
+
                     $.each(results, function(i, playlist) {
-                        console.log(playlist);
+                        $('<div class="playlist link"></div>').text(playlist.title).appendTo(Search.youtifyPlaylistsTab.paneView);
                     });
 
                     var c = Search.youtifyPlaylistsTab.paneView.data('results-count') || 0;

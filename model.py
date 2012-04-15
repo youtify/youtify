@@ -26,6 +26,10 @@ class YoutifyUser(search.SearchableModel):
     playlist_subscriptions = db.ListProperty(db.Key)
     migrated_playlists = db.BooleanProperty(default=False)
 
+    @classmethod
+    def SearchableProperties(cls):
+      return [['nickname', 'flattr_user_name', 'first_name', 'last_name', 'tagline']]
+
 class FollowRelation(db.Model):
     """ user1 follows user2 """
     user1 = db.IntegerProperty()
@@ -61,6 +65,10 @@ class Playlist(search.SearchableModel):
     title = db.StringProperty()
     followers = db.ListProperty(db.Key)
     favorite = db.BooleanProperty(default=False)
+
+    @classmethod
+    def SearchableProperties(cls):
+      return [['title']]
 
 class Phrase(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)

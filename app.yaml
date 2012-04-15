@@ -68,6 +68,9 @@ handlers:
 - url: /api/playlists.*
   script: playlists.py
 
+- url: /api/search.*
+  script: search.py
+
 - url: /api/favorites.*
   script: favorites.py
 
