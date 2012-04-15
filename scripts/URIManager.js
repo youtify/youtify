@@ -23,7 +23,7 @@ var URIManager = {
                 });
             }
         } else if (location.href.indexOf('search') !== -1) {
-            $('#search input').val(URIManager.getSearchQueryFromUrl()).keyup();
+            $('#top .search input').val(URIManager.getSearchQueryFromUrl()).keyup();
         } else if (location.href.indexOf('profile') !== -1) {
             Menu.profile.select();
         } else if (location.href.indexOf('users') !== -1) {
