@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Youtify - YouTube's music, all the time (except when you use IE)</title>
-		{% if ON_PRODUCTION %}
-			<script>
+    <head>
+        <title>Youtify - YouTube's music, all the time (except when you use IE)</title>
+        {% if ON_PRODUCTION %}
+            <script>
                 var _gaq = _gaq || [];
                 _gaq.push(['_setAccount', 'UA-22835317-1']);
                 _gaq.push(['_trackPageview']);
@@ -14,14 +14,37 @@
                     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
                 })();
             </script>
-		{% endif %}
-	</head>
-	<body class="browser-warning">
-		<h1>Sorry, Youtify does not support your browser</h1>
-    <p>Currently we support the latest version of the following browsers:</p>
-		<ul>
-			<li><a href="http://www.google.com/chrome/">Google Chrome</a></li>
-			<li><a href="http://www.getfirefox.com/">Mozilla Firefox</a></li>
-		</ul>
-	</body>
+        {% endif %}
+        <script src="/scripts/FeatureDetection.js" type="text/javascript"></script>
+    </head>
+    <body class="browser-warning">
+        <h1 id="title">Sorry, Youtify does not support your browser</h1>
+        <p>Currently we support the latest version of the following browsers:</p>
+        <ul>
+            <li><a href="http://www.google.com/chrome/">Google Chrome</a></li>
+            <li><a href="http://www.getfirefox.com/">Mozilla Firefox</a></li>
+        </ul>
+        <br />
+        <p id="reasons"></p>
+        <script type="text/javascript">
+            var reasons = document.getElementById('reasons'),
+                title = document.getElementById('title'),
+                i = 0,
+                list = [];
+            FeatureDetection.init();
+            
+            for (i = 0; i < FeatureDetection.cssStylesFailed.length; i += 1) {
+                list.push(FeatureDetection.cssStylesToTest[FeatureDetection.cssStylesFailed[i]]);
+            }
+            for (i = 0; i < FeatureDetection.jsFunctionsFailed.length; i += 1) {
+                list.push(FeatureDetection.jsFunctionNames[FeatureDetection.jsFunctionsFailed[i]]);
+            }
+            if (list.length > 0) {
+                reasons.innerHTML = "Your browser lack support for: " + list.join(', ');
+            } else {
+                reasons.innerHTML = 'Our tests indicate that your browser is OK. Go ahead and try <a href="http://www.youtify.com/">youtify.com</a>.';
+                title.innerHTML = 'Disregard the URL, your browser seems fine!';
+            }
+        </script>
+    </body>
 </html>

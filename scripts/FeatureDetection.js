@@ -1,55 +1,48 @@
-function cssDetect() {
-    var props = ["textShadow", "boxShadow", "borderRadius", "opacity"],
-        CSSprefix = ["Webkit", "Moz", "O", "ms", "Khtml"], 
-        d = document.createElement("detect"), 
-        test = [], 
-        p, pty; 
-    // test prefixed code  
-    function TestPrefixes(prop) { 
-        var 
-            n, np,
-            Uprop = prop.charAt(0).toUpperCase() + prop.substr(1), 
-            All = (prop + ' ' + CSSprefix.join(Uprop + ' ') + Uprop).split(' '); 
-        for (n = 0, np = All.length; n < np; n += 1) {
-            if (d.style[All[n]] === "") {
-                return true; 
-            }
-        } 
-        return false; 
-    } 
-    for (p in props) { 
-        if (props.hasOwnProperty(p)) {
-            pty = props[p]; 
-            if (new TestPrefixes(pty) === false) {
-                return false;
+/* Make sure parent obj is set before testing child functions */
+var JSON = JSON || {};
+
+var FeatureDetection = {
+    cssPrefix: ["Webkit", "Moz", "O", "ms", "Khtml"],
+    cssStylesToTest: ["textShadow", "boxShadow", "borderRadius", "opacity"],
+    cssStylesFailed: [],
+    cssTestElem: document.createElement("detect"),
+    jsFunctionsToTest: [localStorage, history.pushState, JSON.parse, JSON.stringify],
+    jsFunctionNames: ['localStorage', 'history.pushState', 'JSON.parse', 'JSON.stringify'],
+    jsFunctionsFailed: [],
+    
+    init: function() {
+        var i, obj, title;
+        for (i = 0; i < FeatureDetection.cssStylesToTest.length; i += 1) {
+            obj = FeatureDetection.cssStylesToTest[i];
+            if (new FeatureDetection.testPrefixes(obj) === false) {
+                FeatureDetection.cssStylesFailed.push(i);
             }
         }
-    }
-    return true;
-}
-
-function jsDetect() {
-	var list = [
-		localStorage, 
-		history.pushState,
-		JSON.parse,
-		JSON.stringify
-	], i;
-	for (i = 0; i < list.length; i += 1) {
-		//alert('typeof ' + typeof list[i]);
-		if (typeof list[i] === 'undefined') {
-			return false;
-		}
-	}
-	return true;
-}
-
-function checkBrowser() {
-	if (cssDetect() === false || jsDetect() === false) {
-		window.location = '/yourbrowsersucks';
+        for (i = 0; i < FeatureDetection.jsFunctionsToTest.length; i += 1) {
+            obj = FeatureDetection.jsFunctionsToTest[i];
+            if (typeof obj === 'undefined') {
+                FeatureDetection.jsFunctionsFailed.push(i);
+            }
+        }
+    },
+    testPrefixes: function(prop) {
+        var n, np,
+            Uprop = prop.charAt(0).toUpperCase() + prop.substr(1),
+            All = (prop + ' ' + FeatureDetection.cssPrefix.join(Uprop + ' ') + Uprop).split(' ');
+        for (n = 0, np = All.length; n < np; n += 1) {
+            if (FeatureDetection.cssTestElem.style[All[n]] === "") {
+                return true;
+            }
+        }
         return false;
-	} else {
-        return true;
+    },
+    checkBrowser: function() {
+        if (FeatureDetection.cssStylesFailed.length > 0 ||
+            FeatureDetection.jsFunctionsFailed.length > 0) {
+            window.location = '/yourbrowsersucks';
+            return false;
+        } else {
+            return true;
+        }
     }
-}
-checkBrowser();
+};
