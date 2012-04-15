@@ -230,10 +230,9 @@ var Search = {
 
                 start = (loadMore) ? Search.youtifyUsersTab.paneView.data('results-count') + 1 : 1;
 
-                url = 'http://localhost:8080/api/search/users';
+                url = '/api/search/users';
                 params = {
                     'q': q,
-                    'format': 'json',
                     'per_page': 30,
                     'page': Math.ceil(start / 30)
                 };
@@ -246,7 +245,7 @@ var Search = {
                 }
 
                 LoadingBar.show();
-                $.getJSON(url, params, function(data) {
+                $.get(url, params, function(data) {
                     var results = data;
 
                     $.each(results, function(i, user) {
@@ -273,10 +272,9 @@ var Search = {
 
                 start = (loadMore) ? Search.youtifyPlaylistsTab.paneView.data('results-count') + 1 : 1;
 
-                url = 'http://localhost:8080/api/search/playlists';
+                url = '/api/search/playlists';
                 params = {
                     'q': q,
-                    'format': 'json',
                     'per_page': 30,
                     'page': Math.ceil(start / 30)
                 };
@@ -289,7 +287,7 @@ var Search = {
                 }
 
                 LoadingBar.show();
-                $.getJSON(url, params, function(data) {
+                $.get(url, params, function(data) {
                     var results = data;
 
                     $.each(results, function(i, playlist) {
