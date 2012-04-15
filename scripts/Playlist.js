@@ -385,6 +385,20 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 		PlaylistView.loadPlaylistView(self);
 		return deleted;
 	};
+
+    self.getSmallView = function() {
+        var $playlist = $('<span class="playlist link"></span>');
+
+        $playlist.text(self.title);
+
+        $playlist.click(function() {
+            history.pushState(null, null, self.owner.getUrl() + '/playlists/' + self.remoteId);
+            Menu.deSelectAll();
+            loadPlaylist(self.remoteId);
+        });
+
+        return $playlist;
+    };
     
     for (i = 0; i < videos.length; i+= 1) {
         if (videos[i]) {
