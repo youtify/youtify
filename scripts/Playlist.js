@@ -351,6 +351,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
         if (self.isSubscription) {
             li.addClass('subscription');
+            $('<img class="owner" />').attr('src', self.owner.smallImageUrl).appendTo(li);
         } else {
             li.addClass('droppable');
         }
