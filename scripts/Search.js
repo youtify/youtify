@@ -4,6 +4,8 @@ var Search = {
     youtubeVideosTab: null,
     soundCloudTracksTab: null,
     officialfmTracksTab: null,
+    youtifyUsersTab: null,
+    youtifyPlaylistsTab: null,
     searchTimeoutHandle: null,
     currentQuery: '',
     alternatives: undefined,
@@ -11,25 +13,25 @@ var Search = {
     lastPlaylistsSearchQuery: undefined,
     lastSoundCloudTracksQuery: undefined,
     itemsPerPage: 30,
-    
+
     init: function() {
         /* Search on key up */
         $('#top .search input').keyup(function(event) {
-            var i, 
-                deadKeys = [9,16,17,18,37,38,39,40];
+            var i,
+                deadKeys = [9, 16, 17, 18, 37, 38, 39, 40];
             for (i = 0; i < deadKeys.length; i += 1) {
                 if (event.keyCode === deadKeys[i]) {
                     return;
                 }
             }
-            
+
             var timeout = 700,
                 q = $.trim($('#top .search input').val());
 
             if (Search.searchTimeoutHandle) {
                 clearTimeout(Search.searchTimeoutHandle);
             }
-            
+
             if (event.keyCode === 13) {
                 Search.search(q);
             } else {
@@ -46,14 +48,22 @@ var Search = {
         });
     },
     getType: function() {
+        if (Search.youtifyUsersTab.isSelected()) {
+            return 'youtify-users';
+        }
+
+        if (Search.youtifyPlaylistsTab.isSelected()) {
+            return 'youtify-playlists';
+        }
+
         if (Search.soundCloudTracksTab.isSelected()) {
             return 'soundcloud-tracks';
         }
-        
+
         if (Search.officialfmTracksTab.isSelected()) {
             return 'officialfm-tracks';
         }
-        
+
         return Search.youtubeVideosTab.isSelected() ? 'youtube-videos' : 'youtube-playlists';
     },
     search: function(q, loadMore) {
@@ -68,7 +78,7 @@ var Search = {
         Search.menuItem.select();
         Search.currentQuery = q;
 
-        switch(Search.getType()) {
+        switch (Search.getType()) {
             case 'youtube-videos':
                 if (Search.lastVideosSearchQuery === q && !loadMore) {
                     return;
@@ -83,14 +93,14 @@ var Search = {
                     'start-index': start,
                     'format': 5, 'q': q
                 };
-                
+
                 /* Clean up destination */
                 if (loadMore) {
                     Search.youtubeVideosTab.paneView.find('.loadMore').remove();
                 } else {
                     Search.youtubeVideosTab.paneView.html('');
                 }
-                
+
                 /* Get the results */
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
@@ -114,7 +124,7 @@ var Search = {
                     }
                     LoadingBar.hide();
                 });
-                
+
                 break;
             case 'soundcloud-tracks':
                 if (Search.lastSoundCloudTracksQuery === q && !loadMore) {
@@ -140,7 +150,7 @@ var Search = {
                 } else {
                     Search.soundCloudTracksTab.paneView.html('');
                 }
-                
+
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
                     var results = Search.getVideosFromSoundCloudSearchData(data);
@@ -211,7 +221,88 @@ var Search = {
                     LoadingBar.hide();
                 });
                 break;
-            
+            case 'youtify-users':
+                if (Search.youtifyUsersQuery === q && !loadMore) {
+                    return;
+                } else {
+                    Search.youtifyUsersQuery = q;
+                }
+
+                start = (loadMore) ? Search.youtifyUsersTab.paneView.data('results-count') + 1 : 1;
+
+                url = 'http://localhost:8080/api/users/search/' + escape(q);
+                params = {
+                    'format': 'json',
+                    'per_page': 30,
+                    'page': Math.ceil(start / 30)
+                };
+
+                /* Clean up destination */
+                if (loadMore) {
+                    Search.youtifyUsersTab.paneView.find('.loadMore').remove();
+                } else {
+                    Search.youtifyUsersTab.paneView.html('');
+                }
+
+                LoadingBar.show();
+                $.getJSON(url, params, function(data) {
+                    var results = data.users;
+                    $.each(results, function(i, user) {
+                        console.log(user);
+                    });
+
+                    var c = Search.youtifyUsersTab.paneView.data('results-count') || 0;
+                    Search.youtifyUsersTab.paneView.data('results-count', c + results.length);
+
+                    /* Add load more row */
+                    if (data.current >= data.per_page) {
+                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtifyUsersTab.paneView);
+                    }
+
+                    LoadingBar.hide();
+                });
+                break;
+            case 'youtify-playlists':
+                if (Search.youtifyPlaylistsQuery === q && !loadMore) {
+                    return;
+                } else {
+                    Search.youtifyPlaylistsQuery = q;
+                }
+
+                start = (loadMore) ? Search.youtifyPlaylistsTab.paneView.data('results-count') + 1 : 1;
+
+                url = 'http://localhost:8080/api/playlists/search/' + escape(q);
+                params = {
+                    'format': 'json',
+                    'per_page': 30,
+                    'page': Math.ceil(start / 30)
+                };
+
+                /* Clean up destination */
+                if (loadMore) {
+                    Search.youtifyPlaylistsTab.paneView.find('.loadMore').remove();
+                } else {
+                    Search.youtifyPlaylistsTab.paneView.html('');
+                }
+
+                LoadingBar.show();
+                $.getJSON(url, params, function(data) {
+                    var results = data.playlists;
+                    $.each(results, function(i, playlist) {
+                        console.log(playlist);
+                    });
+
+                    var c = Search.youtifyPlaylistsTab.paneView.data('results-count') || 0;
+                    Search.youtifyPlaylistsTab.paneView.data('results-count', c + results.length);
+
+                    /* Add load more row */
+                    if (data.current >= data.per_page) {
+                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtifyPlaylistsTab.paneView);
+                    }
+
+                    LoadingBar.hide();
+                });
+                break;
         }
     },
     createLoadMoreRow: function(callback) {
@@ -267,11 +358,11 @@ var Search = {
                 results.push(null);
                 return;
             }
-            
+
             var url = item.id.$t,
                 title = item.title.$t,
                 videoId;
-            
+
             if (url.match('videos/(.*)$')) {
                 videoId = url.match('videos/(.*)$')[1];
             } else {
@@ -292,7 +383,7 @@ var Search = {
         if (data.feed.entry === undefined) {
             return results;
         }
-        
+
         $.each(data.feed.entry, function(i, item) {
             var playlistId = item.yt$playlistId.$t,
                 title = item.title.$t,
@@ -330,13 +421,13 @@ var Search = {
                 'q': video.title
             };
 
-		$.getJSON(url, params, function(data) {
-			if (data.feed.entry === undefined) {
+        $.getJSON(url, params, function(data) {
+            if (data.feed.entry === undefined) {
                 callback(results);
                 return;
             }
             results = Search.getVideosFromYouTubeSearchData(data);
             callback(results);
-		});
+        });
     }
 };
