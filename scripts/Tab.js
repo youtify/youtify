@@ -67,7 +67,7 @@
                 break;
         }
         /* Set click event */
-        self.view.click(self.select);
+        self.view.mousedown(self.select);
         self.view.data('model', self);
     };
     
