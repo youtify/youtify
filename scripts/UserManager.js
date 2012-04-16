@@ -85,6 +85,10 @@ var UserManager = {
         UserManager.$followings.html('');
         UserManager.$followers.html('');
 
+        if (UserManager.$img) {
+            UserManager.$img.remove();
+        }
+
         $('#right .profile .information-container .flattr-user-name').text('').hide();
         $('#right .profile .information-container .display-name').text('');
         $('#right .profile .information-container .nickname').text('');
@@ -97,13 +101,9 @@ var UserManager = {
                
         var largeImageUrl = user.largeImageUrl;
 
-        if (UserManager.$img.length === 0) {
-            UserManager.$img = $('<img class="picture" alt="Profile picture" />')
-                .attr('src', largeImageUrl)
-                .prependTo($('#right .profile .picture-container'));
-        } else {
-            UserManager.$img.attr('src', largeImageUrl);
-        }
+        UserManager.$img = $('<img class="picture" alt="Profile picture" />')
+            .attr('src', largeImageUrl)
+            .prependTo($('#right .profile .picture-container'));
 
         UserManager.$followButton.unbind('click').click(function() {
             $.post('/me/followings/' + user.id, function(data) {
