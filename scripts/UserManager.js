@@ -95,6 +95,8 @@ var UserManager = {
         $('#right .profile .information-container .tagline').text('');
 
         Menu.profile.tabs[0].select();
+
+        $('#right .profile .tabs').hide();
     },
     populateUserProfile: function(user) {
         /* Also called from Menu.js */
@@ -265,6 +267,8 @@ var UserManager = {
 
         updateFollowersView();
         updateFollowingsView();
+
+        $('#right .profile .tabs').show();
     },
     findUser: function(nickOrId, callback) {
         $.getJSON('/api/users/' + nickOrId, function(data) {
