@@ -220,6 +220,8 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
         return youtify_user_model.first_name
     elif youtify_user_model.nickname:
         return youtify_user_model.nickname
+    elif youtify_user_model.flattr_user_name:
+        return youtify_user_model.flattr_user_name
     if youtify_user_model.google_user2:
         return youtify_user_model.google_user2.nickname().split('@')[0] # don't leak users email
     else:
