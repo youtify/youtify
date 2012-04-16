@@ -168,7 +168,7 @@ var UserManager = {
             }
             var i = 0,
                 $box = $('<div class="playlist-box"/>'),
-                $title = $('<span class="title"/>').text(playlist.title),
+                $title = $('<span class="title link"/>').text(playlist.title),
                 $toggleSubscriptionButton = $('<button class="button subscribe"/>').text('Subscribe'),
                 $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
                 $tracklist = $('<table class="tracklist"/>'),

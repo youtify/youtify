@@ -15,7 +15,7 @@ ModalBox.prototype.setMessage = function(message) {
 
 ModalBox.prototype.addButton = function(label, callback) {
     var self = this;
-    var elem = $('<button></button>').text(label);
+    var elem = $('<button class="button"></button>').text(label);
     elem.click(function() {
         callback(self);
     });

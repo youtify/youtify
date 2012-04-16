@@ -80,24 +80,28 @@ input, textarea, button {
 /* BUTTON
 *******************************/
 
-#right .info .button,
-#right .profile .button {
-    background:-webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-moz-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-ms-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:-o-linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    background:linear-gradient(bottom, rgba(0, 124, 137, 0.2) 0%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.1) 50%, rgba(0, 124, 137, 0.1) 100%);
-    margin: 10px 0px 5px 24px;
+#right .button {
+    display: inline-block;
+    background:-webkit-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
+    background:-moz-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
+    background:-ms-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
+    background:-o-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
+    background:linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     padding: 4px;
     border-radius: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
+    border: 1px solid #8B9594;
     text-align: center;
     min-width: 60px;
+    font-size: 14px;
+    line-height: 20px;
     cursor: pointer;
 }
-#right .info .button:active,
-#right .profile .button:active {
-    background: rgba(0, 124, 137, 0.2);
+#right .button:hover {
+    border: 1px solid #778180;
+}
+#right .button:active {
+    box-shadow: inset 1px 2px 3px #778180, 1px 2px 3px rgba(255,255,255, 0.5);
 }
 
 /** TOP
@@ -623,12 +627,12 @@ input, textarea, button {
 #right .info {
     display: block;
 }
+#right .info .edit.button {
+    margin: 10px 0px 5px 24px;
+}
 #right .info .queue,
 #right .info .title,
-#right .info .user,
-#right .info .subscribe,
-#right .info .unsubscribe,
-#right .info .sync {
+#right .info .user {
     display: inline-block;
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
@@ -640,12 +644,19 @@ input, textarea, button {
 #right .info .title {
     font-size: 14px;
     font-weight: bold;
+    margin: 5px;
+}
+#right .info .user {
+    float: right;
+    margin: 3px 0 0 15px;
 }
 #right .info .button {
     float: right;
 }
-#right .info .subscribe {
+#right .info .subscribe 
+{
     margin-left: 10px;
+    margin-bottom: 5px;
 }
 #right .profile .picture-container {
     width: 208px;
@@ -695,13 +706,16 @@ input, textarea, button {
 }
 #right .profile .information-container .nickname {
     color: #444;
+    line-height: 20px;
 }
 #right .profile .information-container .tagline {
     font-style: italic;
+    line-height: 20px;
 }
 #right .profile .information-container .flattr-user-name {
     padding-left: 20px;
     background: url(/images/flattr_16.png) no-repeat center left;
+    line-height: 28px;
 }
 .modalbox.edit-profile .wrapper {
     text-align: left;
@@ -1360,29 +1374,29 @@ input, textarea, button {
     -ms-user-select: text;
     user-select: text;
 }
-#video-info-popup  .sections li {
+#video-info-popup .sections li {
     min-height: 100px;
 }
-#video-info-popup  .sections li.found {
+#video-info-popup .sections li.found {
     position: relative;
 }
-#video-info-popup  .sections li.found .content {
+#video-info-popup .sections li.found .content {
     position: relative;
     padding-right: 60px;
     padding-left: 55px;
 }
-#video-info-popup  .sections img {
+#video-info-popup .sections img {
     width: 48px;
     position: absolute;
     left: 0;
     top: 0;
 }
-#video-info-popup  .sections .flattr {
+#video-info-popup .sections .flattr {
     position: absolute;
     top: 28px;
     right: 0;
 }
-#video-info-popup  .sections .flattr .button {
+#video-info-popup .sections .flattr .button {
     position: absolute;
     right: 0;
     top: 0;
@@ -1408,16 +1422,16 @@ input, textarea, button {
     border-top-color: #999;
     border-bottom-color: #888;
 }
-#video-info-popup  .sections .button:active {
+#video-info-popup .sections .button:active {
     background: #ccc;
 }
-#video-info-popup  .sections .button:hover {
+#video-info-popup .sections .button:hover {
     border: 1px solid #aaa;
 }
-#video-info-popup  .sections .button.loading {
+#video-info-popup .sections .button.loading {
     color: #888;
 }
-#video-info-popup  .sections .button .count {
+#video-info-popup .sections .button .count {
     margin-right: 5px;
     font-weight: bold;
 }
@@ -1487,7 +1501,7 @@ input, textarea, button {
 #right .video .flattr {
     line-height: 22px;
 }
-#right .video .flattr .button {
+#right .video .flattr .flattr-button {
     display: inline-block;
     padding: 0 4px;
     background: #eee;
@@ -1496,10 +1510,10 @@ input, textarea, button {
     cursor: pointer;
     background: transparent;
 }
-#right .video .flattr .button.loading {
+#right .video .flattr .flattr-button.loading {
     color: #888;
 }
-#right .video .flattr .button .count {
+#right .video .flattr .flattr-button .count {
     margin-right: 5px;
     font-weight: bold;
 }
@@ -1517,11 +1531,13 @@ input, textarea, button {
     font-weight: bold;
 }
 
+#top .link,
 #right .link {
-    font-weight: bold;
     cursor: pointer;
     color: rgb(0, 90, 100);
     text-decoration: none;
+    cursor: pointer;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .user.small img {
