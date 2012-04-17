@@ -653,6 +653,7 @@ input, textarea, button {
 #right .info .button {
     float: right;
 }
+#right .info .unsubscribe, 
 #right .info .subscribe 
 {
     margin-left: 10px;
