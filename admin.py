@@ -7,8 +7,8 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api.users import User
 from django.utils import simplejson
-from model import get_current_youtify_user
-from model import create_youtify_user
+from model import get_current_youtify_user_model
+from model import create_youtify_user_model
 from model import YoutifyUser
 from languages import get_languages
 
@@ -39,9 +39,9 @@ class UserLookupHandler(webapp.RequestHandler):
 class AdminHandler(webapp.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
         if (current_user is not None) and (user is None):
-            user = create_youtify_user()
+            user = create_youtify_user_model()
         path = os.path.join(os.path.dirname(__file__), 'html', 'admin.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {

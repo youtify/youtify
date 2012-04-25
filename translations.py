@@ -4,17 +4,17 @@ from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from django.utils import simplejson
-from model import get_current_youtify_user
-from model import create_youtify_user
+from model import get_current_youtify_user_model
+from model import create_youtify_user_model
 from languages import get_languages
 from languages import get_leader_langs_for_user
 
 class TranslationsToolHandler(webapp.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
-        youtify_user = get_current_youtify_user()
+        youtify_user = get_current_youtify_user_model()
         if (current_user is not None) and (youtify_user is None):
-            youtify_user = create_youtify_user()
+            youtify_user = create_youtify_user_model()
         path = os.path.join(os.path.dirname(__file__), 'html', 'translations.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {
