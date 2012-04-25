@@ -187,6 +187,13 @@ var UserManager = {
                 if (playlist.playlistDOMHandle === null) {
                     playlist.createViews();
                 }
+
+                if (playlist.remoteId) {
+                    history.pushState(null, null, playlist.getUrl());
+                } else {
+                    history.pushState(null, null, '/');
+                }
+
                 PlaylistView.loadPlaylistView(playlist);
             });
 
