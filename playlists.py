@@ -145,7 +145,7 @@ class PlaylistsHandler(webapp.RequestHandler):
 
         playlist_model = Playlist(owner=youtify_user_model, json=None)
         playlist_model.private = json_playlist.get('isPrivate', False)
-        playlist_model.tracks_json = None
+        playlist_model.tracks_json = simplejson.dumps(json_playlist['videos'])
         playlist_model.title = json_playlist['title']
         playlist_model.put()
         
