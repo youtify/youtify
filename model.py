@@ -242,7 +242,7 @@ def get_playlist_structs_by_id(playlist_id):
 def get_playlist_struct_from_playlist_model(playlist_model):
     playlist_struct = {
         'title': playlist_model.title,
-        'videos': '',
+        'videos': playlist_model.tracks_json,
         'remoteId': playlist_model.key().id(),
         'isPrivate': playlist_model.private,
         'owner': get_youtify_user_struct(playlist_model.owner, False, False),
@@ -253,9 +253,6 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     for key in playlist_model.followers:
         youtify_user_model = db.get(key)
         playlist_struct['followers'].append(get_youtify_user_struct(youtify_user_model, False, False))
-    
-    if playlist_model.tracks_json is not None:
-        playlist_struct['videos'] = simplejson.loads(playlist_model.tracks_json)
     
     return playlist_struct
 

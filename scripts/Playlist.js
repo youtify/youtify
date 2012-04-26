@@ -410,6 +410,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         return $playlist;
     };
     
+    videos = JSON.parse(videos);
     for (i = 0; i < videos.length; i+= 1) {
         if (videos[i]) {
             var video = new Video({
