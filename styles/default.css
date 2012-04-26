@@ -324,6 +324,19 @@ input, textarea, button {
     border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
     background: url(/images/playlist.png) no-repeat center left;
 }
+#left .menu .news-feed {
+    background: url(/images/newsfeed.png) no-repeat center left;
+}
+#left .menu .toplist {
+    background: url(/images/toplist.png) no-repeat center left;
+}
+#left .menu .queue {
+    background: url(/images/playqueue.png) no-repeat center left;
+}
+#left .menu .search {
+    background: url(/images/small-search.png) no-repeat center left;
+}
+
 #left .menu li.playing {
     background: url(/images/playing.png) no-repeat center left;
 }
@@ -1277,9 +1290,8 @@ input, textarea, button {
     padding-right: 32px;
 }
 #about-popup div.share .button {
-	width: 55px;
-	overflow: hidden;
-	display: inline-block;
+    display: inline-block;
+    margin-right: 10px;
 }
 #about-popup div.links {
     margin-bottom: 10px;
