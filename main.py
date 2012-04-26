@@ -35,11 +35,13 @@ class MainHandler(webapp.RequestHandler):
         ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
         
         # Find videotag and generate open graph meta tags
-        match = re.compile(r'videos/(.*)').search(self.request.url)
+        match = re.compile(r'tracks/youtube/(.*)').search(self.request.url)
         if match: 
             og_tag = '<meta property="og:video" content="http://www.youtube.com/v/' + match.groups()[0] + '?version=3&amp;autohide=1"/><meta property="og:video:type" content="application/x-shockwave-flash"/><meta property="og:video:width" content="396"/><meta property="og:video:height" content="297"/>'
         else:
             og_tag = ''
+
+        # TODO add og_tag for SoundCloud & Official.fm tracks
 
         lang = auto_detect_language(self.request)
 
