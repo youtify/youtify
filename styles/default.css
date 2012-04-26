@@ -341,7 +341,7 @@ input, textarea, button {
     background: url(/images/playing.png) no-repeat center left;
 }
 #left .menu li.selected {
-    background-color: rgba(0, 124, 137, 0.1);
+    background-color: rgba(0, 124, 137, 0.4);
 }
 #left .menu li.target {
     background-color: rgba(0, 124, 137, 1);
