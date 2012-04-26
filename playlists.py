@@ -4,7 +4,6 @@ from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from activities import create_subscribe_activity
 from model import get_current_youtify_user_model
-from model import get_display_name_for_youtify_user_model
 from model import get_playlist_struct_from_playlist_model
 from model import get_playlist_structs_by_id
 from model import Playlist
