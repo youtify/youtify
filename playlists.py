@@ -6,6 +6,7 @@ from activities import create_subscribe_activity
 from model import get_current_youtify_user_model
 from model import get_playlist_struct_from_playlist_model
 from model import get_playlist_structs_by_id
+from model import get_youtify_user_struct
 from model import Playlist
 
 class FollowPlaylist(webapp.RequestHandler):
@@ -129,7 +130,7 @@ class PlaylistsHandler(webapp.RequestHandler):
     def get(self):
         """Get playlists for logged in user"""
         youtify_user_model = get_current_youtify_user_model()
-        youtify_user_struct = get_youtify_user_struct(youtify_user_model, False, True)
+        youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_playlists=True)
         
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(playlists = youtify_user_struct['playlists']))

@@ -163,17 +163,17 @@ def get_followings_for_youtify_user_model(youtify_user_model):
     ret = []
     for follow_relation_model in FollowRelation.all().filter('user1 =', youtify_user_model.key().id()):
         user = YoutifyUser.get_by_id(follow_relation_model.user2)
-        ret.append(get_youtify_user_struct(user, include_relations=False))
+        ret.append(get_youtify_user_struct(user))
     return ret
 
 def get_followers_for_youtify_user_model(youtify_user_model):
     ret = []
     for follow_relation_model in FollowRelation.all().filter('user2 =', youtify_user_model.key().id()):
         user = YoutifyUser.get_by_id(follow_relation_model.user1)
-        ret.append(get_youtify_user_struct(user, include_relations=False))
+        ret.append(get_youtify_user_struct(user))
     return ret
 
-def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False, include_relations=True):
+def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False, include_relations=False):
     if youtify_user_model.google_user2:
         email = youtify_user_model.google_user2.email()
     else:
@@ -245,14 +245,14 @@ def get_playlist_struct_from_playlist_model(playlist_model):
         'videos': playlist_model.tracks_json,
         'remoteId': playlist_model.key().id(),
         'isPrivate': playlist_model.private,
-        'owner': get_youtify_user_struct(playlist_model.owner, False, False),
+        'owner': get_youtify_user_struct(playlist_model.owner),
         'followers': [],
         'favorite': playlist_model.favorite
     }
     
     for key in playlist_model.followers:
         youtify_user_model = db.get(key)
-        playlist_struct['followers'].append(get_youtify_user_struct(youtify_user_model, False, False))
+        playlist_struct['followers'].append(get_youtify_user_struct(youtify_user_model))
     
     return playlist_struct
 

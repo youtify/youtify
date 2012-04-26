@@ -29,7 +29,7 @@ class MainHandler(webapp.RequestHandler):
         if youtify_user_model is not None:
             youtify_user_model.device = str(random.random())
             youtify_user_model.save()
-            youtify_user_struct = get_youtify_user_struct(youtify_user_model, True, True)
+            youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True, include_playlists=True)
             playlists_struct = youtify_user_struct['playlists']
 
         ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk

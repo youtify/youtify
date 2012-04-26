@@ -15,7 +15,7 @@ class UserHandler(webapp.RequestHandler):
             self.error(404)
             return
         
-        youtify_user_struct = get_youtify_user_struct(youtify_user_model, False, True)
+        youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_playlists=True, include_relations=True)
         
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(youtify_user_struct))

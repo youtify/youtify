@@ -10,8 +10,8 @@ def create_follow_activity(owner, other_user):
 
     Both owner and other_user gets a new activity
     """
-    target = simplejson.dumps(get_youtify_user_struct(other_user, include_relations=False))
-    actor = simplejson.dumps(get_youtify_user_struct(owner, include_relations=False))
+    target = simplejson.dumps(get_youtify_user_struct(other_user))
+    actor = simplejson.dumps(get_youtify_user_struct(owner))
 
     m = Activity(owner=owner, verb='follow', actor=actor, target=target)
     m.put()
@@ -25,7 +25,7 @@ def create_subscribe_activity(youtify_user_model, playlist_model):
     Both user and playlists owner gets a new activity
     """
     target = simplejson.dumps(get_playlist_struct_from_playlist_model(playlist_model))
-    actor = simplejson.dumps(get_youtify_user_struct(youtify_user_model, include_relations=False))
+    actor = simplejson.dumps(get_youtify_user_struct(youtify_user_model))
 
     m = Activity(owner=youtify_user_model, verb='subscribe', actor=actor, target=target)
     m.put()
@@ -35,7 +35,7 @@ def create_subscribe_activity(youtify_user_model, playlist_model):
 
 def create_signup_activity(youtify_user_model):
     target = simplejson.dumps({})
-    actor = simplejson.dumps(get_youtify_user_struct(youtify_user_model, include_relations=False))
+    actor = simplejson.dumps(get_youtify_user_struct(youtify_user_model))
 
     m = Activity(owner=youtify_user_model, verb='signup', actor=actor, target=target)
     m.put()
@@ -45,7 +45,7 @@ def create_flattr_activity(youtify_user_model, thing_id, thing_title):
         'thing_id': thing_id,
         'thing_title': thing_title,
     })
-    actor = simplejson.dumps(get_youtify_user_struct(youtify_user_model, include_relations=False))
+    actor = simplejson.dumps(get_youtify_user_struct(youtify_user_model))
 
     m = Activity(owner=youtify_user_model, verb='flattr', actor=actor, target=target)
     m.put()
