@@ -168,8 +168,9 @@ var UserManager = {
             }
             var i = 0,
                 $box = $('<div class="playlist-box"/>'),
-                $title = $('<span class="title"/>');
-                $toggleSubscriptionButton = $('<button class="button subscribe"/>').text('Subscribe'),
+                $title = $('<span class="title"/>'),
+                $subscribeButton = $('<button class="button subscribe"></button>').text('Subscribe'),
+                $unsubscribeButton = $('<button class="button unsubscribe"></button>').text('Unsubscribe'),
                 $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
                 $tracklist = $('<table class="tracklist"/>');
             
@@ -191,18 +192,21 @@ var UserManager = {
             });
 
             if (playlist.isSubscription) {
-                $toggleSubscriptionButton.text('Unsubscribe');
+                $subscribeButton.hide();
+            } else {
+                $unsubscribeButton.hide();
             }
 
-            $toggleSubscriptionButton.click(function() {
-                if ($toggleSubscriptionButton.text() === 'Subscribe') {
-                    playlist.subscribe(function() {
-                        $toggleSubscriptionButton.text('Unsubscribe');
-                    });
-                } else {
-                    playlistManager.deletePlaylist(index); // delete unsubscribes
-                    $toggleSubscriptionButton.text('Subscribe');
-                }
+            $subscribeButton.click(function() {
+                playlist.subscribe();
+                $(this).hide();
+                $(this).next().show();
+            });
+
+            $unsubscribeButton.click(function() {
+                playlistManager.deletePlaylist(index); // delete unsubscribes
+                $(this).hide();
+                $(this).prev().show();
             });
 
             for (i = 0; i < Math.min(playlist.videos.length, 5); i += 1) {
@@ -222,7 +226,8 @@ var UserManager = {
             $box.append($title);
 
             if (logged_in && user.id !== UserManager.currentUser.id && playlist.owner.id !== UserManager.currentUser.id) {
-                $box.append($toggleSubscriptionButton);
+                $box.append($subscribeButton);
+                $box.append($unsubscribeButton);
             }
 
             if (user.id === my_user_id && playlist.remoteId !== null) {
