@@ -138,6 +138,7 @@ function Video(args) {
                 $listView.removeClass('selected');
             } else {
                 $listView.addClass('selected');
+                selectedVideoElements.push($listView);
             }
         } else if (event !== undefined && event.shiftKey &&  $listView.siblings('.selected').length > 0) {
             var elements = [$listView],
@@ -163,8 +164,11 @@ function Video(args) {
             $(elements).each(function(index, item) {
                 $(item).addClass('selected');
             });
+
+            selectedVideoElements = selectedVideoElements.concat(elements);
         } else {
-            $listView.siblings().removeClass('selected');
+            Utils.deSelectSelectedVideos();
+            selectedVideoElements.push($listView);
             $listView.addClass('selected');
         }
     };

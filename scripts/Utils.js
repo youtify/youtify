@@ -46,5 +46,12 @@ var Utils = {
             }
         }
         return false;
+    },
+
+    deSelectSelectedVideos: function() {
+        var i;
+        for (i = 0; i < selectedVideoElements.length; i += 1) {
+            selectedVideoElements[i].removeClass('selected');
+        }
     }
 };
