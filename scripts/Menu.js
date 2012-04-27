@@ -198,11 +198,11 @@ function MenuItem(type) {
 
         }
         /* Set click event */
-        self.leftView.click(self.select);
+        self.leftView.mousedown(self.select);
         self.leftView.data('model', self);
         self.rightView.data('model', self);
 
-        $('#left .toplist').click();
+        $('#left .toplist').mousedown();
     };
     self.findTab = function(type) {
         var i;
