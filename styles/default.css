@@ -753,30 +753,27 @@ input, textarea, button {
     float: left;
     min-height: 270px;
 }
-#right .profile .playlist-box > .title {
+#right .profile .playlist-box > .title .link {
     overflow: hidden;
-    display: inline;
     font-size: 14px;
     font-weight: bold;
-    padding: 2px;
-    height: 26px;
-    line-height: 26px;
     max-width: 226px;
-    float: left;
     cursor: pointer;
+    line-height: 26px;
+}
+#right .profile .playlist-box > .title .nr {
+    line-height: 26px;
 }
 #right .profile .playlist-box .privacy {
     display: inline;
     max-width: 70px;
     float: right;
+    line-height: 26px;
 }
 #right .profile .playlist-box .privacy input {
     margin-right: 5px;
-    vertical-align: middle;
-    line-height: 26px;
 }
 #right .profile .playlist-box .privacy label {
-    line-height: 26px;
 }
 #right .profile .playlist-box .button {
     float: right;

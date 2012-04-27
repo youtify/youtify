@@ -168,21 +168,14 @@ var UserManager = {
             }
             var i = 0,
                 $box = $('<div class="playlist-box"/>'),
-                $title = $('<span class="title link"/>').text(playlist.title),
+                $title = $('<span class="title"/>');
                 $toggleSubscriptionButton = $('<button class="button subscribe"/>').text('Subscribe'),
                 $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
-                $tracklist = $('<table class="tracklist"/>'),
-                $more = $('<span class="more"/>').click(function() {
-                    if ($tracklistContainer.hasClass('minimized')) {
-                        $tracklistContainer.removeClass('minimized');
-                        $tracklistContainer.css('height', $tracklist.height());
-                    } else {
-                        $tracklistContainer.addClass('minimized');
-                        $tracklistContainer.removeAttr('style');
-                    }
-                }).html('&#8661;');
+                $tracklist = $('<table class="tracklist"/>');
             
             /* Title click */
+            $title.append($('<span class="link"></span>').text(playlist.title));
+            $title.append($('<span class="nr"></span>').text(' (' + playlist.videos.length + ')'));
             $title.click(function() {
                 if (playlist.playlistDOMHandle === null) {
                     playlist.createViews();
@@ -211,8 +204,8 @@ var UserManager = {
                     $toggleSubscriptionButton.text('Subscribe');
                 }
             });
-            
-            for (i = 0; i < playlist.videos.length; i += 1) {
+
+            for (i = 0; i < Math.min(playlist.videos.length, 5); i += 1) {
                 if (playlist.videos[i]) {
                     var video = new Video({
                         title: playlist.videos[i].title,
@@ -250,9 +243,6 @@ var UserManager = {
             }
             $tracklistContainer.append($tracklist);
             $box.append($tracklistContainer);
-            if (playlist.videos.length > 5) {
-                $box.append($more);
-            }
             $box.appendTo(UserManager.$playlists);
         });
 
