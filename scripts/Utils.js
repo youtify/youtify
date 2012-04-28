@@ -55,6 +55,22 @@ var Utils = {
         }
     },
 
+    addFollowing: function(user) {
+        myFollowings.push(user);
+    },
+
+    removeFollowing: function(userId) {
+        var newFollowings = [];
+
+        $.each(myFollowings, function(i, item) {
+            if (item.id !== userId) {
+                newFollowings.push(item);
+            }
+        });
+
+        myFollowings = newFollowings;
+    },
+
     isFollowingUser: function(userId) {
         var ret = false;
 

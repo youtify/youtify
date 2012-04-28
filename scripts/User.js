@@ -4,16 +4,16 @@ function User(args) {
     self.nickname = args.nickname;
     self.displayName = args.displayName;
     self.flattrUserName = args.flattr_user_name;
-    self.email = args.email || '';
-    self.largeImageUrl = args.largeImageUrl || null;
-    self.smallImageUrl = args.smallImageUrl || null;
-    self.firstName = args.firstName || '';
-    self.lastName = args.lastName || '';
+    self.email = args.email;
+    self.largeImageUrl = args.largeImageUrl;
+    self.smallImageUrl = args.smallImageUrl;
+    self.firstName = args.firstName;
+    self.lastName = args.lastName;
     self.fullName = $.trim(self.firstName + ' ' + self.lastName);
     self.nrOfFollowers = args.nr_of_followers;
     self.nrOfFollowings = args.nr_of_followings;
     self.nrOfPlaylists = args.nr_of_playlists;
-    self.tagline = args.tagline || '';
+    self.tagline = args.tagline;
 
     self.saveProfile = function(params) {
         LoadingBar.show();

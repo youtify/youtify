@@ -1,4 +1,3 @@
-
 var UserManager = {
     currentUser: null,
     viewingUser: null,
@@ -42,6 +41,7 @@ var UserManager = {
         UserManager.$changePictureBox = $('#right .profile .picture-container .change');
         UserManager.$gravatarEmail = $('#right .profile .picture-container .change .email');
     },
+
     doFakeProfileMenuClick: function() {
         Menu.deSelectAll();
 
@@ -50,10 +50,12 @@ var UserManager = {
 
         Menu.profile.tabs[0].select();
     },
+
     loadCurrentUser: function() {
         UserManager.resetUserProfileView();
         UserManager.populateUserProfile(UserManager.currentUser);
     },
+
     loadProfile: function(nickOrId) {
         UserManager.resetUserProfileView();
 
@@ -76,6 +78,7 @@ var UserManager = {
             }
         });
     },
+
     resetUserProfileView: function() {
         UserManager.$followButton.hide();
         UserManager.$unFollowButton.hide();
@@ -99,6 +102,7 @@ var UserManager = {
 
         $('#right .profile .tabs').hide();
     },
+
     populateUserProfile: function(user) {
         UserManager.viewingUser = user;
 
@@ -116,6 +120,8 @@ var UserManager = {
                 UserManager.currentUser.nrOfFollowings += 1;
                 user.nrOfFollowers += 1;
 
+                Utils.addFollowing(user);
+
                 UserManager.loadFollowers();
             });
         });
@@ -131,6 +137,8 @@ var UserManager = {
 
                         UserManager.currentUser.nrOfFollowings -= 1;
                         user.nrOfFollowers -= 1;
+
+                        Utils.removeFollowing(user.id);
 
                         UserManager.loadFollowers();
                     }

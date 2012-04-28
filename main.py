@@ -55,10 +55,9 @@ class MainHandler(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
-            'user': current_user,
-            'is_admin': int(users.is_current_user_admin()),
-            'youtify_user': youtify_user_model,
-            'user_args': simplejson.dumps(youtify_user_struct),
+            'my_user_id': youtify_user_model is not None and youtify_user_model.key().id(),
+            'device': youtify_user_model is not None and youtify_user_model.device,
+            'USER': simplejson.dumps(youtify_user_struct),
             'playlistsFromServer': simplejson.dumps(playlists_struct),
             'myFollowers': simplejson.dumps(my_followers_struct),
             'myFollowings': simplejson.dumps(my_followings_struct),
@@ -69,7 +68,7 @@ class MainHandler(webapp.RequestHandler):
             'flattr_user_name': youtify_user_model is not None and youtify_user_model.flattr_user_name,
             'login_url': users.create_login_url('/'),
             'logout_url': users.create_logout_url('/'),
-            'toplist': get_or_create_toplist_json(),
+            'youtubeTopList': get_or_create_toplist_json(),
             'flattr_toplist': flattr_toplist.get_or_create_toplist_json(),
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
             'ON_PRODUCTION': ON_PRODUCTION,
