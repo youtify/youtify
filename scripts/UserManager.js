@@ -230,7 +230,7 @@ var UserManager = {
                 $box.append($unsubscribeButton);
             }
 
-            if (user.id === my_user_id && playlist.remoteId !== null) {
+            if(user.id === my_user_id && my_user_id === playlist.owner.id && playlist.remoteId !== null) {
                 var $privacyContainer = $('<div class="privacy"/>'),
                     $privacy = $('<input type="checkbox"/>'),
                     $privacyLabel = $('<label class="translatable"/>').text("Public");
