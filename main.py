@@ -64,7 +64,6 @@ class MainHandler(webapp.RequestHandler):
             'myFollowings': simplejson.dumps(my_followings_struct),
             'autoDetectedLanguageByServer': lang,
             'autoDetectedTranslations': get_deployed_translations_json(lang),
-            'accept_language_header': self.request.headers.get('Accept-Language', ''), # todo remove
             'logged_in': int(current_user is not None),
             'has_flattr_access_token': int(youtify_user_model is not None and youtify_user_model.flattr_access_token is not None),
             'flattr_user_name': youtify_user_model is not None and youtify_user_model.flattr_user_name,
