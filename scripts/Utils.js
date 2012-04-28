@@ -53,5 +53,18 @@ var Utils = {
         for (i = 0; i < selectedVideoElements.length; i += 1) {
             selectedVideoElements[i].removeClass('selected');
         }
+    },
+
+    isFollowingUser: function(userId) {
+        var ret = false;
+
+        $.each(myFollowings, function(i, item) {
+            if (item.id === userId) {
+                ret = true;
+                return false;
+            }
+        });
+
+        return ret;
     }
 };

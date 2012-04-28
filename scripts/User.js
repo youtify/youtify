@@ -10,10 +10,10 @@ function User(args) {
     self.firstName = args.firstName || '';
     self.lastName = args.lastName || '';
     self.fullName = $.trim(self.firstName + ' ' + self.lastName);
+    self.nrOfFollowers = args.nr_of_followers;
+    self.nrOfFollowings = args.nr_of_followings;
     self.tagline = args.tagline || '';
     self.playlists = [];
-    self.followings = args.followings || [];
-    self.followers = args.followers || [];
 
     if (args.playlists) {
         $.each(args.playlists, function(i, item) {
@@ -54,42 +54,6 @@ function User(args) {
         }
     };
 
-    self.addFollower = function(userId, userDisplayName, smallImageUrl) {
-        self.followers.push({
-            id: userId,
-            displayName: userDisplayName,
-            smallImageUrl: smallImageUrl
-        });
-    };
-
-    self.removeFollower = function(userId) {
-        var newFollowers = [];
-        $.each(self.followers, function(i, item) {
-            if (item.id !== userId) {
-                newFollowers.push(item);
-            }
-        });
-        self.followers = newFollowers;
-    };
-
-    self.removeFollowing = function(userId) {
-        var newFollowings = [];
-        $.each(self.followings, function(i, item) {
-            if (item.id !== userId) {
-                newFollowings.push(item);
-            }
-        });
-        self.followings = newFollowings;
-    };
-
-    self.addFollowing = function(userId, userDisplayName, smallImageUrl) {
-        self.followings.push({
-            id: userId,
-            displayName: userDisplayName,
-            smallImageUrl: smallImageUrl
-        });
-    };
-
     self.getSmallView = function() {
         var $user = $('<span class="user small link"></span>');
 
@@ -107,18 +71,5 @@ function User(args) {
         });
 
         return $user;
-    };
-
-    self.isFollowingUser = function(userId) {
-        var ret = false;
-
-        $.each(self.followings, function(i, item) {
-            if (item.id === userId) {
-                ret = true;
-                return false;
-            }
-        });
-
-        return ret;
     };
 }

@@ -3,6 +3,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user_model
+from model import get_youtify_user_model_by_id_or_nick
 from model import get_youtify_user_struct
 from model import YoutifyUser
 from model import FollowRelation
@@ -49,9 +50,22 @@ class FollowingsHandler(webapp.RequestHandler):
 
     def delete(self, uid):
         me = get_current_youtify_user_model()
+        other_user = get_youtify_user_model_by_id_or_nick(uid)
+
+        if other_user is None:
+            self.error(400)
+            self.response.out.write('Other user not found')
+            return
+
         m = FollowRelation.all().filter('user1 =', me.key().id()).filter('user2 =', int(uid)).get()
         if m:
             m.delete()
+
+        me.nr_of_followings -= 1
+        other_user.nr_of_followers -= 1
+
+        me.save()
+        other_user.save()
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
@@ -74,6 +88,12 @@ class FollowingsHandler(webapp.RequestHandler):
             self.error(400)
             self.response.out.write('You already follow that user')
             return
+
+        me.nr_of_followings += 1
+        other_user.nr_of_followers += 1
+
+        me.save()
+        other_user.save()
 
         m = FollowRelation(user1=me.key().id(), user2=other_user.key().id())
         m.put()

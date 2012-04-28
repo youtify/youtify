@@ -81,7 +81,6 @@
             self.parent.select();
         }
         
-        /* Search special case */
         if (self.type === 'youtube-videos' || self.type === 'soundcloud-tracks' ||
             self.type === 'officialfm-tracks' || self.type === 'youtify-users' || 
             self.type === 'youtify-playlists') {
@@ -91,6 +90,10 @@
                 Search.q = '';
                 $('#top .search input').keyup();
             }
+        } else if (self.type === 'profile-followers') {
+            UserManager.loadFollowers();
+        } else  if (self.type === 'profile-followings') {
+            UserManager.loadFollowings();
         }
         
         /* Remove selected on all menuItems */

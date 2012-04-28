@@ -10,6 +10,8 @@ from toplist import get_or_create_toplist_json
 from model import get_current_youtify_user_model
 from model import create_youtify_user_model
 from model import get_youtify_user_struct
+from model import get_followers_for_youtify_user_model
+from model import get_followings_for_youtify_user_model
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
 from languages import get_languages
@@ -22,6 +24,8 @@ class MainHandler(webapp.RequestHandler):
         youtify_user_model = get_current_youtify_user_model()
         youtify_user_struct = None
         playlists_struct = []
+        my_followers = []
+        my_followings = []
 
         if (current_user is not None) and (youtify_user_model is None):
             youtify_user_model = create_youtify_user_model()
@@ -29,8 +33,10 @@ class MainHandler(webapp.RequestHandler):
         if youtify_user_model is not None:
             youtify_user_model.device = str(random.random())
             youtify_user_model.save()
-            youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True, include_playlists=True, include_relations=True)
+            youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True, include_playlists=True)
             playlists_struct = youtify_user_struct['playlists']
+            my_followers_struct = get_followers_for_youtify_user_model(youtify_user_model)
+            my_followings_struct = get_followings_for_youtify_user_model(youtify_user_model)
 
         ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
         
@@ -53,6 +59,8 @@ class MainHandler(webapp.RequestHandler):
             'youtify_user': youtify_user_model,
             'user_args': simplejson.dumps(youtify_user_struct),
             'playlistsFromServer': simplejson.dumps(playlists_struct),
+            'myFollowers': simplejson.dumps(my_followers_struct),
+            'myFollowings': simplejson.dumps(my_followings_struct),
             'autoDetectedLanguageByServer': lang,
             'autoDetectedTranslations': get_deployed_translations_json(lang),
             'accept_language_header': self.request.headers.get('Accept-Language', ''), # todo remove

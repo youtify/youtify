@@ -24,6 +24,8 @@ class YoutifyUser(search.SearchableModel):
     tagline = db.StringProperty()
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
+    nr_of_followers = db.IntegerProperty(default=0)
+    nr_of_followings = db.IntegerProperty(default=0)
     migrated_playlists = db.BooleanProperty(default=False)
 
     @classmethod
@@ -155,7 +157,7 @@ def get_followers_for_youtify_user_model(youtify_user_model):
         ret.append(get_youtify_user_struct(user))
     return ret
 
-def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False, include_relations=False):
+def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False):
     if youtify_user_model.google_user2:
         email = youtify_user_model.google_user2.email()
     else:
@@ -170,6 +172,8 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False, incl
         'email': None,
         'flattr_user_name': youtify_user_model.flattr_user_name,
         'displayName': get_display_name_for_youtify_user_model(youtify_user_model),
+        'nr_of_followers': youtify_user_model.nr_of_followers,
+        'nr_of_followings': youtify_user_model.nr_of_followings,
         'nickname': youtify_user_model.nickname,
         'firstName': youtify_user_model.first_name,
         'lastName': youtify_user_model.last_name,
@@ -180,10 +184,6 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False, incl
     }
     if include_private_data:
         user['email'] = email
-
-    if include_relations:
-        user['followings'] = get_followings_for_youtify_user_model(youtify_user_model)
-        user['followers'] = get_followers_for_youtify_user_model(youtify_user_model)
     
     if include_playlists:
         user['playlists'] = get_playlist_structs_for_youtify_user_model(youtify_user_model)

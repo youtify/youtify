@@ -1,6 +1,7 @@
 
 var UserManager = {
     currentUser: null,
+    viewingUser: null,
     $playlists: null,
     $followings: null,
     $followers: null,
@@ -99,8 +100,8 @@ var UserManager = {
         $('#right .profile .tabs').hide();
     },
     populateUserProfile: function(user) {
-        /* Also called from Menu.js */
-               
+        UserManager.viewingUser = user;
+
         var largeImageUrl = user.largeImageUrl;
 
         UserManager.$img = $('<img class="picture" alt="Profile picture" />')
@@ -112,9 +113,10 @@ var UserManager = {
                 UserManager.$followButton.hide();
                 UserManager.$unFollowButton.show();
 
-                user.addFollower(UserManager.currentUser.id, UserManager.currentUser.displayName, UserManager.currentUser.smallImageUrl);
-                UserManager.currentUser.addFollowing(user.id, user.displayName, UserManager.currentUser.smallImageUrl);
-                updateFollowersView();
+                UserManager.currentUser.nrOfFollowings += 1;
+                user.nrOfFollowers += 1;
+
+                UserManager.loadFollowers();
             });
         });
 
@@ -127,9 +129,10 @@ var UserManager = {
                         UserManager.$followButton.show();
                         UserManager.$unFollowButton.hide();
 
-                        user.removeFollower(UserManager.currentUser.id, UserManager.currentUser.displayName);
-                        UserManager.currentUser.removeFollowing(user.id, user.displayName);
-                        updateFollowersView();
+                        UserManager.currentUser.nrOfFollowings -= 1;
+                        user.nrOfFollowers -= 1;
+
+                        UserManager.loadFollowers();
                     }
                 }
             });
@@ -144,7 +147,7 @@ var UserManager = {
             UserManager.$editButton.show();
             UserManager.$gravatarEmail.text(UserManager.currentUser.email);
             UserManager.$changePictureBox.show();
-        } else if (logged_in && UserManager.currentUser.isFollowingUser(user.id)) {
+        } else if (logged_in && Utils.isFollowingUser(user.id)) {
             UserManager.$unFollowButton.show();
         } else if (logged_in) {
             UserManager.$followButton.show();
@@ -251,27 +254,42 @@ var UserManager = {
             $box.appendTo(UserManager.$playlists);
         });
 
-        function updateFollowingsView() {
-            UserManager.$followings.html('');
-            UserManager.$followingsTab.text('Following (' + user.followings.length + ')');
-            $.each(user.followings, function(i, item) {
-                UserManager.$followings.append(new User(item).getSmallView());
-            });
-        }
-
-        function updateFollowersView() {
-            UserManager.$followers.html('');
-            UserManager.$followersTab.text('Followers (' + user.followers.length + ')');
-            $.each(user.followers, function(i, item) {
-                UserManager.$followers.append(new User(item).getSmallView());
-            });
-        }
-
-        updateFollowersView();
-        updateFollowingsView();
+        UserManager.updateFollowersTabLabel(user.nrOfFollowers);
+        UserManager.updateFollowingsTabLabel(user.nrOfFollowings);
 
         $('#right .profile .tabs').show();
     },
+
+    updateFollowersTabLabel: function(nrOfFollowers) {
+        UserManager.$followersTab.text('Followers (' + nrOfFollowers + ')');
+    },
+
+    updateFollowingsTabLabel: function(nrOfFollowings) {
+        UserManager.$followingsTab.text('Following (' + nrOfFollowings + ')');
+    },
+
+    loadFollowers: function() {
+        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/followers', function(data) {
+            console.log('loadFollowers');
+            UserManager.$followers.html('');
+            UserManager.updateFollowersTabLabel(data.length);
+            $.each(data, function(i, item) {
+                UserManager.$followers.append(new User(item).getSmallView());
+            });
+        });
+    },
+
+    loadFollowings: function() {
+        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/followings', function(data) {
+            console.log('loadFollowings');
+            UserManager.$followings.html('');
+            UserManager.updateFollowingsTabLabel(data.length);
+            $.each(data, function(i, item) {
+                UserManager.$followings.append(new User(item).getSmallView());
+            });
+        });
+    },
+
     findUser: function(nickOrId, callback) {
         $.getJSON('/api/users/' + nickOrId, function(data) {
              callback(data);
