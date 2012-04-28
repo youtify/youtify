@@ -6,7 +6,6 @@ import hashlib
 from google.appengine.ext import db
 from google.appengine.ext import search
 from google.appengine.api import users
-from django.utils import simplejson
 
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
