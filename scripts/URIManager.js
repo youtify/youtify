@@ -1,10 +1,18 @@
 var URIManager = {
+    initialPopStateHasRun: false,
+
     init: function() {
+        window.addEventListener('popstate', function(event) {
+            // Chrome throws an initial popState, http://dropshado.ws/post/15251622664/ignore-initial-popstate
+			var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+            if (isChrome && !URIManager.initialPopStateHasRun) {
+                URIManager.initialPopStateHasRun = true;
+                return;
+            }
+            URIManager.loadState();
+        });
         URIManager.loadWarnings();
         URIManager.loadState();
-        EventSystem.addEventListener('video_started_playing_successfully', function(video) {
-            URIManager.setURLFromVideo(video);
-        });
     },
     loadWarnings: function() {
         if (window.top !== window.self) {
@@ -60,11 +68,5 @@ var URIManager = {
     getSearchQueryFromUrl: function() {
         return decodeURI(location.href.match('q=(.*)')[1]);
     },
-    setURLFromVideo: function(video) {
-        if (video.type === null || video.type.length === 0 || video.type === 'yt') {
-            video.type = 'youtube';
-        }
-        history.pushState(null, null, '/tracks/' + video.type + '/' + video.videoId);
-    }
 };
     
