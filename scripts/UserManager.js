@@ -176,7 +176,7 @@ var UserManager = {
         UserManager.updateFollowersTabLabel(user.nrOfFollowers);
         UserManager.updateFollowingsTabLabel(user.nrOfFollowings);
 
-        if (UserManager.currentUser.id === user.id) {
+        if (logged_in && UserManager.currentUser.id === user.id) {
             $.each(playlistManager.playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
                 UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, user));
