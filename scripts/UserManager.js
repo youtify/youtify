@@ -164,98 +164,18 @@ var UserManager = {
         $('#right .profile .information-container .nickname').text(user.nickname);
         $('#right .profile .information-container .tagline').text(user.tagline);
 
-        UserManager.$playlistsTab.text('Playlists (' + user.playlists.length + ')');
-        $.each(user.playlists, function(index, playlist) {
-            if ((user.id !== my_user_id) && (playlist.isPrivate === true || playlist.videos.length === 0)) {
-                return;
-            }
-            var i = 0,
-                $box = $('<div class="playlist-box"/>'),
-                $title = $('<span class="title"/>'),
-                $subscribeButton = $('<button class="button subscribe"></button>').text('Subscribe'),
-                $unsubscribeButton = $('<button class="button unsubscribe"></button>').text('Unsubscribe'),
-                $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
-                $tracklist = $('<table class="tracklist"/>');
-            
-            /* Title click */
-            $title.append($('<span class="link"></span>').text(playlist.title));
-            $title.append($('<span class="nr"></span>').text(' (' + playlist.videos.length + ')'));
-            $title.click(function() {
-                if (playlist.playlistDOMHandle === null) {
-                    playlist.createViews();
-                }
-
-                if (playlist.remoteId) {
-                    history.pushState(null, null, playlist.getUrl());
-                } else {
-                    history.pushState(null, null, '/');
-                }
-
-                PlaylistView.loadPlaylistView(playlist);
-            });
-
-            if (playlist.isSubscription) {
-                $subscribeButton.hide();
-            } else {
-                $unsubscribeButton.hide();
-            }
-
-            $subscribeButton.click(function() {
-                playlist.subscribe();
-                $(this).hide();
-                $(this).next().show();
-            });
-
-            $unsubscribeButton.click(function() {
-                playlistManager.deletePlaylist(index); // delete unsubscribes
-                $(this).hide();
-                $(this).prev().show();
-            });
-
-            for (i = 0; i < Math.min(playlist.videos.length, 5); i += 1) {
-                if (playlist.videos[i]) {
-                    var video = new Video({
-                        title: playlist.videos[i].title,
-                        type: playlist.videos[i].type,
-                        videoId: playlist.videos[i].videoId,
-                        duration: playlist.videos[i].duration
-                    });
-                    video.createListView()
-                        .addClass('droppable')
-                        .addClass('draggable')
-                        .appendTo($tracklist);
-                }
-            }
-            $box.append($title);
-
-            if (logged_in && user.id !== UserManager.currentUser.id && playlist.owner.id !== UserManager.currentUser.id) {
-                $box.append($subscribeButton);
-                $box.append($unsubscribeButton);
-            }
-
-            if(user.id === my_user_id && my_user_id === playlist.owner.id && playlist.remoteId !== null) {
-                var $privacyContainer = $('<div class="privacy"/>'),
-                    $privacy = $('<input type="checkbox"/>'),
-                    $privacyLabel = $('<label class="translatable"/>').text("Public");
-                $privacy.attr('checked', !playlist.isPrivate);
-                $privacy.change(function() {
-                    /* Reversed */
-                    playlist.isPrivate = !$privacy.is(':checked');
-                    playlist.synced = false;
-                    playlist.sync();
-                });
-                $privacyContainer
-                    .append($privacy)
-                    .append($privacyLabel)
-                    .appendTo($box);
-            }
-            $tracklistContainer.append($tracklist);
-            $box.append($tracklistContainer);
-            $box.appendTo(UserManager.$playlists);
-        });
-
+        UserManager.updatePlaylistsTabLabel(user.nrOfPlaylists);
         UserManager.updateFollowersTabLabel(user.nrOfFollowers);
         UserManager.updateFollowingsTabLabel(user.nrOfFollowings);
+
+        if (UserManager.currentUser.id === user.id) {
+            $.each(playlistManager.playlists, function(index, item) {
+                var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
+                UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, user));
+            });
+        } else {
+            UserManager.loadPlaylists();
+        }
 
         $('#right .profile .tabs').show();
     },
@@ -268,9 +188,23 @@ var UserManager = {
         UserManager.$followingsTab.text('Following (' + nrOfFollowings + ')');
     },
 
+    updatePlaylistsTabLabel: function(nrOfPlaylists) {
+        UserManager.$playlistsTab.text('Playlists (' + nrOfPlaylists + ')');
+    },
+
+    loadPlaylists: function() {
+        LoadingBar.show();
+        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/playlists', function(data) {
+            $.each(data, function(index, item) {
+                var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
+                UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, UserManager.viewingUser));
+            });
+            LoadingBar.hide();
+        });
+    },
+
     loadFollowers: function() {
         $.getJSON('/api/users/' + UserManager.viewingUser.id + '/followers', function(data) {
-            console.log('loadFollowers');
             UserManager.$followers.html('');
             UserManager.updateFollowersTabLabel(data.length);
             $.each(data, function(i, item) {
@@ -281,7 +215,6 @@ var UserManager = {
 
     loadFollowings: function() {
         $.getJSON('/api/users/' + UserManager.viewingUser.id + '/followings', function(data) {
-            console.log('loadFollowings');
             UserManager.$followings.html('');
             UserManager.updateFollowingsTabLabel(data.length);
             $.each(data, function(i, item) {

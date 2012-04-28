@@ -153,7 +153,7 @@ def get_followers_for_youtify_user_model(youtify_user_model):
         ret.append(get_youtify_user_struct(user))
     return ret
 
-def get_youtify_user_struct(youtify_user_model, include_private_data=False, include_playlists=False):
+def get_youtify_user_struct(youtify_user_model, include_private_data=False):
     if youtify_user_model.google_user2:
         email = youtify_user_model.google_user2.email()
     else:
@@ -170,25 +170,17 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False, incl
         'displayName': get_display_name_for_youtify_user_model(youtify_user_model),
         'nr_of_followers': youtify_user_model.nr_of_followers,
         'nr_of_followings': youtify_user_model.nr_of_followings,
+        'nr_of_playlists': len(youtify_user_model.playlists) + len(youtify_user_model.playlist_subscriptions),
         'nickname': youtify_user_model.nickname,
         'firstName': youtify_user_model.first_name,
         'lastName': youtify_user_model.last_name,
         'tagline': youtify_user_model.tagline,
-        'playlists': [],
         'smallImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(small_size)}),
         'largeImageUrl': "http://www.gravatar.com/avatar/" + hashlib.md5(gravatar_email.lower()).hexdigest() + "?" + urllib.urlencode({'d':default_image, 's':str(large_size)})
     }
     if include_private_data:
         user['email'] = email
     
-    if include_playlists:
-        user['playlists'] = get_playlist_structs_for_youtify_user_model(youtify_user_model)
-        for key in youtify_user_model.playlist_subscriptions:
-            playlist_model = db.get(key)
-            if playlist_model is not None:
-                user['playlists'].append(get_playlist_struct_from_playlist_model(playlist_model))
-            else:
-                logging.error('User %s subscribes to deleted playlist %s' % (user['id'], key))
     return user
 
 def get_display_name_for_youtify_user_model(youtify_user_model):
@@ -208,9 +200,18 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
 def get_playlist_structs_for_youtify_user_model(youtify_user_model):
     playlist_models = youtify_user_model.playlists
     playlist_structs = []
+
     for key in playlist_models:
         playlist_model = db.get(key)
         playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
+
+    for key in youtify_user_model.playlist_subscriptions:
+        playlist_model = db.get(key)
+        if playlist_model is not None:
+            playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
+        else:
+            logging.error('User %s subscribes to deleted playlist %s' % (user['id'], key))
+
     return playlist_structs
 
 def get_playlist_structs_by_id(playlist_id):

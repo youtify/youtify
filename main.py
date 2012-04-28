@@ -12,6 +12,7 @@ from model import create_youtify_user_model
 from model import get_youtify_user_struct
 from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
+from model import get_playlist_structs_for_youtify_user_model
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
 from languages import get_languages
@@ -33,8 +34,8 @@ class MainHandler(webapp.RequestHandler):
         if youtify_user_model is not None:
             youtify_user_model.device = str(random.random())
             youtify_user_model.save()
-            youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True, include_playlists=True)
-            playlists_struct = youtify_user_struct['playlists']
+            youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
+            playlists_struct = get_playlist_structs_for_youtify_user_model(youtify_user_model)
             my_followers_struct = get_followers_for_youtify_user_model(youtify_user_model)
             my_followings_struct = get_followings_for_youtify_user_model(youtify_user_model)
 

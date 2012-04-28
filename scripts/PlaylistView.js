@@ -1,5 +1,95 @@
 var PlaylistView = {
-    updatePlaylistBar: function (playlist) {
+    createSmallPlaylistView: function(playlist, index, user) {
+        if ((user.id !== my_user_id) && (playlist.isPrivate === true || playlist.videos.length === 0)) {
+            return;
+        }
+        var i = 0,
+            $box = $('<div class="playlist-box"/>'),
+            $title = $('<span class="title"/>'),
+            $subscribeButton = $('<button class="button subscribe"></button>').text('Subscribe'),
+            $unsubscribeButton = $('<button class="button unsubscribe"></button>').text('Unsubscribe'),
+            $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
+            $tracklist = $('<table class="tracklist"/>');
+
+        /* Title click */
+        $title.append($('<span class="link"></span>').text(playlist.title));
+        $title.append($('<span class="nr"></span>').text(' (' + playlist.videos.length + ')'));
+        $title.click(function() {
+            if (playlist.playlistDOMHandle === null) {
+                playlist.createViews();
+            }
+
+            if (playlist.remoteId) {
+                history.pushState(null, null, playlist.getUrl());
+            } else {
+                history.pushState(null, null, '/');
+            }
+
+            PlaylistView.loadPlaylistView(playlist);
+        });
+
+        if (playlist.isSubscription) {
+            $subscribeButton.hide();
+        } else {
+            $unsubscribeButton.hide();
+        }
+
+        $subscribeButton.click(function() {
+            playlist.subscribe();
+            $(this).hide();
+            $(this).next().show();
+        });
+
+        $unsubscribeButton.click(function() {
+            playlistManager.deletePlaylist(index); // delete unsubscribes
+            $(this).hide();
+            $(this).prev().show();
+        });
+
+        for (i = 0; i < Math.min(playlist.videos.length, 5); i += 1) {
+            if (playlist.videos[i]) {
+                var video = new Video({
+                    title: playlist.videos[i].title,
+                    type: playlist.videos[i].type,
+                    videoId: playlist.videos[i].videoId,
+                    duration: playlist.videos[i].duration
+                });
+                video.createListView()
+                    .addClass('droppable')
+                    .addClass('draggable')
+                    .appendTo($tracklist);
+            }
+        }
+        $box.append($title);
+
+        if (logged_in && user.id !== UserManager.currentUser.id && playlist.owner.id !== UserManager.currentUser.id) {
+            $box.append($subscribeButton);
+            $box.append($unsubscribeButton);
+        }
+
+        if(user.id === my_user_id && my_user_id === playlist.owner.id && playlist.remoteId !== null) {
+            var $privacyContainer = $('<div class="privacy"/>'),
+                $privacy = $('<input type="checkbox"/>'),
+                $privacyLabel = $('<label class="translatable"/>').text("Public");
+            $privacy.attr('checked', !playlist.isPrivate);
+            $privacy.change(function() {
+                /* Reversed */
+                playlist.isPrivate = !$privacy.is(':checked');
+                playlist.synced = false;
+                playlist.sync();
+            });
+            $privacyContainer
+                .append($privacy)
+                .append($privacyLabel)
+                .appendTo($box);
+        }
+        $tracklistContainer.append($tracklist);
+        $box.append($tracklistContainer);
+
+        return $box;
+    },
+
+    updatePlaylistBar: function(playlist) {
         var i = 0,
             $playlistBar = $('#right > .playlists .info'),
             $privacy = $playlistBar.find('.privacy input');

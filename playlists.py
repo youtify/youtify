@@ -127,14 +127,6 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
 
 class PlaylistsHandler(webapp.RequestHandler):
 
-    def get(self):
-        """Get playlists for logged in user"""
-        youtify_user_model = get_current_youtify_user_model()
-        youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_playlists=True)
-        
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(playlists = youtify_user_struct['playlists']))
-
     def post(self):
         """Create new playlist"""
         youtify_user_model = get_current_youtify_user_model()

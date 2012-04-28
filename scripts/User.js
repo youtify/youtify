@@ -12,14 +12,8 @@ function User(args) {
     self.fullName = $.trim(self.firstName + ' ' + self.lastName);
     self.nrOfFollowers = args.nr_of_followers;
     self.nrOfFollowings = args.nr_of_followings;
+    self.nrOfPlaylists = args.nr_of_playlists;
     self.tagline = args.tagline || '';
-    self.playlists = [];
-
-    if (args.playlists) {
-        $.each(args.playlists, function(i, item) {
-            self.playlists.push(new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers));
-        });
-    }
 
     self.saveProfile = function(params) {
         LoadingBar.show();
