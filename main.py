@@ -24,8 +24,8 @@ class MainHandler(webapp.RequestHandler):
         youtify_user_model = get_current_youtify_user_model()
         youtify_user_struct = None
         playlists_struct = []
-        my_followers = []
-        my_followings = []
+        my_followers_struct = []
+        my_followings_struct = []
 
         if (current_user is not None) and (youtify_user_model is None):
             youtify_user_model = create_youtify_user_model()
