@@ -138,24 +138,6 @@ def create_youtify_user_model():
 
     return m
 
-def migrate_playlists_for_youtify_user_model(youtify_user_model):
-    if not youtify_user_model.migrated_playlists:
-        for playlist in Playlist.all().filter('owner =', youtify_user_model):
-            if playlist.json is not None:
-                old_playlist = simplejson.loads(playlist.json)
-                playlist.private = old_playlist.get('isPrivate', False)
-                playlist.tracks_json = simplejson.dumps(old_playlist['videos'])
-                playlist.owner = youtify_user_model
-                playlist.title = old_playlist['title']
-                playlist.remote_id = old_playlist['remoteId']
-                playlist.json = None
-                playlist.save()
-                youtify_user_model.playlists.append(playlist.key())
-
-        youtify_user_model.migrated_playlists = True
-        youtify_user_model.google_user2 = youtify_user_model.google_user
-        youtify_user_model.save()
-
 def get_playlists_model_for_youtify_user_model(youtify_user_model):
     return db.get(youtify_user_model.playlists)
 
