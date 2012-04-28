@@ -139,9 +139,6 @@ def create_youtify_user_model():
 
     return m
 
-def get_playlists_model_for_youtify_user_model(youtify_user_model):
-    return db.get(youtify_user_model.playlists)
-
 def get_followings_for_youtify_user_model(youtify_user_model):
     ret = []
     for follow_relation_model in FollowRelation.all().filter('user1 =', youtify_user_model.key().id()):
