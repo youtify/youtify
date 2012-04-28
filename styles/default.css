@@ -672,6 +672,17 @@ input, textarea, button {
     margin-left: 10px;
     margin-bottom: 5px;
 }
+#right .info .privacy {
+    display: inline;
+    max-width: 70px;
+    float: right;
+    line-height: 26px;
+    padding: 0 0 0 10px;
+}
+#right .info .privacy input {
+    margin-right: 5px;
+}
+
 #right .profile .picture-container {
     width: 208px;
     display: block;
