@@ -8,7 +8,7 @@ TEMPLATE = """
 <html>
 <body>
 </body>
-Progress: $progress%
+Progress: $progress
 <script type="text/javascript">
 setTimeout(function() { location.href = '?page=$next'; }, 100);
 </script>
@@ -18,7 +18,7 @@ setTimeout(function() { location.href = '?page=$next'; }, 100);
 COMPLETE = """
 <html>
 <body>
-<h1 style="color:green">SUCCESS</h1>
+<h1 style="color:green">DONE</h1>
 </body>
 </html>
 """
@@ -28,24 +28,21 @@ class RelationsMigrationStepHandler(webapp.RequestHandler):
     def get(self):
         page = int(self.request.get('page', '0'))
         page_size = 30
-        total = YoutifyUser.all().count()
 
         ret = []
+        count = 0
         for m in YoutifyUser.all().fetch(page_size, page_size * page):
+            count += 1
             m.nr_of_followers = FollowRelation.all().filter('user2 =', m.key().id()).count()
             m.nr_of_followings = FollowRelation.all().filter('user1 =', m.key().id()).count()
-            m.put()
+            m.save()
 
         self.response.headers['Content-Type'] = 'text/html'
-        if (page_size * page) >= total:
+        if (count < page_size):
             self.response.out.write(COMPLETE)
         else:
-            progress = page * page_size
-            progress = float(page) / float(page_size)
-            progress = progress * 100
-            progress = int(progress)
             self.response.out.write(Template(TEMPLATE).substitute({
-                'progress': progress,
+                'progress': page_size * page,
                 'next': page + 1,
             }))
 
