@@ -84,7 +84,7 @@ handlers:
 - url: /api/favorites.*
   script: favorites.py
 
-- url: /pingcron
+- url: /cron/store_pings
   script: ping.py
   login: admin
 

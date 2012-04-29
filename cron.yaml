@@ -1,6 +1,6 @@
 cron:
 - description: store pings
-  url: /pingcron
+  url: /cron/store_pings
   schedule: every 10 minutes
 
 - description: generate youtube toplist
