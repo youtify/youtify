@@ -2,3 +2,11 @@ cron:
 - description: store pings
   url: /pingcron
   schedule: every 10 minutes
+
+- description: generate youtube toplist
+  url: /cron/generate_youtube_toplist
+  schedule: every 24 hours
+
+- description: generate flattr toplist
+  url: /cron/generate_flattr_toplist
+  schedule: every 24 hours

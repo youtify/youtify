@@ -64,11 +64,13 @@ handlers:
 - url: /your.*
   script: sucks.py
 
-- url: /toplist.*
-  script: toplist.py
+- url: /cron/generate_youtube_toplist.*
+  script: youtube_toplist.py
+  login: admin
 
-- url: /flattr_toplist.*
+- url: /cron/generate_flattr_toplist.*
   script: flattr_toplist.py
+  login: admin
 
 - url: /flattr_submit.*
   script: flattr_submit.py

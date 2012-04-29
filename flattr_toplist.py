@@ -87,31 +87,25 @@ def fetch_toplist():
 
     return simplejson.dumps(json)
 
-def get_or_create_toplist_json():
+def get_flattr_toplist_json():
     """ Returns an empty playlist if anything goes wrong """
     cache = memcache.get(MEMCACHE_KEY)
-    if cache is not None:
-        return cache
-    try:
-        json = fetch_toplist()
-    except:
-        logging.error('Error generating %s' % (MEMCACHE_KEY))
+    if cache is None:
         return '[]'
-    memcache.add(MEMCACHE_KEY, json, 3600*24)
-    return json
+    return cache
 
-class ToplistHandler(webapp.RequestHandler):
+class FlattrToplistHandler(webapp.RequestHandler):
 
     def get(self):
-        if 'flush' in self.request.arguments():
-            memcache.delete(MEMCACHE_KEY)
-            logging.debug('Flushed memcache for %s' % MEMCACHE_KEY)
+        json = fetch_toplist()
+        memcache.add(MEMCACHE_KEY, json, 3600*24)
+
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(get_or_create_toplist_json())
+        self.response.out.write(json)
 
 def main():
     application = webapp.WSGIApplication([
-        ('/flattr_toplist', ToplistHandler),
+        ('/cron/generate_flattr_toplist', FlattrToplistHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
