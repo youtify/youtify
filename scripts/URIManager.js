@@ -67,6 +67,6 @@ var URIManager = {
     },
     getSearchQueryFromUrl: function() {
         return decodeURI(location.href.match('q=(.*)')[1]);
-    },
+    }
 };
     
