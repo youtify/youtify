@@ -15,7 +15,7 @@
             var failedVideoIds = [];
 
             function start() {
-                $.getJSON('/toplist?flush&full', function(data) {
+                $.getJSON('/cron/generate_youtube_toplist', function(data) {
                     toplist = data;
                     player.loadVideoById(data[0].videoId);
                 });
