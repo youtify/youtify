@@ -98,7 +98,9 @@ class FlattrToplistHandler(webapp.RequestHandler):
 
     def get(self):
         json = fetch_toplist()
-        memcache.add(MEMCACHE_KEY, json, 3600*24)
+
+        memcache.delete(MEMCACHE_KEY)
+        memcache.add(MEMCACHE_KEY, json, 3600*25)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json)

@@ -1,3 +1,4 @@
+import logging
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 from google.appengine.ext import webapp
@@ -5,7 +6,6 @@ from google.appengine.ext.webapp import util
 
 from django.utils import simplejson
 from BeautifulSoup import BeautifulSoup
-from filter import blocked_youtube_videos
 
 MEMCACHE_KEY = 'youtube_toplist'
 
@@ -15,6 +15,18 @@ def get_youtube_toplist_json():
     if cache is None:
         return '[]'
     return cache
+
+def is_video_blocked(video_id):
+    url = 'http://gdata.youtube.com/feeds/api/videos/%s' % video_id;
+    headers = {
+        'Referer': 'http://www.youtify.com/',
+    }
+    result = urlfetch.fetch(url, headers=headers)
+
+    if result.status_code != 200:
+        logging.debug('is_video_blocked status code: %s' % result.status_code)
+
+    return result.status_code != 200
 
 class YouTubeToplistHandler(webapp.RequestHandler):
 
@@ -34,15 +46,16 @@ class YouTubeToplistHandler(webapp.RequestHandler):
 
         for a in soup.findAll('a', 'video-title'):
             video_id = a.get('href').split('=')[1]
-            if filter_videos and video_id in blocked_youtube_videos:
-                continue
-            json.append({
-                'title': a.get('title'),
-                'videoId': video_id,
-            })
+            if not is_video_blocked(video_id):
+                json.append({
+                    'title': a.get('title'),
+                    'videoId': video_id,
+                })
 
         json = simplejson.dumps(json)
-        memcache.add(MEMCACHE_KEY, json, 3600*24)
+
+        memcache.delete(MEMCACHE_KEY)
+        memcache.add(MEMCACHE_KEY, json, 3600*25)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json)
