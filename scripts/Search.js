@@ -91,7 +91,8 @@ var Search = {
                 params = {
                     'alt': 'json-in-script', 'max-results': Search.itemsPerPage,
                     'start-index': start,
-                    'format': 5, 'q': q
+                    'format': 5,
+                    'q': q
                 };
 
                 /* Clean up destination */
