@@ -35,7 +35,7 @@ class MainHandler(webapp.RequestHandler):
             youtify_user_model.device = str(random.random())
             youtify_user_model.save()
             youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
-            playlists_struct = get_playlist_structs_for_youtify_user_model(youtify_user_model)
+            playlists_struct = get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=True)
             my_followers_struct = get_followers_for_youtify_user_model(youtify_user_model)
             my_followings_struct = get_followings_for_youtify_user_model(youtify_user_model)
 

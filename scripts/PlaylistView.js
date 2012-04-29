@@ -1,8 +1,5 @@
 var PlaylistView = {
     createSmallPlaylistView: function(playlist, index, user) {
-        if ((user.id !== my_user_id) && (playlist.isPrivate === true || playlist.videos.length === 0)) {
-            return;
-        }
         var i = 0,
             $box = $('<div class="playlist-box"/>'),
             $title = $('<span class="title"/>'),

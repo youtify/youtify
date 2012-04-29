@@ -197,13 +197,14 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
     else:
         return youtify_user_model.google_user.nickname().split('@')[0] # don't leak users email
 
-def get_playlist_structs_for_youtify_user_model(youtify_user_model):
+def get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=False):
     playlist_models = youtify_user_model.playlists
     playlist_structs = []
 
     for key in playlist_models:
         playlist_model = db.get(key)
-        playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
+        if (not playlist_model.private) or include_private_playlists:
+            playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
 
     for key in youtify_user_model.playlist_subscriptions:
         playlist_model = db.get(key)

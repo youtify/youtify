@@ -179,7 +179,9 @@ var UserManager = {
         if (logged_in && UserManager.currentUser.id === user.id) {
             $.each(playlistManager.playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
-                UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, user));
+                if (playlist.videos.length) {
+                    UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, user));
+                }
             });
         } else {
             UserManager.loadPlaylists();
@@ -205,7 +207,9 @@ var UserManager = {
         $.getJSON('/api/users/' + UserManager.viewingUser.id + '/playlists', function(data) {
             $.each(data, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
-                UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, UserManager.viewingUser));
+                if (playlist.videos.length) {
+                    UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, UserManager.viewingUser));
+                }
             });
             LoadingBar.hide();
         });
