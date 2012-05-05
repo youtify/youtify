@@ -51,8 +51,12 @@ class MainHandler(webapp.RequestHandler):
         # TODO add og_tag for SoundCloud & Official.fm tracks
 
         lang = auto_detect_language(self.request)
+        is_mobile = 'iPhone' in self.request.headers['User-Agent']
 
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
+        if is_mobile:
+            path = os.path.join(os.path.dirname(__file__), 'html', 'mobile.html')
+
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
             'my_user_id': youtify_user_model is not None and youtify_user_model.key().id(),
