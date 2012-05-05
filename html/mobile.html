@@ -1,0 +1,49 @@
+<!DOCTYPE html> 
+ 
+<html> 
+	<head> 
+        <title>Youtify</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <script>
+            var USER = {{ USER }};
+            var playlistsFromServer = {{ playlistsFromServer }};
+        </script>
+        <script src="/scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="/scripts/jquery.mobile-1.1.0.min.js" type="text/javascript"></script>
+        <script src="/scripts/underscore-min.js" type="text/javascript"></script>
+        <script src="/scripts/backbone-min.js" type="text/javascript"></script>
+        <script src="/scripts/mobile.js"></script>
+        <link href="/styles/mobile/jquery.mobile-1.1.0.min.css" rel="stylesheet" />
+        <link href="/styles/mobile/mobile.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <div data-role="page" class="playlists">
+
+            {% if USER %}
+            <div data-role="header">
+                <h1>Playlists</h1>
+            </div>
+
+            <div data-role="content" class="content">
+                <ul data-role="listview" data-inset="true">
+                </ul>
+            </div>
+
+            {% else %}
+            <a href="{{ login_url }}" data-role="button">Login</a>
+            {% endif %}
+
+        </div>
+
+        <div data-role="page" class="playlist"> 
+            <div data-role="header">
+                <h1>Playlist</h1>
+            </div>
+
+            <div data-role="content" class="content">
+                <ul data-role="listview" data-inset="true">
+                </ul>
+            </div>
+        </div>
+	</body> 
+</html> 
