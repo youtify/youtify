@@ -1,59 +1,144 @@
-var playlistMap = {};
+var SOUNDCLOUD_API_KEY = '206f38d9623048d6de0ef3a89fea1c4d';
+var $pages = document.querySelector('.pages');
+var $playlistBackButton = document.querySelector('.page.playlist .button.back');
+var $trackPageBackButton = document.querySelector('.page.track .button.back');
+var pageWidth = 320;
 
-function createPlaylistPage(playlist) {
-    var $page = $('<div data-role="page"></div>');
-    var i;
-    var video;
-    var $ul = $('<ul data-role="listview" data-inset="true" class="videos"></ul>');
-
-    for (i = 0; i < playlist.videos; i += 1) {
-        video = playlist.videos[i];
-        $li = $('<li><a href="#">' + video.title + '</a></li>');
-        $ul.append($li);
-    }
-
-    $page.append($ul);
-    $ul.listview();
-
-    return $page;
+function playlistClickCallback(event) {
+    buildPlaylistPage(this.model);
+    swipeToPage(1);
+    event.preventDefault();
 }
 
-function createPlaylistsUl(playlists) {
+function trackClickedCallback(event) {
+    buildTrackPage(this.model);
+    swipeToPage(2);
+    event.preventDefault();
+}
+
+function swipeToPage(number) {
+    $pages.style.webkitTransform = 'translateX(-' + (number * pageWidth) + 'px)';
+    $pages.style.mozTransform = 'translateX(-' + (number * pageWidth) + 'px)';
+    $pages.style.transform = 'translateX(-' + (number * pageWidth) + 'px)';
+}
+
+function buildPlaylistPage(playlist) {
+    var $h1 = document.querySelector('.page.playlist .header h1');
+    var $content = document.querySelector('.page.playlist .content');
+    $h1.innerHTML = playlist.title;
+    $content.innerHTML = '';
+    $content.appendChild(createPlaylistUl(playlist));
+}
+
+function createPlaylistUl(playlist) {
     var i;
-    var $ul = $('<ul data-role="listview" data-inset="true"></ul>');
+    var track;
+    var $ul = document.createElement('ul');
     var $li;
-    var playlist;
+    var tracks = JSON.parse(playlist.videos);
 
-    for (i = 0; i < playlists.length; i += 1) {
-        playlist = playlists[i];
-        playlistMap[playlist.remoteId] = playlist;
+    $ul.setAttribute('class', 'listview');
 
-        $li = $('<li><a href="/users/' + USER.id + '/playlists/' + playlist.remoteId + '">' + playlist.title + '</a></li>');
-        $ul.append($li);
+    for (i = 0; i < tracks.length; i += 1) {
+        track = tracks[i];
+
+        $li = document.createElement('li');
+        $li.innerHTML = track.title;
+        $li.addEventListener('click', trackClickedCallback);
+        $li.model = track;
+
+        $ul.appendChild($li);
     }
 
     return $ul;
 }
 
-$(function() {
-    var $content = $('.playlists .content');
-    var $ul = createPlaylistsUl(playlistsFromServer);
-    $content.append($ul);
-    $ul.listview();
-});
+function buildTrackPage(track) {
+    var $h1 = document.querySelector('.page.track .header h1');
+    var $content = document.querySelector('.page.track .content');
+    $h1.innerHTML = track.title;
+    $content.innerHTML = '';
 
-function showPlaylistPage() {
-    var $page = $('.playlist'),
-        $header = $page.children( ":jqmData(role=header)" ),
-        $content = $page.children( ":jqmData(role=content)" ),
-        playlist = playlistsFromServer[0];
+    switch (track.type) {
+        case 'soundcloud':
+        soundManager.stopAll();
+        playSoundCloudTrack(track.videoId);
+        loadSoundCloudTrackInfo(track.videoId, $content);
+        break;
 
-    alert('show playlist');
+        case 'officialfm':
+        alert('Official.fm tracks can not be played yet');
+        break;
+
+        case 'youtube':
+        alert('YouTube tracks can not be played yet');
+        break;
+    }
 }
 
-$(document).bind("pagebeforechange", function(e, data) {
-    console.log(data, e, location.href, $.mobile.path.parseUrl(data.toPage));
-    if (location.href.match('/users/.*/playlists/.*')) {
-        showPlaylistPage();
+function loadSoundCloudTrackInfo(trackId, $content) {
+    var xhr = new XMLHttpRequest();
+    var url = 'http://api.soundcloud.com/tracks/' + trackId + '.json?client_id=' + SOUNDCLOUD_API_KEY;
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            var json = JSON.parse(xhr.responseText);
+            var $img = document.createElement('img');
+            console.log(json);
+            $img.setAttribute('src', json.artwork_url || json.waveform_url);
+            $img.setAttribute('width', '300');
+            $content.appendChild($img);
+        }
+    };
+    xhr.send();
+}
+
+function playSoundCloudTrack(trackId) {
+    soundManager.createSound({
+        id: trackId,
+        volume: 100,
+        url: 'https://api.soundcloud.com/tracks/' + trackId + '/stream?consumer_key=' + SOUNDCLOUD_API_KEY,
+        onplay: function() {
+        },
+        onfinish: function() {
+            soundManager.destroySound('soundcloud');
+        },
+    });
+    soundManager.play(trackId);
+}
+
+function createPlaylistsUl(playlists) {
+    var i;
+    var playlist;
+    var $ul = document.createElement('ul');
+    var $li;
+    var $a;
+
+    $ul.setAttribute('class', 'listview');
+
+    for (i = 0; i < playlists.length; i += 1) {
+        playlist = playlists[i];
+
+        $li = document.createElement('li');
+        $li.innerHTML = playlist.title;
+        $li.addEventListener('click', playlistClickCallback);
+        $li.model = playlist;
+
+        $ul.appendChild($li);
     }
-});
+
+    return $ul;
+}
+
+function main() {
+    var $playlistsContent = document.querySelector('.page.playlists .content');
+    $playlistsContent.appendChild(createPlaylistsUl(playlistsFromServer));
+    $playlistBackButton.addEventListener('click', function() {
+        swipeToPage(0);
+    });
+    $trackPageBackButton.addEventListener('click', function() {
+        swipeToPage(1);
+    });
+}
+
+main();

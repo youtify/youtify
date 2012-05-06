@@ -1,2 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
+    font-family: 'Open Sans', arial, sans-serif;
+	font-size: 12pt;
+    font-weight: 100;
+    width: 1000px;
+    overflow: hidden;
+}
+
+.pages {
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.page {
+    width: 300px;
+    padding: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.page .header {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+}
+
+.page .header h1 {
+    font-size: 26px;
+    font-weight: 100;
+}
+
+.page .header .button.back {
+    margin-top: 12px;
+    float: left;
+}
+
+.button {
+    width: 24px;
+    height: 24px;
+    border: 2px solid black;
+    border-radius: 16px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.button:active {
+    background: #eee;
+}
+
+.listview {
+    margin: 0;
+    padding: 0;
+}
+
+.listview li {
+    list-style-type: none;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.listview li:active {
+    background: #eee;
+}
+
+.listview li:after {
+    content: ">";
+    display: block;
+    float: right;
 }
