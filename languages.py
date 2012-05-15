@@ -6,6 +6,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
 from django.utils import simplejson
+from model import get_current_youtify_user_model
 from model import YoutifyUser
 from model import Language
 from model import Translation
@@ -236,7 +237,7 @@ class TranslationsHandler(webapp.RequestHandler):
         if language is None:
             self.error(404)
 
-        user = get_current_youtify_user()
+        user = get_current_youtify_user_model()
 
         if not (users.is_current_user_admin() or user.key() in language.leaders):
             self.error(403)
