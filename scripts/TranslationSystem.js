@@ -16,7 +16,7 @@ var TranslationSystem = {
     },
 
     get: function(original) {
-        if (TranslationSystem.translations.hasOwnProperty(original)) {
+        if (TranslationSystem.translations.hasOwnProperty(original) && TranslationSystem.translations[original].length) {
             return TranslationSystem.translations[original];
         }
         return original;
@@ -39,7 +39,7 @@ var TranslationSystem = {
             }
 
             if (TranslationSystem.translations.hasOwnProperty(key)) {
-                elem.text(TranslationSystem.translations[key]);
+                elem.text(TranslationSystem.get(key));
             }
 
             $.each(TranslationSystem.TRANSLATABLE_ATTRIBUTES, function(j, attr) {
@@ -51,7 +51,7 @@ var TranslationSystem = {
                         translationKeys[attr] = key;
                     }
                     if (TranslationSystem.translations.hasOwnProperty(key)) {
-                        elem.attr(attr, TranslationSystem.translations[key]);
+                        elem.attr(attr, TranslationSystem.get(key));
                     }
                 }
             });
