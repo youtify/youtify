@@ -220,11 +220,14 @@ class TranslationsHandler(webapp.RequestHandler):
         json = []
         translations = db.get(language.translations)
         for translation in translations:
-            json.append({
-                'id': translation.key().id(),
-                'original': translation.phrase.text,
-                'translation': translation.text,
-            })
+            try:
+                json.append({
+                    'id': translation.key().id(),
+                    'original': translation.phrase.text,
+                    'translation': translation.text,
+                })
+            except:
+                translation.delete()
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))

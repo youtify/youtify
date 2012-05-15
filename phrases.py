@@ -1,8 +1,10 @@
+from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
 from django.utils import simplejson
 from model import Phrase
+from model import Language
 from model import Translation
 
 class PhrasesHandler(webapp.RequestHandler):
@@ -27,6 +29,13 @@ class PhrasesHandler(webapp.RequestHandler):
             phrase = Phrase(text=text)
             phrase.put()
 
+            for lang in Language.all():
+                translation = Translation(phrase=phrase, text='')
+                translation.save()
+
+                lang.translations.append(translation.key())
+                lang.save()
+
     def delete(self):
         """Delete a specific phrase and all its translations"""
         if not users.is_current_user_admin():
@@ -36,10 +45,14 @@ class PhrasesHandler(webapp.RequestHandler):
         phrase = Phrase.get_by_id(int(phrase_id))
 
         if phrase:
-            phrase.delete()
+            for lang in Language.all():
+                for translation in db.get(lang.translations):
+                    if translation.phrase.key() == phrase.key():
+                        lang.translations.remove(translation.key())
+                        translation.delete()
+                        lang.save()
 
-            for translation in Translation.all().filter('phrase =', phrase):
-                translation.delete()
+            phrase.delete()
 
             self.response.headers['Content-Type'] = 'text/plain'
             self.response.out.write('success');
