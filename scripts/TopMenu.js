@@ -33,14 +33,6 @@ var TopMenu = {
             }
         });
 
-        // LOGOUT POPUP
-        $('#top .username').click(function() {
-            $(this).arrowPopup('#logout-popup');
-        });
-        $('#logout-popup a').click(function(e) {
-            playlistManager.removeRemotePlaylistsFromLocalStorage();
-        });
-
         // SETTINGS
         $('#top .settings').click(function() {
             $(this).arrowPopup('#settings');

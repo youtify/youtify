@@ -240,7 +240,6 @@ input, textarea, button {
 #top .about {
     margin: 0 10px;
 }
-#top .username,
 #top .about,
 #top .webstore,
 #top .settings {
@@ -249,7 +248,8 @@ input, textarea, button {
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-#top .menu .login-link {
+#top .menu .login-link,
+#top .menu .logout-link {
     cursor: pointer;
     font-size: 13px;
     text-transform: uppercase;
@@ -262,10 +262,12 @@ input, textarea, button {
     border-radius: 10px 0 0 10px;
     background: rgba(0, 124, 137, 0.2);
 }
-#top .menu .login-link:hover {
+#top .menu .login-link:hover,
+#top .menu .logout-link:hover {
     background: rgba(0, 124, 137, 0.4);
 }
-#top .menu .login-link:after {
+#top .menu .login-link:after,
+#top .menu .logout-link:after {
     content: '';
     cursor: default;
     position: absolute;

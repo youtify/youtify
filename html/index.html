@@ -156,7 +156,6 @@
         {% include "./popups/share_playlist.html" %}
         {% include "./popups/share_video.html" %}
         {% include "./popups/settings.html" %}
-        {% include "./popups/logout.html" %}
         {% include "./popups/videoinfo.html" %}
         {% include "./popups/webstore.html" %}
         <div id="about-popup" style="display:none" class="popup"></div>
@@ -179,7 +178,7 @@
                 <span class="item about translatable">About</span>
                 <span class="item settings translatable">Settings</span>
                 {% if logged_in %}
-                <span class="item last username translatable">Logout</span>
+                <a class="item last logout-link translatable" href="{{ logout_url }}">Logout</a>
                 {% else %}
                 <a class="item last login-link translatable" href="{{ login_url }}">Login</a>
                 {% endif %}
