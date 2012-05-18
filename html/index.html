@@ -179,9 +179,9 @@
                 <span class="item about translatable">About</span>
                 <span class="item settings translatable">Settings</span>
                 {% if logged_in %}
-                <span class="item last username">Logout</span>
+                <span class="item last username translatable">Logout</span>
                 {% else %}
-                <a class="item last login-link" href="{{ login_url }}">Login</a>
+                <a class="item last login-link translatable" href="{{ login_url }}">Login</a>
                 {% endif %}
             </div>
         </div>
@@ -219,8 +219,8 @@
                         <li class="youtube videos" rel=".youtube.videos.pane" class="active">YouTube</li>
                         <li class="soundcloud tracks" rel=".soundcloud.playlists.pane">SoundCloud</li>
                         <li class="officialfm tracks" rel=".officialfm.playlists.pane">Official.fm</li>
-                        <li class="youtify users" rel=".youtify.users.pane">Users</li>
-                        <li class="youtify playlists" rel=".youtify.playlists.pane">Playlists</li>
+                        <li class="youtify users translatable" rel=".youtify.users.pane">Users</li>
+                        <li class="youtify playlists translatable" rel=".youtify.playlists.pane">Playlists</li>
                     </ul>
                     <table class="youtube videos pane tracklist"></table>
                     <table class="soundcloud tracks pane tracklist"></table>
@@ -269,9 +269,9 @@
                     <div class="information-container">
                         <div class="display-name-container">
                             <span class="display-name"></span>
-                            <button class="follow button">Follow</button>
-                            <button class="unfollow button">Unfollow</button>
-                            <button class="edit button">Edit</button>
+                            <button class="follow button translatable">Follow</button>
+                            <button class="unfollow button translatable">Unfollow</button>
+                            <button class="edit button translatable">Edit</button>
                         </div>
                         <span class="nickname"></span>
                         <a class="flattr-user-name link" target="_blank" href="#"></a>

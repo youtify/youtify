@@ -67,7 +67,7 @@ var PlaylistView = {
         if(user.id === my_user_id && my_user_id === playlist.owner.id && playlist.remoteId !== null) {
             var $privacyContainer = $('<div class="privacy"/>'),
                 $privacy = $('<input type="checkbox"/>'),
-                $privacyLabel = $('<label class="translatable"/>').text("Public");
+                $privacyLabel = $('<label class="translatable"/>').text(TranslationSystem.get('Public'));
             $privacy.attr('checked', !playlist.isPrivate);
             $privacy.change(function() {
                 /* Reversed */
@@ -151,7 +151,7 @@ var PlaylistView = {
                     $video.addClass('draggable');
                     if(!playlist.isSubscription) {
                         $video.data('additionalMenuButtons', [{
-                            title: 'Delete',
+                            title: TranslationSystem.get('Delete'),
                             args: $video,
                             callback: PlaylistView.deleteVideoButtonClicked
                         }]);

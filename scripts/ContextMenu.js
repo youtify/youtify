@@ -53,14 +53,14 @@ function showPlaylistContextMenu(event) {
 
     var buttons = [
 		{
-            title: 'Import from Spotify',
+            title: TranslationSystem.get('Import from Spotify'),
             args: $(this),
             callback: function(li) {
                 li.arrowPopup('#spotify-importer', 'left');
             }
         },
         {
-            title: 'Remove duplicate videos',
+            title: TranslationSystem.get('Remove duplicate videos'),
             args: $(this),
             callback: function(li) {
                 var index = li.index(),
@@ -71,7 +71,7 @@ function showPlaylistContextMenu(event) {
             }
         },
         {
-            title: 'Rename',
+            title: TranslationSystem.get('Rename'),
             args: $(this),
             callback: function(li) {
                 var playlist = null,
@@ -105,7 +105,7 @@ function showPlaylistContextMenu(event) {
             }
         },
         {
-            title: 'Delete/Unsubscribe',
+            title: TranslationSystem.get('Delete/Unsubscribe'),
             args: $(this),
             callback: function(li) {
                 var index = li.index(),
@@ -121,7 +121,7 @@ function showPlaylistContextMenu(event) {
 
     if (logged_in && $(this).data('model').remoteId) {
         buttons.push({
-            title: 'Share',
+            title: TranslationSystem.get('Share'),
             args: $(this),
             callback: function(li) {
                 PlaylistView.showPlaylistSharePopup(li.data('model'), li, 'left');
@@ -131,7 +131,7 @@ function showPlaylistContextMenu(event) {
 
     if (logged_in && !$(this).data('model').remoteId) {
         buttons.push({
-            title: 'Sync',
+            title: TranslationSystem.get('Sync'),
             args: $(this),
             callback: function(li) {
                 li.data('model').sync(function() {
@@ -144,7 +144,7 @@ function showPlaylistContextMenu(event) {
 
     if (logged_in && $(this).data('model').remoteId) {
         buttons.push({
-            title: 'Unsync',
+            title: TranslationSystem.get('Unsync'),
             args: $(this),
             callback: function(li) {
                 li.data('model').unsync();
@@ -181,14 +181,14 @@ function showResultsItemContextMenu(event) {
 
     var buttons = [
         {
-            title: 'Play',
+            title: TranslationSystem.get('Play'),
             args: $(this),
             callback: function(elem) {
                 elem.data('model').play();
             }
         },
 		{
-            title: 'Queue',
+            title: TranslationSystem.get('Queue'),
             args: allSelectedVideos,
             callback: function(allSelectedVideos) {
                 $.each(allSelectedVideos, function(index, li) {
@@ -200,7 +200,7 @@ function showResultsItemContextMenu(event) {
             }
         },
 		{
-			title: 'Share',
+			title: TranslationSystem.get('Share'),
 			args: $(this),
 			callback: function(elem) {
                 var video = $(elem).data('model');
@@ -212,7 +212,7 @@ function showResultsItemContextMenu(event) {
     switch (video.type) {
         case 'youtube':
         buttons.push({
-            title: 'Watch on YouTube',
+            title: TranslationSystem.get('View on YouTube'),
             args: $(this),
             callback: function(elem) {
                 window.open('http://www.youtube.com/watch?v=' + video.videoId);
@@ -222,7 +222,7 @@ function showResultsItemContextMenu(event) {
 
         case 'soundcloud':
         buttons.push({
-            title: 'Watch on SoundCloud',
+            title: TranslationSystem.get('View on SoundCloud'),
             args: $(this),
             callback: function(elem) {
                 var url = "http://api.soundcloud.com/tracks/" + video.videoId + ".json";
@@ -238,7 +238,7 @@ function showResultsItemContextMenu(event) {
 
         case 'officialfm':
         buttons.push({
-            title: 'Watch on Official.fm',
+            title: TranslationSystem.get('View on Official.fm'),
             args: $(this),
             callback: function(elem) {
                 window.open('http://www.official.fm/tracks/' + video.videoId);

@@ -76,21 +76,21 @@ function EditProfileDialog() {
 
     this.view.addClass('edit-profile');
 
-    this.view.find('.wrapper p').append($('<span>Nickname:</span>'));
+    this.view.find('.wrapper p').append($('<span></span>').text(TranslationSystem.get('Nickname:')));
     this.view.find('.wrapper p').append($('<input type="text" name="nickname" />').val(UserManager.currentUser.nickname));
 
-    this.view.find('.wrapper p').append($('<span>First name:</span>'));
+    this.view.find('.wrapper p').append($('<span></span>').text(TranslationSystem.get('First name:')));
     this.view.find('.wrapper p').append($('<input type="text" name="first_name" />').val(UserManager.currentUser.firstName));
 
-    this.view.find('.wrapper p').append($('<span>Last name:</span>'));
+    this.view.find('.wrapper p').append($('<span></span>').text(TranslationSystem.get('Last name:')));
     this.view.find('.wrapper p').append($('<input type="text" name="last_name" />').val(UserManager.currentUser.lastName));
 
-    this.view.find('.wrapper p').append($('<span>Tagline:</span>'));
+    this.view.find('.wrapper p').append($('<span></span>').text(TranslationSystem.get('Tagline:')));
     this.view.find('.wrapper p').append($('<textarea name="tagline"></textarea>').val(UserManager.currentUser.tagline));
 
     this.canBeClosed = true;
 
-    this.addButton('Save', function(self) {
+    this.addButton(TranslationSystem.get('Save'), function(self) {
         var params = {};
         $.each(self.view.find('input, textarea'), function(i, elem) {
             params[elem.name] = elem.value;
@@ -99,7 +99,7 @@ function EditProfileDialog() {
         self.remove();
     });
 
-    this.addButton('Cancel', function(self) {
+    this.addButton(TranslationSystem.get('Cancel'), function(self) {
         self.remove();
     });
 }

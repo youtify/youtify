@@ -191,15 +191,15 @@ var UserManager = {
     },
 
     updateFollowersTabLabel: function(nrOfFollowers) {
-        UserManager.$followersTab.text('Followers (' + nrOfFollowers + ')');
+        UserManager.$followersTab.text(TranslationSystem.get('Followers') + ' (' + nrOfFollowers + ')');
     },
 
     updateFollowingsTabLabel: function(nrOfFollowings) {
-        UserManager.$followingsTab.text('Following (' + nrOfFollowings + ')');
+        UserManager.$followingsTab.text(TranslationSystem.get('Following') + ' (' + nrOfFollowings + ')');
     },
 
     updatePlaylistsTabLabel: function(nrOfPlaylists) {
-        UserManager.$playlistsTab.text('Playlists (' + nrOfPlaylists + ')');
+        UserManager.$playlistsTab.text(TranslationSystem.get('Playlists') + ' (' + nrOfPlaylists + ')');
     },
 
     loadPlaylists: function() {
