@@ -5,11 +5,11 @@ var SettingsPopup = {
         // FLATTR
 
         if (has_flattr_access_token) {
-            $('<span>Connected as </span>').appendTo('#settings > .flattr');
-            $('<a class="username" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings > .flattr');
-            $('<a class="disconnect" href="/flattrdisconnect">Disconnect</a>').appendTo('#settings > .flattr');
+            $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings .connections .flattr');
+            $('<a class="button disconnect" href="/flattrdisconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .flattr');
         } else {
-            $('<a href="/flattrconnect">Connect your Flattr account</a>').appendTo('#settings > .flattr');
+            $('<span class="title">Flattr</span>').appendTo('#settings .connections .flattr');
+            $('<a class="button connect" href="/flattrconnect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .flattr');
         }
 
         // QUALITY

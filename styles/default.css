@@ -1225,8 +1225,17 @@ input, textarea, button {
 #settings .language a {
     display: block;
 }
-#settings .flattr .disconnect {
-    display: block;
+#settings .connections .connection {
+    line-height: 16px;
+}
+#settings .connections .connection .title {
+    padding-left: 20px;
+}
+#settings .connections .flattr {
+    background: url(/images/flattr_16.png) no-repeat center left;
+}
+#settings .connections .button {
+    float: right;
 }
 
 /** ABOUT POPUP
