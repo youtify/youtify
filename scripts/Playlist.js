@@ -386,16 +386,17 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 		return deleted;
 	};
 
+    self.goTo = function() {
+        history.pushState(null, null, self.owner.getUrl() + '/playlists/' + self.remoteId);
+        Menu.deSelectAll();
+        loadPlaylist(self.remoteId);
+    };
+
     self.getSmallView = function() {
         var $playlist = $('<span class="playlist link"></span>');
 
         $playlist.text(self.title);
-
-        $playlist.click(function() {
-            history.pushState(null, null, self.owner.getUrl() + '/playlists/' + self.remoteId);
-            Menu.deSelectAll();
-            loadPlaylist(self.remoteId);
-        });
+        $playlist.click(self.goTo);
 
         return $playlist;
     };
