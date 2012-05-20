@@ -108,4 +108,4 @@ var NewsFeed = {
             callback($newsFeed);
         });
     }
-}
+};
