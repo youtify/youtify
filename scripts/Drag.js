@@ -64,10 +64,8 @@ function dragEnded(event) {
 
     removeTargetClasses();
 
-    if (dragElem) { // todo: fix, dragElem should always exist?
-        dragElem.remove();
-        dragElem = null;
-    }
+    dragElem.remove();
+    dragElem = null;
 }
 
 /**
@@ -108,10 +106,6 @@ function findDraggable(elem) {
 function mouseDragged(event) {
     var target = $(event.target);
     var droppable = findDroppable(target);
-
-    if (!dragElem) { // really needed?
-        return;
-    }
 
     dragElem.css({
         'top': event.pageY,
