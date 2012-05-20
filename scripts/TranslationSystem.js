@@ -18,7 +18,7 @@ var TranslationSystem = {
     get: function(original, vars) {
         var phrase = original;
         var key;
-        if (TranslationSystem.translations.hasOwnProperty(original) && TranslationSystem.translations[original].length) {
+        if (TranslationSystem.translations && TranslationSystem.translations.hasOwnProperty(original) && TranslationSystem.translations[original].length) {
             phrase = TranslationSystem.translations[original];
         }
         for (key in vars) {

@@ -17,8 +17,6 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
 });
 
 $(document).ready(function() {
-    var settings = new Settings();
-	
     EventSystem.init();
     Menu.init();
 
