@@ -130,9 +130,6 @@ function Video(args) {
         if ($listView.hasClass('selected')) {
             return;
         }
-        if (event !== undefined) {
-            event.stopPropagation();
-        }
         if (event !== undefined && (event.ctrlKey || event.metaKey)) {
             if ($listView.hasClass('selected')) {
                 $listView.removeClass('selected');
