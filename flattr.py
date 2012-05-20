@@ -115,6 +115,7 @@ class BackHandler(webapp.RequestHandler):
 
         data = simplejson.dumps({
             'code': code,
+            'redirect_uri': config.REDIRECT_URL,
             'grant_type': 'authorization_code',
         })
 
