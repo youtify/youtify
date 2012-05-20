@@ -27,6 +27,13 @@ var Utils = {
         return replacedText;
     },
 
+    escape: function(s) {
+        s = s.replace('<', '&lt;');
+        s = s.replace('>', '&gt;');
+        s = s.replace('"', '&quot;');
+        return s;
+    },
+
     shorten: function(inputText, limit) {
         var ret = inputText;
 

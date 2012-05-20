@@ -4,8 +4,8 @@ var NewsFeed = {
     },
 
     getIncomingSubscribeActivityView: function(actor, playlist) {
-        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span clas="name">' + escape(actor.displayName) + '</span></span>';
-        var $playlist = '<span class="link playlist">' + escape(playlist.title) + '</span>';
+        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span clas="name">' + Utils.escape(actor.displayName) + '</span></span>';
+        var $playlist = '<span class="link playlist">' + Utils.escape(playlist.title) + '</span>';
         var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to your playlist $playlist', {$playlist: $playlist, $user: $user}) + '</div>'); 
         $div.find('.link.user').click(playlist.owner.goTo);
         $div.find('.link.playlist').click(playlist.goTo);
@@ -13,8 +13,8 @@ var NewsFeed = {
     },
 
     getOutgoingSubscribeActivityView: function(playlist) {
-        var $user = '<span class="user small link"><img src="' + playlist.owner.smallImageUrl + '"/><span clas="name">' + escape(playlist.owner.displayName) + '</span></span>';
-        var $playlist = '<span class="link playlist">' + escape(playlist.title) + '</span>';
+        var $user = '<span class="user small link"><img src="' + playlist.owner.smallImageUrl + '"/><span clas="name">' + Utils.escape(playlist.owner.displayName) + '</span></span>';
+        var $playlist = '<span class="link playlist">' + Utils.escape(playlist.title) + '</span>';
         var $div = $('<div class="activity">' + TranslationSystem.get('You subscribed to $playlist by $user', {$playlist: $playlist, $user: $user}) + '</div>'); 
         $div.find('.link.user').click(playlist.owner.goTo);
         $div.find('.link.playlist').click(playlist.goTo);
@@ -22,14 +22,14 @@ var NewsFeed = {
     },
 
     getOutgoingFollowActivity: function(otherUser) {
-        var $user = '<span class="user small link"><img src="' + otherUser.smallImageUrl + '"/><span class="name">' + escape(otherUser.displayName) + '</span></span>';
+        var $user = '<span class="user small link"><img src="' + otherUser.smallImageUrl + '"/><span class="name">' + Utils.escape(otherUser.displayName) + '</span></span>';
         var $div = $('<div class="activity">' + TranslationSystem.get('You started following $user', {$user: $user}) + '</div>');
         $div.find('.link.user').click(otherUser.goTo);
         return $div;
     },
 
     getIncomingFollowActivity: function(actor) {
-        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span class="name">' + escape(actor.displayName) + '</span></span>';
+        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span class="name">' + Utils.escape(actor.displayName) + '</span></span>';
         var $div = $('<div class="activity">' + TranslationSystem.get('$user started following you', {$user: $user}) + '</div>');
         $div.find('.link.user').click(actor.goTo);
         return $div;
@@ -46,8 +46,10 @@ var NewsFeed = {
         var thingUrl = 'https://flattr.com/t/' + thing.thing_id;
         var thingTitle = thing.thing_title || thingUrl;
         var $thing = '<a class="thing link" href="' + thingUrl + '" target="_blank">' + thingTitle + '</a>';
-        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span class="name">' + escape(actor.displayName) + '</span></span>';
-        return $('<div class="activity">' + TranslationSystem.get('$user flattred $thing', {$user: $user, $thing: $thing}) + '</div>');
+        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span class="name">' + Utils.escape(actor.displayName) + '</span></span>';
+        var $div = $('<div class="activity">' + TranslationSystem.get('$user flattred $thing', {$user: $user, $thing: $thing}) + '</div>');
+        $div.find('.link.user').click(actor.goTo);
+        return $div;
     },
 
     getActivityElem: function(activity) {
