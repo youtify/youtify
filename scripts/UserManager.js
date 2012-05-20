@@ -12,7 +12,6 @@ var UserManager = {
     $editButton: null,
     $img: null,
     $changePictureBox: null,
-    $gravatarEmail: null,
     
     init: function(userJSON) {
         if (userJSON) {
@@ -39,7 +38,6 @@ var UserManager = {
         UserManager.$editButton = $('#right .profile .edit.button');
         UserManager.$img = $('#right .profile .picture-container .picture');
         UserManager.$changePictureBox = $('#right .profile .picture-container .change');
-        UserManager.$gravatarEmail = $('#right .profile .picture-container .change .email');
     },
 
     doFakeProfileMenuClick: function() {
@@ -83,8 +81,8 @@ var UserManager = {
         UserManager.$followButton.hide();
         UserManager.$unFollowButton.hide();
         UserManager.$editButton.hide();
+        UserManager.$changePictureBox.text('');
         UserManager.$changePictureBox.hide();
-        UserManager.$gravatarEmail.text('');
         UserManager.$playlists.html('');
         UserManager.$followings.html('');
         UserManager.$followers.html('');
@@ -153,7 +151,7 @@ var UserManager = {
         if (logged_in && UserManager.currentUser.id === user.id) {
             user.playlists = playlistManager.playlists;
             UserManager.$editButton.show();
-            UserManager.$gravatarEmail.text(UserManager.currentUser.email);
+            UserManager.$changePictureBox.html(TranslationSystem.get('Configure your profile picture for $email at $gravatar', {$email: UserManager.currentUser.email, $gravatar: '<a href="http://www.gravatar.com" target="_blank">gravatar.com</a>'}));
             UserManager.$changePictureBox.show();
         } else if (logged_in && Utils.isFollowingUser(user.id)) {
             UserManager.$unFollowButton.show();
