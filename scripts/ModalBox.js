@@ -52,15 +52,15 @@ ReloadDialog.prototype.constructor = ReloadDialog;
 function WhatIsFlattrDialog() {
     ModalBox.call(this);
 
-    this.setMessage('Flattr is an easy way to send micropayments. With your help we can create a sustainable way for music artists to get paid.');
+    this.setMessage(TranslationSystem.get('Use Flattr, a microdonation service, to support music artists.'));
 
     this.canBeClosed = true;
 
-    this.addButton('Connect your Flattr account', function(self) {
+    this.addButton(TranslationSystem.get('Connect your Flattr account'), function(self) {
         location.href = '/flattrconnect';
     });
 
-    this.addButton('Cancel', function(self) {
+    this.addButton(TranslationSystem.get('Cancel'), function(self) {
         self.remove();
     });
 }

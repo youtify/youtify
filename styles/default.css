@@ -1472,14 +1472,6 @@ input, textarea, button {
     margin-right: 0;
 }
 
-/** CHROME WEB STORE POPUP
- ****************************************************************************/
-
-#webstore-popup a {
-    display: block;
-    margin-top: 10px;
-}
-
 /** FLATTR
  ****************************************************************************/
 
