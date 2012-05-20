@@ -15,11 +15,17 @@ var TranslationSystem = {
         });
     },
 
-    get: function(original) {
+    get: function(original, vars) {
+        var phrase = original;
         if (TranslationSystem.translations.hasOwnProperty(original) && TranslationSystem.translations[original].length) {
-            return TranslationSystem.translations[original];
+            phrase = TranslationSystem.translations[original];
         }
-        return original;
+        for (key in vars) {
+            if (vars.hasOwnProperty(key)) {
+                phrase = phrase.replace(key, vars[key]);
+            }
+        }
+        return phrase;
     },
 
     updateMarkup: function(data) {
