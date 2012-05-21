@@ -20,53 +20,69 @@ var URIManager = {
         }
     },
     loadState: function() {
-        if (location.href.indexOf('playlists') !== -1 && location.href.indexOf('videos') === -1) { // /playlists/123
-            loadPlaylist(URIManager.getPlaylistIdFromUrl());
-        } else if (location.href.indexOf('videos') !== -1 || location.href.indexOf('tracks') !== -1) {
-            if (player.initialized) {
-                player.play(URIManager.getTrackFromUrl());
-            } else {
-                EventSystem.addEventListener('player_manager_initialized', function() {
-                    player.play(URIManager.getTrackFromUrl());
-                });
+        var handlers = [
+            [
+                '/search',
+                function(matches) {
+                    var q = '';
+                    if (location.search) {
+                        q = decodeURI(location.search.match('q=(.*)')[1]);
+                    }
+                    $('#top .search input').val(q).keyup();
+                }
+            ],
+            [
+                '/tracks/(.*)/(.*)',
+                function(matches) {
+                    vid = new Video({
+                        videoId: matches[2],
+                        type: matches[1]
+                    });
+                    if (player.initialized) {
+                        player.play(vid);
+                    } else {
+                        EventSystem.addEventListener('player_manager_initialized', function() {
+                            player.play(vid);
+                        });
+                    }
+                }
+            ],
+            [
+                '/playlists/(.*)',
+                function(matches) {
+                    loadPlaylist(matches[1]);
+                }
+            ],
+            [
+                '/profile',
+                function(matches) {
+                    Menu.profile.select();
+                }
+            ],
+            [
+                '/users/(.*)',
+                function(matches) {
+                    UserManager.doFakeProfileMenuClick();
+                    UserManager.loadProfile(matches[1]);
+                }
+            ],
+            [
+                '.*',
+                function(matches) {
+                    Menu.find('toplist').select();
+                }
+            ]
+        ];
+
+        var i;
+        for (i = 0; i < handlers.length; i += 1) {
+            var handler = handlers[i];
+            var matches = location.pathname.match(handler[0]);
+            if (matches) {
+                handler[1](matches);
+                break;
             }
-        } else if (location.href.indexOf('search') !== -1) {
-            $('#top .search input').val(URIManager.getSearchQueryFromUrl()).keyup();
-        } else if (location.href.indexOf('profile') !== -1) {
-            Menu.profile.select();
-        } else if (location.href.indexOf('users') !== -1) {
-            UserManager.doFakeProfileMenuClick();
-            UserManager.loadProfile((URIManager.getUserFromUrl()));
-        } else {
-            Menu.find('toplist').select();
         }
-    },
-    getPlaylistIdFromUrl: function() {
-        if (location.href.indexOf('playlists') !== -1 && location.href.indexOf('videos') === -1) { // /playlists/123
-            return location.href.match('/playlists/(.*)')[1];
-        }
-        return false;
-    },
-    getTrackFromUrl: function() {
-        if (location.href.indexOf('videos') !== -1) { // /playlists/123/videos/456, // /videos/456
-            return new Video({
-                videoId: location.href.match('videos/(.*)')[1],
-                type: 'youtube'
-            });
-        } else if (location.href.indexOf('tracks') !== -1) { // /playlists/123/videos/456, // /videos/456
-            var match = location.href.match('tracks/(.*)/(.*)');
-            return new Video({
-                videoId: match[2],
-                type: match[1]
-            });
-        }
-        return false;
-    },
-    getUserFromUrl: function() {
-        return decodeURI(location.href.match('/users/(.*)')[1]);
-    },
-    getSearchQueryFromUrl: function() {
-        return decodeURI(location.href.match('q=(.*)')[1]);
     }
 };
     
