@@ -43,15 +43,6 @@ handlers:
   upload: html/popups/about.html
   #expiration: "1d"
 
-- url: /test.*
-  script: gaeunit.py
-  login: admin
-
-- url: /jstests
-  static_files: html/tests.html
-  upload: html/tests.html
-  login: admin
-
 - url: /filter
   static_files: html/filter.html
   upload: html/filter.html
