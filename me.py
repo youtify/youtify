@@ -11,6 +11,27 @@ from model import get_activities_structs
 from model import get_display_name_for_youtify_user_model
 from activities import create_follow_activity
 
+BLOCKED_NICKNAMES = [
+    'admin',
+    'translations',
+    'settings',
+    'preferences',
+    'me',
+    'news',
+    'feed',
+    'newsfeed',
+    'activities',
+    'toplist',
+    'queue',
+    'search',
+    'users',
+    'playlists',
+    'api',
+    'about',
+    'support',
+    'faq',
+]
+
 class ProfileHandler(webapp.RequestHandler):
     def get(self):
         user = get_current_youtify_user_model()
@@ -27,6 +48,11 @@ class ProfileHandler(webapp.RequestHandler):
         if nickname and not re.match('^[A-Za-z0-9_]{4,36}$', nickname):
             self.error(400)
             self.response.out.write('Nickname must be 4-36 alphanumerical characters (no whitespace)')
+            return
+
+        if nickname and nickname in BLOCKED_NICKNAMES:
+            self.error(400)
+            self.response.out.write('That nickname is not allowed.')
             return
 
         for u in YoutifyUser.all().filter('nickname_lower = ', nickname.lower()):
