@@ -222,7 +222,7 @@ class Handler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/import_old_translations', Handler),
+        ('/admin/import_old_translations', Handler),
     ], debug=True)
     util.run_wsgi_app(application)
 

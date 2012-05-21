@@ -14,45 +14,50 @@ error_handlers:
 
 handlers:
 
-- url: /migrations.*
+- url: /admin/import_old_translations
+  script: import_old_translations.py
+  login: admin
+
+- url: /admin/migrations/.*
   script: migrations.py
   login: admin
 
-- url: /fakesetup
+- url: /admin/minimizer
+  script: minimizer.py
+  login: admin
+
+- url: /admin/fakesetup
   script: fakesetup.py
   login: admin
 
-- url: /me.*
+- url: /admin/filter
+  static_files: html/filter.html
+  upload: html/filter.html
+  login: admin
+
+- url: /admin
+  script: admin.py
+  login: admin
+
+- url: /admin/.*
+  script: admin.py
+  login: admin
+
+- url: /me/.*
   script: me.py
 
 - url: /api/users.*
   script: users.py
-
-- url: /export
-  static_files: html/export.html
-  upload: html/export.html
-  expiration: "1d"
-
-- url: /import
-  static_files: html/import.html
-  upload: html/import.html
-  expiration: "1d"
 
 - url: /about
   static_files: html/popups/about.html
   upload: html/popups/about.html
   #expiration: "1d"
 
-- url: /filter
-  static_files: html/filter.html
-  upload: html/filter.html
-  login: admin
+- url: /yourbrowsersucks
+  script: sucks.py
 
-- url: /minimizer
-  script: minimizer.py
-  login: admin
-
-- url: /your.*
+- url: /yourdecisionrocks
   script: sucks.py
 
 - url: /cron/generate_youtube_toplist.*
@@ -96,25 +101,30 @@ handlers:
   static_dir: images
   expiration: "1d"
 
-- url: /import_old_translations
-  script: import_old_translations.py
-  login: admin
-
-- url: /admin.*
-  script: admin.py
-  login: admin
-
-- url: /translations.*
+- url: /translations
   script: translations.py
   login: required
 
-- url: /phrases.*
+- url: /translations/.*
+  script: translations.py
+  login: required
+
+- url: /phrases
   script: phrases.py
 
-- url: /languages.*
+- url: /phrases/.*
+  script: phrases.py
+
+- url: /languages
   script: languages.py
 
-- url: /snapshots.*
+- url: /languages/.*
+  script: languages.py
+
+- url: /snapshots
+  script: snapshots.py
+
+- url: /snapshots/.*
   script: snapshots.py
 
 - url: /api/translations/.*

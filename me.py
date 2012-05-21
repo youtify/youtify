@@ -13,9 +13,13 @@ from activities import create_follow_activity
 
 BLOCKED_NICKNAMES = [
     'admin',
+    'import',
+    'export',
     'translations',
     'settings',
     'preferences',
+    'yourbrowsersucks',
+    'yourdecisionrocks',
     'me',
     'news',
     'feed',

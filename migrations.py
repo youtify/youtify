@@ -48,7 +48,7 @@ class RelationsMigrationStepHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/migrations/relations', RelationsMigrationStepHandler),
+        ('/admin/migrations/relations', RelationsMigrationStepHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
