@@ -41,11 +41,13 @@ function User(args) {
     };
 
     self.getUrl = function() {
+        var ret = location.protocol + '//' + location.host + '/';
         if (this.nickname) {
-            return '/users/' + this.nickname;
+            ret += this.nickname;
         } else {
-            return '/users/' + this.id;
+            ret += '/users/' + this.id;
         }
+        return ret;
     };
 
     self.goTo = function() {

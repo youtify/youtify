@@ -81,11 +81,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     };
 
     self.getUrl = function() {
-        if (self.owner.nickname) {
-            return location.protocol + '//' + location.host + '/users/' + self.owner.nickname + '/playlists/' + self.remoteId;
-        } else {
-            return location.protocol + '//' + location.host + '/users/' + self.owner.id + '/playlists/' + self.remoteId;
-        }
+        return self.owner.getUrl() + '/playlists/' + self.remoteId;
     };
 
     self.copy = function() {

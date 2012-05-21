@@ -67,7 +67,14 @@ var URIManager = {
                 }
             ],
             [
-                '.*',
+                '/(.+)',
+                function(matches) {
+                    UserManager.doFakeProfileMenuClick();
+                    UserManager.loadProfile(matches[1]);
+                }
+            ],
+            [
+                '/',
                 function(matches) {
                     Menu.find('toplist').select();
                 }
