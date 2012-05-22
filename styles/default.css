@@ -676,7 +676,6 @@ input, textarea, button {
 }
 #right .info .privacy {
     display: inline;
-    max-width: 70px;
     float: right;
     line-height: 26px;
     padding: 0 0 0 10px;
