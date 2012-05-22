@@ -151,7 +151,7 @@
 	<body class="logged-out">
     {% endif %}
 	<body>
-        <div id="loading">Loading...</div>
+        <div id="loading" class="translatable">Loading...</div>
 
         {% include "./popups/spotify_importer.html" %}
         {% include "./popups/share_playlist.html" %}
@@ -175,7 +175,7 @@
             <ul class="notifications"></ul>
             
             <div class="menu">
-                <span class="item webstore translatable" title="Install the Youtify Chrome App now"></span>
+                <span class="item webstore translatable" title="Install Youtify from the Chrome Web Store"></span>
                 <span class="item about translatable">About</span>
                 <span class="item settings translatable">Settings</span>
                 {% if logged_in %}
