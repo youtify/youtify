@@ -35,6 +35,10 @@ handlers:
   upload: html/filter.html
   login: admin
 
+- url: /admin/pinggraph
+  script: ping.py
+  login: admin
+
 - url: /admin
   script: admin.py
   login: admin
@@ -84,11 +88,7 @@ handlers:
   script: ping.py
   login: admin
 
-- url: /pinggraph
-  script: ping.py
-  login: admin
-
-- url: /ping.*
+- url: /ping
   script: ping.py
 
 - url: /scripts

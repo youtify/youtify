@@ -58,7 +58,7 @@ class PingGraphHandler(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication([
         ('/cron/store_pings', PingCronHandler),
-        ('/pinggraph', PingGraphHandler),
+        ('/admin/pinggraph', PingGraphHandler),
         ('/ping', PingHandler),
     ], debug=True)
     util.run_wsgi_app(application)
