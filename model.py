@@ -112,6 +112,15 @@ class FlattrClick(db.Model):
     thing_title = db.StringProperty()
     migrated = db.BooleanProperty(default=False)
 
+class Stats(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    nr_of_users = db.IntegerProperty()
+    nr_of_playlists = db.IntegerProperty()
+    nr_of_users_with_flattr_account = db.IntegerProperty()
+    nr_of_flattrs = db.IntegerProperty()
+    nr_of_playlist_subscriptions = db.IntegerProperty()
+    nr_of_follow_relations = db.IntegerProperty()
+
 # HELPERS
 ##############################################################################
 

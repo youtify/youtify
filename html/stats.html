@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Youtify Public Stats</title>
+    </head>
+    <body>
+        <h1>Youtify Public Stats</h1>
+        <dl>
+            <dt>Users</dt>
+            <dd>{{ stats.nr_of_users }}</dd>
+
+            <dt>Playlists</dt>
+            <dd>{{ stats.nr_of_playlists }}</dd>
+
+            <dt>Users with Flattr account</dt>
+            <dd>{{ stats.nr_of_users_with_flattr_account }}</dd>
+
+            <dt>Flattrs made</dt>
+            <dd>{{ stats.nr_of_flattrs }}</dd>
+
+            <dt>Playlist subscriptions</dt>
+            <dd>{{ stats.nr_of_playlist_subscriptions }}</dd>
+
+            <dt>Follow relations</dt>
+            <dd>{{ stats.nr_of_follow_relations }}</dd>
+        </dl>
+        <i>Last updated: {{ stats.date }}</i>
+    </body>
+</html>

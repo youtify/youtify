@@ -47,6 +47,9 @@ handlers:
   script: admin.py
   login: admin
 
+- url: /stats
+  script: stats.py
+
 - url: /me/.*
   script: me.py
 
@@ -70,6 +73,10 @@ handlers:
 
 - url: /cron/generate_flattr_toplist.*
   script: flattr_toplist.py
+  login: admin
+
+- url: /cron/gather_stats
+  script: stats.py
   login: admin
 
 - url: /flattr_submit.*

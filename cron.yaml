@@ -3,6 +3,10 @@ cron:
   url: /cron/store_pings
   schedule: every 10 minutes
 
+- description: gather stats
+  url: /cron/gather_stats
+  schedule: every 24 hours
+
 - description: generate youtube toplist
   url: /cron/generate_youtube_toplist
   schedule: every 24 hours
