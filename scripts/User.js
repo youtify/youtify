@@ -45,7 +45,7 @@ function User(args) {
         if (this.nickname) {
             ret += this.nickname;
         } else {
-            ret += '/users/' + this.id;
+            ret += 'users/' + this.id;
         }
         return ret;
     };
