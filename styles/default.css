@@ -1313,9 +1313,11 @@ input, textarea, button {
 /** SHARE PLAYLIST POPUP
  ****************************************************************************/
 
-#share-playlist-popup input {
+#share-playlist-popup input,
+#share-video-popup input {
     width: 100%;
     margin-bottom: 4px;
+    font-size: 12px;
 }
 
 /** SPOTIFY IMPORTER POPUP
