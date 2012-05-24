@@ -39,7 +39,6 @@ $(document).ready(function() {
     VideoInfo.init();
     FlattrFinder.init();
     BottomPanel.init();
-    Window.init();
     UserManager.init(USER);
     TopMenu.init();
     URIManager.init();
