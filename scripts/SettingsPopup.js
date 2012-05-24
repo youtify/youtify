@@ -30,18 +30,6 @@ var SettingsPopup = {
                 settings.save(); 
             });
             
-        // NOTIFICATIONS
-
-        if (!window.webkitNotifications) {
-            $('#settings .notifications').hide();
-        }
-        $('#notificationRange').change(function() {
-            $('#notificationRangeText').text(this.value);
-            var settings = new Settings();
-            settings.announceTimeout = parseInt(this.value, 10) * 1000;
-            settings.save(); 
-        });
-
         // LANGUAGE
 
         $('#settings .language select').change(function() {
