@@ -1,0 +1,16 @@
+{
+  "version": "14.0",
+  "name": "Youtify",
+  "description": "Web music player",
+  "icons": {
+    "128": "/images/icon_128.png"
+  },
+  "developer": {
+    "name": "Youtify",
+    "url": "https://twitter.com/#!/youtify"
+  },
+  "installs_allowed_from": [
+    "https://marketplace.mozilla.org"
+  ],
+  "default_locale": "en"
+}

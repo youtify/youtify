@@ -136,6 +136,11 @@ handlers:
 
 - url: /api/translations/.*
   script: snapshots.py
+
+- url: /youtify.webapp
+  static_files: youtify.webapp
+  mime_type: application/x-web-app-manifest+json
+  upload: youtify.webapp
   
 - url: /robots.*
   static_files: robots.txt
