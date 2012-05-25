@@ -1,6 +1,7 @@
 import os
 import random
 import re
+from datetime import datetime
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
@@ -33,6 +34,7 @@ class MainHandler(webapp.RequestHandler):
 
         if youtify_user_model is not None:
             youtify_user_model.device = str(random.random())
+            youtify_user_model.last_login = datetime.now()
             youtify_user_model.save()
             youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
             playlists_struct = get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=True)

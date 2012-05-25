@@ -9,6 +9,7 @@ from google.appengine.api import users
 
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
+    last_login = db.DateTimeProperty()
     google_user = db.UserProperty()
     google_user2 = db.UserProperty()
     device = db.StringProperty()
