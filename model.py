@@ -28,6 +28,11 @@ class YoutifyUser(search.SearchableModel):
     nr_of_followings = db.IntegerProperty(default=0)
     migrated_playlists = db.BooleanProperty(default=False)
 
+    region = db.StringProperty()
+    country = db.StringProperty()
+    city = db.StringProperty()
+    latlon = db.StringProperty()
+
     @classmethod
     def SearchableProperties(cls):
       return [['nickname', 'flattr_user_name', 'first_name', 'last_name', 'tagline']]

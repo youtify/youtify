@@ -35,7 +35,15 @@ class MainHandler(webapp.RequestHandler):
         if youtify_user_model is not None:
             youtify_user_model.device = str(random.random())
             youtify_user_model.last_login = datetime.now()
+
+            # https://developers.google.com/appengine/docs/python/runtime#Request_Headers
+            youtify_user_model.country = self.request.headers.get('X-AppEngine-Country', None)
+            youtify_user_model.reqion = self.request.headers.get('X-AppEngine-Region', None)
+            youtify_user_model.city = self.request.headers.get('X-AppEngine-City', None)
+            youtify_user_model.latlon = self.request.headers.get('X-AppEngine-CityLatLong', None)
+
             youtify_user_model.save()
+
             youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
             playlists_struct = get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=True)
             my_followers_struct = get_followers_for_youtify_user_model(youtify_user_model)
