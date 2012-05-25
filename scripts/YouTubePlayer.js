@@ -65,6 +65,9 @@
         }
         /* unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5) */
 		switch (event.data) {
+            case YT.PlayerState.BUFFERING:
+                event.target.setPlaybackQuality(new Settings().quality);
+                break;
 			case 0:
                 self.currentVideo = null;
 				EventSystem.callEventListeners('video_played_to_end', self);
