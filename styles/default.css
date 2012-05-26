@@ -1132,10 +1132,6 @@ input, textarea, button {
     z-index: 25;
     cursor: default;
 }
-.target {
-    background-color: rgba(0, 124, 137, 0.4);
-    cursor: default;
-}
 #right .playlists.target {
     background: inherit;
 }
