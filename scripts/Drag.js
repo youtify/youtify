@@ -5,9 +5,7 @@ var mousedown = false,
     mousedrag = false,
     sourceElem = null, // the REAL dragged element
     dragElem = null, // dragged element copy
-    timeOfMouseDown = null,
     dropCallbacks = [],
-    MOUSE_DRAG_TIMEOUT = 100, // Milliseconds until drag kicks in
     mouseDraggedCallback = null;
 
 function registerDropCallback(f) {
@@ -138,11 +136,8 @@ function mouseDragged(event) {
 
 $(window).mousemove(function (event) {
     if (!mousedrag && mousedown && ($(event.target).hasClass('draggable') || $(event.target).parents('.draggable').length > 0)) {
-        var now = new Date().getTime();
-        if ((now - timeOfMouseDown) >= MOUSE_DRAG_TIMEOUT) {
-            mousedrag = true;
-            dragStarted(event);
-        }
+        mousedrag = true;
+        dragStarted(event);
     }
     
     if (mousedrag) {
@@ -162,7 +157,6 @@ $(window).mouseup(function (event) {
 
 
 $('.draggable').live('mousedown', function (event) {
-    timeOfMouseDown = new Date().getTime();
     if ($(event.target).hasClass('draggable') || 
 		$(event.target).parents('.draggable') ) {
         mousedown = true;
