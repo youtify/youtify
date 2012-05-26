@@ -119,6 +119,9 @@ function mouseDragged(event) {
     }
 
     if (droppable) {
+        if (droppable.hasClass('playlists')) {
+            droppable.find('.tracklist.active .video:last').addClass('insert-after');
+        }
         if (sourceElem.data('type') !== undefined) {
             if (droppable.data('type') !== sourceElem.data('type')) {
                 droppable.addClass('target');
@@ -185,23 +188,28 @@ mouseDraggedCallback = function(targetElem, sourceElem) {
 
 // VIDEO DROPPED ON #results-container
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    var playlistElem,
-        destIndex,
+    var destIndex,
         sourceIndex,
-        playlist;
+        playlist,
+        lastVideo,
+        selectedVideos;
 
-    if ($('#playlists .selected').length) {
-        playlistElem = $('.playlistElem.selected');
-        if (targetElem.attr('id') === 'results-container' && sourceElem.hasClass('video') && playlistElem.length) {
-            sourceIndex = sourceElem.index();
-            destIndex = $('#results-container .results.active .video:last').index() + 1;
+    if (targetElem.hasClass('playlists') && sourceElem.hasClass('video')) {
+        playlist = playlistManager.getCurrentlySelectedPlaylist();
+        selectedVideos = sourceElem.parent().find('.video.selected');
 
-            playlist = playlistElem.data('model');
-            playlist.moveVideo(sourceIndex, destIndex);
-            playlistManager.save();
+        lastVideo = playlist.playlistDOMHandle.find('.video:last');
+        sourceIndex = sourceElem.index();
+        destIndex = lastVideo.index();
 
-            playlistElem.click(); // trigger a rerender
-        }
+        $.each(selectedVideos, function(index, elem) {
+            if (playlist !== undefined) { // hack to not crash when dragging videos on profile pages
+                playlist.moveVideo(sourceIndex, destIndex+1);
+                $(elem).detach().appendTo(playlist.playlistDOMHandle);
+            }
+        });
+
+        playlistManager.save();
     }
 });
 

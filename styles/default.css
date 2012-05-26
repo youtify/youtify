@@ -1136,15 +1136,18 @@ input, textarea, button {
     background-color: rgba(0, 124, 137, 0.4);
     cursor: default;
 }
+#right .playlists.target {
+    background: inherit;
+}
 .reorderable {
 }
 .results > .insert-before,
 #playlists > .insert-before {
-    border-top: 1px solid blue;
+    border-top: 1px solid black;
 }
 .insert-after,
 .insert-after {
-    border-bottom: 1px solid blue;
+    border-bottom: 1px solid black;
 }
 
 /** POPUP
