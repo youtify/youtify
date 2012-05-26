@@ -15,6 +15,7 @@ function loadPlaylist(playlistId) {
                 var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate, data.followers);
                 playlist.createViews();
                 PlaylistView.loadPlaylistView(playlist);
+                playlistManager.selectPlaylistByRemoteId(data.remoteId);
             },
             404: function(data) {
                 alert("No such playlist found");
