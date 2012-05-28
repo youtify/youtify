@@ -50,7 +50,7 @@ var SettingsPopup = {
             if (settings.send_new_subscriber_email) {
                 $('#settings input[name=send_new_subscriber_email]').attr('checked', 'checked');
             }
-        })();
+        }());
 
         $('#settings input[name=send_new_follower_email]').change(function() {
             var settings = new Settings();
