@@ -28,8 +28,10 @@ class YoutifyUser(search.SearchableModel):
     nr_of_followings = db.IntegerProperty(default=0)
     migrated_playlists = db.BooleanProperty(default=False)
 
+    last_emailed = db.DateTimeProperty()
     send_new_follower_email = db.BooleanProperty(default=True)
     send_new_subscriber_email = db.BooleanProperty(default=True)
+
     region = db.StringProperty()
     country = db.StringProperty()
     city = db.StringProperty()
@@ -213,6 +215,11 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
         return youtify_user_model.google_user2.nickname().split('@')[0] # don't leak users email
     else:
         return youtify_user_model.google_user.nickname().split('@')[0] # don't leak users email
+
+def get_url_for_youtify_user_model(youtify_user_model):
+    if youtify_user_model.nickname:
+        return 'http://www.youtify.com/' + youtify_user_model.nickname
+    return 'http://www.youtify.com/' + str(youtify_user_model.key().id())
 
 def get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=False):
     playlist_models = youtify_user_model.playlists

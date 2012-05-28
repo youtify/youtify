@@ -151,6 +151,9 @@ handlers:
   script: flattr.py
   login: required
 
+- url: /unsubscribe
+  script: mail.py
+
 - url: /.*
   script: main.py
 

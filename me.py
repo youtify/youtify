@@ -11,6 +11,7 @@ from model import get_activities_structs
 from model import get_display_name_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
 from activities import create_follow_activity
+from mail import send_new_follower_email
 
 BLOCKED_NICKNAMES = [
     'admin',
@@ -146,6 +147,7 @@ class FollowingsHandler(webapp.RequestHandler):
         m.put()
 
         create_follow_activity(me, other_user)
+        send_new_follower_email(me, other_user)
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')

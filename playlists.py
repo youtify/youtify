@@ -8,6 +8,7 @@ from model import get_playlist_struct_from_playlist_model
 from model import get_playlist_structs_by_id
 from model import get_youtify_user_struct
 from model import Playlist
+from mail import send_new_subscriber_email
 
 class FollowPlaylist(webapp.RequestHandler):
     
@@ -36,6 +37,7 @@ class FollowPlaylist(webapp.RequestHandler):
         playlist_model.save()
 
         create_subscribe_activity(youtify_user_model, playlist_model)
+        send_new_subscriber_email(youtify_user_model, playlist_model)
         
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')

@@ -1,5 +1,7 @@
 import os
 
+EMAIL_UNSUBSCRIBE_SALT = 'abc'
+
 CLIENT_ID = ''
 CLIENT_SECRET = ''
 
