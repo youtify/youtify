@@ -28,6 +28,8 @@ class YoutifyUser(search.SearchableModel):
     nr_of_followings = db.IntegerProperty(default=0)
     migrated_playlists = db.BooleanProperty(default=False)
 
+    send_new_follower_email = db.BooleanProperty(default=True)
+    send_new_subscriber_email = db.BooleanProperty(default=True)
     region = db.StringProperty()
     country = db.StringProperty()
     city = db.StringProperty()
@@ -261,3 +263,9 @@ def get_activities_structs(youtify_user_model):
             'target': m.target,
         })
     return ret
+
+def get_settings_struct_for_youtify_user_model(youtify_user_model):
+    return {
+        'send_new_follower_email': youtify_user_model.send_new_follower_email,
+        'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email
+    }

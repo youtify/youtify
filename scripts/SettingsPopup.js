@@ -39,5 +39,31 @@ var SettingsPopup = {
             settings.save();
             TranslationSystem.changeLanguage(code);
         });
+
+        // NOTIFICATIONS
+
+        (function () {
+            var settings = new Settings();
+            if (settings.send_new_follower_email) {
+                $('#settings input[name=send_new_follower_email]').attr('checked', 'checked');
+            }
+            if (settings.send_new_subscriber_email) {
+                $('#settings input[name=send_new_subscriber_email]').attr('checked', 'checked');
+            }
+        })();
+
+        $('#settings input[name=send_new_follower_email]').change(function() {
+            var settings = new Settings();
+            settingsFromServer.send_new_follower_email = this.checked;
+            settings.send_new_follower_email = this.checked;
+            settings.save();
+        });
+
+        $('#settings input[name=send_new_subscriber_email]').change(function() {
+            var settings = new Settings();
+            settingsFromServer.send_new_subscriber_email = this.checked;
+            settings.send_new_subscriber_email = this.checked;
+            settings.save();
+        });
     }
 };

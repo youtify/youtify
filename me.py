@@ -9,6 +9,7 @@ from model import YoutifyUser
 from model import FollowRelation
 from model import get_activities_structs
 from model import get_display_name_for_youtify_user_model
+from model import get_settings_struct_for_youtify_user_model
 from activities import create_follow_activity
 
 BLOCKED_NICKNAMES = [
@@ -76,6 +77,21 @@ class ProfileHandler(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(get_display_name_for_youtify_user_model(user))
+
+class SettingsHandler(webapp.RequestHandler):
+    
+    def get(self):
+        user = get_current_youtify_user_model()
+        settings = get_settings_struct_for_youtify_user_model(user)
+        self.response.out.write(simplejson.dumps(settings))
+
+    def post(self):
+        user = get_current_youtify_user_model()
+        user.send_new_follower_email = self.request.get('send_new_follower_email') == 'true'
+        user.send_new_subscriber_email = self.request.get('send_new_subscriber_email') == 'true'
+        user.save()
+        settings = get_settings_struct_for_youtify_user_model(user)
+        self.response.out.write(simplejson.dumps(settings))
 
 class FollowingsHandler(webapp.RequestHandler):
 
@@ -162,6 +178,7 @@ def main():
     application = webapp.WSGIApplication([
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
+        ('/me/settings', SettingsHandler),
         ('/me/activities', ActivitiesHandler),
         ('/me/followings/(.*)', FollowingsHandler),
     ], debug=True)
