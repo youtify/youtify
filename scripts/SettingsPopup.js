@@ -1,6 +1,31 @@
 var SettingsPopup = {
+    chromeWebStoreAppLink: 'https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho',
+    puffs: [],
+
     init: function() {
         var settings = new Settings();
+        var numberOfUnseenPuffs;
+
+        // PUFFS
+
+        if (SettingsPopup.isBrowserChrome() && !SettingsPopup.isChromeWebStoreAppInstalled()) {
+            $('#settings .puffs .chrome-webstore').attr('rel', '.chrome-webstore').click(function(event) {
+                event.preventDefault();
+                SettingsPopup.installChromeWebStoreApp();
+            });
+            SettingsPopup.puffs.push('.chrome-webstore');
+        } else {
+            $('#settings .puffs .chrome-webstore').hide();
+        }
+
+        if (SettingsPopup.puffs.length) {
+            $('#settings .puffs').show();
+        }
+
+        numberOfUnseenPuffs = SettingsPopup.getNumberOfUnseenPuffs();
+        if (numberOfUnseenPuffs > 0) {
+            $('#top .menu .settings .counter').text(numberOfUnseenPuffs).show();
+        }
 
         // FLATTR
 
@@ -65,5 +90,48 @@ var SettingsPopup = {
             settings.send_new_subscriber_email = this.checked;
             settings.save();
         });
+    },
+
+    getNumberOfUnseenPuffs: function() {
+        var viewedPuffs = JSON.parse(localStorage.viewedPuffs || '[]');
+        var count = 0;
+        $.each($('#settings .puffs .puff'), function(i, $puff) {
+            if (viewedPuffs.indexOf($puff.rel) === -1) {
+                count += 1;
+            }
+        });
+        return count;
+    },
+
+    markAllPuffsAsSeen: function() {
+        var json = [];
+        $.each($('#settings .puffs .puff'), function(i, $puff) {
+            json.push($puff.rel);
+        });
+        localStorage.viewedPuffs = JSON.stringify(json);
+        $('#top .menu .settings .counter').hide();
+    },
+
+    isBrowserChrome: function() {
+        return navigator && navigator.userAgent && navigator.userAgent.indexOf('Chrome') !== -1;
+    },
+
+    isChromeWebStoreAppInstalled: function() {
+        return window.chrome && window.chrome.app && window.chrome.app.isInstalled;
+    },
+
+    installChromeWebStoreApp: function() {
+        var fail = function() {
+                Notifications.append('Failed to install App.');
+            },
+            success = function() {
+                Notifications.append('Installation succeded!');
+                $('#settings .puffs .chrome-webstore').hide();
+            };
+        if (window.chrome && window.chrome.webstore) {
+            window.chrome.webstore.install(SettingsPopup.chromeWebStoreAppLink, success, fail);
+        } else {
+            fail();
+        }
     }
 };

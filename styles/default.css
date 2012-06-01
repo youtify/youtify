@@ -228,25 +228,27 @@ input, textarea, button {
     height: 32px;
     line-height: 32px;
 }
-#top .webstore {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 3px;
-    background: url(/images/chrome_16.png);
+#settings .puffs .chrome-webstore {
+    padding-left: 20px;
+    background: url(/images/chrome_16.png) no-repeat left center;
+}
+#top .settings .counter {
+    background: rgba(0, 124, 137, 0.4);
+    color: white;
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: bold;
+    vertical-align: top;
 }
 #top .settings,
 #top .about {
-    margin: 0 10px;
-}
-#top .about,
-#top .webstore,
-#top .settings {
+    margin-right: 10px;
     cursor: pointer;
     text-transform: uppercase;
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    display: inline;
 }
 #top .menu .login-link,
 #top .menu .logout-link {

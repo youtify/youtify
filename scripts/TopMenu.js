@@ -36,6 +36,7 @@ var TopMenu = {
         // SETTINGS
         $('#top .settings').click(function() {
             $(this).arrowPopup('#settings');
+            SettingsPopup.markAllPuffsAsSeen();
         });
     }
 };

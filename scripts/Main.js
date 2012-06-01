@@ -31,7 +31,6 @@ $(document).ready(function() {
     Queue.init();
     Ping.init();
     Notifications.init();
-    ChromeWebStore.init();
     player = new PlayerManager();
     player.init();
     Timeline.init();

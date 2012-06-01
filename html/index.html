@@ -158,7 +158,6 @@
         {% include "./popups/share_video.html" %}
         {% include "./popups/settings.html" %}
         {% include "./popups/videoinfo.html" %}
-        {% include "./popups/webstore.html" %}
         <div id="about-popup" style="display:none" class="popup"></div>
         
         <div id="top">
@@ -175,9 +174,13 @@
             <ul class="notifications"></ul>
             
             <div class="menu">
-                <span class="item webstore translatable" title="Install Youtify from the Chrome Web Store"></span>
-                <span class="item about translatable">About</span>
-                <span class="item settings translatable">Settings</span>
+                <div class="item about">
+                    <span class="title translatable">About</span>
+                </div>
+                <div class="item settings translatable">
+                    <span class="title translatable">Settings</span>
+                    <span class="counter" style="display:none"></span>
+                </div>
                 {% if logged_in %}
                 <a class="item last logout-link translatable" href="{{ logout_url }}">Logout</a>
                 {% else %}
