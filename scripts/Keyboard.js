@@ -12,7 +12,7 @@ $(window).keydown(function(event) {
             event.preventDefault();
             break;
         case 27: // ESC
-            $('.modalbox').click();
+            $('.modalbox, #arrow-popup-blocker').click();
             player.fullScreenOff();
             event.preventDefault();
             break;
