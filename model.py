@@ -125,6 +125,7 @@ class FlattrClick(db.Model):
 class Stats(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
     nr_of_users = db.IntegerProperty()
+    nr_of_active_users = db.IntegerProperty()
     nr_of_playlists = db.IntegerProperty()
     nr_of_users_with_flattr_account = db.IntegerProperty()
     nr_of_flattrs = db.IntegerProperty()
