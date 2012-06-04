@@ -4,16 +4,22 @@ var SettingsPopup = {
 
     init: function() {
         var settings = new Settings();
-        var numberOfUnseenPuffs;
+        var numberOfUnseenPuffs = 0;
+        var viewedPuffs = JSON.parse(localStorage.viewedPuffs || '[]');
+        var rel;
 
         // PUFFS
 
         if (SettingsPopup.isBrowserChrome() && !SettingsPopup.isChromeWebStoreAppInstalled()) {
-            $('#settings .puffs .chrome-webstore').attr('rel', '.chrome-webstore').click(function(event) {
+            rel = '.chrome-webstore';
+            if (viewedPuffs.indexOf(rel) === -1) {
+                numberOfUnseenPuffs += 1;
+            }
+            $('#settings .puffs .chrome-webstore').attr('rel', rel).click(function(event) {
                 event.preventDefault();
                 SettingsPopup.installChromeWebStoreApp();
             });
-            SettingsPopup.puffs.push('.chrome-webstore');
+            SettingsPopup.puffs.push(rel);
         } else {
             $('#settings .puffs .chrome-webstore').hide();
         }
@@ -22,7 +28,6 @@ var SettingsPopup = {
             $('#settings .puffs').show();
         }
 
-        numberOfUnseenPuffs = SettingsPopup.getNumberOfUnseenPuffs();
         if (numberOfUnseenPuffs > 0) {
             $('#top .menu .settings .counter').text(numberOfUnseenPuffs).show();
         }
