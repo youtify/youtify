@@ -315,7 +315,7 @@ input, textarea, button {
     height: 100%;
     font-size: 13px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-    padding: 0 5px 5px 10px;
+    padding: 0 5px 5px 5px;
     overflow-y: scroll;
 }
 #left .menu .news-feed,
@@ -324,24 +324,24 @@ input, textarea, button {
 #left .menu .search,
 #left .menu .playlists li {
     cursor: pointer;
-    padding: 8px 8px 8px 20px;
-    background: url(/images/playlist.png) no-repeat center left;
+    padding: 8px 8px 8px 25px;
+    background: url(/images/playlist.png) no-repeat 5px center;
 }
 #left .menu .news-feed {
-    background: url(/images/newsfeed.png) no-repeat center left;
+    background: url(/images/newsfeed.png) no-repeat 5px center;
 }
 #left .menu .toplist {
-    background: url(/images/toplist.png) no-repeat center left;
+    background: url(/images/toplist.png) no-repeat 5px center;
 }
 #left .menu .queue {
-    background: url(/images/playqueue.png) no-repeat center left;
+    background: url(/images/playqueue.png) no-repeat 5px center;
 }
 #left .menu .search {
-    background: url(/images/small-search.png) no-repeat center left;
+    background: url(/images/small-search.png) no-repeat 5px center;
 }
 
 #left .menu li.playing {
-    background: url(/images/playing.png) no-repeat center left;
+    background: url(/images/playing.png) no-repeat 5px center;
 }
 #left .menu li.selected {
     background-color: rgba(0, 124, 137, 0.4);
