@@ -342,6 +342,7 @@ input, textarea, button {
 
 #left .menu li.playing {
     background: url(/images/playing.png) no-repeat 5px center;
+    background-color: rgba(0, 124, 137, 0.1);
 }
 #left .menu li.selected {
     background-color: rgba(0, 124, 137, 0.4);
@@ -625,7 +626,8 @@ input, textarea, button {
     background-color: rgba(0, 124, 137, 0.1);
 }
 #right .tracklist tr:nth-of-type(even) td {
-    background-color: rgba(0, 124, 137, 0.2);
+    /*background-color: rgba(0, 124, 137, 0.2);*/
+    
 }
 #right .tracklist tr:nth-of-type(odd) td.space,
 #right .tracklist tr:nth-of-type(even) td.space,
