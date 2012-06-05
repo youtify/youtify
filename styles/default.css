@@ -574,6 +574,7 @@ input, textarea, button {
     background-repeat: no-repeat;
     background-position: center center;
 }
+
 #right .tracklist .title {
     text-align: left;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
@@ -599,6 +600,11 @@ input, textarea, button {
     cursor: pointer;
     color: rgba(0, 0, 0, 0.6);
 }
+
+#right .tracklist .flattr {
+    width: 100px;
+}
+
 #right .tracklist .like:hover {
     color: #000;
 }
@@ -1503,26 +1509,13 @@ input, textarea, button {
     font-size: 16px;
 }
 
-
-
-
-
 #right .video .flattr {
     line-height: 22px;
 }
-#right .video .flattr .flattr-button {
-    display: inline-block;
-    padding: 0 4px;
-    background: #eee;
-    color: black;
-    border: 1px solid transparent;
-    cursor: pointer;
-    background: transparent;
-}
-#right .video .flattr .flattr-button.loading {
+#right .video .flattr .button.loading {
     color: #888;
 }
-#right .video .flattr .flattr-button .count {
+#right .video .flattr .button .count {
     margin-right: 5px;
     font-weight: bold;
 }

@@ -172,7 +172,7 @@ function Video(args) {
 
     this.createFlattrButton = function() {
         var self = this;
-        return $('<span class="flattr-button"><span class="count">' + (this.flattrs || 0) + '</span><span class="text">Flattr</span></span>')
+        return $('<span class="button"><span class="count">' + (this.flattrs || 0) + '</span><span class="text">Flattr</span></span>')
             .click(function() {
                 if (!has_flattr_access_token) {
                     new WhatIsFlattrDialog().show();
