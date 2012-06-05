@@ -325,7 +325,6 @@ input, textarea, button {
 #left .menu .playlists li {
     cursor: pointer;
     padding: 8px 8px 8px 20px;
-    border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
     background: url(/images/playlist.png) no-repeat center left;
 }
 #left .menu .news-feed {
