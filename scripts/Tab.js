@@ -12,10 +12,6 @@
                 self.view = $('#right .toplists .tabs .youtify');
                 self.paneView = $('#right .toplists .pane.youtify');
                 break;
-            case 'youtube-top100':
-                self.view = $('#right .toplists .tabs .youtube.top100');
-                self.paneView = $('#right .toplists .pane.youtube.top100');
-                break;
             case 'flattr-toplist':
                 self.view = $('#right .toplists .tabs .flattr');
                 self.paneView = $('#right .toplists .pane.flattr');

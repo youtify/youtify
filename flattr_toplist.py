@@ -21,6 +21,7 @@ FILTER = [
     '29243672', # Previously on mobileMacs 076
     '33802859', # Previously on mobileMacs 078
     '35304875', # Previously on mobileMacs 079
+    '36730249', # Previously on mobileMacs 080
     '9Ijq4593DQ4', # Abused Romance - Vaporize - Official music video
     'Z59gKflk2zA', # Abused Romance - Sound of Violence
     'cp_am5HUyic', # Emule & BitTorrent Sites & Users Ruled 100% Legal In Spain Thanks To The \" SGAE \" Music Mafia.
@@ -30,60 +31,42 @@ FILTER = [
 def fetch_toplist():
     """Fetch the top flattred YouTube videos"""
     json = []
+    url = 'https://api.flattr.com/rest/v2/things/search?url=youtube.com|soundcloud.com&tags=music&sort=trend&count=100'
+    result = urlfetch.fetch(url)
+    result = simplejson.loads(result.content)
 
-    i = 0
-    while True:
-        i += 1
-        url = 'https://api.flattr.com/rest/v2/things/search?query=youtube&tags=music&sort=flattrs&page=%i' % i
-        result = urlfetch.fetch(url)
-        result = simplejson.loads(result.content)
-        if i < 5 and 'things' in result and len(result['things']) > 0:
-            for thing in result['things']:
-                url = urlparse.urlparse(thing['url'])
-                if url.netloc.startswith('www.youtube.com'):
-                    params = dict(parse_qsl(url.query))
-                    if 'v' in params and not params['v'] in FILTER:
+    for thing in result['things']:
+        url = urlparse.urlparse(thing['url'])
+        logging.info(thing['url'])
+        if url.netloc.startswith('www.youtube.com'):
+            params = dict(parse_qsl(url.query))
+            if 'v' in params and not params['v'] in FILTER:
+                json.append({
+                    'title': thing['title'],
+                    'videoId': params['v'],
+                    'flattrs': thing['flattrs'],
+                    'flattrThingId': thing['id'],
+                    'type': 'youtube',
+                    'duration': None,
+                })
+        elif url.netloc.startswith('soundcloud.com'):
+            params = url.path.split('/')
+            if len(params) == 3:
+                sleep(1)
+                try:
+                    scresult = urlfetch.fetch('https://api.soundcloud.com/resolve.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d&url=' + thing['url'])
+                    scresult = simplejson.loads(scresult.content)
+                    if 'streamable' in scresult and scresult['streamable'] and (str(scresult['id']) not in FILTER):
                         json.append({
-                            'title': thing['title'],
-                            'videoId': params['v'],
+                            'title': scresult['title'],
+                            'videoId': scresult['id'],
                             'flattrs': thing['flattrs'],
                             'flattrThingId': thing['id'],
-                            'type': 'youtube',
-                            'duration': None,
+                            'type': 'soundcloud',
+                            'duration': scresult['duration'],
                         })
-        else:
-            break
-    
-    i = 0
-    while True:
-        i += 1
-        url = 'https://api.flattr.com/rest/v2/things/search?url=soundcloud.com&tags=music&count=10&sort=flattrs&page=%i' % i
-        result = urlfetch.fetch(url)
-        result = simplejson.loads(result.content)
-        if i < 2 and 'things' in result and len (result['things']) > 0:
-            for thing in result['things']:
-                url = urlparse.urlparse(thing['url'])
-                params = url.path.split('/')
-                if len(params) == 3:
-                    sleep(1)
-                    try:
-                        scresult = urlfetch.fetch('https://api.soundcloud.com/resolve.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d&url=' + thing['url'])
-                        scresult = simplejson.loads(scresult.content)
-                        if 'streamable' in scresult and scresult['streamable'] and (str(scresult['id']) not in FILTER):
-                            json.append({
-                                'title': scresult['title'],
-                                'videoId': scresult['id'],
-                                'flattrs': thing['flattrs'],
-                                'flattrThingId': thing['id'],
-                                'type': 'soundcloud',
-                                'duration': scresult['duration'],
-                            })
-                    except:
-                        sleep(1)
-        else:
-            break
-
-    json = sorted(json, key=lambda thing: thing['flattrs'], reverse=True)
+                except:
+                    pass
 
     return simplejson.dumps(json)
 

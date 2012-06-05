@@ -141,18 +141,7 @@ function MenuItem(type) {
             case 'toplist':
                 self.leftView = $('#left .menu .toplist');
                 self.rightView = $('#right .toplists');
-                self.addTabs(['flattr-toplist', 'youtube-top100']);
-
-                // Init YouTube top 100
-                $pane = $('#right .pane.youtube.top100');
-                $.each(youtubeTopList, function (i, item) {
-                    new Video({
-                        videoId: item.videoId,
-                        title: item.title,
-                        type: 'youtube',
-                        onPlayCallback: self.setAsPlaying
-                    }).createListView().appendTo($pane);
-                });
+                self.addTabs(['flattr-toplist']);
 
                 // Init Flattr Toplist
                 $pane = $('#right .pane.flattr');
