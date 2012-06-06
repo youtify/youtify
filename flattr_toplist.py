@@ -37,7 +37,6 @@ def fetch_toplist():
 
     for thing in result['things']:
         url = urlparse.urlparse(thing['url'])
-        logging.info(thing['url'])
         if url.netloc.startswith('www.youtube.com'):
             params = dict(parse_qsl(url.query))
             if 'v' in params and not params['v'] in FILTER:
@@ -50,23 +49,21 @@ def fetch_toplist():
                     'duration': None,
                 })
         elif url.netloc.startswith('soundcloud.com'):
-            params = url.path.split('/')
-            if len(params) == 3:
-                sleep(1)
-                try:
-                    scresult = urlfetch.fetch('https://api.soundcloud.com/resolve.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d&url=' + thing['url'])
-                    scresult = simplejson.loads(scresult.content)
-                    if 'streamable' in scresult and scresult['streamable'] and (str(scresult['id']) not in FILTER):
-                        json.append({
-                            'title': scresult['title'],
-                            'videoId': scresult['id'],
-                            'flattrs': thing['flattrs'],
-                            'flattrThingId': thing['id'],
-                            'type': 'soundcloud',
-                            'duration': scresult['duration'],
-                        })
-                except:
-                    pass
+            try:
+                params = url.path.split('/')
+                scresult = urlfetch.fetch('https://api.soundcloud.com/resolve.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d&url=' + thing['url'])
+                scresult = simplejson.loads(scresult.content)
+                if 'streamable' in scresult and scresult['streamable'] and (str(scresult['id']) not in FILTER):
+                    json.append({
+                        'title': scresult['title'],
+                        'videoId': scresult['id'],
+                        'flattrs': thing['flattrs'],
+                        'flattrThingId': thing['id'],
+                        'type': 'soundcloud',
+                        'duration': scresult['duration'],
+                    })
+            except:
+                logging.error('failed to do soundcloud lookup for ' + thing['url'])
 
     return simplejson.dumps(json)
 
