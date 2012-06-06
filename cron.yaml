@@ -9,4 +9,4 @@ cron:
 
 - description: generate flattr toplist
   url: /cron/generate_flattr_toplist
-  schedule: every 6 hours
+  schedule: every 2 hours
