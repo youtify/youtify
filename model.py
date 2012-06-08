@@ -223,16 +223,13 @@ def get_url_for_youtify_user_model(youtify_user_model):
     return 'http://www.youtify.com/' + str(youtify_user_model.key().id())
 
 def get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=False):
-    playlist_models = youtify_user_model.playlists
     playlist_structs = []
 
-    for key in playlist_models:
-        playlist_model = db.get(key)
+    for playlist_model in db.get(youtify_user_model.playlists):
         if (not playlist_model.private) or include_private_playlists:
             playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
 
-    for key in youtify_user_model.playlist_subscriptions:
-        playlist_model = db.get(key)
+    for playlist_model in db.get(youtify_user_model.playlist_subscriptions):
         if playlist_model is not None:
             playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
         else:
