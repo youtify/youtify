@@ -258,15 +258,24 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     
     return playlist_struct
 
-def get_activities_structs(youtify_user_model):
+def get_activities_structs(youtify_user_model, verb=None):
+    query = None
+
+    if verb is None:
+        query = Activity.all().filter('owner =', youtify_user_model).order('-timestamp')
+    else:
+        query = Activity.all().filter('owner =', youtify_user_model).filter('verb =', verb).order('-timestamp')
+
     ret = []
-    for m in Activity.all().filter('owner =', youtify_user_model).order('-timestamp'):
+
+    for m in query:
         ret.append({
             'timestamp': m.timestamp.strftime('%s'),
             'verb': m.verb,
             'actor': m.actor,
             'target': m.target,
         })
+
     return ret
 
 def get_settings_struct_for_youtify_user_model(youtify_user_model):

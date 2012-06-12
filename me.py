@@ -152,14 +152,6 @@ class FollowingsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
-class ActivitiesHandler(webapp.RequestHandler):
-
-    def get(self):
-        """ Get all users activities """
-        me = get_current_youtify_user_model()
-        self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(get_activities_structs(me)))
-
 class YouTubeUserNameHandler(webapp.RequestHandler):
     def get(self):
         user = get_current_youtify_user_model()
@@ -181,7 +173,6 @@ def main():
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
         ('/me/settings', SettingsHandler),
-        ('/me/activities', ActivitiesHandler),
         ('/me/followings/(.*)', FollowingsHandler),
     ], debug=True)
     util.run_wsgi_app(application)

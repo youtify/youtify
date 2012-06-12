@@ -103,7 +103,7 @@ var NewsFeed = {
 
     load: function(callback) {
         var $newsFeed = $('<div class="news-feed"></div');
-        $.get('/me/activities', function(data) {
+        $.get('/api/users/' + my_user_id + '/activities', function(data) {
             $.each(data, function(i, activity) {
                 $newsFeed.append(NewsFeed.getActivityElem(activity));
             });
