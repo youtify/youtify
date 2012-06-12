@@ -243,7 +243,7 @@ var UserManager = {
     },
 
     loadFlattrs: function() {
-        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/activities?verb=flattr', function(data) {
+        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/activities?verb=flattr&type=outgoing', function(data) {
             UserManager.$flattrs.html('');
             UserManager.updateFlattrsTabLabel(data.length);
             $.each(data, function(i, activity) {

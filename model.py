@@ -66,6 +66,7 @@ class Activity(db.Model):
     timestamp = db.DateTimeProperty(auto_now_add=True)
     verb = db.StringProperty()
     actor = db.TextProperty()
+    type = db.StringProperty()
     target = db.TextProperty()
 
 class Playlist(search.SearchableModel):
@@ -258,13 +259,13 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     
     return playlist_struct
 
-def get_activities_structs(youtify_user_model, verb=None):
-    query = None
+def get_activities_structs(youtify_user_model, filter={}):
+    query = Activity.all().filter('owner =', youtify_user_model)
 
-    if verb is None:
-        query = Activity.all().filter('owner =', youtify_user_model).order('-timestamp')
-    else:
-        query = Activity.all().filter('owner =', youtify_user_model).filter('verb =', verb).order('-timestamp')
+    for k, v in filter.items():
+        query = query.filter(k + ' =', v)
+
+    query = query.order('-timestamp')
 
     ret = []
 
@@ -272,6 +273,7 @@ def get_activities_structs(youtify_user_model, verb=None):
         ret.append({
             'timestamp': m.timestamp.strftime('%s'),
             'verb': m.verb,
+            'type': m.type,
             'actor': m.actor,
             'target': m.target,
         })
