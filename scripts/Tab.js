@@ -61,6 +61,10 @@
                 self.view = $('#right .profile .tabs .profile-followers');
                 self.paneView = $('#right .profile .pane.profile-followers');
                 break;
+            case 'profile-flattrs':
+                self.view = $('#right .profile .tabs .profile-flattrs');
+                self.paneView = $('#right .profile .pane.profile-flattrs');
+                break;
         }
         /* Set click event */
         self.view.mousedown(self.select);
@@ -90,6 +94,8 @@
             UserManager.loadFollowers();
         } else  if (self.type === 'profile-followings') {
             UserManager.loadFollowings();
+        } else  if (self.type === 'profile-flattrs') {
+            UserManager.loadFlattrs();
         }
         
         /* Remove selected on all menuItems */

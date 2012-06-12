@@ -13,6 +13,7 @@ function User(args) {
     self.nrOfFollowers = args.nr_of_followers;
     self.nrOfFollowings = args.nr_of_followings;
     self.nrOfPlaylists = args.nr_of_playlists;
+    self.nrOfFlattrs = args.nr_of_flattrs || 0;
     self.tagline = args.tagline;
 
     self.saveProfile = function(params) {

@@ -4,9 +4,11 @@ var UserManager = {
     $playlists: null,
     $followings: null,
     $followers: null,
+    $flattrs: null,
     $playlistsTab: null,
     $followingsTab: null,
     $followersTab: null,
+    $flattrsTab: null,
     $followButton: null,
     $unFollowButton: null,
     $editButton: null,
@@ -30,9 +32,11 @@ var UserManager = {
         UserManager.$playlists = $('#right .profile .pane.profile-playlists');
         UserManager.$followings = $('#right .profile .pane.profile-followings');
         UserManager.$followers = $('#right .profile .pane.profile-followers');
+        UserManager.$flattrs = $('#right .profile .pane.profile-flattrs');
         UserManager.$playlistsTab = $('#right .profile .tabs .profile-playlists');
         UserManager.$followingsTab = $('#right .profile .tabs .profile-followings');
         UserManager.$followersTab = $('#right .profile .tabs .profile-followers');
+        UserManager.$flattrsTab = $('#right .profile .tabs .profile-flattrs');
         UserManager.$followButton = $('#right .profile .follow.button');
         UserManager.$unFollowButton = $('#right .profile .unfollow.button');
         UserManager.$editButton = $('#right .profile .edit.button');
@@ -173,6 +177,7 @@ var UserManager = {
         UserManager.updatePlaylistsTabLabel(user.nrOfPlaylists);
         UserManager.updateFollowersTabLabel(user.nrOfFollowers);
         UserManager.updateFollowingsTabLabel(user.nrOfFollowings);
+        UserManager.updateFlattrsTabLabel(user.nrOfFlattrs);
 
         if (logged_in && UserManager.currentUser.id === user.id) {
             $.each(playlistManager.playlists, function(index, item) {
@@ -198,6 +203,10 @@ var UserManager = {
 
     updatePlaylistsTabLabel: function(nrOfPlaylists) {
         UserManager.$playlistsTab.text(TranslationSystem.get('Playlists') + ' (' + nrOfPlaylists + ')');
+    },
+
+    updateFlattrsTabLabel: function(nrOfFlattrs) {
+        UserManager.$flattrsTab.text(TranslationSystem.get('Flattrs') + ' (' + nrOfFlattrs + ')');
     },
 
     loadPlaylists: function() {
@@ -229,6 +238,17 @@ var UserManager = {
             UserManager.updateFollowingsTabLabel(data.length);
             $.each(data, function(i, item) {
                 UserManager.$followings.append(new User(item).getSmallView());
+            });
+        });
+    },
+
+    loadFlattrs: function() {
+        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/activities?verb=flattr', function(data) {
+            UserManager.$flattrs.html('');
+            UserManager.updateFlattrsTabLabel(data.length);
+            $.each(data, function(i, activity) {
+                var thing = JSON.parse(activity.target);
+                UserManager.$flattrs.append(NewsFeed.getIncomingFlattrActivity(UserManager.viewingUser, thing));
             });
         });
     },
