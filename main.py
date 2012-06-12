@@ -18,6 +18,7 @@ from model import get_settings_struct_for_youtify_user_model
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
 from languages import get_languages
+from config import ON_PRODUCTION
 
 class MainHandler(webapp.RequestHandler):
 
@@ -50,8 +51,6 @@ class MainHandler(webapp.RequestHandler):
             my_followers_struct = get_followers_for_youtify_user_model(youtify_user_model)
             my_followings_struct = get_followings_for_youtify_user_model(youtify_user_model)
             settings_struct = get_settings_struct_for_youtify_user_model(youtify_user_model)
-
-        ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
         
         # Find videotag and generate open graph meta tags
         match = re.compile(r'tracks/youtube/(.*)').search(self.request.url)
