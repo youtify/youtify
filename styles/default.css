@@ -838,6 +838,9 @@ input, textarea, button {
 #right .profile .playlist-box .more:active {
     background: rgba(0, 124, 137, 0.4);
 }
+#right .profile .pane.profile-flattrs {
+    padding-top: 5px;
+}
 #right .profile .pane.profile-followings .user,
 #right .profile .pane.profile-followers .user {
     padding: 5px 5px 5px 0;
@@ -1538,8 +1541,6 @@ input, textarea, button {
 
 #right .activity {
     padding: 5px 0;
-    border-bottom: 1px solid #8B9594;
-    border-bottom: 1px dashed rgba(128, 128, 128, 0.5);
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 #right .activity:first-child {
