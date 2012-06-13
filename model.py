@@ -26,6 +26,7 @@ class YoutifyUser(search.SearchableModel):
     playlist_subscriptions = db.ListProperty(db.Key)
     nr_of_followers = db.IntegerProperty(default=0)
     nr_of_followings = db.IntegerProperty(default=0)
+    nr_of_flattrs = db.IntegerProperty(default=0)
     migrated_playlists = db.BooleanProperty(default=False)
 
     last_emailed = db.DateTimeProperty()
@@ -192,6 +193,7 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False):
         'nr_of_followers': youtify_user_model.nr_of_followers,
         'nr_of_followings': youtify_user_model.nr_of_followings,
         'nr_of_playlists': len(youtify_user_model.playlists) + len(youtify_user_model.playlist_subscriptions),
+        'nr_of_flattrs': youtify_user_model.nr_of_flattrs,
         'nickname': youtify_user_model.nickname,
         'firstName': youtify_user_model.first_name,
         'lastName': youtify_user_model.last_name,

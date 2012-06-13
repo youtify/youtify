@@ -79,6 +79,8 @@ var InfoPopup = {
                     } else if (data.hasOwnProperty('error_description')) {
                         alert(data.error_description);
                         decreaseCount();
+                    } else {
+                        EventSystem.callEventListeners('flattr_click_made', data);
                     }
                 });
             });

@@ -3,6 +3,7 @@ var EventSystem = {
     },
 
     listeners: {
+        'flattr_click_made': [],
         'playlists_loaded': [],
         'player_manager_initialized': [],
         'video_started_playing_successfully': [],

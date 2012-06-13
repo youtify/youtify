@@ -27,6 +27,9 @@ var UserManager = {
                 UserManager.loadCurrentUser();
                 history.pushState(null, null, UserManager.currentUser.getUrl());
             });
+            EventSystem.addEventListener('flattr_click_made', function(data) {
+                UserManager.currentUser.nrOfFlattrs += 1;
+            });
         }
 
         UserManager.$playlists = $('#right .profile .pane.profile-playlists');

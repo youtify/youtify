@@ -20,55 +20,32 @@ setTimeout(function() { location.href = '?page=$next'; }, 100);
 COMPLETE = """
 <html>
 <body>
-<h1 style="color:green">DONE</h1>
+<h1 style="color:green">DONE, $count iterations</h1>
 </body>
 </html>
 """
 
-class RelationsMigrationStepHandler(webapp.RequestHandler):
+class MigrationStepHandler(webapp.RequestHandler):
 
     def get(self):
         page = int(self.request.get('page', '0'))
         page_size = 30
-
-        ret = []
         count = 0
-        for m in YoutifyUser.all().fetch(page_size, page_size * page):
+
+        #### START MIGRATION CODE ####
+
+        for m in YoutifyUser.all().filter('flattr_access_token !=', None).fetch(page_size, page_size * page):
             count += 1
-            m.nr_of_followers = FollowRelation.all().filter('user2 =', m.key().id()).count()
-            m.nr_of_followings = FollowRelation.all().filter('user1 =', m.key().id()).count()
+            m.nr_of_flattrs = len([i for i in Activity.all().filter('owner =', m).filter('verb =', 'flattr').filter('type =', 'outgoing')])
             m.save()
+
+        #### END MIGRATION CODE ####
 
         self.response.headers['Content-Type'] = 'text/html'
         if (count < page_size):
-            self.response.out.write(COMPLETE)
-        else:
-            self.response.out.write(Template(TEMPLATE).substitute({
-                'progress': page_size * page,
-                'next': page + 1,
+            self.response.out.write(Template(COMPLETE).substitute({
+                'count': count,
             }))
-
-class ActivitiesMigrationStepHandler(webapp.RequestHandler):
-
-    def get(self):
-        page = int(self.request.get('page', '0'))
-        page_size = 30
-
-        ret = []
-        count = 0
-        for m in Activity.all().fetch(page_size, page_size * page):
-            count += 1
-
-            user = simplejson.loads(m.actor)
-            if str(user['id']) != str(m.owner.key().id()):
-                m.type = 'incoming'
-            else:
-                m.type = 'outgoing'
-            m.save()
-
-        self.response.headers['Content-Type'] = 'text/html'
-        if (count < page_size):
-            self.response.out.write(COMPLETE)
         else:
             self.response.out.write(Template(TEMPLATE).substitute({
                 'progress': page_size * page,
@@ -77,8 +54,7 @@ class ActivitiesMigrationStepHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/admin/migrations/relations', RelationsMigrationStepHandler),
-        ('/admin/migrations/activities', ActivitiesMigrationStepHandler),
+        ('/admin/migrations/nr_of_flattrs', MigrationStepHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

@@ -33,6 +33,8 @@ class ClickHandler(webapp.RequestHandler):
             thing_id = str(json['thing'].get('id'))
             thing_title = json['thing'].get('title')
             create_flattr_activity(user, thing_id, thing_title)
+            user.nr_of_flattrs += 1
+            user.save()
         else:
             logging.error('Error creating flattr click. Response: %s' % response.content)
 
@@ -62,6 +64,8 @@ class AutoSubmitHandler(webapp.RequestHandler):
             thing_id = str(json['thing'].get('id'))
             thing_title = json['thing'].get('title')
             create_flattr_activity(user, thing_id, thing_title)
+            user.nr_of_flattrs += 1
+            user.save()
         else:
             logging.error('Error creating flattr click. Response: %s' % response.content)
 
