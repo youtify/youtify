@@ -223,7 +223,7 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
 def get_url_for_youtify_user_model(youtify_user_model):
     if youtify_user_model.nickname:
         return 'http://www.youtify.com/' + youtify_user_model.nickname
-    return 'http://www.youtify.com/' + str(youtify_user_model.key().id())
+    return 'http://www.youtify.com/users/' + str(youtify_user_model.key().id())
 
 def get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=False):
     playlist_structs = []
