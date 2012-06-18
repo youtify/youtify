@@ -3,6 +3,7 @@ var EventSystem = {
     },
 
     listeners: {
+        'song_almost_done_playing': [],
         'flattr_click_made': [],
         'playlists_loaded': [],
         'player_manager_initialized': [],

@@ -1,4 +1,6 @@
 var Timeline = {
+    hasThrownAlmostDoneEvent: false,
+
     init: function() {
         $('#bottom .timeline').mousedown(function(event) {
             Timeline.manualUpdate(event);
@@ -33,6 +35,7 @@ var Timeline = {
         Timeline.manualUpdate(event);
     },
 	start: function() {
+        Timeline.hasThrownAlmostDoneEvent = false;
 		$('#bottom .timeline .knob').show();
         if (Timeline.updateHandle === null) {
             Timeline.updateHandle = setInterval(Timeline.update, 100);
@@ -66,6 +69,11 @@ var Timeline = {
         }
         var pos = player.getCurrentPlaybackTime(),
             len = player.getTotalPlaybackTime();
+
+        if (!Timeline.hasThrownAlmostDoneEvent && pos/len > 0.9) {
+            Timeline.hasThrownAlmostDoneEvent = true;
+            EventSystem.callEventListeners('song_almost_done_playing', null);
+        }
         
         if (pos && len) {
             $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
