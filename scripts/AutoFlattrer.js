@@ -35,9 +35,9 @@ var AutoFlattrer = {
 
         $.post(url, postParams, function(data) {
             if (data === null) {
-                alert("Error: response from Flattr was null");
+                console.log("Error: response from Flattr was null");
             } else if (data.hasOwnProperty('error_description')) {
-                alert(data.error_description);
+                console.log("Flattr error", data.error_description);
             } else {
                 EventSystem.callEventListeners('flattr_click_made', data);
             }
