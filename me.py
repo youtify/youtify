@@ -90,6 +90,7 @@ class SettingsHandler(webapp.RequestHandler):
         user = get_current_youtify_user_model()
         user.send_new_follower_email = self.request.get('send_new_follower_email') == 'true'
         user.send_new_subscriber_email = self.request.get('send_new_subscriber_email') == 'true'
+        user.flattr_automatically = self.request.get('flattr_automatically') == 'true'
         user.save()
         settings = get_settings_struct_for_youtify_user_model(user)
         self.response.out.write(simplejson.dumps(settings))

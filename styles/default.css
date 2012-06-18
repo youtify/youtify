@@ -1256,11 +1256,14 @@ input, textarea, button {
 #settings .connections .connection .title {
     padding-left: 20px;
 }
-#settings .connections .flattr {
+#settings .connections .flattr .account {
     background: url(/images/flattr_16.png) no-repeat center left;
 }
 #settings .connections .button {
     float: right;
+}
+#settings .connections .settings {
+    margin-top: 5px;
 }
 
 /** ABOUT POPUP

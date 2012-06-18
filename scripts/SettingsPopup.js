@@ -35,12 +35,27 @@ var SettingsPopup = {
         // FLATTR
 
         if (has_flattr_access_token) {
-            $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings .connections .flattr');
-            $('<a class="button disconnect translatable" href="/flattrdisconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .flattr');
+            $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings .connections .flattr .account');
+            $('<a class="button disconnect translatable" href="/flattrdisconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .flattr .account');
         } else {
-            $('<span class="title">Flattr</span>').appendTo('#settings .connections .flattr');
-            $('<a class="button connect translatable" href="/flattrconnect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .flattr');
+            $('<span class="title">Flattr</span>').appendTo('#settings .connections .flattr .account');
+            $('<a class="button connect translatable" href="/flattrconnect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .flattr .account');
+            $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('disabled', 'disabled');
         }
+
+        (function() {
+            var settings = new Settings();
+            if (settings.flattr_automatically) {
+                $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('checked', 'checked');
+            }
+        }());
+
+        $('#settings .connections .flattr .settings input[name=flattr_automatically]').change(function() {
+            var settings = new Settings();
+            settingsFromServer.flattr_automatically = this.checked;
+            settings.flattr_automatically = this.checked;
+            settings.save();
+        });
 
         // QUALITY
 

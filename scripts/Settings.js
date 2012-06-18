@@ -7,6 +7,7 @@ function Settings() {
 	this.announceTimeout = settings.announceTimeout || 3000;
     this.send_new_follower_email = settingsFromServer.send_new_follower_email;
     this.send_new_subscriber_email = settingsFromServer.send_new_subscriber_email;
+    this.flattr_automatically = settingsFromServer.flattr_automatically;
 
     this.save = function() {
         localStorage.settings = JSON.stringify({
@@ -19,6 +20,7 @@ function Settings() {
         LoadingBar.show();
 
         params = {
+             flattr_automatically: this.flattr_automatically,
              send_new_follower_email: this.send_new_follower_email,
              send_new_subscriber_email: this.send_new_subscriber_email
         };

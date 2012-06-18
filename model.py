@@ -16,6 +16,7 @@ class YoutifyUser(search.SearchableModel):
     flattr_access_token = db.StringProperty()
     flattr_user_name = db.StringProperty()
     flattr_scope = db.StringProperty()
+    flattr_automatically = db.BooleanProperty(default=False)
     youtube_username = db.StringProperty()
     nickname = db.StringProperty()
     nickname_lower = db.StringProperty()
@@ -284,6 +285,7 @@ def get_activities_structs(youtify_user_model, filter={}):
 
 def get_settings_struct_for_youtify_user_model(youtify_user_model):
     return {
+        'flattr_automatically': youtify_user_model.flattr_automatically,
         'send_new_follower_email': youtify_user_model.send_new_follower_email,
         'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email
     }
