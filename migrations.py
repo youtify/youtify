@@ -36,7 +36,7 @@ class MigrationStepHandler(webapp.RequestHandler):
 
         for m in YoutifyUser.all().filter('flattr_access_token !=', None).fetch(page_size, page_size * page):
             count += 1
-            m.nr_of_flattrs = len([i for i in Activity.all().filter('owner =', m).filter('verb =', 'flattr').filter('type =', 'outgoing')])
+            m.flattr_automatically = False
             m.save()
 
         #### END MIGRATION CODE ####
@@ -54,7 +54,7 @@ class MigrationStepHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/admin/migrations/nr_of_flattrs', MigrationStepHandler),
+        ('/admin/migrations/set_auto_flattr_to_false', MigrationStepHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

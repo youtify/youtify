@@ -16,7 +16,7 @@ class YoutifyUser(search.SearchableModel):
     flattr_access_token = db.StringProperty()
     flattr_user_name = db.StringProperty()
     flattr_scope = db.StringProperty()
-    flattr_automatically = db.BooleanProperty(default=False)
+    flattr_automatically = db.BooleanProperty(default=True)
     youtube_username = db.StringProperty()
     nickname = db.StringProperty()
     nickname_lower = db.StringProperty()
