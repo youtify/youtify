@@ -63,6 +63,7 @@
             var myFollowers = {{ myFollowers }};
             var myFollowings = {{ myFollowings }};
             var settingsFromServer = {{ settingsFromServer }};
+            var flattrStats = {{ flattrStats }};
 
             var playlistsFromServer = {{ playlistsFromServer }};
             var flattrTopList = {{ flattrTopList }};
@@ -239,7 +240,14 @@
                     <ul class="tabs">
                         <li class="flattr" rel=".flattr">Most Flattred</li>
                     </ul>
-                    <table class="flattr pane tracklist"></table>
+                    <div class="flattr pane">
+                        <div class="puff">
+                            <span class="stats"></span>
+                            <a class="button translatable" href="http://www.youtube.com/watch?v=9zrMlEEWBgY" target="_blank">Learn more</a>
+                        </div>
+                        <table class="tracklist">
+                        </table>
+                    </div>
                 </div>
                 
                 <div class="queue">

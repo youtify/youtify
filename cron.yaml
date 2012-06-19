@@ -7,6 +7,10 @@ cron:
   url: /cron/gather_stats
   schedule: every 24 hours
 
+- description: gather flattr stats
+  url: /cron/gather_flattr_stats
+  schedule: every 1 hours
+
 - description: generate flattr toplist
   url: /cron/generate_flattr_toplist
   schedule: every 2 hours

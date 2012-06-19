@@ -79,6 +79,10 @@ handlers:
   script: stats.py
   login: admin
 
+- url: /cron/gather_flattr_stats
+  script: stats.py
+  login: admin
+
 - url: /flattr_submit.*
   script: flattr_submit.py
 

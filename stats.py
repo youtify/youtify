@@ -4,11 +4,26 @@ from datetime import datetime
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
+from google.appengine.api import memcache
+from django.utils import simplejson
 from model import Stats
 from model import YoutifyUser
 from model import Playlist
 from model import Activity
 from model import FollowRelation
+
+def get_flattr_stats_json():
+    return memcache.get('flattr_stats')
+
+class FlattrStatsCronJobHandler(webapp.RequestHandler):
+
+    def get(self):
+        json = simplejson.dumps({
+            'nr_of_users': len([i for i in YoutifyUser.all().filter('flattr_access_token !=', None)]),
+            'nr_of_flattrs': len([i for i in Activity.all().filter('type =', 'outgoing').filter('verb =', 'flattr')]),
+        })
+        memcache.delete('flattr_stats')
+        memcache.add('flattr_stats', json, 3600*24)
 
 class StatsPageHandler(webapp.RequestHandler):
 
@@ -53,6 +68,7 @@ def main():
     application = webapp.WSGIApplication([
         ('/stats', StatsPageHandler),
         ('/cron/gather_stats', CronJobHandler),
+        ('/cron/gather_flattr_stats', FlattrStatsCronJobHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

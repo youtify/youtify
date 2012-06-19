@@ -42,6 +42,11 @@ $(document).ready(function() {
     UserManager.init(USER);
     TopMenu.init();
     URIManager.init();
+
+    $('#right .flattr .puff .stats').html(TranslationSystem.get('$nr_of_users people have made $nr_of_flattrs Flattr donations via Youtify.', {
+        $nr_of_users: '<strong>' + (flattrStats.nr_of_users || 0) + '</strong>',
+        $nr_of_flattrs: '<strong>' + (flattrStats.nr_of_flattrs || 0) + '</strong>'
+    }));
 });
 
 function onYouTubePlayerAPIReady() {

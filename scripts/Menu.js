@@ -144,7 +144,7 @@ function MenuItem(type) {
                 self.addTabs(['flattr-toplist']);
 
                 // Init Flattr Toplist
-                $pane = $('#right .pane.flattr');
+                $tracklist = $('#right .pane.flattr .tracklist');
                 $.each(flattrTopList, function (i, item) {
                     new Video({
                         videoId: item.videoId,
@@ -154,7 +154,7 @@ function MenuItem(type) {
                         flattrs: item.flattrs,
                         onPlayCallback: self.setAsPlaying,
                         duration: item.duration
-                    }).createListView().appendTo($pane);
+                    }).createListView().appendTo($tracklist);
                 });
 
                 break;
