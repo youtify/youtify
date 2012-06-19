@@ -544,7 +544,6 @@ input, textarea, button {
 #right .tracklist .video.selected .play,
 #right .tracklist .video.selected .title,
 #right .tracklist .video.selected .like,
-#right .tracklist .video.selected .flattr,
 #right .tracklist .video.selected .type,
 #right .tracklist .video.selected .views,
 #right .tracklist .video.selected .videoCountHint {
@@ -604,19 +603,11 @@ input, textarea, button {
     display: none;
 }
 
-#right tr.has-flattr .space:nth-child(4) {
-    display: table-cell;
-}
-
 #right .tracklist .like {
     width: 40px;
     font-size: 20px;
     cursor: pointer;
     color: rgba(0, 0, 0, 0.6);
-}
-
-#right .tracklist .flattr {
-    width: 100px;
 }
 
 #right .tracklist .like:hover {
@@ -1427,7 +1418,6 @@ input, textarea, button {
 }
 #video-info-popup .sections li.found .content {
     position: relative;
-    padding-right: 60px;
     padding-left: 55px;
 }
 #video-info-popup .sections img {
@@ -1435,37 +1425,6 @@ input, textarea, button {
     position: absolute;
     left: 0;
     top: 0;
-}
-#video-info-popup .sections .flattr {
-    position: absolute;
-    top: 28px;
-    right: 0;
-}
-#video-info-popup .sections .flattr .button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 4px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    border-radius: 2px;
-    color: #333;
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.28, rgb(217,217,217)),
-        color-stop(0.64, rgb(255,255,255))
-    );
-    background-image: -moz-linear-gradient(
-        center bottom,
-        rgb(217,217,217) 28%,
-        rgb(255,255,255) 64%
-    );
-    border-left-color: #999;
-    border-right-color: #999;
-    border-top-color: #999;
-    border-bottom-color: #888;
 }
 #video-info-popup .sections .button:active {
     background: #ccc;
@@ -1511,7 +1470,7 @@ input, textarea, button {
     margin-right: 0;
 }
 
-/** FLATTR
+/** MISC
  ****************************************************************************/
 
 #loading {
@@ -1529,17 +1488,6 @@ input, textarea, button {
     z-index: 25;
     border-radius: 10px;
     font-size: 16px;
-}
-
-#right .video .flattr {
-    line-height: 22px;
-}
-#right .video .flattr .button.loading {
-    color: #888;
-}
-#right .video .flattr .button .count {
-    margin-right: 5px;
-    font-weight: bold;
 }
 
 #right .activity {

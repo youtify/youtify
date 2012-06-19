@@ -4,86 +4,11 @@ var InfoPopup = {
         EventSystem.addEventListener('video_info_fetched', InfoPopup.loadVideo);
         EventSystem.addEventListener('uploader_info_fetched', InfoPopup.loadUploader);
         EventSystem.addEventListener('artist_twitter_account_found', InfoPopup.loadTwitter);
-        EventSystem.addEventListener('flattr_thing_for_twitter_account_found', InfoPopup.loadFlattrThingForTwitterAccount);
-        EventSystem.addEventListener('flattr_thing_for_track_found', InfoPopup.loadFlattrThingForTrack);
-        EventSystem.addEventListener('flattr_thing_for_uploader_found', InfoPopup.loadFlattrThingForUploader);
-    },
-
-    loadFlattrThingForTwitterAccount: function(args) {
-        var $twitter = $('#video-info-popup .sections .twitter');
-        $twitter.find('.flattr').append(InfoPopup.createFlattrButton(args));
-    },
-
-    loadFlattrThingForTrack: function(args) {
-        var $video = $('#video-info-popup .sections .video');
-        $video.find('.flattr').append(InfoPopup.createFlattrButton(args));
-    },
-
-    loadFlattrThingForUploader: function(args) {
-        var $uploader = $('#video-info-popup .sections .uploader');
-        $uploader.find('.flattr').append(InfoPopup.createFlattrButton(args));
     },
 
 	clearPopup: function(video) {
         $('#video-info-popup .sections li').removeClass('found');
         $('#video-info-popup .sections .content').text('Not found');
-        $('#video-info-popup .sections .flattr').html('');
-    },
-
-    createFlattrButton: function(args) {
-        return $('<span class="button"><span class="count">' + args.flattrs + '</span><span class="text">Flattr</span></span>')
-            .click(function() {
-                var $button = $(this);
-                var url;
-                var postParams;
-
-                if (!has_flattr_access_token) {
-                    new WhatIsFlattrDialog().show();
-                    return;
-                }
-
-                function increaseCount() {
-                    var $count = $button.find('.count');
-                    $count.text(String(Number($count.text()) + 1));
-                }
-                function decreaseCount() {
-                    var $count = $button.find('.count');
-                    $count.text(String(Number($count.text()) - 1));
-                }
-
-                if ($button.hasClass('loading')) {
-                    return;
-                }
-
-                $button.addClass('loading');
-
-                // Always update the count
-                increaseCount();
-
-                if (args.thingId) {
-                    url = '/flattrclick';
-                    postParams = {
-                        thing_id: args.thingId
-                    };
-                } else {
-                    url = '/flattrautosubmit';
-                    postParams = {
-                        url: args.sourceUrl
-                    };
-                }
-                $.post(url, postParams, function(data) {
-                    $button.removeClass('loading');
-                    if (data === null) {
-                        alert("Error: response from Flattr was null");
-                        decreaseCount();
-                    } else if (data.hasOwnProperty('error_description')) {
-                        alert(data.error_description);
-                        decreaseCount();
-                    } else {
-                        EventSystem.callEventListeners('flattr_click_made', data);
-                    }
-                });
-            });
     },
 
     createSection: function(args) {

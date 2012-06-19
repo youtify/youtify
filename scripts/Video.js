@@ -67,7 +67,6 @@ function Video(args) {
             $play = document.createElement('td'),
             $title = document.createElement('td'),
             $heart = document.createElement('td'),
-            $flattr = null,
             $type = document.createElement('td');
             
         
@@ -83,12 +82,6 @@ function Video(args) {
         $title.setAttribute('class', 'title');
         $fragment.appendChild($title);
         $fragment.appendChild($space.cloneNode(false));
-
-        if (this.flattrThingId) {
-            $flattr = document.createElement('td');
-            $flattr.setAttribute('class', 'flattr');
-            $fragment.appendChild( $($flattr).append(this.createFlattrButton())[0]);
-        }
         
         $heart.setAttribute('class', 'like');
         $heart.innerHTML = '&hearts;';
@@ -109,9 +102,6 @@ function Video(args) {
             .dblclick(function(event){self.play(event);})
             .data('model', this);
         
-        if (this.flattrThingId) {
-            this.listView.addClass('has-flattr');
-        }
         return this.listView;
     };
     
@@ -170,56 +160,6 @@ function Video(args) {
         }
     };
 
-    this.createFlattrButton = function() {
-        var self = this;
-        return $('<span class="button"><span class="count">' + (this.flattrs || 0) + '</span><span class="text">Flattr</span></span>')
-            .click(function() {
-                if (!has_flattr_access_token) {
-                    new WhatIsFlattrDialog().show();
-                    return;
-                }
-
-                var $button = $(this);
-                var url;
-                var postParams;
-
-                function increaseCount() {
-                    var $count = $button.find('.count');
-                    $count.text(String(Number($count.text()) + 1));
-                }
-                function decreaseCount() {
-                    var $count = $button.find('.count');
-                    $count.text(String(Number($count.text()) - 1));
-                }
-
-                if ($button.hasClass('loading')) {
-                    return;
-                }
-
-                $button.addClass('loading');
-
-                // Always update the count
-                increaseCount();
-
-                url = '/flattrclick';
-                postParams = {
-                    thing_id: self.flattrThingId
-                };
-                $.post(url, postParams, function(data) {
-                    $button.removeClass('loading');
-                    if (data === null) {
-                        alert("Error: response from Flattr was null");
-                        decreaseCount();
-                    } else if (data.hasOwnProperty('error_description')) {
-                        alert(data.error_description);
-                        decreaseCount();
-                    } else {
-                        EventSystem.callEventListeners('flattr_click_made', data);
-                    }
-                });
-            });
-    };
-    
     this.play = function(event) {
         $('#right .video').removeClass('playing');
         this.listView.addClass("playing");

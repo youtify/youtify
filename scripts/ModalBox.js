@@ -46,28 +46,6 @@ function ReloadDialog() {
 ReloadDialog.prototype = new ModalBox();
 ReloadDialog.prototype.constructor = ReloadDialog;
 
-/* FLATTR DIALOG
- ****************************************************************************/
-
-function WhatIsFlattrDialog() {
-    ModalBox.call(this);
-
-    this.setMessage(TranslationSystem.get('Use Flattr, a microdonation service, to support music artists.'));
-
-    this.canBeClosed = true;
-
-    this.addButton(TranslationSystem.get('Connect your Flattr account'), function(self) {
-        location.href = '/flattrconnect';
-    });
-
-    this.addButton(TranslationSystem.get('Cancel'), function(self) {
-        self.remove();
-    });
-}
-
-WhatIsFlattrDialog.prototype = new ModalBox();
-WhatIsFlattrDialog.prototype.constructor = WhatIsFlattrDialog;
-
 /* EDIT PROFILE DIALOG
  ****************************************************************************/
 
