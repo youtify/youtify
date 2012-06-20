@@ -43,11 +43,16 @@ $(document).ready(function() {
     TopMenu.init();
     URIManager.init();
 
+    updateFlattrPuffText();
+    EventSystem.addEventListener('language_changed', updateFlattrPuffText);
+});
+
+function updateFlattrPuffText() {
     $('#right .flattr .puff .stats').html(TranslationSystem.get('$nr_of_users people have made $nr_of_flattrs Flattr donations via Youtify.', {
         $nr_of_users: '<strong>' + (flattrStats.nr_of_users || 0) + '</strong>',
         $nr_of_flattrs: '<strong>' + (flattrStats.nr_of_flattrs || 0) + '</strong>'
     }));
-});
+}
 
 function onYouTubePlayerAPIReady() {
     youTubeApiReady = true;

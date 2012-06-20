@@ -72,9 +72,11 @@ var TranslationSystem = {
 
         if (autoDetectedLanguageByServer === code) {
             TranslationSystem.updateMarkup(autoDetectedTranslations);
+            EventSystem.callEventListeners('language_changed', code);
         } else {
             $.getJSON('/api/translations/' + code, function(data, textStatus) {
                 TranslationSystem.updateMarkup(data);
+                EventSystem.callEventListeners('language_changed', code);
             });
         }
 
