@@ -701,7 +701,7 @@ input, textarea, button {
 #right .profile .picture-container {
     width: 208px;
     display: block;
-    margin: 0 10px 0 0;
+    margin: 0 5px 0 0;
     display: inline-block;
     position: relative;
 }
@@ -1502,10 +1502,8 @@ input, textarea, button {
 }
 
 #right .pane.flattr .puff {
-    margin: 5px 0;
     padding: 5px 5px;
     text-align: center;
-    background-color: rgba(0, 124, 137, 0.1);
 }
 
 #right a.button {
