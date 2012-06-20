@@ -45,7 +45,7 @@ class CronJobHandler(webapp.RequestHandler):
         stats.nr_of_active_users = 0
         stats.nr_of_playlists = len([i for i in Playlist.all()])
         stats.nr_of_users_with_flattr_account = 0
-        stats.nr_of_flattrs = 0
+        stats.nr_of_flattrs = len([i for i in Activity.all().filter('type =', 'outgoing').filter('verb =', 'flattr')])
         stats.nr_of_playlist_subscriptions = 0
         stats.nr_of_follow_relations = len([i for i in FollowRelation.all()])
 
@@ -62,8 +62,6 @@ class CronJobHandler(webapp.RequestHandler):
                 delta = datetime.now() - user.last_login
                 if delta.seconds < 3600 * 24 * 7:
                     stats.nr_of_active_users += 1
-
-            stats.nr_of_flattrs += len([i for i in Activity.all().filter('owner =', user).filter('verb =', 'flattr')])
 
         stats.put()
 
