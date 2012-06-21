@@ -13,7 +13,10 @@ from model import Activity
 from model import FollowRelation
 
 def get_flattr_stats_json():
-    return memcache.get('flattr_stats')
+    json = memcache.get('flattr_stats')
+    if json is None:
+        json = '{nr_of_users: 0, nr_of_flattrs: 0}'
+    return json
 
 class FlattrStatsCronJobHandler(webapp.RequestHandler):
 
