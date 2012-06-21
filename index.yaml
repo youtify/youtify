@@ -15,3 +15,11 @@ indexes:
   - name: owner
   - name: timestamp
     direction: desc
+
+- kind: Activity
+  properties:
+  - name: owner
+  - name: type
+  - name: verb
+  - name: timestamp
+    direction: desc
