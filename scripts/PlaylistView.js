@@ -1,5 +1,5 @@
 var PlaylistView = {
-    createSmallPlaylistView: function(playlist, index, user) {
+    createSmallPlaylistView: function(playlist, index) {
         var i = 0,
             $box = $('<div class="playlist-box"/>'),
             $title = $('<span class="title"/>'),
@@ -59,12 +59,12 @@ var PlaylistView = {
         }
         $box.append($title);
 
-        if (logged_in && user.id !== UserManager.currentUser.id && playlist.owner.id !== UserManager.currentUser.id) {
+        if (logged_in && playlist.owner.id !== UserManager.currentUser.id) {
             $box.append($subscribeButton);
             $box.append($unsubscribeButton);
         }
 
-        if (playlist.remoteId !== null && user.id === my_user_id && my_user_id === playlist.owner.id) {
+        if (playlist.remoteId !== null && my_user_id === playlist.owner.id) {
             var $privacyContainer = $('<div class="privacy"/>'),
                 $privacy = $('<input type="checkbox"/>'),
                 $privacyLabel = $('<label class="translatable"/>').text(TranslationSystem.get('Public'));
