@@ -190,8 +190,6 @@ function MenuItem(type) {
         self.leftView.mousedown(self.select);
         self.leftView.data('model', self);
         self.rightView.data('model', self);
-
-        $('#left .toplist').mousedown();
     };
     self.findTab = function(type) {
         var i;
@@ -211,6 +209,8 @@ function MenuItem(type) {
             history.pushState(null, null, UserManager.currentUser.getUrl());
             UserManager.doFakeProfileMenuClick();
             UserManager.loadCurrentUser();
+        } else if (self.type === 'toplist') {
+            history.pushState(null, null, '/');
         } else if (self.type === 'news-feed') {
             self.rightView.html('');
             LoadingBar.show();

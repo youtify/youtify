@@ -48,6 +48,12 @@ var URIManager = {
                 }
             ],
             [
+                '/toplist/playlists',
+                function(matches) {
+                    Toplist.popularPlaylistsTab.select();
+                }
+            ],
+            [
                 '/playlists/(.*)',
                 function(matches) {
                     loadPlaylist(matches[1]);

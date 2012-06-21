@@ -94,6 +94,8 @@
                 Search.q = '';
                 $('#top .search input').keyup();
             }
+        } else if (self.type === 'flattr-toplist') {
+            history.pushState(null, null, '/');
         } else if (self.type === 'playlists-toplist') {
             Toplist.loadPopularPlaylists();
         } else if (self.type === 'profile-followers') {
