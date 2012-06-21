@@ -1538,3 +1538,11 @@ input, textarea, button {
     vertical-align: middle;
     margin-right: 5px;
 }
+
+.popup .user.small {
+    display: block;
+    margin-bottom: 5px;
+}
+.popup .user.small:last-child {
+    margin-bottom: 0;
+}

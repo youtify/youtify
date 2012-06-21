@@ -107,10 +107,14 @@ var PlaylistView = {
             if (playlist.followers.length) {
                 $playlistBar.find('.subscribers')
                     .text(TranslationSystem.get('Subscribers ($nr)', {$nr: playlist.followers.length}))
+                    .unbind('click')
                     .click(function() {
                         var $popup = $('#playlist-subscribers-popup').html('');
                         $.each(playlist.followers, function(i, user) {
                             $popup.append(new User(user).getSmallView());
+                        });
+                        $popup.find('.user').click(function() {
+                            $('#arrow-popup-blocker').click(); // hide arrow popup when clicking user in popup
                         });
                         $(this).arrowPopup('#playlist-subscribers-popup');
                     })
