@@ -661,6 +661,7 @@ input, textarea, button {
 }
 #right .info .queue,
 #right .info .title,
+#right .info .subscribers,
 #right .info .user {
     display: inline-block;
     font-size: 13px;
@@ -681,6 +682,11 @@ input, textarea, button {
 }
 #right .info .button {
     float: right;
+}
+#right .info .subscribers {
+    float: right;
+    cursor: pointer;
+    line-height: 26px;
 }
 #right .info .unsubscribe, 
 #right .info .subscribe 
@@ -1177,9 +1183,11 @@ input, textarea, button {
 	box-shadow: 0px 0px 20px #888;
 	border-radius: 10px;
 }
-.popup a {
+.popup a,
+.popup .link {
     color: rgb(0, 124, 137);
     text-decoration: none;
+    cursor: pointer;
 }
 .popup a:hover {
     text-decoration: underline;

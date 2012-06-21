@@ -99,9 +99,23 @@ var PlaylistView = {
         $playlistBar.find('.sync').hide().unbind('click');
         $playlistBar.find('.subscribe').hide().unbind('click');
         $playlistBar.find('.unsubscribe').hide().unbind('click');
+        $playlistBar.find('.followers').hide().unbind('click');
 
         if(playlist.owner) {
             $playlistBar.find('.user').replaceWith(playlist.owner.getSmallView()).show();
+
+            if (playlist.followers.length) {
+                $playlistBar.find('.subscribers')
+                    .text(TranslationSystem.get('Subscribers ($nr)', {$nr: playlist.followers.length}))
+                    .click(function() {
+                        var $popup = $('#playlist-subscribers-popup').html('');
+                        $.each(playlist.followers, function(i, user) {
+                            $popup.append(new User(user).getSmallView());
+                        });
+                        $(this).arrowPopup('#playlist-subscribers-popup');
+                    })
+                    .show();
+            }
 
             /* Show subscription button */
             if(logged_in) {
