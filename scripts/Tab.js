@@ -16,6 +16,10 @@
                 self.view = $('#right .toplists .tabs .flattr');
                 self.paneView = $('#right .toplists .pane.flattr');
                 break;
+            case 'playlists-toplist':
+                self.view = $('#right .toplists .tabs .playlists');
+                self.paneView = $('#right .toplists .pane.playlists');
+                break;
             case 'queue':
                 self.view = $('#right .queue .info .queue');
                 self.paneView = $('#right .queue .pane.queue');
@@ -90,6 +94,8 @@
                 Search.q = '';
                 $('#top .search input').keyup();
             }
+        } else if (self.type === 'playlists-toplist') {
+            Toplist.loadPopularPlaylists();
         } else if (self.type === 'profile-followers') {
             UserManager.loadFollowers();
         } else  if (self.type === 'profile-followings') {

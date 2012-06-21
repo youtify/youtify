@@ -75,6 +75,10 @@ handlers:
   script: flattr_toplist.py
   login: admin
 
+- url: /cron/generate_playlists_toplist.*
+  script: playlists_toplist.py
+  login: admin
+
 - url: /cron/gather_stats
   script: stats.py
   login: admin
@@ -94,6 +98,9 @@ handlers:
 
 - url: /api/favorites.*
   script: favorites.py
+
+- url: /api/toplists/playlists
+  script: playlists_toplist.py
 
 - url: /cron/store_pings
   script: ping.py

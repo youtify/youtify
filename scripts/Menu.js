@@ -141,7 +141,7 @@ function MenuItem(type) {
             case 'toplist':
                 self.leftView = $('#left .menu .toplist');
                 self.rightView = $('#right .toplists');
-                self.addTabs(['flattr-toplist']);
+                self.addTabs(['flattr-toplist', 'playlists-toplist']);
 
                 // Init Flattr Toplist
                 $tracklist = $('#right .pane.flattr .tracklist');

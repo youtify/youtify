@@ -41,6 +41,7 @@ $(document).ready(function() {
     BottomPanel.init();
     UserManager.init(USER);
     TopMenu.init();
+    Toplist.init();
     URIManager.init();
 
     updateFlattrPuffText();

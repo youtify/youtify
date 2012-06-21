@@ -778,63 +778,6 @@ input, textarea, button {
 .modalbox.edit-profile textarea {
     height: 90px;
 }
-#right .profile .playlist-box {
-    width: 300px;
-    display: block;
-    margin: 10px 10px 0 0;
-    float: left;
-    min-height: 270px;
-}
-#right .profile .playlist-box > .title .link {
-    overflow: hidden;
-    font-size: 14px;
-    font-weight: bold;
-    max-width: 226px;
-    cursor: pointer;
-    line-height: 26px;
-}
-#right .profile .playlist-box > .title .nr {
-    line-height: 26px;
-}
-#right .profile .playlist-box .privacy {
-    display: inline;
-    max-width: 70px;
-    float: right;
-    line-height: 26px;
-}
-#right .profile .playlist-box .privacy input {
-    margin-right: 5px;
-}
-#right .profile .playlist-box .privacy label {
-}
-#right .profile .playlist-box .button {
-    float: right;
-    margin: 0 0 5px 0;
-}
-#right .profile .playlist-box .tracklist-container {
-    clear: both;
-    overflow: hidden;
-    height: 200px;
-    -moz-transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-#right .profile .playlist-box .more {
-    display: block;
-    height: 36px;
-    padding: 2px;
-    text-align: center;
-    font-size: 18px;
-    background: rgba(0, 124, 137, 0.2);
-    cursor: pointer;
-    line-height: 36px;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
-}
-#right .profile .playlist-box .more:active {
-    background: rgba(0, 124, 137, 0.4);
-}
 #right .profile .pane.profile-flattrs {
     padding-top: 5px;
 }
@@ -854,6 +797,67 @@ input, textarea, button {
 }
 #right .profile .tabs {
     margin-top: 10px;
+}
+
+/** SMALL PLAYLIST VIEW
+ ****************************************************************************/
+
+#right .playlist-box {
+    width: 300px;
+    display: block;
+    margin: 10px 10px 0 0;
+    float: left;
+    min-height: 270px;
+}
+#right .playlist-box > .title .link {
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: bold;
+    max-width: 226px;
+    cursor: pointer;
+    line-height: 26px;
+}
+#right .playlist-box > .title .nr {
+    line-height: 26px;
+}
+#right .playlist-box .privacy {
+    display: inline;
+    max-width: 70px;
+    float: right;
+    line-height: 26px;
+}
+#right .playlist-box .privacy input {
+    margin-right: 5px;
+}
+#right .playlist-box .privacy label {
+}
+#right .playlist-box .button {
+    float: right;
+    margin: 0 0 5px 0;
+}
+#right .playlist-box .tracklist-container {
+    clear: both;
+    overflow: hidden;
+    height: 200px;
+    -moz-transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+#right .playlist-box .more {
+    display: block;
+    height: 36px;
+    padding: 2px;
+    text-align: center;
+    font-size: 18px;
+    background: rgba(0, 124, 137, 0.2);
+    cursor: pointer;
+    line-height: 36px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
+}
+#right .playlist-box .more:active {
+    background: rgba(0, 124, 137, 0.4);
 }
 
 /** BOTTOM
