@@ -1,6 +1,7 @@
 import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
+from google.appengine.ext import db
 from django.utils import simplejson
 from activities import create_subscribe_activity
 from model import get_current_youtify_user_model
@@ -9,6 +10,20 @@ from model import get_playlist_structs_by_id
 from model import get_youtify_user_struct
 from model import Playlist
 from mail import send_new_subscriber_email
+
+class PlaylistFollowersHandler(webapp.RequestHandler):
+    
+    def get(self, playlist_id):
+        """Gets the list of users that follow a playlist"""
+        playlist_model = Playlist.get_by_id(int(playlist_id))
+        json = []
+
+        for key in playlist_model.followers:
+            youtify_user_model = db.get(key)
+            json.append(get_youtify_user_struct(youtify_user_model))
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
 
 class FollowPlaylist(webapp.RequestHandler):
     
@@ -151,6 +166,7 @@ class PlaylistsHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
+        ('/api/playlists/(.*)/followers', PlaylistFollowersHandler),
         ('/api/playlists/follow/.*', FollowPlaylist),
         ('/api/playlists/.*', SpecificPlaylistHandler),
         ('/api/playlists', PlaylistsHandler),
