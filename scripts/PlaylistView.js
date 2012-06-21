@@ -59,10 +59,7 @@ var PlaylistView = {
         }
         $box.append($title);
 
-        if (logged_in && playlist.owner.id !== UserManager.currentUser.id) {
-            $box.append($subscribeButton);
-            $box.append($unsubscribeButton);
-        }
+        playlist.owner.getSmallView().appendTo($box);
 
         if (playlist.remoteId !== null && my_user_id === playlist.owner.id) {
             var $privacyContainer = $('<div class="privacy"/>'),
@@ -80,8 +77,14 @@ var PlaylistView = {
                 .append($privacyLabel)
                 .appendTo($box);
         }
+
         $tracklistContainer.append($tracklist);
         $box.append($tracklistContainer);
+
+        if (logged_in && playlist.owner.id !== UserManager.currentUser.id) {
+            $box.append($subscribeButton);
+            $box.append($unsubscribeButton);
+        }
 
         return $box;
     },

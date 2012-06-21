@@ -808,6 +808,10 @@ input, textarea, button {
     margin: 10px 10px 0 0;
     float: left;
     min-height: 270px;
+    text-align: center;
+}
+#right .playlist-box > .title .link {
+    float: left;
 }
 #right .playlist-box > .title .link {
     overflow: hidden;
@@ -819,6 +823,8 @@ input, textarea, button {
 }
 #right .playlist-box > .title .nr {
     line-height: 26px;
+    float: left;
+    margin-left: 5px;
 }
 #right .playlist-box .privacy {
     display: inline;
@@ -832,32 +838,22 @@ input, textarea, button {
 #right .playlist-box .privacy label {
 }
 #right .playlist-box .button {
-    float: right;
+    text-align: center;
     margin: 0 0 5px 0;
+}
+#right .playlist-box .user {
+    float: right;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+#right .playlist-box .user .name {
+    display: none;
 }
 #right .playlist-box .tracklist-container {
     clear: both;
     overflow: hidden;
-    height: 200px;
-    -moz-transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-#right .playlist-box .more {
-    display: block;
-    height: 36px;
-    padding: 2px;
-    text-align: center;
-    font-size: 18px;
-    background: rgba(0, 124, 137, 0.2);
-    cursor: pointer;
-    line-height: 36px;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
-}
-#right .playlist-box .more:active {
-    background: rgba(0, 124, 137, 0.4);
+    max-height: 200px;
+    margin-bottom: 5px;
 }
 
 /** BOTTOM
