@@ -17,6 +17,9 @@ function loadPlaylist(playlistId) {
                 PlaylistView.loadPlaylistView(playlist);
                 playlistManager.selectPlaylistByRemoteId(data.remoteId);
             },
+            403: function(data) {
+                alert("Looks like this playlist is private");
+            },
             404: function(data) {
                 alert("No such playlist found");
             }

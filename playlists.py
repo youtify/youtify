@@ -81,7 +81,12 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
     def get(self):
         """Get playlist"""
         playlist_id = self.request.path.split('/')[-1]
-        playlist_struct = get_playlist_structs_by_id(playlist_id)
+        playlist_model = Playlist.get_by_id(int(playlist_id))
+        playlist_struct = get_playlist_struct_from_playlist_model(playlist_model)
+
+        if playlist_model.private and playlist_model.owner.key() != get_current_youtify_user_model().key():
+            self.error(403)
+            return
 
         if playlist_struct:
             self.response.headers['Content-Type'] = 'application/json'
