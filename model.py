@@ -237,7 +237,7 @@ def get_playlist_structs_for_youtify_user_model(youtify_user_model, include_priv
         if playlist_model is not None:
             playlist_structs.append(get_playlist_struct_from_playlist_model(playlist_model))
         else:
-            logging.error('User %s subscribes to deleted playlist %s' % (user['id'], key))
+            logging.error('User %s subscribes to deleted playlist' % (youtify_user_model.key().id()))
 
     return playlist_structs
 
