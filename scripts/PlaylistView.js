@@ -118,8 +118,6 @@ var PlaylistView = {
         $playlistBar.find('.followers').hide().unbind('click');
 
         if(playlist.owner) {
-            $playlistBar.find('.user').replaceWith(playlist.owner.getSmallView()).show();
-
             if (playlist.followers.length) {
                 $playlistBar.find('.subscribers')
                     .text(TranslationSystem.get('Subscribers ($nr)', {$nr: playlist.followers.length}))
@@ -132,6 +130,9 @@ var PlaylistView = {
 
             /* Show subscription button */
             if(logged_in) {
+                if (playlist.owner.id !== UserManager.currentUser.id) {
+                    $playlistBar.find('.user').replaceWith(playlist.owner.getSmallView()).show();
+                }
                 if(playlist.isSubscription) {
                     $playlistBar.find('.unsubscribe').show().click(function () {
                         playlist.unsync(function () {
