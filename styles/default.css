@@ -899,7 +899,7 @@ input, textarea, button {
     font-family: 'EntypoRegular';
     position: absolute;
     top: 12px;
-    margin-left: -25px;
+    margin-left: -20px;
     line-height: 28px;
 }
 #right .playlist-box .privacy,
