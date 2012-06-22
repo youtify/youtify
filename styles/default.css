@@ -900,8 +900,6 @@ input, textarea, button {
     margin-left: -16px;
     line-height: 26px;
 }
-#right .playlist-box .subscribe:before,
-#right .playlist-box .unsubscribe:before,
 #right .playlist-box > .header .title .subscribers:before {
     content: 'M';
     font-size: 36px;
