@@ -378,11 +378,17 @@ input, textarea, button {
 .logged-in #left .menu .playlists li.remote {
     opacity: 1;
 }
+#left .menu .playlists li.subscription {
+    position: relative;
+    padding-right: 20px;
+}
 #left .menu .playlists li.subscription .owner {
     width: 16px;
     height: 16px;
-    float: right;
     border-radius: 16px;
+    position: absolute;
+    right: 5px;
+    top: 9px;
 }
 #left .menu .playlists .new:before {
     content: '+';
