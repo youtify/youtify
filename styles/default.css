@@ -16,6 +16,17 @@ body:after {
     display: none;
 }
 
+@font-face {
+    font-family: 'EntypoRegular';
+    src: url('/styles/entypo/entypo-webfont.eot');
+    src: url('/styles/entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/entypo/entypo-webfont.woff') format('woff'),
+         url('/styles/entypo/entypo-webfont.ttf') format('truetype'),
+         url('/styles/entypo/entypo-webfont.svg#EntypoRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* RESET
 *******************************/
 
@@ -810,41 +821,99 @@ input, textarea, button {
     min-height: 270px;
     text-align: center;
 }
-#right .playlist-box > .title .link {
-    float: left;
-}
-#right .playlist-box > .title .link {
+#right .playlist-box > .header {
+    width: 300px;
+    height: 40px;
+    display: block;
     overflow: hidden;
+    margin-bottom: 3px;
+}
+#right .playlist-box > .header .user {
+    float: right;
+    margin-left: 3px;
+}
+#right .playlist-box > .header .user img {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+}
+#right .playlist-box > .header .title {
+    display: block;
+    float: left;
+    width: 257px;
+    max-width: 257px;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+}
+#right .playlist-box > .header .title .link {
     font-size: 14px;
     font-weight: bold;
-    max-width: 226px;
     cursor: pointer;
+    display: block;
+    text-align: left;
+    max-height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+}
+#right .playlist-box > .header .title .nr,
+#right .playlist-box > .header .title .subscribers {
+    text-align: left;
+    margin-right: 20px;
+    margin-left: 20px;
+    color: #444;
+}
+#right .playlist-box > .header .title .nr:before {
+    content: 'i';
+    font-size: 39px;
+    font-family: 'EntypoRegular';
+    position: absolute;
+    top: 12px;
+    margin-left: -20px;
     line-height: 26px;
 }
-#right .playlist-box > .title .nr {
-    line-height: 26px;
-    float: left;
-    margin-left: 5px;
+#right .playlist-box .subscribe:before,
+#right .playlist-box .unsubscribe:before,
+#right .playlist-box > .header .title .subscribers:before {
+    content: 'M';
+    font-size: 36px;
+    font-family: 'EntypoRegular';
+    position: absolute;
+    top: 12px;
+    margin-left: -25px;
+    line-height: 28px;
 }
-#right .playlist-box .privacy {
-    display: inline;
-    max-width: 70px;
-    float: right;
-    line-height: 26px;
+
+#right .playlist-box .public:before {
+    content: 'V';
+    font-size: 36px;
+    font-family: 'EntypoRegular';
+    position: absolute;
+    top: 12px;
+    margin-left: -20px;
+    line-height: 28px;
 }
-#right .playlist-box .privacy input {
+#right .playlist-box .private:before {
+    content: 'U';
+    font-size: 36px;
+    font-family: 'EntypoRegular';
+    position: absolute;
+    top: 12px;
+    margin-left: -25px;
+    line-height: 28px;
+}
+#right .playlist-box .privacy,
+#right .playlist-box .subscribe,
+#right .playlist-box .unsubscribe {
     margin-right: 5px;
-}
-#right .playlist-box .privacy label {
-}
-#right .playlist-box .button {
-    text-align: center;
-    margin: 0 0 5px 0;
-}
-#right .playlist-box .user {
     float: right;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    cursor: pointer;
+    color: #444;
+}
+#right .playlist-box .privacy:hover,
+#right .playlist-box .subscribe:hover,
+#right .playlist-box .unsubscribe:hover {
+    color: #000;
 }
 #right .playlist-box .user .name {
     display: none;

@@ -2,16 +2,16 @@ var PlaylistView = {
     createSmallPlaylistView: function(playlist, index) {
         var i = 0,
             $box = $('<div class="playlist-box"/>'),
+            $header = $('<div class="header"/>'),
             $title = $('<span class="title"/>'),
-            $subscribeButton = $('<button class="button subscribe"></button>').text('Subscribe'),
-            $unsubscribeButton = $('<button class="button unsubscribe"></button>').text('Unsubscribe'),
+            $titleLink = $('<span class="link"/>'),
+            $subscribeButton = $('<span class="subscribe"/>').text('Subscribe'),
+            $unsubscribeButton = $('<span class="unsubscribe"/>').text('Unsubscribe'),
             $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
             $tracklist = $('<table class="tracklist"/>');
 
-        /* Title click */
-        $title.append($('<span class="link"></span>').text(playlist.title));
-        $title.append($('<span class="nr"></span>').text(' (' + playlist.videos.length + ')'));
-        $title.click(function() {
+        /* Title */
+        $titleLink.text(playlist.title).click(function() {
             if (playlist.playlistDOMHandle === null) {
                 playlist.createViews();
             }
@@ -23,26 +23,36 @@ var PlaylistView = {
             }
 
             PlaylistView.loadPlaylistView(playlist);
+        }).appendTo($title);
+        
+        /* Stats */
+        $title.append($('<span class="nr"/>').text(playlist.videos.length));
+        if (playlist.remoteId !== null && !playlist.isPrivate) {
+            $title.append($('<span class="subscribers"/>').text(playlist.followers.length));
+        }
+        
+        /* Subscribe/Unsubscribe */
+        $subscribeButton.click(function() {
+            playlist.subscribe();
+            $(this).hide();
+            $(this).next().show();
         });
-
+        $unsubscribeButton.click(function() {
+            playlistManager.deletePlaylist(index); // delete unsubscribes
+            $(this).hide();
+            $(this).prev().show();
+        });
+        if (logged_in && playlist.owner && playlist.owner.id !== UserManager.currentUser.id) {
+            $title.append($subscribeButton);
+            $title.append($unsubscribeButton);
+        }
         if (playlist.isSubscription) {
             $subscribeButton.hide();
         } else {
             $unsubscribeButton.hide();
         }
 
-        $subscribeButton.click(function() {
-            playlist.subscribe();
-            $(this).hide();
-            $(this).next().show();
-        });
-
-        $unsubscribeButton.click(function() {
-            playlistManager.deletePlaylist(index); // delete unsubscribes
-            $(this).hide();
-            $(this).prev().show();
-        });
-
+        /* Playlist grid */
         for (i = 0; i < Math.min(playlist.videos.length, 5); i += 1) {
             if (playlist.videos[i]) {
                 var video = new Video({
@@ -57,34 +67,43 @@ var PlaylistView = {
                     .appendTo($tracklist);
             }
         }
-        $box.append($title);
-
-        playlist.owner.getSmallView().appendTo($box);
-
+        
+        if (playlist.owner) {
+            playlist.owner.getSmallView().appendTo($header);
+        }
+        
+        /* Privacy checkbox*/
         if (playlist.remoteId !== null && my_user_id === playlist.owner.id) {
-            var $privacyContainer = $('<div class="privacy"/>'),
-                $privacy = $('<input type="checkbox"/>'),
-                $privacyLabel = $('<label class="translatable"/>').text(TranslationSystem.get('Public'));
-            $privacy.attr('checked', !playlist.isPrivate);
-            $privacy.change(function() {
-                /* Reversed */
-                playlist.isPrivate = !$privacy.is(':checked');
+            var $privacyContainer = $('<span class="privacy translatable"/>')
+            if (playlist.isPrivate) {
+                $privacyContainer.addClass('private');
+                $privacyContainer.text(TranslationSystem.get('Private'));
+            } else {
+                $privacyContainer.addClass('public');
+                $privacyContainer.text(TranslationSystem.get('Public'));
+            }
+            $privacyContainer.click(function() {
+                playlist.isPrivate = !playlist.isPrivate;
+                if (playlist.isPrivate) {
+                    $privacyContainer.removeClass('public');
+                    $privacyContainer.addClass('private');
+                    $privacyContainer.text(TranslationSystem.get('Private'));
+                } else {
+                    $privacyContainer.removeClass('private');
+                    $privacyContainer.addClass('public');
+                    $privacyContainer.text(TranslationSystem.get('Public'));
+                }
                 playlist.synced = false;
                 playlist.sync();
             });
-            $privacyContainer
-                .append($privacy)
-                .append($privacyLabel)
-                .appendTo($box);
+            $privacyContainer.appendTo($title);
         }
-
+        
+        /* Append */
+        $header.append($title);
+        $box.append($header);
         $tracklistContainer.append($tracklist);
         $box.append($tracklistContainer);
-
-        if (logged_in && playlist.owner.id !== UserManager.currentUser.id) {
-            $box.append($subscribeButton);
-            $box.append($unsubscribeButton);
-        }
 
         return $box;
     },

@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <link href='stylesheet.css' rel='stylesheet' type='text/css'>
+        <style>
+            body { font-size: 24px; color: #666; font-family: arial, verdana, sans-serif; }
+            .pair { line-height: 60px; padding: 10px; }
+            .entypo { font-size: 48px; font-family: EntypoRegular; color: black; }
+            .pair:hover, .pair:hover .entypo { border-radius: 15px; background: black; color: white; }
+        </style>
+    </head>
+    <body>
+        <div id="out"></div>
+        <script>
+            var out = document.getElementById('out');
+            var text = '';
+            for (var i = 33; i < 252; i++) {
+                if (i >= 127 && i <= 168)
+                    continue;
+                text += '<span class="pair ' + i + '">' + String.fromCharCode(i) + ' <span class="entypo">' + String.fromCharCode(i) + '</span></span> ';
+            }
+            out.innerHTML = text;
+        </script>
+    </body>
+</html>
