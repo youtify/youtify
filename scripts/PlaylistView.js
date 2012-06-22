@@ -74,29 +74,7 @@ var PlaylistView = {
         
         /* Privacy checkbox*/
         if (playlist.remoteId !== null && my_user_id === playlist.owner.id) {
-            var $privacyContainer = $('<span class="privacy translatable"/>')
-            if (playlist.isPrivate) {
-                $privacyContainer.addClass('private');
-                $privacyContainer.text(TranslationSystem.get('Private'));
-            } else {
-                $privacyContainer.addClass('public');
-                $privacyContainer.text(TranslationSystem.get('Public'));
-            }
-            $privacyContainer.click(function() {
-                playlist.isPrivate = !playlist.isPrivate;
-                if (playlist.isPrivate) {
-                    $privacyContainer.removeClass('public');
-                    $privacyContainer.addClass('private');
-                    $privacyContainer.text(TranslationSystem.get('Private'));
-                } else {
-                    $privacyContainer.removeClass('private');
-                    $privacyContainer.addClass('public');
-                    $privacyContainer.text(TranslationSystem.get('Public'));
-                }
-                playlist.synced = false;
-                playlist.sync();
-            });
-            $privacyContainer.appendTo($title);
+            PlaylistView.createPrivacyToggleButton(playlist).appendTo($title);
         }
         
         /* Append */
@@ -159,17 +137,39 @@ var PlaylistView = {
                         });
                     }).show();
                 } else {
-                    $playlistBar.find('.privacy').show();
-                    $privacy.attr('checked', !playlist.isPrivate);
-                    $privacy.change(function () {
-                        /* Reversed */
-                        playlist.isPrivate = !$privacy.is(':checked');
-                        playlist.synced = false;
-                        playlist.sync();
-                    });
+                    $playlistBar.find('.privacy').replaceWith(PlaylistView.createPrivacyToggleButton(playlist));
                 }
             }
         }
+    },
+
+    createPrivacyToggleButton: function(playlist) {
+        var $privacyContainer = $('<span class="privacy translatable"/>');
+        if (playlist.isPrivate) {
+            $privacyContainer.addClass('private');
+            $privacyContainer.text(TranslationSystem.get('Private'));
+        } else {
+            $privacyContainer.addClass('public');
+            $privacyContainer.text(TranslationSystem.get('Public'));
+        }
+        $privacyContainer.click(function() {
+            playlist.isPrivate = !playlist.isPrivate;
+            if (playlist.isPrivate) {
+                $privacyContainer.removeClass('public');
+                $privacyContainer.addClass('private');
+                $privacyContainer.text(TranslationSystem.get('Private'));
+            } else {
+                $privacyContainer.removeClass('private');
+                $privacyContainer.addClass('public');
+                $privacyContainer.text(TranslationSystem.get('Public'));
+            }
+            playlist.synced = false;
+            LoadingBar.show();
+            playlist.sync(function() {
+                LoadingBar.hide();
+            });
+        });
+        return $privacyContainer;
     },
 
     loadPlaylistView: function (playlist) {

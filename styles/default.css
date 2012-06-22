@@ -706,13 +706,31 @@ input, textarea, button {
     margin-bottom: 5px;
 }
 #right .info .privacy {
+    position: relative;
+    cursor: pointer;
     display: inline;
     float: right;
     line-height: 26px;
+    margin-left: 20px;
     padding: 0 0 0 10px;
 }
-#right .info .privacy input {
-    margin-right: 5px;
+#right .info .public:before {
+    content: 'V';
+    font-size: 36px;
+    font-family: 'EntypoRegular';
+    position: absolute;
+    top: -5px;
+    margin-left: -20px;
+    line-height: 28px;
+}
+#right .info .private:before {
+    content: 'U';
+    font-size: 36px;
+    font-family: 'EntypoRegular';
+    position: absolute;
+    top: -5px;
+    margin-left: -20px;
+    line-height: 28px;
 }
 
 #right .profile .picture-container {
