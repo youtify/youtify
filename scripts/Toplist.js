@@ -16,7 +16,7 @@ var Toplist = {
             $.each(playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
                 if (playlist.videos.length) {
-                    self.popularPlaylistsTab.paneView.append(PlaylistView.createSmallPlaylistView(playlist, index, UserManager.viewingUser));
+                    self.popularPlaylistsTab.paneView.append(PlaylistView.createSmallPlaylistView(playlist, index));
                 }
             });
             LoadingBar.hide();

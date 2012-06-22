@@ -1,5 +1,5 @@
 var PlaylistView = {
-    createSmallPlaylistView: function(playlist, index) {
+    createSmallPlaylistView: function(playlist, index, showPrivacyToggle) {
         var i = 0,
             $box = $('<div class="playlist-box"/>'),
             $header = $('<div class="header"/>'),
@@ -73,7 +73,7 @@ var PlaylistView = {
         }
         
         /* Privacy checkbox*/
-        if (playlist.remoteId !== null && my_user_id === playlist.owner.id) {
+        if (showPrivacyToggle && playlist.remoteId !== null && my_user_id === playlist.owner.id) {
             PlaylistView.createPrivacyToggleButton(playlist).appendTo($title);
         }
         
