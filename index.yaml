@@ -23,3 +23,9 @@ indexes:
   - name: verb
   - name: timestamp
     direction: desc
+
+- kind: Playlist
+  properties:
+  - name: private
+  - name: followers
+    direction: desc
