@@ -891,6 +891,9 @@ input, textarea, button {
     margin-left: 20px;
     color: #444;
 }
+#right .playlist-box > .header .title .subscribers {
+    cursor: pointer;
+}
 #right .playlist-box > .header .title .nr:before {
     content: 'H';
     font-size: 36px;

@@ -28,7 +28,12 @@ var PlaylistView = {
         /* Stats */
         $title.append($('<span class="nr"/>').text(playlist.videos.length));
         if (playlist.remoteId !== null && !playlist.isPrivate) {
-            $title.append($('<span class="subscribers"/>').text(playlist.followers.length));
+            $('<span class="subscribers"/>')
+                .text(playlist.followers.length)
+                .click(function() {
+                    PlaylistView.displaySubscribersPopupForPlaylist($(this), playlist);
+                })
+                .appendTo($title);
         }
         
         /* Subscribe/Unsubscribe */
@@ -86,6 +91,17 @@ var PlaylistView = {
         return $box;
     },
 
+    displaySubscribersPopupForPlaylist: function($buttonElem, playlist) {
+        var $popup = $('#playlist-subscribers-popup').html('');
+        $.each(playlist.followers, function(i, user) {
+            $popup.append(new User(user).getSmallView());
+        });
+        $popup.find('.user').click(function() {
+            $('#arrow-popup-blocker').click(); // hide arrow popup when clicking user in popup
+        });
+        $buttonElem.arrowPopup('#playlist-subscribers-popup');
+    },
+
     updatePlaylistBar: function(playlist) {
         var i = 0,
             $playlistBar = $('#right > .playlists .info'),
@@ -109,14 +125,7 @@ var PlaylistView = {
                     .text(TranslationSystem.get('Subscribers ($nr)', {$nr: playlist.followers.length}))
                     .unbind('click')
                     .click(function() {
-                        var $popup = $('#playlist-subscribers-popup').html('');
-                        $.each(playlist.followers, function(i, user) {
-                            $popup.append(new User(user).getSmallView());
-                        });
-                        $popup.find('.user').click(function() {
-                            $('#arrow-popup-blocker').click(); // hide arrow popup when clicking user in popup
-                        });
-                        $(this).arrowPopup('#playlist-subscribers-popup');
+                        PlaylistView.displaySubscribersPopupForPlaylist($(this), playlist);
                     })
                     .show();
             }
