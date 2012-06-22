@@ -4,7 +4,7 @@ var PlaylistView = {
             $box = $('<div class="playlist-box"/>'),
             $header = $('<div class="header"/>'),
             $title = $('<span class="title"/>'),
-            $titleLink = $('<span class="link"/>'),
+            $titleLink = $('<span class="playlist-title link"/>'),
             $subscribeButton = $('<span class="subscribe"/>').text('Subscribe'),
             $unsubscribeButton = $('<span class="unsubscribe"/>').text('Unsubscribe'),
             $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
@@ -69,7 +69,7 @@ var PlaylistView = {
         }
         
         if (playlist.owner) {
-            playlist.owner.getSmallView().appendTo($header);
+            playlist.owner.getSmallView().appendTo($title);
         }
         
         /* Privacy checkbox*/

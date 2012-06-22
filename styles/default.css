@@ -829,24 +829,27 @@ input, textarea, button {
     margin-bottom: 3px;
 }
 #right .playlist-box > .header .user {
-    float: right;
-    margin-left: 3px;
+    float: left;
+    margin: 0;
+    padding: 0px;
 }
 #right .playlist-box > .header .user img {
-    width: 40px;
-    height: 40px;
+    border-radius: 16px;
+    width: 16px;
+    height: 16px;
     margin: 0;
+    vertical-align: 0%;
 }
 #right .playlist-box > .header .title {
     display: block;
     float: left;
-    width: 257px;
-    max-width: 257px;
+    width: 300px;
+    max-width: 300px;
     overflow: hidden;
     position: relative;
     text-align: left;
 }
-#right .playlist-box > .header .title .link {
+#right .playlist-box > .header .title .playlist-title {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
@@ -856,6 +859,16 @@ input, textarea, button {
     line-height: 22px;
     overflow: hidden;
 }
+#right .playlist-box > .header .user .name {
+    font-size: 13px;
+    text-align: left;
+    margin-right: 8px;
+    margin-left: 5px;
+    color: #444;
+    font-weight: normal;
+    text-shadow: none;
+}
+
 #right .playlist-box > .header .title .nr,
 #right .playlist-box > .header .title .subscribers {
     text-align: left;
@@ -864,12 +877,12 @@ input, textarea, button {
     color: #444;
 }
 #right .playlist-box > .header .title .nr:before {
-    content: 'i';
-    font-size: 39px;
+    content: 'H';
+    font-size: 36px;
     font-family: 'EntypoRegular';
     position: absolute;
     top: 12px;
-    margin-left: -20px;
+    margin-left: -16px;
     line-height: 26px;
 }
 #right .playlist-box .subscribe:before,
@@ -908,15 +921,12 @@ input, textarea, button {
     margin-right: 5px;
     float: right;
     cursor: pointer;
-    color: #444;
+    color: #333;
 }
 #right .playlist-box .privacy:hover,
 #right .playlist-box .subscribe:hover,
 #right .playlist-box .unsubscribe:hover {
     color: #000;
-}
-#right .playlist-box .user .name {
-    display: none;
 }
 #right .playlist-box .tracklist-container {
     clear: both;
