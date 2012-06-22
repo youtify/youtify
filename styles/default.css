@@ -852,11 +852,17 @@ input, textarea, button {
     padding: 0px;
 }
 #right .playlist-box > .header .user img {
-    border-radius: 16px;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     margin: 0;
-    vertical-align: 0%;
+}
+#right .playlist-box > .header .user .name {
+    display: inline-block;
+    font-size: 13px;
+    margin-right: 8px;
+    margin-left: 5px;
+    font-weight: normal;
+    text-shadow: none;
 }
 #right .playlist-box > .header .title {
     display: block;
@@ -876,15 +882,6 @@ input, textarea, button {
     max-height: 22px;
     line-height: 22px;
     overflow: hidden;
-}
-#right .playlist-box > .header .user .name {
-    font-size: 13px;
-    text-align: left;
-    margin-right: 8px;
-    margin-left: 5px;
-    color: #444;
-    font-weight: normal;
-    text-shadow: none;
 }
 
 #right .playlist-box > .header .title .nr,
