@@ -17,4 +17,4 @@ cron:
 
 - description: generate playlists toplist
   url: /cron/generate_playlists_toplist
-  schedule: every 2 hours
+  schedule: every 5 minutes
