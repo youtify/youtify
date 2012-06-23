@@ -1,6 +1,7 @@
 var PlaylistView = {
     createPlaylistHeader: function(playlist, showPrivacyToggle) {
         var $header = $('<div class="playlist-header"/>'),
+            $info = $('<div class="info"/>'),
             $subscribeButton = $('<span class="translatable subscribe"/>').text(TranslationSystem.get('Subscribe')),
             $unsubscribeButton = $('<span class="translatable unsubscribe"/>').text(TranslationSystem.get('Unsubscribe'));
 
@@ -18,19 +19,26 @@ var PlaylistView = {
 
             PlaylistView.loadPlaylistView(playlist);
         }).appendTo($header);
+
+        /* Playlist owner */
+        if (playlist.owner) {
+            playlist.owner.getSmallView().appendTo($info);
+        }
         
-        /* Stats */
-        $header.append($('<span class="nr"/>').text(playlist.videos.length));
+        /* Number of tracks */
+        $info.append($('<span class="nr"/>').text(playlist.videos.length));
+
+        /* Number of subscribers */
         if (playlist.remoteId !== null && !playlist.isPrivate) {
             $('<span class="subscribers"/>')
                 .text(playlist.followers.length)
                 .click(function() {
                     PlaylistView.displaySubscribersPopupForPlaylist($(this), playlist);
                 })
-                .appendTo($header);
+                .appendTo($info);
         }
         
-        /* Subscribe/Unsubscribe */
+        /* Subscribe/Unsubscribe button */
         $subscribeButton.click(function() {
             playlist.subscribe();
             $(this).hide();
@@ -42,24 +50,21 @@ var PlaylistView = {
             $(this).prev().show();
         });
         if (logged_in && playlist.owner && playlist.owner.id !== UserManager.currentUser.id) {
-            $header.append($subscribeButton);
-            $header.append($unsubscribeButton);
+            $info.append($subscribeButton);
+            $info.append($unsubscribeButton);
         }
         if (playlist.isSubscription) {
             $subscribeButton.hide();
         } else {
             $unsubscribeButton.hide();
         }
-
-        /* Playlist owner */
-        if (playlist.owner) {
-            playlist.owner.getSmallView().appendTo($header);
-        }
         
         /* Privacy checkbox*/
         if (showPrivacyToggle && playlist.remoteId !== null && my_user_id === playlist.owner.id) {
-            PlaylistView.createPrivacyToggleButton(playlist).appendTo($header);
+            PlaylistView.createPrivacyToggleButton(playlist).appendTo($info);
         }
+
+        $info.appendTo($header);
 
         return $header;
     },

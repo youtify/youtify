@@ -728,75 +728,6 @@ input, textarea, button {
 #right .tracklist .video.officialfm .type {
     background-image: url(/images/officialfm.png);
 }
-#right .info {
-    display: block;
-}
-#right .info .edit.button {
-    margin: 10px 0px 5px 24px;
-}
-#right .info .queue,
-#right .info .title,
-#right .info .subscribers,
-#right .info .user {
-    display: inline-block;
-    font-size: 13px;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-    cursor: default;
-    border: 0;
-    margin: 0 0 5px 5px;
-}
-#right .info .queue,
-#right .info .title {
-    font-size: 14px;
-    font-weight: bold;
-    margin: 5px;
-}
-#right .info .user {
-    float: right;
-    margin: 3px 0 0 15px;
-}
-#right .info .button {
-    float: right;
-}
-#right .info .subscribers {
-    float: right;
-    cursor: pointer;
-    line-height: 26px;
-}
-#right .info .unsubscribe, 
-#right .info .subscribe 
-{
-    margin-left: 10px;
-    margin-bottom: 5px;
-}
-#right .info .privacy {
-    position: relative;
-    cursor: pointer;
-    display: inline;
-    float: right;
-    line-height: 26px;
-    margin-left: 20px;
-    padding: 0 0 0 10px;
-}
-#right .info .public:before {
-    content: 'V';
-    font-size: 36px;
-    font-family: 'EntypoRegular';
-    position: absolute;
-    top: -5px;
-    margin-left: -20px;
-    line-height: 28px;
-}
-#right .info .private:before {
-    content: 'U';
-    font-size: 36px;
-    font-family: 'EntypoRegular';
-    position: absolute;
-    top: -5px;
-    margin-left: -20px;
-    line-height: 28px;
-}
-
 #right .profile .picture-container {
     width: 208px;
     display: block;
@@ -897,40 +828,29 @@ input, textarea, button {
 
 #right .playlist-header {
     position: relative;
-    height: 40px;
-}
-#right .playlist-header .user {
-    float: left;
-    margin: 0;
-    padding: 0px;
+    margin-bottom: 5px;
 }
 #right .playlist-header .user img {
     width: 20px;
     height: 20px;
-    margin: 0;
 }
 #right .playlist-header .user .name {
-    display: inline-block;
-    font-size: 13px;
-    margin-right: 8px;
-    margin-left: 5px;
-    font-weight: normal;
-    text-shadow: none;
+    vertical-align: middle;
+}
+#right .playlist-header .nr,
+#right .playlist-header .subscribers {
+    vertical-align: middle;
+    margin-right: 5px;
 }
 #right .playlist-header .title {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     display: block;
-    text-align: left;
-    max-height: 22px;
-    line-height: 22px;
-    overflow: hidden;
+    overflow: hidden;.
 }
 #right .playlist-header .nr,
 #right .playlist-header .subscribers {
-    text-align: left;
-    margin-right: 20px;
     margin-left: 20px;
     color: #444;
 }
@@ -939,44 +859,39 @@ input, textarea, button {
 }
 #right .playlist-header .nr:before {
     content: 'H';
-    font-size: 36px;
     font-family: 'EntypoRegular';
+    font-size: 30px;
     position: absolute;
-    top: 12px;
-    margin-left: -16px;
-    line-height: 26px;
+    top: 15px;
+    margin-left: -15px;
 }
 #right .playlist-header .subscribers:before {
     content: 'M';
-    font-size: 36px;
     font-family: 'EntypoRegular';
+    font-size: 30px;
     position: absolute;
-    top: 12px;
-    margin-left: -25px;
-    line-height: 28px;
+    top: 16px;
+    margin-left: -20px;
 }
 #right .playlist-header .public:before {
     content: 'V';
     font-size: 36px;
     font-family: 'EntypoRegular';
     position: absolute;
-    top: 12px;
+    top: 9px;
     margin-left: -20px;
-    line-height: 28px;
 }
 #right .playlist-header .private:before {
     content: 'U';
     font-size: 36px;
     font-family: 'EntypoRegular';
     position: absolute;
-    top: 12px;
+    top: 9px;
     margin-left: -20px;
-    line-height: 28px;
 }
 #right .playlist-header .privacy,
 #right .playlist-header .subscribe,
 #right .playlist-header .unsubscribe {
-    margin-right: 5px;
     float: right;
     cursor: pointer;
     color: #333;
