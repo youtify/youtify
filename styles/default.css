@@ -597,9 +597,34 @@ input, textarea, button {
 }
 #right .tracklist .play {
     width: 40px;
+    height: 15px;
+    max-height: 15px;
+    max-width: 40px;
+}
+#right .tracklist .play:after {
+    content: '{';
+    font-family: EntypoRegular;
+    font-size: 34px;
+    line-height: 20px;
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.6);
+    color: #666;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: relative;
+    vertical-align: -20%;
+}
+#right .tracklist .play:hover:after {
+    content: '{';
+    font-family: EntypoRegular;
+    font-size: 34px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: relative;
+    vertical-align: -20%;
+}
+#right .tracklist .playing .play:after {
+    content:'';
 }
 #right .tracklist .play:hover {
     color: #000;

@@ -72,7 +72,6 @@ function Video(args) {
         
         $space.setAttribute('class', 'space');
 
-        $play.innerHTML = '&#9654;';
         $play.setAttribute('class', 'play');
         $play.onclick = function(event){self.play(event);};
         $fragment.appendChild($play);
