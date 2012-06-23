@@ -2,8 +2,8 @@ var PlaylistView = {
     createPlaylistHeader: function(playlist, showPrivacyToggle) {
         var $header = $('<div class="playlist-header"/>'),
             $info = $('<div class="info"/>'),
-            $subscribeButton = $('<span class="translatable subscribe"/>').text(TranslationSystem.get('Subscribe')),
-            $unsubscribeButton = $('<span class="translatable unsubscribe"/>').text(TranslationSystem.get('Unsubscribe'));
+            $subscribeButton = $('<span class="translatable button subscribe"/>').text(TranslationSystem.get('Subscribe')),
+            $unsubscribeButton = $('<span class="translatable button unsubscribe"/>').text(TranslationSystem.get('Unsubscribe'));
 
         /* Title */
         $('<span class="title link"/>').text(playlist.title).click(function() {

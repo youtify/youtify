@@ -892,13 +892,12 @@ input, textarea, button {
 #right .playlist-header .privacy,
 #right .playlist-header .subscribe,
 #right .playlist-header .unsubscribe {
-    float: right;
+    position: absolute;
+    right: 0;
+    bottom: 0px;
     cursor: pointer;
-    color: #333;
 }
-#right .playlist-header .privacy:hover,
-#right .playlist-header .subscribe:hover,
-#right .playlist-header .unsubscribe:hover {
+#right .playlist-header .privacy:hover {
     color: #000;
 }
 
@@ -911,6 +910,10 @@ input, textarea, button {
     margin: 10px 10px 0 0;
     float: left;
     min-height: 270px;
+}
+#right .playlist-box .info .subscribe,
+#right .playlist-box .info .unsubscribe {
+    display: none;
 }
 #right .playlist-box > .playlist-header {
     width: 300px;
