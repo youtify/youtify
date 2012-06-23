@@ -67,6 +67,7 @@ function Video(args) {
             $play = document.createElement('td'),
             $title = document.createElement('td'),
             $heart = document.createElement('td'),
+            $menu = document.createElement('td'),
             $type = document.createElement('td');
             
         
@@ -85,6 +86,11 @@ function Video(args) {
         $heart.setAttribute('class', 'like');
         $heart.innerHTML = '&hearts;';
         $fragment.appendChild($heart);
+        $fragment.appendChild($space.cloneNode(false));
+        
+        $menu.setAttribute('class', 'menu translatable');
+        $menu.innerHTML = TranslationSystem.get('Menu') + ' <span>\u25BE</span>';
+        $fragment.appendChild($menu);
         $fragment.appendChild($space.cloneNode(false));
 
         $type.setAttribute('class', 'type');

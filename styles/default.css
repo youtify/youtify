@@ -569,6 +569,7 @@ input, textarea, button {
 #right .tracklist .video.selected .play,
 #right .tracklist .video.selected .title,
 #right .tracklist .video.selected .like,
+#right .tracklist .video.selected .menu,
 #right .tracklist .video.selected .type,
 #right .tracklist .video.selected .views,
 #right .tracklist .video.selected .videoCountHint {
@@ -646,10 +647,31 @@ input, textarea, button {
     display: block;
     overflow: hidden;
 }
+#right .tracklist .video .menu {
+    color: transparent;
+    width: 80px;
+}
+#right .tracklist .video.selected .menu,
+#right .tracklist .video:hover .menu {
+    min-width: 80px;
+    width: 80px;
+    max-width: 80px;
+    cursor: pointer;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+#right .tracklist .video.selected .menu span,
+#right .tracklist .video:hover .menu span {
+    font-size: 16px;
+    line-height: 13px;
+    color: #666;
+    vertical-align: -8%;
+}
 
 /* todo: remove when we have implemented favorites */
 #right .tracklist .like,
-#right tr .space:nth-child(4) {
+#right tr .space:nth-child(6) {
     display: none;
 }
 
