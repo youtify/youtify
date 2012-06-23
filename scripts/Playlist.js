@@ -120,9 +120,13 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         if (self.isSubscription) {
             url = '/api/playlists/follow/' + self.remoteId;
         }
+        LoadingBar.show();
         $.ajax({
             type: 'DELETE',
             url: url,
+            complete: function(jqXHR, textStatus) {
+                LoadingBar.hide();
+            },
 			statusCode: {
 				200: function(data) {
 					if (callback) {
@@ -151,10 +155,14 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         };
 
         self.syncing = true;
+        LoadingBar.show();
         $.ajax({
             type: 'POST',
             url: '/api/playlists/follow/' + self.remoteId,
             data: params,
+            complete: function(jqXHR, textStatus) {
+                LoadingBar.hide();
+            },
             statusCode: {
                 200: function(data, textStatus) {
                     self.syncing = false;
