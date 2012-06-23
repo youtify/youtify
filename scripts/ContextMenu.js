@@ -169,10 +169,10 @@ function showPlaylistContextMenu(event) {
     showContextMenu(buttons, event.pageX, event.pageY);
 }
 
-function showResultsItemContextMenu(event) {
-    var li = $(this);
+function showResultsItemContextMenu(event, videoElem) {
+    var li = videoElem || $(this);
     var allSelectedVideos = $(this).parent().find('.video.selected');
-    var video = $(this).data('model');
+    var video = li.data('model');
 
     if (!$(li).hasClass('selected')) {
         li.parent().find('.selected').removeClass('selected');

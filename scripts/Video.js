@@ -106,7 +106,9 @@ function Video(args) {
             .mousedown(function(event) {self.listViewSelect(event);})
             .dblclick(function(event){self.play(event);})
             .data('model', this);
-        
+        this.listView.find('.menu').click(function(event) {
+            showResultsItemContextMenu(event, $(event.target).parent());
+        });
         return this.listView;
     };
     
