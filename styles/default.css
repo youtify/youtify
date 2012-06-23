@@ -668,6 +668,10 @@ input, textarea, button {
     color: #666;
     vertical-align: -8%;
 }
+#right .playlist-box .tracklist .video .menu,
+#right .playlist-box .tracklist tr .space:nth-child(4) {
+    display: none;
+}
 
 /* todo: remove when we have implemented favorites */
 #right .tracklist .like,
