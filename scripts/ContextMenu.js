@@ -182,7 +182,7 @@ function showResultsItemContextMenu(event, videoElem) {
     var buttons = [
         {
             title: TranslationSystem.get('Play'),
-            args: $(this),
+            args: li,
             callback: function(elem) {
                 elem.data('model').play();
             }
@@ -201,7 +201,7 @@ function showResultsItemContextMenu(event, videoElem) {
         },
 		{
 			title: TranslationSystem.get('Share'),
-			args: $(this),
+			args: li,
 			callback: function(elem) {
                 var video = $(elem).data('model');
                 showVideoSharePopup(video, elem, 'up');
@@ -213,7 +213,7 @@ function showResultsItemContextMenu(event, videoElem) {
         case 'youtube':
         buttons.push({
             title: TranslationSystem.get('View on YouTube'),
-            args: $(this),
+            args: li,
             callback: function(elem) {
                 window.open('http://www.youtube.com/watch?v=' + video.videoId);
             }
@@ -223,7 +223,7 @@ function showResultsItemContextMenu(event, videoElem) {
         case 'soundcloud':
         buttons.push({
             title: TranslationSystem.get('View on SoundCloud'),
-            args: $(this),
+            args: li,
             callback: function(elem) {
                 var url = "http://api.soundcloud.com/tracks/" + video.videoId + ".json";
                 var params = {
@@ -239,7 +239,7 @@ function showResultsItemContextMenu(event, videoElem) {
         case 'officialfm':
         buttons.push({
             title: TranslationSystem.get('View on Official.fm'),
-            args: $(this),
+            args: li,
             callback: function(elem) {
                 window.open('http://www.official.fm/tracks/' + video.videoId);
             }
@@ -250,7 +250,7 @@ function showResultsItemContextMenu(event, videoElem) {
     if (ON_DEV) {
         buttons.push({
             title: 'View JSON',
-            args: $(this),
+            args: li,
             callback: function(li) {
                 alert(JSON.stringify(video.toJSON()));
                 console.log(video.toJSON());
@@ -258,11 +258,11 @@ function showResultsItemContextMenu(event, videoElem) {
         });
     }
 
-    if ($(this).data('additionalMenuButtons')) {
-        buttons = $.merge(buttons, $(this).data('additionalMenuButtons'));
+    if (li.data('additionalMenuButtons')) {
+        buttons = $.merge(buttons, li.data('additionalMenuButtons'));
     }
 
-    showContextMenu(buttons, (event.pageX || $(this).offset().left + $(this).width()) , (event.pageY || $(this).offset().top));
+    showContextMenu(buttons, (event.pageX || li.offset().left + li.width()) , (event.pageY || li.offset().top));
 
     return false;
 }
