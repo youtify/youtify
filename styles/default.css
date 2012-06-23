@@ -889,16 +889,18 @@ input, textarea, button {
     top: 9px;
     margin-left: -20px;
 }
-#right .playlist-header .privacy,
+#right .playlist-header .privacy {
+    float: right;
+}
+#right .playlist-header .privacy:hover {
+    color: #000;
+}
 #right .playlist-header .subscribe,
 #right .playlist-header .unsubscribe {
     position: absolute;
     right: 0;
     bottom: 0px;
     cursor: pointer;
-}
-#right .playlist-header .privacy:hover {
-    color: #000;
 }
 
 /** SMALL PLAYLIST VIEW
