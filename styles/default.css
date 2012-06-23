@@ -867,35 +867,24 @@ input, textarea, button {
     margin-top: 10px;
 }
 
-/** SMALL PLAYLIST VIEW
+/** GENERAL PLAYLIST HEADER STYLE
  ****************************************************************************/
 
-#right .playlist-box {
-    width: 300px;
-    display: block;
-    margin: 10px 10px 0 0;
-    float: left;
-    min-height: 270px;
-    text-align: center;
-}
-#right .playlist-box > .header {
-    width: 300px;
+#right .playlist-header {
+    position: relative;
     height: 40px;
-    display: block;
-    overflow: hidden;
-    margin-bottom: 3px;
 }
-#right .playlist-box > .header .user {
+#right .playlist-header .user {
     float: left;
     margin: 0;
     padding: 0px;
 }
-#right .playlist-box > .header .user img {
+#right .playlist-header .user img {
     width: 20px;
     height: 20px;
     margin: 0;
 }
-#right .playlist-box > .header .user .name {
+#right .playlist-header .user .name {
     display: inline-block;
     font-size: 13px;
     margin-right: 8px;
@@ -903,16 +892,7 @@ input, textarea, button {
     font-weight: normal;
     text-shadow: none;
 }
-#right .playlist-box > .header .title {
-    display: block;
-    float: left;
-    width: 300px;
-    max-width: 300px;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
-}
-#right .playlist-box > .header .title .playlist-title {
+#right .playlist-header .title {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
@@ -922,18 +902,17 @@ input, textarea, button {
     line-height: 22px;
     overflow: hidden;
 }
-
-#right .playlist-box > .header .title .nr,
-#right .playlist-box > .header .title .subscribers {
+#right .playlist-header .nr,
+#right .playlist-header .subscribers {
     text-align: left;
     margin-right: 20px;
     margin-left: 20px;
     color: #444;
 }
-#right .playlist-box > .header .title .subscribers {
+#right .playlist-header .subscribers {
     cursor: pointer;
 }
-#right .playlist-box > .header .title .nr:before {
+#right .playlist-header .nr:before {
     content: 'H';
     font-size: 36px;
     font-family: 'EntypoRegular';
@@ -942,7 +921,7 @@ input, textarea, button {
     margin-left: -16px;
     line-height: 26px;
 }
-#right .playlist-box > .header .title .subscribers:before {
+#right .playlist-header .subscribers:before {
     content: 'M';
     font-size: 36px;
     font-family: 'EntypoRegular';
@@ -951,8 +930,7 @@ input, textarea, button {
     margin-left: -25px;
     line-height: 28px;
 }
-
-#right .playlist-box .public:before {
+#right .playlist-header .public:before {
     content: 'V';
     font-size: 36px;
     font-family: 'EntypoRegular';
@@ -961,7 +939,7 @@ input, textarea, button {
     margin-left: -20px;
     line-height: 28px;
 }
-#right .playlist-box .private:before {
+#right .playlist-header .private:before {
     content: 'U';
     font-size: 36px;
     font-family: 'EntypoRegular';
@@ -970,18 +948,33 @@ input, textarea, button {
     margin-left: -20px;
     line-height: 28px;
 }
-#right .playlist-box .privacy,
-#right .playlist-box .subscribe,
-#right .playlist-box .unsubscribe {
+#right .playlist-header .privacy,
+#right .playlist-header .subscribe,
+#right .playlist-header .unsubscribe {
     margin-right: 5px;
     float: right;
     cursor: pointer;
     color: #333;
 }
-#right .playlist-box .privacy:hover,
-#right .playlist-box .subscribe:hover,
-#right .playlist-box .unsubscribe:hover {
+#right .playlist-header .privacy:hover,
+#right .playlist-header .subscribe:hover,
+#right .playlist-header .unsubscribe:hover {
     color: #000;
+}
+
+/** SMALL PLAYLIST VIEW
+ ****************************************************************************/
+
+#right .playlist-box {
+    width: 300px;
+    display: block;
+    margin: 10px 10px 0 0;
+    float: left;
+    min-height: 270px;
+}
+#right .playlist-box > .playlist-header {
+    width: 300px;
+    margin-bottom: 5px;
 }
 #right .playlist-box .tracklist-container {
     clear: both;

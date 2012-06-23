@@ -186,7 +186,7 @@ var UserManager = {
             $.each(playlistManager.playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
                 if (playlist.videos.length) {
-                    UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index, true));
+                    UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, true));
                 }
             });
         } else {
@@ -218,7 +218,7 @@ var UserManager = {
             $.each(data, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
                 if (playlist.videos.length) {
-                    UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, index));
+                    UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist));
                 }
             });
             LoadingBar.hide();
