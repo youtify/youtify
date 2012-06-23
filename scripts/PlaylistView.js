@@ -67,7 +67,7 @@ var PlaylistView = {
     createSmallPlaylistView: function(playlist, showPrivacyToggle) {
         var i = 0,
             $box = $('<div class="playlist-box"/>'),
-            $header = PlaylistView.createPlaylistHeader(playlist, showPrivacyToggle);
+            $header = PlaylistView.createPlaylistHeader(playlist, showPrivacyToggle),
             $tracklistContainer = $('<div class="tracklist-container minimized"/>'),
             $tracklist = $('<table class="tracklist"/>');
 

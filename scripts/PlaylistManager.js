@@ -196,7 +196,7 @@ function PlaylistsManager() {
                 return i;
             }
         }
-    },
+    };
 
     this.selectPlaylistByRemoteId = function(remoteId) {
         var map = this.getPlaylistsMap();
