@@ -163,7 +163,18 @@ function PlaylistsManager() {
         this.playlists.splice(destIndex, 0, tmp);
     };
 
-    this.deletePlaylist = function(index) {
+    this.deletePlaylist = function(playlistOrIndex) {
+        var index;
+        if (playlistOrIndex instanceof Playlist) {
+            index = this.getIndexOfPlaylist(playlistOrIndex);
+            if (index === undefined) {
+                console.log("Could not find index for playlist " + playlistOrIndex.title);
+                return;
+            }
+        } else {
+            index = playlistOrIndex;
+        }
+
         if (logged_in && this.playlists[index].remoteId) {
             this.playlists[index].unsync();
         }
@@ -175,6 +186,17 @@ function PlaylistsManager() {
         }
         this.playlists.splice(index, 1);
     };
+
+    this.getIndexOfPlaylist = function(playlist) {
+        var i;
+        var playlist2;
+        for (i = 0; i < this.playlists.length; i += 1) {
+            playlist2 = this.playlists[i];
+            if (playlist2.remoteId === playlist.remoteId) {
+                return i;
+            }
+        }
+    },
 
     this.selectPlaylistByRemoteId = function(remoteId) {
         var map = this.getPlaylistsMap();
