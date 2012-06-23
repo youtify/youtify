@@ -1291,11 +1291,62 @@ input, textarea, button {
     background: white;
 }
 #contextmenu .option {
-    padding: 5px;
+    padding: 5px 5px 5px 30px;
     cursor: pointer;
 }
+#contextmenu .option.import:before,
+#contextmenu .option.remove-duplicates:before,
+#contextmenu .option.rename:before,
+#contextmenu .option.delete:before,
+#contextmenu .option.share:before,
+#contextmenu .option.sync:before,
+#contextmenu .option.unsync:before,
+#contextmenu .option.json:before,
+#contextmenu .option.play:before,
+#contextmenu .option.queue:before,
+#contextmenu .option.view:before {
+    font-family: 'EntypoRegular';
+    font-size: 30px;
+    position: relative;
+    line-height: 0;
+    display: block;
+    position: absolute;
+    margin: 4px 5px 0 -25px;
+    text-align: center;
+    width: 20px;
+}
+#contextmenu .option.import:before {
+    content:')';
+}
+#contextmenu .option.remove-duplicates:before {
+    content:'I';
+}
+#contextmenu .option.rename:before {
+    content:'&';
+}
+#contextmenu .option.delete:before {
+    content:'^';
+}
+#contextmenu .option.share:before {
+    content:'>';
+}
+#contextmenu .option.sync:before {
+}
+#contextmenu .option.unsync:before {
+}
+#contextmenu .option.json:before {
+}
+#contextmenu .option.play:before {
+    content:'{';
+}
+#contextmenu .option.queue:before {
+    content:'j';
+}
+#contextmenu .option.view:before {
+    content:'*';
+}
 #contextmenu .option:hover {
-    background: rgba(0, 124, 137, 0.4);
+    background-color: rgba(0, 124, 137, 0.4);
 }
 
 /** DRAG N DROP

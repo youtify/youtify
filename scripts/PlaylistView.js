@@ -158,6 +158,7 @@ var PlaylistView = {
                     if(!playlist.isSubscription) {
                         $video.data('additionalMenuButtons', [{
                             title: TranslationSystem.get('Delete'),
+                            cssClass: 'delete',
                             args: $video,
                             callback: PlaylistView.deleteVideoButtonClicked
                         }]);

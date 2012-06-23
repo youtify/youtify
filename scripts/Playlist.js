@@ -287,6 +287,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         var $video = newVideo.createListView();
         $video.data('additionalMenuButtons', [{
             title: 'Delete',
+            cssClass: 'delete',
             args: $video,
             callback: PlaylistView.deleteVideoButtonClicked
         }]);

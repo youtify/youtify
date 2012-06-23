@@ -8,15 +8,18 @@ function showContextMenu(buttons, x, y) {
     var contextmenu = $('<ul id="contextmenu" />');
 
     $.each(buttons, function(i, item) {
-        $('<li class="option" />')
+        var $li = $('<li class="option" />')
             .text(item.title)
             .data('args', item.args)
             .data('callback', item.callback)
             .click(function() {
                 $(this).data('callback')($(this).data('args'));
                 $('#context-menu-blocker, #contextmenu').remove();
-            })
-            .appendTo(contextmenu);
+            });
+        if (item.cssClass) {
+            $li.addClass(item.cssClass);
+        }
+        $li.appendTo(contextmenu);
     });
 
     // Set up a blocker div that closes the menu when clicked
@@ -54,6 +57,7 @@ function showPlaylistContextMenu(event) {
     var buttons = [
 		{
             title: TranslationSystem.get('Import from Spotify'),
+            cssClass: 'import',
             args: $(this),
             callback: function(li) {
                 li.arrowPopup('#spotify-importer', 'left');
@@ -61,6 +65,7 @@ function showPlaylistContextMenu(event) {
         },
         {
             title: TranslationSystem.get('Remove duplicate videos'),
+            cssClass: 'remove-duplicates',
             args: $(this),
             callback: function(li) {
                 var index = li.index(),
@@ -72,6 +77,7 @@ function showPlaylistContextMenu(event) {
         },
         {
             title: TranslationSystem.get('Rename'),
+            cssClass: 'rename',
             args: $(this),
             callback: function(li) {
                 var playlist = null,
@@ -106,6 +112,7 @@ function showPlaylistContextMenu(event) {
         },
         {
             title: TranslationSystem.get('Delete/Unsubscribe'),
+            cssClass: 'delete',
             args: $(this),
             callback: function(li) {
                 var index = li.index(),
@@ -122,6 +129,7 @@ function showPlaylistContextMenu(event) {
     if (logged_in && $(this).data('model').remoteId) {
         buttons.push({
             title: TranslationSystem.get('Share'),
+            cssClass: 'share',
             args: $(this),
             callback: function(li) {
                 PlaylistView.showPlaylistSharePopup(li.data('model'), li, 'left');
@@ -132,6 +140,7 @@ function showPlaylistContextMenu(event) {
     if (logged_in && !$(this).data('model').remoteId) {
         buttons.push({
             title: TranslationSystem.get('Sync'),
+            cssClass: 'sync',
             args: $(this),
             callback: function(li) {
                 li.data('model').sync(function() {
@@ -145,6 +154,7 @@ function showPlaylistContextMenu(event) {
     if (logged_in && $(this).data('model').remoteId) {
         buttons.push({
             title: TranslationSystem.get('Unsync'),
+            cssClass: 'unsync',
             args: $(this),
             callback: function(li) {
                 li.data('model').unsync();
@@ -157,6 +167,7 @@ function showPlaylistContextMenu(event) {
     if (ON_DEV) {
         buttons.push({
             title: 'View JSON',
+            cssClass: 'json',
             args: $(this),
             callback: function(li) {
                 var playlist = li.data('model');
@@ -182,6 +193,7 @@ function showResultsItemContextMenu(event, videoElem) {
     var buttons = [
         {
             title: TranslationSystem.get('Play'),
+            cssClass: 'play',
             args: li,
             callback: function(elem) {
                 elem.data('model').play();
@@ -189,6 +201,7 @@ function showResultsItemContextMenu(event, videoElem) {
         },
 		{
             title: TranslationSystem.get('Queue'),
+            cssClass: 'queue',
             args: allSelectedVideos,
             callback: function(allSelectedVideos) {
                 $.each(allSelectedVideos, function(index, li) {
@@ -201,6 +214,7 @@ function showResultsItemContextMenu(event, videoElem) {
         },
 		{
 			title: TranslationSystem.get('Share'),
+            cssClass: 'share',
 			args: li,
 			callback: function(elem) {
                 var video = $(elem).data('model');
@@ -213,6 +227,7 @@ function showResultsItemContextMenu(event, videoElem) {
         case 'youtube':
         buttons.push({
             title: TranslationSystem.get('View on YouTube'),
+            cssClass: 'view',
             args: li,
             callback: function(elem) {
                 window.open('http://www.youtube.com/watch?v=' + video.videoId);
@@ -223,6 +238,7 @@ function showResultsItemContextMenu(event, videoElem) {
         case 'soundcloud':
         buttons.push({
             title: TranslationSystem.get('View on SoundCloud'),
+            cssClass: 'view',
             args: li,
             callback: function(elem) {
                 var url = "http://api.soundcloud.com/tracks/" + video.videoId + ".json";
@@ -239,6 +255,7 @@ function showResultsItemContextMenu(event, videoElem) {
         case 'officialfm':
         buttons.push({
             title: TranslationSystem.get('View on Official.fm'),
+            cssClass: 'view',
             args: li,
             callback: function(elem) {
                 window.open('http://www.official.fm/tracks/' + video.videoId);
@@ -250,6 +267,7 @@ function showResultsItemContextMenu(event, videoElem) {
     if (ON_DEV) {
         buttons.push({
             title: 'View JSON',
+            cssClass: 'json',
             args: li,
             callback: function(li) {
                 alert(JSON.stringify(video.toJSON()));
