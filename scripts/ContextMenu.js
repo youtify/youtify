@@ -54,78 +54,42 @@ function showPlaylistContextMenu(event) {
     $(this).addClass('selected');
     event.preventDefault();
 
-    var buttons = [
-		{
-            title: TranslationSystem.get('Import from Spotify'),
-            cssClass: 'import',
-            args: $(this),
-            callback: function(li) {
-                li.arrowPopup('#spotify-importer', 'left');
-            }
-        },
-        {
-            title: TranslationSystem.get('Remove duplicate videos'),
-            cssClass: 'remove-duplicates',
-            args: $(this),
-            callback: function(li) {
-                var index = li.index(),
-                    playlist = playlistManager.getPlaylist(index);
-				if (confirm(TranslationSystem.get('This will delete duplicate videos from your playlist. Continue?'))) {
-                    Notifications.append(playlist.removeDuplicates() + TranslationSystem.get(' duplicates removed.'));
-				}
-            }
-        },
-        {
-            title: TranslationSystem.get('Rename'),
-            cssClass: 'rename',
-            args: $(this),
-            callback: function(li) {
-                var playlist = null,
-                    input = $('<input type="text"/>')
-                    .addClass('rename')
-                    .val(li.text())
-                    .data('li', li)
-                    .blur(function(event) {
-                        li.find('.title').show();
-                        input.remove();
-                    })
-                    .keyup(function(event) {
-                        var playlist;
-                        switch (event.keyCode) {
-                            case 13: // RETURN
-                                playlist = li.data('model');
-                                playlist.rename(input.val());
-                                playlistManager.save();
-                                $(this).blur();
-                                break;
-                            case 27: // ESC
-                                $(this).blur();
-                                break;
-                        }
-                        event.stopPropagation();
-                    });
+    var buttons = [];
+    buttons.push({
+        title: TranslationSystem.get('Rename'),
+        cssClass: 'rename',
+        args: $(this),
+        callback: function(li) {
+            var playlist = null,
+                input = $('<input type="text"/>')
+                .addClass('rename')
+                .val(li.text())
+                .data('li', li)
+                .blur(function(event) {
+                    li.find('.title').show();
+                    input.remove();
+                })
+                .keyup(function(event) {
+                    var playlist;
+                    switch (event.keyCode) {
+                        case 13: // RETURN
+                            playlist = li.data('model');
+                            playlist.rename(input.val());
+                            playlistManager.save();
+                            $(this).blur();
+                            break;
+                        case 27: // ESC
+                            $(this).blur();
+                            break;
+                    }
+                    event.stopPropagation();
+                });
 
-                li.find('.title').hide();
-                li.append(input);
-                input.focus().select();
-            }
-        },
-        {
-            title: TranslationSystem.get('Delete/Unsubscribe'),
-            cssClass: 'delete',
-            args: $(this),
-            callback: function(li) {
-                var index = li.index(),
-                    playlist = playlistManager.getPlaylist(index);
-
-                if (confirm("Are you sure you want to delete this playlist (" + playlist.title + ")?")) {
-                    playlistManager.deletePlaylist(index);
-                    playlistManager.save();
-                }
-            }
+            li.find('.title').hide();
+            li.append(input);
+            input.focus().select();
         }
-    ];
-
+    });
     if (logged_in && $(this).data('model').remoteId) {
         buttons.push({
             title: TranslationSystem.get('Share'),
@@ -136,7 +100,27 @@ function showPlaylistContextMenu(event) {
             }
         });
     }
-
+    buttons.push({
+        title: TranslationSystem.get('Import from Spotify'),
+        cssClass: 'import',
+        args: $(this),
+        callback: function(li) {
+            li.arrowPopup('#spotify-importer', 'left');
+        }
+    });
+    buttons.push({
+        title: TranslationSystem.get('Remove duplicate videos'),
+        cssClass: 'remove-duplicates',
+        args: $(this),
+        callback: function(li) {
+            var index = li.index(),
+                playlist = playlistManager.getPlaylist(index);
+            if (confirm(TranslationSystem.get('This will delete duplicate videos from your playlist. Continue?'))) {
+                Notifications.append(playlist.removeDuplicates() + TranslationSystem.get(' duplicates removed.'));
+            }
+        }
+    });
+    
     if (logged_in && !$(this).data('model').remoteId) {
         buttons.push({
             title: TranslationSystem.get('Sync'),
@@ -176,6 +160,21 @@ function showPlaylistContextMenu(event) {
             }
         });
     }
+    
+    buttons.push({
+        title: TranslationSystem.get('Delete/Unsubscribe'),
+        cssClass: 'delete',
+        args: $(this),
+        callback: function(li) {
+            var index = li.index(),
+                playlist = playlistManager.getPlaylist(index);
+
+            if (confirm("Are you sure you want to delete this playlist (" + playlist.title + ")?")) {
+                playlistManager.deletePlaylist(index);
+                playlistManager.save();
+            }
+        }
+    });
 
     showContextMenu(buttons, event.pageX, event.pageY);
 }
