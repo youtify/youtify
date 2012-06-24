@@ -285,12 +285,14 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         self.videos.push(newVideo);
 
         var $video = newVideo.createListView();
-        $video.data('additionalMenuButtons', [{
+        var buttons = $video.data('additionalMenuButtons') || [];
+        buttons.push({
             title: 'Delete',
             cssClass: 'delete',
             args: $video,
             callback: PlaylistView.deleteVideoButtonClicked
-        }]);
+        });
+        $video.data('additionalMenuButtons', buttons);
         $video.addClass('droppable');
         $video.addClass('draggable');
         $video.addClass('reorderable');

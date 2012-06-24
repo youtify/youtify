@@ -110,6 +110,19 @@ function Video(args) {
         this.listView.find('.menu').click(function(event) {
             showResultsItemContextMenu(event, $(event.target).parent());
         });
+        
+        if (self.buyLinks && self.buyLinks.length) {
+            var buttons = this.listView.data('additionalMenuButtons') || [];
+            for (var i = 0; i < self.buyLinks.length; i += 1) {
+                buttons.push({
+                    title: 'Buy track',
+                    cssClass: 'buy',
+                    args: self.buyLinks[i],
+                    callback: Utils.openLink
+                });
+            }
+            this.listView.data('additionalMenuButtons', buttons);
+        }
         return this.listView;
     };
     

@@ -89,5 +89,10 @@ var Utils = {
         });
 
         return ret;
+    },
+    
+    openLink: function(url) {
+        window.open(url);
     }
+    
 };

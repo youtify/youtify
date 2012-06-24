@@ -1223,7 +1223,8 @@ input, textarea, button {
 #contextmenu .option.json:before,
 #contextmenu .option.play:before,
 #contextmenu .option.queue:before,
-#contextmenu .option.view:before {
+#contextmenu .option.view:before,
+#contextmenu .option.buy:before {
     font-family: 'EntypoRegular';
     font-size: 30px;
     position: relative;
@@ -1269,6 +1270,9 @@ input, textarea, button {
 }
 #contextmenu .option.view:before {
     content:'*';
+}
+#contextmenu .option.buy:before {
+    content:'C';
 }
 #contextmenu .option:hover {
     background-color: rgba(0, 124, 137, 0.4);
