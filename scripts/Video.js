@@ -27,6 +27,7 @@ function Video(args) {
     this.title = $.trim(args.title) || '';
     this.artist = Utils.extractArtist(this.title);
     this.duration = args.duration || null;
+    this.buyLinks = args.buyLinks || null;
     this.type = args.type || 'youtube';
     this.onPlayCallback = args.onPlayCallback;
     this.listView = null;
@@ -189,7 +190,8 @@ function Video(args) {
             'videoId': this.videoId,
             'title': this.title,
             'duration': this.duration,
-            'type': this.type
+            'type': this.type,
+            'buyLinks': this.buyLinks
         };
     };
 }

@@ -16,6 +16,15 @@ var InfoPopup = {
 
         var $titleAndDescription = $('<div class="title-and-description"></div>');
         $('<a class="subtitle" target="_blank"></a>').attr('href', args.a.link).text(args.a.text).appendTo($titleAndDescription);
+        
+        if (args.buyLinks && args.buyLinks.length) {
+            var $description = $('<p class="buy-links"></p>');
+            for (var i = 0; i < args.buyLinks.length; i += 1) {
+                $('<a/>').attr('href', args.buyLinks[i]).attr('target', '_blank').text(TranslationSystem.get('Buy this track')).appendTo($description);
+                $('<br/>').appendTo($description);
+            }
+            $description.appendTo($titleAndDescription);
+        }
 
         if (args.description) {
             var $description = $('<p class="description"></p>');
@@ -68,7 +77,8 @@ var InfoPopup = {
                     link: info.url
                 },
                 description: info.description,
-                image: info.thumbnail
+                image: info.thumbnail,
+                buyLinks: info.buyLinks
             })
         );
     },

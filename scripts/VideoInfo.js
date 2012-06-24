@@ -66,6 +66,7 @@ var VideoInfo = {
                 url: data.web_url || data.buy_url,
                 user_id: data.user_id
             };
+            info.buyLinks = video.buyLinks || data.buy_url ? [data.buy_url] : null;
             EventSystem.callEventListeners('video_info_fetched', info);
             EventSystem.callEventListeners('uploader_info_fetched', info.author);
         });
@@ -90,6 +91,7 @@ var VideoInfo = {
                 url: data.user.permalink_url,
                 uri: data.user.uri
             };
+            info.buyLinks = video.buyLinks || data.purchase_url ? [data.purchase_url] : null;
             EventSystem.callEventListeners('video_info_fetched', info);
             EventSystem.callEventListeners('uploader_info_fetched', info.author);
         });

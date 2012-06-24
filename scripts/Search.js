@@ -329,10 +329,15 @@ var Search = {
     getVideosFromSoundCloudSearchData: function(data) {
         ret = [];
         $.each(data, function(i, track) {
+            var buyLinks = track.purchase_url ? [track.purchase_url] : null;
+            if (buyLinks) {
+                console.log('buyLinks: ' + track.title);
+            }
             ret.push(new Video({
                 videoId: track.id,
                 title: track.title,
                 duration: track.duration,
+                buyLinks: buyLinks,
                 type: 'soundcloud'
             }));
         });
@@ -341,10 +346,12 @@ var Search = {
     getVideosFromOfficialfmSearchData: function(data) {
         ret = [];
         $.each(data, function(i, track) {
+        var buyLinks = track.purchase_url ? [track.buy_url] : null;
             ret.push(new Video({
                 videoId: track.id,
                 title: track.title,
                 duration: track.length * 1000,
+                buyLinks: buyLinks,
                 type: 'officialfm'
             }));
         });
