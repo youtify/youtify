@@ -35,15 +35,20 @@ function dragStarted(event) {
     sourceElem = findDraggable($(event.target)); // set global
 	var text = '';
     if (sourceElem.find('.title').length) {
-		var titles = sourceElem.find('.title').not(sourceElem.find('.alternative > .title'));
+		var titles = sourceElem.find('.title').not(sourceElem.find('.alternative > .title')),
+            overflow = 0;
 		$.each(titles, function(index, item) {
-			text += $(item).text();
-			if (index < titles.length-1) {
-				text += '<br />';
+            if (index <= 2) {
+                text += '<span class="track">' + $(item).text() + '</span>';
+            } else {
+                overflow += 1;
             }
 		});
+        if (overflow) {
+            text += '<span class="overflow">' + TranslationSystem.get('+ $nbr more', { $nbr: overflow }) + '</span>';
+        }
 	} else {
-		text = sourceElem.text();
+		text = '<span class="track">' + sourceElem.text() + '</span>';
 	}
 	dragElem = $('<span id="dragElem" />')
         .html(text)

@@ -1230,7 +1230,7 @@ input, textarea, button {
     line-height: 0;
     display: block;
     position: absolute;
-    margin: 4px 5px 0 -25px;
+    margin: 5px 5px 0 -25px;
     text-align: center;
     width: 20px;
 }
@@ -1246,14 +1246,20 @@ input, textarea, button {
 #contextmenu .option.delete:before {
     content:'^';
 }
+#contextmenu .option.delete:hover:before {
+    color: red;
+}
 #contextmenu .option.share:before {
     content:'>';
 }
 #contextmenu .option.sync:before {
+    content:'ã';
 }
 #contextmenu .option.unsync:before {
+    content:'ä';
 }
 #contextmenu .option.json:before {
+    content:'a';
 }
 #contextmenu .option.play:before {
     content:'{';
@@ -1272,12 +1278,40 @@ input, textarea, button {
  ****************************************************************************/
 
 #dragElem {
+    opacity: 0.9;
     position: absolute;
-    padding: 5px;
-    background: white;
-	box-shadow: 0px 0px 20px #888;
+    box-shadow: 0px 0px 20px #888;
     z-index: 25;
     cursor: default;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#dragElem .overflow {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    width: 250px;
+    text-align: center;
+}    
+#dragElem .track {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    width: 250px;
+    padding-left: 12px;
+}
+#dragElem span:nth-of-type(odd) {
+    background-color: rgba(0, 124, 137, 0.1);
+}
+#dragElem .track:before {
+    content: '{';
+    font-family: EntypoRegular;
+    font-size: 34px;
+    line-height: 20px;
+    color: #666;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: relative;
+    vertical-align: -20%;
+    padding-right: 30px;
 }
 #right .playlists.target {
     background: inherit;
