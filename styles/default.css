@@ -890,6 +890,7 @@ input, textarea, button {
     margin-left: -20px;
 }
 #right .playlist-header .privacy {
+    cursor: pointer;
     float: right;
 }
 #right .playlist-header .privacy:hover {
