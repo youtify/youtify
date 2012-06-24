@@ -45,6 +45,16 @@ var URIManager = {
                             player.play(vid);
                         });
                     }
+                    EventSystem.addEventListener('video_info_fetched', function(info) {
+                        var hasRunOnce = false;
+                        if (!hasRunOnce) {
+                            hasRunOnce = true;
+                            vid.title = info.title;
+                            vid.createListView();
+                            Queue.setAutoQueue([vid]);
+                        }
+                    });
+                    $('#left .queue').mousedown();
                 }
             ],
             [
