@@ -18,12 +18,13 @@ var InfoPopup = {
         $('<a class="subtitle" target="_blank"></a>').attr('href', args.a.link).text(args.a.text).appendTo($titleAndDescription);
         
         if (args.buyLinks && args.buyLinks.length) {
-            var $description = $('<p class="buy-links"></p>');
-            for (var i = 0; i < args.buyLinks.length; i += 1) {
-                $('<a/>').attr('href', args.buyLinks[i]).attr('target', '_blank').text(TranslationSystem.get('Buy this track')).appendTo($description);
-                $('<br/>').appendTo($description);
+            var $buyLink = $('<p class="buy-links"></p>');
+            var i;
+            for (i = 0; i < args.buyLinks.length; i += 1) {
+                $('<a/>').attr('href', args.buyLinks[i]).attr('target', '_blank').text(TranslationSystem.get('Buy this track')).appendTo($buyLink);
+                $('<br/>').appendTo($buyLink);
             }
-            $description.appendTo($titleAndDescription);
+            $buyLink.appendTo($titleAndDescription);
         }
 
         if (args.description) {

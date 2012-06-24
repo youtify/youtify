@@ -113,7 +113,8 @@ function Video(args) {
         
         if (self.buyLinks && self.buyLinks.length) {
             var buttons = this.listView.data('additionalMenuButtons') || [];
-            for (var i = 0; i < self.buyLinks.length; i += 1) {
+            var i;
+            for (i = 0; i < self.buyLinks.length; i += 1) {
                 buttons.push({
                     title: 'Buy track',
                     cssClass: 'buy',
