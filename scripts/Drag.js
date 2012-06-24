@@ -25,6 +25,7 @@ function dragAborted() {
         dragElem = null;
     }
     removeTargetClasses();
+    sourceElem.removeClass('dragged');
 }
 
 /**
@@ -33,6 +34,7 @@ function dragAborted() {
  */
 function dragStarted(event) {
     sourceElem = findDraggable($(event.target)); // set global
+    sourceElem.addClass('dragged');
 	var text = '';
     if (sourceElem.find('.title').length) {
 		var titles = sourceElem.find('.title').not(sourceElem.find('.alternative > .title')),
@@ -66,7 +68,7 @@ function dragEnded(event) {
     }
 
     removeTargetClasses();
-
+    sourceElem.removeClass('dragged');
     dragElem.remove();
     dragElem = null;
 }

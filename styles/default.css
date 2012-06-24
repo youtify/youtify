@@ -1280,7 +1280,9 @@ input, textarea, button {
 
 /** DRAG N DROP
  ****************************************************************************/
-
+.video.dragged {
+    opacity: 0.7;
+}
 #dragElem {
     opacity: 0.9;
     position: absolute;
@@ -1302,6 +1304,7 @@ input, textarea, button {
     line-height: 40px;
     width: 250px;
     padding-left: 12px;
+    overflow: hidden;
 }
 #dragElem span:nth-of-type(odd) {
     background-color: rgba(0, 124, 137, 0.1);
