@@ -862,7 +862,7 @@ input, textarea, button {
     font-family: 'EntypoRegular';
     font-size: 30px;
     position: absolute;
-    top: 15px;
+    line-height: 16px;
     margin-left: -15px;
 }
 #right .playlist-header .subscribers:before {
@@ -870,7 +870,7 @@ input, textarea, button {
     font-family: 'EntypoRegular';
     font-size: 30px;
     position: absolute;
-    top: 16px;
+    line-height: 16px;
     margin-left: -20px;
 }
 #right .playlist-header .public:before {
