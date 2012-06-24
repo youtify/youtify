@@ -28,11 +28,12 @@ var InfoPopup = {
 
         if (args.description) {
             var $description = $('<p class="description"></p>');
-            $('<span></span').text(Utils.shorten(args.description, 140) + ' ').appendTo($description);
+            $('<span/>').text(Utils.shorten(args.description, 140) + ' ').appendTo($description);
             if (args.description.length > 140) {
-                $('<a class="more" href="#"></a>').text('More').click(function() {
-                    alert('show complete description');
-                });//.appendTo($description);
+                $('<a class="more" href="#"/>').text(TranslationSystem.get('More')).click(function() {
+                    $description.text(args.description);
+                    $('#bottom .info .title').arrowPopup('#video-info-popup', 'down');
+                }).appendTo($description);
             }
             $description.appendTo($titleAndDescription);
         }

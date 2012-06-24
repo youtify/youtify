@@ -3,7 +3,7 @@
     $.fn.arrowPopup = function(popupSelector, arrowDirection) {
         arrowDirection = arrowDirection || 'up';
 
-        var popup = $(popupSelector);
+        var popup = $(popupSelector).removeAttr('style');
         var arrow = $('<span class="arrow"></span>').addClass(arrowDirection);
         var offset = $(this).offset();
 
