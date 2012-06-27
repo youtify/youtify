@@ -1623,6 +1623,12 @@ input, textarea, button {
     position: absolute;
     background: rgba(0, 0, 0, 0.4);
 }
+.modalbox .top {
+    text-align: right;
+}
+.modalbox .close {
+    cursor: pointer;
+}
 .modalbox .wrapper {
     width: 300px;
     padding: 10px;

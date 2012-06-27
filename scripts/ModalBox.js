@@ -1,13 +1,23 @@
 function ModalBox() {
     var self = this;
-    this.canBeClosed = false;
-    this.view = $('<div class="modalbox"><div class="wrapper"><p></p><div class="buttons"></div></div></div>');
-    this.view.click(function(e) {
-        if ($(e.target).hasClass('modalbox') && self.canBeClosed) {
-            self.remove();
-        }
-    });
+    this.view = $('<div class="modalbox"><div class="wrapper"><div class="top"></div><p></p><div class="buttons"></div></div></div>');
 }
+
+ModalBox.prototype.setCanBeClosed = function(canBeClosed) {
+    self = this;
+
+    if (canBeClosed) {
+        $('<span class="close">x</span>').click(function() {
+            self.remove();
+        }).appendTo(self.view.find('.top'));
+
+        this.view.click(function(e) {
+            if ($(e.target).hasClass('modalbox') && canBeClosed) {
+                self.remove();
+            }
+        });
+    }
+};
 
 ModalBox.prototype.setMessage = function(message) {
     this.view.find('.wrapper p').text(message);
@@ -66,7 +76,7 @@ function EditProfileDialog() {
     this.view.find('.wrapper p').append($('<span></span>').text(TranslationSystem.get('Tagline:')));
     this.view.find('.wrapper p').append($('<textarea name="tagline"></textarea>').val(UserManager.currentUser.tagline));
 
-    this.canBeClosed = true;
+    this.setCanBeClosed(true);
 
     this.addButton(TranslationSystem.get('Save'), function(self) {
         var params = {};
