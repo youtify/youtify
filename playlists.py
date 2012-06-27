@@ -42,6 +42,11 @@ class PlaylistFollowersHandler(webapp.RequestHandler):
             self.response.out.write('You can not subscribe to your own playlists')
             return
         
+        if playlist_model.key() in youtify_user_model.playlist_subscriptions:
+            self.error(400)
+            self.response.out.write('You already subscribe to this playlist')
+            return
+            
         youtify_user_model.playlist_subscriptions.append(playlist_model.key())
         youtify_user_model.save()
         
