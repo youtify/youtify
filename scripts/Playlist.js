@@ -118,7 +118,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     self.unsync = function(callback) {
         var url = '/api/playlists/' + self.remoteId;
         if (self.isSubscription) {
-            url = '/api/playlists/follow/' + self.remoteId;
+            url = '/api/playlists/' + self.remoteId + '/followers';
         }
         LoadingBar.show();
         $.ajax({
@@ -158,7 +158,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         LoadingBar.show();
         $.ajax({
             type: 'POST',
-            url: '/api/playlists/follow/' + self.remoteId,
+            url: '/api/playlists/' + self.remoteId + '/followers',
             data: params,
             complete: function(jqXHR, textStatus) {
                 LoadingBar.hide();

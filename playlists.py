@@ -25,16 +25,13 @@ class PlaylistFollowersHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
-class FollowPlaylist(webapp.RequestHandler):
-    
-    def post(self):
+    def post(self, playlist_id):
         """Follows a playlist"""
         youtify_user_model = get_current_youtify_user_model()
         if youtify_user_model == None:
             self.error(403)
             return
         
-        playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
         if playlist_model is None:
             self.error(404)
@@ -57,14 +54,13 @@ class FollowPlaylist(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
     
-    def delete(self):
+    def delete(self, playlist_id):
         """Unfollows a playlist"""
         youtify_user_model = get_current_youtify_user_model()
         if youtify_user_model == None:
             self.error(403)
             return
         
-        playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
         
         youtify_user_model.playlist_subscriptions.remove(playlist_model.key())
@@ -172,7 +168,6 @@ class PlaylistsHandler(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication([
         ('/api/playlists/(.*)/followers', PlaylistFollowersHandler),
-        ('/api/playlists/follow/.*', FollowPlaylist),
         ('/api/playlists/.*', SpecificPlaylistHandler),
         ('/api/playlists', PlaylistsHandler),
     ], debug=True)
