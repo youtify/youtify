@@ -8,6 +8,10 @@ var BottomPanel = {
         $('#bottom .info .title').click(function() {
             $(this).arrowPopup('#video-info-popup', 'down');
         });
+        $('#bottom .info .title').bind('contextmenu', function(event) {
+            showResultsItemContextMenu(event, player.currentVideo.listView);
+            return false;
+        });
 
         // CONTROLS
         $('#bottom .controls .playpause').click(player.playPause);
