@@ -15,7 +15,7 @@ var InfoPopup = {
         var $div = $('<div class="content"></div>');
 
         var $titleAndDescription = $('<div class="title-and-description"></div>');
-        $('<a class="subtitle" target="_blank"></a>').attr('href', args.a.link).text(args.a.text).appendTo($titleAndDescription);
+        var $a = $('<a class="subtitle" target="_blank"></a>').attr('href', args.a.link).text(args.a.text).click(args.a.callback).appendTo($titleAndDescription);
         
         if (args.buyLinks && args.buyLinks.length) {
             var $buyLink = $('<p class="buy-links"></p>');
@@ -87,13 +87,22 @@ var InfoPopup = {
 
     loadUploader: function(info) {
         var $uploader = $('#video-info-popup .sections .uploader');
+        var callback;
+
+        if (info.url.match('soundcloud')) {
+            callback = function(event) {
+                ExternalProfile.show(info.url);
+                event.preventDefault();
+            };
+        }
 
         $uploader.addClass('found');
         $uploader.find('.content').replaceWith(
             InfoPopup.createSection({
                 a: {
                     text: info.name,
-                    link: info.url
+                    link: info.url,
+                    callback: callback
                 },
                 image: info.avatar_url
             })

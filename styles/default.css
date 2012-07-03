@@ -1713,3 +1713,30 @@ input, textarea, button {
 .popup .user.small:last-child {
     margin-bottom: 0;
 }
+
+/** MISC
+ ****************************************************************************/
+
+#right .external-profile .img {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 5px;
+}
+
+#right .external-profile .info {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#right .external-profile .description {
+    font-style: italic;
+}
+
+#right .external-profile h1 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#right .external-profile .tracklist {
+    margin-top: 5px;
+}

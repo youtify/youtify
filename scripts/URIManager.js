@@ -64,6 +64,12 @@ var URIManager = {
                 }
             ],
             [
+                '/soundcloud/(.*)',
+                function(matches) {
+                    ExternalProfile.loadSoundCloudUser(matches[1]);
+                }
+            ],
+            [
                 '/playlists/(.*)',
                 function(matches) {
                     loadPlaylist(matches[1]);
