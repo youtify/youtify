@@ -144,6 +144,10 @@ var PlaylistView = {
     },
 
     loadPlaylistView: function (playlist) {
+        if (playlist.leftMenuDOMHandle.hasClass('selected') && player.currentVideo && player.currentVideo.listView) {
+            player.currentVideo.scrollTo();
+        }
+            
         $('#right > div').hide();
 
         $('#right > .playlists .pane').hide().removeClass('active');
