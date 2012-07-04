@@ -1747,20 +1747,25 @@ input, textarea, button {
     display: inline-block;
     vertical-align: top;
     margin-right: 5px;
+    float: left;
 }
 
 #right .external-profile .info {
-    display: inline-block;
-    vertical-align: top;
+    display: block;
 }
 
 #right .external-profile .description {
     font-style: italic;
+    margin-left: 105px;
 }
 
 #right .external-profile h1 {
     font-size: 16px;
     font-weight: bold;
+    clear: right;
+}
+#right .external-profile .link {
+    clear: right;
 }
 
 #right .external-profile .tracklist {
