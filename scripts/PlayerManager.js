@@ -55,6 +55,7 @@ function PlayerManager() {
         if (self.currentPlayer) {
             self.currentVideoLength = self.currentPlayer.getTotalPlaybackTime();
         }
+        self.currentVideo.scrollTo();
     };
     
     /* Start (or if video is null resume) playback of a video */
@@ -358,7 +359,6 @@ function PlayerManager() {
 
                 alternative.createListView();
                 $playlist = video.listView.parents('.tracklist');
-                console.log($playlist, video);
                 if ($playlist.length) {
                     alternative.createAlternativeContextMenuButton(video, $playlist.data('model'));
                 }

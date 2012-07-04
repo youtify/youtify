@@ -61,6 +61,19 @@ function Video(args) {
         return 'http://facebook.com/sharer.php?u=' + url;
     };
     
+    this.scrollTo = function() {
+        var $container = this.listView.parents('#right > div'),
+            viewTop = 0,
+            containerTop = 0;
+        if (this.listView && this.listView.is(':visible')) {
+            containerTop = $container.scrollTop();
+            viewTop = this.listView.position().top + containerTop - 84;
+            if (viewTop < containerTop || viewTop + this.listView.height() > containerTop + $container.height()) {
+                $container.animate({scrollTop: viewTop}, 400);
+            }
+        }
+    };
+    
     this.createAlternativeContextMenuButton = function(originalTrack, playlist) {
         var self = this,
             buttons = originalTrack.listView.data('additionalMenuButtons') || [];
