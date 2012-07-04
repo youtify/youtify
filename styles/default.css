@@ -1250,7 +1250,8 @@ input, textarea, button {
 #contextmenu .option.play:before,
 #contextmenu .option.queue:before,
 #contextmenu .option.view:before,
-#contextmenu .option.buy:before {
+#contextmenu .option.buy:before,
+#contextmenu .option.replace:before {
     font-family: 'EntypoRegular';
     font-size: 30px;
     position: relative;
@@ -1299,6 +1300,11 @@ input, textarea, button {
 }
 #contextmenu .option.buy:before {
     content:'C';
+}
+#contextmenu .option.replace:before {
+    content: '\21B9';
+    font-size: 20px;
+    margin: 7px 5px 0 -25px;
 }
 #contextmenu .option:hover {
     background-color: rgba(0, 124, 137, 0.4);

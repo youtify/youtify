@@ -61,8 +61,32 @@ function Video(args) {
         return 'http://facebook.com/sharer.php?u=' + url;
     };
     
+    this.createAlternativeContextMenuButton = function(originalTrack, playlist) {
+        var self = this,
+            buttons = originalTrack.listView.data('additionalMenuButtons') || [];
+        
+        buttons.unshift({
+            title: TranslationSystem.get('Replace with alternative'),
+            cssClass: 'replace',
+            args: null,
+            callback: function() {
+                var i = 0;
+                for (i; i < playlist.videos.length; i += 1) {
+                    if (playlist.videos[i] === originalTrack) {
+                        playlist.videos.splice(i, 1, self);
+                        playlist.synced = false;
+                        playlist.sync();
+                        self.listView.insertAfter(originalTrack.listView);
+                        originalTrack.listView.remove();
+                    }
+                }
+            }
+        });
+    };
+    
     this.createListView = function() {
         var self = this,
+            buttons,
             $fragment = document.createDocumentFragment(),
             $space = document.createElement('td'),
             $play = document.createElement('td'),
@@ -111,19 +135,22 @@ function Video(args) {
             showResultsItemContextMenu(event, $(event.target).parent());
         });
         
+        buttons = this.listView.data('additionalMenuButtons') || [];
+        
         if (self.buyLinks && self.buyLinks.length) {
-            var buttons = this.listView.data('additionalMenuButtons') || [];
+            
             var i;
             for (i = 0; i < self.buyLinks.length; i += 1) {
                 buttons.push({
-                    title: 'Buy track',
+                    title: TranslationSystem.get('Buy track'),
                     cssClass: 'buy',
                     args: self.buyLinks[i],
                     callback: Utils.openLink
                 });
             }
-            this.listView.data('additionalMenuButtons', buttons);
         }
+        this.listView.data('additionalMenuButtons', buttons);
+        
         return this.listView;
     };
     

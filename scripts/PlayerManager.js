@@ -349,6 +349,7 @@ function PlayerManager() {
             video.listView.addClass('alternative');
         }
         Search.findAlternative(video, function(alternative) {
+            var $playlist;
             if (alternative) {
                 self.play(alternative);
                 
@@ -356,6 +357,11 @@ function PlayerManager() {
                    alternative is dragged instead of the unplayable video */
 
                 alternative.createListView();
+                $playlist = video.listView.parents('.tracklist');
+                console.log($playlist, video);
+                if ($playlist.length) {
+                    alternative.createAlternativeContextMenuButton(video, $playlist.data('model'));
+                }
 
                 if (video.listView) {
                     video.listView.data('model', alternative);
