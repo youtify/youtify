@@ -158,7 +158,12 @@ input, textarea, button {
     padding-right: 34px; /* button width */
     position: relative;
 }
-#top .search input[type=text] {
+#top .search input[type=search] {
+    -webkit-appearance: none;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+
     height: 26px;
     width: 200px;
     padding: 2px 28px 2px 6px; /* padding-right: .loader */
