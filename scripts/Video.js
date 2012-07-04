@@ -89,6 +89,7 @@ function Video(args) {
                         playlist.videos.splice(i, 1, self);
                         playlist.synced = false;
                         playlist.sync();
+                        self.createListView();
                         self.listView.insertAfter(originalTrack.listView);
                         originalTrack.listView.remove();
                     }
