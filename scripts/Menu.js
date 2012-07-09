@@ -23,6 +23,7 @@ var Menu = {
         Menu.profile.init();
 
         EventSystem.addEventListener('playlists_loaded', this.createPlaylistViews);
+        EventSystem.addEventListener('external_user_subscriptions_updated', this.updateExternalUserSubscriptions);
 
         /* Bind events */
         $('#left .playlists .new span').click(Menu.newPlaylistClick);
@@ -44,6 +45,14 @@ var Menu = {
 
         $.each(playlists, function(i, playlist) {
             Menu.addPlaylist(playlist);
+        });
+    },
+    updateExternalUserSubscriptions: function(subscriptions) {
+        var $subscriptions = $('#left .menu .external-user-subscriptions ul');
+        $subscriptions.html('');
+
+        $.each(subscriptions, function(i, subscription) {
+            $subscriptions.append(subscription.getMenuView());
         });
     },
     addPlaylist: function(playlist) {

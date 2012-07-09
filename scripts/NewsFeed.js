@@ -21,6 +21,23 @@ var NewsFeed = {
         return $div;
     },
 
+    getIncomingExternalSubscribeActivity: function(actor, externalUser) {
+        console.log(actor, externalUser);
+        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span clas="name">' + Utils.escape(actor.displayName) + '</span></span>';
+        var $externalUser = '<span class="link external-user">' + Utils.escape(externalUser.username) + '</span>';
+        var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to $externalUser', {$externalUser: $externalUser, $user: $user}) + '</div>'); 
+        $div.find('.link.user').click(actor.goTo);
+        $div.find('.link.external-user').click(externalUser.goTo);
+        return $div;
+    },
+
+    getOutgoingExternalSubscribeActivity: function(externalUser) {
+        var $externalUser = '<span class="link external-user">' + Utils.escape(externalUser.username) + '</span>';
+        var $div = $('<div class="activity">' + TranslationSystem.get('You subscribed to $externalUser', {$externalUser: $externalUser}) + '</div>'); 
+        $div.find('.link.external-user').click(externalUser.goTo);
+        return $div;
+    },
+
     getOutgoingFollowActivity: function(otherUser) {
         var $user = '<span class="user small link"><img src="' + otherUser.smallImageUrl + '"/><span class="name">' + Utils.escape(otherUser.displayName) + '</span></span>';
         var $div = $('<div class="activity">' + TranslationSystem.get('You started following $user', {$user: $user}) + '</div>');
@@ -57,6 +74,7 @@ var NewsFeed = {
             actor = null,
             otherUser = null,
             playlist = null,
+            externalUser = null,
             thing = null;
 
         switch (activity.verb) {
@@ -78,6 +96,16 @@ var NewsFeed = {
                     $div = NewsFeed.getIncomingSubscribeActivityView(actor, playlist);
                 } else if (actor.id === UserManager.currentUser.id) {
                     $div = NewsFeed.getOutgoingSubscribeActivityView(playlist);
+                }
+            break;
+
+            case 'external_subscribe':
+                actor = new User(JSON.parse(activity.actor));
+                externalUser = new ExternalUserSubscription(JSON.parse(activity.target));
+                if (actor.id === UserManager.currentUser.id) {
+                    $div = NewsFeed.getOutgoingExternalSubscribeActivity(externalUser);
+                } else {
+                    $div = NewsFeed.getIncomingExternalSubscribeActivity(actor, externalUser);
                 }
             break;
 

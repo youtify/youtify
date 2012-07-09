@@ -337,12 +337,20 @@ input[type=search]::-webkit-search-results-decoration {
     padding: 0 5px 5px 5px;
     overflow-y: scroll;
 }
-#left .menu .news-feed:hover,
-#left .menu .toplist:hover, 
-#left .menu .queue:hover,
-#left .menu .search:hover,
-#left .menu .playlists li:hover {
+#left .menu li:hover {
     color: #000;
+}
+#left .menu .external-user-subscriptions li {
+    cursor: pointer;
+    padding: 8px 8px 8px 25px;
+    position: relative;
+}
+#left .menu .external-user-subscriptions img {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    width: 16px;
+    height: 16px;
 }
 #left .menu .news-feed,
 #left .menu .toplist, 
@@ -1765,6 +1773,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 
 #right .external-profile h1 {
+    display: inline;
     font-size: 16px;
     font-weight: bold;
     clear: right;

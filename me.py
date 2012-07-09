@@ -9,6 +9,7 @@ from model import YoutifyUser
 from model import FollowRelation
 from model import get_activities_structs
 from model import get_display_name_for_youtify_user_model
+from model import get_external_user_subscriptions_struct_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
 from activities import create_follow_activity
 from mail import send_new_follower_email
@@ -169,8 +170,15 @@ class YouTubeUserNameHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
+class ExternalUserSubscriptionsHandler(webapp.RequestHandler):
+    def get(self):
+        user = get_current_youtify_user_model()
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(get_external_user_subscriptions_struct_for_youtify_user_model(user)))
+
 def main():
     application = webapp.WSGIApplication([
+        ('/me/external_user_subscriptions', ExternalUserSubscriptionsHandler),
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
         ('/me/settings', SettingsHandler),

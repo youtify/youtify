@@ -7,6 +7,13 @@ from google.appengine.ext import db
 from google.appengine.ext import search
 from google.appengine.api import users
 
+class ExternalUser(db.Model):
+    type = db.StringProperty(required=True)
+    external_user_id = db.StringProperty(required=True)
+    username = db.StringProperty()
+    avatar_url = db.StringProperty()
+    subscribers = db.ListProperty(db.Key)
+
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
     last_login = db.DateTimeProperty()
@@ -25,6 +32,7 @@ class YoutifyUser(search.SearchableModel):
     tagline = db.StringProperty()
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
+    external_user_subscriptions = db.ListProperty(db.Key)
     nr_of_followers = db.IntegerProperty(default=0)
     nr_of_followings = db.IntegerProperty(default=0)
     nr_of_flattrs = db.IntegerProperty(default=0)
@@ -289,3 +297,19 @@ def get_settings_struct_for_youtify_user_model(youtify_user_model):
         'send_new_follower_email': youtify_user_model.send_new_follower_email,
         'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email
     }
+
+def get_external_user_subscription_struct(m):
+    return {
+        'type': m.type,
+        'external_user_id': m.external_user_id,
+        'username': m.username,
+        'avatar_url': m.avatar_url,
+    }
+
+def get_external_user_subscriptions_struct_for_youtify_user_model(youtify_user_model):
+    ret = []
+
+    for external_user_model in db.get(youtify_user_model.external_user_subscriptions):
+        ret.append(get_external_user_subscription_struct(external_user_model))
+
+    return ret
