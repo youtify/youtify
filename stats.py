@@ -65,11 +65,17 @@ class CronJobHandler(webapp.RequestHandler):
                     stats.nr_of_active_users += 1
         
         pings = []
+        last_ping = None
         for m in PingStats.all().order('-date').fetch(6*24*7):
-            pings.append({
-                'date': str(m.date),
-                'pings': m.pings
-            })
+            if last_ping is not None and last_ping.date.hour is not m.date.hour:
+                pings.append({
+                    'date': str(last_ping.date),
+                    'pings': last_ping.pings
+                })
+                last_ping = m
+            elif last_ping is None or m.pings > last_ping.pings:
+                last_ping = m
+            
         stats.pings = simplejson.dumps(pings)
         
         stats.put()
