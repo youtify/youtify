@@ -100,7 +100,7 @@ var ExternalProfile = {
                 self.$view.find('h1').text(userData.full_name);
                 self.$view.find('.source').text(TranslationSystem.get('View on SoundCloud')).attr('href', userData.permalink_url);
                 self.$view.find('.img').append($('<img src="' + userData.avatar_url + '"/>'));
-                self.$view.find('.description').text(userData.description);
+                self.$view.find('.description').text(Utils.shorten(userData.description, 500));
             });
             
             $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + "/tracks.json", {client_id: SOUNDCLOUD_API_KEY}, function(tracksData) {
