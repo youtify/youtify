@@ -89,7 +89,7 @@ var InfoPopup = {
         var $uploader = $('#video-info-popup .sections .uploader');
         var callback;
 
-        if (info.url.match('soundcloud')) {
+        if (info.url.match('soundcloud') || info.url.match('youtube')) {
             callback = function(event) {
                 ExternalProfile.show(info.url);
                 event.preventDefault();

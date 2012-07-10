@@ -71,6 +71,13 @@ var URIManager = {
                 }
             ],
             [
+                '/youtube/(.*)',
+                function(matches) {
+                    Menu.deSelectAll();
+                    ExternalProfile.loadYouTubeUser(matches[1]);
+                }
+            ],
+            [
                 '/playlists/(.*)',
                 function(matches) {
                     loadPlaylist(matches[1]);

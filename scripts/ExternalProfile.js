@@ -44,8 +44,14 @@ var ExternalProfile = {
         var username;
 
         matches = externalUrl.match('/soundcloud.com/(.*)');
-        if (matches.length) {
+        if (matches) {
             type = 'soundcloud';
+            username = matches[1];
+        }
+
+        matches = externalUrl.match('youtube.com/user/(.*)');
+        if (matches) {
+            type = 'youtube';
             username = matches[1];
         }
 
@@ -56,6 +62,10 @@ var ExternalProfile = {
         switch (type) {
             case 'soundcloud':
             this.loadSoundCloudUser(username);
+            break;
+
+            case 'youtube':
+            this.loadYouTubeUser(username);
             break;
 
             default:
@@ -101,7 +111,51 @@ var ExternalProfile = {
                 });
             });
         });
-    }
+    },
+
+    loadYouTubeUser: function(username) {
+        var self = this;
+
+        self.resetView();
+        self.showView();
+
+        history.pushState(null, null, '/youtube/' + username);
+
+        // https://developers.google.com/youtube/2.0/developers_guide_protocol_profiles#Profiles
+        $.getJSON('https://gdata.youtube.com/feeds/api/users/' + username + '?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
+            self.externalUser = new ExternalUserSubscription({
+                type: 'youtube',
+                external_user_id: username,
+                username: username,
+                avatar_url: data.entry.media$thumbnail.url
+            });
+
+            if (logged_in) {
+                if (ExternalUserSubscriptions.isSubscription(self.externalUser)) {
+                    self.$unsubscribeButton.show();
+                } else {
+                    self.$subscribeButton.show();
+                }
+            }
+
+            self.$view.find('h1').text(data.entry.author[0].name.$t);
+            self.$view.find('.source').text(TranslationSystem.get('View on YouTube')).attr('href', 'http://www.youtube.com/user/' + username);
+            self.$view.find('.img').append($('<img src="' + self.externalUser.avatarUrl + '"/>'));
+            self.$view.find('.description').text(data.entry.summary.$t);
+        });
+
+        // https://developers.google.com/youtube/2.0/developers_guide_protocol_video_feeds#User_Uploaded_Videos
+        $.getJSON('https://gdata.youtube.com/feeds/api/users/' + username + '/uploads?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
+            if (data.feed.entry === undefined) {
+                return;
+            }
+            var results = Search.getVideosFromYouTubeSearchData(data);
+            var $tracklist = self.$view.find('.tracklist');
+            $.each(results, function(i, video) {
+                video.createListView().appendTo($tracklist);
+            });
+        });
+    },
 };
 
 function ExternalUserSubscription(data) {
