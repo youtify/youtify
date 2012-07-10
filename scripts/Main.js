@@ -40,7 +40,7 @@ $(document).ready(function() {
     AutoFlattrer.init();
     BottomPanel.init();
     UserManager.init(USER);
-    ExternalProfile.init();
+    ExternalUserPage.init();
     ExternalUserSubscriptions.init();
     TopMenu.init();
     Toplist.init();

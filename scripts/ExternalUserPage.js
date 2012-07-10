@@ -1,4 +1,4 @@
-var ExternalProfile = {
+var ExternalUserPage = {
     $view: null,
     $subscribeButton: null,
     $unsubscribeButton: null,
@@ -174,7 +174,7 @@ function ExternalUserSubscription(data) {
 
     self.goTo = function() {
         console.log(self, 'goto');
-        ExternalProfile.load(self.type, self.username);
+        ExternalUserPage.load(self.type, self.username);
     };
 
     self.getUrl = function() {
@@ -197,7 +197,7 @@ function ExternalUserSubscription(data) {
         $li.mousedown(function() {
             $('#left .menu li').removeClass('selected');
             $(this).addClass('selected');
-            ExternalProfile.load(self.type, self.username);
+            ExternalUserPage.load(self.type, self.username);
         });
 
         return $li;

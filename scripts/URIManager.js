@@ -67,14 +67,14 @@ var URIManager = {
                 '/soundcloud/(.*)',
                 function(matches) {
                     Menu.deSelectAll();
-                    ExternalProfile.loadSoundCloudUser(matches[1]);
+                    ExternalUserPage.loadSoundCloudUser(matches[1]);
                 }
             ],
             [
                 '/youtube/(.*)',
                 function(matches) {
                     Menu.deSelectAll();
-                    ExternalProfile.loadYouTubeUser(matches[1]);
+                    ExternalUserPage.loadYouTubeUser(matches[1]);
                 }
             ],
             [
