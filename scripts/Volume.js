@@ -48,5 +48,11 @@ var Volume = {
             mX = paddingLeft;
         }
         $('#bottom .volume .slider').css({'width': mX});
+    },
+    
+    updateUI: function(volume) {
+        var maxW = $('#bottom .volume').width(),
+            mX = maxW * volume / 100.0;
+        $('#bottom .volume .slider').css({'width': mX});
     }
 };
