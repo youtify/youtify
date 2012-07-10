@@ -142,7 +142,7 @@ class Stats(db.Model):
     nr_of_flattrs = db.IntegerProperty()
     nr_of_playlist_subscriptions = db.IntegerProperty()
     nr_of_follow_relations = db.IntegerProperty()
-    pings = db.StringProperty()
+    pings = db.TextProperty()
 
 class PingStats(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
