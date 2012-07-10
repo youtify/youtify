@@ -155,7 +155,7 @@ var ExternalProfile = {
                 video.createListView().appendTo($tracklist);
             });
         });
-    },
+    }
 };
 
 function ExternalUserSubscription(data) {
