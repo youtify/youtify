@@ -973,6 +973,7 @@ input[type=search]::-webkit-search-results-decoration {
     z-index: 10;
     border-top: 2px solid rgb(98, 98, 98);
     color: #000;
+    overflow: hidden;
 
     background:-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
     background:-moz-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
