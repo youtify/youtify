@@ -4,9 +4,50 @@
     <head>
         <title>Youtify Public Stats</title>
     </head>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script>
+            var pings = {{ stats.pings }},
+                width = window.innerWidth - 250,
+                height= 300, 
+                timeDiff = new Date().getTimezoneOffset() / 60;
+			function convertToDate(str) {
+				return new Date(
+						str.substring(0,4),
+						str.substring(5,7),
+						str.substring(8,10),
+						str.substring(11,13),
+						str.substring(14,16),
+						str.substring(17,19));
+			}
+        
+            function drawChart() {
+                if (pings.length === 0) {
+                    return;
+                }
+                google.load("visualization", "1", {packages:["corechart"]});
+                google.setOnLoadCallback(function () {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Time');
+                    data.addColumn('number', 'Users online');
+                    for (var i = pings.length-1; i > 0; i--) {
+                        data.addRow([pings[i].date.substring(0,19), pings[i].pings]);
+                    }
+                     new google.visualization.LineChart(
+                        document.getElementById('visualization')).draw(
+                            data, {curveType: "function", width: width, height: height, vAxis: {maxValue: 10}});
+                });
+            }
+            drawChart();
+        </script>
+        <style>
+            body { font: 15px Arial, Helvetica, Verdana, sans-serif; }
+            .list { float: left; }
+            .graph { float: right; }
+            .updated { clear: both; font-style: italic; }
+        </style>
     <body>
         <h1>Youtify Public Stats</h1>
-        <dl>
+        <dl class='list'>
             <dt>Registered Users</dt>
             <dd>{{ stats.nr_of_users }}</dd>
 
@@ -28,6 +69,9 @@
             <dt>Follow relations</dt>
             <dd>{{ stats.nr_of_follow_relations }}</dd>
         </dl>
-        <i>Last updated: {{ stats.date }}</i>
+        <div class='graph'>
+			<div id="visualization"></div>
+		</div>
+        <p class='updated'>Last updated: {{ stats.date }} UTC</p>
     </body>
 </html>

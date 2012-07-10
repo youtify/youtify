@@ -11,6 +11,7 @@ from model import YoutifyUser
 from model import Playlist
 from model import Activity
 from model import FollowRelation
+from model import PingStats
 
 def get_flattr_stats_json():
     json = memcache.get('flattr_stats')
@@ -62,7 +63,15 @@ class CronJobHandler(webapp.RequestHandler):
                 delta = datetime.now() - user.last_login
                 if delta.seconds < 3600 * 24 * 7:
                     stats.nr_of_active_users += 1
-
+        
+        pings = []
+        for m in PingStats.all().order('-date').fetch(6*24*7):
+            pings.append({
+                'date': str(m.date),
+                'pings': m.pings
+            })
+        stats.pings = simplejson.dumps(pings)
+        
         stats.put()
 
 def main():

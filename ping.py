@@ -7,12 +7,8 @@ from google.appengine.api import memcache
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
-
 from django.utils import simplejson
-
-class PingStats(db.Model):
-    date = db.DateTimeProperty(auto_now_add=True)
-    pings = db.IntegerProperty(required=True)
+from model import PingStats
 
 def get_or_create_pings():
     pings = memcache.get('pings')
