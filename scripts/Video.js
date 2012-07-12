@@ -62,10 +62,10 @@ function Video(args) {
     };
     
     this.scrollTo = function() {
-        var $container = this.listView.parents('#right > div'),
-            viewTop = 0,
-            containerTop = 0;
         if (this.listView && this.listView.is(':visible')) {
+            var $container = this.listView.parents('#right > div'),
+                viewTop = 0,
+                containerTop = 0;
             containerTop = $container.scrollTop();
             viewTop = this.listView.position().top + containerTop - 84;
             if (viewTop < containerTop || viewTop + this.listView.height() > containerTop + $container.height()) {
