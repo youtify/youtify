@@ -7,6 +7,8 @@ var RemoteControl = {
         this.server = server;
         if (this.isReceiver()) {
             this.enableReceiver();
+        } else if (this.isRemote()) {
+            this.enableRemote();
         }
     },
 
@@ -56,11 +58,13 @@ var RemoteControl = {
                 throw 'Unknown remote control command: ' + params.command;
             }
         });
+        $('#left .players').show();
     },
 
     enableRemote: function() {
         localStorage.isRemote = JSON.stringify(true);
         localStorage.isReceiver = JSON.stringify(false);
+        $('#left .players').hide();
     },
 
     isRemote: function() {
