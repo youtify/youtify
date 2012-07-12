@@ -91,6 +91,7 @@ class MainHandler(webapp.RequestHandler):
             #'USE_PRODUCTION_JAVASCRIPT': True, # Uncomment to try out production settings. Remember to build production.js with localhost:8080/minimizer
 			'url': self.request.url,
             'og_tag': og_tag,
+            'remoteControlServer': 'http://192.168.1.64:9999',
         }))
 
 def main():

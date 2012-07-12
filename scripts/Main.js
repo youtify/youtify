@@ -44,6 +44,7 @@ $(document).ready(function() {
     ExternalUserSubscriptions.init();
     TopMenu.init();
     Toplist.init();
+    RemoteControl.init(remoteControlServer);
     URIManager.init();
 
     updateFlattrPuffText();

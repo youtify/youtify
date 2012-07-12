@@ -90,6 +90,16 @@ var Utils = {
 
         return ret;
     },
+
+    parseQueryString: function(qs) {
+        var split = qs.split('&');
+        var ret = {};
+        $.each(split, function(i, part) {
+            part = part.split('=');
+            ret[part[0]] = part[1];
+        });
+        return ret;
+    },
     
     openLink: function(url) {
         window.open(url);

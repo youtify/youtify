@@ -67,6 +67,7 @@
 
             var playlistsFromServer = {{ playlistsFromServer }};
             var flattrTopList = {{ flattrTopList }};
+            var remoteControlServer = "{{ remoteControlServer }}";
         </script>
         		
 		<script src="/scripts/jquery.shuffle.js"></script>
@@ -77,6 +78,7 @@
 			soundManager.flashVersion = 9;
             soundManager.debugMode = false;
 		</script>
+        <script src="{{ remoteControlServer }}/socket.io/socket.io.js"></script>
         {% if USE_PRODUCTION_JAVASCRIPT %}
         <script src="/scripts/jquery.timeago.js"></script>
         <script src="/scripts/production.js?v={{ CURRENT_VERSION_ID }}"></script>
@@ -128,6 +130,7 @@
         <script src="/scripts/UserManager.js"></script>
         <script src="/scripts/ExternalUserPage.js"></script>
         <script src="/scripts/ModalBox.js"></script>
+        <script src="/scripts/RemoteControl.js"></script>
 		<script src="/scripts/Main.js"></script>
         {% endif %}
         

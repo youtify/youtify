@@ -60,6 +60,11 @@ function PlayerManager() {
     
     /* Start (or if video is null resume) playback of a video */
     self.play = function(video) {
+        if (RemoteControl.isRemote()) {
+            RemoteControl.sendCommand('play', video.toJSON());
+            return;
+        }
+
         var i = 0;
         
         /* Play called without argument */
