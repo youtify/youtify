@@ -5,6 +5,11 @@ var RemoteControl = {
 
     init: function(server) {
         this.server = server;
+
+        if (Utils.isiOS()) {
+            this.enableRemote()
+        }
+
         if (this.isReceiver()) {
             this.enableReceiver();
         } else if (this.isRemote()) {

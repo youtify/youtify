@@ -91,6 +91,14 @@ var Utils = {
         return ret;
     },
 
+    isiOS: function() {
+        var m = navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/);
+        if (m && m.length) {
+            return true;
+        }
+        return false;
+    },
+
     parseQueryString: function(qs) {
         var split = qs.split('&');
         var ret = {};
