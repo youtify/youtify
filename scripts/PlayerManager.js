@@ -256,6 +256,10 @@ function PlayerManager() {
     
     /* Set volume (0-100) */
     self.setVolume = function(volume) {
+        if (RemoteControl.isRemote()) {
+            RemoteControl.setVolume(volume);
+            return;
+        }
         var i;
         if (volume < 0 || volume > 100) {
             console.log("Player.setVolume("+ volume + "): argument must be >= 0 && <= 100");

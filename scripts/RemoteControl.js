@@ -1,6 +1,7 @@
 var RemoteControl = {
     socket: null,
     server: null,
+    setVolumeTimer: null,
 
     init: function(server) {
         this.server = server;
@@ -9,14 +10,27 @@ var RemoteControl = {
         }
     },
 
-    play: function(video) {
+    sendCommand: function(command, data) {
+        console.log('sending command', command, data);
         var params = {
-            command: 'play',
-            data: JSON.stringify(video.toJSON())
+            command: command,
+            data: data
         };
         $.post(this.server, params, function(response) {
             console.log(response);
         });
+    },
+
+    play: function(video) {
+        this.sendCommand('play', JSON.stringify(video.toJSON()));
+    },
+
+    setVolume: function(volume) {
+        var self = this;
+        clearTimeout(self.setVolumeTimer)
+        self.setVolumeTimer = setTimeout(function() {
+            self.sendCommand('setVolume', volume);
+        }, 250);
     },
 
     enableReceiver: function() {
@@ -28,10 +42,14 @@ var RemoteControl = {
 
         this.socket.on('commands', function(params) {
             params = Utils.parseQueryString(params);
-            console.log('received command', params);
+            console.log('received command', params.command, params.data);
             switch (params.command) {
                 case 'play':
                 player.play(new Video(JSON.parse(decodeURIComponent(params.data))));
+                break;
+
+                case 'setVolume':
+                player.setVolume(Number(params.data));
                 break;
 
                 default:
