@@ -32,6 +32,10 @@ var RemoteControl = {
         this.sendCommand('play', JSON.stringify(video.toJSON()));
     },
 
+    pause: function() {
+        this.sendCommand('pause', null);
+    },
+
     setVolume: function(volume) {
         var self = this;
         clearTimeout(self.setVolumeTimer)
@@ -53,6 +57,10 @@ var RemoteControl = {
             switch (params.command) {
                 case 'play':
                 player.play(new Video(JSON.parse(decodeURIComponent(params.data))));
+                break;
+
+                case 'pause':
+                player.pause();
                 break;
 
                 case 'setVolume':

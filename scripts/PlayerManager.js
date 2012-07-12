@@ -62,6 +62,9 @@ function PlayerManager() {
     self.play = function(video) {
         if (RemoteControl.isRemote()) {
             RemoteControl.play(video);
+            self.isPlaying = true;
+            $('body').removeClass('paused');
+            $('body').addClass('playing');
             return;
         }
 
@@ -158,6 +161,13 @@ function PlayerManager() {
     
     /* Pauses the current video */
     self.pause = function() {
+        if (RemoteControl.isRemote()) {
+            RemoteControl.pause();
+            self.isPlaying = false;
+            $('body').removeClass('playing');
+            $('body').addClass('paused');
+            return;
+        }
         if (self.currentPlayer === null || self.currentVideo === null) {
             console.log("Player.pause(): currentPlayer or currentVideo is null");
             return;
@@ -169,6 +179,14 @@ function PlayerManager() {
     
     /* Pauses or plays the current video */
     self.playPause = function() {
+        if (RemoteControl.isRemote()) {
+            if (self.isPlaying) {
+                self.pause();
+            } else {
+                self.play();
+            }
+        }
+
         if (self.currentPlayer === null || self.currentVideo === null) {
             console.log("Player.playPause(): currentPlayer or currentVideo is null");
             return;
