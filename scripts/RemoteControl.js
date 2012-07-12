@@ -9,8 +9,12 @@ var RemoteControl = {
         }
     },
 
-    sendCommand: function(command, data) {
-        $.post(this.server, data, function(response) {
+    play: function(video) {
+        var params = {
+            command: 'play',
+            data: JSON.stringify(video.toJSON())
+        };
+        $.post(this.server, params, function(response) {
             console.log(response);
         });
     },
@@ -22,9 +26,17 @@ var RemoteControl = {
         this.socket = io.connect(this.server);
         console.log('listening on ' + this.server);
 
-        this.socket.on('commands', function(video) {
-            console.log('received video play request', video);
-            player.play(new Video(Utils.parseQueryString(video)));
+        this.socket.on('commands', function(params) {
+            params = Utils.parseQueryString(params);
+            console.log('received command', params);
+            switch (params.command) {
+                case 'play':
+                player.play(new Video(JSON.parse(decodeURIComponent(params.data))));
+                break;
+
+                default:
+                throw 'Unknown remote control command: ' + params.command;
+            }
         });
     },
 
