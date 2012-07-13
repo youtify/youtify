@@ -48,6 +48,8 @@ $(document).ready(function() {
 
     updateFlattrPuffText();
     EventSystem.addEventListener('language_changed', updateFlattrPuffText);
+    
+    $('.login-link').click(LoadingBar.show);
 });
 
 function updateFlattrPuffText() {
