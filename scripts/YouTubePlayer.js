@@ -9,6 +9,8 @@
     self.loadedNewVideo = false;
     self.currentVideo = null;
     self.inFullScreen = false;
+    self.defaultWidth = $('#left .players').width();
+    self.defaultHeight = $('#left .players').height();
     
     /* Init the player */
     self.init = function(callback) {
@@ -21,8 +23,8 @@
         
         /* First argument is a DOM id */
 		self.player = new YT.Player('youtube', {
-            height: '230',
-            width: '230',
+            height: self.defaultHeight,
+            width: self.defaultWidth,
             videoId: videoId,
             enablejsapi: 1,
             modestbranding: 1,
@@ -148,16 +150,14 @@
     
     /* Exit fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOff = function() {
-        var width = 230,
-            height = 230;
         if (self.view === null || self.view.left < 0) {
             return;
         }
         
 		/* Must set style, not class */
 		$('#left .players').removeAttr('style');
-		self.view.width(width);
-		self.view.height(height);
+		self.view.width(self.defaultWidth);
+		self.view.height(self.defaultHeight);
         self.inFullScreen = false;
     };
     

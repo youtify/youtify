@@ -7,6 +7,8 @@ function SoundCloudPlayer() {
     self.view = null;
 	self.volume = 100;
 	self.playedSuccessfully = false;
+    self.defaultWidth = $('#left .players').width();
+    self.defaultHeight = $('#left .players').height();
 	
     /* Init the player */
     self.init = function(callback) {
@@ -120,16 +122,15 @@ function SoundCloudPlayer() {
     
     /* Exit fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOff = function() {
-        var width = 230,
-            height = 230;
         if (self.view === null) {
             return;
         }
         
 		/* Must set style, not class */
 		$('#left .players').removeAttr('style');
-		self.view.width(width);
-		self.view.height(height);
+		self.view.width(self.defaultWidth);
+		self.view.height(self.defaultHeight);
+        self.inFullScreen = false;
     };
     
     /* Set volume (0-100) */
