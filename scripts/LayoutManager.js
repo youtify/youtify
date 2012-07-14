@@ -1,7 +1,7 @@
 var LayoutManager = {
     self: this,
     width: 0,
-    height: 0
+    height: 0,
     init: function() {
         self.width = $(window).width();
         self.height = $(window).height();
