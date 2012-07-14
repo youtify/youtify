@@ -4,10 +4,7 @@ body:after {
     content:
         url(/images/fullscreen.png)
         url(/images/minimize.png)
-        url(/images/pause.png)
-        url(/images/next.png)
-        url(/images/prev.png)
-		url(/images/shuffle-off.png)
+        url(/images/shuffle-off.png)
         url(/images/knob.png)
         url(/images/playlist.png)
         url(/images/search.png);
@@ -1020,41 +1017,58 @@ input[type=search]::-webkit-search-results-decoration {
     background: -o-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
     background: linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
 }
+#bottom .controls .playpause {
+    width: 50px;
+    height: 50px;
+}
 #bottom .controls .prev:active,
 #bottom .controls .playpause:active,
 #bottom .controls  .next:active {
     box-shadow: 0px 0px 5px #000, inset 0px 0px 5px #000;
 }
 #bottom .controls .prev:after {
-    content: url(/images/prev.png);
-    width: 14px;
-    height: 13px;
+    content: 'Å';
+    font-family: EntypoRegular;
+    font-size: 36px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: 10px;
-    left: 8px;
-}
-#bottom .controls .playpause {
-    width: 50px;
-    height: 50px;
+    top: 1px;
+    left: 6px;
 }
 #bottom .controls .playpause:after {
-    content: url(/images/play.png);
-    width: 17px;
-    height: 15px;
+    content: '{';
+    font-family: EntypoRegular;
+    font-size: 50px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: 18px;
+    top: 9px;
     left: 18px;
 }
 .playing #bottom .controls .playpause:after {
-    content: url(/images/pause.png);
+    content: '|';
+    font-family: EntypoRegular;
+    font-size: 50px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 9px;
+    left: 17px;
 }
 #bottom .controls .next:after {
-    content: url(/images/next.png);
-    width: 13px;
-    height: 13px;
+    content: 'Ä';
+    font-family: EntypoRegular;
+    font-size: 36px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: 11px;
-    left: 11px;
+    top: 1px;
+    left: 8px;
 }
 #bottom .info {
     position: absolute;
