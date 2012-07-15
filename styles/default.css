@@ -1155,7 +1155,7 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .timeline-wrapper .position,
 #bottom .timeline-wrapper .length{
     position: absolute;
-    top: 0px;
+    top: -2px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     text-align: center;
     width: 45px;
@@ -1254,7 +1254,7 @@ input[type=search]::-webkit-search-results-decoration {
     height: 16px;
     position: absolute;
     left: 210px;
-    bottom: 38px;
+    bottom: 40px;
     cursor: pointer;
 }
 #bottom .fullscreen:after {
@@ -1262,7 +1262,7 @@ input[type=search]::-webkit-search-results-decoration {
     font-family: EntypoRegular;
     font-size: 40px;
     line-height: 20px;
-    color: #000;
+    color: #333;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
     top: -7px;
@@ -1283,10 +1283,9 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .shuffle {
     position: absolute;
     right: -6px;
-    top: 22px;
+    top: 21px;
     width: 28px;
     height: 28px;
-        
     cursor: pointer;
     margin: 15px;
     border-radius: 50px;
@@ -1299,14 +1298,13 @@ input[type=search]::-webkit-search-results-decoration {
     font-size: 32px;
     line-height: 20px;
     cursor: pointer;
-    color: #000;
+    color: #333;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
     left: 5px;
 }
 #bottom .shuffle.on {
     box-shadow: inset 1px 2px 3px #000, 1px 2px 3px rgba(255,255,255, 0.5);
-
 }
 #bottom .shuffle.on:active,
 #bottom .shuffle:active {
