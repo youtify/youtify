@@ -366,6 +366,7 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     padding: 8px 8px 8px 25px;
     background: url(/images/playlist.png) no-repeat 5px center;
+    position: relative;
 }
 #left .menu .news-feed {
     background: url(/images/newsfeed.png) no-repeat 5px center;
@@ -377,7 +378,18 @@ input[type=search]::-webkit-search-results-decoration {
     background: url(/images/playqueue.png) no-repeat 5px center;
 }
 #left .menu .search {
-    background: url(/images/small-search.png) no-repeat 5px center;
+    background: none;
+}
+#left .menu .search:before {
+    content: 'ô';
+    font-family: EntypoRegular;
+    font-size: 36px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
+    position: absolute;
+    top: 3px;
+    left: 3px;
 }
 
 #left .menu li.playing {
