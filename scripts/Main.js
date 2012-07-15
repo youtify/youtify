@@ -51,6 +51,12 @@ $(document).ready(function() {
     EventSystem.addEventListener('language_changed', updateFlattrPuffText);
     
     $('.login-link').click(LoadingBar.show);
+
+    $('.playlists').click(function(event) {
+        if ($(event.target).hasClass('playlists')) {
+            Utils.deSelectSelectedVideos();
+        }
+    });
 });
 
 function updateFlattrPuffText() {
