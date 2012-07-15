@@ -169,7 +169,7 @@ input[type=search]::-webkit-search-results-decoration {
 
     height: 26px;
     width: 200px;
-    padding: 2px 6px 2px 6px;
+    padding: 2px 4px 2px 6px;
     border-radius: 10px 0 0 10px;
     border: 1px solid #8B9594;
     border-right: none;
