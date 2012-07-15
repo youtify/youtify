@@ -366,8 +366,16 @@ input[type=search]::-webkit-search-results-decoration {
     padding: 8px 8px 8px 25px;
     position: relative;
 }
-#left .menu .news-feed {
-    background: url(/images/newsfeed.png) no-repeat 5px center;
+#left .menu .news-feed:before {
+    content: 'ó';
+    font-family: EntypoRegular;
+    font-size: 32px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 3px;
+    left: 4px;
 }
 #left .menu .toplist:before {
     content: '7';
