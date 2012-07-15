@@ -2,8 +2,13 @@
 *******************************/
 body:after {
     content:
-        url(/images/fullscreen.png)
-        url(/images/minimize.png)
+        url(/images/volume-down-small.png)
+        url(/images/volume-up-small.png)
+        url(/images/playing.png)
+        url(/images/youtube.png)
+        url(/images/soundcloud.png)
+        url(/images/officialfm.png)
+        url(/images/bigsnake.gif)
         url(/images/knob.png);
 
     display: none;
@@ -1247,15 +1252,32 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .fullscreen {
     width: 16px;
     height: 16px;
-    display: inline-block;
     position: absolute;
     left: 210px;
     bottom: 38px;
     cursor: pointer;
-    background: url(/images/fullscreen.png);
 }
-#bottom .fullscreen.on {
-    background: url(/images/minimize.png);
+#bottom .fullscreen:after {
+    content: 'Ñ';
+    font-family: EntypoRegular;
+    font-size: 40px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: -7px;
+    left: -2px;
+}
+#bottom .fullscreen.on:after {
+    content: 'Ö';
+    font-family: EntypoRegular;
+    font-size: 40px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: -7px;
+    left: -2px;
 }
 
 #bottom .shuffle {
