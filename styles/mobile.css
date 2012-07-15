@@ -4,7 +4,6 @@ body:after {
     content:
         url(/images/fullscreen.png)
         url(/images/minimize.png)
-        url(/images/shuffle-off.png)
         url(/images/knob.png)
         url(/images/playlist.png)
         url(/images/search.png);
