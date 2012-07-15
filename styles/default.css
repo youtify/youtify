@@ -4,8 +4,7 @@ body:after {
     content:
         url(/images/fullscreen.png)
         url(/images/minimize.png)
-        url(/images/knob.png)
-        url(/images/playlist.png);
+        url(/images/knob.png);
 
     display: none;
 }
@@ -365,7 +364,6 @@ input[type=search]::-webkit-search-results-decoration {
 #left .menu .playlists li {
     cursor: pointer;
     padding: 8px 8px 8px 25px;
-    background: url(/images/playlist.png) no-repeat 5px center;
     position: relative;
 }
 #left .menu .news-feed {
@@ -391,7 +389,17 @@ input[type=search]::-webkit-search-results-decoration {
     top: 3px;
     left: 3px;
 }
-
+#left .menu .playlists li:before {
+    content: 'i';
+    font-family: EntypoRegular;
+    font-size: 40px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
+    position: absolute;
+    top: 3px;
+    left: 3px;
+}
 #left .menu li.playing {
     background: url(/images/playing.png) no-repeat 5px center;
     background-color: rgba(0, 124, 137, 0.1);
@@ -604,13 +612,6 @@ input[type=search]::-webkit-search-results-decoration {
     line-height: 40px;
     text-align: center;
     cursor: default;
-}
-#right .tracklist tr .playlist {
-    width: 40px;
-    cursor: pointer;
-    background-image: url(/images/playlist.png);
-    background-repeat: no-repeat;
-    background-position: center center;
 }
 #right .video.alternative .title:before {
     content: '\21B9';
