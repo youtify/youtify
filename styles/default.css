@@ -426,6 +426,9 @@ input[type=search]::-webkit-search-results-decoration {
     top: 3px;
     left: 3px;
 }
+#left .menu .playlists li.playing:before {
+    content: '';
+}
 #left .menu li.playing {
     background: url(/images/playing.png) no-repeat 5px center;
     background-color: rgba(0, 124, 137, 0.1);
