@@ -1,18 +1,18 @@
 var AutoFlattrer = {
-    flattrThingForTrack: null,
+    thingForCurrentTrack: null,
 
     init: function() {
         EventSystem.addEventListener('video_started_playing_successfully', function(data) {
-            AutoFlattrer.flattrThingForTrack = false;
+            AutoFlattrer.thingForCurrentTrack = false;
         });
 
         EventSystem.addEventListener('flattr_thing_for_track_found', function(data) {
-            AutoFlattrer.flattrThingForTrack = data;
+            AutoFlattrer.thingForCurrentTrack = data;
         });
 
         EventSystem.addEventListener('song_almost_done_playing', function(data) {
-            if (has_flattr_access_token && settingsFromServer.flattr_automatically && AutoFlattrer.flattrThingForTrack) {
-                AutoFlattrer.makeFlattrClick(AutoFlattrer.flattrThingForTrack);
+            if (has_flattr_access_token && settingsFromServer.flattr_automatically && AutoFlattrer.thingForCurrentTrack) {
+                AutoFlattrer.makeFlattrClick(AutoFlattrer.thingForCurrentTrack);
             }
         });
     },
