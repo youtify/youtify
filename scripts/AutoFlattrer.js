@@ -29,6 +29,7 @@ var AutoFlattrer = {
         } else {
             url = '/flattrautosubmit';
             postParams = {
+                videoTitle: thingData.videoTitle,
                 url: thingData.sourceUrl
             };
         }

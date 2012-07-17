@@ -45,6 +45,7 @@ class AutoSubmitHandler(webapp.RequestHandler):
     """Flattrs a specified URL even though it may not be on flattr yet"""
     def post(self):
         url_to_submit = self.request.get('url')
+        video_title = self.request.get('videoTitle')
         url = 'https://api.flattr.com/rest/v2/flattr'
         user = get_current_youtify_user_model()
 
@@ -62,8 +63,7 @@ class AutoSubmitHandler(webapp.RequestHandler):
 
         if json.get('message') == 'ok' and 'thing' in json:
             thing_id = str(json['thing'].get('id'))
-            thing_title = json['thing'].get('title')
-            create_flattr_activity(user, thing_id, thing_title)
+            create_flattr_activity(user, thing_id, video_title)
             user.nr_of_flattrs += 1
             user.save()
         else:
