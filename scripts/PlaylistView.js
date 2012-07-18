@@ -193,34 +193,6 @@ var PlaylistView = {
         });
     },
 
-    showPlaylistSharePopup: function (playlist, elem, arrowDirection) {
-        $('#share-playlist-popup .link input').val(playlist.getUrl());
-
-        $('#share-playlist-popup .twitter')
-            .unbind('click')
-            .click(function (event) {
-                event.preventDefault();
-                window.open(playlist.getTwitterShareUrl(), 'Share playlist on Twitter', 400, 400);
-                return false;
-            });
-
-        $('#share-playlist-popup .facebook')
-            .unbind('click')
-            .click(function (event) {
-                event.preventDefault();
-                window.open(playlist.getFacebookShareUrl(), 'Share playlist on Facebook', 400, 400);
-                return false;
-            });
-
-        elem.arrowPopup('#share-playlist-popup', arrowDirection);
-    },
-
-    shareButtonClicked: function (event) {
-        var playlistBar = $(this).parent();
-        var playlist = playlistBar.data('playlist');
-        PlaylistView.showPlaylistSharePopup(playlist, $(this), 'up');
-    },
-
     deleteVideoButtonClicked: function (li) {
         var playlist = playlistManager.getCurrentlySelectedPlaylist();
         var allSelectedVideos = li.parent().find('.video.selected');

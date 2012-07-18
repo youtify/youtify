@@ -96,7 +96,7 @@ function showPlaylistContextMenu(event) {
             cssClass: 'share',
             args: $(this),
             callback: function(li) {
-                PlaylistView.showPlaylistSharePopup(li.data('model'), li, 'left');
+                new ShareTrackDialog(li.data('model')).show();
             }
         });
     }
@@ -217,7 +217,7 @@ function showResultsItemContextMenu(event, videoElem) {
 			args: li,
 			callback: function(elem) {
                 var video = $(elem).data('model');
-                showVideoSharePopup(video, elem, 'up');
+                new ShareTrackDialog(video).show();
 			}
 		}
     ];

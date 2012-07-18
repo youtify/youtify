@@ -75,7 +75,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
     self.getTwitterShareUrl = function() {
         var url = self.getUrl(),
-            text = "Check out self playlist!" + ' -- ' + self.title;
+            text = "Check out this playlist!" + ' -- ' + self.title;
         return encodeURI('http://twitter.com/share?related=youtify&via=youtify' + '&url=' + url + '&counturl=' + url + '&text=' + text);
     };
 

@@ -95,3 +95,35 @@ function EditProfileDialog() {
 EditProfileDialog.prototype = new ModalBox();
 EditProfileDialog.prototype.constructor = EditProfileDialog;
 
+/* SHARE TRACK DIALOG
+ ****************************************************************************/
+
+function ShareTrackDialog(videoOrPlaylist) {
+    ModalBox.call(this);
+
+    this.view.addClass('share');
+
+    this.view.find('.wrapper p').append($('<input type="text" />').val(videoOrPlaylist.getUrl()));
+
+    var $shareOnTwitter = $('<div class="share-button twitter"></span>').text(TranslationSystem.get('Share on Twitter'))
+        .click(function(event) {
+            event.preventDefault();
+            window.open(videoOrPlaylist.getTwitterShareUrl(), TranslationSystem.get('Share on Twitter'), 'width=500, height=300');
+            return false;
+        });
+
+    var $shareOnFacebook = $('<div class="share-button facebook"></span>').text(TranslationSystem.get('Share on Facebook'))
+        .click(function(event) {
+            event.preventDefault();
+            window.open(videoOrPlaylist.getFacebookShareUrl(), TranslationSystem.get('Share on Facebook'), 'width=500, height=300');
+            return false;
+        });
+
+    this.view.find('.wrapper .buttons').append($shareOnTwitter);
+    this.view.find('.wrapper .buttons').append($shareOnFacebook);
+
+    this.setCanBeClosed(true);
+}
+
+ShareTrackDialog.prototype = new ModalBox();
+ShareTrackDialog.prototype.constructor = ShareTrackDialog;

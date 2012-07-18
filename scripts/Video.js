@@ -1,25 +1,3 @@
-function showVideoSharePopup(video, elem, arrowDirection) {
-    $('#share-video-popup .link input').val(video.getUrl());
-
-    $('#share-video-popup .twitter')
-        .unbind('click')
-        .click(function(event) {
-            event.preventDefault();
-            window.open(video.getTwitterShareUrl(), 'Share video on Twitter', 400, 400);
-            return false;
-        });
-
-    $('#share-video-popup .facebook')
-        .unbind('click')
-        .click(function(event) {
-            event.preventDefault();
-            window.open(video.getFacebookShareUrl(), 'Share video on Facebook', 400, 400);
-            return false;
-        });
-
-    elem.arrowPopup('#share-video-popup', arrowDirection);
-}
-
 function Video(args) {
     this.videoId = args.videoId;
     this.flattrThingId = args.flattrThingId || null;

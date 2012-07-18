@@ -1632,16 +1632,6 @@ input[type=search]::-webkit-search-results-decoration {
     width: auto;
 }
 
-/** SHARE PLAYLIST POPUP
- ****************************************************************************/
-
-#share-playlist-popup input,
-#share-video-popup input {
-    width: 100%;
-    margin-bottom: 4px;
-    font-size: 12px;
-}
-
 /** SPOTIFY IMPORTER POPUP
  ****************************************************************************/
 
@@ -1874,4 +1864,25 @@ input[type=search]::-webkit-search-results-decoration {
 
 #right .external-profile .tracklist {
     margin-top: 5px;
+}
+
+/** SHARE DIALOG
+ ****************************************************************************/
+
+.modalbox.share input {
+    display: block;
+    width: 294px;
+    margin-top: 10px;
+}
+.modalbox.share .share-button {
+    margin-top: 10px;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+}
+.modalbox.share .share-button.twitter {
+    background: #31A3D0;
+}
+.modalbox.share .share-button.facebook {
+    background: rgb(59, 89, 152);
 }
