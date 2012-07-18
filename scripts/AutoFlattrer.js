@@ -24,6 +24,7 @@ var AutoFlattrer = {
         if (thingData.thingId) {
             url = '/flattrclick';
             postParams = {
+                videoTitle: thingData.videoTitle,
                 thing_id: thingData.thingId
             };
         } else {

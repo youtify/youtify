@@ -19,6 +19,7 @@ class ClickHandler(webapp.RequestHandler):
     """Flattrs a specified thing"""
     def post(self):
         thing_id = self.request.get('thing_id')
+        video_title = self.request.get('videoTitle')
         url = 'https://api.flattr.com/rest/v2/things/' + thing_id + '/flattr'
         user = get_current_youtify_user_model()
 
@@ -31,8 +32,7 @@ class ClickHandler(webapp.RequestHandler):
 
         if json.get('message') == 'ok' and 'thing' in json:
             thing_id = str(json['thing'].get('id'))
-            thing_title = json['thing'].get('title')
-            create_flattr_activity(user, thing_id, thing_title)
+            create_flattr_activity(user, thing_id, video_title)
             user.nr_of_flattrs += 1
             user.save()
         else:
