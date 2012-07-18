@@ -184,6 +184,18 @@ function showResultsItemContextMenu(event, videoElem) {
     var allSelectedVideos = $(this).parent().find('.video.selected');
     var video = li.data('model');
 
+    var videos = [];
+    if (allSelectedVideos.length === 0) {
+        videos.push(video);
+    } else {
+        $.each(allSelectedVideos, function(index, li) {
+            var video = $(li).data('model');
+            if (video) {
+                videos.push(video);
+            }
+        });
+    }
+
     if (!$(li).hasClass('selected')) {
         li.parent().find('.selected').removeClass('selected');
         li.addClass('selected');
@@ -209,6 +221,14 @@ function showResultsItemContextMenu(event, videoElem) {
                         Queue.addManual(model);
                     }
                 });
+            }
+        },
+		{
+            title: TranslationSystem.get('Add to playlist'),
+            cssClass: 'add-to-playlist',
+            args: allSelectedVideos,
+            callback: function() {
+                new AddToPlaylistDialog(videos).show();
             }
         },
 		{

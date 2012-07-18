@@ -127,3 +127,29 @@ function ShareTrackDialog(videoOrPlaylist) {
 
 ShareTrackDialog.prototype = new ModalBox();
 ShareTrackDialog.prototype.constructor = ShareTrackDialog;
+
+/* ADD TO PLAYLIST DIALOG
+ ****************************************************************************/
+
+function AddToPlaylistDialog(videos) {
+    ModalBox.call(this);
+
+    this.view.addClass('add-to-playlist');
+
+    this.view.find('.wrapper p').append(playlistManager.getDropdownOfAllPlaylists());
+
+    this.addButton(TranslationSystem.get('Add to playlist'), function(self) {
+        var playlistIndex = self.view.find('select').val();
+        var playlist = playlistManager.getPlaylist(playlistIndex);
+        $.each(videos, function(index, video) {
+            playlist.addVideo(video);
+        });
+        playlistManager.save();
+        self.remove();
+    });
+
+    this.setCanBeClosed(true);
+}
+
+AddToPlaylistDialog.prototype = new ModalBox();
+AddToPlaylistDialog.prototype.constructor = AddToPlaylistDialog;

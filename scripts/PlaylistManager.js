@@ -205,6 +205,21 @@ function PlaylistsManager() {
         }
     };
 
+    this.getDropdownOfAllPlaylists = function() {
+        var $select = $('<select></select>');
+        var playlist;
+        var i;
+
+        for (i = 0; i < this.playlists.length; i += 1) {
+            playlist = this.playlists[i];
+            if (playlist.remoteId === null || playlist.owner.id === UserManager.currentUser.id) {
+                $('<option></option>').val(i).text(playlist.title).appendTo($select);
+            }
+        }
+
+        return $select;
+    };
+
     this.load();
 }
 

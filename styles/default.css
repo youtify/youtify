@@ -1348,6 +1348,7 @@ input[type=search]::-webkit-search-results-decoration {
 #contextmenu .option.json:before,
 #contextmenu .option.play:before,
 #contextmenu .option.queue:before,
+#contextmenu .option.add-to-playlist:before,
 #contextmenu .option.view:before,
 #contextmenu .option.buy:before,
 #contextmenu .option.replace:before {
@@ -1393,6 +1394,9 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #contextmenu .option.queue:before {
     content:'j';
+}
+#contextmenu .option.add-to-playlist:before {
+    content:'i';
 }
 #contextmenu .option.view:before {
     content:'*';
@@ -1885,4 +1889,15 @@ input[type=search]::-webkit-search-results-decoration {
 }
 .modalbox.share .share-button.facebook {
     background: rgb(59, 89, 152);
+}
+
+/** ADD TO PLAYLIST DIALOG
+ ****************************************************************************/
+
+.modalbox.add-to-playlist .buttons {
+    text-align: right;
+}
+
+.modalbox.add-to-playlist select {
+    width: 294px;
 }
