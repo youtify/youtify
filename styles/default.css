@@ -629,6 +629,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #right .tracklist .video .type a {
     display: block;
+    text-decoration: none;
     width: 100%;
     height: 100%;
 }
