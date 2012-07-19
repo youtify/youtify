@@ -242,47 +242,6 @@ function showResultsItemContextMenu(event, videoElem) {
 		}
     ];
 
-    switch (video.type) {
-        case 'youtube':
-        buttons.push({
-            title: TranslationSystem.get('View on YouTube'),
-            cssClass: 'view',
-            args: li,
-            callback: function(elem) {
-                window.open('http://www.youtube.com/watch?v=' + video.videoId);
-            }
-        });
-        break;
-
-        case 'soundcloud':
-        buttons.push({
-            title: TranslationSystem.get('View on SoundCloud'),
-            cssClass: 'view',
-            args: li,
-            callback: function(elem) {
-                var url = "http://api.soundcloud.com/tracks/" + video.videoId + ".json";
-                var params = {
-                    client_id: SOUNDCLOUD_API_KEY
-                };
-                $.getJSON(url, params, function(data) {
-                    window.open(data.permalink_url);
-                });
-            }
-        });
-        break;
-
-        case 'officialfm':
-        buttons.push({
-            title: TranslationSystem.get('View on Official.fm'),
-            cssClass: 'view',
-            args: li,
-            callback: function(elem) {
-                window.open('http://www.official.fm/tracks/' + video.videoId);
-            }
-        });
-        break;
-    }
-
     if (ON_DEV) {
         buttons.push({
             title: 'View JSON',

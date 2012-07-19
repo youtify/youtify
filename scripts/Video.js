@@ -24,8 +24,30 @@ function Video(args) {
         return location.protocol + '//' + location.host + '/tracks/' + this.type + '/' + this.videoId;
     };
 
-    this.getYouTubeUrl = function() {
-        return 'http://www.youtube.com/watch?v=' + this.videoId;
+    this.getExternalLink = function() {
+        var ret = {
+            label: '',
+            url: ''
+        };
+
+        switch (this.type) {
+            case 'youtube':
+            ret.label = TranslationSystem.get('View on YouTube');
+            ret.url = 'http://www.youtube.com/watch?v=' + this.videoId;
+            break;
+
+            case 'soundcloud':
+            ret.label = TranslationSystem.get('View on SoundCloud');
+            ret.url = "http://api.soundcloud.com/tracks/" + this.videoId + ".json";
+            break;
+
+            case 'officialfm':
+            ret.label = TranslationSystem.get('View on Official.fm');
+            ret.url = 'http://www.official.fm/tracks/' + this.videoId;
+            break;
+        }
+        
+        return ret;
     };
 
     this.getTwitterShareUrl = function() {
@@ -79,6 +101,7 @@ function Video(args) {
     this.createListView = function() {
         var self = this,
             buttons,
+            externalLink = this.getExternalLink(),
             $fragment = document.createDocumentFragment(),
             $space = document.createElement('td'),
             $play = document.createElement('td'),
@@ -111,9 +134,8 @@ function Video(args) {
         $fragment.appendChild($space.cloneNode(false));
 
         $type.setAttribute('class', 'type');
-        $type.innerHTML = '&nbsp;';
+        $type.innerHTML = '<a href="' + externalLink.url + '" title="' + externalLink.label + '" target="_blank">' + '&nbsp;' + '</a>';
         $fragment.appendChild($type);
-        
         
         this.listView = document.createElement('tr');
         this.listView.setAttribute('class', 'draggable video ' + this.type);

@@ -627,6 +627,11 @@ input[type=search]::-webkit-search-results-decoration {
 #right .tracklist .video .type {
     width: 40px;
 }
+#right .tracklist .video .type a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 #right .tracklist .video.selected .playlist,
 #right .tracklist .video.selected .play,
 #right .tracklist .video.selected .title,

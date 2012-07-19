@@ -104,10 +104,11 @@ var VideoInfo = {
 			'prettyprint': true,
 			'v': 2
 		};
+        var externalLink = video.getExternalLink();
 
         var info = {
             video: video,
-            url: video.getYouTubeUrl()
+            url: externalLink.url
         };
 
 		$.getJSON(url, params, function(data) {
