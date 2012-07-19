@@ -1,4 +1,4 @@
-﻿/* PRELOAD
+/* PRELOAD
 *******************************/
 body:after {
     content:
@@ -345,7 +345,7 @@ input[type=search]::-webkit-search-results-decoration {
     font-size: 14px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     padding: 0 5px 5px 5px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 #left .menu li:hover {
     color: #000;
