@@ -5,3 +5,4 @@ production.js
 config.py
 /Icon*
 *~
+.c9revisions
