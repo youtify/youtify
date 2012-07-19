@@ -97,7 +97,7 @@ var ExternalUserPage = {
                     }
                 }
 
-                self.$view.find('h1').text(userData.full_name);
+                self.$view.find('h1').text(userData.username);
                 self.$view.find('.source').text(TranslationSystem.get('View on SoundCloud')).attr('href', userData.permalink_url);
                 self.$view.find('.img').append($('<img src="' + userData.avatar_url + '"/>'));
                 self.$view.find('.description').text(Utils.shorten(userData.description, 500));
