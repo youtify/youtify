@@ -38,7 +38,8 @@ function Video(args) {
 
             case 'soundcloud':
             ret.label = TranslationSystem.get('View on SoundCloud');
-            ret.url = "http://api.soundcloud.com/tracks/" + this.videoId + ".json";
+            //ret.url = "http://api.soundcloud.com/tracks/" + this.videoId + ".json";
+            ret.url = "/soundcloud_id_to_permalink?id=" + this.videoId;
             break;
 
             case 'officialfm':

@@ -168,6 +168,9 @@ handlers:
 - url: /unsubscribe
   script: mail.py
 
+- url: /soundcloud_id_to_permalink
+  script: soundcloud_id_to_permalink.py
+
 - url: /.*
   script: main.py
 
