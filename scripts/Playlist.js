@@ -358,14 +358,14 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                 .mousedown(playlistMouseDown)
                 .mousedown(playlistClicked);
 
-        $('<span class="title"></span>').text(self.title).appendTo(li);
-
         if (self.isSubscription) {
             li.addClass('subscription');
             $('<img class="owner" />').attr('src', self.owner.smallImageUrl).appendTo(li);
         } else {
             li.addClass('droppable');
         }
+
+        $('<span class="title"></span>').text(self.title).appendTo(li);
 
         if (self.remoteId) {
             li.addClass('remote');

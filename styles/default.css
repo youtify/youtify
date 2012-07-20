@@ -350,12 +350,14 @@ input[type=search]::-webkit-search-results-decoration {
 #left .menu li:hover {
     color: #000;
 }
-#left .menu .external-user-subscriptions li {
+#left .menu .external-user-subscriptions li,
+#left .menu .playlists li.subscription {
     cursor: pointer;
     padding: 8px 8px 8px 25px;
     position: relative;
 }
-#left .menu .external-user-subscriptions img {
+#left .menu .external-user-subscriptions img,
+#left .menu .playlists li.subscription .owner {
     position: absolute;
     left: 5px;
     top: 10px;
@@ -426,11 +428,8 @@ input[type=search]::-webkit-search-results-decoration {
     top: 3px;
     left: 3px;
 }
-#left .menu .playlists li.playing:before {
-    content: '';
-}
 #left .menu li.playing {
-    background: url(/images/playing.png) no-repeat 5px center;
+    background: url(/images/playing.png) no-repeat 200px center;
     background-color: rgba(0, 124, 137, 0.1);
 }
 #left .menu li.selected {
@@ -447,18 +446,6 @@ input[type=search]::-webkit-search-results-decoration {
 }
 .logged-in #left .menu .playlists li.remote {
     opacity: 1;
-}
-#left .menu .playlists li.subscription {
-    position: relative;
-    padding-right: 20px;
-}
-#left .menu .playlists li.subscription .owner {
-    width: 16px;
-    height: 16px;
-    border-radius: 16px;
-    position: absolute;
-    right: 5px;
-    top: 9px;
 }
 #left .menu .playlists .new:before {
     content: '+';
