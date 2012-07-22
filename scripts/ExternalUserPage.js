@@ -33,7 +33,7 @@ var ExternalUserPage = {
         this.$view.find('.source').attr('href', '#').html('');
         this.$view.find('.img').html('');
         this.$view.find('.description').html('');
-        this.$view.find('.tracklist').html('');
+        this.$view.find('.tracklist').hide();
         this.$view.find('.button.subscribe').hide();
         this.$view.find('.button.unsubscribe').hide();
     },
@@ -103,13 +103,20 @@ var ExternalUserPage = {
                 self.$view.find('.description').text(Utils.shorten(userData.description, 500));
             });
             
-            $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + "/tracks.json", {client_id: SOUNDCLOUD_API_KEY}, function(tracksData) {
-                var results = Search.getVideosFromSoundCloudSearchData(tracksData);
-                var $tracklist = self.$view.find('.tracklist');
-                $.each(results, function(i, video) {
-                    video.createListView().appendTo($tracklist);
+            var key = 'soundcloud' + username;
+            var $existingTracklist = self.$view.find('#' + key);
+            if ($existingTracklist.length) {
+                $existingTracklist.show();
+            } else {
+                $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + "/tracks.json", {client_id: SOUNDCLOUD_API_KEY}, function(tracksData) {
+                    var results = Search.getVideosFromSoundCloudSearchData(tracksData);
+                    var $tracklist = $('<table class="tracklist"></table>').attr('id', key);
+                    $.each(results, function(i, video) {
+                        video.createListView().appendTo($tracklist);
+                    });
+                    $tracklist.appendTo(self.$view);
                 });
-            });
+            }
         });
     },
 
@@ -144,17 +151,24 @@ var ExternalUserPage = {
             self.$view.find('.description').text(data.entry.summary.$t);
         });
 
-        // https://developers.google.com/youtube/2.0/developers_guide_protocol_video_feeds#User_Uploaded_Videos
-        $.getJSON('https://gdata.youtube.com/feeds/api/users/' + username + '/uploads?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
-            if (data.feed.entry === undefined) {
-                return;
-            }
-            var results = Search.getVideosFromYouTubeSearchData(data);
-            var $tracklist = self.$view.find('.tracklist');
-            $.each(results, function(i, video) {
-                video.createListView().appendTo($tracklist);
+        var key = 'youtube' + username;
+        var $existingTracklist = self.$view.find('#' + key);
+        if ($existingTracklist.length) {
+            $existingTracklist.show();
+        } else {
+            // https://developers.google.com/youtube/2.0/developers_guide_protocol_video_feeds#User_Uploaded_Videos
+            $.getJSON('https://gdata.youtube.com/feeds/api/users/' + username + '/uploads?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
+                if (data.feed.entry === undefined) {
+                    return;
+                }
+                var results = Search.getVideosFromYouTubeSearchData(data);
+                var $tracklist = $('<table class="tracklist"></table>').attr('id', key);
+                $.each(results, function(i, video) {
+                    video.createListView().appendTo($tracklist);
+                });
+                $tracklist.appendTo(self.$view);
             });
-        });
+        }
     }
 };
 
