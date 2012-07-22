@@ -23,6 +23,16 @@ var ExternalUserPage = {
         });
     },
 
+    setMenuItemAsPlayingFor: function(type, username) {
+        $('#left .menu .playing').removeClass('playing');
+        $.each($('#left .menu .external-user-subscriptions li'), function(i, elem) {
+            elem = $(elem);
+            if (elem.hasClass(type) && elem.text() === username) {
+                elem.addClass('playing');
+            }
+        });
+    },
+
     showView: function() {
         $('#right > div').hide();
         this.$view.show();
@@ -112,6 +122,9 @@ var ExternalUserPage = {
                     var results = Search.getVideosFromSoundCloudSearchData(tracksData);
                     var $tracklist = $('<table class="tracklist"></table>').attr('id', key);
                     $.each(results, function(i, video) {
+                        video.onPlayCallback = function() {
+                            self.setMenuItemAsPlayingFor('soundcloud', username);
+                        };
                         video.createListView().appendTo($tracklist);
                     });
                     $tracklist.appendTo(self.$view);
@@ -164,6 +177,9 @@ var ExternalUserPage = {
                 var results = Search.getVideosFromYouTubeSearchData(data);
                 var $tracklist = $('<table class="tracklist"></table>').attr('id', key);
                 $.each(results, function(i, video) {
+                    video.onPlayCallback = function() {
+                        self.setMenuItemAsPlayingFor('youtube', username);
+                    };
                     video.createListView().appendTo($tracklist);
                 });
                 $tracklist.appendTo(self.$view);
@@ -204,7 +220,7 @@ function ExternalUserSubscription(data) {
     };
 
     self.getMenuView = function() {
-        var $li = $('<li></li>');
+        var $li = $('<li></li>').addClass(self.type);
         $('<img/>').attr('src', self.avatarUrl).appendTo($li);
         $('<span class="username"></span>').text(self.username).appendTo($li);
 
