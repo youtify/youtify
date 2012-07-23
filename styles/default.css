@@ -626,9 +626,11 @@ input[type=search]::-webkit-search-results-decoration {
 #right .tracklist .video.selected .like,
 #right .tracklist .video.selected .menu,
 #right .tracklist .video.selected .type,
+#right .tracklist .video.selected .uploader,
 #right .tracklist .video.selected .views,
 #right .tracklist .video.selected .videoCountHint {
     background-color: rgba(0, 124, 137, 0.4);
+    color: #222;
 }
 #right .tracklist tr td {
     line-height: 40px;
@@ -687,13 +689,17 @@ input[type=search]::-webkit-search-results-decoration {
     background-position: center center;
 }
 
-#right .tracklist .title {
+#right .tracklist .title,
+#right .tracklist .uploader {
     text-align: left;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     padding-left: 15px;
     max-height: 40px;
     display: block;
     overflow: hidden;
+}
+#right .tracklist .uploader {
+    cursor: pointer;
 }
 #right .tracklist .video .menu {
     color: transparent;

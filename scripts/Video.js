@@ -1,4 +1,6 @@
 function Video(args) {
+    var self = this;
+
     this.videoId = args.videoId;
     this.flattrThingId = args.flattrThingId || null;
     this.flattrs = args.flattrs || null;
@@ -9,6 +11,7 @@ function Video(args) {
     this.type = args.type || 'youtube';
     this.onPlayCallback = args.onPlayCallback;
     this.listView = null;
+    this.uploaderUsername = args.uploaderUsername || null;
     
     this.clone = function() {
         return new Video({
@@ -76,8 +79,7 @@ function Video(args) {
     };
     
     this.createAlternativeContextMenuButton = function(originalTrack, playlist) {
-        var self = this,
-            buttons = originalTrack.listView.data('additionalMenuButtons') || [];
+        var buttons = originalTrack.listView.data('additionalMenuButtons') || [];
         
         buttons.unshift({
             title: TranslationSystem.get('Replace with alternative'),
@@ -100,17 +102,16 @@ function Video(args) {
     };
     
     this.createListView = function() {
-        var self = this,
-            buttons,
+        var buttons,
             externalLink = this.getExternalLink(),
             $fragment = document.createDocumentFragment(),
             $space = document.createElement('td'),
             $play = document.createElement('td'),
             $title = document.createElement('td'),
+            $uploader = document.createElement('td'),
             $heart = document.createElement('td'),
             $menu = document.createElement('td'),
             $type = document.createElement('td');
-            
         
         $space.setAttribute('class', 'space');
 
@@ -123,6 +124,13 @@ function Video(args) {
         $title.setAttribute('class', 'title');
         $fragment.appendChild($title);
         $fragment.appendChild($space.cloneNode(false));
+
+        if (this.uploaderUsername) {
+            $uploader.innerHTML = this.uploaderUsername;
+            $uploader.setAttribute('class', 'uploader link');
+            $fragment.appendChild($uploader);
+            $fragment.appendChild($space.cloneNode(false));
+        }
         
         $heart.setAttribute('class', 'like');
         $heart.innerHTML = '&hearts;';
@@ -149,6 +157,10 @@ function Video(args) {
         this.listView.find('.menu').click(function(event) {
             showResultsItemContextMenu(event, $(event.target).parent());
         });
+
+        if (this.uploaderUsername) {
+            this.listView.find('.uploader').click(this.goToUploader);
+        }
         
         buttons = this.listView.data('additionalMenuButtons') || [];
         
@@ -167,6 +179,21 @@ function Video(args) {
         this.listView.data('additionalMenuButtons', buttons);
         
         return this.listView;
+    };
+
+    this.goToUploader = function() {
+        switch (self.type) {
+            case 'soundcloud':
+            ExternalUserPage.loadSoundCloudUser(self.uploaderUsername);
+            break;
+
+            case 'youtube':
+            ExternalUserPage.loadYouTubeUser(self.uploaderUsername);
+            break;
+
+            default:
+            throw 'Unknown type for external users: ' + self.type;
+        }
     };
     
     /**

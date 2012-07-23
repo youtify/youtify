@@ -106,7 +106,7 @@ var Search = {
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
                     /* Parse the results and create the views */
-                    var results = Search.getVideosFromYouTubeSearchData(data);
+                    var results = Search.getVideosFromYouTubeSearchData(data, true);
                     $.each(results, function(i, video) {
                         if (video) {
                             video.onPlayCallback = function() {
@@ -154,7 +154,7 @@ var Search = {
 
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
-                    var results = Search.getVideosFromSoundCloudSearchData(data);
+                    var results = Search.getVideosFromSoundCloudSearchData(data, true);
                     $.each(results, function(i, video) {
                         if (video) {
                             video.onPlayCallback = function() {
@@ -326,7 +326,7 @@ var Search = {
     loadMore: function() {
         Search.search(Search.currentQuery, true);
     },
-    getVideosFromSoundCloudSearchData: function(data) {
+    getVideosFromSoundCloudSearchData: function(data, includeUploader) {
         ret = [];
         $.each(data, function(i, track) {
             var buyLinks = track.purchase_url ? [track.purchase_url] : null;
@@ -338,6 +338,7 @@ var Search = {
                 title: track.title,
                 duration: track.duration,
                 buyLinks: buyLinks,
+                uploaderUsername: includeUploader ? track.user.permalink : null,
                 type: 'soundcloud'
             }));
         });
@@ -357,7 +358,7 @@ var Search = {
         });
         return ret;
     },
-    getVideosFromYouTubeSearchData: function(data) {
+    getVideosFromYouTubeSearchData: function(data, includeUploader) {
         var results = [];
         if (data.feed.entry === undefined) {
             return results;
@@ -382,6 +383,7 @@ var Search = {
             var video = new Video({
                 videoId: videoId,
                 title: title,
+                uploaderUsername: includeUploader ? item.author[0].name.$t : null,
                 type: 'youtube'
             });
             results.push(video);
@@ -436,7 +438,7 @@ var Search = {
                 callback(results);
                 return;
             }
-            results = Search.getVideosFromYouTubeSearchData(data);
+            results = Search.getVideosFromYouTubeSearchData(data, true);
             callback(results);
         });
     }
