@@ -720,7 +720,7 @@ input[type=search]::-webkit-search-results-decoration {
 #right .tracklist .video .menu:after {
     content: '\25BE';
     color: #666;
-    font-size: 22px;
+    font-size: 16px;
     position: relative;
     line-height: 20px;
     vertical-align: -22%;
