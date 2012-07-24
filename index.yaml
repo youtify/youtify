@@ -27,5 +27,5 @@ indexes:
 - kind: Playlist
   properties:
   - name: private
-  - name: followers
+  - name: nr_of_followers
     direction: desc

@@ -4,6 +4,7 @@ from google.appengine.api import urlfetch
 from model import FollowRelation
 from model import YoutifyUser
 from model import Activity
+from model import Playlist
 from string import Template
 from django.utils import simplejson
 
@@ -38,27 +39,10 @@ class MigrationStepHandler(webapp.RequestHandler):
 
         #### START MIGRATION CODE ####
 
-        for m in Activity.all().filter('verb =', 'flattr').fetch(page_size, page_size * page):
+        for m in Playlist.all().fetch(page_size, page_size * page):
             count += 1
-            activity_target = simplejson.loads(m.target)
-            if not activity_target['thing_title']:
-                thing_id = activity_target['thing_id']
-                thing_title = ''
-
-                if thing_id in flattr_thing_cache:
-                    thing_title = flattr_thing_cache[thing_id]
-                else:
-                    url = 'https://api.flattr.com/rest/v2/things/' + activity_target['thing_id']
-                    response = urlfetch.fetch(url=url, method=urlfetch.GET)
-                    json = simplejson.loads(response.content)
-                    thing_title = json['title']
-                    flattr_thing_cache[thing_id] = thing_title
-
-                m.target = simplejson.dumps({
-                    'thing_id': activity_target['thing_id'],
-                    'thing_title': thing_title,
-                })
-                m.save()
+            m.nr_of_followers = len(m.followers)
+            m.save()
 
         #### END MIGRATION CODE ####
 
@@ -75,7 +59,7 @@ class MigrationStepHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/admin/migrations/migrate_flattr_activities', MigrationStepHandler),
+        ('/admin/migrations/migrate_nr_of_followers_for_playlists', MigrationStepHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
