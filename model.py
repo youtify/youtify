@@ -82,10 +82,11 @@ class Activity(db.Model):
 class Playlist(search.SearchableModel):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
     json = db.TextProperty()
-    private = db.BooleanProperty()
+    private = db.BooleanProperty(default=False)
     tracks_json = db.TextProperty()
     title = db.StringProperty()
     followers = db.ListProperty(db.Key)
+    nr_of_followers = db.IntegerProperty(default=0)
     favorite = db.BooleanProperty(default=False)
 
     @classmethod

@@ -51,6 +51,7 @@ class PlaylistFollowersHandler(webapp.RequestHandler):
         youtify_user_model.save()
         
         playlist_model.followers.append(youtify_user_model.key())
+        playlist_model.nr_of_followers = len(playlist_model.followers)
         playlist_model.save()
 
         create_subscribe_activity(youtify_user_model, playlist_model)
@@ -72,6 +73,7 @@ class PlaylistFollowersHandler(webapp.RequestHandler):
         youtify_user_model.save()
         
         playlist_model.followers.remove(youtify_user_model.key())
+        playlist_model.nr_of_followers = len(playlist_model.followers)
         playlist_model.save()
         
         self.response.headers['Content-Type'] = 'text/plain'
