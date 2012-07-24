@@ -137,8 +137,8 @@ function Video(args) {
         $fragment.appendChild($heart);
         $fragment.appendChild($space.cloneNode(false));
         
-        $menu.setAttribute('class', 'menu translatable');
-        $menu.innerHTML = TranslationSystem.get('Menu') + ' <span>\u25BE</span>';
+        $menu.setAttribute('class', 'menu');
+        $menu.innerHTML = '';
         $fragment.appendChild($menu);
         $fragment.appendChild($space.cloneNode(false));
 
