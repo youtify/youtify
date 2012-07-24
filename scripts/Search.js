@@ -40,6 +40,23 @@ var Search = {
                 }, timeout);
             }
         });
+
+        (function() {
+            var $search = $('#right .search');
+            var timeout;
+            $('#right .search').scroll(function(event) {
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(function() {
+                    var $pane = $('#right .search .pane.selected');
+                    if ($search.scrollTop() >= ($pane.height() - $search.height()) && $pane.hasClass('has-more')) {
+                        Search.search(Search.currentQuery, true);
+                    }
+                }, 100);
+            });
+        }());
+
         $('#top .search button').click(function() {
             Search.search($.trim($('#top .search input').val()));
         });
@@ -119,9 +136,11 @@ var Search = {
                     var c = Search.youtubeVideosTab.paneView.data('results-count') || 0;
                     Search.youtubeVideosTab.paneView.data('results-count', c + results.length);
 
-                    /* Add load more row */
+                    /* Load more? */
                     if (results.length >= Search.itemsPerPage) {
-                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtubeVideosTab.paneView);
+                        Search.youtubeVideosTab.paneView.addClass('has-more');
+                    } else {
+                        Search.youtubeVideosTab.paneView.removeClass('has-more');
                     }
                     LoadingBar.hide();
                 });
@@ -167,9 +186,11 @@ var Search = {
                     var c = Search.soundCloudTracksTab.paneView.data('results-count') || 0;
                     Search.soundCloudTracksTab.paneView.data('results-count', c + results.length);
 
-                    /* Add load more row */
+                    /* Load more? */
                     if (results.length >= Search.itemsPerPage) {
-                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.soundCloudTracksTab.paneView);
+                        Search.soundCloudTracksTab.paneView.addClass('has-more');
+                    } else {
+                        Search.soundCloudTracksTab.paneView.removeClass('has-more');
                     }
 
                     LoadingBar.hide();
@@ -214,9 +235,11 @@ var Search = {
                     var c = Search.officialfmTracksTab.paneView.data('results-count') || 0;
                     Search.officialfmTracksTab.paneView.data('results-count', c + results.length);
 
-                    /* Add load more row */
+                    /* Load more? */
                     if (data.current >= data.per_page) {
-                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.officialfmTracksTab.paneView);
+                        Search.officialfmTracksTab.paneView.addClass('has-more');
+                    } else {
+                        Search.officialfmTracksTab.paneView.removeClass('has-more');
                     }
 
                     LoadingBar.hide();
@@ -256,11 +279,6 @@ var Search = {
                     var c = Search.youtifyUsersTab.paneView.data('results-count') || 0;
                     Search.youtifyUsersTab.paneView.data('results-count', c + results.length);
 
-                    /* Add load more row */
-                    if (data.current >= data.per_page) {
-                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtifyUsersTab.paneView);
-                    }
-
                     LoadingBar.hide();
                 });
                 break;
@@ -298,33 +316,10 @@ var Search = {
                     var c = Search.youtifyPlaylistsTab.paneView.data('results-count') || 0;
                     Search.youtifyPlaylistsTab.paneView.data('results-count', c + results.length);
 
-                    /* Add load more row */
-                    if (data.current >= data.per_page) {
-                        Search.createLoadMoreRow(Search.loadMore).appendTo(Search.youtifyPlaylistsTab.paneView);
-                    }
-
                     LoadingBar.hide();
                 });
                 break;
         }
-    },
-    createLoadMoreRow: function(callback) {
-        var $tr = $('<tr/>')
-            .addClass('loadMore')
-            .append($('<td/>'))
-            .append($('<td class="space"/>'));
-        $('<td/>').text('Load more').click(function(event) {
-            $(this).addClass('loading');
-            callback();
-        }).appendTo($tr);
-        $tr.append($('<td class="space"/>'))
-            .append($('<td/>'))
-            .append($('<td class="space"/>'))
-            .append($('<td/>'));
-        return $tr;
-    },
-    loadMore: function() {
-        Search.search(Search.currentQuery, true);
     },
     getVideosFromSoundCloudSearchData: function(data, includeUploader) {
         ret = [];
