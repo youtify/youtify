@@ -231,13 +231,22 @@ function showResultsItemContextMenu(event, videoElem) {
                 new AddToPlaylistDialog(videos).show();
             }
         },
-		{
+        {
 			title: TranslationSystem.get('Share'),
             cssClass: 'share',
 			args: li,
 			callback: function(elem) {
                 var video = $(elem).data('model');
                 new ShareTrackDialog(video).show();
+			}
+		},
+		{
+			title: video.getExternalLink().label,
+            cssClass: 'view',
+			args: li,
+			callback: function(elem) {
+                var video = $(elem).data('model');
+                window.open(video.getExternalLink().url);
 			}
 		}
     ];
