@@ -111,10 +111,10 @@ body.fullscreen #bottom .controls .next:after {
 body.fullscreen #bottom .info {
     position: absolute;
     top: 0px;
-    left: 230px;
+    left: 320px;
     height: 20px;
     width: 100%;
-    padding-right: 465px; /* #controls.width + volume.width */
+    padding-right: 555px; /* #controls.width + volume.width */
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -133,10 +133,10 @@ body.fullscreen #bottom .shuffle {
 body.fullscreen #bottom .timeline-wrapper {
     position: absolute;
     top: 7px;
-    left: 275px;
+    left: 320px;
     height: 15px;
     width: 100%;
-    padding-right: 500px; /* #controls.width + volume.width */
+    padding-right: 550px; /* #controls.width + volume.width */
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -154,7 +154,7 @@ body.fullscreen #bottom .timeline-wrapper .position {
     left: 0px;
 }
 body.fullscreen #bottom .timeline-wrapper .length {
-    right: 500px; /* #controls.width + volume.width + 5 */
+    right: 550px; /* #controls.width + volume.width + 5 */
 }
 body.fullscreen #bottom .timeline-wrapper .timeline {
     width: auto;
@@ -240,5 +240,5 @@ body.fullscreen #bottom .volume-wrapper .knob {
 }
 body.fullscreen #bottom .fullscreen {
     top: 8px;
-    left: 210px;
+    left: 280px;
 }

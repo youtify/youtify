@@ -129,6 +129,15 @@ input, textarea, button {
     background: rgba(255,255,255, 0.3);
     box-shadow: 0px 5px 5px rgba(0,0,0,0.3);
 }
+#top .logo {
+    position: absolute;
+    background: url(/images/logo32x32.png) no-repeat center center;
+    width: 32px;
+    height: 32px;
+    left: 10px;
+    top: 7px;
+    border: 2px solid #666;
+}
 #top .profile {
     cursor: pointer;
     display: none;
@@ -1234,7 +1243,7 @@ input[type=search]::-webkit-search-results-decoration {
     width: 16px;
     height: 16px;
     position: absolute;
-    left: 300px;
+    left: 280px;
     bottom: 40px;
     cursor: pointer;
 }
