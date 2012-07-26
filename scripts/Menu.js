@@ -19,8 +19,10 @@ var Menu = {
         });
         
         /* Add profile */
-        Menu.profile = new MenuItem('profile');
-        Menu.profile.init();
+        if (logged_in) {
+            Menu.profile = new MenuItem('profile');
+            Menu.profile.init();
+        }
 
         EventSystem.addEventListener('playlists_loaded', this.createPlaylistViews);
         EventSystem.addEventListener('external_user_subscriptions_updated', this.updateExternalUserSubscriptions);
@@ -185,7 +187,7 @@ function MenuItem(type) {
                 self.addTabs(['favorites']);
                 break;
             case 'profile':
-                self.leftView = $('#top .profile');
+                self.leftView = $('#left .menu .profile');
                 self.rightView = $('#right .profile');
                 self.addTabs(['profile-playlists', 'profile-followings', 'profile-followers', 'profile-flattrs']);
                 break;

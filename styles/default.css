@@ -142,9 +142,8 @@ input, textarea, button {
     margin-left: 32px;
 }
 #top .profile {
+    display: inline-block;
     cursor: pointer;
-    display: none;
-    float: right;
 }
 #top .profile .picture {
     display: inline-block;
@@ -153,9 +152,6 @@ input, textarea, button {
     background-color: #FFF;
 }
 #top .profile .display-name {
-    font-size: 14px;
-    font-weight: bold;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     display: inline;
     line-height: 30px;
     vertical-align: 32%
@@ -281,7 +277,8 @@ input[type=search]::-webkit-search-results-decoration {
     display: inline;
 }
 #top .settings:after,
-#top .about:after {
+#top .about:after,
+#top .profile .display-name:after {
     content: '\25BE';
     font-size: 16px;
     line-height: 13px;
@@ -301,15 +298,10 @@ input[type=search]::-webkit-search-results-decoration {
     border-radius: 10px 0 0 10px;
     background: rgba(0, 124, 137, 0.2);
 }
-#top .menu .logout-link {
-    display: none;
-}
-#top .menu .login-link:hover,
-#top .menu .logout-link:hover {
+#top .menu .login-link:hover {
     background: rgba(0, 124, 137, 0.4);
 }
-#top .menu .login-link:after,
-#top .menu .logout-link:after {
+#top .menu .login-link:after {
     content: '';
     cursor: default;
     position: absolute;
@@ -1619,14 +1611,6 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #about-popup div.links a {
     display: block;
-}
-
-/** LOGOUT POPUP
- ****************************************************************************/
-
-#logout-popup {
-    text-align: center;
-    width: auto;
 }
 
 /** SPOTIFY IMPORTER POPUP

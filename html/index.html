@@ -161,6 +161,7 @@
         {% include "./popups/spotify_importer.html" %}
         {% include "./popups/settings.html" %}
         {% include "./popups/videoinfo.html" %}
+        {% include "./popups/profile.html" %}
         <div id="about-popup" style="display:none" class="popup"></div>
         <div id="playlist-subscribers-popup" style="display:none" class="popup"></div>
         
@@ -168,10 +169,6 @@
             <div class="logo"></div>
             <div class="item about">
                 <span class="title translatable">About</span>
-            </div>
-            <div class="profile">
-                <span class="picture"></span>
-                <span class="display-name link"></span>
             </div>
             <div class="search"> 
                 <input type="search" class="translatable" placeholder="Search" />
@@ -186,7 +183,10 @@
                     <span class="counter" style="display:none"></span>
                 </div>
                 {% if logged_in %}
-                <a class="item last logout-link translatable" href="{{ logout_url }}">Logout</a>
+                <div class="profile">
+                    <span class="picture"></span>
+                    <span class="display-name"></span>
+                </div>
                 {% else %}
                 <a class="item last login-link translatable" href="{{ login_url }}">Login</a>
                 {% endif %}

@@ -8,6 +8,10 @@ var TopMenu = {
             $('#top .profile .display-name').text(UserManager.currentUser.displayName);
             $('#top .profile').show();
 
+            $('#top .profile').click(function(event) {
+                $(this).arrowPopup('#profile-popup', 'down');
+            });
+
             EventSystem.addEventListener('user_profile_updated', function(params) {
                 $('#top .profile .display-name').text(params.displayName);
             });
