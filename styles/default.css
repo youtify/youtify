@@ -1018,8 +1018,8 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .controls {
     width: 320px;
-    height: 80px;
-    padding-top: 15px;
+    height: 68px;
+    padding-top: 0px;
     text-align: center;
     display: inline-block;
 }
@@ -1028,11 +1028,11 @@ input[type=search]::-webkit-search-results-decoration {
     margin: 5px 0px 8px 0px;
 
     border-radius: 50px;
-    background:-webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+    /*background:-webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
     background:-moz-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
     background:-ms-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
     background:-o-linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
-    background:linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+    background:linear-gradient(bottom, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);*/
 }
 #bottom .controls  .border.middle {
     margin: 5px 10px 0px 10px;
@@ -1048,12 +1048,19 @@ input[type=search]::-webkit-search-results-decoration {
     margin: 5px;
     border-radius: 50px;
     position: relative;
-
-    background: -webkit-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
+    box-shadow: 0px 0px 5px #000, inset 2px 3px 1px #FFF;
+    /*background: -webkit-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
     background: -moz-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
     background: -ms-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
     background: -o-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
-    background: linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
+    background: linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);*/
+    color: #333;
+}
+#bottom .controls .prev:hover,
+#bottom .controls .playpause:hover,
+#bottom .controls  .next:hover {
+    background: #F0F0F0;
+    color: #000;
 }
 #bottom .controls .playpause {
     width: 50px;
@@ -1062,17 +1069,16 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .controls .prev:active,
 #bottom .controls .playpause:active,
 #bottom .controls  .next:active {
-    box-shadow: 0px 0px 5px #000, inset 0px 0px 5px #000;
+    box-shadow: 0px 0px 3px #000, inset 0px 0px 3px #000;
 }
 #bottom .controls .prev:after {
     content: 'Å';
     font-family: EntypoRegular;
     font-size: 36px;
     line-height: 20px;
-    color: #000;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: 1px;
+    top: 2px;
     left: 6px;
 }
 #bottom .controls .playpause:after {
@@ -1080,7 +1086,6 @@ input[type=search]::-webkit-search-results-decoration {
     font-family: EntypoRegular;
     font-size: 50px;
     line-height: 20px;
-    color: #000;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
     top: 9px;
@@ -1091,7 +1096,6 @@ input[type=search]::-webkit-search-results-decoration {
     font-family: EntypoRegular;
     font-size: 50px;
     line-height: 20px;
-    color: #000;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
     top: 9px;
@@ -1102,10 +1106,10 @@ input[type=search]::-webkit-search-results-decoration {
     font-family: EntypoRegular;
     font-size: 36px;
     line-height: 20px;
-    color: #000;
+    color: #333;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: 1px;
+    top: 2px;
     left: 8px;
 }
 #bottom .info {
