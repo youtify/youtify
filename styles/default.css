@@ -138,6 +138,9 @@ input, textarea, button {
     top: 7px;
     border: 2px solid #666;
 }
+#top .about {
+    margin-left: 32px;
+}
 #top .profile {
     cursor: pointer;
     display: none;
@@ -159,7 +162,6 @@ input, textarea, button {
 }
 #top .search {
     display: inline-block;
-    margin-left: 300px;  /* left column */
     padding-right: 34px; /* button width */
     position: relative;
 }
