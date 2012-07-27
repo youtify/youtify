@@ -422,34 +422,10 @@ input[type=search]::-webkit-search-results-decoration {
 .logged-in #left .menu .playlists li.remote {
     opacity: 1;
 }
-#left .menu .playlists .new:before {
-    content: '+';
-    cursor: default;
-    position: absolute;
-    display: inline-block;
-    width: 6px;
-    padding: 5px 9px;
-    border: 1px solid #8B9594;
-    border-radius: 10px 0 0 10px;
-    margin-top: -4px; /* .new.padding + border */
-    margin-left: -34px; /* .new.padding + border */
-    background: -webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -moz-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -ms-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -o-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-}
 #left .menu .playlists .new {
     position: relative;
-    background: rgba(0, 124, 137, 0.2);
-    margin: 10px 0px 5px 24px;
-    padding: 3px 8px;
-    border-radius: 0px 10px 10px 0px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-    border-left: none;
-}
-#left .menu .playlists .new:hover {
-    background: rgba(0, 124, 137, 0.4);
+    margin: 10px 0px 5px 0px;
+    display: block;
 }
 #left .menu .playlists .new span {
     cursor: pointer;
