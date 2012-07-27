@@ -33,7 +33,7 @@ html, body {
     color: #aaa;
 }
 #footer .logo.youtify {
-    background: url(/images/favicon.png) left center no-repeat;
+    background: url(/images/logo/logo_16x16.png) left center no-repeat;
     padding-left: 20px;
 }
 

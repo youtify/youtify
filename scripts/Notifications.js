@@ -33,7 +33,7 @@ var Notifications = {
             {
                 var settings = new Settings();
                 var popup = window.webkitNotifications.createNotification(
-                    '/images/logo32x32.png',
+                    '/images/logo/logo_32x32.png',
                     'Youtify',
                     message);
                 popup.show();

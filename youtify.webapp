@@ -3,7 +3,10 @@
   "name": "Youtify",
   "description": "Web music player",
   "icons": {
-    "128": "/images/icon_128.png"
+    "128": "/images/logo/logo_128x128.png",
+    "256": "/images/logo/logo_256x256.png",
+    "512": "/images/logo/logo_512x512.png",
+    "1024": "/images/logo/logo_1024x1024.png"
   },
   "developer": {
     "name": "Youtify",
