@@ -89,11 +89,11 @@ input, textarea, button {
 
 #right .button {
     display: inline-block;
-    background:-webkit-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:-moz-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:-ms-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:-o-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
+    background:-webkit-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-moz-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-ms-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-o-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:linear-gradient(top, #EEE 0%, #CCC 100%);
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     padding: 4px;
     border-radius: 10px;

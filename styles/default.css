@@ -90,28 +90,31 @@ input, textarea, button {
 /* BUTTON
 *******************************/
 
-#right .button {
+.button {
     display: inline-block;
-    background:-webkit-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:-moz-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:-ms-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:-o-linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
-    background:linear-gradient(bottom, #7DAFB4 0%, #7DAFB4 50%, #A4BDBF 50%, #A4BDBF 100%);
+    background:-webkit-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-moz-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-ms-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-o-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:linear-gradient(top, #EEE 0%, #CCC 100%);
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     padding: 4px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid #8B9594;
     text-align: center;
     min-width: 60px;
     font-size: 14px;
     line-height: 20px;
     cursor: pointer;
+    text-decoration: none;
+    color: #333;
 }
-#right .button:hover {
+.button:hover {
     border: 1px solid #778180;
+    color: #000;
 }
-#right .button:active {
-    box-shadow: inset 1px 2px 3px #778180, 1px 2px 3px rgba(255,255,255, 0.5);
+.button:active {
+    background: -moz-linear-gradient(top, #CCC 0%, #EEE 100%);
 }
 
 /** TOP
@@ -123,7 +126,7 @@ input, textarea, button {
     box-sizing: border-box;
     position: absolute;
     height: 50px;
-    padding: 10px 25px;
+    padding: 8px 10px 10px 10px;
     width: 100%;
     z-index: 10;
     background: rgba(255,255,255, 0.5);
@@ -131,15 +134,16 @@ input, textarea, button {
 }
 #top .logo {
     position: absolute;
-    background: url(/images/logo32x32.png) no-repeat center center;
-    width: 32px;
+    background: url(/images/banner/banner_192x64.png) no-repeat;
+    background-size: 96px 32px;
+    width: 96px;
     height: 32px;
     left: 10px;
-    top: 7px;
-    border: 2px solid #666;
+    top: 8px;
 }
 #top .about {
-    margin-left: 32px;
+    margin-left: 106px;
+    vertical-align: -15%;
 }
 #top .profile {
     display: inline-block;
@@ -185,16 +189,12 @@ input[type=search]::-webkit-search-results-decoration {
     position: absolute;
     right: 0;
     top: 0;
+    min-width: 35px;
     width: 35px;
     height: 100%;
-    border: 1px solid #8B9594;
+    padding:0;
     border-radius: 0 10px 10px 0;
     outline: none;
-    background: -webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -moz-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -ms-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -o-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
 }
 #top .search button:after {
     content: 'ô';
@@ -274,7 +274,7 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     font-size: 14px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-    display: inline;
+    display: inline-block;
 }
 #top .settings:after,
 #top .about:after,
@@ -287,35 +287,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #top .menu .login-link {
     cursor: pointer;
-    font-size: 13px;
     text-transform: uppercase;
-    text-decoration: none;
-    color: #000;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-    padding: 5px 9px;
-    margin-right: 20px;
-    border: 1px solid #8B9594;
-    border-radius: 10px 0 0 10px;
-    background: rgba(0, 124, 137, 0.2);
-}
-#top .menu .login-link:hover {
-    background: rgba(0, 124, 137, 0.4);
-}
-#top .menu .login-link:after {
-    content: '';
-    cursor: default;
-    position: absolute;
-    display: inline-block;
-    width: 25px;
-    height: 28px;
-    margin: 1px 0px 0px 9px;
-    border: 1px solid #8B9594;
-    border-radius: 0 10px 10px 0;
-    background: -webkit-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -moz-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -ms-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: -o-linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
-    background: linear-gradient(bottom, rgba(0, 124, 137, 0.4) 0%, rgba(0, 124, 137, 0.4) 50%, rgba(0, 124, 137, 0.2) 50%, rgba(0, 124, 137, 0.2) 100%);
 }
 
 /** LEFT
@@ -1042,18 +1014,17 @@ input[type=search]::-webkit-search-results-decoration {
     margin: 5px;
     border-radius: 50px;
     position: relative;
-    box-shadow: 0px 0px 5px #000, inset 2px 3px 1px #FFF;
-    /*background: -webkit-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
-    background: -moz-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
-    background: -ms-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
-    background: -o-linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);
-    background: linear-gradient(bottom, #3E3E3E 0%, #BCBCBC 100%);*/
+    box-shadow: 0px 0px 2px #000;
+    background:-webkit-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-moz-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-ms-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-o-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:linear-gradient(top, #EEE 0%, #CCC 100%);
     color: #333;
 }
 #bottom .controls .prev:hover,
 #bottom .controls .playpause:hover,
 #bottom .controls  .next:hover {
-    background: #F0F0F0;
     color: #000;
 }
 #bottom .controls .playpause {
@@ -1064,6 +1035,7 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .controls .playpause:active,
 #bottom .controls  .next:active {
     box-shadow: 0px 0px 3px #000, inset 0px 0px 3px #000;
+    color: #000;
 }
 #bottom .controls .prev:after {
     content: 'Å';
