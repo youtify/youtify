@@ -129,8 +129,8 @@ input, textarea, button {
     font-weight: bold;
     background: -webkit-linear-gradient(top, #499bea 0%,#207ce5 100%);
     background: -moz-linear-gradient(top, #499bea 0%, #207ce5 100%);
-    background: -o-linear-gradient(top, #499bea 0%,#207ce5 100%);
     background: -ms-linear-gradient(top, #499bea 0%,#207ce5 100%);
+    background: -o-linear-gradient(top, #499bea 0%,#207ce5 100%);
     background: linear-gradient(top, #499bea 0%,#207ce5 100%);
 }
 .button.exposed:hover {
@@ -1132,15 +1132,26 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .info .title {
     margin-top: 12px;
-    padding: 0 45px;
-    text-align: center;
-    font-size: 13px;
+    padding: 0 25px;
+    text-align: left;
+    font-size: 15px;
     font-weight: bold;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
     overflow: hidden;
     cursor: pointer;
-    height: 20px;
+    height: 25px;
     position: relative;
+}
+#bottom .info .title:before {
+    content: '`';
+    font-family: EntypoRegular;
+    font-size: 40px;
+    line-height: 20px;
+    color: #333;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: -5px;
+    left: -2px;
 }
 #bottom .timeline-wrapper {
     position: absolute;
@@ -1186,22 +1197,11 @@ input[type=search]::-webkit-search-results-decoration {
     width: 0;
     border-radius: 50px;
     box-shadow: inset 3px 3px 3px #2C2C2C;
-    background:-webkit-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-moz-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-ms-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-}
-#bottom .timeline-wrapper .slider .knob {
-    position: absolute;
-    display: none;
-    top: -4px;
-    right: -5px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50px;
-    background: url("/images/knob.png") no-repeat -1px 0 transparent;
-    box-shadow: 0px 3px 3px #2C2C2C;
+    background: -webkit-linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
+    background: -moz-linear-gradient(left, #499bea 0%, #207ce5 50%, #499bea 100%);
+    background: -ms-linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
+    background: -o-linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
+    background: linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
 }
 #bottom .volume-wrapper {
     position: absolute;
@@ -1214,14 +1214,14 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .volume-wrapper:before {
     content: url(/images/volume-down-small.png);
     position: absolute;
-    top: -3px;
+    top: -2px;
     left: 6px;
 }
 #bottom .volume-wrapper:after {
     content: url(/images/volume-up-small.png);
     position: absolute;
-    top: -2px;
-    right: 5px;
+    top: -1px;
+    right: 3px;
 }
 #bottom .volume-wrapper .volume {
     width: auto;
@@ -1238,28 +1238,38 @@ input[type=search]::-webkit-search-results-decoration {
     position: relative;
     border-radius: 50px;
     box-shadow: inset 3px 3px 3px #2C2C2C;
-    background:-webkit-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-moz-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-ms-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:-o-linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
-    background:linear-gradient(left, #679394 0%, #AEF7FD 50%, #679394 100%);
+    background: -webkit-linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
+    background: -moz-linear-gradient(left, #499bea 0%, #207ce5 50%, #499bea 100%);
+    background: -ms-linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
+    background: -o-linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
+    background: linear-gradient(left, #499bea 0%,#207ce5 50%, #499bea 100%);
 }
+
+#bottom .timeline-wrapper .slider .knob,
 #bottom .volume-wrapper .knob {
     position: absolute;
-    top: -4px;
+    top: -1px;
     right: -5px;
-    width: 22px;
-    height: 22px;
+    width: 15px;
+    height: 15px;
     border-radius: 50px;
-    background: url(/images/knob.png) no-repeat -1px 0 transparent;
-    box-shadow: 0px 3px 3px #2C2C2C;
+    box-shadow: 0px 3px 3px #000;
+    background:-webkit-linear-gradient(top, #FFF 0%, #AAA 100%);
+    background:-moz-linear-gradient(top, #FFF 0%, #AAA 100%);
+    background:-ms-linear-gradient(top, #FFF 0%, #AAA 100%);
+    background:-o-linear-gradient(top, #FFF 0%, #AAA 100%);
+    background:linear-gradient(top, #FFF 0%, #AAA 100%);
 }
+#bottom .timeline-wrapper .slider .knob {
+    display: none;
+}
+
 #bottom .fullscreen {
     width: 16px;
     height: 16px;
     position: absolute;
-    left: 280px;
-    bottom: 40px;
+    top: 10px;
+    right: 15px;
     cursor: pointer;
 }
 #bottom .fullscreen:after {
@@ -1278,7 +1288,7 @@ input[type=search]::-webkit-search-results-decoration {
     font-family: EntypoRegular;
     font-size: 40px;
     line-height: 20px;
-    color: #000;
+    color: purple;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
     top: -7px;
@@ -1286,14 +1296,12 @@ input[type=search]::-webkit-search-results-decoration {
 }
 
 #bottom .shuffle {
+    width: 16px;
+    height: 16px;
     position: absolute;
-    right: -6px;
-    top: 21px;
-    width: 28px;
-    height: 28px;
+    bottom: 10px;
+    right: 15px;
     cursor: pointer;
-    margin: 15px;
-    border-radius: 50px;
     color: #333;
 }
 #bottom .shuffle:after {
@@ -1304,7 +1312,8 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    left: 5px;
+    top: -7px;
+    left: -2px;
     color: #333;
 }
 #bottom .shuffle.on:after {
@@ -1485,7 +1494,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 .popup a,
 .popup .link {
-    color: rgba(62, 126, 221, 1);
+    color: purple;
     text-decoration: none;
     cursor: pointer;
 }
@@ -1809,7 +1818,7 @@ input[type=search]::-webkit-search-results-decoration {
 
 #top .link,
 #right .link {
-    color: rgba(62, 126, 221, 1);
+    color: purple;
     cursor: pointer;
     text-decoration: none;
     cursor: pointer;
