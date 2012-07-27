@@ -8,6 +8,9 @@ body:after {
         url(/images/youtube.png)
         url(/images/soundcloud.png)
         url(/images/officialfm.png)
+        url(/images/youtube-inverted.png)
+        url(/images/soundcloud-inverted.png)
+        url(/images/officialfm-inverted.png)
         url(/images/bigsnake.gif)
         url(/images/knob.png);
 
@@ -171,43 +174,57 @@ input, textarea, button {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    height: 50px;
-    padding: 8px 10px 10px 10px;
+    padding: 0 25px 0 5px;
     width: 100%;
     z-index: 10;
     background: rgba(255,255,255, 0.5);
     border-bottom: 2px groove #FFFFFF;
 }
+#top .left-area,
+#top .right-area {
+    line-height: 50px;
+}
+#top .left-area {
+    float: left;
+}
+#top .right-area {
+    float: right;
+}
+#top .item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+#top .item.last {
+    margin-right: 0;
+}
+#top .dropdown-button {
+    cursor: pointer;
+    font-size: 14px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
+#top .dropdown-button:after {
+    content: '\25BE';
+    font-size: 16px;
+    color: #666;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
 #top .logo {
-    position: absolute;
-    background: url(/images/banner/banner_192x64.png) no-repeat;
+    background: url(/images/banner/banner_192x64.png) no-repeat center center;
     background-size: 96px 32px;
     width: 96px;
     height: 32px;
-    left: 10px;
-    top: 8px;
-}
-#top .about {
-    margin-left: 106px;
-    vertical-align: -15%;
 }
 #top .profile {
-    display: inline-block;
-    cursor: pointer;
+    padding-left: 27px;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    background-position: left center;
 }
-#top .profile .picture {
+#top .profile img {
     display: inline-block;
-    width: 30px;
-    height: 30px;
-    background-color: #FFF;
-}
-#top .profile .display-name {
-    display: inline;
-    line-height: 30px;
-    vertical-align: 32%
 }
 #top .search {
-    display: inline-block;
     padding-right: 34px; /* button width */
     position: relative;
 }
@@ -221,7 +238,6 @@ input[type=search]::-webkit-search-results-decoration {
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
-
     height: 26px;
     width: 200px;
     padding: 2px 4px 2px 6px;
@@ -234,10 +250,10 @@ input[type=search]::-webkit-search-results-decoration {
 #top .search button {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 10px;
     min-width: 35px;
     width: 35px;
-    height: 100%;
+    height: 32px;
     padding:0;
     border-radius: 0 10px 10px 0;
     outline: none;
@@ -251,6 +267,22 @@ input[type=search]::-webkit-search-results-decoration {
     position: absolute;
     top: -2px;
     left: 3px;
+}
+#settings .puffs .chrome-webstore {
+    padding-left: 20px;
+    background: url(/images/chrome_16.png) no-repeat left center;
+}
+#top .settings .counter {
+    background: rgba(0, 124, 137, 0.4);
+    color: white;
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: bold;
+    vertical-align: top;
+}
+#top .menu .login-link {
+    cursor: pointer;
 }
 #top .notifications {
     position: absolute;
@@ -294,45 +326,6 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #top .notifications li:hover .close {
     display: block;
-}
-#top .menu {
-    float: right;
-    height: 32px;
-    line-height: 32px;
-}
-#settings .puffs .chrome-webstore {
-    padding-left: 20px;
-    background: url(/images/chrome_16.png) no-repeat left center;
-}
-#top .settings .counter {
-    background: rgba(0, 124, 137, 0.4);
-    color: white;
-    border-radius: 4px;
-    padding: 0 4px;
-    font-size: 10px;
-    font-weight: bold;
-    vertical-align: top;
-}
-#top .settings,
-#top .about {
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-    display: inline-block;
-}
-#top .settings:after,
-#top .about:after,
-#top .profile .display-name:after {
-    content: '\25BE';
-    font-size: 16px;
-    line-height: 13px;
-    color: #666;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-}
-#top .menu .login-link {
-    cursor: pointer;
-    text-transform: uppercase;
 }
 
 /** LEFT
@@ -1737,6 +1730,13 @@ input[type=search]::-webkit-search-results-decoration {
 #video-info-popup .sections .button .count {
     margin-right: 5px;
     font-weight: bold;
+}
+
+/** PROFILE POPUP
+ ****************************************************************************/
+
+#profile-popup {
+    width: auto;
 }
 
 /** MODAL BOXES

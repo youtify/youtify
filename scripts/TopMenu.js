@@ -4,12 +4,11 @@ var TopMenu = {
 
         // PROFILE
         if (UserManager.currentUser) {
-            $('#top .profile .picture').replaceWith('<img class="picture" src="'+ UserManager.currentUser.smallImageUrl + '" />');
-            $('#top .profile .display-name').text(UserManager.currentUser.displayName);
-            $('#top .profile').show();
+            /*$('#top .profile').append('<img src="'+ UserManager.currentUser.smallImageUrl + '" width="24" height="24" />');*/
+            $('#top .profile').css('background-image', 'url(' + UserManager.currentUser.smallImageUrl + ')');
 
             $('#top .profile').click(function(event) {
-                $(this).arrowPopup('#profile-popup', 'down');
+                $(this).arrowPopup('#profile-popup');
             });
 
             EventSystem.addEventListener('user_profile_updated', function(params) {
