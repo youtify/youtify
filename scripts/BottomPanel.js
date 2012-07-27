@@ -6,10 +6,14 @@ var BottomPanel = {
         });
 
         $('#bottom .info .title').click(function() {
-            $(this).arrowPopup('#video-info-popup', 'down');
+            if (player.currentVideo) {
+                $(this).arrowPopup('#video-info-popup', 'down');
+            }
         });
         $('#bottom .info .title').bind('contextmenu', function(event) {
-            showResultsItemContextMenu(event, player.currentVideo.listView);
+            if (player.currentVideo) {
+                showResultsItemContextMenu(event, player.currentVideo.listView);
+            }
             return false;
         });
 
