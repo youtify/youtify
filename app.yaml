@@ -56,6 +56,11 @@ handlers:
 - url: /api/users.*
   script: users.py
 
+- url: /logo
+  static_files: html/logo-guidlines.html
+  upload: html/logo-guidlines.html
+  #expiration: "1d"
+
 - url: /about
   static_files: html/popups/about.html
   upload: html/popups/about.html
