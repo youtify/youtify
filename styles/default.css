@@ -168,8 +168,16 @@ input, textarea, button {
  }
 /** TOP
  ****************************************************************************/
-body.fullscreen #top {
-    display: none;
+body.fullscreen #top > div,
+body.fullscreen #left .menu,
+body.fullscreen #right > div {
+    display: none !important;
+}
+body.fullscreen #top,
+body.fullscreen #left,
+body.fullscreen #right {
+    background-color: black;
+    border: none;
 }
 
 #top {
@@ -177,15 +185,18 @@ body.fullscreen #top {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    padding: 0 25px 0 5px;
+    padding: 0 20px 0 5px;
     width: 100%;
+    height: 50px;
     z-index: 10;
     background: rgba(255,255,255, 0.5);
     border-bottom: 2px groove #FFFFFF;
 }
-#top .left-area,
+#top .left-area{
+    padding-top: 8px;
+}
 #top .right-area {
-    line-height: 50px;
+    padding-top: 9px;
 }
 #top .left-area {
     float: left;
@@ -223,6 +234,7 @@ body.fullscreen #top {
     background-size: 24px 24px;
     background-repeat: no-repeat;
     background-position: left center;
+    line-height: 28px;
 }
 #top .profile img {
     display: inline-block;
@@ -253,7 +265,7 @@ input[type=search]::-webkit-search-results-decoration {
 #top .search button {
     position: absolute;
     right: 0;
-    top: 10px;
+    top: 0px;
     min-width: 35px;
     width: 35px;
     height: 32px;
@@ -286,6 +298,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #top .menu .login-link {
     cursor: pointer;
+    line-height: 20px;
 }
 #top .notifications {
     position: absolute;
