@@ -148,7 +148,14 @@ input, textarea, button {
 #left .menu .selected {
     color: #FFF;
     text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
-    background-color: rgba(62, 126, 221, 1);
+    background-color: #aaa;
+}
+
+#right.focused .video.selected,
+#left.focused .menu .selected {
+    color: #FFF;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
+    background-color: rgb(62, 126, 221);
 }
 
 /** TOP

@@ -23,6 +23,9 @@ var Search = {
 
         /* Search on key up */
         $('#top .search input').keyup(function(event) {
+            $('#left, #right').removeClass('focused');
+            $('#top .search').addClass('focused');
+
             var i,
                 deadKeys = [9, 16, 17, 18, 37, 38, 39, 40];
             for (i = 0; i < deadKeys.length; i += 1) {

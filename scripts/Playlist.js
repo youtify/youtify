@@ -2,6 +2,9 @@
  ****************************************************************************/
 
 function playlistMouseDown(event) {
+    $('#right, #top .search').removeClass('focused');
+    $('#left').addClass('focused');
+
 	$('#left-menu li').removeClass('selected');
 	$(this).addClass('selected');
 }

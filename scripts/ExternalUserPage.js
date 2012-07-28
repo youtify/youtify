@@ -225,6 +225,9 @@ function ExternalUserSubscription(data) {
         $('<span class="username"></span>').text(self.username).appendTo($li);
 
         $li.mousedown(function() {
+            $('#right, #top .search').removeClass('focused');
+            $('#left').addClass('focused');
+
             $('#left .menu li').removeClass('selected');
             $(this).addClass('selected');
             ExternalUserPage.load(self.type, self.username);

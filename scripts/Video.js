@@ -205,6 +205,9 @@ function Video(args) {
      * queue where the listView element being pressed is a "ghost" element.
      */
     this.listViewSelect = function(event, $listView) {
+        $('#left, #top .search').removeClass('focused');
+        $('#right').addClass('focused');
+
         if ($listView === undefined) {
             $listView = this.listView;
         }

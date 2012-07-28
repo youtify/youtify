@@ -192,6 +192,9 @@ function MenuItem(type) {
         return null;
     };
     self.select = function() {
+        $('#right, #top .search').removeClass('focused');
+        $('#left').addClass('focused');
+
         /* DeSelect left menus and hide right views */
         Menu.deSelectAll();
         
