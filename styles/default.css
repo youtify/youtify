@@ -145,7 +145,8 @@ input, textarea, button {
     background: linear-gradient(top, #207ce5 0%,#499bea 100%);
 }
 
-.selected {
+#right .video.selected,
+#left .menu .selected {
     color: #FFF;
     text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
     background-color: rgba(62, 126, 221, 1);
@@ -894,10 +895,11 @@ input[type=search]::-webkit-search-results-decoration {
 .modalbox.edit-profile textarea {
     height: 90px;
 }
+.pane {
+    display: none;
+}
 .pane.selected {
-    background: transparent;
-    color: #333;
-    font-weight: normal;
+    display: block;
 }
 #right .profile .pane.profile-flattrs {
     padding-top: 5px;

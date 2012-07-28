@@ -98,13 +98,7 @@
             history.pushState(null, null, '/');
         } else if (self.type === 'playlists-toplist') {
             Toplist.loadPopularPlaylists();
-        } else if (self.type === 'profile-followers') {
-            UserManager.loadFollowers();
-        } else  if (self.type === 'profile-followings') {
-            UserManager.loadFollowings();
-        } else  if (self.type === 'profile-flattrs') {
-            UserManager.loadFlattrs();
-        }
+        } 
         
         /* Remove selected on all menuItems */
         self.view.siblings().removeClass('selected');

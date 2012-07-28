@@ -1,6 +1,8 @@
 var UserManager = {
     currentUser: null,
     viewingUser: null,
+    tabs: null,
+    $rightView: null,
     $playlists: null,
     $followings: null,
     $followers: null,
@@ -32,6 +34,7 @@ var UserManager = {
             });
         }
 
+        UserManager.$rightView = $('#right .profile');
         UserManager.$playlists = $('#right .profile .pane.profile-playlists');
         UserManager.$followings = $('#right .profile .pane.profile-followings');
         UserManager.$followers = $('#right .profile .pane.profile-followers');
@@ -45,20 +48,25 @@ var UserManager = {
         UserManager.$editButton = $('#right .profile .edit.button');
         UserManager.$img = $('#right .profile .picture-container .picture');
         UserManager.$changePictureBox = $('#right .profile .picture-container .change');
+
+        UserManager.tabs = new Tabs(UserManager.$rightView.find('.tab-area'), {
+            'profile-followers': UserManager.loadFollowers,
+            'profile-followings': UserManager.loadFollowings,
+            'profile-flattrs': UserManager.loadFlattrs
+        });
     },
 
-    doFakeProfileMenuClick: function() {
+    show: function() {
         Menu.deSelectAll();
-
-        Menu.profile.rightView.show();
-        Menu.profile.leftView.addClass('selected');
-
-        Menu.profile.tabs[0].select();
+        UserManager.$rightView.show();
+        UserManager.tabs.select('profile-playlists');
+        history.pushState(null, null, UserManager.viewingUser.getUrl());
     },
 
     loadCurrentUser: function() {
         UserManager.resetUserProfileView();
         UserManager.populateUserProfile(UserManager.currentUser);
+        UserManager.show();
     },
 
     loadProfile: function(nickOrId) {
@@ -103,7 +111,7 @@ var UserManager = {
         $('#right .profile .information-container .nickname').text('');
         $('#right .profile .information-container .tagline').text('');
 
-        Menu.profile.tabs[0].select();
+        UserManager.tabs.select('profile-playlists');
 
         $('#right .profile .tabs').hide();
     },

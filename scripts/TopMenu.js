@@ -14,10 +14,14 @@ var TopMenu = {
             EventSystem.addEventListener('user_profile_updated', function(params) {
                 $('#top .profile .display-name').text(params.displayName);
             });
+
+            // I know, not the most natural place to put this...
+            $('#profile-popup .profile-page').click(function(event) {
+                UserManager.loadCurrentUser();
+            });
         } else {
             $('#top .profile').hide();
         }
-
 
         // ABOUT
         $('#top .about').click(function() {

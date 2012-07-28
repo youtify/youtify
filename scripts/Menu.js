@@ -2,7 +2,6 @@ var pendingVideo;
 
 var Menu = {
     left: [],
-    profile: null,
     init: function() {
         /* Create new menuitems */
         var leftMenuItems = [];
@@ -18,12 +17,6 @@ var Menu = {
             Menu.left.push(menuItem);
         });
         
-        /* Add profile */
-        if (logged_in) {
-            Menu.profile = new MenuItem('profile');
-            Menu.profile.init();
-        }
-
         EventSystem.addEventListener('playlists_loaded', this.createPlaylistViews);
         EventSystem.addEventListener('external_user_subscriptions_updated', this.updateExternalUserSubscriptions);
 
@@ -186,11 +179,6 @@ function MenuItem(type) {
                 self.rightView = $('#right .favorites');
                 self.addTabs(['favorites']);
                 break;
-            case 'profile':
-                self.leftView = $('#left .menu .profile');
-                self.rightView = $('#right .profile');
-                self.addTabs(['profile-playlists', 'profile-followings', 'profile-followers', 'profile-flattrs']);
-                break;
             case 'news-feed':
                 self.leftView = $('#left .menu .news-feed');
                 self.rightView = $('#right .news-feed');
@@ -215,12 +203,7 @@ function MenuItem(type) {
         /* DeSelect left menus and hide right views */
         Menu.deSelectAll();
         
-        /* Populate fields with current user */
-        if (self.type === 'profile') {
-            history.pushState(null, null, UserManager.currentUser.getUrl());
-            UserManager.doFakeProfileMenuClick();
-            UserManager.loadCurrentUser();
-        } else if (self.type === 'toplist') {
+        if (self.type === 'toplist') {
             history.pushState(null, null, '/');
         } else if (self.type === 'news-feed') {
             self.rightView.html('');

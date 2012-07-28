@@ -86,13 +86,12 @@ var URIManager = {
             [
                 '/profile',
                 function(matches) {
-                    Menu.profile.select();
+                    UserManager.loadCurrentUser();
                 }
             ],
             [
                 '/users/(.*)',
                 function(matches) {
-                    UserManager.doFakeProfileMenuClick();
                     UserManager.loadProfile(matches[1]);
                 }
             ],
