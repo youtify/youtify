@@ -1,10 +1,8 @@
-var Toplist = {
-    toplistMenuItem: null,
+var HomeScreen = {
     $rightView: null,
 
     init: function() {
-        this.toplistMenuItem = Menu.find('toplist');
-        this.$rightView = this.toplistMenuItem.rightView;
+        this.$rightView = Menu.find('home').rightView;
     },
 
     show: function() {

@@ -99,7 +99,7 @@ var URIManager = {
             [
                 '/',
                 function(matches) {
-                    Menu.find('toplist').select();
+                    Menu.find('home').select();
                 }
             ]
         ];

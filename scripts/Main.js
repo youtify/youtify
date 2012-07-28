@@ -44,7 +44,7 @@ $(document).ready(function() {
     ExternalUserPage.init();
     ExternalUserSubscriptions.init();
     TopMenu.init();
-    Toplist.init();
+    HomeScreen.init();
     URIManager.init();
     LayoutManager.init();
     

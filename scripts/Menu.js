@@ -8,7 +8,7 @@ var Menu = {
         if (logged_in) {
             leftMenuItems.push('news-feed');
         }
-        leftMenuItems.push('toplist');
+        leftMenuItems.push('home');
         leftMenuItems.push('queue');
         $.each(leftMenuItems, function(i, type) {
             var menuItem = new MenuItem(type);
@@ -140,9 +140,9 @@ function MenuItem(type) {
     self.init = function() {
         /* Bind views */
         switch(self.type) {
-            case 'toplist':
-                self.leftView = $('#left .menu .toplist');
-                self.rightView = $('#right .toplists');
+            case 'home':
+                self.leftView = $('#left .menu .home');
+                self.rightView = $('#right .home');
                 break;
             case 'queue':
                 self.leftView = $('#left .menu .queue');
@@ -166,8 +166,8 @@ function MenuItem(type) {
         /* DeSelect left menus and hide right views */
         Menu.deSelectAll();
         
-        if (self.type === 'toplist') {
-            Toplist.show();
+        if (self.type === 'home') {
+            HomeScreen.show();
         } else if (self.type === 'news-feed') {
             self.rightView.html('');
             LoadingBar.show();
