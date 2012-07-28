@@ -7,7 +7,7 @@ ModalBox.prototype.setCanBeClosed = function(canBeClosed) {
     self = this;
 
     if (canBeClosed) {
-        $('<span class="close">x</span>').click(function() {
+        $('<span class="close">X</span>').click(function() {
             self.remove();
         }).appendTo(self.view.find('.top'));
 
