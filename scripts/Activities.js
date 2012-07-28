@@ -1,4 +1,4 @@
-var NewsFeed = {
+var Activities = {
     getSignupActivity: function() {
         return $('<div class="activity">' + TranslationSystem.get('You joined Youtify') + '</div>'); 
     },
@@ -82,9 +82,9 @@ var NewsFeed = {
                 actor = new User(JSON.parse(activity.actor));
                 otherUser = new User(JSON.parse(activity.target));
                 if (otherUser.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getIncomingFollowActivity(actor);
+                    $div = Activities.getIncomingFollowActivity(actor);
                 } else if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingFollowActivity(otherUser);
+                    $div = Activities.getOutgoingFollowActivity(otherUser);
                 }
             break;
 
@@ -93,9 +93,9 @@ var NewsFeed = {
                 playlist = JSON.parse(activity.target);
                 playlist = new Playlist(playlist.title, playlist.videos, playlist.remoteId, playlist.owner, playlist.isPrivate);
                 if (playlist.owner.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getIncomingSubscribeActivityView(actor, playlist);
+                    $div = Activities.getIncomingSubscribeActivityView(actor, playlist);
                 } else if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingSubscribeActivityView(playlist);
+                    $div = Activities.getOutgoingSubscribeActivityView(playlist);
                 }
             break;
 
@@ -103,23 +103,23 @@ var NewsFeed = {
                 actor = new User(JSON.parse(activity.actor));
                 externalUser = new ExternalUserSubscription(JSON.parse(activity.target));
                 if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingExternalSubscribeActivity(externalUser);
+                    $div = Activities.getOutgoingExternalSubscribeActivity(externalUser);
                 } else {
-                    $div = NewsFeed.getIncomingExternalSubscribeActivity(actor, externalUser);
+                    $div = Activities.getIncomingExternalSubscribeActivity(actor, externalUser);
                 }
             break;
 
             case 'signup':
-                $div = NewsFeed.getSignupActivity();
+                $div = Activities.getSignupActivity();
             break;
 
             case 'flattr':
                 actor = new User(JSON.parse(activity.actor));
                 thing = JSON.parse(activity.target);
                 if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingFlattrActivity(thing);
+                    $div = Activities.getOutgoingFlattrActivity(thing);
                 } else {
-                    $div = NewsFeed.getIncomingFlattrActivity(actor, thing);
+                    $div = Activities.getIncomingFlattrActivity(actor, thing);
                 }
             break;
         }
@@ -135,7 +135,7 @@ var NewsFeed = {
         LoadingBar.show();
         $.get('/api/users/' + my_user_id + '/activities', function(data) {
             $.each(data, function(i, activity) {
-                $ul.append(NewsFeed.getActivityElem(activity));
+                $ul.append(Activities.getActivityElem(activity));
             });
             LoadingBar.hide();
         });
