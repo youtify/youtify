@@ -92,7 +92,6 @@ var URIManager = {
             [
                 '/(.+)',
                 function(matches) {
-                    UserManager.doFakeProfileMenuClick();
                     UserManager.loadProfile(matches[1]);
                 }
             ],

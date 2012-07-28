@@ -52,8 +52,6 @@ function User(args) {
     };
 
     self.goTo = function() {
-        history.pushState(null, null, self.getUrl());
-        UserManager.doFakeProfileMenuClick();
         if (logged_in && self.id === UserManager.currentUser.id) {
             UserManager.loadCurrentUser();
         } else {
