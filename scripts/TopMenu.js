@@ -40,6 +40,12 @@ var TopMenu = {
             }
         });
 
+        // NOTIFICATIONS
+        $('#top .activities').click(function() {
+            $(this).arrowPopup('#activities-popup');
+            NewsFeed.load();
+        });
+
         // SETTINGS
         $('#top .settings').click(function() {
             $(this).arrowPopup('#settings');

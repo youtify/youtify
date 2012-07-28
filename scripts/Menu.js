@@ -5,9 +5,6 @@ var Menu = {
     init: function() {
         /* Create new menuitems */
         var leftMenuItems = [];
-        if (logged_in) {
-            leftMenuItems.push('news-feed');
-        }
         leftMenuItems.push('home');
         leftMenuItems.push('queue');
         $.each(leftMenuItems, function(i, type) {
@@ -148,11 +145,6 @@ function MenuItem(type) {
                 self.leftView = $('#left .menu .queue');
                 self.rightView = $('#right > .queue');
                 break;
-            case 'news-feed':
-                self.leftView = $('#left .menu .news-feed');
-                self.rightView = $('#right .news-feed');
-                break;
-
         }
         /* Set click event */
         self.leftView.mousedown(self.select);
@@ -168,15 +160,8 @@ function MenuItem(type) {
         
         if (self.type === 'home') {
             HomeScreen.show();
-        } else if (self.type === 'news-feed') {
-            self.rightView.html('');
-            LoadingBar.show();
-            NewsFeed.load(function($newsFeed) {
-                self.rightView.append($newsFeed);
-                LoadingBar.hide();
-            });
-        }
-        
+        }        
+
         /* Display views */
         self.rightView.show();
         self.leftView.addClass('selected');

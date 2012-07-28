@@ -129,13 +129,15 @@ var NewsFeed = {
         return $div;
     },
 
-    load: function(callback) {
-        var $newsFeed = $('<div class="news-feed"></div');
+    load: function() {
+        var $ul = $('#activities-popup ul');
+        $ul.html('');
+        LoadingBar.show();
         $.get('/api/users/' + my_user_id + '/activities', function(data) {
             $.each(data, function(i, activity) {
-                $newsFeed.append(NewsFeed.getActivityElem(activity));
+                $ul.append(NewsFeed.getActivityElem(activity));
             });
-            callback($newsFeed);
+            LoadingBar.hide();
         });
     }
 };

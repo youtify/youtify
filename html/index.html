@@ -160,6 +160,7 @@
         {% include "./popups/settings.html" %}
         {% include "./popups/videoinfo.html" %}
         {% include "./popups/profile.html" %}
+        {% include "./popups/activities.html" %}
         <div id="about-popup" style="display:none" class="popup"></div>
         <div id="playlist-subscribers-popup" style="display:none" class="popup"></div>
         
@@ -177,6 +178,12 @@
             </div>
             
             <div class="right-area">
+                {% if logged_in %}
+                <div class="item right activities dropdown-button">
+                    <span class="title translatable">Activities</span>
+                    <span class="counter" style="display:none"></span>
+                </div>
+                {% endif %}
                 <div class="item right settings dropdown-button">
                     <span class="title translatable">Settings</span>
                     <span class="counter" style="display:none"></span>
@@ -195,9 +202,6 @@
         <div class="left-wrapper">
             <div id="left">
                 <ul class="menu">
-                    {% if logged_in %}
-                        <li class="news-feed translatable">News Feed</li>
-                    {% endif %}
                     <li class="home translatable">Home</li>
                     <li class="queue translatable">Play Queue</li>
                     <li class="external-user-subscriptions">
@@ -236,10 +240,6 @@
                     <table class="officialfm-tracks pane tracklist"></table>
                     <div class="youtify-users pane user-list"></div>
                     <div class="youtify-playlists pane playlist-list"></div>
-                </div>
-
-                <div class="news-feed">
-                    <div class="activities pane"></div>
                 </div>
                 
                 <div class="home">
