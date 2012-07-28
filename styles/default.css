@@ -279,6 +279,17 @@ input[type=search]::-webkit-search-results-decoration {
     padding-left: 20px;
     background: url(/images/chrome_16.png) no-repeat left center;
 }
+#top .activities {
+    position: relative;
+}
+#top .activities .title {
+    font-family: YoutifyRegular;
+    font-size: 32px;
+    line-height: 20px;
+    position: absolute;
+    top: -6px;
+    left: -17px;
+}
 #top .settings .counter {
     background: rgba(0, 124, 137, 0.4);
     color: white;
@@ -393,14 +404,14 @@ input[type=search]::-webkit-search-results-decoration {
     border-bottom: 2px groove rgba(255,255,255,0.2);
 }
 #left .menu .home:before {
-    content: '7';
+    content: 'ï';
     font-family: YoutifyRegular;
     font-size: 32px;
     line-height: 20px;
     color: #000;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: -1px;
+    top: -2px;
     left: 4px;
 }
 #left .menu .queue:before {
