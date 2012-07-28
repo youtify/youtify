@@ -29,7 +29,7 @@
             enablejsapi: 1,
             modestbranding: 1,
             origin: origin,
-            playerVars: { 'autoplay': 0, 'controls': 0 },
+            playerVars: { 'autoplay': 0, 'controls': 0, 'wmode': 'opaque' },
             events: {
                 'onReady': function(data) {
                         self.initialized = true;

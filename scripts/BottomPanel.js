@@ -5,7 +5,7 @@ var BottomPanel = {
             BottomPanel.setTitleText(info.title);
         });
 
-        $('#bottom .info .title').click(function() {
+        $('#bottom .info .i').click(function() {
             if (player.currentVideo) {
                 $(this).arrowPopup('#video-info-popup', 'down');
             }
@@ -34,8 +34,8 @@ var BottomPanel = {
         });
     },
     setTitleText: function(titleText) {
+        $('#bottom .info .i').css({'display': 'inline-block'});
         $('#bottom .info .title')
-            .show()
             .text(titleText)
             .attr('title', titleText);
     }

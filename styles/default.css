@@ -1115,33 +1115,23 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .info {
     position: absolute;
-    top: 0px;
+    top: 7px;
     left: 320px;
-    height: 43px;
+    height: 36px;
     width: 100%;
     padding-right: 555px; /* #controls.width + volume.width */
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-#bottom .info .title {
-    margin-top: 12px;
-    padding: 0 25px;
-    color: #333;
-    text-align: left;
-    font-size: 15px;
-    font-weight: bold;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
-    overflow: hidden;
-    cursor: pointer;
-    height: 25px;
-    position: relative;
+#bottom .info .i {
+    width: 20px;
+    height: 20px;
     display: none;
+    color: #333;
+    cursor: pointer;
 }
-#bottom .info .title:hover {
-    color: purple;
-}
-#bottom .info .title:before {
+#bottom .info .i:before {
     content: '`';
     font-family: YoutifyRegular;
     font-size: 40px;
@@ -1150,6 +1140,19 @@ input[type=search]::-webkit-search-results-decoration {
     position: absolute;
     top: -5px;
     left: -2px;
+}
+#bottom .info .title {
+    color: #333;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: inline;
+}
+#bottom .info .i:hover,
+#bottom .info .title:hover {
+    color: purple;
 }
 #bottom .timeline-wrapper {
     position: absolute;
@@ -1696,6 +1699,7 @@ input[type=search]::-webkit-search-results-decoration {
  ****************************************************************************/
 #video-info-popup {
     height: auto;
+    z-index: 9999;
 }
 #video-info-popup  .title-and-description {
     display: block;
