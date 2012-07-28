@@ -168,6 +168,9 @@ input, textarea, button {
  }
 /** TOP
  ****************************************************************************/
+body.fullscreen #top {
+    display: none;
+}
 
 #top {
     -moz-box-sizing: border-box;
@@ -1126,6 +1129,7 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .info .title {
     margin-top: 12px;
     padding: 0 25px;
+    color: #333;
     text-align: left;
     font-size: 15px;
     font-weight: bold;
@@ -1134,13 +1138,16 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     height: 25px;
     position: relative;
+    display: none;
+}
+#bottom .info .title:hover {
+    color: purple;
 }
 #bottom .info .title:before {
     content: '`';
     font-family: EntypoRegular;
     font-size: 40px;
     line-height: 20px;
-    color: #333;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
     top: -5px;

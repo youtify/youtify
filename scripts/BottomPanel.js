@@ -34,7 +34,8 @@ var BottomPanel = {
         });
     },
     setTitleText: function(titleText) {
-        $('#bottom .info .title .text')
+        $('#bottom .info .title')
+            .show()
             .text(titleText)
             .attr('title', titleText);
     }
