@@ -11,5 +11,11 @@ var LoadingBar = {
 
     hide: function() {
         LoadingBar.$elem.fadeOut(200);
+    },
+    error: function() {
+        LoadingBar.$elem.addClass('error');
+        LoadingBar.$elem.fadeOut(400, function() {
+            LoadingBar.$elem.removeClass('error');
+        });
     }
 };

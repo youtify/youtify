@@ -14,6 +14,7 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
             $('body').html(r.responseText);
         }
     }
+    LoadingBar.error();
 });
 
 $(document).ready(function() {

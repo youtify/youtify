@@ -1811,6 +1811,10 @@ input[type=search]::-webkit-search-results-decoration {
     font-size: 16px;
 }
 
+#loading.error {
+    background: url('/images/bigsnake.gif') center center no-repeat red;
+}
+
 #right .activity {
     padding: 5px 0;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
