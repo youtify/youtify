@@ -90,7 +90,7 @@ var ExternalUserPage = {
 
         history.pushState(null, null, '/soundcloud/' + username);
 
-        $.getJSON("http://api.soundcloud.com/resolve.json", {client_id: SOUNDCLOUD_API_KEY, url: "https://soundcloud.com/" + username}, function(resolveData) {
+        $.getJSON("http://api.soundcloud.com/resolve.json?callback=?", {client_id: SOUNDCLOUD_API_KEY, url: "https://soundcloud.com/" + username}, function(resolveData) {
             $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + ".json", {client_id: SOUNDCLOUD_API_KEY}, function(userData) {
                 self.externalUser = new ExternalUserSubscription({
                     type: 'soundcloud',
