@@ -55,8 +55,8 @@ var Timeline = {
         }
         pos = mouseX / maxWidth * len;
 
-        $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-        $('#bottom .timeline-wrapper .length').html(Math.floor(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
+        $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60.0)+':' + ((Math.floor(pos%60) <10) ? '0' : '') + Math.floor(pos%60));
+        $('#bottom .timeline-wrapper .length').html(Math.floor(len/60.0)+':' + ((Math.floor(len%60) <10) ? '0' : '') + Math.floor(len%60));
 		$('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
         
         if (!Timeline.isDragging) {
@@ -76,8 +76,8 @@ var Timeline = {
         }
         
         if (pos && len) {
-            $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60)+':' + ((Math.round(pos%60) <10) ? '0' : '') + Math.round(pos%60));
-            $('#bottom .timeline-wrapper .length').html(Math.floor(len/60)+':' + ((Math.round(len%60) <10) ? '0' : '') + Math.round(len%60));
+            $('#bottom .timeline-wrapper .position').html(Math.floor(pos/60.0)+':' + ((Math.floor(pos%60) <10) ? '0' : '') + Math.floor(pos%60));
+            $('#bottom .timeline-wrapper .length').html(Math.floor(len/60.0)+':' + ((Math.floor(len%60) <10) ? '0' : '') + Math.floor(len%60));
             $('#bottom .timeline-wrapper .slider').width(pos/len*$('#bottom .timeline').width());
         } else {
             $('#bottom .timeline-wrapper .position').html('0:00');
