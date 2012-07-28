@@ -1319,10 +1319,6 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .shuffle.on:after {
     color: purple;
 }
-#bottom .shuffle.on:active,
-#bottom .shuffle:active {
-    box-shadow: inset 0px 0px 3px #000;
-}
 
 /** CONTEXTMENU
  ****************************************************************************/
