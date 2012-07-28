@@ -150,11 +150,6 @@ function MenuItem(type) {
                 self.rightView = $('#right > .queue');
                 self.addTabs(['queue']);
                 break;
-            case 'favorites':
-                self.leftView = $('#left .menu .favorites');
-                self.rightView = $('#right .favorites');
-                self.addTabs(['favorites']);
-                break;
             case 'news-feed':
                 self.leftView = $('#left .menu .news-feed');
                 self.rightView = $('#right .news-feed');
