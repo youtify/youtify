@@ -136,7 +136,6 @@ function MenuItem(type) {
     self.type = type;
     self.leftView = null;
     self.rightView = null;
-    self.tabs = [];
     
     self.init = function() {
         /* Bind views */
@@ -148,7 +147,6 @@ function MenuItem(type) {
             case 'queue':
                 self.leftView = $('#left .menu .queue');
                 self.rightView = $('#right > .queue');
-                self.addTabs(['queue']);
                 break;
             case 'news-feed':
                 self.leftView = $('#left .menu .news-feed');
@@ -160,15 +158,6 @@ function MenuItem(type) {
         self.leftView.mousedown(self.select);
         self.leftView.data('model', self);
         self.rightView.data('model', self);
-    };
-    self.findTab = function(type) {
-        var i;
-        for(i = 0; i < self.tabs.length; i += 1) {
-            if (self.tabs[i].type === type) {
-                return self.tabs[i];
-            }
-        }
-        return null;
     };
     self.select = function() {
         $('#right, #top .search').removeClass('focused');
@@ -191,32 +180,10 @@ function MenuItem(type) {
         /* Display views */
         self.rightView.show();
         self.leftView.addClass('selected');
-        
-        /* Display the right video list */
-        if (self.tabs.length > 0) {
-            var selectedTab = null;
-            $.each(self.tabs, function(i, tab) {
-                if (tab.isSelected()) {
-                    selectedTab = tab;
-                    return false;
-                }
-            });
-            /* No selected tab was found. Select the first. */
-            if (selectedTab === null) {
-                self.tabs[0].select();
-            }
-        }
     };
     self.setAsPlaying = function() {
         /* Remove playing on all menuItems */
         $('#left .menu li').removeClass('playing');
         self.leftView.addClass('playing');
-    };
-    self.addTabs = function(tabList) {
-        $.each(tabList, function(i, type) {
-            var tab = new Tab(type, self);
-            tab.init();
-            self.tabs.push(tab);
-        });
     };
 }

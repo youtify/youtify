@@ -3,8 +3,12 @@ var Queue = {
     autoList: [],
     manualPlayIndex: null,
     autoPlayIndex: null,
+    $rightView: null,
+    $tracklist: null,
+
     init: function() {
-    
+        this.$rightView = $('#right .queue');
+        this.$tracklist = $('#right .queue .tracklist');
     },
     addManual: function(video) {
         Queue.manualList.push(video);  
@@ -79,7 +83,7 @@ var Queue = {
         }
     },
 	updateView: function() {
-        var view = Menu.find('queue').findTab('queue').paneView;
+        var view = this.$tracklist;
         
         view.html('');
         $.each(Queue.manualList, function(index, video) {
