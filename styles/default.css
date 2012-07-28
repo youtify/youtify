@@ -2,9 +2,6 @@
 *******************************/
 body:after {
     content:
-        url(/images/volume-down-small.png)
-        url(/images/volume-up-small.png)
-        url(/images/playing.png)
         url(/images/youtube.png)
         url(/images/soundcloud.png)
         url(/images/officialfm.png)
@@ -18,12 +15,12 @@ body:after {
 }
 
 @font-face {
-    font-family: 'EntypoRegular';
-    src: url('/styles/entypo/entypo-webfont.eot');
-    src: url('/styles/entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/styles/entypo/entypo-webfont.woff') format('woff'),
-         url('/styles/entypo/entypo-webfont.ttf') format('truetype'),
-         url('/styles/entypo/entypo-webfont.svg#EntypoRegular') format('svg');
+    font-family: 'YoutifyRegular';
+    src: url('/styles/font/YoutifyRegulart.eot');
+    src: url('/styles/font/YoutifyRegular.eot?#iefix') format('embedded-opentype'),
+         url('/styles/font/YoutifyRegular.woff') format('woff'),
+         url('/styles/font/YoutifyRegular.ttf') format('truetype'),
+         url('/styles/font/YoutifyRegular.svg#YoutifyRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -275,12 +272,12 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #top .search button:after {
     content: 'ô';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 50px;
     line-height: 20px;
     font-weight: normal;
     position: absolute;
-    top: -2px;
+    top: -9px;
     left: 3px;
 }
 #settings .puffs .chrome-webstore {
@@ -404,7 +401,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #left .menu .news-feed:before {
     content: 'ó';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 32px;
     line-height: 20px;
     color: #000;
@@ -415,7 +412,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #left .menu .toplist:before {
     content: '7';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 32px;
     line-height: 20px;
     color: #000;
@@ -426,7 +423,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #left .menu .queue:before {
     content: 'j';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 32px;
     line-height: 20px;
     color: #000;
@@ -437,7 +434,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #left .menu .search:before {
     content: 'ô';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 36px;
     line-height: 20px;
     color: #000;
@@ -448,7 +445,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #left .menu .playlists li:before {
     content: 'i';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 40px;
     line-height: 20px;
     color: #000;
@@ -457,11 +454,30 @@ input[type=search]::-webkit-search-results-decoration {
     top: 3px;
     left: 3px;
 }
-#left .menu li.playing {
-    background-image: url(/images/volume-up-small.png);
-    background-repeat: no-repeat;
-    background-position: 96% center;
-    font-weight: bold;
+
+#left .menu .selected.news-feed:before,
+#left .menu .selected.toplist:before,
+#left .menu .selected.queue:before,
+#left .menu .selected.search:before,
+#left .menu .playlists li.selected:before {
+    color: #FFF;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+#left .menu li.playing:after {
+    content: '3';
+    font-family: YoutifyRegular;
+    font-size: 60px;
+    line-height: 20px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    color: #333;
+}
+#left .menu li.playing.selected:after {
+    color: #FFF;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
 }
 #left .menu li.target {
     background-color: rgba(0, 124, 137, 1);
@@ -646,10 +662,11 @@ input[type=search]::-webkit-search-results-decoration {
     height: 15px;
     max-height: 15px;
     max-width: 40px;
+    overflow: hidden;
 }
 #right .tracklist .play:after {
     content: '{';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 34px;
     line-height: 20px;
     cursor: pointer;
@@ -659,15 +676,7 @@ input[type=search]::-webkit-search-results-decoration {
     vertical-align: -20%;
 }
 #right .tracklist .play:hover:after {
-    content: '{';
-    font-family: EntypoRegular;
-    font-size: 34px;
-    line-height: 20px;
-    cursor: pointer;
     color: #000;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
-    position: relative;
-    vertical-align: -20%;
 }
 #right .tracklist .playing .play:after {
     content:'';
@@ -675,13 +684,17 @@ input[type=search]::-webkit-search-results-decoration {
 #right .tracklist .play:hover {
     color: #000;
 }
-#right .tracklist .playing .play,
-#right .tracklist .playing .play:hover {
-    color: transparent;
-    text-shadow: none;
-    background-image: url(/images/volume-up-small.png);
-    background-repeat: no-repeat;
-    background-position: center center;
+
+#right .tracklist .playing .play:after,
+#right .tracklist .playing .play:hover:after {
+    content: '3';
+    font-family: YoutifyRegular;
+    font-size: 60px;
+    line-height: 0px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: relative;
+    color: #333;
+    vertical-align: -8px;
 }
 
 #right .tracklist .title,
@@ -707,7 +720,7 @@ input[type=search]::-webkit-search-results-decoration {
     color: #666;
     vertical-align: -18%;
     line-height: 20px;
-    font-family: 'EntypoRegular';
+    font-family: 'YoutifyRegular';
     font-size: 30px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     margin-left: 3px;
@@ -943,7 +956,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #right .playlist-header .nr:before {
     content: 'H';
-    font-family: 'EntypoRegular';
+    font-family: 'YoutifyRegular';
     font-size: 30px;
     position: absolute;
     line-height: 16px;
@@ -951,7 +964,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #right .playlist-header .subscribers:before {
     content: 'M';
-    font-family: 'EntypoRegular';
+    font-family: 'YoutifyRegular';
     font-size: 30px;
     position: absolute;
     line-height: 16px;
@@ -960,7 +973,7 @@ input[type=search]::-webkit-search-results-decoration {
 #right .playlist-header .public:before {
     content: 'V';
     font-size: 36px;
-    font-family: 'EntypoRegular';
+    font-family: 'YoutifyRegular';
     position: absolute;
     top: 9px;
     margin-left: -20px;
@@ -968,7 +981,7 @@ input[type=search]::-webkit-search-results-decoration {
 #right .playlist-header .private:before {
     content: 'U';
     font-size: 36px;
-    font-family: 'EntypoRegular';
+    font-family: 'YoutifyRegular';
     position: absolute;
     top: 9px;
     margin-left: -20px;
@@ -1089,43 +1102,43 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .controls .prev:after {
     content: 'Å';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 36px;
     line-height: 20px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: 2px;
+    top: -2px;
     left: 6px;
 }
 #bottom .controls .playpause:after {
     content: '{';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 50px;
     line-height: 20px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: 9px;
+    top: 3px;
     left: 18px;
 }
 .playing #bottom .controls .playpause:after {
     content: '|';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 50px;
     line-height: 20px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: 9px;
+    top: 3px;
     left: 17px;
 }
 #bottom .controls .next:after {
     content: 'Ä';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 36px;
     line-height: 20px;
     color: #333;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: 2px;
+    top: -2px;
     left: 8px;
 }
 #bottom .info {
@@ -1158,7 +1171,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .info .title:before {
     content: '`';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 40px;
     line-height: 20px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
@@ -1225,16 +1238,26 @@ input[type=search]::-webkit-search-results-decoration {
     height: 15px;
 }
 #bottom .volume-wrapper:before {
-    content: url(/images/volume-down-small.png);
+    content: '1';
+    font-family: YoutifyRegular;
+    font-size: 60px;
+    line-height: 20px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: -2px;
-    left: 6px;
+    top: -21px;
+    left: 7px;
+    color: #333;
 }
 #bottom .volume-wrapper:after {
-    content: url(/images/volume-up-small.png);
+    content: '3';
+    font-family: YoutifyRegular;
+    font-size: 60px;
+    line-height: 20px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: -1px;
-    right: 3px;
+    top: -21px;
+    right: 1px;
+    color: #333;
 }
 #bottom .volume-wrapper .volume {
     width: auto;
@@ -1278,55 +1301,55 @@ input[type=search]::-webkit-search-results-decoration {
 }
 
 #bottom .fullscreen {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 6px;
+    right: 12px;
     cursor: pointer;
 }
 #bottom .fullscreen:after {
     content: 'Ñ';
-    font-family: EntypoRegular;
-    font-size: 40px;
+    font-family: YoutifyRegular;
+    font-size: 42px;
     line-height: 20px;
     color: #333;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: -7px;
+    top: -12px;
     left: -2px;
 }
 #bottom .fullscreen.on:after {
     content: 'Ö';
-    font-family: EntypoRegular;
-    font-size: 40px;
+    font-family: YoutifyRegular;
+    font-size: 42px;
     line-height: 20px;
     color: purple;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: -7px;
+    top: -12px;
     left: -2px;
 }
 
 #bottom .shuffle {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     position: absolute;
-    bottom: 10px;
-    right: 15px;
+    bottom: 6px;
+    right: 12px;
     cursor: pointer;
     color: #333;
 }
 #bottom .shuffle:after {
     content: 'f';
-    font-family: EntypoRegular;
-    font-size: 32px;
+    font-family: YoutifyRegular;
+    font-size: 38px;
     line-height: 20px;
     cursor: pointer;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: -7px;
-    left: -2px;
+    top: -11px;
+    left: -1px;
     color: #333;
 }
 #bottom .shuffle.on:after {
@@ -1371,7 +1394,7 @@ input[type=search]::-webkit-search-results-decoration {
 #contextmenu .option.view:before,
 #contextmenu .option.buy:before,
 #contextmenu .option.replace:before {
-    font-family: 'EntypoRegular';
+    font-family: 'YoutifyRegular';
     font-size: 30px;
     position: relative;
     line-height: 0;
@@ -1465,7 +1488,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #dragElem .track:before {
     content: '{';
-    font-family: EntypoRegular;
+    font-family: YoutifyRegular;
     font-size: 34px;
     line-height: 20px;
     color: #666;

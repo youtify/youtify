@@ -260,10 +260,16 @@ input[type=search]::-webkit-search-results-decoration {
 #left .menu .search {
     background: url(/images/small-search.png) no-repeat 5px center;
 }
-
-#left .menu li.playing {
-    background: url(/images/playing.png) no-repeat 5px center;
-    background-color: rgba(0, 124, 137, 0.1);
+#left .menu li.playing:after {
+    content: '3';
+    font-family: YoutifyRegular;
+    font-size: 60px;
+    line-height: 20px;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    color: #333;
 }
 #left .menu li.selected {
     background-color: rgba(0, 124, 137, 0.4);
@@ -511,16 +517,6 @@ input[type=search]::-webkit-search-results-decoration {
 #right .tracklist .playing .play:after {
     content:'';
 }
-#right .tracklist .playing .play,
-#right .tracklist .playing .play:hover {
-    color: transparent;
-    text-shadow: none;
-    background-image: url(/images/volume-up-small.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 8px 8px;
-}
-
 #right .tracklist .title {
     text-align: left;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
