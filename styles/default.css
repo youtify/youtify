@@ -149,11 +149,6 @@ input, textarea, button {
     color: #FFF;
     text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
     background-color: rgba(62, 126, 221, 1);
-/*    background-color: rgba(33, 125, 229, 0.5);
-    background: -webkit-linear-gradient(top, #6db3f2 0%,#3e7edd 100%);
-    background: -moz-linear-gradient(top, #6db3f2 0%, #3e7edd 100%);
-    background: -ms-linear-gradient(top, #6db3f2 0%,#3e7edd 100%);
-    background: -o-linear-gradient(top, #6db3f2 0%,#3e7edd 100%); */
 }
 
 /** TOP
@@ -465,12 +460,6 @@ input[type=search]::-webkit-search-results-decoration {
     color: white;
     text-shadow: none;
     cursor: default;
-}
-.logged-in #left .menu .playlists li {
-    opacity: 0.8;
-}
-.logged-in #left .menu .playlists li.remote {
-    opacity: 1;
 }
 #left .menu .playlists .new {
     position: relative;
@@ -1382,7 +1371,7 @@ input[type=search]::-webkit-search-results-decoration {
     line-height: 0;
     display: block;
     position: absolute;
-    margin: 5px 5px 0 -25px;
+    margin: 2px 5px 0 -25px;
     text-align: center;
     width: 20px;
 }
@@ -1421,6 +1410,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #contextmenu .option.add-to-playlist:before {
     content:'i';
+    margin-left: -26px;
 }
 #contextmenu .option.view:before {
     content:'*';
@@ -1434,7 +1424,8 @@ input[type=search]::-webkit-search-results-decoration {
     margin: 7px 5px 0 -25px;
 }
 #contextmenu .option:hover {
-    background-color: rgba(0, 124, 137, 0.4);
+    background-color: rgba(62, 126, 221, 1);
+    color: #FFF;
 }
 
 /** DRAG N DROP
@@ -1448,7 +1439,7 @@ input[type=search]::-webkit-search-results-decoration {
     box-shadow: 0px 0px 20px #888;
     z-index: 25;
     cursor: default;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 #dragElem .overflow {
     display: block;
@@ -1466,7 +1457,7 @@ input[type=search]::-webkit-search-results-decoration {
     overflow: hidden;
 }
 #dragElem span:nth-of-type(odd) {
-    background-color: rgba(0, 124, 137, 0.1);
+    background-color: rgba(255, 255, 255, 0.2)
 }
 #dragElem .track:before {
     content: '{';
