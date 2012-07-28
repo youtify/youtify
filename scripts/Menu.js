@@ -10,7 +10,6 @@ var Menu = {
         }
         leftMenuItems.push('toplist');
         leftMenuItems.push('queue');
-        leftMenuItems.push('search');
         $.each(leftMenuItems, function(i, type) {
             var menuItem = new MenuItem(type);
             menuItem.init();
@@ -166,13 +165,6 @@ function MenuItem(type) {
                 self.leftView = $('#left .menu .queue');
                 self.rightView = $('#right > .queue');
                 self.addTabs(['queue']);
-                break;
-            case 'search':
-                self.leftView = $('#left .menu .search');
-                self.rightView = $('#right .search');
-                self.addTabs(['youtube-videos', 'soundcloud-tracks', 'officialfm-tracks', 'youtify-users', 'youtify-playlists']);
-                /* Bind search menu to this */
-                Search.menuItem = self;
                 break;
             case 'favorites':
                 self.leftView = $('#left .menu .favorites');

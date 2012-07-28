@@ -24,51 +24,6 @@
                 self.view = $('#right .queue .info .queue');
                 self.paneView = $('#right .queue .pane.queue');
                 break;
-            case 'youtube-videos':
-                self.view = $('#right .search .tabs .youtube.videos');
-                self.paneView = $('#right .search .pane.youtube.videos');
-                Search.youtubeVideosTab = self;
-                break;
-            case 'soundcloud-tracks':
-                self.view = $('#right .search .tabs .soundcloud.tracks');
-                self.paneView = $('#right .search .pane.soundcloud.tracks');
-                Search.soundCloudTracksTab = self;
-                break;
-            case 'officialfm-tracks':
-                self.view = $('#right .search .tabs .officialfm.tracks');
-                self.paneView = $('#right .search .pane.officialfm.tracks');
-                Search.officialfmTracksTab = self;
-                break;
-            case 'youtify-users':
-                self.view = $('#right .search .tabs .youtify.users');
-                self.paneView = $('#right .search .pane.youtify.users');
-                Search.youtifyUsersTab = self;
-                break;
-            case 'youtify-playlists':
-                self.view = $('#right .search .tabs .youtify.playlists');
-                self.paneView = $('#right .search .pane.youtify.playlists');
-                Search.youtifyPlaylistsTab = self;
-                break;
-            case 'favorites':
-                self.view = $('#right .favorites .tabs .favorites');
-                self.paneView = $('#right .favorites .pane.favorites');
-                break;
-            case 'profile-playlists':
-                self.view = $('#right .profile .tabs .profile-playlists');
-                self.paneView = $('#right .profile .pane.profile-playlists');
-                break;
-            case 'profile-followings':
-                self.view = $('#right .profile .tabs .profile-followings');
-                self.paneView = $('#right .profile .pane.profile-followings');
-                break;
-            case 'profile-followers':
-                self.view = $('#right .profile .tabs .profile-followers');
-                self.paneView = $('#right .profile .pane.profile-followers');
-                break;
-            case 'profile-flattrs':
-                self.view = $('#right .profile .tabs .profile-flattrs');
-                self.paneView = $('#right .profile .pane.profile-flattrs');
-                break;
         }
         /* Set click event */
         self.view.mousedown(self.select);
@@ -84,17 +39,7 @@
         if (!self.parent.leftView.hasClass('selected')) {
             self.parent.select();
         }
-        
-        if (self.type === 'youtube-videos' || self.type === 'soundcloud-tracks' ||
-            self.type === 'officialfm-tracks' || self.type === 'youtify-users' || 
-            self.type === 'youtify-playlists') {
-            history.pushState(null, null, '/');
-            
-            if (!self.view.hasClass('selected')) {
-                Search.q = '';
-                $('#top .search input').keyup();
-            }
-        } else if (self.type === 'flattr-toplist') {
+        if (self.type === 'flattr-toplist') {
             history.pushState(null, null, '/');
         } else if (self.type === 'playlists-toplist') {
             Toplist.loadPopularPlaylists();
