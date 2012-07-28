@@ -7,8 +7,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
-from flattr_toplist import get_flattr_toplist_json
-from stats import get_flattr_stats_json
 from model import get_current_youtify_user_model
 from model import create_youtify_user_model
 from model import get_youtify_user_struct
@@ -81,8 +79,6 @@ class MainHandler(webapp.RequestHandler):
             'flattr_user_name': youtify_user_model is not None and youtify_user_model.flattr_user_name,
             'login_url': users.create_login_url('/'),
             'logout_url': users.create_logout_url('/'),
-            'flattrTopList': get_flattr_toplist_json(),
-            'flattrStats': get_flattr_stats_json(),
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
             'ON_PRODUCTION': ON_PRODUCTION,
             'ON_DEV': ON_PRODUCTION is False,

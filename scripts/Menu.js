@@ -144,22 +144,6 @@ function MenuItem(type) {
             case 'toplist':
                 self.leftView = $('#left .menu .toplist');
                 self.rightView = $('#right .toplists');
-                self.addTabs(['flattr-toplist', 'playlists-toplist']);
-
-                // Init Flattr Toplist
-                $tracklist = $('#right .pane.flattr .tracklist');
-                $.each(flattrTopList, function (i, item) {
-                    new Video({
-                        videoId: item.videoId,
-                        title: item.title,
-                        type: item.type,
-                        flattrThingId: item.flattrThingId,
-                        flattrs: item.flattrs,
-                        onPlayCallback: self.setAsPlaying,
-                        duration: item.duration
-                    }).createListView().appendTo($tracklist);
-                });
-
                 break;
             case 'queue':
                 self.leftView = $('#left .menu .queue');
@@ -199,7 +183,7 @@ function MenuItem(type) {
         Menu.deSelectAll();
         
         if (self.type === 'toplist') {
-            history.pushState(null, null, '/');
+            Toplist.show();
         } else if (self.type === 'news-feed') {
             self.rightView.html('');
             LoadingBar.show();

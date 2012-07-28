@@ -58,12 +58,6 @@ var URIManager = {
                 }
             ],
             [
-                '/toplist/playlists',
-                function(matches) {
-                    Toplist.popularPlaylistsTab.select();
-                }
-            ],
-            [
                 '/soundcloud/(.*)',
                 function(matches) {
                     Menu.deSelectAll();

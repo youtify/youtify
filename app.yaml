@@ -76,10 +76,6 @@ handlers:
   script: youtube_toplist.py
   login: admin
 
-- url: /cron/generate_flattr_toplist.*
-  script: flattr_toplist.py
-  login: admin
-
 - url: /cron/generate_playlists_toplist.*
   script: playlists_toplist.py
   login: admin

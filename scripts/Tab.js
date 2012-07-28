@@ -12,10 +12,6 @@
                 self.view = $('#right .toplists .tabs .youtify');
                 self.paneView = $('#right .toplists .pane.youtify');
                 break;
-            case 'flattr-toplist':
-                self.view = $('#right .toplists .tabs .flattr');
-                self.paneView = $('#right .toplists .pane.flattr');
-                break;
             case 'playlists-toplist':
                 self.view = $('#right .toplists .tabs .playlists');
                 self.paneView = $('#right .toplists .pane.playlists');
@@ -39,11 +35,6 @@
         if (!self.parent.leftView.hasClass('selected')) {
             self.parent.select();
         }
-        if (self.type === 'flattr-toplist') {
-            history.pushState(null, null, '/');
-        } else if (self.type === 'playlists-toplist') {
-            Toplist.loadPopularPlaylists();
-        } 
         
         /* Remove selected on all menuItems */
         self.view.siblings().removeClass('selected');

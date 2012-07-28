@@ -47,9 +47,6 @@ $(document).ready(function() {
     Toplist.init();
     URIManager.init();
     LayoutManager.init();
-
-    updateFlattrPuffText();
-    EventSystem.addEventListener('language_changed', updateFlattrPuffText);
     
     $('.login-link').click(LoadingBar.show);
 
@@ -59,13 +56,6 @@ $(document).ready(function() {
         }
     });
 });
-
-function updateFlattrPuffText() {
-    $('#right .flattr .puff .stats').html(TranslationSystem.get('$nr_of_users people have made $nr_of_flattrs Flattr donations via Youtify.', {
-        $nr_of_users: '<strong>' + (flattrStats.nr_of_users || 0) + '</strong>',
-        $nr_of_flattrs: '<strong>' + (flattrStats.nr_of_flattrs || 0) + '</strong>'
-    }));
-}
 
 function onYouTubePlayerAPIReady() {
     youTubeApiReady = true;
