@@ -289,6 +289,7 @@ input[type=search]::-webkit-search-results-decoration {
     position: absolute;
     top: -6px;
     left: -17px;
+    color: #333;
 }
 #top .settings .counter {
     background: rgba(0, 124, 137, 0.4);
@@ -1940,4 +1941,89 @@ input[type=search]::-webkit-search-results-decoration {
 
 .modalbox.add-to-playlist select {
     width: 294px;
+}
+
+/** HOME
+ ****************************************************************************/
+.home .content {
+    width: 100%;
+    height: 100%;
+}
+.home .content h2 {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.home .content .top,
+.home .content .bottom {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50%;
+    padding: 10px;
+    position: relative;
+}
+.home .content .left,
+.home .content .right {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    float: left;
+}
+.home .content .spinner {
+    border: 2px groove #FFF;
+    height: 200px;
+    min-width: 100%;
+    overflow: hidden;
+}
+.home .content .spinner .inner {
+    display: block;
+    min-width: 100%;
+}
+.home .content .spinner .inner .item {
+    min-width: 500px;
+    min-height: 200px;
+    display: inline-block;
+    float: left;
+    margin-right: 50px;
+}
+.home .content .spinner .inner .item:last-of-type {
+    margin-right: 0px;
+}
+#right .home .content .spinner .inner .item .left {
+    width: 200px;
+    height: 200px;
+    padding: 0;
+    overflow: hidden;
+}
+#right .home .content .spinner .inner .item .left .title {
+    font-size: 16px;
+    font-weight: bold;
+    color: purple;
+    cursor: pointer;
+    text-align: center;
+    line-height: 100px;
+    overflow: hidden;
+    height: 50%;
+}
+#right .home .content .spinner .inner .item .playlist-box {
+    min-height: 200px;
+    height: 200px;
+    margin: 0;
+    float: right;
+}
+.home .content .spinner .item img {
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: contain;
+	-moz-background-size: contain;
+	-o-background-size: contain;
+	background-size: contain;
+    width: 100%;
+    height: 50%;
+    float: left;
 }
