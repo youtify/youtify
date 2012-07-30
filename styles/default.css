@@ -1505,7 +1505,6 @@ input[type=search]::-webkit-search-results-decoration {
     color: #333;
     z-index:200;
 	box-shadow: 0px 0px 20px #888;
-	border-radius: 10px;
 }
 .popup a,
 .popup .link {
