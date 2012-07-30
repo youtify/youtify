@@ -1518,7 +1518,7 @@ input[type=search]::-webkit-search-results-decoration {
 .arrow {
     display: block;
 	position: absolute;
-    z-index: 201;
+    z-index: 10000;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
