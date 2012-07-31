@@ -1547,6 +1547,24 @@ input[type=search]::-webkit-search-results-decoration {
     margin-bottom: 5px;
 }
 
+/** NOTIFICATIONS POPUP
+ ****************************************************************************/
+
+#activities-popup {
+}
+#activities-popup .activity {
+    margin-bottom: 10px;
+}
+#activities-popup .activity .user {
+    display: inline-block;
+}
+#activities-popup .activity:last-child {
+    margin-bottom: 0;
+}
+#activities-popup .activity .timestamp {
+    font-weight: bold;
+}
+
 /** SETTINGS POPUP
  ****************************************************************************/
 
