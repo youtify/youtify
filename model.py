@@ -276,14 +276,17 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     
     return playlist_struct
 
-def get_activities_structs(youtify_user_model, filter={}, count=None):
+def get_activities_structs(youtify_user_model, verbs=None, type=None, count=None):
     query = Activity.all()
 
     if youtify_user_model:
         query = query.filter('owner =', youtify_user_model)
 
-    for k, v in filter.items():
-        query = query.filter(k + ' =', v)
+    if verbs:
+        query = query.filter('verb IN', verbs)
+
+    if type:
+        query = query.filter('type =', type)
 
     query = query.order('-timestamp')
 

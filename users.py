@@ -14,24 +14,21 @@ class ActivitiesHandler(webapp.RequestHandler):
         """Get activities for user as JSON"""
         youtify_user_model = get_youtify_user_model_by_id_or_nick(id_or_nick)
 
-        verb = self.request.get('verb', None)
+        verbs = self.request.get('verbs', None)
         type = self.request.get('type', None)
         count = self.request.get('count', None)
 
+        if verbs:
+            verbs = verbs.split(',')
+
         if count:
             count = int(count)
-
-        filter = {}
-        if verb:
-            filter['verb'] = verb
-        if type:
-            filter['type'] = type
         
         if youtify_user_model is None:
             self.error(404)
             return
         
-        ret = get_activities_structs(youtify_user_model, filter, count)
+        ret = get_activities_structs(youtify_user_model, verbs, type, count)
         
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
