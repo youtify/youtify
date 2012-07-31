@@ -129,11 +129,11 @@ var Activities = {
         return $div;
     },
 
-    load: function() {
+    loadNotificationsPopup: function() {
         var $ul = $('#activities-popup ul');
         $ul.html('');
         LoadingBar.show();
-        $.get('/api/users/' + my_user_id + '/activities', function(data) {
+        $.get('/api/users/' + my_user_id + '/activities?type=incoming&verbs=follow,subscribe&count=50', function(data) {
             $.each(data, function(i, activity) {
                 $ul.append(Activities.getActivityElem(activity));
             });

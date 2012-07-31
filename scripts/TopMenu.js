@@ -43,7 +43,7 @@ var TopMenu = {
         // NOTIFICATIONS
         $('#top .activities').click(function() {
             $(this).arrowPopup('#activities-popup');
-            Activities.load();
+            Activities.loadNotificationsPopup();
         });
 
         // SETTINGS
