@@ -276,13 +276,19 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     
     return playlist_struct
 
-def get_activities_structs(youtify_user_model, filter={}):
-    query = Activity.all().filter('owner =', youtify_user_model)
+def get_activities_structs(youtify_user_model, filter={}, count=None):
+    query = Activity.all()
+
+    if youtify_user_model:
+        query = query.filter('owner =', youtify_user_model)
 
     for k, v in filter.items():
         query = query.filter(k + ' =', v)
 
     query = query.order('-timestamp')
+
+    if count is not None:
+        query = query.fetch(count)
 
     ret = []
 

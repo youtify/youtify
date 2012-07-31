@@ -16,6 +16,10 @@ class ActivitiesHandler(webapp.RequestHandler):
 
         verb = self.request.get('verb', None)
         type = self.request.get('type', None)
+        count = self.request.get('count', None)
+
+        if count:
+            count = int(count)
 
         filter = {}
         if verb:
@@ -27,7 +31,7 @@ class ActivitiesHandler(webapp.RequestHandler):
             self.error(404)
             return
         
-        ret = get_activities_structs(youtify_user_model, filter)
+        ret = get_activities_structs(youtify_user_model, filter, count)
         
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
