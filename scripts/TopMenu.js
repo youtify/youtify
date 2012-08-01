@@ -18,6 +18,7 @@ var TopMenu = {
             // I know, not the most natural place to put this...
             $('#profile-popup .profile-page').click(function(event) {
                 UserManager.loadCurrentUser();
+                Utils.closeAnyOpenArrowPopup();
             });
         } else {
             $('#top .profile').hide();

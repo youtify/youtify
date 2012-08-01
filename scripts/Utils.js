@@ -66,6 +66,10 @@ var Utils = {
         myFollowings.push(user);
     },
 
+    closeAnyOpenArrowPopup: function(user) {
+        $('#arrow-popup-blocker').click();
+    },
+
     removeFollowing: function(userId) {
         var newFollowings = [];
 
