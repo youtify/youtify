@@ -216,9 +216,9 @@ body.fullscreen #right {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 #top .logo {
-    background: url(/images/banner/banner_192x64.png) no-repeat center center;
-    background-size: 96px 32px;
-    width: 96px;
+    background: url(/images/logo/logo_64x64.png) no-repeat center center;
+    background-size: 32px 32px;
+    width: 32px;
     height: 32px;
 }
 #top .profile {
@@ -1794,6 +1794,27 @@ input[type=search]::-webkit-search-results-decoration {
 
 #profile-popup {
     width: auto;
+}
+
+/** LOGO POPUP
+ ****************************************************************************/
+
+#logo-popup {
+    width: 500px;
+    max-height: 75%;
+    overflow-x: auto;
+}
+
+#logo-popup h1 {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+#logo-popup h2 {
+    border: none;
+}
+#logo-popup .section {
+    width: 460px;
 }
 
 /** MODAL BOXES

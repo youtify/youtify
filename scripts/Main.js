@@ -47,6 +47,7 @@ $(document).ready(function() {
     HomeScreen.init();
     URIManager.init();
     LayoutManager.init();
+    Logo.init();
     
     $('.login-link').click(LoadingBar.show);
 
