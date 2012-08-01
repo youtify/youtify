@@ -368,7 +368,7 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: border-box;
     width: 320px;
     height: 100%;
-    padding-bottom: 180px; /* #youtube.height */
+    padding-bottom: 200px; /* #.players.height */
 }
 #left .menu {
     -moz-box-sizing: border-box;
@@ -487,30 +487,24 @@ input[type=search]::-webkit-search-results-decoration {
     width: 90%;
     height: 100%;
 }
-#left .players {
+#left .players,
+#left .players .soundcloud,
+#left .players .officialfm,
+#left .players .youtube {
     width: 320px;
-    height: 180px;
+    height: 200px;
     background: #000;
     position: absolute;
     z-index: 30;
 }
 #left .players .soundcloud,
 #left .players .officialfm {
-    width: 320px;
-    height: 180px;
-    position: absolute;
-    background: #000;
     background-repeat: no-repeat;
     background-position: center center;
     -webkit-background-size: contain;
 	-moz-background-size: contain;
 	-o-background-size: contain;
 	background-size: contain;
-}
-#left .players .youtube {
-    width: 320px;
-    height: 180px;
-    position: absolute;
 }
 
 /** RIGHT
