@@ -1547,6 +1547,24 @@ input[type=search]::-webkit-search-results-decoration {
     margin-bottom: 5px;
 }
 
+/** PROFILE POPUP
+ ****************************************************************************/
+
+#profile-popup li {
+    padding: 5px;
+}
+#profile-popup li a:hover {
+    text-decoration: none;
+}
+#profile-popup li:hover {
+    color: #FFF;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
+    background-color: rgb(62, 126, 221);
+}
+#profile-popup .link {
+    color: inherit;
+}
+
 /** NOTIFICATIONS POPUP
  ****************************************************************************/
 
