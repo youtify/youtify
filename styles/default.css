@@ -160,16 +160,20 @@ input, textarea, button {
 
 /** TOP
  ****************************************************************************/
-body.fullscreen #top > div,
+body.fullscreen #top,
 body.fullscreen #left .menu,
 body.fullscreen #right > div {
     display: none !important;
 }
+body.fullscreen,
 body.fullscreen #top,
 body.fullscreen #left,
 body.fullscreen #right {
-    background-color: black;
+    background: black;
     border: none;
+}
+body.fullscreen #bottom {
+    background: #DDD;
 }
 
 #top {
