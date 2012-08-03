@@ -1,14 +1,6 @@
 /** EVENTS
  ****************************************************************************/
 
-function playlistMouseDown(event) {
-    $('#right, #top .search').removeClass('focused');
-    $('#left').addClass('focused');
-
-	$('#left-menu li').removeClass('selected');
-	$(this).addClass('selected');
-}
-
 function loadPlaylist(playlistId) {
     $.ajax({
         url: '/api/playlists/' + playlistId,
@@ -16,7 +8,6 @@ function loadPlaylist(playlistId) {
         statusCode: {
             200: function(data) {
                 var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate, data.followers);
-                playlist.createViews();
                 PlaylistView.loadPlaylistView(playlist);
                 playlistManager.selectPlaylistByRemoteId(data.remoteId);
             },
@@ -30,12 +21,8 @@ function loadPlaylist(playlistId) {
     });
 }
 
-/**
- * Mark the playlistElem in the #left as selected, then
- * fill #playlist with the contained videos.
- */
-function playlistClicked(event) {
-    var playlist = $(this).data('model');
+function playlistMenuItemSelected(menuItem) {
+    var playlist = menuItem.getModel();
 
     if (playlist.remoteId) {
         history.pushState(null, null, playlist.getUrl());
@@ -73,8 +60,8 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             break;
         }
     }
-    self.leftMenuDOMHandle = null;
-    self.playlistDOMHandle = null;
+    self.menuItem = null;
+    self.$tracklist = null;
 
     self.getTwitterShareUrl = function() {
         var url = self.getUrl(),
@@ -95,16 +82,53 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         return new Playlist(self.title, self.videos);
     };
 
-    self.getMenuView = function() {
-        if (self.leftMenuDOMHandle === null) {
-            self.createViews();
+    self.getMenuItem = function() {
+        if (self.menuItem === null) {
+            var args = {
+                title: self.title,
+                $contentPane: $('#right > .playlists'),
+                cssClasses: ['playlistElem'],
+                onSelected: playlistMenuItemSelected,
+                onContextMenu: showPlaylistContextMenu,
+                model: self,
+            };
+
+            if (self.isSubscription) {
+                args.cssClasses.push('subscription');
+                args.$img = $('<img class="owner" />').attr('src', self.owner.smallImageUrl);
+            } else {
+                args.cssClasses.push('droppable');
+            }
+
+            if (self.remoteId) {
+                args.cssClasses.push('remote');
+            } else {
+                args.cssClasses.push('local');
+            }
+
+            if (self.isPrivate) {
+                args.cssClasses.push('private');
+            }
+
+            self.menuItem = new MenuItem(args);
         }
-        return self.leftMenuDOMHandle;
+
+        return self.menuItem;
+    };
+
+    self.getTrackList = function() {
+        if (self.$tracklist === null) {
+            self.$tracklist = $('<table/>')
+                .addClass('pane')
+                .addClass('tracklist')
+                .appendTo('#right > .playlists')
+                .data('model', self);
+        }
+        return self.$tracklist;
     };
     
     self.setAsPlaying = function() {
-        $('#left .menu li').removeClass('playing');
-        self.getMenuView().addClass('playing');
+        self.getMenuItem().setAsPlaying();
     };
 
     self.rename = function(newTitle) {
@@ -113,9 +137,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             self.title = newTitle;
         }
         self.synced = false;
-        if (self.leftMenuDOMHandle) {
-            self.leftMenuDOMHandle.find('.title').text(newTitle);
-        }
+        self.getMenuItem().setTitle(newTitle);
     };
 
     self.unsync = function(callback) {
@@ -176,7 +198,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                     } else {
                         alert('Failed to create new playlist ' + self.title);
                     }
-                    self.createViews();
                     self.getMenuView().addClass('remote');
                     playlistManager.addPlaylist(self);
                     Menu.addPlaylist(self);
@@ -299,7 +320,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         $video.addClass('droppable');
         $video.addClass('draggable');
         $video.addClass('reorderable');
-        $video.appendTo(self.playlistDOMHandle);
+        $video.appendTo(self.getTrackList());
 
         self.synced = false;
     };
@@ -348,41 +369,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         };
     };
 
-    self.createViews = function() {
-        var table = $('<table/>')
-                .addClass('pane')
-                .addClass('tracklist')
-                .appendTo('#right > .playlists')
-                .data('model', self),
-            li = $('<li/>')
-                .addClass("playlistElem")
-                .data('model', self)
-                .bind('contextmenu', showPlaylistContextMenu)
-                .mousedown(playlistMouseDown)
-                .mousedown(playlistClicked);
-
-        if (self.isSubscription) {
-            li.addClass('subscription');
-            $('<img class="owner" />').attr('src', self.owner.smallImageUrl).appendTo(li);
-        } else {
-            li.addClass('droppable');
-        }
-
-        $('<span class="title"></span>').text(self.title).appendTo(li);
-
-        if (self.remoteId) {
-            li.addClass('remote');
-        } else {
-            li.addClass('local');
-        }
-
-        if (self.isPrivate) {
-            li.addClass('private');
-        }
-        self.leftMenuDOMHandle = li;
-        self.playlistDOMHandle = table;
-    };
-	
 	self.removeDuplicates = function() {
 		var deleted = 0,
             i, j;
@@ -402,7 +388,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
     self.goTo = function() {
         history.pushState(null, null, self.owner.getUrl() + '/playlists/' + self.remoteId);
-        Menu.deSelectAll();
+        Menu.deSelect();
         loadPlaylist(self.remoteId);
     };
 

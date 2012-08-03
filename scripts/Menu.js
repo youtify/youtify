@@ -1,81 +1,57 @@
-var pendingVideo;
-
+/**
+ * Holds MenuItemGrops which in turn holds MenuItems. To add or edit a group,
+ * see "#left .menu" in index.html.
+ *
+ * Also manages the "New playlist" button.
+ */
 var Menu = {
-    left: [],
+    $view: null,
+    selectedMenuItem: null,
+    playingMenuItem: null,
+    groups: {},
+
     init: function() {
-        /* Create new menuitems */
-        var leftMenuItems = [];
-        leftMenuItems.push('home');
-        leftMenuItems.push('queue');
-        $.each(leftMenuItems, function(i, type) {
-            var menuItem = new MenuItem(type);
-            menuItem.init();
-            Menu.left.push(menuItem);
-        });
-        
-        EventSystem.addEventListener('playlists_loaded', this.createPlaylistViews);
-        EventSystem.addEventListener('external_user_subscriptions_updated', this.updateExternalUserSubscriptions);
+        var self = this;
+        this.$view = $('#left .menu');
 
-        /* Bind events */
-        $('#left .playlists .new span').click(Menu.newPlaylistClick);
-        $('#left .playlists .new input').keyup(Menu.newPlaylistNameKeyUp);
-        $('#left .playlists .new input').blur(Menu.newPlaylistNameBlur);
+        $.each(this.$view.find('.group'), function(i, $group) {
+            $group = $($group);
+            self.groups[$group.attr('rel')] = new MenuItemGroup($group);
+        });
+
+        $('#left .playlists .new span').click(this.newPlaylistClick);
+        $('#left .playlists .new input').keyup(this.newPlaylistNameKeyUp);
+        $('#left .playlists .new input').blur(this.newPlaylistNameBlur);
     },
-    find: function(type) {
-        var i;
-        for(i = 0; i < Menu.left.length; i += 1) {
-            if (Menu.left[i].type === type) {
-                return Menu.left[i];
-            }
+
+    deSelect: function() {
+        if (this.selectedMenuItem) {
+            this.selectedMenuItem.deSelect();
         }
-        return null;
     },
-    createPlaylistViews: function(playlists) {
-        $playlists = $('#left .menu .playlists ul');
-        $playlists.html('');
 
-        $.each(playlists, function(i, playlist) {
-            Menu.addPlaylist(playlist);
-        });
+    getGroup: function(relAttr) {
+        if (this.groups.hasOwnProperty(relAttr)) {
+            return this.groups[relAttr];
+        } else {
+            throw "Menu has no group named " + relAttr;
+        }
     },
-    updateExternalUserSubscriptions: function(subscriptions) {
-        var $subscriptions = $('#left .menu .external-user-subscriptions ul');
-        $subscriptions.html('');
 
-        $.each(subscriptions, function(i, subscription) {
-            $subscriptions.append(subscription.getMenuView());
-        });
-    },
-    addPlaylist: function(playlist) {
-        $playlists = $('#left .menu .playlists ul');
-        $playlists.append(playlist.getMenuView());
-        
-    },
     newPlaylistClick: function() {
-        var suggestedTitle = '',
-            artist;
-            
-        /* Generate playlist name from dragged video */
-        if (pendingVideo) {
-            artist = extractArtist(pendingVideo.title);
-            if (artist) {
-                suggestedTitle = artist;
-            }
-        }
-        
-        /* Hide the label and show the text input */
         $(this).hide();
         $('#left .playlists .new input')
             .show()
             .focus()
             .select()
-            .val(suggestedTitle);
+            .val('');
     },
+
     newPlaylistNameBlur: function() {
         $('#left .playlists .new span').show();
         $(this).hide();
-        pendingVideo = null;
     },
+
     newPlaylistNameKeyUp: function(event) {
         var title,
             playlist,
@@ -88,17 +64,13 @@ var Menu = {
 
                 title = $.trim($(this).val());
                 if (title.length > 0 && title.length < 50) {
-                    if (pendingVideo) {
-                        videos.push(pendingVideo);
-                    }
                     playlist = new Playlist($(this).val(), videos);
-                    playlist.createViews();
                     playlistManager.addPlaylist(playlist);
-                    playlist.getMenuView().appendTo('#left .playlists ul');
+                    Menu.getGroup('playlists').addMenuItem(playlist.getMenuItem());
                     if (logged_in) {
                         playlist.createNewPlaylistOnRemote(function() {
                             playlistManager.save();
-                            playlist.getMenuView().addClass('remote');
+                            playlist.getMenuItem().$view.addClass('remote');
                         });
                     } else {
                         playlistManager.save();
@@ -107,68 +79,135 @@ var Menu = {
                     return;
                 }
                 $(this).val('');
-                pendingVideo = null;
                 break;
             case 27: // ESC
                 $('#left .playlists .new input').hide();
                 $('#left .playlists .new span').show();
                 $(this).val('');
-                pendingVideo = null;
                 break;
         }
         event.stopPropagation();
-    },
-    deSelectAll: function() {
-        /* Remove selected on all menuItems */
-        $('#left .menu li').removeClass('selected');
-        
-        /* Hide right view */
-        $('#right > div').hide();
     }
 };
 
-function MenuItem(type) {
-    var self = this,
-        $pane;
-    self.type = type;
-    self.leftView = null;
-    self.rightView = null;
-    
-    self.init = function() {
-        /* Bind views */
-        switch(self.type) {
-            case 'home':
-                self.leftView = $('#left .menu .home');
-                self.rightView = $('#right .home');
-                break;
-            case 'queue':
-                self.leftView = $('#left .menu .queue');
-                self.rightView = $('#right > .queue');
-                break;
-        }
-        /* Set click event */
-        self.leftView.mousedown(self.select);
-        self.leftView.data('model', self);
-        self.rightView.data('model', self);
+/**
+ * Group of MenuItems, e.g. playlists, subscriptions.
+ */
+function MenuItemGroup($view) {
+    var self = this;
+
+    self.$view = $view;
+    self.$ul = $view.find('ul');
+
+    self.removeMenuItem = function(menuItem) {
+        menuItem.$view.remove();
     };
+
+    self.addMenuItem = function(menuItem) {
+        self.$ul.append(menuItem.$view);
+    };
+
+    self.clear = function() {
+        self.$ul.html('');
+    };
+}
+
+/**
+ * Menu item that, when clicked, shows a right $contentPane.
+ */
+function MenuItem(args) {
+    var self = this;
+
+    self.$view = $('<li/>');
+    self.$contentPane = args.$contentPane,
+    self.model = null;
+    self.onSelected = args.onSelected;
+
+    $('<span class="title"></span>').text(args.title).appendTo(self.$view);
+
+    if (args.model) {
+        self.model = args.model;
+        self.$view.data('model', args.model);
+    }
+
+    if (args.$img) {
+        self.$view.append(args.$img);
+    }
+
+    if (args.onContextMenu) {
+        self.$view.bind('contextmenu', function(event) {
+            self.select();
+            return args.onContextMenu(self, event);
+        });
+    };
+
+    $.each(args.cssClasses, function(i, cssClass) {
+        self.$view.addClass(cssClass)
+    });
+
+    if (args.translatable) {
+        self.$view.addClass('translatable');
+    }
+
+    self.isSelected = function() {
+        return self === Menu.selectedMenuItem;
+    };
+
     self.select = function() {
         $('#right, #top .search').removeClass('focused');
         $('#left').addClass('focused');
 
-        /* DeSelect left menus and hide right views */
-        Menu.deSelectAll();
-        
-        if (self.type === 'home') {
-            HomeScreen.show();
-        }        
+        if (Menu.selectedMenuItem) {
+            Menu.selectedMenuItem.deSelect();
+        }
 
-        /* Display views */
-        self.rightView.show();
-        self.leftView.addClass('selected');
+        self.$view.addClass('selected');
+
+        if (self.$contentPane) {
+            self.$contentPane.addClass('selected');
+        }
+
+        $('#right > div').hide();
+
+        if (self.onSelected) {
+            self.onSelected(self);
+        }
+
+        Menu.selectedMenuItem = self;
     };
+
+    self.getModel = function() {
+        return self.model;
+    };
+
+    self.deSelect = function() {
+        self.$view.removeClass('selected');
+        if (self.$contentPane) {
+            self.$contentPane.removeClass('selected');
+        }
+        if (Menu.selectedMenuItem === self) {
+            Menu.selectedMenuItem = null;
+        }
+    };
+
+    self.setAsNotPlaying = function() {
+        self.$view.removeClass('playing');
+        if (Menu.playingMenuItem === self) {
+            Menu.playingMenuItem = null;
+        }
+    };
+
     self.setAsPlaying = function() {
-        /* Remove playing on all menuItems */
-        $('#left .menu li').removeClass('playing');
-        self.leftView.addClass('playing');
+        if (Menu.playingMenuItem) {
+            Menu.playingMenuItem.setAsNotPlaying();
+        }
+        self.$view.addClass('playing');
+        Menu.playingMenuItem = self;
     };
+
+    self.setTitle = function(newTitle) {
+        self.$view.find('.title').text(newTitle);
+    };
+
+    self.$view.mousedown(self.select);
 }

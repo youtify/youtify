@@ -1,5 +1,6 @@
 var HomeScreen = {
     $rightView: null,
+    menuItem: null,
     
     artists: [
       { displayName: 'Monstercat', name: 'monstercatmedia', id: '8553751', img: '/images/profiles/monstercat.png', type: 'soundcloud', backgroundColor: '#FFF' },
@@ -8,7 +9,17 @@ var HomeScreen = {
     ],
 
     init: function() {
-        this.$rightView = Menu.find('home').rightView;
+        this.$rightView = $('#right > .home');
+        this.menuItem = new MenuItem({
+            cssClasses: ['home'],
+            title: TranslationSystem.get('Home'),
+            $contentPane: this.$rightView,
+            onSelected: function() {
+                HomeScreen.show();
+            },
+            translatable: true
+        });
+        Menu.getGroup('misc').addMenuItem(this.menuItem);
     },
 
     show: function() {

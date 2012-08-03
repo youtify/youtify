@@ -29,6 +29,7 @@ $(document).ready(function() {
     SpotifyImporterPopup.init();
     SettingsPopup.init();
     Search.init();
+    HomeScreen.init();
     Queue.init();
     Ping.init();
     Notifications.init();
@@ -44,7 +45,6 @@ $(document).ready(function() {
     ExternalUserPage.init();
     ExternalUserSubscriptions.init();
     TopMenu.init();
-    HomeScreen.init();
     URIManager.init();
     LayoutManager.init();
     Logo.init();

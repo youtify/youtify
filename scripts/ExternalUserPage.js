@@ -194,6 +194,7 @@ function ExternalUserSubscription(data) {
     self.type = data.type;
     self.username = data.username;
     self.avatarUrl = data.avatar_url;
+    self.menuItem = null;
 
     self.getMetaData = function() {
         return {
@@ -219,21 +220,18 @@ function ExternalUserSubscription(data) {
         return self.externalUserId === other.externalUserId && self.type === other.type;
     };
 
-    self.getMenuView = function() {
-        var $li = $('<li></li>').addClass(self.type);
-        $('<img/>').attr('src', self.avatarUrl).appendTo($li);
-        $('<span class="username"></span>').text(self.username).appendTo($li);
-
-        $li.mousedown(function() {
-            $('#right, #top .search').removeClass('focused');
-            $('#left').addClass('focused');
-
-            $('#left .menu li').removeClass('selected');
-            $(this).addClass('selected');
-            ExternalUserPage.load(self.type, self.username);
-        });
-
-        return $li;
+    self.getMenuItem = function() {
+        if (self.menuItem === null) {
+            self.menuItem = new MenuItem({
+                cssClasses: ['external-user-subscription', self.type],
+                title: self.username,
+                $img: $('<img/>').attr('src', self.avatarUrl),
+                onSelected: function() {
+                    ExternalUserPage.load(self.type, self.username);
+                }
+            });
+        }
+        return self.menuItem;
     };
 }
 
@@ -247,9 +245,18 @@ var ExternalUserSubscriptions = {
                 $.each(data, function(i, subscription) {
                     self.subscriptions.push(new ExternalUserSubscription(subscription));
                 });
-                EventSystem.callEventListeners('external_user_subscriptions_updated', self.subscriptions);
+                self.updateMenu();
             });
         }
+    },
+
+    updateMenu: function() {
+        var self = this;
+        var group = Menu.getGroup('external-user-subscriptions');
+        group.clear();
+        $.each(self.subscriptions, function(i, subscription) {
+            group.addMenuItem(subscription.getMenuItem());
+        });
     },
 
     isSubscription: function(externalUser) {
@@ -277,7 +284,7 @@ var ExternalUserSubscriptions = {
             statusCode: {
                 200: function(data) {
                     self.subscriptions.push(externalUser);
-                    EventSystem.callEventListeners('external_user_subscriptions_updated', self.subscriptions);
+                    self.updateMenu();
                     callback();
                 },
                 409: function(data) {
@@ -306,7 +313,7 @@ var ExternalUserSubscriptions = {
                         }
                     });
                     self.subscriptions = newSubscriptions;
-                    EventSystem.callEventListeners('external_user_subscriptions_updated', self.subscriptions);
+                    self.updateMenu();
                     callback();
                 },
                 409: function(data) {

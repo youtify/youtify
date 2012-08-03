@@ -199,14 +199,14 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
         playlist = playlistManager.getCurrentlySelectedPlaylist();
         selectedVideos = sourceElem.parent().find('.video.selected');
 
-        lastVideo = playlist.playlistDOMHandle.find('.video:last');
+        lastVideo = playlist.getTrackList().find('.video:last');
         sourceIndex = sourceElem.index();
         destIndex = lastVideo.index();
 
         $.each(selectedVideos, function(index, elem) {
             if (playlist !== undefined) { // hack to not crash when dragging videos on profile pages
                 playlist.moveVideo(sourceIndex, destIndex+1);
-                $(elem).detach().appendTo(playlist.playlistDOMHandle);
+                $(elem).detach().appendTo(playlist.getTrackList());
             }
         });
 

@@ -7,10 +7,6 @@ var PlaylistView = {
 
         /* Title */
         $('<span class="title link"/>').text(playlist.title).click(function() {
-            if (playlist.playlistDOMHandle === null) {
-                playlist.createViews();
-            }
-
             if (playlist.remoteId) {
                 history.pushState(null, null, playlist.getUrl());
             } else {
@@ -144,21 +140,18 @@ var PlaylistView = {
     },
 
     loadPlaylistView: function (playlist) {
-        if (playlist.leftMenuDOMHandle.hasClass('selected') && player.currentVideo && player.currentVideo.listView) {
+        if (playlist.getMenuItem().isSelected() && player.currentVideo && player.currentVideo.listView) {
             player.currentVideo.scrollTo();
         }
-            
-        $('#right > div').hide();
 
-        $('#right > .playlists .pane').hide().removeClass('active');
-        $('#left .menu li').removeClass('selected');
+        $('#right > .playlists .tracklist').hide();
 
-        playlist.playlistDOMHandle.addClass('active');
-        playlist.leftMenuDOMHandle.addClass('selected');
+        var $tracklist =  playlist.getTrackList();
+        $tracklist.show();
 
         PlaylistView.updatePlaylistBar(playlist);
-        if(playlist.playlistDOMHandle.find('.video').length !== playlist.videos.length) {
-            playlist.playlistDOMHandle.html('');
+        if ($tracklist.find('.video').length !== playlist.videos.length) {
+            $tracklist.html('');
             $.each(playlist.videos, function (i, item) {
                 if(item) {
                     $video = item.createListView();
@@ -174,12 +167,10 @@ var PlaylistView = {
 
                         $video.addClass('reorderable');
                     }
-                    $video.appendTo(playlist.playlistDOMHandle);
+                    $video.appendTo($tracklist);
                 }
             });
         }
-        playlist.playlistDOMHandle.show();
-        $('#right > .playlists').show();
     },
 
     syncPlaylistButtonClicked: function (event) {

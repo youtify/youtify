@@ -7,7 +7,6 @@ var EventSystem = {
         'song_almost_done_playing': [],
         'flattr_click_made': [],
         'playlists_loaded': [],
-        'external_user_subscriptions_updated': [],
         'player_manager_initialized': [],
         'video_started_playing_successfully': [],
         'video_failed_to_play': [],

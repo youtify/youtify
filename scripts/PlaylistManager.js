@@ -19,8 +19,17 @@ function PlaylistsManager() {
         }
 
         this.mergePlaylists(playlistsFromServer);
+        this.updateMenu();
 
         EventSystem.callEventListeners('playlists_loaded', this.playlists);
+    };
+
+    this.updateMenu = function() {
+        var group = Menu.getGroup('playlists');
+        group.clear();
+        $.each(this.playlists, function(i, playlist) {
+            group.addMenuItem(playlist.getMenuItem());
+        });
     };
 
     this.removeRemotePlaylistsFromLocalStorage = function() {
@@ -165,7 +174,10 @@ function PlaylistsManager() {
 
     this.deletePlaylist = function(playlistOrIndex) {
         var index;
+        var playlist;
+
         if (playlistOrIndex instanceof Playlist) {
+            playlist = playlistOrIndex;
             index = this.getIndexOfPlaylist(playlistOrIndex);
             if (index === undefined) {
                 console.log("Could not find index for playlist " + playlistOrIndex.title);
@@ -173,18 +185,17 @@ function PlaylistsManager() {
             }
         } else {
             index = playlistOrIndex;
+            playlist = this.playlists[index];
         }
 
-        if (logged_in && this.playlists[index].remoteId) {
-            this.playlists[index].unsync();
+        if (logged_in && playlist.remoteId) {
+            playlist.unsync();
         }
-        if (this.playlists[index].leftMenuDOMHandle) {
-            this.playlists[index].leftMenuDOMHandle.remove();
-        }
-        if (this.playlists[index].playlistDOMHandle) {
-            this.playlists[index].playlistDOMHandle.remove();
-        }
+
         this.playlists.splice(index, 1);
+
+        Menu.deSelect();
+        Menu.getGroup('playlists').removeMenuItem(playlist.getMenuItem());
     };
 
     this.getIndexOfPlaylist = function(playlist) {
@@ -201,7 +212,7 @@ function PlaylistsManager() {
     this.selectPlaylistByRemoteId = function(remoteId) {
         var map = this.getPlaylistsMap();
         if (map.hasOwnProperty(remoteId)) {
-            map[remoteId].leftMenuDOMHandle.mousedown();
+            map[remoteId].getMenuItem().select();
         }
     };
 

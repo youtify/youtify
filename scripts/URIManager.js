@@ -60,14 +60,12 @@ var URIManager = {
             [
                 '/soundcloud/(.*)',
                 function(matches) {
-                    Menu.deSelectAll();
                     ExternalUserPage.loadSoundCloudUser(matches[1]);
                 }
             ],
             [
                 '/youtube/(.*)',
                 function(matches) {
-                    Menu.deSelectAll();
                     ExternalUserPage.loadYouTubeUser(matches[1]);
                 }
             ],
@@ -98,7 +96,7 @@ var URIManager = {
             [
                 '/',
                 function(matches) {
-                    Menu.find('home').select();
+                    HomeScreen.menuItem.select();
                 }
             ]
         ];

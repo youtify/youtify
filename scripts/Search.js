@@ -77,7 +77,7 @@ var Search = {
         Search.search(Search.currentQuery);
     },
     show: function() {
-        Menu.deSelectAll();
+        Menu.deSelect();
         Search.$rightView.show();
         history.pushState(null, null, encodeURI('/search?q=' + Search.currentQuery));
     },

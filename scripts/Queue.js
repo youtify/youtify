@@ -5,10 +5,21 @@ var Queue = {
     autoPlayIndex: null,
     $rightView: null,
     $tracklist: null,
+    menuItem: null,
 
     init: function() {
         this.$rightView = $('#right .queue');
         this.$tracklist = $('#right .queue .tracklist');
+        this.menuItem = new MenuItem({
+            cssClasses: ['queue'],
+            title: TranslationSystem.get('Play Queue'),
+            $contentPane: this.$rightView,
+            onSelected: function() {
+                // nothing special is needed
+            },
+            translatable: true
+        });
+        Menu.getGroup('misc').addMenuItem(this.menuItem);
     },
     addManual: function(video) {
         Queue.manualList.push(video);  

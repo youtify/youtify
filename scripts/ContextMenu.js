@@ -49,19 +49,17 @@ function showContextMenu(buttons, x, y) {
     });
 }
 
-function showPlaylistContextMenu(event) {
-    $('#left .selected').removeClass('selected');
-    $(this).addClass('selected');
+function showPlaylistContextMenu(menuItem, event) {
     event.preventDefault();
+    var playlist = menuItem.getModel();
 
     var buttons = [];
     buttons.push({
         title: TranslationSystem.get('Rename'),
         cssClass: 'rename',
-        args: $(this),
+        args: menuItem.$view,
         callback: function(li) {
-            var playlist = null,
-                input = $('<input type="text"/>')
+            var input = $('<input type="text"/>')
                 .addClass('rename')
                 .val(li.text())
                 .data('li', li)
@@ -70,10 +68,8 @@ function showPlaylistContextMenu(event) {
                     input.remove();
                 })
                 .keyup(function(event) {
-                    var playlist;
                     switch (event.keyCode) {
                         case 13: // RETURN
-                            playlist = li.data('model');
                             playlist.rename(input.val());
                             playlistManager.save();
                             $(this).blur();
@@ -90,20 +86,20 @@ function showPlaylistContextMenu(event) {
             input.focus().select();
         }
     });
-    if (logged_in && $(this).data('model').remoteId) {
+    if (logged_in && playlist.remoteId) {
         buttons.push({
             title: TranslationSystem.get('Share'),
             cssClass: 'share',
-            args: $(this),
+            args: menuItem.$view,
             callback: function(li) {
-                new ShareTrackDialog(li.data('model')).show();
+                new ShareTrackDialog(playlist).show();
             }
         });
     }
     buttons.push({
         title: TranslationSystem.get('Import from Spotify'),
         cssClass: 'import',
-        args: $(this),
+        args: menuItem.$view,
         callback: function(li) {
             li.arrowPopup('#spotify-importer', 'left');
         }
@@ -111,7 +107,7 @@ function showPlaylistContextMenu(event) {
     buttons.push({
         title: TranslationSystem.get('Remove duplicate videos'),
         cssClass: 'remove-duplicates',
-        args: $(this),
+        args: menuItem.$view,
         callback: function(li) {
             var index = li.index(),
                 playlist = playlistManager.getPlaylist(index);
@@ -121,11 +117,11 @@ function showPlaylistContextMenu(event) {
         }
     });
     
-    if (logged_in && !$(this).data('model').remoteId) {
+    if (logged_in && !playlist.remoteId) {
         buttons.push({
             title: TranslationSystem.get('Sync'),
             cssClass: 'sync',
-            args: $(this),
+            args: menuItem.$view,
             callback: function(li) {
                 li.data('model').sync(function() {
                     playlistManager.save();
@@ -135,11 +131,11 @@ function showPlaylistContextMenu(event) {
         });
     }
 
-    if (logged_in && $(this).data('model').remoteId) {
+    if (logged_in && playlist.remoteId) {
         buttons.push({
             title: TranslationSystem.get('Unsync'),
             cssClass: 'unsync',
-            args: $(this),
+            args: menuItem.$view,
             callback: function(li) {
                 li.data('model').unsync();
                 playlistManager.save();
@@ -152,9 +148,8 @@ function showPlaylistContextMenu(event) {
         buttons.push({
             title: 'View JSON',
             cssClass: 'json',
-            args: $(this),
+            args: menuItem.$view,
             callback: function(li) {
-                var playlist = li.data('model');
                 alert(JSON.stringify(playlist.toJSON()));
                 console.log(playlist.toJSON());
             }
@@ -164,7 +159,7 @@ function showPlaylistContextMenu(event) {
     buttons.push({
         title: TranslationSystem.get('Delete/Unsubscribe'),
         cssClass: 'delete',
-        args: $(this),
+        args: menuItem.$view,
         callback: function(li) {
             var index = li.index(),
                 playlist = playlistManager.getPlaylist(index);
