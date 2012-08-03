@@ -1268,6 +1268,7 @@ input[type=search]::-webkit-search-results-decoration {
     top: 6px;
     right: 12px;
     cursor: pointer;
+    overflow: hidden;
 }
 #bottom .fullscreen:after {
     content: 'Ñ';
@@ -1300,6 +1301,7 @@ input[type=search]::-webkit-search-results-decoration {
     right: 12px;
     cursor: pointer;
     color: #333;
+    overflow: hidden;
 }
 #bottom .shuffle:after {
     content: 'f';
