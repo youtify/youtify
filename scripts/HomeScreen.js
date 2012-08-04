@@ -27,8 +27,7 @@ var HomeScreen = {
             i = 0,
             artist = null,
             $spinner = self.$rightView.find('.spinner .inner'),
-            /* workaround for jquery width bug: http://bugs.jquery.com/ticket/9945 */
-            width = ($('#right .home').width() - 320) * 1.15, 
+            width = $('#right > .home .spinner').width() * 1.15, 
             itemWidth = 88,
             rows = 3,
             nbrOfArtists = 0;
