@@ -66,11 +66,6 @@ handlers:
   upload: html/popups/about.html
   #expiration: "1d"
 
-- url: /home
-  static_files: html/home.html
-  upload: html/home.html
-  #expiration: "1d"
-
 - url: /yourbrowsersucks
   script: sucks.py
 

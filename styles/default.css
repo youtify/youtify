@@ -1160,9 +1160,9 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .timeline-wrapper {
     position: absolute;
-    top: 43px;
+    top: 44px;
     left: 320px;
-    height: 15px;
+    height: 12px;
     width: 100%;
     padding-right: 550px;
     -moz-box-sizing: border-box;
@@ -1172,7 +1172,7 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .timeline-wrapper .position,
 #bottom .timeline-wrapper .length{
     position: absolute;
-    top: -2px;
+    top: -3px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     text-align: center;
     width: 45px;
@@ -1190,12 +1190,12 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .timeline-wrapper .timeline {
     width: auto;
-    height: 15px;
+    height: 12px;
     margin: 0 90px 0 0;
     border: 1px solid #999;
 }
 #bottom .timeline-wrapper .slider {
-    height: 15px;
+    height: 12px;
     position: relative;
     width: 0;
     background: #BBB;
@@ -1204,10 +1204,10 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .volume-wrapper {
     position: absolute;
     right: 44px;
-    top: 43px;
+    top: 44px;
     width: 150px;
     padding: 0 20px 0 20px;
-    height: 15px;
+    height: 12px;
 }
 #bottom .volume-wrapper:before {
     content: '1';
@@ -1216,7 +1216,7 @@ input[type=search]::-webkit-search-results-decoration {
     line-height: 20px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: -21px;
+    top: -22px;
     left: 7px;
     color: #333;
 }
@@ -1227,19 +1227,19 @@ input[type=search]::-webkit-search-results-decoration {
     line-height: 20px;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: -21px;
+    top: -22px;
     right: 1px;
     color: #333;
 }
 #bottom .volume-wrapper .volume {
     width: auto;
-    height: 15px;
+    height: 12px;
     margin: 0px 10px;
     border: 1px solid #999;
 }
 
 #bottom .volume-wrapper .slider {
-    height: 15px;
+    height: 12px;
     width: 100%;
     position: relative;
     background: #BBB;
@@ -1999,7 +1999,8 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: border-box;
     width: 100%;
     height: 50%;
-    padding: 10px;
+    min-height: 290px;
+    padding: 5px;
     position: relative;
 }
 .home .content .left,
@@ -2009,60 +2010,63 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: border-box;
     width: 50%;
     height: 100%;
-    padding: 10px;
+    padding: 5px;
     position: relative;
     float: left;
 }
 .home .content .spinner {
     border: 2px groove #FFF;
-    height: 200px;
+    min-height: 264px;
+    max-height: 264px;
     min-width: 100%;
     overflow: hidden;
 }
 .home .content .spinner .inner {
     display: block;
-    min-width: 100%;
+    min-width: 528px;
+    width: 115%;
+    margin: 0 auto;
 }
 .home .content .spinner .inner .item {
-    min-width: 500px;
-    min-height: 200px;
-    display: inline-block;
+    position: relative;
+    width: 88px;
+    height: 88px;
     float: left;
-    margin-right: 50px;
-}
-.home .content .spinner .inner .item:last-of-type {
-    margin-right: 0px;
-}
-#right .home .content .spinner .inner .item .left {
-    width: 200px;
-    height: 200px;
-    padding: 0;
     overflow: hidden;
-}
-#right .home .content .spinner .inner .item .left .title {
-    font-size: 16px;
-    font-weight: bold;
-    color: purple;
     cursor: pointer;
-    text-align: center;
-    line-height: 100px;
-    overflow: hidden;
-    height: 50%;
-}
-#right .home .content .spinner .inner .item .playlist-box {
-    min-height: 200px;
-    height: 200px;
-    margin: 0;
-    float: right;
-}
-.home .content .spinner .item img {
+    background-color: #FFF;
     background-repeat: no-repeat;
     background-position: center center;
-    -webkit-background-size: contain;
-	-moz-background-size: contain;
-	-o-background-size: contain;
-	background-size: contain;
-    width: 100%;
-    height: 50%;
-    float: left;
+    -webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+    
+    opacity: 0;
+    -moz-transition: opacity 200ms ease-in-out;
+    -webkit-transition: opacity 200ms ease-in-out;
+    -o-transition: opacity 200ms ease-in-out;
+    -ms-transition: opacity 200ms ease-in-out;
+    transition: opacity 200ms ease-in-out;
+}
+.home .content .spinner .inner .item .title {
+    width: 88px;
+    text-align: center;
+    font-size: 12px;
+    background: rgba(255,255,255,1);
+    color: purple;
+    overflow: hidden;
+    cursor: pointer;
+    position: absolute;
+    bottom: -50px;
+    -moz-transition: all 200ms ease-in-out;
+    -webkit-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    -ms-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+    word-break: hyphenate;
+    word-wrap: break-word;
+}
+.home .content .spinner .inner .item:hover .title {
+    bottom: 0px;
 }
