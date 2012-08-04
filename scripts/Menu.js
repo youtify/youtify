@@ -98,16 +98,20 @@ function MenuItemGroup($view) {
 
     self.$view = $view;
     self.$ul = $view.find('ul');
+    self.menuItems = [];
 
     self.removeMenuItem = function(menuItem) {
+        // @TODO remove that menu item from self.menuItems
         menuItem.$view.remove();
     };
 
     self.addMenuItem = function(menuItem) {
+        self.menuItems.push(menuItem);
         self.$ul.append(menuItem.$view);
     };
 
     self.clear = function() {
+        self.menuItems = [];
         self.$ul.html('');
     };
 }

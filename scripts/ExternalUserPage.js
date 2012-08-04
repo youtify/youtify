@@ -24,11 +24,10 @@ var ExternalUserPage = {
     },
 
     setMenuItemAsPlayingFor: function(type, username) {
-        $('#left .menu .playing').removeClass('playing');
-        $.each($('#left .menu .external-user-subscriptions li'), function(i, elem) {
-            elem = $(elem);
-            if (elem.hasClass(type) && elem.text() === username) {
-                elem.addClass('playing');
+        var group = Menu.getGroup('external-user-subscriptions');
+        $.each(group.menuItems, function(i, menuItem) {
+            if (menuItem.$view.hasClass(type) && menuItem.$view.text() === username) {
+                menuItem.setAsPlaying();
             }
         });
     },
