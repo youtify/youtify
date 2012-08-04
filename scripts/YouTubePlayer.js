@@ -11,6 +11,7 @@
     self.inFullScreen = false;
     self.defaultWidth = $('#left .players').width();
     self.defaultHeight = $('#left .players').height();
+    self.qualitySet = false;
     
     /* Init the player */
     self.init = function(callback) {
@@ -68,7 +69,10 @@
         /* unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5) */
 		switch (event.data) {
             case YT.PlayerState.BUFFERING:
-                event.target.setPlaybackQuality(new Settings().quality);
+                if (!self.qualitySet) {
+                    event.target.setPlaybackQuality(new Settings().quality);
+                    self.qualitySet = true;
+                }
                 break;
 			case 0:
                 self.currentVideo = null;
@@ -111,6 +115,7 @@
         var quality = new Settings().quality || 'hd720';
         
         if (video) {
+            self.qualitySet = false;
             self.loadedNewVideo = true;
             self.currentVideo = video;
             self.player.loadVideoById(video.videoId, 0, quality);
