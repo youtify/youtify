@@ -7,6 +7,18 @@ from activities import create_external_subscribe_activity
 from model import get_current_youtify_user_model
 from model import get_youtify_user_struct
 from model import ExternalUser
+from model import get_external_user_subscription_struct
+
+class TopExternalUsers(webapp.RequestHandler):
+
+    def get(self, max):
+        """Gets a list of external users"""
+        users = ExternalUser.all().fetch(int(max));
+        json = []
+        for user in users:
+            json.append(get_external_user_subscription_struct(user))
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
 
 class SubscribersHandler(webapp.RequestHandler):
     
@@ -77,6 +89,7 @@ class SubscribersHandler(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication([
         ('/api/external_users/(.*)/(.*)/subscribers', SubscribersHandler),
+        ('/api/external_users/top/(.*)', TopExternalUsers),
     ], debug=True)
     util.run_wsgi_app(application)
 
