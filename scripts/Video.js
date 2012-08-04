@@ -12,6 +12,7 @@ function Video(args) {
     this.onPlayCallback = args.onPlayCallback;
     this.listView = null;
     this.uploaderUsername = args.uploaderUsername || null;
+    this.artworkURL = args.artworkURL || null;
     
     this.clone = function() {
         return new Video({
@@ -19,7 +20,9 @@ function Video(args) {
             'title': this.title,
             'type': this.type,
             'duration': this.duration,
-            'onPlayCallback': this.onPlayCallback
+            'onPlayCallback': this.onPlayCallback,
+            'uploaderUsername': this.uploaderUsername,
+            'artworkURL': this.artworkURL
         });
     };
 

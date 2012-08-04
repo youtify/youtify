@@ -257,16 +257,14 @@ var Search = {
         ret = [];
         $.each(data, function(i, track) {
             var buyLinks = track.purchase_url ? [track.purchase_url] : null;
-            if (buyLinks) {
-                console.log('buyLinks: ' + track.title);
-            }
             ret.push(new Video({
                 videoId: track.id,
                 title: track.title,
                 duration: track.duration,
                 buyLinks: buyLinks,
                 uploaderUsername: includeUploader ? track.user.permalink : null,
-                type: 'soundcloud'
+                type: 'soundcloud',
+                artworkURL: track.artwork_url
             }));
         });
         return ret;
@@ -306,12 +304,12 @@ var Search = {
             } else {
                 videoId = item.media$group.yt$videoid.$t;
             }
-
             var video = new Video({
                 videoId: videoId,
                 title: title,
                 uploaderUsername: includeUploader ? item.author[0].name.$t : null,
-                type: 'youtube'
+                type: 'youtube',
+                artworkURL: item.media$group.media$thumbnail.length > 1 ? item.media$group.media$thumbnail[1].url : null
             });
             results.push(video);
         });
