@@ -72,6 +72,10 @@ handlers:
 - url: /yourdecisionrocks
   script: sucks.py
 
+- url: /cron/generate_flattr_toplist.*
+  script: flattr_toplist.py
+  login: admin
+
 - url: /cron/generate_youtube_toplist.*
   script: youtube_toplist.py
   login: admin

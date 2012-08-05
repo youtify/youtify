@@ -11,6 +11,10 @@ cron:
   url: /cron/gather_flattr_stats
   schedule: every 1 hours
 
+- description: generate flattr toplist
+  url: /cron/generate_flattr_toplist
+  schedule: every 2 hours
+
 - description: generate playlists toplist
   url: /cron/generate_playlists_toplist
   schedule: every 5 minutes
