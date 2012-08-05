@@ -90,7 +90,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                 cssClasses: ['playlistElem'],
                 onSelected: playlistMenuItemSelected,
                 onContextMenu: showPlaylistContextMenu,
-                model: self,
+                model: self
             };
 
             if (self.isSubscription) {

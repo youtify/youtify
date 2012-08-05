@@ -123,7 +123,7 @@ function MenuItem(args) {
     var self = this;
 
     self.$view = $('<li/>');
-    self.$contentPane = args.$contentPane,
+    self.$contentPane = args.$contentPane;
     self.model = null;
     self.onSelected = args.onSelected;
 
@@ -143,10 +143,10 @@ function MenuItem(args) {
             self.select();
             return args.onContextMenu(self, event);
         });
-    };
+    }
 
     $.each(args.cssClasses, function(i, cssClass) {
-        self.$view.addClass(cssClass)
+        self.$view.addClass(cssClass);
     });
 
     if (args.translatable) {
