@@ -165,13 +165,13 @@ function MenuItem(args) {
             Menu.selectedMenuItem.deSelect();
         }
 
+        $('#right > div').hide().removeClass('selected');
+        
         self.$view.addClass('selected');
 
         if (self.$contentPane) {
             self.$contentPane.addClass('selected');
         }
-
-        $('#right > div').hide();
 
         if (self.onSelected) {
             self.onSelected(self);

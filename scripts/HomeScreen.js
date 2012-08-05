@@ -19,6 +19,7 @@ var HomeScreen = {
 
     show: function() {
         history.pushState(null, null, '/');
+        this.$rightView.show();
         HomeScreen.fill();
     },
     
@@ -43,16 +44,21 @@ var HomeScreen = {
         
         $.getJSON('/api/external_users/top/' + nbrOfArtists, function(data) {
             $.each(data, function(i, externalUser) {
+                if (!externalUser.avatar_url) {
+                    return;
+                }
                 var $item = $('<div class="item"/>'),
                     $title = $('<div class="title"/>'),
                     image = new Image();
-                if (externalUser.avatar_url) {
-                    image.onload = function() {
-                        $item.css({'opacity': '1'});
-                    };
-                    image.src = externalUser.avatar_url;
-                    $item.css({'background-image': 'url('+ externalUser.avatar_url + ')'});
-                }
+                
+                image.onload = function() {
+                    $item.css({'opacity': '1'});
+                };
+                image.src = externalUser.avatar_url;
+                $item.css({'background-image': 'url('+ externalUser.avatar_url + ')'});
+                $item.click(function() {
+                    ExternalUserPage.load(externalUser.type, externalUser.username);
+                });
                 $title.text(externalUser.username);
                 $item.append($title);
                 $spinner.append($item);

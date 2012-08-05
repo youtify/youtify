@@ -33,7 +33,7 @@ var ExternalUserPage = {
     },
 
     showView: function() {
-        $('#right > div').hide();
+        $('#right > div').hide().removeClass('selected');
         this.$view.show();
     },
 
