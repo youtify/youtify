@@ -53,12 +53,12 @@ var Utils = {
                 artist: $.trim(split[0]),
                 track: $.trim(split[1])
             };
-        } else if (match1.length === 3) {
+        } else if (match1 && match1.length === 3) {
             ret = {
                 artist: $.trim(match1[1]),
                 track: $.trim(match1[2])
             };
-        } else if (match2.length === 3) {
+        } else if (match2 && match2.length === 3) {
             ret = {
                 artist: $.trim(match2[1]),
                 track: $.trim(match2[2])
