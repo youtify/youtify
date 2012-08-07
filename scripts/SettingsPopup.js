@@ -43,6 +43,15 @@ var SettingsPopup = {
             $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('disabled', 'disabled');
         }
 
+        if (has_lastfm_access_token) {
+            $('<a class="title" target="_blank"></a>').attr('href', 'http://www.last.fm/user/' + lastfm_user_name).text(lastfm_user_name).appendTo('#settings .connections .lastfm .account');
+            $('<a class="button disconnect translatable" href="/lastfm/disconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .lastfm .account');
+        } else {
+            $('<span class="title">Last.fm</span>').appendTo('#settings .connections .lastfm .account');
+            $('<a class="button connect translatable" href="/lastfm/connect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .lastfm .account');
+            $('#settings .connections .lastfm .settings input[name=scrobble_automatically]').attr('disabled', 'disabled');
+        }
+
         (function() {
             var settings = new Settings();
             if (settings.flattr_automatically) {
