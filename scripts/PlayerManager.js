@@ -44,6 +44,10 @@ function PlayerManager() {
                 self.currentVideoLength = duration;
             }
         });
+
+        EventSystem.addEventListener('uploader_info_fetched', function(data) {
+            self.currentVideo.artist = data.name;
+        });
     };
     
     /* Update the */

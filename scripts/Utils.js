@@ -37,6 +37,11 @@ var Utils = {
                 artist: $.trim(split[0]),
                 track: $.trim(split[1])
             };
+        } else if (video.artist) {
+            ret = {
+                artist: video.artist,
+                track: $.trim(video.title)
+            };
         }
 
         return ret;

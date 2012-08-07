@@ -6,7 +6,7 @@ function Video(args) {
     this.flattrThingId = args.flattrThingId || null;
     this.flattrs = args.flattrs || null;
     this.title = $.trim(args.title) || '';
-    this.artist = Utils.extractArtist(this.title);
+    this.artist = args.artist || null;
     this.duration = args.duration || null;
     this.buyLinks = args.buyLinks || null;
     this.type = args.type || 'youtube';
