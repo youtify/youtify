@@ -1346,6 +1346,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #contextmenu .option.import:before,
 #contextmenu .option.remove-duplicates:before,
+#contextmenu .option.recommendations:before,
 #contextmenu .option.rename:before,
 #contextmenu .option.delete:before,
 #contextmenu .option.share:before,
@@ -1373,6 +1374,9 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #contextmenu .option.remove-duplicates:before {
     content:'I';
+}
+#contextmenu .option.recommendations:before {
+    content: 'ô';
 }
 #contextmenu .option.rename:before {
     content:'&';
