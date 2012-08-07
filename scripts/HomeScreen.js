@@ -1,11 +1,14 @@
 var HomeScreen = {
     $rightView: null,
+    $recommendations: null,
+    $playlists: null,
     menuItem: null,
     nbrOfArtists: 0,
     
     init: function() {
         this.$rightView = $('#right > .home');
         this.$recommendations = $('#right > .home .recommendations');
+        this.$playlists = $('#right > .home .playlists');
         this.menuItem = new MenuItem({
             cssClasses: ['home'],
             title: TranslationSystem.get('Home'),
@@ -23,6 +26,7 @@ var HomeScreen = {
         this.reset();
         this.$rightView.show();
         HomeScreen.loadSpotlight();
+        HomeScreen.loadTopPlaylists();
         if (lastfm_user_name) {
             HomeScreen.loadRecommendedArtists();
         }
@@ -30,6 +34,7 @@ var HomeScreen = {
 
     reset: function() {
         this.$recommendations.html('');
+        this.$playlists.html('');
     },
 
     loadRecommendedArtists: function() {
@@ -46,6 +51,19 @@ var HomeScreen = {
                     self.$recommendations.append(artistSuggestion.getSmallView());
                 }
             });
+        });
+    },
+
+    loadTopPlaylists: function() {
+        var self = this;
+        $.get('/api/toplists/playlists', function(playlists) {
+            $.each(playlists, function(index, item) {
+                var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
+                if (playlist.videos.length) {
+                    self.$playlists.append(PlaylistView.createSmallPlaylistView(playlist));
+                }
+            });
+            LoadingBar.hide();
         });
     },
 
