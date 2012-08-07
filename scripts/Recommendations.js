@@ -66,7 +66,7 @@ var Recommendations = {
         self.show();
     },
 
-    findRecommendedArtists: function() {
+    findRecommendedArtists: function(callback) {
         var self = this;
 
         self.reset();
@@ -76,17 +76,7 @@ var Recommendations = {
             LoadingBar.hide();
 
             if (data.success) {
-                $.each(data.artists, function(i, artist) {
-                    if (artist.name) {
-                        var artistSuggestion = new ArtistSuggestion({
-                            name: artist.name,
-                            imageUrl: artist.image[1]['#text'],
-                            mbid: artist.mbid
-                        });
-
-                        self.$artistList.append(artistSuggestion.getSmallView());
-                    }
-                });
+                callback(data.artists);
             } else {
                 console.log('Failed to load recommendations…');
             }

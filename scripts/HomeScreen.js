@@ -5,6 +5,7 @@ var HomeScreen = {
     
     init: function() {
         this.$rightView = $('#right > .home');
+        this.$recommendations = $('#right > .home .recommendations');
         this.menuItem = new MenuItem({
             cssClasses: ['home'],
             title: TranslationSystem.get('Home'),
@@ -19,11 +20,36 @@ var HomeScreen = {
 
     show: function() {
         history.pushState(null, null, '/');
+        this.reset();
         this.$rightView.show();
-        HomeScreen.fill();
+        HomeScreen.loadSpotlight();
+        if (lastfm_user_name) {
+            HomeScreen.loadRecommendedArtists();
+        }
     },
-    
-    fill: function() {
+
+    reset: function() {
+        this.$recommendations.html('');
+    },
+
+    loadRecommendedArtists: function() {
+        var self = this;
+        Recommendations.findRecommendedArtists(function(artists) {
+            console.log(artists);
+            $.each(artists, function(i, artist) {
+                if (artist.name) {
+                    var artistSuggestion = new ArtistSuggestion({
+                        name: artist.name,
+                        imageUrl: artist.image[1]['#text'],
+                        mbid: artist.mbid
+                    });
+                    self.$recommendations.append(artistSuggestion.getSmallView());
+                }
+            });
+        });
+    },
+
+    loadSpotlight: function() {
         var self = this,
             i = 0,
             artist = null,
