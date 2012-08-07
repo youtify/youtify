@@ -312,6 +312,7 @@ def get_activities_structs(youtify_user_model, verbs=None, type=None, count=None
 def get_settings_struct_for_youtify_user_model(youtify_user_model):
     return {
         'flattr_automatically': youtify_user_model.flattr_automatically,
+        'lastfm_scrobble_automatically': youtify_user_model.lastfm_scrobble_automatically,
         'send_new_follower_email': youtify_user_model.send_new_follower_email,
         'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email
     }

@@ -41,6 +41,7 @@ $(document).ready(function() {
     Recommendations.init();
     FlattrFinder.init();
     AutoFlattrer.init();
+    Lastfm.init();
     BottomPanel.init();
     UserManager.init(USER);
     ExternalUserPage.init();

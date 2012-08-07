@@ -49,7 +49,7 @@ var SettingsPopup = {
         } else {
             $('<span class="title">Last.fm</span>').appendTo('#settings .connections .lastfm .account');
             $('<a class="button connect translatable" href="/lastfm/connect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .lastfm .account');
-            $('#settings .connections .lastfm .settings input[name=scrobble_automatically]').attr('disabled', 'disabled');
+            $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').attr('disabled', 'disabled');
         }
 
         (function() {
@@ -57,12 +57,23 @@ var SettingsPopup = {
             if (settings.flattr_automatically) {
                 $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('checked', 'checked');
             }
+
+            if (settings.lastfm_scrobble_automatically) {
+                $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').attr('checked', 'checked');
+            }
         }());
 
         $('#settings .connections .flattr .settings input[name=flattr_automatically]').change(function() {
             var settings = new Settings();
             settingsFromServer.flattr_automatically = this.checked;
             settings.flattr_automatically = this.checked;
+            settings.save();
+        });
+        
+        $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').change(function() {
+            var settings = new Settings();
+            settingsFromServer.lastfm_scrobble_automatically = this.checked;
+            settings.lastfm_scrobble_automatically = this.checked;
             settings.save();
         });
 

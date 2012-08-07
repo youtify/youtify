@@ -3,6 +3,7 @@ import urllib
 import base64
 
 from hashlib import md5
+from urllib import quote
 from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
@@ -16,25 +17,30 @@ except ImportError:
 
 VALIDATE_CERTIFICATE = True
 
-def lastfm_request(method, options):
+def lastfm_request(method, t, options, user = None):
     options.update({
         'method': method,
         'api_key': 'db8b8dccb3afd186b6df786775a62cb5'
     })
 
+    if user:
+        options['sk'] = user.lastfm_access_token
+
     keys = options.keys()
 
     keys.sort()
 
-    signature = reduce(lambda s, v: s + v, [k + options[k] for k in keys]) + '75dada4b3f3794de3be2db291c20528b'
+    signature = reduce(lambda s, v: s + v, [k + options[k].encode('utf8') for k in keys]) + '75dada4b3f3794de3be2db291c20528b'
 
     signature = md5(signature).hexdigest()
 
-    options = reduce(lambda s, v: '%s&%s' % (s, v), ['%s=%s' % (k, options[k]) for k in keys])
+    options = reduce(lambda s, v: '%s&%s' % (s, v), ['%s=%s' % (k, quote(options[k].encode('utf8'))) for k in keys])
 
     url = 'http://ws.audioscrobbler.com/2.0/?%s&format=json&api_sig=%s' % (options, signature)
 
-    response = urlfetch.fetch(url=url, validate_certificate=VALIDATE_CERTIFICATE)
+    http_method = urlfetch.GET if t == 'GET' else urlfetch.POST # TODO: Fix this
+
+    response = urlfetch.fetch(url=url, method=http_method, validate_certificate=VALIDATE_CERTIFICATE)
 
     return simplejson.loads(response.content)
 
@@ -68,7 +74,7 @@ class DisconnectHandler(webapp.RequestHandler):
 class CallbackHandler(webapp.RequestHandler):
     """Retrieve the access token"""
     def get(self):
-        session = lastfm_request('auth.getSession', { 'token': self.request.get('token') })
+        session = lastfm_request('auth.getSession', 'GET', { 'token': self.request.get('token') })
         
         if 'session' in session:
             user = get_current_youtify_user_model()
@@ -91,11 +97,32 @@ class CallbackHandler(webapp.RequestHandler):
 
             self.response.out.write(str(response))
 
+class ScrobbleHandler(webapp.RequestHandler):
+    """Scrobble a track"""
+    def post(self):
+        options = {
+            'artist': self.request.get('artist'),
+            'track': self.request.get('track'),
+            'timestamp': self.request.get('timestamp')
+        }
+
+        session = lastfm_request('track.scrobble', 'POST', options, get_current_youtify_user_model())
+
+        logging.info(session['scrobbles'])
+
+        self.response.headers['Content-Type'] = 'application/json'
+
+        if 'scrobbles' in session:
+            self.response.out.write(simplejson.dumps({ 'success': True, 'result': session['scrobbles']['scrobble'] }))
+        else:
+            self.response.out.write(simplejson.dumps({ 'success': False }))
+
 def main():
     application = webapp.WSGIApplication([
         ('/lastfm/connect', ConnectHandler),
         ('/lastfm/disconnect', DisconnectHandler),
-        ('/lastfm/callback', CallbackHandler)
+        ('/lastfm/callback', CallbackHandler),
+        ('/lastfm/scrobble', ScrobbleHandler)
     ], debug=True)
     util.run_wsgi_app(application)
 
