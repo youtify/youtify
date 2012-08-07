@@ -1607,12 +1607,19 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #settings .connections .connection {
     line-height: 16px;
+    margin-top: 10px;
+}
+#settings .connections .connection:first-child {
+    margin-top: 0;
 }
 #settings .connections .connection .title {
     padding-left: 20px;
 }
 #settings .connections .flattr .account {
     background: url(/images/flattr_16.png) no-repeat center left;
+}
+#settings .connections .lastfm .account {
+    background: url(/images/lastfm_16.png) no-repeat center left;
 }
 #settings .connections .button {
     float: right;
