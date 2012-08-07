@@ -44,7 +44,7 @@ var Recommendations = {
         $.getJSON(url, params, function(data) {
             LoadingBar.hide();
             console.log('response', data);
-            if (typeof(data.similartracks.track) !== "object") {
+            if (!data.similartracks || typeof(data.similartracks.track) !== "object") {
                 alert('Could not find any similar tracks to ' + artistAndTrack.artist + ' - ' + artistAndTrack.track);
                 return;
             }
