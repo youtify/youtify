@@ -21,6 +21,10 @@ var ExternalUserPage = {
                 self.$unsubscribeButton.hide().prev().show();
             });
         });
+
+        self.$view.find('.recommendations').click(function() {
+            Recommendations.findSimilarArtists(self.externalUser);
+        });
     },
 
     setMenuItemAsPlayingFor: function(type, username) {
@@ -95,6 +99,7 @@ var ExternalUserPage = {
                     type: 'soundcloud',
                     external_user_id: String(userData.id),
                     username: username,
+                    display_name: userData.username,
                     avatar_url: userData.avatar_url
                 });
 
@@ -146,6 +151,7 @@ var ExternalUserPage = {
                 type: 'youtube',
                 external_user_id: username,
                 username: username,
+                display_name: data.entry.author[0].name.$t,
                 avatar_url: data.entry.media$thumbnail.url
             });
 
@@ -192,6 +198,7 @@ function ExternalUserSubscription(data) {
     self.externalUserId = data.external_user_id;
     self.type = data.type;
     self.username = data.username;
+    self.displayName = data.display_name;
     self.avatarUrl = data.avatar_url;
     self.menuItem = null;
 

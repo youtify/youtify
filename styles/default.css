@@ -2088,3 +2088,19 @@ input[type=search]::-webkit-search-results-decoration {
 .home .content .spinner .inner .item:hover .title {
     bottom: 0px;
 }
+
+/** RECOMMENDATIONS
+ ****************************************************************************/
+
+.artist.suggestion img {
+    width: 50px;
+    vertical-align: middle;
+}
+.artist.suggestion {
+    vertical-align: middle;
+    margin-bottom: 10px;
+}
+.artist.suggestion .name {
+    vertical-align: middle;
+    margin-left: 5px;
+}
