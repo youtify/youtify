@@ -1131,7 +1131,8 @@ input[type=search]::-webkit-search-results-decoration {
     position: absolute;
     top: 7px;
     left: 320px;
-    height: 36px;
+    height: 28px;
+    overflow: hidden;
     width: 100%;
     padding-right: 360px; /* #controls.width */
     -moz-box-sizing: border-box;
