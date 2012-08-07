@@ -28,14 +28,40 @@ var Utils = {
     },
 
     getArtistAndTrackNames: function(video) {
-        var title = video.title;
-        var split = title.split('-');
+        var title = video.title.toLowerCase();
         var ret = false;
+        var strip = [
+            '(official video)',
+            'official video',
+            'p/v',
+            'm/v',
+        ];
+
+        $.each(strip, function(i, s) {
+            title = title.replace(s, '');
+        });
+
+        title.replace('  ', '');
+        title.replace('   ', '');
+
+        var split = title.split('-');
+        var match1 = title.match(/(.*)'(.*)'/); // Robyn 'Call Your Girlfriend' Official Video
+        var match2 = title.match(/(.*)"(.*)"/); // Robyn "Call Your Girlfriend" Official Video
 
         if (split.length >= 2) {
             ret = {
                 artist: $.trim(split[0]),
                 track: $.trim(split[1])
+            };
+        } else if (match1.length === 3) {
+            ret = {
+                artist: $.trim(match1[1]),
+                track: $.trim(match1[2])
+            };
+        } else if (match2.length === 3) {
+            ret = {
+                artist: $.trim(match2[1]),
+                track: $.trim(match2[2])
             };
         } else if (video.artist) {
             ret = {
