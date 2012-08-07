@@ -108,12 +108,24 @@ class ScrobbleHandler(webapp.RequestHandler):
 
         session = lastfm_request('track.scrobble', 'POST', options, get_current_youtify_user_model())
 
-        logging.info(session['scrobbles'])
-
         self.response.headers['Content-Type'] = 'application/json'
 
         if 'scrobbles' in session:
             self.response.out.write(simplejson.dumps({ 'success': True, 'result': session['scrobbles']['scrobble'] }))
+        else:
+            self.response.out.write(simplejson.dumps({ 'success': False }))
+
+class RecommendationsHandler(webapp.RequestHandler):
+    """Recommended artists for the user"""
+    def get(self):
+        from pprint import pformat
+
+        session = lastfm_request('user.getRecommendedArtists', 'GET', { 'limit': '30' }, get_current_youtify_user_model())
+
+        self.response.headers['Content-Type'] = 'application/json'
+
+        if 'recommendations' in session:
+            self.response.out.write(simplejson.dumps({ 'success': True, 'artists': session['recommendations']['artist'] }))
         else:
             self.response.out.write(simplejson.dumps({ 'success': False }))
 
@@ -122,7 +134,8 @@ def main():
         ('/lastfm/connect', ConnectHandler),
         ('/lastfm/disconnect', DisconnectHandler),
         ('/lastfm/callback', CallbackHandler),
-        ('/lastfm/scrobble', ScrobbleHandler)
+        ('/lastfm/scrobble', ScrobbleHandler),
+        ('/lastfm/recommendations', RecommendationsHandler)
     ], debug=True)
     util.run_wsgi_app(application)
 

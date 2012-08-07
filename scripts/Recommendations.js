@@ -66,6 +66,36 @@ var Recommendations = {
         self.show();
     },
 
+    findRecommendedArtists: function() {
+        var self = this;
+
+        self.reset();
+
+        LoadingBar.show();
+        $.getJSON('/lastfm/recommendations', {}, function(data) {
+            LoadingBar.hide();
+
+            if (data.success) {
+                $.each(data.artists, function(i, artist) {
+                    if (artist.name) {
+                        var artistSuggestion = new ArtistSuggestion({
+                            name: artist.name,
+                            imageUrl: artist.image[1]['#text'],
+                            mbid: artist.mbid
+                        });
+
+                        self.$artistList.append(artistSuggestion.getSmallView());
+                    }
+                });
+            } else {
+                console.log('Failed to load recommendations…');
+            }
+        });
+
+        self.$artistList.show();
+        self.show();
+    },
+
     findSimilarArtistsFromName: function(name) {
         var self = this;
         var url = "http://ws.audioscrobbler.com/2.0?callback=?";
