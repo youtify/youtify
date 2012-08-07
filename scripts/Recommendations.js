@@ -19,9 +19,11 @@ var Recommendations = {
         this.$artistList.html('').hide();
     },
 
-    findSimilarTracksFromTitle: function(title) {
+    findSimilarTracks: function(video) {
         var self = this;
-        var artistAndTrack = Utils.getArtistAndTrackNames(title);
+        var artistAndTrack = Utils.getArtistAndTrackNames(video);
+
+        var title = video.title
 
         if (!artistAndTrack) {
             alert('Could not extract artist and title from ' + title);
@@ -64,10 +66,6 @@ var Recommendations = {
 
         self.$tracklist.show();
         self.show();
-    },
-    
-    findSimilarTracks: function(video) {
-        return this.findSimilarTracksFromTitle(video.title);
     },
 
     findSimilarArtistsFromName: function(name) {

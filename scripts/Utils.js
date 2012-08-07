@@ -27,7 +27,8 @@ var Utils = {
         return replacedText;
     },
 
-    getArtistAndTrackNames: function(title) {
+    getArtistAndTrackNames: function(video) {
+        var title = video.title;
         var split = title.split('-');
         var ret = false;
 

@@ -8,7 +8,7 @@ var Lastfm = {
     },
 
     scrobble: function(data) {
-        var options = Utils.getArtistAndTrackNames(data.title);
+        var options = Utils.getArtistAndTrackNames(data);
         
         if (options) {
             options.timestamp = (((new Date).getTime() / 1000) >> 0); // TODO: Fix before 2038
