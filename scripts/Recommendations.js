@@ -49,11 +49,14 @@ var Recommendations = {
                 return;
             }
             $.each(data.similartracks.track, function(i, track) {
-                var video = new Video({
-                    title: track.artist.name + ' - ' + track.name,
-                    type: 'unresolved'
-                });
-                self.$tracklist.append(video.createListView());
+                if (track.mbid) {
+                    var video = new Video({
+                        title: track.artist.name + ' - ' + track.name,
+                        mbid: track.mbid,
+                        type: 'unresolved'
+                    });
+                    self.$tracklist.append(video.createListView());
+                }
             });
         });
 
