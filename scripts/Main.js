@@ -38,6 +38,7 @@ $(document).ready(function() {
     Timeline.init();
     InfoPopup.init();
     VideoInfo.init();
+    Recommendations.init();
     FlattrFinder.init();
     AutoFlattrer.init();
     BottomPanel.init();

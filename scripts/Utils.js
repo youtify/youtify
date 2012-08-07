@@ -27,6 +27,20 @@ var Utils = {
         return replacedText;
     },
 
+    getArtistAndTrackNames: function(title) {
+        var split = title.split('-');
+        var ret = false;
+
+        if (split.length >= 2) {
+            ret = {
+                artist: $.trim(split[0]),
+                track: $.trim(split[1])
+            };
+        }
+
+        return ret;
+    },
+
     escape: function(s) {
         s = s.replace('<', '&lt;');
         s = s.replace('>', '&gt;');
