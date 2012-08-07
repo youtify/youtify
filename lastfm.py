@@ -16,6 +16,28 @@ except ImportError:
 
 VALIDATE_CERTIFICATE = True
 
+def lastfm_request(method, options):
+    options.update({
+        'method': method,
+        'api_key': 'db8b8dccb3afd186b6df786775a62cb5'
+    })
+
+    keys = options.keys()
+
+    keys.sort()
+
+    signature = reduce(lambda s, v: s + v, [k + options[k] for k in keys]) + '75dada4b3f3794de3be2db291c20528b'
+
+    signature = md5(signature).hexdigest()
+
+    options = reduce(lambda s, v: '%s&%s' % (s, v), ['%s=%s' % (k, options[k]) for k in keys])
+
+    url = 'http://ws.audioscrobbler.com/2.0/?%s&format=json&api_sig=%s' % (options, signature)
+
+    response = urlfetch.fetch(url=url, validate_certificate=VALIDATE_CERTIFICATE)
+
+    return simplejson.loads(response.content)
+
 class ConnectHandler(webapp.RequestHandler):
     """Initiate the Last.fm authentication dance"""
     def get(self):
@@ -46,24 +68,7 @@ class DisconnectHandler(webapp.RequestHandler):
 class CallbackHandler(webapp.RequestHandler):
     """Retrieve the access token"""
     def get(self):
-        options = {
-            'api_key': 'db8b8dccb3afd186b6df786775a62cb5',
-            'method': 'auth.getSession',
-            'token': self.request.get('token')
-        }
-
-        keys = options.keys()
-
-        keys.sort()
-
-        signature = reduce(lambda s, v: s + v, [k + options[k] for k in keys]) + '75dada4b3f3794de3be2db291c20528b'
-        signature = md5(signature).hexdigest()
-        options = reduce(lambda s, v: '%s&%s' % (s, v), ['%s=%s' % (k, options[k]) for k in keys])
-
-        url = 'http://ws.audioscrobbler.com/2.0/?%s&format=json&api_sig=%s' % (options, signature)
-
-        response = urlfetch.fetch(url=url, validate_certificate=VALIDATE_CERTIFICATE)
-        session = simplejson.loads(response.content)
+        session = lastfm_request('auth.getSession', { 'token': self.request.get('token') })
         
         if 'session' in session:
             user = get_current_youtify_user_model()
