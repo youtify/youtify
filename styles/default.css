@@ -1198,18 +1198,26 @@ input[type=search]::-webkit-search-results-decoration {
     right: 540px;
     text-align: left;
 }
-#bottom .timeline-wrapper .timeline {
+#bottom .timeline,
+#bottom .volume {
     width: auto;
-    height: 12px;
-    margin: 0 90px 0 0;
+    height: 8px;
     border: 1px solid #999;
+    border-radius: 4px;
+    overflow: hidden;
+}
+#bottom .timeline .slider,
+#bottom .volume .slider {
+    height: 100%;
+    background: #BBB;
+    border-radius: 4px;
+    position: relative;
+}
+#bottom .timeline-wrapper .timeline {
+    margin: 1px 90px 0 0;
 }
 #bottom .timeline-wrapper .slider {
-    height: 12px;
-    position: relative;
     width: 0;
-    background: #BBB;
-    border-right: 1px solid #999;
 }
 #bottom .volume-wrapper {
     position: absolute;
@@ -1217,7 +1225,7 @@ input[type=search]::-webkit-search-results-decoration {
     top: 44px;
     width: 150px;
     padding: 0 20px 0 20px;
-    height: 12px;
+    height: 8px;
 }
 #bottom .volume-wrapper:before {
     content: '1';
@@ -1243,19 +1251,11 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .volume-wrapper .volume {
     width: auto;
-    height: 12px;
-    margin: 0px 10px;
-    border: 1px solid #999;
+    margin: 1px 10px 0 10px;
 }
-
 #bottom .volume-wrapper .slider {
-    height: 12px;
     width: 100%;
-    position: relative;
-    background: #BBB;
-    border-right: 1px solid #999;
 }
-
 #bottom .timeline-wrapper .slider .knob,
 #bottom .volume-wrapper .knob {
     position: inline;
@@ -2106,6 +2106,7 @@ input[type=search]::-webkit-search-results-decoration {
 .artist.suggestion {
     vertical-align: middle;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 .artist.suggestion .name {
     vertical-align: middle;
