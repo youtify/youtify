@@ -23,10 +23,8 @@ var Recommendations = {
         var self = this;
         var artistAndTrack = Utils.getArtistAndTrackNames(video);
 
-        var title = video.title
-
         if (!artistAndTrack) {
-            alert('Could not extract artist and title from ' + title);
+            alert('Could not extract artist and title from ' + video.title);
             return;
         }
 
@@ -40,7 +38,7 @@ var Recommendations = {
             api_key: 'b25b959554ed76058ac220b7b2e0a026' // @TODO change
         };
 
-        console.log('Looking for alternatives to', artistAndTrack.artist, artistAndTrack.track)
+        console.log('Looking for alternatives to', artistAndTrack.artist, artistAndTrack.track);
 
         self.reset();
 
@@ -94,7 +92,7 @@ var Recommendations = {
                     var artistSuggestion = new ArtistSuggestion({
                         name: artist.name,
                         imageUrl: artist.image[1]['#text'],
-                        mbid: artist.mbid,
+                        mbid: artist.mbid
                     });
                     self.$artistList.append(artistSuggestion.getSmallView());
                 }
@@ -132,4 +130,4 @@ function ArtistSuggestion(args) {
     this.goTo = function() {
         $('#top .search input').val(this.name).keyup();
     };
-};
+}

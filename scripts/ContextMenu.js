@@ -231,7 +231,7 @@ function showResultsItemContextMenu(event, videoElem) {
             cssClass: 'recommendations',
             args: allSelectedVideos,
             callback: function() {
-                Recommendations.findSimilarTracks(video)
+                Recommendations.findSimilarTracks(video);
             }
         },
         {
