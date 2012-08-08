@@ -930,7 +930,6 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     display: block;
     overflow: hidden;
-    margin-left: 5px;
 }
 #right .playlist-header .nr,
 #right .playlist-header .subscribers {
@@ -1202,9 +1201,9 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom .timeline,
 #bottom .volume {
     width: auto;
-    height: 8px;
+    height: 10px;
     border: 1px solid #999;
-    border-radius: 4px;
+    border-radius: 6px;
     overflow: hidden;
 }
 #bottom .timeline .slider,
@@ -1622,16 +1621,11 @@ input[type=search]::-webkit-search-results-decoration {
 #settings .connections .lastfm .account {
     background: url(/images/lastfm_16.png) no-repeat center left;
 }
-#settings .connections .button {
+#settings .connections .action {
     float: right;
 }
 #settings .connections .settings {
     margin-top: 5px;
-}
-#settings  a.button,
-#settings  a.button:hover {
-    text-decoration: none;
-    color: #222;
 }
 
 /** ABOUT POPUP
@@ -2094,20 +2088,23 @@ input[type=search]::-webkit-search-results-decoration {
 .home .content .spinner .inner .item:hover .title {
     bottom: 0px;
 }
+#right .home .content .playlist-box {
+    display: block;
+    margin: 0 0 10px 0;
+    min-height: 0;
+}
 
 /** RECOMMENDATIONS
  ****************************************************************************/
 
 .artist.suggestion img {
     width: 50px;
-    vertical-align: middle;
 }
 .artist.suggestion {
-    vertical-align: middle;
     margin-bottom: 10px;
     cursor: pointer;
 }
 .artist.suggestion .name {
-    vertical-align: middle;
+    vertical-align: top;
     margin-left: 5px;
 }
