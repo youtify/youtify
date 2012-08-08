@@ -118,13 +118,15 @@ class ScrobbleHandler(webapp.RequestHandler):
 class RecommendationsHandler(webapp.RequestHandler):
     """Recommended artists for the user"""
     def get(self):
-        session = lastfm_request('user.getRecommendedArtists', 'GET', { 'limit': '30' }, get_current_youtify_user_model())
-
         self.response.headers['Content-Type'] = 'application/json'
 
-        if 'recommendations' in session:
-            self.response.out.write(simplejson.dumps({ 'success': True, 'artists': session['recommendations']['artist'] }))
-        else:
+        try:
+            session = lastfm_request('user.getRecommendedArtists', 'GET', { 'limit': '30' }, get_current_youtify_user_model())
+            if 'recommendations' in session:
+                self.response.out.write(simplejson.dumps({ 'success': True, 'artists': session['recommendations']['artist'] }))
+            else:
+                self.response.out.write(simplejson.dumps({ 'success': False }))
+        except:
             self.response.out.write(simplejson.dumps({ 'success': False }))
 
 def main():
