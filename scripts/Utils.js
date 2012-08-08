@@ -28,6 +28,10 @@ var Utils = {
     },
 
     getArtistAndTrackNames: function(video) {
+        if (video.track && video.artist) {
+            return { track: video.track, artist: video.artist };
+        }
+
         var title = video.title.toLowerCase();
         var ret = false;
         var strip = [
