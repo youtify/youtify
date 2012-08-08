@@ -63,7 +63,7 @@ class DisconnectHandler(webapp.RequestHandler):
 
         user = get_current_youtify_user_model()
 
-        user.lastfm_name = None
+        user.lastfm_user_name = None
         user.lastfm_subscriber = None
         user.lastfm_access_token = None
 
