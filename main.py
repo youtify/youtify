@@ -101,7 +101,7 @@ class MainHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/favicon.ico', NotFoundHandler),
+        ('/.*\.(?:png|ico|jpg|gif|xml|css|swf|js|yaml|py|pyc|woff|eot|svg|ttf)$', NotFoundHandler),
         ('/.*', MainHandler),
     ], debug=True)
     util.run_wsgi_app(application)
