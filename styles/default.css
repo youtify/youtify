@@ -2024,6 +2024,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 .home .content .top {
     height: 290px;
+    margin-bottom: 10px;
 }
 .home .content .bottom {
     height: 100%;
