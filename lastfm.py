@@ -95,7 +95,7 @@ class CallbackHandler(webapp.RequestHandler):
             self.response.out.write('Last.fm connection failed')
             self.response.out.write('\n\n')
 
-            self.response.out.write(str(response))
+            self.response.out.write(str(session))
 
 class ScrobbleHandler(webapp.RequestHandler):
     """Scrobble a track"""
@@ -118,8 +118,6 @@ class ScrobbleHandler(webapp.RequestHandler):
 class RecommendationsHandler(webapp.RequestHandler):
     """Recommended artists for the user"""
     def get(self):
-        from pprint import pformat
-
         session = lastfm_request('user.getRecommendedArtists', 'GET', { 'limit': '30' }, get_current_youtify_user_model())
 
         self.response.headers['Content-Type'] = 'application/json'
