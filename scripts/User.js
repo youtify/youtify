@@ -56,6 +56,7 @@ function User(args) {
             UserManager.loadCurrentUser();
         } else {
             UserManager.loadProfile(self.id);
+            UserManager.show();
         }
     };
 

@@ -165,12 +165,12 @@ function MenuItem(args) {
             Menu.selectedMenuItem.deSelect();
         }
 
-        $('#right > div').hide().removeClass('selected');
+        $('#right > div').hide();
         
         self.$view.addClass('selected');
 
         if (self.$contentPane) {
-            self.$contentPane.addClass('selected');
+            self.$contentPane.show();
         }
 
         if (self.onSelected) {
@@ -187,7 +187,7 @@ function MenuItem(args) {
     self.deSelect = function() {
         self.$view.removeClass('selected');
         if (self.$contentPane) {
-            self.$contentPane.removeClass('selected');
+            self.$contentPane.hide();
         }
         if (Menu.selectedMenuItem === self) {
             Menu.selectedMenuItem = null;

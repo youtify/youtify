@@ -24,12 +24,15 @@ var HomeScreen = {
     show: function() {
         history.pushState(null, null, '/');
         this.reset();
-        this.$rightView.show();
+
         HomeScreen.loadSpotlight();
         HomeScreen.loadTopPlaylists();
         if (lastfm_user_name) {
             HomeScreen.loadRecommendedArtists();
         }
+
+        $('#right > div').hide();
+        this.$rightView.show();
     },
 
     reset: function() {

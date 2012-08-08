@@ -539,10 +539,6 @@ input[type=search]::-webkit-search-results-decoration {
     height: 100%;
     overflow-y: scroll;
 }
-#right > div.selected {
-    display: block !important;
-}
-
 #right .tabs {
     position: relative;
     overflow: hidden;
