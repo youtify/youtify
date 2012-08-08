@@ -2,6 +2,27 @@ var EchoNest = {
     init: function() {
         EventSystem.addEventListener('video_started_playing_successfully', function(data) {
             EchoNest.fingerprint(data);
+
+            EchoNest.extractArtist(data);
+        });
+    },
+
+    extractArtist: function(track) {
+        var options = {
+            api_key: ECHONEST_API_KEY,
+            format: 'json',
+            text: track.title,
+            sort: 'familiarity-desc',
+            min_familiarity: '0.3',
+            results: 15
+        }
+        
+        $.get('http://developer.echonest.com/api/v4/artist/extract', options, function(data) {
+            if (data.response.artists.length == 1) {
+                track.echonestArtist = data.response.artists[0].name
+                
+                console.log('Echo Nest identified artist as \'' + track.echonestArtist + '\'');
+            }
         });
     },
 
