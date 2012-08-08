@@ -27,18 +27,18 @@ var EchoNest = {
     },
 
     fingerprint: function(track) {
-        if (track.type == 'soundcloud') {
+        if (track.type === 'soundcloud') {
             var options = {
                 api_key: ECHONEST_API_KEY,
                 format: 'json',
                 url: 'https://api.soundcloud.com/tracks/' + track.videoId + '/stream?consumer_key=' + SOUNDCLOUD_API_KEY
-            }
+            };
             
             $.post('http://developer.echonest.com/api/v4/track/upload', options, function(data) {
                 var response = data.response;
                 
-                if (response.status.message == 'Success') {
-                    if (response.track.status == 'complete') {
+                if (response.status.message === 'Success') {
+                    if (response.track.status === 'complete') {
                         track.echonestInformation = response.track;
 
                         if (response.track.title) {

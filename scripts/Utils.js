@@ -38,7 +38,7 @@ var Utils = {
             '(official video)',
             'official video',
             'p/v',
-            'm/v',
+            'm/v'
         ];
 
         $.each(strip, function(i, s) {
