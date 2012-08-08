@@ -53,6 +53,7 @@ $(document).ready(function() {
     URIManager.init();
     LayoutManager.init();
     Logo.init();
+    WindowEvents.init();
     
     $('.login-link').click(LoadingBar.show);
 
