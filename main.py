@@ -21,6 +21,12 @@ from snapshots import get_deployed_translations_json
 from languages import get_languages
 from config import ON_PRODUCTION
 
+class NotFoundHandler(webapp.RequestHandler):
+
+    def get(self):
+        self.response.set_status(404)
+        self.response.out.write("404 Not found")
+
 class MainHandler(webapp.RequestHandler):
 
     def get(self):
@@ -95,6 +101,7 @@ class MainHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
+        ('/favicon.ico', NotFoundHandler),
         ('/.*', MainHandler),
     ], debug=True)
     util.run_wsgi_app(application)
