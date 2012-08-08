@@ -35,7 +35,7 @@ var Recommendations = {
             limit: 30,
             artist: artistAndTrack.artist,
             track: artistAndTrack.track,
-            api_key: 'b25b959554ed76058ac220b7b2e0a026' // @TODO change
+            api_key: LASTFM_API_KEY
         };
 
         console.log('Looking for alternatives to', artistAndTrack.artist, artistAndTrack.track);
@@ -94,7 +94,7 @@ var Recommendations = {
             format: 'json',
             limit: 30,
             artist: name,
-            api_key: 'b25b959554ed76058ac220b7b2e0a026' // @TODO change
+            api_key: LASTFM_API_KEY
         };
 
         self.reset();
