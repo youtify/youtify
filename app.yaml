@@ -175,6 +175,11 @@ handlers:
 
 - url: /soundcloud_id_to_permalink
   script: soundcloud_id_to_permalink.py
+  
+- url: /opensearch.xml
+  static_files: opensearch.xml
+  upload: opensearch.xml
+  expiration: "1d"
 
 - url: /.*
   script: main.py
