@@ -44,6 +44,10 @@ function PlayerManager() {
                 self.currentVideoLength = duration;
             }
         });
+
+        EventSystem.addEventListener('uploader_info_fetched', function(data) {
+            self.currentVideo.artist = data.name;
+        });
     };
     
     /* Update the */
@@ -91,22 +95,26 @@ function PlayerManager() {
             BottomPanel.setTitleText('Loading...');
             
             /* Display the right player and init if uninitialized */
-            for (i = 0; i < self.players.length; i+=1) {
-                if (self.players[i].type === video.type) {
-                    /* Init the player and start playing the video on callback */
-                    if (self.players[i].initialized === false) {
-                        self.players[i].show();
-                        self.players[i].init(callback);
-                        return;
+            if (video.type === 'unresolved') {
+                self.findAndPlayAlternative(video);
+            } else {
+                for (i = 0; i < self.players.length; i+=1) {
+                    if (self.players[i].type === video.type) {
+                        /* Init the player and start playing the video on callback */
+                        if (self.players[i].initialized === false) {
+                            self.players[i].show();
+                            self.players[i].init(callback);
+                            return;
+                        } else {
+                            /* We found the right player! */
+                            self.currentPlayer = self.players[i];
+                            self.configurePlayer(self.currentPlayer);
+                            self.currentPlayer.show();
+                        }
                     } else {
-                        /* We found the right player! */
-                        self.currentPlayer = self.players[i];
-                        self.configurePlayer(self.currentPlayer);
-                        self.currentPlayer.show();
+                        /* Hide other players */
+                        self.players[i].hide();
                     }
-                } else {
-                    /* Hide other players */
-                    self.players[i].hide();
                 }
             }
             

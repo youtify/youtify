@@ -144,7 +144,9 @@ var PlaylistView = {
             player.currentVideo.scrollTo();
         }
 
+        $('#right > div').hide();
         $('#right > .playlists .tracklist').hide();
+        $('#right > .playlists').show();
 
         var $tracklist =  playlist.getTrackList();
         $tracklist.show();

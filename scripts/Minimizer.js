@@ -5,6 +5,7 @@ var JSLINT_OPTIONS = {
     sloppy: true,
     undef: true,
     unparam: true,
+    bitwise: true,
     vars: true,
     white: true,
     nomen: true,

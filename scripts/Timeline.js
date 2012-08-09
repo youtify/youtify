@@ -72,7 +72,7 @@ var Timeline = {
 
         if (!Timeline.hasThrownAlmostDoneEvent && pos/len > 0.9) {
             Timeline.hasThrownAlmostDoneEvent = true;
-            EventSystem.callEventListeners('song_almost_done_playing', null);
+            EventSystem.callEventListeners('song_almost_done_playing', player.currentVideo);
         }
         
         if (pos && len) {

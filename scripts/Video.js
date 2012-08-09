@@ -2,10 +2,11 @@ function Video(args) {
     var self = this;
 
     this.videoId = args.videoId;
+    this.mbid = args.mbid || null;
     this.flattrThingId = args.flattrThingId || null;
     this.flattrs = args.flattrs || null;
     this.title = $.trim(args.title) || '';
-    this.artist = Utils.extractArtist(this.title);
+    this.artist = args.artist || null;
     this.duration = args.duration || null;
     this.buyLinks = args.buyLinks || null;
     this.type = args.type || 'youtube';
@@ -17,6 +18,7 @@ function Video(args) {
     this.clone = function() {
         return new Video({
             'videoId': this.videoId,
+            'mbid': this.mbid,
             'title': this.title,
             'type': this.type,
             'duration': this.duration,
@@ -277,6 +279,7 @@ function Video(args) {
     this.toJSON = function() {
         return {
             'videoId': this.videoId,
+            'mbid': this.mbid,
             'title': this.title,
             'duration': this.duration,
             'type': this.type,

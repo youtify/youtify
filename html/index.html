@@ -56,7 +56,9 @@
             var my_user_id = "{{ my_user_id }}";
             var logged_in = {{ logged_in }};
             var has_flattr_access_token = {{ has_flattr_access_token }};
-            var flattr_user_name = "{{ flattr_user_name }}";
+            var has_lastfm_access_token = {{ has_lastfm_access_token }};
+            var flattr_user_name = {{ flattr_user_name }};
+            var lastfm_user_name = {{ lastfm_user_name }};
 			var device = "{{ device }}";
             var autoDetectedLanguageByServer = "{{ autoDetectedLanguageByServer }}";
             var autoDetectedTranslations = {{ autoDetectedTranslations }};
@@ -118,9 +120,12 @@
         <script src="/scripts/Timeline.js"></script>
         <script src="/scripts/EventSystem.js"></script>
         <script src="/scripts/HomeScreen.js"></script>
+        <script src="/scripts/Recommendations.js"></script>
         <script src="/scripts/InfoPopup.js"></script>
         <script src="/scripts/FlattrFinder.js"></script>
         <script src="/scripts/AutoFlattrer.js"></script>
+        <script src="/scripts/Lastfm.js"></script>
+        <script src="/scripts/EchoNest.js"></script>
         <script src="/scripts/VideoInfo.js"></script>
         <script src="/scripts/BottomPanel.js"></script>
         <script src="/scripts/TopMenu.js"></script>
@@ -175,7 +180,7 @@
 
                 <div class="item search"> 
                     <input type="search" class="translatable" placeholder="Search" />
-                    <button class='button exposed'/>
+                    <button class="button"/>
                 </div>
             </div>
             
@@ -261,7 +266,8 @@
                         </div>
                         <div class="bottom">
                             <div class="left">
-                                <h2 class="translatable"></h2>
+                                <h2 class="translatable">Last.fm Recommendations</h2>
+                                <div class="recommendations"></div>
                             </div>
                             <div class="right">
                                 <h2 class="translatable">Top Playlists</h2>
@@ -273,6 +279,11 @@
                 
                 <div class="queue">
                     <table class="tracklist"></table>
+                </div>
+
+                <div class="recommendations">
+                    <table class="tracklist"></table>
+                    <div class="artists"></div>
                 </div>
                 
                 <div class="playlists droppable">
@@ -328,6 +339,7 @@
                             <button class="unsubscribe button translatable">Unsubscribe</button>
                         </div>
                         <a class="source link" href="#" target="_blank"></a>
+                        | <span class="link recommendations dropdown translatable" href="#" target="_blank">Similar artists</span>
                         <div class="description"></div>
                     </div>
                 </div>

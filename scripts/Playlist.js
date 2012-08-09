@@ -419,6 +419,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         if (videos[i]) {
             var video = new Video({
                 videoId: videos[i].videoId,
+                mbid: videos[i].mbid,
                 title: videos[i].title,
                 type: videos[i].type,
                 duration: videos[i].duration,

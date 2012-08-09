@@ -1,10 +1,14 @@
 var HomeScreen = {
     $rightView: null,
+    $recommendations: null,
+    $playlists: null,
     menuItem: null,
     nbrOfArtists: 0,
     
     init: function() {
         this.$rightView = $('#right > .home');
+        this.$recommendations = $('#right > .home .recommendations');
+        this.$playlists = $('#right > .home .playlists');
         this.menuItem = new MenuItem({
             cssClasses: ['home'],
             title: TranslationSystem.get('Home'),
@@ -19,11 +23,54 @@ var HomeScreen = {
 
     show: function() {
         history.pushState(null, null, '/');
+        this.reset();
+
+        HomeScreen.loadSpotlight();
+        HomeScreen.loadTopPlaylists();
+        if (lastfm_user_name) {
+            HomeScreen.loadRecommendedArtists();
+        }
+
+        $('#right > div').hide();
         this.$rightView.show();
-        HomeScreen.fill();
     },
-    
-    fill: function() {
+
+    reset: function() {
+        this.$recommendations.html('');
+        this.$playlists.html('');
+    },
+
+    loadRecommendedArtists: function() {
+        var self = this;
+        Recommendations.findRecommendedArtists(function(artists) {
+            console.log(artists);
+            $.each(artists, function(i, artist) {
+                if (artist.name) {
+                    var artistSuggestion = new ArtistSuggestion({
+                        name: artist.name,
+                        imageUrl: artist.image[1]['#text'],
+                        mbid: artist.mbid
+                    });
+                    self.$recommendations.append(artistSuggestion.getSmallView());
+                }
+            });
+        });
+    },
+
+    loadTopPlaylists: function() {
+        var self = this;
+        $.get('/api/toplists/playlists', function(playlists) {
+            $.each(playlists, function(index, item) {
+                var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
+                if (playlist.videos.length) {
+                    self.$playlists.append(PlaylistView.createSmallPlaylistView(playlist));
+                }
+            });
+            LoadingBar.hide();
+        });
+    },
+
+    loadSpotlight: function() {
         var self = this,
             i = 0,
             artist = null,

@@ -1,4 +1,5 @@
 import re
+import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
@@ -92,7 +93,11 @@ class SettingsHandler(webapp.RequestHandler):
         user.send_new_follower_email = self.request.get('send_new_follower_email') == 'true'
         user.send_new_subscriber_email = self.request.get('send_new_subscriber_email') == 'true'
         user.flattr_automatically = self.request.get('flattr_automatically') == 'true'
+        user.lastfm_scrobble_automatically = self.request.get('lastfm_scrobble_automatically') == 'true'
         user.save()
+        
+        logging.info(self.request)
+        
         settings = get_settings_struct_for_youtify_user_model(user)
         self.response.out.write(simplejson.dumps(settings))
 

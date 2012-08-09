@@ -185,8 +185,9 @@ body.fullscreen #bottom {
     width: 100%;
     height: 50px;
     z-index: 10;
-    background: #DDD;
-    border-bottom: 2px groove #FFFFFF;
+    background:-webkit-linear-gradient(top, #EEE 0%, #CCC 100%);
+    border-bottom: 1px solid #999;
+    box-shadow: 0px 0px 1px #333;
 }
 #top .left-area{
     padding-top: 8px;
@@ -252,8 +253,8 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: content-box;
     height: 26px;
     width: 200px;
-    padding: 2px 4px 2px 6px;
-    border-radius: 10px 0 0 10px;
+    padding: 2px 4px 2px 10px;
+    border-radius: 24px 0 0 24px;
     border: 1px solid #8B9594;
     border-right: none;
     outline: none;
@@ -267,18 +268,20 @@ input[type=search]::-webkit-search-results-decoration {
     width: 35px;
     height: 32px;
     padding:0;
-    border-radius: 0 10px 10px 0;
-    outline: none;
+    border-radius: 0 24px 24px 0;
+    border-left: none;
+    background: white;
 }
 #top .search button:after {
     content: 'ô';
     font-family: YoutifyRegular;
-    font-size: 50px;
+    color: #bbb;
+    font-size: 36px;
     line-height: 20px;
     font-weight: normal;
     position: absolute;
-    top: -9px;
-    left: 3px;
+    top: -4px;
+    left: 6px;
 }
 #settings .puffs .chrome-webstore {
     padding-left: 20px;
@@ -539,10 +542,6 @@ input[type=search]::-webkit-search-results-decoration {
     height: 100%;
     overflow-y: scroll;
 }
-#right > div.selected {
-    display: block !important;
-}
-
 #right .tabs {
     position: relative;
     overflow: hidden;
@@ -776,6 +775,16 @@ input[type=search]::-webkit-search-results-decoration {
     width: 100%;
     height: 100%;
 }
+#right .tracklist .video.unresolved .type {
+    position: relative;
+}
+#right .tracklist .video.unresolved .type:after {
+    display: block;
+    content: '?';
+    position: absolute;
+    top: 0;
+    left: 15px;
+}
 #right .tracklist .video.youtube .type {
     background-image: url(/images/youtube.png);
 }
@@ -920,7 +929,6 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     display: block;
     overflow: hidden;
-    margin-left: 5px;
 }
 #right .playlist-header .nr,
 #right .playlist-header .subscribers {
@@ -1008,13 +1016,14 @@ input[type=search]::-webkit-search-results-decoration {
 #bottom {
     position: absolute;
     width: 100%;
-    height: 68px;
+    height: 69px;
     bottom: 0;
     z-index: 10;
-    border-top: 2px groove #FFFFFF;
+    border-top: 1px solid #999;
+    box-shadow: 0px 0px 1px #333;
     color: #000;
     overflow: hidden;
-    background: #DDD;
+    background:-webkit-linear-gradient(top, #EEE 0%, #BBB 100%);
     /*background:-webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
     background:-moz-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
     background:-ms-linear-gradient(bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.48) 50%, rgba(0, 0, 0, 0.4) 100%);
@@ -1121,7 +1130,8 @@ input[type=search]::-webkit-search-results-decoration {
     position: absolute;
     top: 7px;
     left: 320px;
-    height: 36px;
+    height: 28px;
+    overflow: hidden;
     width: 100%;
     padding-right: 360px; /* #controls.width */
     -moz-box-sizing: border-box;
@@ -1188,18 +1198,27 @@ input[type=search]::-webkit-search-results-decoration {
     right: 540px;
     text-align: left;
 }
-#bottom .timeline-wrapper .timeline {
+#bottom .timeline,
+#bottom .volume {
     width: auto;
-    height: 12px;
-    margin: 0 90px 0 0;
+    height: 10px;
     border: 1px solid #999;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #ccc;
+}
+#bottom .timeline .slider,
+#bottom .volume .slider {
+    height: 100%;
+    background: #BBB;
+    border-radius: 4px;
+    position: relative;
+}
+#bottom .timeline-wrapper .timeline {
+    margin: 1px 90px 0 0;
 }
 #bottom .timeline-wrapper .slider {
-    height: 12px;
-    position: relative;
     width: 0;
-    background: #BBB;
-    border-right: 1px solid #999;
 }
 #bottom .volume-wrapper {
     position: absolute;
@@ -1207,7 +1226,7 @@ input[type=search]::-webkit-search-results-decoration {
     top: 44px;
     width: 150px;
     padding: 0 20px 0 20px;
-    height: 12px;
+    height: 8px;
 }
 #bottom .volume-wrapper:before {
     content: '1';
@@ -1233,19 +1252,11 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #bottom .volume-wrapper .volume {
     width: auto;
-    height: 12px;
-    margin: 0px 10px;
-    border: 1px solid #999;
+    margin: 1px 10px 0 10px;
 }
-
 #bottom .volume-wrapper .slider {
-    height: 12px;
     width: 100%;
-    position: relative;
-    background: #BBB;
-    border-right: 1px solid #999;
 }
-
 #bottom .timeline-wrapper .slider .knob,
 #bottom .volume-wrapper .knob {
     position: inline;
@@ -1346,6 +1357,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #contextmenu .option.import:before,
 #contextmenu .option.remove-duplicates:before,
+#contextmenu .option.recommendations:before,
 #contextmenu .option.rename:before,
 #contextmenu .option.delete:before,
 #contextmenu .option.share:before,
@@ -1373,6 +1385,9 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #contextmenu .option.remove-duplicates:before {
     content:'I';
+}
+#contextmenu .option.recommendations:before {
+    content: 'ô';
 }
 #contextmenu .option.rename:before {
     content:'&';
@@ -1593,6 +1608,10 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #settings .connections .connection {
     line-height: 16px;
+    margin-top: 10px;
+}
+#settings .connections .connection:first-child {
+    margin-top: 0;
 }
 #settings .connections .connection .title {
     padding-left: 20px;
@@ -1600,16 +1619,14 @@ input[type=search]::-webkit-search-results-decoration {
 #settings .connections .flattr .account {
     background: url(/images/flattr_16.png) no-repeat center left;
 }
-#settings .connections .button {
+#settings .connections .lastfm .account {
+    background: url(/images/lastfm_16.png) no-repeat center left;
+}
+#settings .connections .action {
     float: right;
 }
 #settings .connections .settings {
     margin-top: 5px;
-}
-#settings  a.button,
-#settings  a.button:hover {
-    text-decoration: none;
-    color: #222;
 }
 
 /** ABOUT POPUP
@@ -1998,11 +2015,11 @@ input[type=search]::-webkit-search-results-decoration {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
-    padding: 5px;
     position: relative;
 }
 .home .content .top {
     height: 290px;
+    margin-bottom: 10px;
 }
 .home .content .bottom {
     height: 100%;
@@ -2014,12 +2031,10 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: border-box;
     width: 50%;
     height: 100%;
-    padding: 5px;
     position: relative;
     float: left;
 }
 .home .content .spinner {
-    border: 2px groove #FFF;
     min-height: 264px;
     max-height: 264px;
     min-width: 100%;
@@ -2073,4 +2088,24 @@ input[type=search]::-webkit-search-results-decoration {
 }
 .home .content .spinner .inner .item:hover .title {
     bottom: 0px;
+}
+#right .home .content .playlist-box {
+    display: block;
+    margin: 0 0 10px 0;
+    min-height: 0;
+}
+
+/** RECOMMENDATIONS
+ ****************************************************************************/
+
+.artist.suggestion img {
+    width: 50px;
+}
+.artist.suggestion {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.artist.suggestion .name {
+    vertical-align: top;
+    margin-left: 5px;
 }

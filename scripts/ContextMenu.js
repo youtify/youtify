@@ -226,6 +226,14 @@ function showResultsItemContextMenu(event, videoElem) {
                 new AddToPlaylistDialog(videos).show();
             }
         },
+		{
+            title: TranslationSystem.get('Find similar tracks'),
+            cssClass: 'recommendations',
+            args: allSelectedVideos,
+            callback: function() {
+                Recommendations.findSimilarTracks(video);
+            }
+        },
         {
 			title: TranslationSystem.get('Share'),
             cssClass: 'share',

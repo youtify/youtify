@@ -170,6 +170,10 @@ handlers:
   script: flattr.py
   login: required
 
+- url: /lastfm/*.*
+  script: lastfm.py
+  login: required
+
 - url: /unsubscribe
   script: mail.py
 
