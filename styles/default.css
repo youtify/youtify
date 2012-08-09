@@ -2019,6 +2019,7 @@ input[type=search]::-webkit-search-results-decoration {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
+    padding: 5px;
     position: relative;
 }
 .home .content .top {
@@ -2035,10 +2036,12 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: border-box;
     width: 50%;
     height: 100%;
+    padding: 5px;
     position: relative;
     float: left;
 }
 .home .content .spinner {
+    border: none;
     min-height: 264px;
     max-height: 264px;
     min-width: 100%;
