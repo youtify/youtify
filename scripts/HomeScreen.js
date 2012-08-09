@@ -1,24 +1,27 @@
 var HomeScreen = {
     $rightView: null,
+    $spotlight: null,
     $recommendations: null,
     $playlists: null,
     menuItem: null,
     nbrOfArtists: 0,
     
     init: function() {
-        this.$rightView = $('#right > .home');
-        this.$recommendations = $('#right > .home .recommendations');
-        this.$playlists = $('#right > .home .playlists');
-        this.menuItem = new MenuItem({
+        var self = this;
+        self.$rightView = $('#right > .home');
+        self.$recommendations = $('#right > .home .recommendations');
+        self.$playlists = $('#right > .home .playlists');
+        self.$spotlight = self.$rightView.find('.spotlight .inner')
+        self.menuItem = new MenuItem({
             cssClasses: ['home'],
             title: TranslationSystem.get('Home'),
-            $contentPane: this.$rightView,
+            $contentPane: self.$rightView,
             onSelected: function() {
                 HomeScreen.show();
             },
             translatable: true
         });
-        Menu.getGroup('misc').addMenuItem(this.menuItem);
+        Menu.getGroup('misc').addMenuItem(self.menuItem);
     },
 
     show: function() {
@@ -51,10 +54,11 @@ var HomeScreen = {
                         imageUrl: artist.image[1]['#text'],
                         mbid: artist.mbid
                     });
-                    self.$recommendations.append(artistSuggestion.getSmallView());
+                    self.$recommendations.append(artistSuggestion.getSmallView()).show();
                 }
             });
         });
+        self.$recommendations.parent().show();
     },
 
     loadTopPlaylists: function() {
@@ -67,6 +71,7 @@ var HomeScreen = {
                 }
             });
             LoadingBar.hide();
+            self.$playlists.parent().show();
         });
     },
 
@@ -74,8 +79,7 @@ var HomeScreen = {
         var self = this,
             i = 0,
             artist = null,
-            $spinner = self.$rightView.find('.spinner .inner'),
-            width = $('#right > .home .spinner').width() * 1.15, 
+            width = $('#right > .home .spotlight').width() * 1.15, 
             itemWidth = 88,
             rows = 3,
             nbrOfArtists = 0;
@@ -86,7 +90,7 @@ var HomeScreen = {
             return;
         } else {
             self.nbrOfArtists = nbrOfArtists;
-            $spinner.html('');
+            self.$spotlight.html('');
         }
         
         $.getJSON('/api/external_users/top/' + nbrOfArtists, function(data) {
@@ -108,7 +112,7 @@ var HomeScreen = {
                 });
                 $title.text(externalUser.username);
                 $item.append($title);
-                $spinner.append($item);
+                self.$spotlight.append($item);
             });
         });
     }    
