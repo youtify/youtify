@@ -7,7 +7,7 @@ var HomeScreen = {
     nbrOfArtists: 0,
     
     init: function() {
-        var self = this;
+        var self = HomeScreen;
         self.$rightView = $('#right > .home');
         self.$recommendations = $('#right > .home .recommendations');
         self.$playlists = $('#right > .home .playlists');
@@ -22,11 +22,13 @@ var HomeScreen = {
             translatable: true
         });
         Menu.getGroup('misc').addMenuItem(self.menuItem);
+        EventSystem.addEventListener('window_resized', HomeScreen.loadSpotlight);
     },
 
     show: function() {
+        var self = HomeScreen;
         history.pushState(null, null, '/');
-        this.reset();
+        self.reset();
 
         HomeScreen.loadSpotlight();
         HomeScreen.loadTopPlaylists();
@@ -35,16 +37,17 @@ var HomeScreen = {
         }
 
         $('#right > div').hide();
-        this.$rightView.show();
+        self.$rightView.show();
     },
 
     reset: function() {
-        this.$recommendations.html('');
-        this.$playlists.html('');
+        var self = HomeScreen;
+        self.$recommendations.html('');
+        self.$playlists.html('');
     },
 
     loadRecommendedArtists: function() {
-        var self = this;
+        var self = HomeScreen;
         Recommendations.findRecommendedArtists(function(artists) {
             console.log(artists);
             $.each(artists, function(i, artist) {
@@ -62,7 +65,7 @@ var HomeScreen = {
     },
 
     loadTopPlaylists: function() {
-        var self = this;
+        var self = HomeScreen;
         $.get('/api/toplists/playlists', function(playlists) {
             $.each(playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
@@ -76,7 +79,7 @@ var HomeScreen = {
     },
 
     loadSpotlight: function() {
-        var self = this,
+        var self = HomeScreen,
             i = 0,
             artist = null,
             width = $('#right > .home .spotlight').width() * 1.15, 
@@ -86,7 +89,7 @@ var HomeScreen = {
         width = width < 528 ? 528 : width;
         nbrOfArtists = Math.ceil(width/itemWidth) * rows;
         
-        if (self.nbrOfArtists === nbrOfArtists) {
+        if (self.nbrOfArtists >= nbrOfArtists && self.nbrOfArtists !== 0) {
             return;
         } else {
             self.nbrOfArtists = nbrOfArtists;
