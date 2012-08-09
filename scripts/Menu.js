@@ -108,6 +108,7 @@ function MenuItemGroup($view) {
     self.addMenuItem = function(menuItem) {
         self.menuItems.push(menuItem);
         self.$ul.append(menuItem.$view);
+        menuItem.onAfterAdd();
     };
 
     self.clear = function() {
@@ -126,6 +127,7 @@ function MenuItem(args) {
     self.$contentPane = args.$contentPane;
     self.model = null;
     self.onSelected = args.onSelected;
+    self.onContextMenu = args.onContextMenu;
 
     $('<span class="title"></span>').text(args.title).appendTo(self.$view);
 
@@ -138,13 +140,6 @@ function MenuItem(args) {
         self.$view.append(args.$img);
     }
 
-    if (args.onContextMenu) {
-        self.$view.bind('contextmenu', function(event) {
-            self.select();
-            return args.onContextMenu(self, event);
-        });
-    }
-
     $.each(args.cssClasses, function(i, cssClass) {
         self.$view.addClass(cssClass);
     });
@@ -152,6 +147,16 @@ function MenuItem(args) {
     if (args.translatable) {
         self.$view.addClass('translatable');
     }
+
+    self.onAfterAdd = function() {
+        self.$view.mousedown(self.select);
+        if (args.onContextMenu) {
+            self.$view.bind('contextmenu', function(event) {
+                self.select();
+                return args.onContextMenu(self, event);
+            });
+        }
+    };
 
     self.isSelected = function() {
         return self === Menu.selectedMenuItem;
@@ -212,6 +217,4 @@ function MenuItem(args) {
     self.setTitle = function(newTitle) {
         self.$view.find('.title').text(newTitle);
     };
-
-    self.$view.mousedown(self.select);
 }

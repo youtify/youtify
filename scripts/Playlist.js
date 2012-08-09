@@ -198,9 +198,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                     } else {
                         alert('Failed to create new playlist ' + self.title);
                     }
-                    self.getMenuView().addClass('remote');
                     playlistManager.addPlaylist(self);
-                    Menu.addPlaylist(self);
                     if (callback) {
                         callback();
                     }

@@ -28,7 +28,7 @@ function PlaylistsManager() {
         var group = Menu.getGroup('playlists');
         group.clear();
         $.each(this.playlists, function(i, playlist) {
-            group.addMenuItem(playlist.getMenuItem());
+            Menu.getGroup('playlists').addMenuItem(playlist.getMenuItem());
         });
     };
 
@@ -145,6 +145,7 @@ function PlaylistsManager() {
             throw "playlist param must be object";
         }
         this.playlists.push(playlist);
+        Menu.getGroup('playlists').addMenuItem(playlist.getMenuItem());
     };
 
     this.getPlaylist = function(index) {
