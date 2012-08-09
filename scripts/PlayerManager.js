@@ -48,6 +48,12 @@ function PlayerManager() {
         EventSystem.addEventListener('uploader_info_fetched', function(data) {
             self.currentVideo.artist = data.name;
         });
+        
+        EventSystem.addEventListener('window_resized', function() {
+            if (self.inFullScreen && self.currentPlayer) {
+                self.currentPlayer.fullScreenOn();
+            }
+        });
     };
     
     /* Update the */
