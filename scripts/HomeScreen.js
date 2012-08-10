@@ -11,7 +11,7 @@ var HomeScreen = {
         self.$rightView = $('#right > .home');
         self.$recommendations = $('#right > .home .recommendations');
         self.$playlists = $('#right > .home .playlists');
-        self.$spotlight = self.$rightView.find('.spotlight .inner')
+        self.$spotlight = self.$rightView.find('.spotlight .inner');
         self.menuItem = new MenuItem({
             cssClasses: ['home'],
             title: TranslationSystem.get('Home'),

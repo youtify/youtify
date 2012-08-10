@@ -15,12 +15,11 @@ var EchoNest = {
             sort: 'familiarity-desc',
             min_familiarity: '0.3',
             results: 15
-        }
+        };
         
         $.get('http://developer.echonest.com/api/v4/artist/extract', options, function(data) {
-            if (data.response.artists.length == 1) {
-                track.echonestArtist = data.response.artists[0].name
-                
+            if (data.response.artists.length === 1) {
+                track.echonestArtist = data.response.artists[0].name;
                 console.log('Echo Nest identified artist as \'' + track.echonestArtist + '\'');
             }
         });
