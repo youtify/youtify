@@ -7,6 +7,8 @@ CLIENT_SECRET = ''
 
 ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
 
+SEARCH_STATS_URL = '' # Leave empty to disable search stats
+
 if ON_PRODUCTION:
     REDIRECT_URL = 'http://www.youtify.com/flattrback'
 else:

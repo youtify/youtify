@@ -46,6 +46,7 @@ $(document).ready(function() {
     Toplist.init();
     URIManager.init();
     LayoutManager.init();
+    SearchStats.init();
 
     updateFlattrPuffText();
     EventSystem.addEventListener('language_changed', updateFlattrPuffText);

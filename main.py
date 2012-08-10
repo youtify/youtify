@@ -19,7 +19,10 @@ from model import get_settings_struct_for_youtify_user_model
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
 from languages import get_languages
-from config import ON_PRODUCTION
+try:
+    import config
+except ImportError:
+    import config_template as config
 
 class NotFoundHandler(webapp.RequestHandler):
 
@@ -90,9 +93,10 @@ class MainHandler(webapp.RequestHandler):
             'flattrTopList': get_flattr_toplist_json(),
             'flattrStats': get_flattr_stats_json(),
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
-            'ON_PRODUCTION': ON_PRODUCTION,
-            'ON_DEV': ON_PRODUCTION is False,
-            'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
+            'SEARCH_STATS_URL': config.SEARCH_STATS_URL,
+            'ON_PRODUCTION': config.ON_PRODUCTION,
+            'ON_DEV': config.ON_PRODUCTION is False,
+            'USE_PRODUCTION_JAVASCRIPT': config.ON_PRODUCTION,
             'languages': [lang for lang in get_languages() if lang['enabled_on_site']],
             #'USE_PRODUCTION_JAVASCRIPT': True, # Uncomment to try out production settings. Remember to build production.js with localhost:8080/minimizer
 			'url': self.request.url,

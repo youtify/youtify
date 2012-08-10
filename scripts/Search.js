@@ -101,6 +101,7 @@ var Search = {
                     return;
                 } else {
                     Search.lastVideosSearchQuery = q;
+                    EventSystem.callEventListeners('new_search_executed', q);
                 }
                 /* Get the results */
                 url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
@@ -151,6 +152,7 @@ var Search = {
                     return;
                 } else {
                     Search.lastSoundCloudTracksQuery = q;
+                    EventSystem.callEventListeners('new_search_executed', q);
                 }
 
                 start = (loadMore) ? Search.soundCloudTracksTab.paneView.data('results-count') + 1 : 1;
@@ -201,6 +203,7 @@ var Search = {
                     return;
                 } else {
                     Search.lastOfficialfmTracksQuery = q;
+                    EventSystem.callEventListeners('new_search_executed', q);
                 }
 
                 start = (loadMore) ? Search.officialfmTracksTab.paneView.data('results-count') + 1 : 1;
@@ -250,6 +253,7 @@ var Search = {
                     return;
                 } else {
                     Search.youtifyUsersQuery = q;
+                    EventSystem.callEventListeners('new_search_executed', q);
                 }
 
                 start = (loadMore) ? Search.youtifyUsersTab.paneView.data('results-count') + 1 : 1;
@@ -287,6 +291,7 @@ var Search = {
                     return;
                 } else {
                     Search.youtifyPlaylistsQuery = q;
+                    EventSystem.callEventListeners('new_search_executed', q);
                 }
 
                 start = (loadMore) ? Search.youtifyPlaylistsTab.paneView.data('results-count') + 1 : 1;

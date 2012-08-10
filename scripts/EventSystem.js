@@ -3,6 +3,7 @@ var EventSystem = {
     },
 
     listeners: {
+        'new_search_executed': [],
         'language_changed': [],
         'song_almost_done_playing': [],
         'flattr_click_made': [],
