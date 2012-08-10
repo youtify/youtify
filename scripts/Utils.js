@@ -74,7 +74,7 @@ var Utils = {
             };
         }
 
-        if (ret.track === video.echonestArtist.toLowerCase()) { // TODO: Should count the number of Echo Nest hits in the artist/track and base the decision on that.
+        if (video.echonestArtist && ret.track === video.echonestArtist.toLowerCase()) { // TODO: Should count the number of Echo Nest hits in the artist/track and base the decision on that.
             ret.track = ret.artist;
             ret.artist = video.echonestArtist;
         }
