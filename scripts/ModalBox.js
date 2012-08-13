@@ -23,9 +23,12 @@ ModalBox.prototype.setMessage = function(message) {
     this.view.find('.wrapper p').text(message);
 };
 
-ModalBox.prototype.addButton = function(label, callback) {
+ModalBox.prototype.addButton = function(label, callback, cssClass) {
     var self = this;
     var elem = $('<button class="button"></button>').text(label);
+    if (cssClass) {
+        elem.addClass(cssClass);
+    }
     elem.click(function() {
         callback(self);
     });
@@ -46,11 +49,11 @@ ModalBox.prototype.remove = function() {
 function ReloadDialog() {
     ModalBox.call(this);
 
-    this.setMessage('Your account has been used somewhere else. Please reload the page.');
+    this.setMessage('Looks like your account has been used somewhere else, please reload the page.');
 
     this.addButton('Reload', function(self) {
         location.reload();
-    });
+    }, 'exposed');
 }
 
 ReloadDialog.prototype = new ModalBox();
@@ -78,6 +81,10 @@ function EditProfileDialog() {
 
     this.setCanBeClosed(true);
 
+    this.addButton(TranslationSystem.get('Cancel'), function(self) {
+        self.remove();
+    });
+
     this.addButton(TranslationSystem.get('Save'), function(self) {
         var params = {};
         $.each(self.view.find('input, textarea'), function(i, elem) {
@@ -85,11 +92,7 @@ function EditProfileDialog() {
         });
         UserManager.currentUser.saveProfile(params);
         self.remove();
-    });
-
-    this.addButton(TranslationSystem.get('Cancel'), function(self) {
-        self.remove();
-    });
+    }, 'exposed');
 }
 
 EditProfileDialog.prototype = new ModalBox();
@@ -146,7 +149,7 @@ function AddToPlaylistDialog(videos) {
         });
         playlistManager.save();
         self.remove();
-    });
+    }, 'exposed');
 
     this.setCanBeClosed(true);
 }
