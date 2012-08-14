@@ -18,7 +18,7 @@ function Settings() {
 			'announceTimeout': this.announceTimeout
         });
 
-        if (logged_in) {
+        if (UserManager.isLoggedIn()) {
             LoadingBar.show();
 
             params = {

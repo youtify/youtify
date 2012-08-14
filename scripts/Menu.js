@@ -67,7 +67,7 @@ var Menu = {
                     playlist = new Playlist($(this).val(), videos);
                     playlistManager.addPlaylist(playlist);
                     Menu.getGroup('playlists').addMenuItem(playlist.getMenuItem());
-                    if (logged_in) {
+                    if (UserManager.isLoggedIn()) {
                         playlist.createNewPlaylistOnRemote(function() {
                             playlistManager.save();
                             playlist.getMenuItem().$view.addClass('remote');

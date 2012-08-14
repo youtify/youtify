@@ -45,7 +45,7 @@ var PlaylistView = {
             $(this).hide();
             $(this).prev().show();
         });
-        if (logged_in && playlist.owner && playlist.owner.id !== UserManager.currentUser.id) {
+        if (UserManager.isLoggedIn() && playlist.owner && playlist.owner.id !== UserManager.currentUser.id) {
             $info.append($subscribeButton);
             $info.append($unsubscribeButton);
         }

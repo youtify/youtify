@@ -88,7 +88,7 @@ function PlaylistsManager() {
 
     this.save = function() {
         this.saveToLocalStorage();
-        if (logged_in && this.playlists.length) {
+        if (UserManager.isLoggedIn() && this.playlists.length) {
             this.syncPlaylists(0);
         }
     };
@@ -191,7 +191,7 @@ function PlaylistsManager() {
             playlist = this.playlists[index];
         }
 
-        if (logged_in && playlist.remoteId) {
+        if (UserManager.isLoggedIn() && playlist.remoteId) {
             playlist.unsync();
         }
 
