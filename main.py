@@ -67,7 +67,6 @@ class MainHandler(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
-            'my_user_id': youtify_user_model is not None and youtify_user_model.key().id(),
             'device': youtify_user_model is not None and youtify_user_model.device,
             'myFollowers': simplejson.dumps(my_followers_struct),
             'myFollowings': simplejson.dumps(my_followings_struct),
