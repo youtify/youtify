@@ -63,6 +63,10 @@ var UserManager = {
         });
     },
 
+    isLoggedIn: function() {
+        return self.currentUser !== null;
+    },
+
     show: function() {
         Menu.deSelect();
         UserManager.tabs.select('profile-playlists');
@@ -172,14 +176,14 @@ var UserManager = {
             new EditProfileDialog().show();
         });
 
-        if (logged_in && UserManager.currentUser.id === user.id) {
+        if (UserManager.isLoggedIn() && UserManager.currentUser.id === user.id) {
             user.playlists = playlistManager.playlists;
             UserManager.$editButton.show();
             UserManager.$changePictureBox.html(TranslationSystem.get('Configure your profile picture for $email at $gravatar', {$email: UserManager.currentUser.email, $gravatar: '<a href="http://www.gravatar.com" target="_blank">gravatar.com</a>'}));
             UserManager.$changePictureBox.show();
-        } else if (logged_in && Utils.isFollowingUser(user.id)) {
+        } else if (UserManager.isLoggedIn() && Utils.isFollowingUser(user.id)) {
             UserManager.$unFollowButton.show();
-        } else if (logged_in) {
+        } else if (UserManager.isLoggedIn()) {
             UserManager.$followButton.show();
         }
 
@@ -199,7 +203,7 @@ var UserManager = {
         UserManager.updateFollowingsTabLabel(user.nrOfFollowings);
         UserManager.updateFlattrsTabLabel(user.nrOfFlattrs);
 
-        if (logged_in && UserManager.currentUser.id === user.id) {
+        if (UserManager.isLoggedIn() && UserManager.currentUser.id === user.id) {
             $.each(playlistManager.playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
                 if (playlist.videos.length) {

@@ -52,7 +52,7 @@ function User(args) {
     };
 
     self.goTo = function() {
-        if (logged_in && self.id === UserManager.currentUser.id) {
+        if (UserManager.isLoggedIn() && self.id === UserManager.currentUser.id) {
             UserManager.loadCurrentUser();
         } else {
             UserManager.loadProfile(self.id);

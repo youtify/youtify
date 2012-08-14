@@ -103,7 +103,7 @@ var ExternalUserPage = {
                     avatar_url: userData.avatar_url
                 });
 
-                if (logged_in) {
+                if (UserManager.isLoggedIn()) {
                     if (ExternalUserSubscriptions.isSubscription(self.externalUser)) {
                         self.$unsubscribeButton.show();
                     } else {
@@ -155,7 +155,7 @@ var ExternalUserPage = {
                 avatar_url: data.entry.media$thumbnail.url
             });
 
-            if (logged_in) {
+            if (UserManager.isLoggedIn()) {
                 if (ExternalUserSubscriptions.isSubscription(self.externalUser)) {
                     self.$unsubscribeButton.show();
                 } else {
@@ -246,7 +246,7 @@ var ExternalUserSubscriptions = {
 
     init: function() {
         var self = this;
-        if (logged_in) {
+        if (UserManager.isLoggedIn()) {
             $.getJSON('/me/external_user_subscriptions', function(data) {
                 $.each(data, function(i, subscription) {
                     self.subscriptions.push(new ExternalUserSubscription(subscription));

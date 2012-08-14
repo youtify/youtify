@@ -86,7 +86,7 @@ function showPlaylistContextMenu(menuItem, event) {
             input.focus().select();
         }
     });
-    if (logged_in && playlist.remoteId) {
+    if (UserManager.isLoggedIn() && playlist.remoteId) {
         buttons.push({
             title: TranslationSystem.get('Share'),
             cssClass: 'share',
@@ -117,7 +117,7 @@ function showPlaylistContextMenu(menuItem, event) {
         }
     });
     
-    if (logged_in && !playlist.remoteId) {
+    if (UserManager.isLoggedIn() && !playlist.remoteId) {
         buttons.push({
             title: TranslationSystem.get('Sync'),
             cssClass: 'sync',
@@ -131,7 +131,7 @@ function showPlaylistContextMenu(menuItem, event) {
         });
     }
 
-    if (logged_in && playlist.remoteId) {
+    if (UserManager.isLoggedIn() && playlist.remoteId) {
         buttons.push({
             title: TranslationSystem.get('Unsync'),
             cssClass: 'unsync',
