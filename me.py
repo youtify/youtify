@@ -194,8 +194,22 @@ class PlaylistsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
+class MeHandler(webapp.RequestHandler):
+
+    def get(self):
+        """Get the currnet user, incuding private data"""
+        user = get_current_youtify_user_model()
+        if user:
+            json = get_youtify_user_struct(user, include_private_data=True)
+        else:
+            json = {
+            }
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
 def main():
     application = webapp.WSGIApplication([
+        ('/me', MeHandler),
         ('/me/external_user_subscriptions', ExternalUserSubscriptionsHandler),
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),

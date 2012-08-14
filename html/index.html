@@ -64,7 +64,6 @@
             var autoDetectedTranslations = {{ autoDetectedTranslations }};
             var ON_DEV = {{ ON_DEV|lower }};
             var ON_PRODUCTION = {{ ON_PRODUCTION|lower }};
-            var USER = {{ USER }};
             var myFollowers = {{ myFollowers }};
             var myFollowings = {{ myFollowings }};
             var settingsFromServer = {{ settingsFromServer }};
@@ -185,22 +184,17 @@
             </div>
             
             <div class="right-area">
-                {% if logged_in %}
                 <div class="item right activities dropdown-button">
                     <span class="title translatable" title="Activities">=</span>
                     <span class="counter" style="display:none"></span>
                 </div>
-                {% endif %}
                 <div class="item right settings dropdown-button">
                     <span class="title translatable">Settings</span>
                     <span class="counter" style="display:none"></span>
                 </div>
-                {% if logged_in %}
                 <div class="item right last profile dropdown-button">
                 </div>
-                {% else %}
                 <a class="item right last login-link button exposed translatable" href="{{ login_url }}">Login</a>
-                {% endif %}
             </div>
 
             <ul class="notifications"></ul>

@@ -46,7 +46,7 @@ $(document).ready(function() {
     Lastfm.init();
     EchoNest.init();
     BottomPanel.init();
-    UserManager.init(USER);
+    UserManager.init();
     ExternalUserPage.init();
     ExternalUserSubscriptions.init();
     TopMenu.init();

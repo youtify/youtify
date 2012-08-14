@@ -50,6 +50,9 @@ handlers:
 - url: /stats
   script: stats.py
 
+- url: /me
+  script: me.py
+
 - url: /me/.*
   script: me.py
 

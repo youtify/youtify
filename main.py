@@ -30,7 +30,6 @@ class MainHandler(webapp.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
         youtify_user_model = get_current_youtify_user_model()
-        youtify_user_struct = None
         my_followers_struct = []
         my_followings_struct = []
         settings_struct = {}
@@ -50,7 +49,6 @@ class MainHandler(webapp.RequestHandler):
 
             youtify_user_model.save()
 
-            youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
             my_followers_struct = get_followers_for_youtify_user_model(youtify_user_model)
             my_followings_struct = get_followings_for_youtify_user_model(youtify_user_model)
             settings_struct = get_settings_struct_for_youtify_user_model(youtify_user_model)
@@ -71,7 +69,6 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {
             'my_user_id': youtify_user_model is not None and youtify_user_model.key().id(),
             'device': youtify_user_model is not None and youtify_user_model.device,
-            'USER': simplejson.dumps(youtify_user_struct),
             'myFollowers': simplejson.dumps(my_followers_struct),
             'myFollowings': simplejson.dumps(my_followings_struct),
             'settingsFromServer': simplejson.dumps(settings_struct),
