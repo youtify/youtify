@@ -2,7 +2,8 @@ function PlaylistsManager() {
     this.playlists = [];
 
     this.load = function() {
-        var data,
+        var self = this,
+            data,
             item,
             i;
 
@@ -18,10 +19,11 @@ function PlaylistsManager() {
             alert('Error parsing playlists from localStorage: ' + e); 
         }
 
-        this.mergePlaylists(playlistsFromServer);
-        this.updateMenu();
-
-        EventSystem.callEventListeners('playlists_loaded', this.playlists);
+        $.getJSON('/me/playlists', function(data) {
+            self.mergePlaylists(data);
+            self.updateMenu();
+            EventSystem.callEventListeners('playlists_loaded', self.playlists);
+        });
     };
 
     this.updateMenu = function() {

@@ -13,7 +13,6 @@ from model import create_youtify_user_model
 from model import get_youtify_user_struct
 from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
-from model import get_playlist_structs_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_json
@@ -32,7 +31,6 @@ class MainHandler(webapp.RequestHandler):
         current_user = users.get_current_user()
         youtify_user_model = get_current_youtify_user_model()
         youtify_user_struct = None
-        playlists_struct = []
         my_followers_struct = []
         my_followings_struct = []
         settings_struct = {}
@@ -53,7 +51,6 @@ class MainHandler(webapp.RequestHandler):
             youtify_user_model.save()
 
             youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
-            playlists_struct = get_playlist_structs_for_youtify_user_model(youtify_user_model, include_private_playlists=True)
             my_followers_struct = get_followers_for_youtify_user_model(youtify_user_model)
             my_followings_struct = get_followings_for_youtify_user_model(youtify_user_model)
             settings_struct = get_settings_struct_for_youtify_user_model(youtify_user_model)
@@ -75,7 +72,6 @@ class MainHandler(webapp.RequestHandler):
             'my_user_id': youtify_user_model is not None and youtify_user_model.key().id(),
             'device': youtify_user_model is not None and youtify_user_model.device,
             'USER': simplejson.dumps(youtify_user_struct),
-            'playlistsFromServer': simplejson.dumps(playlists_struct),
             'myFollowers': simplejson.dumps(my_followers_struct),
             'myFollowings': simplejson.dumps(my_followings_struct),
             'settingsFromServer': simplejson.dumps(settings_struct),
