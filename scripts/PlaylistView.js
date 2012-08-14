@@ -56,7 +56,7 @@ var PlaylistView = {
         }
         
         /* Privacy checkbox*/
-        if (showPrivacyToggle && playlist.remoteId !== null && my_user_id === playlist.owner.id) {
+        if (showPrivacyToggle && playlist.remoteId !== null && UserManager.currentUser.id === playlist.owner.id) {
             PlaylistView.createPrivacyToggleButton(playlist).appendTo($info);
         }
 

@@ -133,7 +133,7 @@ var Activities = {
         var $ul = $('#activities-popup ul');
         $ul.html('');
         LoadingBar.show();
-        $.get('/api/users/' + my_user_id + '/activities?type=incoming&verbs=follow,subscribe&count=50', function(data) {
+        $.get('/api/users/' + UserManager.currentUser.id + '/activities?type=incoming&verbs=follow,subscribe&count=50', function(data) {
             $.each(data, function(i, activity) {
                 $ul.append(Activities.getActivityElem(activity));
             });
