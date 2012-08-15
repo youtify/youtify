@@ -8,6 +8,16 @@ var OFFICIALFM_API_KEY = 'gLc8fHvg39ez6EAYvxFA';
 var LASTFM_API_KEY = 'b25b959554ed76058ac220b7b2e0a026'; // @TODO update this key, it's from the doc and returns "heavily cached results"
 var selectedVideoElements = [];
 
+// Globals set by /api/main
+var settingsFromServer = {};
+var device;
+var autoDetectedLanguageByServer;
+var autoDetectedTranslations;
+var ON_DEV;
+var ON_PRODUCTION;
+var myFollowers;
+var myFollowings;
+
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
@@ -23,37 +33,47 @@ $(document).ready(function() {
     EventSystem.init();
     Menu.init();
 
-    playlistManager = new PlaylistsManager();
+    $.getJSON('/api/main', function(data) {
+        settingsFromServer = data.settingsFromServer;
+        device = data.device;
+        autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
+        autoDetectedTranslations = data.autoDetectedTranslations;
+        ON_DEV = data.ON_DEV;
+        ON_PRODUCTION = data.ON_PRODUCTION;
+        myFollowers = data.myFollowers;
+        myFollowings = data.myFollowings;
 
-    LoadingBar.init();
-	Volume.init();
-	TranslationSystem.init();
-    SpotifyImporterPopup.init();
-    SettingsPopup.init();
-    Search.init();
-    HomeScreen.init();
-    Queue.init();
-    Ping.init();
-    Notifications.init();
-    player = new PlayerManager();
-    player.init();
-    Timeline.init();
-    InfoPopup.init();
-    VideoInfo.init();
-    Recommendations.init();
-    FlattrFinder.init();
-    AutoFlattrer.init();
-    Lastfm.init();
-    EchoNest.init();
-    BottomPanel.init();
-    UserManager.init();
-    ExternalUserPage.init();
-    ExternalUserSubscriptions.init();
-    TopMenu.init();
-    URIManager.init();
-    LayoutManager.init();
-    Logo.init();
-    WindowEvents.init();
+        playlistManager = new PlaylistsManager();
+        LoadingBar.init();
+        Volume.init();
+        TranslationSystem.init();
+        SpotifyImporterPopup.init();
+        SettingsPopup.init();
+        Search.init();
+        HomeScreen.init();
+        Queue.init();
+        Ping.init();
+        Notifications.init();
+        player = new PlayerManager();
+        player.init();
+        Timeline.init();
+        InfoPopup.init();
+        VideoInfo.init();
+        Recommendations.init();
+        FlattrFinder.init();
+        AutoFlattrer.init();
+        Lastfm.init();
+        EchoNest.init();
+        BottomPanel.init();
+        UserManager.init();
+        ExternalUserPage.init();
+        ExternalUserSubscriptions.init();
+        TopMenu.init();
+        URIManager.init();
+        LayoutManager.init();
+        Logo.init();
+        WindowEvents.init();
+    });
     
     $('.login-link').click(LoadingBar.show);
 
