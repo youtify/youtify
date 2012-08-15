@@ -1,5 +1,7 @@
 import os.path
 from shutil import copyfile
+from shutil import copytree
+from shutil import rmtree
 try:
     from jinja2 import Template
 except:
@@ -8,11 +10,18 @@ except:
 
 output_dir = os.path.join('./', 'chrome_webstore')
 
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+if os.path.exists(output_dir):
+    rmtree(output_dir)
+
+os.makedirs(output_dir)
 
 def add_background_script():
     copyfile('chrome_webstore_background.js', os.path.join(output_dir, 'background.js'))
+
+def copy_static_dirs():
+    copytree('images', os.path.join(output_dir, 'images'))
+    copytree('styles', os.path.join(output_dir, 'styles'))
+    copytree('scripts', os.path.join(output_dir, 'scripts'))
 
 def add_manifest():
     copyfile('chrome_webstore_manifest.json', os.path.join(output_dir, 'manifest.json'))
@@ -32,3 +41,4 @@ def render_main_template():
 add_manifest()
 add_background_script()
 render_main_template()
+copy_static_dirs()
