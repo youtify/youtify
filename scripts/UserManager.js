@@ -64,7 +64,7 @@ var UserManager = {
     },
 
     isLoggedIn: function() {
-        return self.currentUser !== null;
+        return UserManager.currentUser !== null;
     },
 
     show: function() {

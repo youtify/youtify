@@ -32,7 +32,7 @@ var HomeScreen = {
 
         HomeScreen.loadSpotlight();
         HomeScreen.loadTopPlaylists();
-        if (lastfm_user_name) {
+        if (UserManager.isLoggedIn() && UserManager.currentUser.lastfmUserName) {
             HomeScreen.loadRecommendedArtists();
         }
 
