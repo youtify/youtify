@@ -19,11 +19,14 @@ def init_cached_translations():
         snapshot = SnapshotContent.all().filter('metadata =', metadata).get()
         deployed_translations = simplejson.loads(snapshot.json)
 
-def get_deployed_translations_json(code):
+def get_deployed_translations_struct(code):
     global deployed_translations
     if code in deployed_translations:
-        return simplejson.dumps(deployed_translations[code])
-    return '{}'
+        return deployed_translations[code]
+    return {}
+
+def get_deployed_translations_json(code):
+    return simplejson.dumps(get_deployed_translations_struct(code))
 
 class LatestHandler(webapp.RequestHandler):
     def get(self):

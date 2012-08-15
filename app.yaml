@@ -188,6 +188,9 @@ handlers:
   upload: opensearch.xml
   expiration: "1d"
 
+- url: /api/main
+  script: main.py
+
 - url: /.*
   script: main.py
 
