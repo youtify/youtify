@@ -11,8 +11,11 @@ output_dir = os.path.join('./', 'chrome_webstore')
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
+def add_background_script():
+    copyfile('chrome_webstore_background.js', os.path.join(output_dir, 'background.js'))
+
 def add_manifest():
-    copyfile('chrome_webstore_manifest.json', os.path.join(output_dir, 'chrome_webstore_manifest.json'))
+    copyfile('chrome_webstore_manifest.json', os.path.join(output_dir, 'manifest.json'))
 
 def render_main_template():
     f = open('./html/index.html')
@@ -27,4 +30,5 @@ def render_main_template():
     print "Template rendered"
 
 add_manifest()
+add_background_script()
 render_main_template()
