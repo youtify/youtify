@@ -4,6 +4,7 @@ function User(args) {
     self.nickname = args.nickname;
     self.displayName = args.displayName;
     self.flattrUserName = args.flattr_user_name;
+    self.lastfmUserName = args.lastfm_user_name;
     self.email = args.email;
     self.largeImageUrl = args.largeImageUrl;
     self.smallImageUrl = args.smallImageUrl;

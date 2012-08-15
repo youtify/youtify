@@ -34,8 +34,8 @@ var SettingsPopup = {
 
         // FLATTR
 
-        if (has_flattr_access_token) {
-            $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings .connections .flattr .account');
+        if (UserManager.currentUser.flattrUserName) {
+            $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + UserManager.currentUser.flattrUserName).text(UserManager.currentUser.flattrUserName).appendTo('#settings .connections .flattr .account');
             $('<a class="action disconnect translatable" href="/flattrdisconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .flattr .account');
         } else {
             $('<span class="title">Flattr</span>').appendTo('#settings .connections .flattr .account');
@@ -43,8 +43,8 @@ var SettingsPopup = {
             $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('disabled', 'disabled');
         }
 
-        if (has_lastfm_access_token) {
-            $('<a class="title" target="_blank"></a>').attr('href', 'http://www.last.fm/user/' + lastfm_user_name).text(lastfm_user_name).appendTo('#settings .connections .lastfm .account');
+        if (UserManager.currentUser.lastfmUserName) {
+            $('<a class="title" target="_blank"></a>').attr('href', 'http://www.last.fm/user/' + UserManager.currentUser.lastfmUserName).text(UserManager.currentUser.lastfmUserName).appendTo('#settings .connections .lastfm .account');
             $('<a class="action disconnect translatable" href="/lastfm/disconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .lastfm .account');
         } else {
             $('<span class="title">Last.fm</span>').appendTo('#settings .connections .lastfm .account');

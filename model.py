@@ -207,6 +207,7 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False):
         'id': str(youtify_user_model.key().id()),
         'email': None,
         'flattr_user_name': youtify_user_model.flattr_user_name,
+        'lastfm_user_name': youtify_user_model.lastfm_user_name,
         'displayName': get_display_name_for_youtify_user_model(youtify_user_model),
         'nr_of_followers': youtify_user_model.nr_of_followers,
         'nr_of_followings': youtify_user_model.nr_of_followings,
