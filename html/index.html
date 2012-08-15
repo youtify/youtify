@@ -142,13 +142,112 @@
 	<body>
         <div id="loading" class="translatable">Loading...</div>
 
-        {% include "./popups/spotify_importer.html" %}
-        {% include "./popups/settings.html" %}
-        {% include "./popups/videoinfo.html" %}
-        {% include "./popups/profile.html" %}
-        {% include "./popups/activities.html" %}
-        {% include "./popups/logo.html" %}
+        <div id="spotify-importer" style="display:none;" class="popup">
+            <h2 class="translatable">Paste Spotify links below</h2>
+            <span class="translatable instructions">Instructions</span>
+            <textarea></textarea>
+            <input type="button" value="Cancel" class="translatable cancel" />
+            <span class="added">0</span><span class="max">/0</span>
+            <input type="button" value="Import" class="translatable start" />
+        </div>
+
+        <div id="settings" style="display:none" class="popup">
+            <div class="puffs" style="display:none">
+                <a class="puff chrome-webstore translatable" href="#" target="_blank">Install Youtify from the Chrome Web Store</a>
+            </div>
+            <div class="language">
+                <h2 class="translatable">Language</h2>
+                <select>
+                    {% for lang in languages %}
+                        <option value="{{ lang.code }}">{{ lang.label }}</option>
+                    {% endfor %}
+                </select>
+                <a class="translatable" href="/translations">Help out with translations</a>
+            </div>
+            {% if logged_in %}
+            <div class="connections">
+                <h2 class="translatable">Connections</h2>
+                <div class="connection flattr">
+                    <div class="account">
+                    </div>
+                    <div class="settings">
+                        <div class="tickbox">
+                            <input type="checkbox" name="flattr_automatically" />
+                            <label for="flattr_automatically" class="translatable">Automatically flattr songs after they finish playing</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="connection lastfm">
+                    <div class="account">
+                    </div>
+                    <div class="settings">
+                        <div class="tickbox">
+                            <input type="checkbox" name="lastfm_scrobble_automatically" />
+                            <label for="lastfm_scrobble_automatically" class="translatable">Automatically scrobble songs to Last.fm after they finish playing</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="notifications">
+                <h2 class="translatable">Notifications</h2>
+                <p class="translatable">Email me when:</p>
+                <div class="toggle">
+                    <input type="checkbox" name="send_new_follower_email" />
+                    <span class="translatable">I'm followed by someone new</span>
+                </div>
+                <div class="toggle">
+                    <input type="checkbox" name="send_new_subscriber_email" />
+                    <span class="translatable">My playlists are subscribed to</span>
+                </div>
+            </div>
+            {% endif %}
+            <div class="quality">
+                <h2 class="translatable">Quality (Sound & Video)</h2>
+                <input id="qualityLowRadio" type="radio" name="quality" value="Low" />
+                <label id="qualityLowSpan" for="qualityLowRadio" class="translatable">Low</label>
+                <input id="qualityHighRadio" type="radio" name="quality" value="High" />
+                <label id="qualityHighSpan" for="qualityHighRadio" class="translatable">High</label>
+            </div>
+        </div>
+
+        <div id="video-info-popup" style="display:none;" class="popup">
+            <ul class="sections">
+                <li class="video">
+                    <h2>Video/Track</h2>
+                    <div class="content">
+                    </div>
+                </li>
+
+                <li class="uploader">
+                    <h2>Uploader/Artist</h2>
+                    <div class="content">
+                    </div>
+                </li>
+
+                <li class="twitter">
+                    <h2>Twitter Account</h2>
+                    <div class="content">
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="activities-popup" style="display:none" class="popup">
+            <ul>
+            </ul>
+        </div>
+
+        <div id="profile-popup" style="display:none" class="popup">
+            <ul>
+                <li class="profile-page"><span class="link translatable">My profile</span></li>
+                <li class="logout"><a class="link translatable" href="">Logout</a></li>
+            </ul>
+        </div>
+
+        <div id="logo-popup" style="display:none" class="popup"></div>
+
         <div id="about-popup" style="display:none" class="popup"></div>
+
         <div id="playlist-subscribers-popup" style="display:none" class="popup"></div>
         
         <div id="top">
