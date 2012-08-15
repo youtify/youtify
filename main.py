@@ -73,8 +73,6 @@ class MainHandler(webapp.RequestHandler):
             'settingsFromServer': simplejson.dumps(settings_struct),
             'autoDetectedLanguageByServer': lang,
             'autoDetectedTranslations': get_deployed_translations_json(lang),
-            'has_flattr_access_token': int(youtify_user_model is not None and youtify_user_model.flattr_access_token is not None),
-            'has_lastfm_access_token': int(youtify_user_model is not None and youtify_user_model.lastfm_access_token is not None),
             'flattr_user_name': simplejson.dumps(youtify_user_model is not None and youtify_user_model.flattr_user_name),
             'lastfm_user_name': simplejson.dumps(youtify_user_model is not None and youtify_user_model.lastfm_user_name),
             'login_url': users.create_login_url('/'),
