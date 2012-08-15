@@ -32,6 +32,10 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
 $(document).ready(function() {
     EventSystem.init();
     Menu.init();
+    LoadingBar.init();
+    WindowEvents.init();
+    Logo.init();
+    LayoutManager.init();
 
     $.getJSON('/api/main', function(data) {
         settingsFromServer = data.settingsFromServer;
@@ -46,8 +50,8 @@ $(document).ready(function() {
         $('#top .login-link').attr('href', data.loginUrl);
         $('#profile-popup .logout a').attr('href', data.logoutUrl);
 
+        UserManager.init();
         playlistManager = new PlaylistsManager();
-        LoadingBar.init();
         Volume.init();
         TranslationSystem.init();
         SpotifyImporterPopup.init();
@@ -68,14 +72,10 @@ $(document).ready(function() {
         Lastfm.init();
         EchoNest.init();
         BottomPanel.init();
-        UserManager.init();
         ExternalUserPage.init();
         ExternalUserSubscriptions.init();
         TopMenu.init();
         URIManager.init();
-        LayoutManager.init();
-        Logo.init();
-        WindowEvents.init();
     });
     
     $('.login-link').click(LoadingBar.show);
