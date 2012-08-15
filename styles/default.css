@@ -245,6 +245,18 @@ body.fullscreen #bottom {
     padding-right: 34px; /* button width */
     position: relative;
 }
+
+/* Hide top menu optinos until settings and user has loaded */
+#top .right {
+    opacity: 0;
+    -moz-transition: opacity 0.5s;
+    -webkit-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+}
+body.loaded #top .right {
+    opacity: 1;
+}
+
 input[type=search]::-webkit-search-decoration,
 input[type=search]::-webkit-search-results-button,
 input[type=search]::-webkit-search-results-decoration {

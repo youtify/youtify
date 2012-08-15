@@ -9,6 +9,7 @@ from google.appengine.ext.webapp import util
 from django.utils import simplejson
 from model import get_current_youtify_user_model
 from model import create_youtify_user_model
+from model import get_youtify_user_struct
 from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
@@ -52,6 +53,7 @@ class ApiMainHandler(webapp.RequestHandler):
         my_followers_struct = []
         my_followings_struct = []
         settings_struct = {}
+        youtify_user_struct = None
 
         current_user = users.get_current_user()
         youtify_user_model = get_current_youtify_user_model()
@@ -62,6 +64,7 @@ class ApiMainHandler(webapp.RequestHandler):
         if youtify_user_model is not None:
             youtify_user_model.device = str(random.random())
             youtify_user_model.last_login = datetime.now()
+            youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
 
             # https://developers.google.com/appengine/docs/python/runtime#Request_Headers
             youtify_user_model.country = self.request.headers.get('X-AppEngine-Country', None)
@@ -80,6 +83,7 @@ class ApiMainHandler(webapp.RequestHandler):
         json = {
             'languages': [lang for lang in get_languages() if lang['enabled_on_site']],
             'device': youtify_user_model is not None and youtify_user_model.device,
+            'user': youtify_user_struct,
             'myFollowers': my_followers_struct,
             'myFollowings': my_followings_struct,
             'settingsFromServer': settings_struct,

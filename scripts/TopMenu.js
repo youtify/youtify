@@ -3,12 +3,10 @@ var TopMenu = {
     init: function() {
 
         // PROFILE
-        $('#top .profile').hide();
-        $('#top .activities').hide();
-        $('#top .login-link').hide();
-        EventSystem.addEventListener('current_user_loaded', function(user) {
+
+        if (UserManager.isLoggedIn()) {
             /*$('#top .profile').append('<img src="'+ user.smallImageUrl + '" width="24" height="24" />');*/
-            $('#top .profile').css('background-image', 'url(' + user.smallImageUrl + ')');
+            $('#top .profile').css('background-image', 'url(' + UserManager.currentUser.smallImageUrl + ')');
 
             $('#top .profile').click(function(event) {
                 $(this).arrowPopup('#profile-popup');
@@ -24,14 +22,11 @@ var TopMenu = {
                 Utils.closeAnyOpenArrowPopup();
             });
 
-            $('#top .profile').show();
-            $('#top .activities').show();
-        });
-        EventSystem.addEventListener('user_logged_out', function() {
+            $('#top .login-link').hide();
+        } else {
             $('#top .profile').hide();
             $('#top .activities').hide();
-            $('#top .login-link').show();
-        });
+        }
 
         // ABOUT
         $('#top .about').click(function() {
