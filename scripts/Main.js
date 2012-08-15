@@ -43,6 +43,9 @@ $(document).ready(function() {
         myFollowers = data.myFollowers;
         myFollowings = data.myFollowings;
 
+        $('#top .login-link').attr('href', data.loginUrl);
+        $('#profile-popup .logout a').attr('href', data.logoutUrl);
+
         playlistManager = new PlaylistsManager();
         LoadingBar.init();
         Volume.init();
