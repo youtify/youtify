@@ -17,12 +17,8 @@ var UserManager = {
     $img: null,
     $changePictureBox: null,
     
-    init: function() {
-        $.getJSON('/me', function(userJSON) {
-            if (userJSON.nickname === undefined) {
-                EventSystem.callEventListeners('user_logged_out');
-                return;
-            }
+    init: function(userJSON) {
+        if (userJSON) {
             UserManager.currentUser = new User(userJSON);
             EventSystem.addEventListener('user_profile_updated', function(params) {
                 UserManager.currentUser.displayName = params.displayName;
@@ -37,9 +33,7 @@ var UserManager = {
             EventSystem.addEventListener('flattr_click_made', function(data) {
                 UserManager.currentUser.nrOfFlattrs += 1;
             });
-
-            EventSystem.callEventListeners('current_user_loaded', UserManager.currentUser);
-        });
+        }
 
         UserManager.$rightView = $('#right .profile');
         UserManager.$playlists = $('#right .profile .pane.profile-playlists');

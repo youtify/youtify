@@ -3,8 +3,6 @@ var EventSystem = {
     },
 
     listeners: {
-        'user_logged_out': [],
-        'current_user_loaded': [],
         'language_changed': [],
         'song_almost_done_playing': [],
         'flattr_click_made': [],

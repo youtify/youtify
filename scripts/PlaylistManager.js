@@ -19,11 +19,16 @@ function PlaylistsManager() {
             alert('Error parsing playlists from localStorage: ' + e); 
         }
 
-        $.getJSON('/me/playlists', function(data) {
-            self.mergePlaylists(data);
+        if (UserManager.isLoggedIn()) {
+            $.getJSON('/me/playlists', function(data) {
+                self.mergePlaylists(data);
+                self.updateMenu();
+                EventSystem.callEventListeners('playlists_loaded', self.playlists);
+            });
+        } else {
             self.updateMenu();
             EventSystem.callEventListeners('playlists_loaded', self.playlists);
-        });
+        }
     };
 
     this.updateMenu = function() {

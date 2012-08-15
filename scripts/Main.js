@@ -47,10 +47,13 @@ $(document).ready(function() {
         myFollowers = data.myFollowers;
         myFollowings = data.myFollowings;
 
+        UserManager.init(data.user);
+        TopMenu.init();
+
+        $('body').addClass('loaded');
         $('#top .login-link').attr('href', data.loginUrl);
         $('#profile-popup .logout a').attr('href', data.logoutUrl);
 
-        UserManager.init();
         playlistManager = new PlaylistsManager();
         Volume.init();
         TranslationSystem.init();
@@ -74,7 +77,6 @@ $(document).ready(function() {
         BottomPanel.init();
         ExternalUserPage.init();
         ExternalUserSubscriptions.init();
-        TopMenu.init();
         URIManager.init();
     });
     
