@@ -44,7 +44,18 @@
         <link href='/styles/default.css?v={{ CURRENT_VERSION_ID }}' rel='stylesheet' type='text/css'media="only screen and (min-width: 321px)">
         <link href='/styles/mobile.css?v={{ CURRENT_VERSION_ID }}' rel="stylesheet" type="text/css" media="only screen and (max-width: 320px)">
         
+        {% if USE_SELF_HOSTED_FONT %}
+        <style type="text/css">
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Open Sans'), local('OpenSans'), url(/styles/opensans.woff) format('woff');
+        }
+        </style>
+        {% else %}
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        {% endif %}
 
         <script>
         </script>
