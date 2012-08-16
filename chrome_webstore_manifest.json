@@ -11,6 +11,6 @@
     "permissions": ["experimental", "app.window"],
     "icons": {
         "16": "images/logo/logo_16x16.png",
-        "128": "images/logo/logo_128x128.png",
+        "128": "images/logo/logo_128x128.png"
     }
 }
