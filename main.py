@@ -40,7 +40,6 @@ class MainHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
-            'ON_PRODUCTION': ON_PRODUCTION,
             'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
             'INCLUDE_GOOGLE_ANALYTICS': ON_PRODUCTION,
 			'url': self.request.url,
