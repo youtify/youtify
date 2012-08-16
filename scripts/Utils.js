@@ -149,6 +149,14 @@ var Utils = {
 
         return ret;
     },
+
+    showModalBox: function(msg) {
+        var modalBox = new ModalBox();
+        modalBox.setMessage(msg);
+        modalBox.setCanBeClosed(true);
+        modalBox.show();
+        return modalBox;
+    },
     
     openLink: function(url) {
         window.open(url);
