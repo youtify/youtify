@@ -34,11 +34,13 @@
     
         <script src="/scripts/jquery-1.7.2.min.js"></script>
         
+        {% if DO_FEATURE_DETECTION %}
 		<script src="/scripts/FeatureDetection.js?v={{ CURRENT_VERSION_ID }}"></script>
         <script>
             FeatureDetection.init();
             FeatureDetection.checkBrowser();
         </script>
+        {% endif %}
         
         <link rel="icon" href="/images/logo/logo_16x16.png" type="image/png" />
         <link href='/styles/default.css?v={{ CURRENT_VERSION_ID }}' rel='stylesheet' type='text/css'media="only screen and (min-width: 321px)">
