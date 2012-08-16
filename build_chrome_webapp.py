@@ -16,8 +16,21 @@ if os.path.exists(output_dir):
 
 os.makedirs(output_dir)
 
+def render_template(src, dst, args):
+    f = open(src)
+    template = Template(f.read().decode('utf-8'))
+    f.close()
+
+    html = template.render(args)
+
+    f = open(dst, 'w')
+    f.write(html.encode('utf-8'))
+    f.close()
+
 def add_background_script():
-    copyfile('chrome_webstore_background.js', os.path.join(output_dir, 'background.js'))
+    render_template('./chrome_webstore_background.js', os.path.join(output_dir, 'background.js'), {
+        'API_HOST': 'http://localhost:8080',
+    })
 
     print "Background script copied"
 
@@ -34,21 +47,13 @@ def add_manifest():
     print "Manifest copied"
 
 def render_main_template():
-    f = open('./html/index.html')
-    template = Template(f.read().decode('utf-8'))
-    f.close()
-
-    html = template.render({
+    render_template('./html/index.html', os.path.join(output_dir, 'index.html'), {
         'og_tag': '',
         'url': '',
         'CURRENT_VERSION_ID': '12345',
         'INCLUDE_GOOGLE_ANALYTICS': False,
         'USE_PRODUCTION_JAVASCRIPT': True,
     })
-
-    f = open(os.path.join(output_dir, 'index.html'), 'w')
-    f.write(html.encode('utf-8'))
-    f.close()
 
     print "Template rendered"
 

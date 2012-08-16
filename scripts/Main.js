@@ -17,6 +17,10 @@ var ON_PRODUCTION;
 var myFollowers;
 var myFollowings;
 
+if (window.API_HOST === undefined) { // This is set for the Chrome Web App
+    window.API_HOST = '';
+}
+
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
@@ -36,7 +40,7 @@ $(document).ready(function() {
     Logo.init();
     LayoutManager.init();
 
-    $.getJSON('/api/main', function(data) {
+    $.getJSON(API_HOST + '/api/main', function(data) {
         settingsFromServer = data.settingsFromServer;
         device = data.device;
         autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
