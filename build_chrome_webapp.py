@@ -53,6 +53,7 @@ def render_main_template():
         'CURRENT_VERSION_ID': '12345',
         'INCLUDE_GOOGLE_ANALYTICS': False,
         'USE_SELF_HOSTED_FONT': True,
+        'DO_FEATURE_DETECTION': False,
         'USE_PRODUCTION_JAVASCRIPT': True,
     })
 
