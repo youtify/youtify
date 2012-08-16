@@ -2013,8 +2013,7 @@ input[type=search]::-webkit-search-results-decoration {
     font-weight: bold;
     margin-bottom: 5px;
 }
-.home .content .top,
-.home .content .bottom {
+.home .content .top {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -2022,12 +2021,9 @@ input[type=search]::-webkit-search-results-decoration {
     padding: 5px;
     position: relative;
 }
-.home .content .top {
+.home .content .wide {
     height: 290px;
     margin-bottom: 10px;
-}
-.home .content .bottom {
-    height: 100%;
 }
 .home .content .float {
     -moz-box-sizing: border-box;
@@ -2040,6 +2036,8 @@ input[type=search]::-webkit-search-results-decoration {
     float: left;
     display: none;
 }
+.home .content .recommendations,
+.home .content .toplist,
 .home .content .spotlight {
     border: none;
     min-height: 264px;
@@ -2047,7 +2045,7 @@ input[type=search]::-webkit-search-results-decoration {
     min-width: 100%;
     overflow: hidden;
 }
-.home .content .spotlight .inner {
+.home .content .inner {
     display: block;
     min-width: 528px;
     width: 115%;
@@ -2098,8 +2096,9 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #right .home .content .playlist-box {
     display: block;
-    margin: 0 0 10px 0;
+    margin: 0 10px 10px 0;
     min-height: 0;
+    float: left;
 }
 
 /** RECOMMENDATIONS
