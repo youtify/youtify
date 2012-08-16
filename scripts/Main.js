@@ -13,7 +13,6 @@ var settingsFromServer = {};
 var device;
 var autoDetectedLanguageByServer;
 var autoDetectedTranslations;
-var ON_DEV;
 var ON_PRODUCTION;
 var myFollowers;
 var myFollowings;
@@ -42,7 +41,6 @@ $(document).ready(function() {
         device = data.device;
         autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
         autoDetectedTranslations = data.autoDetectedTranslations;
-        ON_DEV = data.ON_DEV;
         ON_PRODUCTION = data.ON_PRODUCTION;
         myFollowers = data.myFollowers;
         myFollowings = data.myFollowings;

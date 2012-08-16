@@ -41,7 +41,6 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
             'ON_PRODUCTION': ON_PRODUCTION,
-            'ON_DEV': ON_PRODUCTION is False,
             'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
 			'url': self.request.url,
             'og_tag': og_tag,

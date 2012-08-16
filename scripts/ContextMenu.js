@@ -144,7 +144,7 @@ function showPlaylistContextMenu(menuItem, event) {
         });
     }
 
-    if (ON_DEV) {
+    if (!ON_PRODUCTION) {
         buttons.push({
             title: 'View JSON',
             cssClass: 'json',
@@ -254,7 +254,7 @@ function showResultsItemContextMenu(event, videoElem) {
 		}
     ];
 
-    if (ON_DEV) {
+    if (!ON_PRODUCTION) {
         buttons.push({
             title: 'View JSON',
             cssClass: 'json',
