@@ -11,6 +11,7 @@ except:
 output_dir = os.path.join('./', 'chrome_webstore')
 
 if os.path.exists(output_dir):
+    print "Removing existing build output directory"
     rmtree(output_dir)
 
 os.makedirs(output_dir)
@@ -18,13 +19,19 @@ os.makedirs(output_dir)
 def add_background_script():
     copyfile('chrome_webstore_background.js', os.path.join(output_dir, 'background.js'))
 
+    print "Background script copied"
+
 def copy_static_dirs():
     copytree('images', os.path.join(output_dir, 'images'))
     copytree('styles', os.path.join(output_dir, 'styles'))
     copytree('scripts', os.path.join(output_dir, 'scripts'))
 
+    print "Static directories copied"
+
 def add_manifest():
     copyfile('chrome_webstore_manifest.json', os.path.join(output_dir, 'manifest.json'))
+
+    print "Manifest copied"
 
 def render_main_template():
     f = open('./html/index.html')
@@ -42,3 +49,5 @@ add_manifest()
 add_background_script()
 render_main_template()
 copy_static_dirs()
+
+print "Done, see " + os.path.abspath(output_dir)
