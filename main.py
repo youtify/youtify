@@ -42,6 +42,7 @@ class MainHandler(webapp.RequestHandler):
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
             'ON_PRODUCTION': ON_PRODUCTION,
             'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
+            'INCLUDE_GOOGLE_ANALYTICS': ON_PRODUCTION,
 			'url': self.request.url,
             'og_tag': og_tag,
         }))
