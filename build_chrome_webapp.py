@@ -38,7 +38,14 @@ def render_main_template():
     template = Template(f.read().decode('utf-8'))
     f.close()
 
-    html = template.render(og_tag='', url='', CURRENT_VERSION_ID='12345', INCLUDE_GOOGLE_ANALYTICS=False, USE_PRODUCTION_JAVASCRIPT=True)
+    html = template.render({
+        'og_tag': '',
+        'url': '',
+        'CURRENT_VERSION_ID': '12345',
+        'INCLUDE_GOOGLE_ANALYTICS': False,
+        'USE_PRODUCTION_JAVASCRIPT': True,
+    })
+
     f = open(os.path.join(output_dir, 'index.html'), 'w')
     f.write(html.encode('utf-8'))
     f.close()
