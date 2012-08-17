@@ -11,6 +11,7 @@ var selectedVideoElements = [];
 // Globals set by /api/main
 var settingsFromServer = {};
 var device;
+var languagesFromServer;
 var autoDetectedLanguageByServer;
 var autoDetectedTranslations;
 var ON_PRODUCTION;
@@ -47,6 +48,7 @@ $(document).ready(function() {
     $.getJSON(API_HOST + '/api/main', function(data) {
         settingsFromServer = data.settingsFromServer;
         device = data.device;
+        languagesFromServer = data.languagesFromServer;
         autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
         autoDetectedTranslations = data.autoDetectedTranslations;
         ON_PRODUCTION = data.ON_PRODUCTION;

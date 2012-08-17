@@ -80,7 +80,7 @@ class ApiMainHandler(webapp.RequestHandler):
         lang = auto_detect_language(self.request)
 
         json = {
-            'languages': [lang for lang in get_languages() if lang['enabled_on_site']],
+            'languagesFromServer': [lang for lang in get_languages() if lang['enabled_on_site']],
             'device': youtify_user_model is not None and youtify_user_model.device,
             'user': youtify_user_struct,
             'myFollowers': my_followers_struct,
