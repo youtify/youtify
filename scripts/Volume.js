@@ -32,7 +32,6 @@ var Volume = {
     },
 
     setVolume: function(event) {
-        var paddingLeft = 7;
         var maxW = $('#bottom .volume').width();
         var mX = event.pageX - $('#bottom .volume .slider').offset().left;
         if (mX < 0) {
@@ -44,9 +43,6 @@ var Volume = {
 
         player.setVolume(mX/maxW*100.0);
 
-        if (mX < paddingLeft) {
-            mX = paddingLeft;
-        }
         $('#bottom .volume .slider').css({'width': mX});
     },
     
