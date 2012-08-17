@@ -104,7 +104,7 @@ var SettingsPopup = {
         // LANGUAGE
 
         $.each(languagesFromServer, function(i, lang) {
-            var $option = $('<option></option>').attr('value', lang.code).text(lang.label)
+            var $option = $('<option></option>').attr('value', lang.code).text(lang.label);
             if (lang.code === settings.language) {
                 $option.attr('selected', 'selected');
             }
