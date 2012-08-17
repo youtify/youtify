@@ -1555,9 +1555,12 @@ input[type=search]::-webkit-search-results-decoration {
 
 /** PROFILE POPUP
  ****************************************************************************/
-
+#profile-popup {
+    padding: 5px;
+}
 #profile-popup li {
     padding: 5px;
+    min-width: 100px;
 }
 #profile-popup li a:hover {
     text-decoration: none;
