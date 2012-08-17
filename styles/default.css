@@ -244,6 +244,8 @@ body.fullscreen #bottom {
 #top .search {
     padding-right: 34px; /* button width */
     position: relative;
+    border-radius: 24px;
+    background-color: #FFF;
 }
 
 /* Hide top menu optinos until settings and user has loaded */
@@ -274,7 +276,7 @@ input[type=search]::-webkit-search-results-decoration {
     border: 1px solid #8B9594;
     border-right: none;
     outline: none;
-    background-color: #FFF;
+    background-color: transparent;
 }
 #top .search button {
     position: absolute;
@@ -286,7 +288,7 @@ input[type=search]::-webkit-search-results-decoration {
     padding:0;
     border-radius: 0 24px 24px 0;
     border-left: none;
-    background: white;
+    background: transparent;
 }
 #top .search button:after {
     content: 'ô';
