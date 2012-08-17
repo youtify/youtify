@@ -21,7 +21,7 @@ def init_cached_translations():
 
 def get_deployed_translations_struct(code):
     global deployed_translations
-    if code in deployed_translations:
+    if deployed_translations.get('code'):
         return deployed_translations[code]
     return {}
 
