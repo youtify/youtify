@@ -210,7 +210,6 @@ function ExternalUserSubscription(data) {
     };
 
     self.goTo = function() {
-        console.log(self, 'goto');
         ExternalUserPage.load(self.type, self.username);
     };
 

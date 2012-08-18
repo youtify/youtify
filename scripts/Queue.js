@@ -31,7 +31,6 @@ var Queue = {
         Queue.updateView();
     },
     manualPlay: function(index) {
-        console.log('manual ' + index);
         if (Queue.manualList.length === 0) {
             return false;
         }
@@ -46,7 +45,6 @@ var Queue = {
         return true;
     },
     autoPlay: function(index) {
-        console.log('auto ' + index);
         if (Queue.autoList.length === 0) {
             return false;
         }

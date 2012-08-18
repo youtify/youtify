@@ -49,7 +49,6 @@ var HomeScreen = {
     loadRecommendedArtists: function() {
         var self = HomeScreen;
         Recommendations.findRecommendedArtists(function(artists) {
-            console.log(artists);
             $.each(artists, function(i, artist) {
                 if (artist.name) {
                     var artistSuggestion = new ArtistSuggestion({

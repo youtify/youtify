@@ -45,7 +45,6 @@ var Recommendations = {
         LoadingBar.show();
         $.getJSON(url, params, function(data) {
             LoadingBar.hide();
-            console.log('response', data);
             if (!data.similartracks || typeof(data.similartracks.track) !== "object") {
                 alert('Could not find any similar tracks to ' + artistAndTrack.artist + ' - ' + artistAndTrack.track);
                 return;
@@ -102,7 +101,6 @@ var Recommendations = {
         LoadingBar.show();
         $.getJSON(url, params, function(data) {
             LoadingBar.hide();
-            console.log('response', data);
             if (!data.similarartists || typeof(data.similarartists.artist) !== "object") {
                 alert('Could not find any similar artists to ' + name);
                 return;

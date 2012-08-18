@@ -177,7 +177,6 @@ var PlaylistView = {
 
     syncPlaylistButtonClicked: function (event) {
         var playlist = playlistManager.getCurrentlySelectedPlaylist();
-        console.log('syncing playlist ' + playlist.title);
         playlist.sync(function () {
             PlaylistView.updatePlaylistBar(playlist);
             playlistManager.save();

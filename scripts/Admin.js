@@ -176,7 +176,6 @@ function loadTeamLeaders(langCode) {
             .click(deleteButtonClicked)
             .end()
             .appendTo($tr);
-        console.log($tr);
         return $tr;
     }
 

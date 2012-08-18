@@ -22,7 +22,6 @@ var Activities = {
     },
 
     getIncomingExternalSubscribeActivity: function(actor, externalUser) {
-        console.log(actor, externalUser);
         var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span clas="name">' + Utils.escape(actor.displayName) + '</span></span>';
         var $externalUser = '<span class="link external-user">' + Utils.escape(externalUser.username) + '</span>';
         var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to $externalUser', {$externalUser: $externalUser, $user: $user}) + '</div>'); 
