@@ -52,7 +52,7 @@ class ConnectHandler(webapp.RequestHandler):
         if redirect_uri and redirect_uri != 'deleted':
             self.response.headers['Set-Cookie'] = 'redirect_uri=' + redirect_uri
 
-        url = 'http://www.last.fm/api/auth/?api_key=db8b8dccb3afd186b6df786775a62cb5&cb=http://0.0.0.0:8080/lastfm/callback'
+        url = 'http://www.last.fm/api/auth/?api_key=db8b8dccb3afd186b6df786775a62cb5&cb=' + config.LASTFM_REDIRECT_URL
 
         self.redirect(url)
 
