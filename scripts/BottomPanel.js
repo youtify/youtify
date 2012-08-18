@@ -31,6 +31,9 @@ var BottomPanel = {
         // SHUFFLE
         $('#bottom .shuffle').click(function() {
             $(this).toggleClass('on');
+            if (player.currentVideo && player.currentVideo.listView) {
+                Queue.addSiblingsToPlayorder(player.currentVideo.listView);
+            }
         });
     },
     setTitleText: function(titleText) {
