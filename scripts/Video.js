@@ -135,12 +135,10 @@ function Video(args) {
         $fragment.appendChild($title);
         $fragment.appendChild($space.cloneNode(false));
 
-        if (this.uploaderUsername) {
-            $uploader.innerHTML = this.uploaderUsername;
-            $uploader.setAttribute('class', 'uploader link');
-            $fragment.appendChild($uploader);
-            $fragment.appendChild($space.cloneNode(false));
-        }
+        $uploader.innerHTML = this.uploaderUsername ? this.uploaderUsername : '';
+        $uploader.setAttribute('class', 'uploader link');
+        $fragment.appendChild($uploader);
+        $fragment.appendChild($space.cloneNode(false));
         
         $heart.setAttribute('class', 'like');
         $heart.innerHTML = '&hearts;';

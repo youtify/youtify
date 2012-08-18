@@ -131,7 +131,7 @@ var Search = {
 
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
-                    var results = Search.getVideosFromYouTubeSearchData(data, true);
+                    var results = Search.getVideosFromYouTubeSearchData(data);
                     $.each(results, function(i, video) {
                         if (video) {
                             video.createListView().appendTo(Search.tabs.$selectedPane);
@@ -161,7 +161,7 @@ var Search = {
 
                 LoadingBar.show();
                 $.getJSON(url, params, function(data) {
-                    var results = Search.getVideosFromSoundCloudSearchData(data, true);
+                    var results = Search.getVideosFromSoundCloudSearchData(data);
                     $.each(results, function(i, video) {
                         if (video) {
                             video.createListView().appendTo(Search.tabs.$selectedPane);
@@ -253,7 +253,7 @@ var Search = {
                 break;
         }
     },
-    getVideosFromSoundCloudSearchData: function(data, includeUploader) {
+    getVideosFromSoundCloudSearchData: function(data) {
         ret = [];
         $.each(data, function(i, track) {
             var buyLinks = track.purchase_url ? [track.purchase_url] : null;
@@ -262,7 +262,7 @@ var Search = {
                 title: track.title,
                 duration: track.duration,
                 buyLinks: buyLinks,
-                uploaderUsername: includeUploader ? track.user.permalink : null,
+                uploaderUsername: track.user.permalink,
                 type: 'soundcloud',
                 artworkURL: track.artwork_url
             }));
@@ -283,7 +283,7 @@ var Search = {
         });
         return ret;
     },
-    getVideosFromYouTubeSearchData: function(data, includeUploader) {
+    getVideosFromYouTubeSearchData: function(data) {
         var results = [];
         if (data.feed.entry === undefined) {
             return results;
@@ -307,7 +307,7 @@ var Search = {
             var video = new Video({
                 videoId: videoId,
                 title: title,
-                uploaderUsername: includeUploader ? item.author[0].name.$t : null,
+                uploaderUsername: item.author[0].name.$t,
                 type: 'youtube',
                 artworkURL: item.media$group.media$thumbnail.length > 1 ? item.media$group.media$thumbnail[1].url : null
             });

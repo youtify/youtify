@@ -703,6 +703,14 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #right .tracklist .uploader {
     cursor: pointer;
+    display: table-cell;
+    width: 150px;
+}
+#right .playlists .tracklist .uploader ,
+#right .playlists .tracklist tr .space:nth-child(4),
+#right .external-profile .tracklist .uploader ,
+#right .external-profile .tracklist tr .space:nth-child(4){
+    display: none;
 }
 #right .tracklist .video .menu {
     width: 40px;
