@@ -130,11 +130,6 @@ function MenuItem(args) {
 
     $('<span class="title"></span>').text(args.title).appendTo(self.$view);
 
-    if (args.model) {
-        self.model = args.model;
-        self.$view.data('model', args.model);
-    }
-
     if (args.$img) {
         self.$view.append(args.$img);
     }
@@ -154,6 +149,10 @@ function MenuItem(args) {
                 self.select();
                 return args.onContextMenu(self, event);
             });
+        }
+        if (args.model) {
+            self.model = args.model;
+            self.$view.data('model', args.model);
         }
     };
 
