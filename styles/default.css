@@ -172,9 +172,6 @@ body.fullscreen #right {
     background: black;
     border: none;
 }
-body.fullscreen #bottom {
-    background: #DDD;
-}
 
 #top {
     -moz-box-sizing: border-box;
@@ -1042,7 +1039,8 @@ input[type=search]::-webkit-search-results-decoration {
 
 /** BOTTOM
  ****************************************************************************/
- 
+body.fullscreen #bottom.on,
+body.fullscreen #bottom:hover,
 #bottom {
     position: absolute;
     width: 100%;
@@ -1061,7 +1059,29 @@ input[type=search]::-webkit-search-results-decoration {
     background:-ms-linear-gradient(bottom, #333 0%, #999 100%);
     background:-o-linear-gradient(bottom, #333 0%, #999 100%);
     background:linear-gradient(bottom, #333 0%, #999 100%);
+    
+    -webkit-transition: bottom 500ms ease-in-out;
+    -moz-transition: bottom 500ms ease-in-out;
+    -ms-transition: bottom 500ms ease-in-out;
+    -o-transition: bottom 500ms ease-in-out;
+    transition: bottom 500ms ease-in-out;
 }
+
+body.fullscreen #bottom {
+    bottom: -60px;
+    -webkit-transition: bottom 500ms ease-in-out;
+    -moz-transition: bottom 500ms ease-in-out;
+    -ms-transition: bottom 500ms ease-in-out;
+    -o-transition: bottom 500ms ease-in-out;
+    transition: bottom 500ms ease-in-out;
+    -webkit-transition-delay: 2s;
+    -moz-transition-delay: 2s;
+    -ms-transition-delay: 2s;
+    -o-transition-delay: 2s;
+    transition-delay: 2s;
+
+}
+
 #bottom .info,
 #bottom .fullscreen {
     color: #EEE;

@@ -15,7 +15,7 @@ $(window).keydown(function(event) {
             Utils.closeAnyOpenArrowPopup();
             $('.modalbox').click();
             $('#context-menu-blocker').mousedown();
-            player.fullScreenOff();
+            FullScreen.off();
             event.preventDefault();
             break;
         case 13: // Enter

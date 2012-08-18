@@ -86,6 +86,7 @@ $(document).ready(function() {
         ExternalUserPage.init();
         ExternalUserSubscriptions.init();
         URIManager.init();
+        FullScreen.init();
     });
     
     $('.login-link').click(LoadingBar.show);

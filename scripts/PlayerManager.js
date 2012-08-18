@@ -236,8 +236,6 @@ function PlayerManager() {
     /* Enter fullScreen */
     self.fullScreenOn = function(event) {
         self.inFullScreen = true;
-        $('body').addClass('fullscreen');
-        
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {
                 self.players[i].fullScreenOn();
@@ -248,7 +246,6 @@ function PlayerManager() {
     /* Exit fullScreen */
     self.fullScreenOff = function() {
         self.inFullScreen = false;
-        $('body').removeClass('fullscreen');
         
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {

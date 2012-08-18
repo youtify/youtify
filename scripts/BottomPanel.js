@@ -22,11 +22,7 @@ var BottomPanel = {
         $('#bottom .controls .next').click(player.next);
         $('#bottom .controls .prev').click(player.prev);
         
-        // FULLSCREEN
-        $('#bottom .fullscreen').click(function(event) {
-            $(this).toggleClass('on');
-            player.toggleFullScreen(event);
-        });
+        // FULLSCREEN is set in FullScreen.js
         
         // SHUFFLE
         $('#bottom .shuffle').click(function() {

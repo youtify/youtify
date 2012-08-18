@@ -140,7 +140,7 @@
     /* Enter fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOn = function() {
         var width = $(window).width(),
-            height = $(window).height() - $('#bottom').outerHeight();
+            height = $(window).height() - 10;
         
         if (self.view === null || self.view.left < 0) {
             return;
