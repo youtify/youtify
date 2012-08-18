@@ -11,7 +11,7 @@ var AutoFlattrer = {
         });
 
         EventSystem.addEventListener('song_almost_done_playing', function(data) {
-            if (has_flattr_access_token && settingsFromServer.flattr_automatically && AutoFlattrer.thingForCurrentTrack) {
+            if (UserManager.currentUser && UserManager.currentUser.flattrUserName && settingsFromServer.flattr_automatically && AutoFlattrer.thingForCurrentTrack) {
                 AutoFlattrer.makeFlattrClick(AutoFlattrer.thingForCurrentTrack);
             }
         });
