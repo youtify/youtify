@@ -1,0 +1,20 @@
+{
+  "name": "youtify-make-system",
+  "version": "0.0.0-1",
+  "main": "make.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node make.js"
+  },
+  "dependencies": {
+    "jslint": "0.1.9",
+    "uglify-js": "1.3.3"
+  },
+  "engines": {
+    "node": ">=0.8.2"
+  },
+  "author": "Per Thulin",
+  "license": "BSD",
+  "description": "README.md",
+  "subdomain": "youtify"
+}

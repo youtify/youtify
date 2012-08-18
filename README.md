@@ -37,6 +37,23 @@ How to get the development environment set up
 4. Start Youtify from the GAE SDK
 5. You're done! Navigate your browser to http://localhost:8080 (or whatever port you selected).
 
+Build & Deploy
+--------------
+
+When developing, Youtify requests all script files individually. However, on the production envrioronment we use a one big minimized script. To generate this script, you need to run our build system.
+
+Dependencies: python 2.7 and node 0.8.2 needs to be installed.
+
+    $ cd YOUTIFY_DIR/make
+
+Install JSLint, UglifyJS and other dependencies:
+
+    $ npm install
+
+To run the build system:
+
+    $ node make.js
+
 Discussion
 ----------
 
