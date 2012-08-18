@@ -90,6 +90,9 @@ var Utils = {
     },
 
     shorten: function(inputText, limit) {
+        if (inputText === null) {
+            return '';
+        }
         var ret = inputText;
 
         if (ret.length > limit) {
