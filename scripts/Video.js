@@ -84,8 +84,13 @@ function Video(args) {
     };
     
     this.createAlternativeContextMenuButton = function(originalTrack, playlist) {
-        var buttons = originalTrack.listView.data('additionalMenuButtons') || [];
-        
+        var buttons = originalTrack.listView.data('additionalMenuButtons') || [],
+            i;
+        for (i = buttons.length - 1; i >= 0 ; i -= 1) {
+            if (buttons[i].cssClass === 'replace') {
+                buttons.splice(i, 1);
+            }
+        }
         buttons.unshift({
             title: TranslationSystem.get('Replace with alternative'),
             cssClass: 'replace',
