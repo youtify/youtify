@@ -189,17 +189,15 @@
     self.getCurrentPlaybackTime = function() {
         if (self.currentVideo) {
             return self.player.getCurrentTime();
-        } else {
-            return 0;
         }
+        return 0;
     };
     
     /* Returns the length of the video in seconds */
     self.getTotalPlaybackTime = function() {
         if (self.currentVideo) {
             return self.player.getDuration();
-        } else {
-            return 0;
         }
+        return 0;
     };
 }

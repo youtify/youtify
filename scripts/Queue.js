@@ -38,9 +38,8 @@ var Queue = {
         
         if (index < 0 || index > Queue.manualList.length -1) {
             return false;
-        } else {
-            Queue.manualPlayIndex = index;
         }
+        Queue.manualPlayIndex = index;
         Queue.manualList[Queue.manualPlayIndex].play();
         Queue.autoPlayIndex = null;
         Queue.updateView();
@@ -54,9 +53,8 @@ var Queue = {
         
         if (index < 0 || index > Queue.autoList.length -1) {
             return false;
-        } else {
-            Queue.autoPlayIndex = index;
         }
+        Queue.autoPlayIndex = index;
         Queue.autoList[Queue.autoPlayIndex].play();
         Queue.updateView();
         return true;
@@ -68,15 +66,17 @@ var Queue = {
         
         if (Queue.manualList.length > 0 && Queue.manualPlayIndex === null) {
             return Queue.manualPlay(0);
-        } else if (Queue.manualList.length > 0 && Queue.manualPlayIndex + 1 < Queue.manualList.length) {
-            return Queue.manualPlay(Queue.manualPlayIndex + 1);
-        } else if (Queue.autoList.length > 0 && Queue.autoPlayIndex === null) {
-            return Queue.autoPlay(0);
-        } else if (Queue.autoList.length > 0 && Queue.autoPlayIndex + 1 < Queue.autoList.length) {
-            return Queue.autoPlay(Queue.autoPlayIndex + 1);
-        } else {
-            return false;
         }
+        if (Queue.manualList.length > 0 && Queue.manualPlayIndex + 1 < Queue.manualList.length) {
+            return Queue.manualPlay(Queue.manualPlayIndex + 1);
+        }
+        if (Queue.autoList.length > 0 && Queue.autoPlayIndex === null) {
+            return Queue.autoPlay(0);
+        }
+        if (Queue.autoList.length > 0 && Queue.autoPlayIndex + 1 < Queue.autoList.length) {
+            return Queue.autoPlay(Queue.autoPlayIndex + 1);
+        }
+        return false;
     },
     playPrev: function() {
         if ((Queue.manualList.length + Queue.autoList.length) === 0) {
@@ -85,13 +85,14 @@ var Queue = {
         
         if (Queue.autoPlayIndex !== null && Queue.autoPlayIndex > 0) {
             return Queue.autoPlay(Queue.autoPlayIndex - 1);
-        } else if (Queue.autoPlayIndex !== null && Queue.autoPlayIndex === 0) {
-            return Queue.manualPlay(Queue.manualList.length - 1);
-        } else if (Queue.manualPlayIndex !== null && Queue.manualPlayIndex > 0) {
-            return Queue.manualPlay(Queue.manualPlayIndex - 1);
-        } else {
-            return false;
         }
+        if (Queue.autoPlayIndex !== null && Queue.autoPlayIndex === 0) {
+            return Queue.manualPlay(Queue.manualList.length - 1);
+        }
+        if (Queue.manualPlayIndex !== null && Queue.manualPlayIndex > 0) {
+            return Queue.manualPlay(Queue.manualPlayIndex - 1);
+        }
+        return false;
     },
 	updateView: function() {
         var view = this.$tracklist;

@@ -91,10 +91,10 @@ var HomeScreen = {
         
         if (self.nbrOfArtists >= nbrOfArtists && self.nbrOfArtists !== 0) {
             return;
-        } else {
-            self.nbrOfArtists = nbrOfArtists;
-            self.$spotlight.html('');
         }
+
+        self.nbrOfArtists = nbrOfArtists;
+        self.$spotlight.html('');
         
         $.getJSON('/api/external_users/top/' + nbrOfArtists, function(data) {
             $.each(data, function(i, externalUser) {

@@ -33,9 +33,8 @@ var Menu = {
     getGroup: function(relAttr) {
         if (this.groups.hasOwnProperty(relAttr)) {
             return this.groups[relAttr];
-        } else {
-            throw "Menu has no group named " + relAttr;
         }
+        throw "Menu has no group named " + relAttr;
     },
 
     newPlaylistClick: function() {

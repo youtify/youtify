@@ -142,10 +142,9 @@ var VideoInfo = {
             $.getJSON(url, {}, function(data) {
                 if (!data || !data.links || !data.hasOwnProperty('artist_name')) {
                     return;
-                } else {
-                    if (data.links.hasOwnProperty('Twitter')) {
-                        EventSystem.callEventListeners('artist_twitter_account_found', data.links.Twitter);
-                    }
+                }
+                if (data.links.hasOwnProperty('Twitter')) {
+                    EventSystem.callEventListeners('artist_twitter_account_found', data.links.Twitter);
                 }
             });
         }
