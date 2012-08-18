@@ -1,7 +1,7 @@
 var Lastfm = {
     init: function() {
         EventSystem.addEventListener('song_almost_done_playing', function(data) {
-            if (has_lastfm_access_token && settingsFromServer.lastfm_scrobble_automatically) {
+            if (UserManager.isLoggedIn() && UserManager.currentUser.lastfmUserName && settingsFromServer.lastfm_scrobble_automatically) {
                 Lastfm.scrobble(data);
             }
         });
