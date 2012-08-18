@@ -17,7 +17,7 @@ var EchoNest = {
             results: 15
         };
         
-        $.get('http://developer.echonest.com/api/v4/artist/extract', options, function(data) {
+        $.getJSON('http://developer.echonest.com/api/v4/artist/extract', options, function(data) {
             if (data.response.artists.length === 1) {
                 track.echonestArtist = data.response.artists[0].name;
                 console.log('Echo Nest identified artist as \'' + track.echonestArtist + '\'');
