@@ -229,25 +229,6 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
     }
 });
 
-// VIDEO DROPPED ON #new-playlist
-registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (targetElem.attr('id') === 'new-playlist' && sourceElem.hasClass('video')) {
-        pendingVideo = {
-            title: sourceElem.find('.title').text(),
-            videoId: sourceElem.data('videoId')
-        };
-        $('#new-playlist span').click();
-    }
-});
-
-// VIDEO TITLE DROPPED ON #new-playlist
-registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (targetElem.attr('id') === 'new-playlist' && sourceElem.attr('id') === 'info') {
-        pendingVideo = sourceElem.data('model');
-        $('#new-playlist span').click();
-    }
-});
-
 // VIDEO TITLE DROPPED ON PLAYLIST
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.hasClass('playlistElem') && sourceElem.attr('id') === 'info') {
