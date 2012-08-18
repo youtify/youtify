@@ -603,10 +603,28 @@ input[type=search]::-webkit-search-results-decoration {
 #right .user-list .user {
     display: block;
     margin: 5px 0;
+    line-height: 40px;
 }
+#right .user-list .user:nth-of-type(odd) {
+    background-color: #DDD;
+}
+#right .user-list .user img {
+    width: 40px;
+    height: 40px;
+}
+#right .user-list .user  span {
+    padding-left: 15px;
+}
+
 #right .playlist-list > .playlist {
     margin: 5px 0;
+    line-height: 40px;
+    padding-left: 15px;
 }
+#right .playlist-list > .playlist:nth-of-type(odd) {
+    background-color: #DDD;
+}
+
 #right .tracklist,
 #right .tracklist table {
     width: 100%;
