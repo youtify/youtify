@@ -155,6 +155,10 @@ class PlaylistsHandler(webapp.RequestHandler):
     def post(self):
         """Create new playlist"""
         youtify_user_model = get_current_youtify_user_model()
+        if youtify_user_model == None:
+            self.error(403)
+            return
+        
         json_playlist = simplejson.loads(self.request.get('json'))
 
         if json_playlist is None:
