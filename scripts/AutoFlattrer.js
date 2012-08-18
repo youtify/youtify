@@ -39,6 +39,9 @@ var AutoFlattrer = {
             if (data === null) {
                 console.log("Error: response from Flattr was null");
             } else if (data.hasOwnProperty('error_description')) {
+                if (data.hasOwnProperty('error') && data.error == 'flattr_once') {
+                    return;
+                }
                 console.log("Flattr error", data.error_description);
             } else {
                 EventSystem.callEventListeners('flattr_click_made', data);
