@@ -25,7 +25,9 @@ function dragAborted() {
         dragElem = null;
     }
     removeTargetClasses();
-    sourceElem.removeClass('dragged');
+    if (sourceElem) {
+        sourceElem.removeClass('dragged');
+    }
 }
 
 /**
