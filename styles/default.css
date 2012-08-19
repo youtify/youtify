@@ -1030,6 +1030,19 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
 }
 
+#right .new-playlist-help {
+    margin-top: 10px;
+    background-color: #DDD;
+    padding: 20px;
+    text-align: center;
+    display: none;
+}
+#right .new-playlist-help h2 {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 /** SMALL PLAYLIST VIEW
  ****************************************************************************/
 

@@ -173,6 +173,11 @@ var PlaylistView = {
                 }
             });
         }
+        if (playlist.videos.length === 0) {
+            $('#right .new-playlist-help').show();
+        } else {
+            $('#right .new-playlist-help').hide();
+        }
     },
 
     syncPlaylistButtonClicked: function (event) {
