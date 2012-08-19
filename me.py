@@ -1,4 +1,5 @@
 import re
+import random
 import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
@@ -207,6 +208,19 @@ class MeHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
+class DeviceTokenHandler(webapp.RequestHandler):
+
+    def get(self):
+        """Set a new device token for the user"""
+        user = get_current_youtify_user_model()
+        user.device = str(random.random())
+        user.save()
+        json = {
+            'device': user.device
+        }
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
 def main():
     application = webapp.WSGIApplication([
         ('/me', MeHandler),
@@ -214,6 +228,7 @@ def main():
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
         ('/me/playlists', PlaylistsHandler),
+        ('/me/request_new_device_token', DeviceTokenHandler),
         ('/me/settings', SettingsHandler),
         ('/me/followings/(.*)', FollowingsHandler),
     ], debug=True)

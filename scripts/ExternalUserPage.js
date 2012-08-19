@@ -291,9 +291,6 @@ var ExternalUserSubscriptions = {
                     self.subscriptions.push(externalUser);
                     self.updateMenu();
                     callback();
-                },
-                409: function(data) {
-                    new ReloadDialog().show();
                 }
             }
         });
@@ -320,9 +317,6 @@ var ExternalUserSubscriptions = {
                     self.subscriptions = newSubscriptions;
                     self.updateMenu();
                     callback();
-                },
-                409: function(data) {
-                    new ReloadDialog().show();
                 }
             }
         });

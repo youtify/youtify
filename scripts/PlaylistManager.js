@@ -1,7 +1,7 @@
 function PlaylistsManager() {
     this.playlists = [];
 
-    this.load = function() {
+    this.load = function(callback) {
         var self = this,
             data,
             item,
@@ -23,12 +23,23 @@ function PlaylistsManager() {
             $.getJSON('/me/playlists', function(data) {
                 self.mergePlaylists(data);
                 self.updateMenu();
+                if (callback) {
+                    callback();
+                }
                 EventSystem.callEventListeners('playlists_loaded', self.playlists);
             });
         } else {
             self.updateMenu();
+            if (callback) {
+                callback();
+            }
             EventSystem.callEventListeners('playlists_loaded', self.playlists);
         }
+    };
+
+    this.reset = function() {
+        this.playlists = [];
+        Menu.getGroup('playlists').clear();
     };
 
     this.updateMenu = function() {

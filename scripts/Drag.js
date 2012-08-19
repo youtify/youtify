@@ -220,13 +220,17 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.hasClass('playlistElem') && sourceElem.hasClass('video')) {
         var playlist = targetElem.data('model');
-        $.each(sourceElem, function(index, item) {
-            item = $(item);
-            if (item.hasClass('video')) {
-                playlist.addVideo(item.data('model'));
-                item.removeClass('selected');
-            }
-        });
+        var lastAction = function() {
+            $.each(sourceElem, function(index, item) {
+                item = $(item);
+                if (item.hasClass('video')) {
+                    playlist.addVideo(item.data('model'));
+                    item.removeClass('selected');
+                }
+            });
+        };
+        lastAction();
+        SyncManager.setLastAction(lastAction);
         playlistManager.save();
     }
 });

@@ -43,22 +43,6 @@ ModalBox.prototype.remove = function() {
     this.view.remove();
 };
 
-/* RELOAD DIALOG
- ****************************************************************************/
-
-function ReloadDialog() {
-    ModalBox.call(this);
-
-    this.setMessage('Looks like your account has been used somewhere else, please reload the page.');
-
-    this.addButton('Reload', function(self) {
-        location.reload();
-    }, 'exposed');
-}
-
-ReloadDialog.prototype = new ModalBox();
-ReloadDialog.prototype.constructor = ReloadDialog;
-
 /* EDIT PROFILE DIALOG
  ****************************************************************************/
 

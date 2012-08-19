@@ -10,7 +10,7 @@ var selectedVideoElements = [];
 
 // Globals set by /api/main
 var settingsFromServer = {};
-var device;
+var lastAction; // Action to be repeated if a playlist sync has been required
 var languagesFromServer;
 var autoDetectedLanguageByServer;
 var autoDetectedTranslations;
@@ -34,7 +34,11 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
             $('body').html(r.responseText);
         }
     }
-    LoadingBar.error();
+    // 409 is used for device conflicts which we handle (see
+    // PlaylistManager.reloadAndPerformLastAction).
+    if (r.status !== 409) {
+        LoadingBar.error();
+    }
 });
 
 $(document).ready(function() {
@@ -47,7 +51,6 @@ $(document).ready(function() {
 
     $.getJSON(API_HOST + '/api/main', function(data) {
         settingsFromServer = data.settingsFromServer;
-        device = data.device;
         languagesFromServer = data.languagesFromServer;
         autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
         autoDetectedTranslations = data.autoDetectedTranslations;
@@ -55,6 +58,7 @@ $(document).ready(function() {
         myFollowers = data.myFollowers;
         myFollowings = data.myFollowings;
 
+        SyncManager.init(data.device);
         UserManager.init(data.user);
         TopMenu.init();
 

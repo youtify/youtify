@@ -5,7 +5,10 @@ var LoadingBar = {
         LoadingBar.$elem = $('#loading');
     },
 
-    show: function() {
+    show: function(title) {
+        title = title || TranslationSystem.get('Loading...');
+        LoadingBar.$elem.removeClass('error');
+        LoadingBar.$elem.text(title);
         LoadingBar.$elem.fadeIn(200);
     },
 

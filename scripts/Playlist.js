@@ -161,9 +161,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 				},
 				404: function(data) {
 					alert(TranslationSystem.translations['No such playlist found']);
-				},
-				409: function(data) {
-                    new ReloadDialog().show();
 				}
 			}
         });
@@ -176,7 +173,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     
     self.subscribe = function(callback) {
         var params = {
-            'device': device
         };
 
         self.syncing = true;
@@ -186,11 +182,11 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             url: '/api/playlists/' + self.remoteId + '/followers',
             data: params,
             complete: function(jqXHR, textStatus) {
+                self.syncing = false;
                 LoadingBar.hide();
             },
             statusCode: {
                 200: function(data, textStatus) {
-                    self.syncing = false;
                     self.isSubscription = true;
                     self.followers.push(UserManager.currentUser);
                     if (textStatus === 'success') {
@@ -205,9 +201,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
                 },
                 404: function(data) {
                     alert(TranslationSystem.translations['No such playlist found']);
-                },
-                409: function(data) {
-                    new ReloadDialog().show();
                 }
             }
         });
@@ -215,8 +208,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
     self.createNewPlaylistOnRemote = function(callback) {
         var params = {
-                'json': JSON.stringify(self.toJSON()),
-				'device': device
+                'json': JSON.stringify(self.toJSON())
             };
 
         self.syncing = true;
@@ -225,9 +217,11 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             type: 'POST',
             url: '/api/playlists',
 			data: params,
+            complete: function(jqXHR, textStatus) {
+                self.syncing = false;
+            },
 			statusCode: {
 				200: function(data, textStatus) {
-					self.syncing = false;
 					if (textStatus === 'success') {
 						self.remoteId = data.remoteId;
 						self.owner = new User(data.owner);
@@ -238,9 +232,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 					if (callback) {
 						callback();
 					}
-				},
-				409: function(data) {
-                    new ReloadDialog().show();
 				}
 			}
         });
@@ -251,9 +242,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             return;
         }
         var params = {
-                'json': JSON.stringify(self.toJSON()),
-				'device': device
-            };
+            'json': JSON.stringify(self.toJSON()),
+            'device': SyncManager.getDeviceToken()
+        };
 
         self.syncing = true;
 
@@ -261,9 +252,11 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             type: 'POST',
             url: '/api/playlists/' + self.remoteId,
 			data: params,
+            complete: function(jqXHR, textStatus) {
+                self.syncing = false;
+            },
 			statusCode: {
 				200: function(data, textStatus) {
-					self.syncing = false;
 					if (textStatus === 'success') {
 						self.synced = true;
 					} else {
@@ -277,7 +270,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 					alert(TranslationSystem.translations['No such playlist found']);
 				},
 				409: function(data) {
-                    new ReloadDialog().show();
+                    SyncManager.reloadAndPerformLastAction();
 				}
 			}
         });
