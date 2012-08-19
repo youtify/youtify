@@ -189,8 +189,8 @@ var UserManager = {
         }
 
         $('#right .profile .information-container .display-name').text(user.displayName);
-        $('#right .profile .information-container .nickname').text(user.nickname);
-        $('#right .profile .information-container .tagline').text(user.tagline);
+        $('#right .profile .information-container .nickname').text(user.nickname || '');
+        $('#right .profile .information-container .tagline').text(user.tagline || '');
 
         UserManager.updatePlaylistsTabLabel(user.nrOfPlaylists);
         UserManager.updateFollowersTabLabel(user.nrOfFollowers);
