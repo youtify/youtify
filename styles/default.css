@@ -2000,28 +2000,40 @@ body.fullscreen #bottom {
 #right .external-profile .img {
     display: inline-block;
     vertical-align: top;
-    margin-right: 5px;
     float: left;
+    width: 96px;
+    height: 96px;
+}
+#right .external-profile .img img {
+    width: 88px;
+    height: 88px;
 }
 
 #right .external-profile .info {
     display: block;
 }
 
-#right .external-profile .description {
-    font-style: italic;
-}
-
 #right .external-profile h1 {
-    display: inline;
+    display: block;
     font-size: 16px;
     font-weight: bold;
     clear: right;
+    line-height: 30px;
+}
+#right .external-profile .subscribe,
+#right .external-profile .unsubscribe {
+    float: left;
+    margin-right: 10px;
 }
 #right .external-profile .link {
     clear: right;
+    line-height: 30px;
 }
-
+#right .external-profile .description {
+    font-style: italic;
+    display: block;
+    margin-top: 5px;
+}
 #right .external-profile .tracklist {
     margin-top: 5px;
 }
