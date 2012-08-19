@@ -1,5 +1,4 @@
 import re
-import random
 import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
@@ -14,6 +13,7 @@ from model import get_display_name_for_youtify_user_model
 from model import get_external_user_subscriptions_struct_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
 from model import get_playlist_structs_for_youtify_user_model
+from model import generate_device_token
 from activities import create_follow_activity
 from mail import send_new_follower_email
 
@@ -213,7 +213,7 @@ class DeviceTokenHandler(webapp.RequestHandler):
     def get(self):
         """Set a new device token for the user"""
         user = get_current_youtify_user_model()
-        user.device = str(random.random())
+        user.device = generate_device_token()
         user.save()
         json = {
             'device': user.device

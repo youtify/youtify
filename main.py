@@ -1,5 +1,4 @@
 import os
-import random
 import re
 from datetime import datetime
 from google.appengine.api import users
@@ -13,6 +12,7 @@ from model import get_youtify_user_struct
 from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
+from model import generate_device_token
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_struct
 from languages import get_languages
@@ -61,7 +61,7 @@ class ApiMainHandler(webapp.RequestHandler):
             youtify_user_model = create_youtify_user_model()
 
         if youtify_user_model is not None:
-            youtify_user_model.device = str(random.random())
+            youtify_user_model.device = generate_device_token()
             youtify_user_model.last_login = datetime.now()
             youtify_user_struct = get_youtify_user_struct(youtify_user_model, include_private_data=True)
 

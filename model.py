@@ -333,3 +333,6 @@ def get_external_user_subscriptions_struct_for_youtify_user_model(youtify_user_m
         ret.append(get_external_user_subscription_struct(external_user_model))
 
     return ret
+
+def generate_device_token():
+    return str(random.random())
