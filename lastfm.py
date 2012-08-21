@@ -40,9 +40,13 @@ def lastfm_request(method, t, options, user = None):
 
     http_method = urlfetch.GET if t == 'GET' else urlfetch.POST # TODO: Fix this
 
-    response = urlfetch.fetch(url=url, method=http_method, validate_certificate=VALIDATE_CERTIFICATE)
-
-    return simplejson.loads(response.content)
+    try:
+        response = urlfetch.fetch(url=url, method=http_method, validate_certificate=VALIDATE_CERTIFICATE)
+        return simplejson.loads(response.content)
+    except e:
+        return simplejson.loads({
+            'message': 'urlfetch failed ' + str(e)
+        })
 
 class ConnectHandler(webapp.RequestHandler):
     """Initiate the Last.fm authentication dance"""
