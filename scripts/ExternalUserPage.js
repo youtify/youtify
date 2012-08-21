@@ -51,7 +51,7 @@ var ExternalUserPage = {
         this.$view.find('.button.unsubscribe').hide();
     },
 
-    show: function(externalUrl) {
+    loadFromExternalUrl: function(externalUrl) {
         var matches;
         var type;
         var username;

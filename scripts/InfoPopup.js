@@ -91,7 +91,7 @@ var InfoPopup = {
 
         if (info.url.match('soundcloud') || info.url.match('youtube')) {
             callback = function(event) {
-                ExternalUserPage.show(info.url);
+                ExternalUserPage.loadFromExternalUrl(info.url);
                 event.preventDefault();
             };
         }
