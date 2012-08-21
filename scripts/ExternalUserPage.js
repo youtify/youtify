@@ -95,7 +95,7 @@ var ExternalUserPage = {
 
         $.getJSON("http://api.soundcloud.com/resolve.json?callback=?", {client_id: SOUNDCLOUD_API_KEY, url: "https://soundcloud.com/" + username}, function(resolveData) {
             $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + ".json", {client_id: SOUNDCLOUD_API_KEY}, function(userData) {
-                self.externalUser = new ExternalUserSubscription({
+                self.externalUser = new ExternalUser({
                     type: 'soundcloud',
                     external_user_id: String(userData.id),
                     username: username,
@@ -147,7 +147,7 @@ var ExternalUserPage = {
 
         // https://developers.google.com/youtube/2.0/developers_guide_protocol_profiles#Profiles
         $.getJSON('https://gdata.youtube.com/feeds/api/users/' + username + '?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
-            self.externalUser = new ExternalUserSubscription({
+            self.externalUser = new ExternalUser({
                 type: 'youtube',
                 external_user_id: username,
                 username: username,
@@ -193,7 +193,7 @@ var ExternalUserPage = {
     }
 };
 
-function ExternalUserSubscription(data) {
+function ExternalUser(data) {
     var self = this;
     self.externalUserId = data.external_user_id;
     self.type = data.type;
@@ -248,7 +248,7 @@ var ExternalUserManager = {
         if (UserManager.isLoggedIn()) {
             $.getJSON('/me/external_user_subscriptions', function(data) {
                 $.each(data, function(i, subscription) {
-                    self.subscriptions.push(new ExternalUserSubscription(subscription));
+                    self.subscriptions.push(new ExternalUser(subscription));
                 });
                 self.updateMenu();
             });

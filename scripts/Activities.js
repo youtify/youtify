@@ -100,7 +100,7 @@ var Activities = {
 
             case 'external_subscribe':
                 actor = new User(JSON.parse(activity.actor));
-                externalUser = new ExternalUserSubscription(JSON.parse(activity.target));
+                externalUser = new ExternalUser(JSON.parse(activity.target));
                 if (actor.id === UserManager.currentUser.id) {
                     $div = Activities.getOutgoingExternalSubscribeActivity(externalUser);
                 } else {
