@@ -51,6 +51,20 @@ var ExternalUserPage = {
         this.$view.find('.button.unsubscribe').hide();
     },
 
+    updateInfoBar: function() {
+        if (UserManager.isLoggedIn()) {
+            if (ExternalUserManager.isSubscription(this.externalUser)) {
+                this.$unsubscribeButton.show();
+            } else {
+                this.$subscribeButton.show();
+            }
+        }
+        this.$view.find('h1').text(this.externalUser.displayName);
+        this.$view.find('.source').text(this.externalUser.linkLabel).attr('href', this.externalUser.linkUrl);
+        this.$view.find('.img').append($('<img src="' + this.externalUser.avatarUrl + '"/>'));
+        this.$view.find('.description').text(Utils.shorten(this.externalUser.description, 500));
+    },
+
     loadFromExternalUrl: function(externalUrl) {
         var matches;
         var type;
@@ -74,11 +88,11 @@ var ExternalUserPage = {
     load: function(type, username) {
         switch (type) {
             case 'soundcloud':
-            this.loadSoundCloudUser(username);
+            this.loadSoundCloudUser(username, self.showUser);
             break;
 
             case 'youtube':
-            this.loadYouTubeUser(username);
+            this.loadYouTubeUser(username, self.showUser);
             break;
 
             default:
@@ -100,21 +114,12 @@ var ExternalUserPage = {
                     external_user_id: String(userData.id),
                     username: username,
                     display_name: userData.username,
-                    avatar_url: userData.avatar_url
+                    avatar_url: userData.avatar_url,
+                    linkLabel: TranslationSystem.get('View on SoundCloud'),
+                    linkUrl: userData.permalink_url,
+                    description: userData.description
                 });
-
-                if (UserManager.isLoggedIn()) {
-                    if (ExternalUserManager.isSubscription(self.externalUser)) {
-                        self.$unsubscribeButton.show();
-                    } else {
-                        self.$subscribeButton.show();
-                    }
-                }
-
-                self.$view.find('h1').text(userData.username);
-                self.$view.find('.source').text(TranslationSystem.get('View on SoundCloud')).attr('href', userData.permalink_url);
-                self.$view.find('.img').append($('<img src="' + userData.avatar_url + '"/>'));
-                self.$view.find('.description').text(Utils.shorten(userData.description, 500));
+                self.updateInfoBar();
             });
             
             var key = 'soundcloud' + username;
@@ -152,21 +157,12 @@ var ExternalUserPage = {
                 external_user_id: username,
                 username: username,
                 display_name: data.entry.author[0].name.$t,
-                avatar_url: data.entry.media$thumbnail.url
+                avatar_url: data.entry.media$thumbnail.url,
+                linkLabel: TranslationSystem.get('View on YouTube'),
+                linkUrl: 'http://www.youtube.com/user/' + username,
+                description: data.entry.summary.$t
             });
-
-            if (UserManager.isLoggedIn()) {
-                if (ExternalUserManager.isSubscription(self.externalUser)) {
-                    self.$unsubscribeButton.show();
-                } else {
-                    self.$subscribeButton.show();
-                }
-            }
-
-            self.$view.find('h1').text(data.entry.author[0].name.$t);
-            self.$view.find('.source').text(TranslationSystem.get('View on YouTube')).attr('href', 'http://www.youtube.com/user/' + username);
-            self.$view.find('.img').append($('<img src="' + self.externalUser.avatarUrl + '"/>'));
-            self.$view.find('.description').text(data.entry.summary.$t);
+            self.updateInfoBar();
         });
 
         var key = 'youtube' + username;
@@ -201,6 +197,11 @@ function ExternalUser(data) {
     self.displayName = data.display_name;
     self.avatarUrl = data.avatar_url;
     self.menuItem = null;
+
+    // Properties used for the info bar
+    self.linkLabel = data.linkLabel;
+    self.linkUrl = data.linkUrl;
+    self.description = data.description;
 
     self.getMetaData = function() {
         return {
