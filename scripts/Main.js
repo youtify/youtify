@@ -88,7 +88,7 @@ $(document).ready(function() {
         EchoNest.init();
         BottomPanel.init();
         ExternalUserPage.init();
-        ExternalUserSubscriptions.init();
+        ExternalUserManager.init();
         URIManager.init();
         FullScreen.init();
     });

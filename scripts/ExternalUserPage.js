@@ -11,13 +11,13 @@ var ExternalUserPage = {
         self.$unsubscribeButton = self.$view.find('.button.unsubscribe');
 
         self.$subscribeButton.click(function() {
-            ExternalUserSubscriptions.subscribe(self.externalUser, function() {
+            ExternalUserManager.subscribe(self.externalUser, function() {
                 self.$subscribeButton.hide().next().show();
             });
         });
 
         self.$unsubscribeButton.click(function() {
-            ExternalUserSubscriptions.unsubscribe(self.externalUser, function() {
+            ExternalUserManager.unsubscribe(self.externalUser, function() {
                 self.$unsubscribeButton.hide().prev().show();
             });
         });
@@ -104,7 +104,7 @@ var ExternalUserPage = {
                 });
 
                 if (UserManager.isLoggedIn()) {
-                    if (ExternalUserSubscriptions.isSubscription(self.externalUser)) {
+                    if (ExternalUserManager.isSubscription(self.externalUser)) {
                         self.$unsubscribeButton.show();
                     } else {
                         self.$subscribeButton.show();
@@ -156,7 +156,7 @@ var ExternalUserPage = {
             });
 
             if (UserManager.isLoggedIn()) {
-                if (ExternalUserSubscriptions.isSubscription(self.externalUser)) {
+                if (ExternalUserManager.isSubscription(self.externalUser)) {
                     self.$unsubscribeButton.show();
                 } else {
                     self.$subscribeButton.show();
@@ -240,7 +240,7 @@ function ExternalUserSubscription(data) {
     };
 }
 
-var ExternalUserSubscriptions = {
+var ExternalUserManager = {
     subscriptions: [],
 
     init: function() {
