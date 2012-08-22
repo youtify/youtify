@@ -60,13 +60,13 @@ var URIManager = {
             [
                 '/soundcloud/(.*)',
                 function(matches) {
-                    ExternalUserPage.loadSoundCloudUser(matches[1]);
+                    ExternalUserPage.load('soundcloud', matches[1]);
                 }
             ],
             [
                 '/youtube/(.*)',
                 function(matches) {
-                    ExternalUserPage.loadYouTubeUser(matches[1]);
+                    ExternalUserPage.load('youtube', matches[1]);
                 }
             ],
             [

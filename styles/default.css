@@ -2009,16 +2009,13 @@ body.fullscreen #bottom {
 /** MISC
  ****************************************************************************/
 
-#right .external-profile .img {
+#right .external-profile img {
     display: inline-block;
     vertical-align: top;
     float: left;
-    width: 96px;
-    height: 96px;
-}
-#right .external-profile .img img {
     width: 88px;
     height: 88px;
+    margin: 0 10px 10px 0;
 }
 
 #right .external-profile .info {

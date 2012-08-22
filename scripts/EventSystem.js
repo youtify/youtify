@@ -3,6 +3,7 @@ var EventSystem = {
     },
 
     listeners: {
+        'external_user_subscriptions_loaded': [],
         'language_changed': [],
         'song_almost_done_playing': [],
         'flattr_click_made': [],
