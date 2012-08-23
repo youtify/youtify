@@ -13,7 +13,6 @@ var VideoInfo = {
                     break;
             }
         });
-        EventSystem.addEventListener('video_info_fetched', VideoInfo.loadLinko);
         EventSystem.addEventListener('video_info_fetched', function(videoInfo) {
             switch (videoInfo.video.type) {
                 case 'youtube':
@@ -132,21 +131,5 @@ var VideoInfo = {
 
             EventSystem.callEventListeners('video_info_fetched', info);
 		});
-	},
-
-    loadLinko: function(info) {
-        var artist = Utils.extractArtist(info.title);
-
-        if (artist) {
-            var url = 'http://linko.fruktsallad.net/artist/' + (artist.replace(/ /g, '_')) + '.json?callback=?';
-            $.getJSON(url, {}, function(data) {
-                if (!data || !data.links || !data.hasOwnProperty('artist_name')) {
-                    return;
-                }
-                if (data.links.hasOwnProperty('Twitter')) {
-                    EventSystem.callEventListeners('artist_twitter_account_found', data.links.Twitter);
-                }
-            });
-        }
-    }
+	}
 };
