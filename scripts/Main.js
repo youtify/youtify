@@ -80,7 +80,7 @@ $(document).ready(function() {
         player.init();
         Timeline.init();
         InfoPopup.init();
-        VideoInfo.init();
+        InfoFetcher.init();
         Recommendations.init();
         FlattrFinder.init();
         AutoFlattrer.init();

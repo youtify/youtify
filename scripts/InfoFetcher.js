@@ -1,22 +1,23 @@
-var VideoInfo = {
+var InfoFetcher = {
     init: function() {
+        var self = this;
         EventSystem.addEventListener('video_started_playing_successfully', function(video) {
             switch (video.type) {
                 case 'youtube':
-                    VideoInfo.loadYouTubeVideoInfo(video);
+                    self.loadYouTubeVideoInfo(video);
                     break;
                 case 'soundcloud':
-                    VideoInfo.loadSoundCloudTrackInfo(video);
+                    self.loadSoundCloudTrackInfo(video);
                     break;
                 case 'officialfm':
-                    VideoInfo.loadOfficialFmTrackInfo(video);
+                    self.loadOfficialFmTrackInfo(video);
                     break;
             }
         });
         EventSystem.addEventListener('video_info_fetched', function(videoInfo) {
             switch (videoInfo.video.type) {
                 case 'youtube':
-                    VideoInfo.loadYouTubeUploader(videoInfo);
+                    self.loadYouTubeUploader(videoInfo);
                     break;
                 case 'soundcloud':
                     break;
