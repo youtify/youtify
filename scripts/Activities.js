@@ -129,14 +129,17 @@ var Activities = {
     },
 
     loadNotificationsPopup: function() {
-        var $ul = $('#activities-popup ul');
+        var $popup = $('#activities-popup');
+        var $ul = $popup.find('ul');
         $ul.html('');
-        LoadingBar.show();
+
+        $popup.addClass('loading');
+
         $.get('/api/users/' + UserManager.currentUser.id + '/activities?type=incoming&verbs=follow,subscribe&count=50', function(data) {
+            $popup.removeClass('loading');
             $.each(data, function(i, activity) {
                 $ul.append(Activities.getActivityElem(activity));
             });
-            LoadingBar.hide();
         });
     }
 };

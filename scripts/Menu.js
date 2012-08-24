@@ -124,6 +124,14 @@ function MenuItemGroup($view) {
         self.menuItems = [];
         self.$ul.html('');
     };
+
+    self.showLoadingAnimation = function() {
+        self.$view.find('.loading-animation').show();
+    };
+
+    self.hideLoadingAnimation = function() {
+        self.$view.find('.loading-animation').hide();
+    };
 }
 
 /**
