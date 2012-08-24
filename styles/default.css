@@ -906,7 +906,7 @@ input[type=search]::-webkit-search-results-decoration {
     font-style: italic;
     line-height: 20px;
 }
-#right .profile .information-container .flattr-user-name {
+#right .profile .information-container .flattr .username {
     padding-left: 20px;
     background: url(/images/flattr_16.png) no-repeat center left;
     line-height: 28px;
