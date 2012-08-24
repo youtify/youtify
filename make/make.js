@@ -53,7 +53,7 @@ function runJSLint(filenames) {
         if (!jslint(data, JSLINT_OPTIONS)) {
             throw {
                 filename: filename,
-                report: jslint.report()
+                report: jslint.data()
             }
         }
         files.push({
@@ -95,7 +95,10 @@ var filenames = extractScriptFileNames();
 try {
     var files = runJSLint(filenames);
 } catch (e) {
-    console.log(e.report);
+    e.report.errors.forEach(function(e) {
+        console.log(e.raw.replace('{a}', e.a).replace('{b}', e.b).replace('{c}', e.c).replace('{d}', e.d));
+        console.log('Line ' + e.line + ', character', e.character, e.evidence);
+    });
     process.exit(1);
 }
 var mergedFile = mergeFiles(files);
