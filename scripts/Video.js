@@ -195,18 +195,7 @@ function Video(args) {
     };
 
     this.goToUploader = function() {
-        switch (self.type) {
-            case 'soundcloud':
-            ExternalUserPage.loadSoundCloudUser(self.uploaderUsername);
-            break;
-
-            case 'youtube':
-            ExternalUserPage.loadYouTubeUser(self.uploaderUsername);
-            break;
-
-            default:
-            throw 'Unknown type for external users: ' + self.type;
-        }
+        ExternalUserPage.load(self.type, self.uploaderUsername);
     };
     
     /**
