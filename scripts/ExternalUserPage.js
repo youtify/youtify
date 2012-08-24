@@ -197,7 +197,7 @@ function ExternalUser(data) {
     };
 
     self.videoPlayCallback = function() {
-        self.getMenuItem().setAsPlaying();
+        ExternalUserManager.setMenuItemAsPlayingFor(self);
     };
 
     self.loadSoundCloudUser = function(callback) {
@@ -271,6 +271,15 @@ var ExternalUserManager = {
         group.clear();
         $.each(self.subscriptions, function(i, subscription) {
             group.addMenuItem(subscription.getMenuItem());
+        });
+    },
+
+    setMenuItemAsPlayingFor: function(externalUser) {
+        $.each(this.subscriptions, function(i, subscription) {
+            if (externalUser.equals(subscription)) {
+                subscription.getMenuItem().setAsPlaying();
+                return;
+            }
         });
     },
 
