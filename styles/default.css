@@ -1098,7 +1098,7 @@ body.fullscreen #bottom.on,
 }
 
 body.fullscreen #bottom {
-    bottom: -60px;
+    bottom: -70px;
     -webkit-transition: bottom 500ms ease-in-out;
     -moz-transition: bottom 500ms ease-in-out;
     -ms-transition: bottom 500ms ease-in-out;
@@ -1936,6 +1936,12 @@ body.fullscreen #bottom {
 
 /** MISC
  ****************************************************************************/
+
+/* Enable mousemove over the youtube player iframe.
+   http://caniuse.com/#search=pointer-events */
+#youtube {
+    pointer-events: none;
+}
 
 #loading {
     display: none;
