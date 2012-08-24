@@ -48,7 +48,7 @@ var UserManager = {
 
         UserManager.tabs = new Tabs(UserManager.$rightView.find('.tab-area'), {
             'profile-followers': UserManager.loadFollowers,
-            'profile-followings': UserManager.loadFollowings,
+            'profile-followings': UserManager.loadFollowings
         });
     },
 
