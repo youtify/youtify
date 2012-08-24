@@ -296,6 +296,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         }
 
         var newVideo = video.clone();
+        newVideo.parent = this;
         newVideo.onPlayCallback = self.setAsPlaying;
         self.videos.push(newVideo);
 
@@ -409,6 +410,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     for (i = 0; i < videos.length; i+= 1) {
         if (videos[i]) {
             var video = new Video({
+                parent: this,
                 videoId: videos[i].videoId,
                 mbid: videos[i].mbid,
                 title: videos[i].title,

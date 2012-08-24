@@ -16,6 +16,9 @@ var BottomPanel = {
             }
             return false;
         });
+        $('#bottom .info .title').click(function() {
+            Utils.showWhatIsCurrentlyPlaying();
+        });
 
         // CONTROLS
         $('#bottom .controls .playpause').click(player.playPause);

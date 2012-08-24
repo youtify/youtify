@@ -14,6 +14,7 @@ function Video(args) {
     this.listView = null;
     this.uploaderUsername = args.uploaderUsername || null;
     this.artworkURL = args.artworkURL || null;
+    this.parent = args.parent || null;
     
     this.clone = function() {
         return new Video({
@@ -30,6 +31,10 @@ function Video(args) {
 
     this.getUrl = function() {
         return location.protocol + '//' + location.host + '/tracks/' + this.type + '/' + this.videoId;
+    };
+
+    this.getParent = function() {
+        return this.parent;
     };
 
     this.getExternalLink = function() {

@@ -21,6 +21,9 @@ var Queue = {
         });
         Menu.getGroup('misc').addMenuItem(this.menuItem);
     },
+    getMenuItem: function() {
+        return this.menuItem;
+    },
     addManual: function(video) {
         Queue.manualList.push(video);  
         Queue.updateView();

@@ -197,6 +197,9 @@ function ExternalUser(data) {
     };
 
     self.videoPlayCallback = function() {
+        if (Menu.getPlayingMenuItem() !== self.getMenuItem()) {
+            Menu.setAsNotPlaying();
+        }
         ExternalUserManager.setMenuItemAsPlayingFor(self);
     };
 
@@ -214,6 +217,7 @@ function ExternalUser(data) {
                 $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + "/tracks.json", {client_id: SOUNDCLOUD_API_KEY}, function(tracksData) {
                     var results = Search.getVideosFromSoundCloudSearchData(tracksData);
                     $.each(results, function(i, video) {
+                        video.parent = self;
                         video.onPlayCallback = self.videoPlayCallback;
                         video.createListView().appendTo(self.$tracklist);
                     });
@@ -239,6 +243,7 @@ function ExternalUser(data) {
                 if (data.feed.entry !== undefined) {
                     var results = Search.getVideosFromYouTubeSearchData(data);
                     $.each(results, function(i, video) {
+                        video.parent = self;
                         video.onPlayCallback = self.videoPlayCallback;
                         video.createListView().appendTo(self.$tracklist);
                     });

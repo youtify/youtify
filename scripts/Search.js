@@ -253,11 +253,16 @@ var Search = {
                 break;
         }
     },
+    onPlayCallback: function() {
+        Menu.setAsNotPlaying();
+    },
     getVideosFromSoundCloudSearchData: function(data) {
         ret = [];
         $.each(data, function(i, track) {
             var buyLinks = track.purchase_url ? [track.purchase_url] : null;
             ret.push(new Video({
+                parent: 'search',
+                onPlayCallback: Search.onPlayCallback,
                 videoId: track.id,
                 title: track.title,
                 duration: track.duration,
@@ -274,6 +279,8 @@ var Search = {
         $.each(data, function(i, track) {
         var buyLinks = track.purchase_url ? [track.buy_url] : null;
             ret.push(new Video({
+                parent: 'search',
+                onPlayCallback: Search.onPlayCallback,
                 videoId: track.id,
                 title: track.title,
                 duration: track.length * 1000,
@@ -305,6 +312,8 @@ var Search = {
                 videoId = item.media$group.yt$videoid.$t;
             }
             var video = new Video({
+                parent: 'search',
+                onPlayCallback: Search.onPlayCallback,
                 videoId: videoId,
                 title: title,
                 uploaderUsername: item.author[0].name.$t,

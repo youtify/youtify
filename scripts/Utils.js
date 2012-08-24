@@ -160,6 +160,20 @@ var Utils = {
         modalBox.show();
         return modalBox;
     },
+
+    showWhatIsCurrentlyPlaying: function() {
+        if (Menu.getPlayingMenuItem()) {
+            Menu.getPlayingMenuItem().select();
+        } else if (player.getCurrentVideo().getParent() === 'search') {
+            Search.show();
+        } else if (player.getCurrentVideo().getParent() instanceof Playlist // "unpinned" Playlist or ExternalUser?
+                || player.getCurrentVideo().getParent() instanceof ExternalUser) {
+            player.getCurrentVideo().getParent().goTo();
+        } else { // Track visited from URL?
+            Queue.getMenuItem().select();
+        }
+        player.getCurrentVideo().scrollTo();
+    },
     
     openLink: function(url) {
         window.open(url);

@@ -24,6 +24,16 @@ var Menu = {
         $('#left .playlists .new input').blur(this.newPlaylistNameBlur);
     },
 
+    getPlayingMenuItem: function() {
+        return this.playingMenuItem;
+    },
+
+    setAsNotPlaying: function() {
+        if (this.playingMenuItem) {
+            this.playingMenuItem.setAsNotPlaying();
+        }
+    },
+
     deSelect: function() {
         if (this.selectedMenuItem) {
             this.selectedMenuItem.deSelect();
