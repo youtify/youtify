@@ -2108,18 +2108,24 @@ body.fullscreen #bottom {
 .home .content .wide {
     margin-bottom: 10px;
 }
-.home .content .playlists,
 .home .content .spotlight {
     border: none;
-    min-height: 264px;
-    max-height: 264px;
+    min-height: 254px;
+    max-height: 254px;
     min-width: 100%;
     overflow: hidden;
 }
 .home .content .recommendations {
     border: none;
-    min-height: 176px;
-    max-height: 176px;
+    min-height: 127px;
+    max-height: 127px;
+    min-width: 100%;
+    overflow: hidden;
+}
+.home .content .playlists {
+    border: none;
+    min-height: 264px;
+    max-height: 264px;
     min-width: 100%;
     overflow: hidden;
 }
@@ -2134,7 +2140,6 @@ body.fullscreen #bottom {
     width: 88px;
     height: 88px;
     float: left;
-    overflow: hidden;
     cursor: pointer;
     background-color: #FFF;
     background-repeat: no-repeat;
@@ -2143,7 +2148,7 @@ body.fullscreen #bottom {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-    
+    margin: 0 5px 39px 5px;
     opacity: 0;
     -moz-transition: opacity 200ms ease-in-out;
     -webkit-transition: opacity 200ms ease-in-out;
@@ -2156,13 +2161,13 @@ body.fullscreen #bottom {
     width: 88px;
     text-align: center;
     font-size: 12px;
-    background: rgba(255,255,255,1);
     color: purple;
     overflow: hidden;
     cursor: pointer;
     position: absolute;
     left: 0;
-    bottom: -50px;
+    bottom: -34px;
+    height: 34px;
     -moz-transition: all 200ms ease-in-out;
     -webkit-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
@@ -2176,10 +2181,6 @@ body.fullscreen #bottom {
     height: 88px;
 }
 
-.artist.suggestion:hover .name,
-.home .content .spotlight .inner .item:hover .title {
-    bottom: 0px;
-}
 #right .home .content .playlist-box {
     display: block;
     margin: 0 10px 10px 0;
