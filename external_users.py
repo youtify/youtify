@@ -13,7 +13,7 @@ class TopExternalUsers(webapp.RequestHandler):
 
     def get(self, max):
         """Gets a list of external users"""
-        users = ExternalUser.all().fetch(int(max));
+        users = ExternalUser.all().order('-nr_of_subscribers').fetch(int(max));
         json = []
         for user in users:
             json.append(get_external_user_subscription_struct(user))
@@ -61,6 +61,7 @@ class SubscribersHandler(webapp.RequestHandler):
         youtify_user_model.save()
         
         external_user_model.subscribers.append(youtify_user_model.key())
+        external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
         external_user_model.save()
 
         create_external_subscribe_activity(youtify_user_model, external_user_model)
@@ -81,6 +82,7 @@ class SubscribersHandler(webapp.RequestHandler):
         youtify_user_model.save()
         
         external_user_model.subscribers.remove(youtify_user_model.key())
+        external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
         external_user_model.save()
         
         self.response.headers['Content-Type'] = 'text/plain'

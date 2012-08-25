@@ -13,6 +13,7 @@ class ExternalUser(db.Model):
     username = db.StringProperty()
     avatar_url = db.StringProperty()
     subscribers = db.ListProperty(db.Key)
+    nr_of_subscribers = db.IntegerProperty(default=0)
 
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
