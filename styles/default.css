@@ -1094,11 +1094,11 @@ body.fullscreen #bottom.on,
     background:-o-linear-gradient(bottom, #333 0%, #999 100%);
     background:linear-gradient(bottom, #333 0%, #999 100%);
     
-    -webkit-transition: bottom 500ms ease-in-out;
-    -moz-transition: bottom 500ms ease-in-out;
-    -ms-transition: bottom 500ms ease-in-out;
-    -o-transition: bottom 500ms ease-in-out;
-    transition: bottom 500ms ease-in-out;
+    -webkit-transition: bottom 200ms ease-in-out;
+    -moz-transition: bottom 200ms ease-in-out;
+    -ms-transition: bottom 200ms ease-in-out;
+    -o-transition: bottom 200ms ease-in-out;
+    transition: bottom 200ms ease-in-out;
 }
 
 body.fullscreen #bottom {
