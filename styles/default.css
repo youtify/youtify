@@ -1074,6 +1074,7 @@ input[type=search]::-webkit-search-results-decoration {
 
 /** BOTTOM
  ****************************************************************************/
+body.fullscreen #bottom:hover,
 body.fullscreen #bottom.on,
 #bottom {
     position: absolute;
