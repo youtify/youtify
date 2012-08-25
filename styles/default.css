@@ -2105,30 +2105,10 @@ body.fullscreen #bottom {
     font-weight: bold;
     margin-bottom: 5px;
 }
-.home .content .top {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 5px;
-    position: relative;
-}
 .home .content .wide {
     margin-bottom: 10px;
 }
-.home .content .float {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 300px;
-    height: auto;
-    padding: 5px;
-    position: relative;
-    float: left;
-    display: none;
-}
-.home .content .recommendations,
-.home .content .toplist,
+.home .content .playlists,
 .home .content .spotlight {
     border: none;
     min-height: 264px;
@@ -2145,8 +2125,7 @@ body.fullscreen #bottom {
 }
 .home .content .inner {
     display: block;
-    min-width: 528px;
-    width: 115%;
+    width: 100%;
     margin: 0 auto;
 }
 .artist.suggestion,
