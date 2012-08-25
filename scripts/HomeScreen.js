@@ -53,7 +53,7 @@ var HomeScreen = {
                 if (artist.name) {
                     var artistSuggestion = new ArtistSuggestion({
                         name: artist.name,
-                        imageUrl: artist.image[1]['#text'],
+                        imageUrl: artist.image[2]['#text'],
                         mbid: artist.mbid
                     });
                     self.$recommendations.append(artistSuggestion.getSmallView()).show();

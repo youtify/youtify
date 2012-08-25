@@ -132,10 +132,15 @@ function ArtistSuggestion(args) {
     this.imageUrl = args.imageUrl;
 
     this.getSmallView = function() {
-        var self = this;
-        var $view = $('<div class="suggestion artist"></div>');
-
-        $('<img/>').attr('src', this.imageUrl).appendTo($view);
+        var self = this,
+            $view = $('<div class="suggestion artist"></div>'),
+            image = new Image();
+        image.onload = function() {
+            $view.css({'opacity': '1'});
+        };
+        image.src = this.imageUrl;
+        
+        $view.css({'background-image': 'url('+ this.imageUrl + ')'});
         $('<span class="link name"></span>').text(this.name).appendTo($view);
 
         $view.click(function() {

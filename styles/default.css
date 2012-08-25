@@ -2114,7 +2114,6 @@ body.fullscreen #bottom {
     position: relative;
 }
 .home .content .wide {
-    height: 290px;
     margin-bottom: 10px;
 }
 .home .content .float {
@@ -2137,12 +2136,20 @@ body.fullscreen #bottom {
     min-width: 100%;
     overflow: hidden;
 }
+.home .content .recommendations {
+    border: none;
+    min-height: 176px;
+    max-height: 176px;
+    min-width: 100%;
+    overflow: hidden;
+}
 .home .content .inner {
     display: block;
     min-width: 528px;
     width: 115%;
     margin: 0 auto;
 }
+.artist.suggestion,
 .home .content .spotlight .inner .item {
     position: relative;
     width: 88px;
@@ -2165,6 +2172,7 @@ body.fullscreen #bottom {
     -ms-transition: opacity 200ms ease-in-out;
     transition: opacity 200ms ease-in-out;
 }
+.artist.suggestion .name,
 .home .content .spotlight .inner .item .title {
     width: 88px;
     text-align: center;
@@ -2174,6 +2182,7 @@ body.fullscreen #bottom {
     overflow: hidden;
     cursor: pointer;
     position: absolute;
+    left: 0;
     bottom: -50px;
     -moz-transition: all 200ms ease-in-out;
     -webkit-transition: all 200ms ease-in-out;
@@ -2183,6 +2192,12 @@ body.fullscreen #bottom {
     word-break: hyphenate;
     word-wrap: break-word;
 }
+.artist.suggestion img {
+    width: 88px;
+    height: 88px;
+}
+
+.artist.suggestion:hover .name,
 .home .content .spotlight .inner .item:hover .title {
     bottom: 0px;
 }
@@ -2191,21 +2206,6 @@ body.fullscreen #bottom {
     margin: 0 10px 10px 0;
     min-height: 0;
     float: left;
-}
-
-/** RECOMMENDATIONS
- ****************************************************************************/
-
-.artist.suggestion img {
-    width: 50px;
-}
-.artist.suggestion {
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-.artist.suggestion .name {
-    vertical-align: top;
-    margin-left: 5px;
 }
 
 /** LOADING ANIMATION
