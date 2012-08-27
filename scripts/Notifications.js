@@ -37,6 +37,10 @@ var Notifications = {
                     'Youtify',
                     message);
                 popup.show();
+                popup.onclick = function() {
+                    window.focus();
+                    popup.cancel();
+                };
                 setTimeout(function(){ popup.cancel(); }, settings.announceTimeout);
             } catch(err) {
                 console.log(err.message);
@@ -44,11 +48,11 @@ var Notifications = {
         };
 		if (window.webkitNotifications) {
 			if (window.webkitNotifications.checkPermission() === 1) { // 0=OK, 1=Not Allowed, 2=Denied
-				window.webkitNotifications.requestPermission(function() { 
-					announceFunction(message); 
+				window.webkitNotifications.requestPermission(function() {
+                    announceFunction(message);
 				});
-			} else { 
-				announceFunction(message); 
+			} else {
+                announceFunction(message);
 			}
 		}
 	}
