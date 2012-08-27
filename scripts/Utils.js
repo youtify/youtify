@@ -103,16 +103,6 @@ var Utils = {
         return ret;
     },
 
-    extractArtist: function(title) {
-        if (title) {
-            var parts = title.split('-');
-            if (parts.length > 1) {
-                return $.trim(parts[0]);
-            }
-        }
-        return false;
-    },
-
     deSelectSelectedVideos: function() {
         var i;
         for (i = 0; i < selectedVideoElements.length; i += 1) {
