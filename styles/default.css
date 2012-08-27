@@ -1648,6 +1648,7 @@ body.fullscreen #bottom {
     background-color: rgb(62, 126, 221);
 }
 #profile-popup .link {
+    display: block;
     color: inherit;
 }
 
