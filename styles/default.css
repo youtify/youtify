@@ -1645,18 +1645,26 @@ body.fullscreen #bottom {
  ****************************************************************************/
 
 #activities-popup {
+    width: 380px;
+    padding: 5px;
 }
 #activities-popup .activity {
-    margin-bottom: 10px;
+    min-height: 2em;
+    line-height: 25px;
+    padding: 5px 5px 0 5px;
+    clear: both;
+}
+#activities-popup .activity:nth-of-type(even){
+    background-color: #EEE;
 }
 #activities-popup .activity .user {
     display: inline-block;
 }
 #activities-popup .activity:last-child {
-    margin-bottom: 0;
 }
 #activities-popup .activity .timestamp {
-    font-weight: bold;
+    float: right;
+    font-style: italic;
 }
 #activities-popup .loading-animation {
     display: none;
