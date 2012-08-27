@@ -725,6 +725,8 @@ input[type=search]::-webkit-search-results-decoration {
     display: table-cell;
     width: 150px;
 }
+#right .minimized .uploader ,
+#right .minimized tr .space:nth-child(4),
 #right .playlists .tracklist .uploader ,
 #right .playlists .tracklist tr .space:nth-child(4),
 #right .external-profile .tracklist .uploader ,
