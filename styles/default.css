@@ -429,6 +429,13 @@ input[type=search]::-webkit-search-results-decoration {
     position: relative;
     overflow: hidden;
 }
+#left .menu .title {
+    display: block;
+    overflow: hidden;
+}
+#left .menu .playing .title {
+    max-width: 235px;
+}
 #left .menu .home:before {
     content: 'ï';
     font-family: YoutifyRegular;
