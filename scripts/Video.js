@@ -76,6 +76,9 @@ function Video(args) {
     };
     
     this.scrollTo = function() {
+        if (this.listView === null) {
+            return;
+        }
         var $container = this.listView.parents('#right > div'),
             viewTop = 0,
             containerTop = 0;
