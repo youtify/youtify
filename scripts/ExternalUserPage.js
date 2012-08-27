@@ -129,7 +129,7 @@ function ExternalUser(data) {
         }
 
         $recommendations.click(function() {
-            Recommendations.findSimilarArtists(self.externalUser);
+            Recommendations.findSimilarArtists(self);
         });
 
         self.$info.append($img);
