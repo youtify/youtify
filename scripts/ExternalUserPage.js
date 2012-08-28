@@ -129,7 +129,8 @@ function ExternalUser(data) {
         }
 
         $recommendations.click(function() {
-            Recommendations.findSimilarArtists(self);
+            Recommendations.loadSimilarArtistsPopup(self);
+            $(this).arrowPopup('#similar-artists-popup');
         });
 
         self.$info.append($img);

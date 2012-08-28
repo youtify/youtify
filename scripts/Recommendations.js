@@ -1,7 +1,13 @@
 var Recommendations = {
     $rightView: null,
+    $popup: null,
+    $popupContent: null,
+    $popupLoadingAnimation: null,
     
     init: function() {
+        this.$popup = $('#similar-artists-popup');
+        this.$popupContent = this.$popup.find('.content');
+        this.$popupLoadingAnimation = this.$popup.find('.loading-animation');
         this.$rightView = $('#right > .recommendations');
         this.$tracklist = $('#right > .recommendations .tracklist');
         this.$artistList = $('#right > .recommendations .artists');
@@ -85,8 +91,9 @@ var Recommendations = {
         self.show();
     },
 
-    findSimilarArtistsFromName: function(name) {
+    loadSimilarArtistsPopup: function(externalUser) {
         var self = this;
+        var name = externalUser.displayName;
         var url = "http://ws.audioscrobbler.com/2.0?callback=?";
         var params = {
             method: 'artist.getsimilar',
@@ -96,11 +103,11 @@ var Recommendations = {
             api_key: LASTFM_API_KEY
         };
 
-        self.reset();
+        self.$popupContent.html('');
+        self.$popupLoadingAnimation.show();
 
-        LoadingBar.show();
         $.getJSON(url, params, function(data) {
-            LoadingBar.hide();
+            self.$popup.find('.loading-animation').hide();
             if (!data.similarartists || typeof(data.similarartists.artist) !== "object") {
                 alert('Could not find any similar artists to ' + name);
                 return;
@@ -112,17 +119,10 @@ var Recommendations = {
                         imageUrl: artist.image[1]['#text'],
                         mbid: artist.mbid
                     });
-                    self.$artistList.append(artistSuggestion.getSmallView());
+                    self.$popupContent.append(artistSuggestion.getSmallView());
                 }
             });
         });
-
-        self.$artistList.show();
-        self.show();
-    },
-
-    findSimilarArtists: function(externalUser) {
-        return this.findSimilarArtistsFromName(externalUser.displayName);
     }
 };
 
@@ -144,6 +144,7 @@ function ArtistSuggestion(args) {
         $('<span class="link name"></span>').text(this.name).appendTo($view);
 
         $view.click(function() {
+            Utils.closeAnyOpenArrowPopup();
             self.goTo();
         });
 

@@ -1630,8 +1630,29 @@ body.fullscreen #bottom {
     margin-bottom: 5px;
 }
 
+/** SIMILAR ARTISTS POPUP
+ ****************************************************************************/
+
+#similar-artists-popup {
+    max-height: 300px;
+    overflow: scroll;
+}
+#similar-artists-popup .suggestion {
+    background-repeat: no-repeat;
+    background-size: 40px;
+    margin-bottom: 10px;
+}
+#similar-artists-popup .suggestion .name {
+    /* Make sure this elem takes up the whole width/height, so that the whole
+     * suggestion box is clickable. */
+    display: block;
+    padding-left: 45px;
+    height: 40px;
+}
+
 /** PROFILE POPUP
  ****************************************************************************/
+
 #profile-popup {
     padding: 5px;
 }
@@ -2156,7 +2177,7 @@ body.fullscreen #bottom {
     width: 100%;
     margin: 0 auto;
 }
-.artist.suggestion,
+#right .artist.suggestion,
 .home .content .spotlight .inner .item {
     position: relative;
     width: 88px;
@@ -2178,7 +2199,7 @@ body.fullscreen #bottom {
     -ms-transition: opacity 200ms ease-in-out;
     transition: opacity 200ms ease-in-out;
 }
-.artist.suggestion .name,
+#right .artist.suggestion .name,
 .home .content .spotlight .inner .item .title {
     width: 88px;
     text-align: center;
@@ -2198,7 +2219,7 @@ body.fullscreen #bottom {
     word-break: hyphenate;
     word-wrap: break-word;
 }
-.artist.suggestion img {
+#right .artist.suggestion img {
     width: 88px;
     height: 88px;
 }
