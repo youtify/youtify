@@ -45,7 +45,7 @@ var Recommendations = {
         $.getJSON(url, params, function(data) {
             self.$popup.find('.loading-animation').hide();
             if (!data.similarartists || typeof(data.similarartists.artist) !== "object") {
-                alert('Could not find any similar artists to ' + name);
+                self.$popupContent.text(TranslationSystem.get('Could not find any similar artists to $artistName', {$artistName: name}));
                 return;
             }
             $.each(data.similarartists.artist, function(i, artist) {
