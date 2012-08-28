@@ -101,25 +101,21 @@ function PlayerManager() {
             BottomPanel.setTitleText('Loading...');
             
             /* Display the right player and init if uninitialized */
-            if (video.type === 'unresolved') {
-                self.findAndPlayAlternative(video);
-            } else {
-                for (i = 0; i < self.players.length; i+=1) {
-                    if (self.players[i].type === video.type) {
-                        /* Init the player and start playing the video on callback */
-                        if (self.players[i].initialized === false) {
-                            self.players[i].show();
-                            self.players[i].init(callback);
-                            return;
-                        }
-                        /* We found the right player! */
-                        self.currentPlayer = self.players[i];
-                        self.configurePlayer(self.currentPlayer);
-                        self.currentPlayer.show();
-                    } else {
-                        /* Hide other players */
-                        self.players[i].hide();
+            for (i = 0; i < self.players.length; i+=1) {
+                if (self.players[i].type === video.type) {
+                    /* Init the player and start playing the video on callback */
+                    if (self.players[i].initialized === false) {
+                        self.players[i].show();
+                        self.players[i].init(callback);
+                        return;
                     }
+                    /* We found the right player! */
+                    self.currentPlayer = self.players[i];
+                    self.configurePlayer(self.currentPlayer);
+                    self.currentPlayer.show();
+                } else {
+                    /* Hide other players */
+                    self.players[i].hide();
                 }
             }
             
