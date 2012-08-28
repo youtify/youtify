@@ -1,5 +1,4 @@
 var Recommendations = {
-    $rightView: null,
     $popup: null,
     $popupContent: null,
     $popupLoadingAnimation: null,
@@ -8,27 +7,13 @@ var Recommendations = {
         this.$popup = $('#similar-artists-popup');
         this.$popupContent = this.$popup.find('.content');
         this.$popupLoadingAnimation = this.$popup.find('.loading-animation');
-        this.$rightView = $('#right > .recommendations');
-        this.$tracklist = $('#right > .recommendations .tracklist');
-        this.$artistList = $('#right > .recommendations .artists');
     },
 
-    show: function() {
-        history.pushState(null, null, '/');
-        $('#right > div').hide();
-        Menu.deSelect();
-        this.$rightView.show();
-    },
-
-    reset: function() {
-        this.$tracklist.html('').hide();
-        this.$artistList.html('').hide();
-    },
-
+    /**
+     * Get recommended artists based on your scrobble data.
+     */
     findRecommendedArtists: function(callback) {
         var self = this;
-
-        self.reset();
 
         LoadingBar.show();
         $.getJSON('/lastfm/recommendations', {}, function(data) {
@@ -40,9 +25,6 @@ var Recommendations = {
                 console.log('Failed to load recommendations…');
             }
         });
-
-        self.$artistList.show();
-        self.show();
     },
 
     loadSimilarArtistsPopup: function(externalUser) {
