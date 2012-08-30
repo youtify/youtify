@@ -687,6 +687,7 @@ input[type=search]::-webkit-search-results-decoration {
     max-height: 15px;
     max-width: 40px;
     overflow: hidden;
+    cursor: pointer;
 }
 #right .tracklist .play:after {
     content: '{';
