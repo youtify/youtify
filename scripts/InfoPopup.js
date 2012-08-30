@@ -32,7 +32,7 @@ var InfoPopup = {
             if (args.description.length > 140) {
                 $('<a class="more" href="#"/>').text(TranslationSystem.get('More')).click(function() {
                     $description.text(args.description);
-                    $('#bottom .info .title').arrowPopup('#video-info-popup', 'down');
+                    $('#bottom .info .i').arrowPopup('#video-info-popup', 'down');
                 }).appendTo($description);
             }
             $description.appendTo($titleAndDescription);

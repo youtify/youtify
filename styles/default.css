@@ -1585,6 +1585,7 @@ body.fullscreen #bottom {
  ****************************************************************************/
 
 .popup {
+    max-height: 90%;
 	width: 270px;
 	padding: 10px;
 	position: absolute;
@@ -1592,6 +1593,9 @@ body.fullscreen #bottom {
     color: #333;
     z-index:200;
 	box-shadow: 0px 0px 20px #888;
+}
+.popup.no-overflow {
+    overflow: hidden;
 }
 .popup a,
 .popup .link {
@@ -1874,8 +1878,13 @@ body.fullscreen #bottom {
 #video-info-popup {
     height: auto;
     z-index: 9999;
+    word-break: hyphenate;
+    word-wrap: break-word;
 }
-#video-info-popup  .title-and-description {
+#video-info-popup.no-overflow {
+    overflow-y: scroll;
+}
+#video-info-popup .title-and-description {
     display: block;
     margin-top: 10px;
 }
@@ -1935,8 +1944,9 @@ body.fullscreen #bottom {
 
 #logo-popup {
     width: 500px;
-    max-height: 75%;
-    overflow-x: auto;
+    height: 75%;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 #logo-popup h1 {
