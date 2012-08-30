@@ -54,6 +54,12 @@ function PlayerManager() {
                 self.currentPlayer.fullScreenOn();
             }
         });
+        
+        $('#left .soundcloud, #left .officialfm').click(function() {
+            if (self.currentVideo) {
+                self.playPause();
+            }
+        }).dblclick(FullScreen.toggle);
     };
     
     /* Update the */
