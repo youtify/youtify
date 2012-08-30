@@ -84,6 +84,7 @@ class ApiMainHandler(webapp.RequestHandler):
             'languagesFromServer': [lang for lang in get_languages() if lang['enabled_on_site']],
             'device': youtify_user_model is not None and youtify_user_model.device,
             'user': youtify_user_struct,
+            'lastNotificationSeenTimestamp': youtify_user_model is not None and youtify_user_model.last_notification_seen_timestamp, 
             'myFollowers': my_followers_struct,
             'myFollowings': my_followings_struct,
             'settingsFromServer': settings_struct,

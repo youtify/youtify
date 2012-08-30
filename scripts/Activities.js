@@ -128,6 +128,10 @@ var Activities = {
         return $div;
     },
 
+    getNewNotifications: function(callback) {
+        $.get('/api/users/' + UserManager.currentUser.id + '/activities?type=incoming&verbs=follow,subscribe&count=50', callback);
+    },
+
     loadNotificationsPopup: function() {
         var $popup = $('#activities-popup');
         var $ul = $popup.find('ul');
@@ -135,8 +139,15 @@ var Activities = {
 
         $popup.addClass('loading');
 
-        $.get('/api/users/' + UserManager.currentUser.id + '/activities?type=incoming&verbs=follow,subscribe&count=50', function(data) {
+        this.getNewNotifications(function(data) {
             $popup.removeClass('loading');
+
+            $('#top .activities').removeClass('has-new');
+
+            if (data.length > 0 && data[0].timestamp > SyncManager.getLastNotificationSeenTimestamp()) {
+                SyncManager.setLastNotificationSeenTimestamp(data[0].timestamp);
+            }
+
             $.each(data, function(i, activity) {
                 $ul.append(Activities.getActivityElem(activity));
             });

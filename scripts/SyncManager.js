@@ -12,8 +12,20 @@ var SyncManager = {
     lastAction: null,
     deviceToken: null,
 
-    init: function(deviceToken) {
+    init: function(deviceToken, lastNotificationSeenTimestamp) {
         this.deviceToken = deviceToken;
+        this.lastNotificationSeenTimestamp = lastNotificationSeenTimestamp;
+        setInterval(this.checkForNewNotifications, 60 * 10 * 1000);
+    },
+
+    checkForNewNotifications: function() {
+        var self = this;
+        Activities.getNewNotifications(function(data) {
+            if (data.length > 0 && data[0].timestamp > self.lastNotificationSeenTimestamp) {
+                $('#top .activities').addClass('has-new');
+            }
+            console.log(data);
+        });
     },
 
     getDeviceToken: function() {
@@ -38,5 +50,14 @@ var SyncManager = {
                 }
             });
         });
+    },
+
+    setLastNotificationSeenTimestamp: function(lastNotificationSeenTimestamp) {
+        this.lastNotificationSeenTimestamp = lastNotificationSeenTimestamp;
+        $.post('/me/last-notification-seen-timestamp', {val:lastNotificationSeenTimestamp});
+    },
+
+    getLastNotificationSeenTimestamp: function() {
+        return this.lastNotificationSeenTimestamp;
     }
 };

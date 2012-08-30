@@ -221,9 +221,30 @@ class DeviceTokenHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
+class LastNotificationSeenTimestampHandler(webapp.RequestHandler):
+
+    def post(self):
+        user = get_current_youtify_user_model()
+        val = self.request.get('val')
+        json = {
+            'message': '',
+        }
+        if user:
+            if val > user.last_notification_seen_timestamp:
+                user.last_notification_seen_timestamp = val
+                user.save()
+                json['message'] = 'timestamp updated'
+            else:
+                json['message'] = 'newer timestamp already set'
+        else:
+            json['message'] = 'no user found'
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
 def main():
     application = webapp.WSGIApplication([
         ('/me', MeHandler),
+        ('/me/last-notification-seen-timestamp', LastNotificationSeenTimestampHandler),
         ('/me/external_user_subscriptions', ExternalUserSubscriptionsHandler),
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),

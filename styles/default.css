@@ -314,6 +314,9 @@ input[type=search]::-webkit-search-results-decoration {
     left: -17px;
     color: #333;
 }
+#top .activities.has-new .title {
+    color: purple;
+}
 #top .settings .counter {
     background: rgba(0, 124, 137, 0.4);
     color: white;

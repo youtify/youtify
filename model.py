@@ -36,6 +36,7 @@ class YoutifyUser(search.SearchableModel):
     tagline = db.StringProperty()
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
+    last_notification_seen_timestamp = db.StringProperty()
     external_user_subscriptions = db.ListProperty(db.Key)
     nr_of_followers = db.IntegerProperty(default=0)
     nr_of_followings = db.IntegerProperty(default=0)

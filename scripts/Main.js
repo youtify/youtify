@@ -58,7 +58,7 @@ $(document).ready(function() {
         myFollowers = data.myFollowers;
         myFollowings = data.myFollowings;
 
-        SyncManager.init(data.device);
+        SyncManager.init(data.device, data.lastNotificationSeenTimestamp);
         UserManager.init(data.user);
         TopMenu.init();
 
