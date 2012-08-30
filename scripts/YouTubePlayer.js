@@ -161,6 +161,8 @@
         
 		/* Must set style, not class */
 		$('#left .players').removeAttr('style');
+        $('#left .players .youtube').css('pointer-events', 'all');
+        
 		self.view.width(self.defaultWidth);
 		self.view.height(self.defaultHeight);
         self.inFullScreen = false;

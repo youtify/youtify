@@ -536,6 +536,11 @@ input[type=search]::-webkit-search-results-decoration {
     position: absolute;
     z-index: 30;
 }
+/* Enable mousemove over the youtube player iframe.
+   http://caniuse.com/#search=pointer-events */
+#youtube {
+    pointer-events: all;
+}
 #left .players .soundcloud,
 #left .players .officialfm {
     background-repeat: no-repeat;
@@ -2003,12 +2008,6 @@ body.fullscreen #bottom {
 
 /** MISC
  ****************************************************************************/
-
-/* Enable mousemove over the youtube player iframe.
-   http://caniuse.com/#search=pointer-events */
-#youtube {
-    pointer-events: none;
-}
 
 #loading {
     display: none;

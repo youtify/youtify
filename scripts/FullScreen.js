@@ -30,24 +30,6 @@ var FullScreen = {
         self.$bottom = $('#bottom');
         self.$button = $('#bottom .fullscreen');
         self.$button.click(self.toggle);
-
-        // Make double clicking on player enter fullscreen.
-        // In fullscreen, .players doesn't receive click events
-        // when YouTube is playing, but #right does.
-        $('.players').dblclick(function(event) {
-            if (player.getCurrentVideo() && player.getCurrentVideo().type === 'youtube') {
-                if (!self.isOn) {
-                    self.on();
-                }
-            } else {
-                self.toggle();
-            }
-        });
-        $('#right').dblclick(function(event) {
-            if (player.getCurrentVideo() && player.getCurrentVideo().type === 'youtube' && self.isOn) {
-                self.off();
-            }
-        });
     },
     on: function() {
         var self = FullScreen;
@@ -98,11 +80,18 @@ var FullScreen = {
     },
     mouseMove: function() {
         var self = FullScreen;
+        /* Make sure youtube player receives mouse events */
+        $('#youtube').css({'pointer-events': 'all'});
+
         if (self.showBottomTimer === null) {
             self.$bottom.addClass('on');
             self.showBottomTimer = setTimeout(function() {
                 self.$bottom.removeClass('on');
                 self.showBottomTimer = null;
+                /* Remove mouse events from yt player so we can detect mouse move */
+                if (FullScreen.isOn) {
+                    $('#youtube').css({'pointer-events': 'none'});
+                }
             }, 1000);
         }
     }
