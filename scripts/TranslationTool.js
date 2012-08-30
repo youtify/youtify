@@ -51,8 +51,16 @@ function createTableRow(item) {
     return tr;
 }
 
+function updateMailLink() {
+    var subject = 'I want to be a translator for ' + currentLanguage;
+    var body = "My user id: " + my_user_id + " My user email: " + my_user_email;
+    $('#applyLink').attr('href', 'mailto:youtify@youtify.com?subject=' + subject + '&body=' + body);
+}
+
 function loadLanguage() {
     currentLanguage = $('#language').val(); // global
+    updateMailLink(currentLanguage);
+    $('#applyLink').show();
 
     function loadLeaders() {
         $("#leaders").html('');
@@ -60,6 +68,9 @@ function loadLanguage() {
             var names = [];
             $.each(data, function(i, item) {
                 names.push(item.name);
+                if (item.name === my_user_email) {
+                    $('#applyLink').hide();
+                }
             });
             $('#leaders').text(names.join(', '));
         });
