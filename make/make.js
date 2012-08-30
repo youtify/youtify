@@ -24,7 +24,7 @@ var JSLINT_OPTIONS = {
 
 function extractScriptFileNames() {
     var filenames = [];
-    var data = fs.readFileSync('../html/index.html', 'utf8');
+    var data = fs.readFileSync('./html/index.html', 'utf8');
     match = data.match(MATCH_PATTERN);
 
     for (var i =- 0; i < match.length; i += 1) {
@@ -40,7 +40,7 @@ function extractScriptFileNames() {
 function runJSLint(filenames) {
     var files = [];
     filenames.forEach(function(filename) {
-        var data = fs.readFileSync('..' + filename);
+        var data = fs.readFileSync('./' + filename);
 
         // Fix UTF8 with BOM
         if (0xEF === data[0] && 0xBB === data[1] && 0xBF === data[2]) {
@@ -86,7 +86,7 @@ function mergeFiles(files) {
 }
 
 function writeUglifiedFile(uglifiedFile) {
-    var outputFileName = '../scripts/production.js';
+    var outputFileName = './scripts/production.js';
     fs.writeFileSync(outputFileName, uglifiedFile, 'utf8');
     console.log("Wrote", outputFileName);
 }
