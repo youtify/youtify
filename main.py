@@ -88,7 +88,7 @@ class ApiMainHandler(webapp.RequestHandler):
             'myFollowers': my_followers_struct,
             'myFollowings': my_followings_struct,
             'settingsFromServer': settings_struct,
-            'autoDetectedLanguageByServer': lang,
+            'autoDetectedLanguageByServer': lang_code,
             'autoDetectedTranslations': get_deployed_translations_struct(lang_code),
             'loginUrl': users.create_login_url('/'),
             'logoutUrl': users.create_logout_url('/'),
