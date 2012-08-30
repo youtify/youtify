@@ -77,7 +77,7 @@ class ApiMainHandler(webapp.RequestHandler):
             my_followings_struct = get_followings_for_youtify_user_model(youtify_user_model)
             settings_struct = get_settings_struct_for_youtify_user_model(youtify_user_model)
 
-        lang = auto_detect_language(self.request)
+        lang_code = auto_detect_language(self.request)
 
         json = {
             'ON_PRODUCTION': ON_PRODUCTION,
@@ -88,7 +88,7 @@ class ApiMainHandler(webapp.RequestHandler):
             'myFollowings': my_followings_struct,
             'settingsFromServer': settings_struct,
             'autoDetectedLanguageByServer': lang,
-            'autoDetectedTranslations': get_deployed_translations_struct(lang),
+            'autoDetectedTranslations': get_deployed_translations_struct(lang_code),
             'loginUrl': users.create_login_url('/'),
             'logoutUrl': users.create_logout_url('/'),
         }

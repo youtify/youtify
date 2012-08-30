@@ -52,7 +52,6 @@ def get_translations(code):
 
 def get_languages():
     global languages
-    logging.info(languages)
     return languages
 
 def get_lang_codes():
