@@ -743,6 +743,9 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     display: table-cell;
     width: 150px;
+    overflow: hidden;
+    max-height: 40px;
+    word-wrap: break-word;
 }
 #right .minimized .uploader ,
 #right .minimized tr .space:nth-child(4),
@@ -1648,7 +1651,7 @@ body.fullscreen #bottom {
 
 #similar-artists-popup {
     max-height: 300px;
-    overflow: scroll;
+    overflow-y: auto;
 }
 #similar-artists-popup .suggestion {
     background-repeat: no-repeat;
