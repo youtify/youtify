@@ -5,6 +5,7 @@ from model import FollowRelation
 from model import YoutifyUser
 from model import Activity
 from model import Playlist
+from model import ExternalUser
 from string import Template
 from django.utils import simplejson
 
@@ -39,9 +40,9 @@ class MigrationStepHandler(webapp.RequestHandler):
 
         #### START MIGRATION CODE ####
 
-        for m in Playlist.all().fetch(page_size, page_size * page):
+        for m in ExternalUser.all().fetch(page_size, page_size * page):
             count += 1
-            m.nr_of_followers = len(m.followers)
+            m.nr_of_subscribers = len(m.subscribers)
             m.save()
 
         #### END MIGRATION CODE ####
@@ -59,7 +60,7 @@ class MigrationStepHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/admin/migrations/migrate_nr_of_followers_for_playlists', MigrationStepHandler),
+        ('/admin/migrations/migrate_nr_of_subscribers_for_external_users', MigrationStepHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
