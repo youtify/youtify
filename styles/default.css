@@ -1058,17 +1058,20 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
 }
 
-#right .new-playlist-help {
+#right .help-box {
     margin-top: 10px;
     background-color: #DDD;
     padding: 20px;
     text-align: center;
     display: none;
 }
-#right .new-playlist-help h2 {
+#right .help-box h2 {
     font-size: 15px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+#right .help-box .button {
+    margin-top:10px;
 }
 
 /** SMALL PLAYLIST VIEW
@@ -2047,11 +2050,6 @@ body.fullscreen #bottom {
 #right .pane.flattr .puff {
     padding: 5px 5px;
     text-align: center;
-}
-
-#right a.button {
-    text-decoration: none;
-    color: black;
 }
 
 #top .link,

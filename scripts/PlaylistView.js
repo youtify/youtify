@@ -174,9 +174,9 @@ var PlaylistView = {
             });
         }
         if (playlist.videos.length === 0) {
-            $('#right .new-playlist-help').show();
+            $('#right .playlists .help-box').show();
         } else {
-            $('#right .new-playlist-help').hide();
+            $('#right .playlists .help-box').hide();
         }
     },
 

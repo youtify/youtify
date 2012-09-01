@@ -26,11 +26,7 @@ var HomeScreen = {
         self.tabs = new Tabs(self.$rightView, {
             'artists': self.loadArtists,
             'playlists': self.loadTopPlaylists,
-            'recommendations': function() {
-                if (UserManager.isLoggedIn() && UserManager.currentUser.lastfmUserName) {
-                    self.loadRecommendedArtists();
-                }
-            }
+            'recommendations': self.loadRecommendedArtists
         });
     },
 
@@ -38,39 +34,40 @@ var HomeScreen = {
         var self = HomeScreen;
         var tab = tab || 'artists';
         history.pushState(null, null, '/');
-        self.reset();
         self.$rightView.find('.tabs .' + tab).click();
 
         $('#right > div').hide();
         self.$rightView.show();
     },
 
-    reset: function() {
-        var self = HomeScreen;
-        self.$artists.html('');
-        self.$recommendations.html('');
-        self.$playlists.html('');
-    },
-
     loadRecommendedArtists: function() {
         var self = HomeScreen;
-
-        self.$recommendations.html('');
+        var $content = self.$recommendations.find('.content');
 
         history.pushState(null, null, '/recommendations');
 
-        Recommendations.findRecommendedArtists(function(artists) {
-            $.each(artists, function(i, artist) {
-                if (artist.name) {
-                    var artistSuggestion = new ArtistSuggestion({
-                        name: artist.name,
-                        imageUrl: artist.image[2]['#text'],
-                        mbid: artist.mbid
-                    });
-                    self.$recommendations.append(artistSuggestion.getSmallView()).show();
-                }
+        $content.html('');
+        self.$recommendations.find('.help-box').hide();
+        console.log($content);
+
+        if (!UserManager.isLoggedIn()) {
+            self.$recommendations.find('.help-box.not-logged-in').show();
+        } else if (!UserManager.currentUser.lastfmUserName) {
+            self.$recommendations.find('.help-box.not-connected-to-lastfm').show();
+        } else {
+            Recommendations.findRecommendedArtists(function(artists) {
+                $.each(artists, function(i, artist) {
+                    if (artist.name) {
+                        var artistSuggestion = new ArtistSuggestion({
+                            name: artist.name,
+                            imageUrl: artist.image[2]['#text'],
+                            mbid: artist.mbid
+                        });
+                        $content.append(artistSuggestion.getSmallView()).show();
+                    }
+                });
             });
-        });
+        }
     },
 
     loadTopPlaylists: function() {
