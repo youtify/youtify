@@ -1,17 +1,17 @@
 var HomeScreen = {
     $rightView: null,
-    $spotlight: null,
+    $artists: null,
     $recommendations: null,
     $playlists: null,
     menuItem: null,
-    nbrOfArtists: 0,
+    tabs: null,
     
     init: function() {
         var self = HomeScreen;
         self.$rightView = $('#right > .home');
-        self.$recommendations = $('#right > .home .recommendations');
-        self.$playlists = $('#right > .home .playlists');
-        self.$spotlight = self.$rightView.find('.spotlight .inner');
+        self.$recommendations = self.$rightView.find('.pane.recommendations');
+        self.$playlists = self.$rightView.find('.pane.playlists');
+        self.$artists = self.$rightView.find('.pane.artists');
         self.menuItem = new MenuItem({
             cssClasses: ['home'],
             title: TranslationSystem.get('Home'),
@@ -22,19 +22,23 @@ var HomeScreen = {
             translatable: true
         });
         Menu.getGroup('misc').addMenuItem(self.menuItem);
-        EventSystem.addEventListener('window_resized', HomeScreen.loadSpotlight);
+
+        self.tabs = new Tabs(self.$rightView, {
+            'artists': self.loadArtists,
+            'playlists': self.loadTopPlaylists,
+            'recommendations': function() {
+                if (UserManager.isLoggedIn() && UserManager.currentUser.lastfmUserName) {
+                    self.loadRecommendedArtists();
+                }
+            }
+        });
     },
 
     show: function() {
         var self = HomeScreen;
         history.pushState(null, null, '/');
         self.reset();
-
-        HomeScreen.loadSpotlight();
-        HomeScreen.loadTopPlaylists();
-        if (UserManager.isLoggedIn() && UserManager.currentUser.lastfmUserName) {
-            HomeScreen.loadRecommendedArtists();
-        }
+        self.$rightView.find('.tabs .artists').click();
 
         $('#right > div').hide();
         self.$rightView.show();
@@ -42,12 +46,16 @@ var HomeScreen = {
 
     reset: function() {
         var self = HomeScreen;
+        self.$artists.html('');
         self.$recommendations.html('');
         self.$playlists.html('');
     },
 
     loadRecommendedArtists: function() {
         var self = HomeScreen;
+
+        self.$recommendations.html('');
+
         Recommendations.findRecommendedArtists(function(artists) {
             $.each(artists, function(i, artist) {
                 if (artist.name) {
@@ -60,11 +68,14 @@ var HomeScreen = {
                 }
             });
         });
-        self.$recommendations.parent().show();
     },
 
     loadTopPlaylists: function() {
         var self = HomeScreen;
+
+        self.$playlists.html('');
+
+        LoadingBar.show();
         $.get('/api/toplists/playlists', function(playlists) {
             $.each(playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
@@ -73,29 +84,20 @@ var HomeScreen = {
                 }
             });
             LoadingBar.hide();
-            self.$playlists.parent().show();
         });
     },
 
-    loadSpotlight: function() {
+    loadArtists: function() {
         var self = HomeScreen,
             i = 0,
             artist = null,
-            width = $('#right > .home .spotlight').width(), 
-            itemWidth = 88,
-            rows = 3,
-            nbrOfArtists = 0;
-        width = width < 528 ? 528 : width;
-        nbrOfArtists = Math.ceil(width/itemWidth) * rows;
-        
-        if (self.nbrOfArtists >= nbrOfArtists && self.nbrOfArtists !== 0) {
-            return;
-        }
+            nbrOfArtists = 50;
 
-        self.nbrOfArtists = nbrOfArtists;
-        self.$spotlight.html('');
+        self.$artists.html('');
         
+        LoadingBar.show();
         $.getJSON('/api/external_users/top/' + nbrOfArtists, function(data) {
+            LoadingBar.hide();
             $.each(data, function(i, externalUser) {
                 if (!externalUser.avatar_url) {
                     return;
@@ -114,7 +116,7 @@ var HomeScreen = {
                 });
                 $title.text(externalUser.username);
                 $item.append($title);
-                self.$spotlight.append($item);
+                self.$artists.append($item);
             });
         });
     }    
