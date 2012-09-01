@@ -32,7 +32,7 @@ var HomeScreen = {
 
     show: function(tab) {
         var self = HomeScreen;
-        var tab = tab || 'artists';
+        tab = tab || 'artists';
         history.pushState(null, null, '/');
         self.$rightView.find('.tabs .' + tab).click();
 
