@@ -33,6 +33,7 @@ BLOCKED_NICKNAMES = [
     'newsfeed',
     'activities',
     'toplist',
+    'recommendations',
     'queue',
     'search',
     'users',

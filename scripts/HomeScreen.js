@@ -34,11 +34,12 @@ var HomeScreen = {
         });
     },
 
-    show: function() {
+    show: function(tab) {
         var self = HomeScreen;
+        var tab = tab || 'artists';
         history.pushState(null, null, '/');
         self.reset();
-        self.$rightView.find('.tabs .artists').click();
+        self.$rightView.find('.tabs .' + tab).click();
 
         $('#right > div').hide();
         self.$rightView.show();
@@ -55,6 +56,8 @@ var HomeScreen = {
         var self = HomeScreen;
 
         self.$recommendations.html('');
+
+        history.pushState(null, null, '/recommendations');
 
         Recommendations.findRecommendedArtists(function(artists) {
             $.each(artists, function(i, artist) {
@@ -75,6 +78,8 @@ var HomeScreen = {
 
         self.$playlists.html('');
 
+        history.pushState(null, null, '/toplist/playlists');
+
         LoadingBar.show();
         $.get('/api/toplists/playlists', function(playlists) {
             $.each(playlists, function(index, item) {
@@ -94,6 +99,8 @@ var HomeScreen = {
             nbrOfArtists = 50;
 
         self.$artists.html('');
+
+        history.pushState(null, null, '/');
         
         LoadingBar.show();
         $.getJSON('/api/external_users/top/' + nbrOfArtists, function(data) {

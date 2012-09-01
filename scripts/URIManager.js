@@ -88,6 +88,18 @@ var URIManager = {
                 }
             ],
             [
+                '/toplist/playlists',
+                function(matches) {
+                    HomeScreen.show('playlists');
+                }
+            ],
+            [
+                '/recommendations',
+                function(matches) {
+                    HomeScreen.show('recommendations');
+                }
+            ],
+            [
                 '/(.+)',
                 function(matches) {
                     UserManager.loadProfile(matches[1]);
