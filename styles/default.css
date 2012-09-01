@@ -1271,11 +1271,6 @@ body.fullscreen #bottom {
     cursor: pointer;
     display: inline;
 }
-#bottom .info .i:hover,
-#bottom .info .title:hover {
-    color: purple;
-    text-shadow: 0px 1px 1px #FFF;
-}
 #bottom .timeline-wrapper {
     position: absolute;
     top: 44px;
