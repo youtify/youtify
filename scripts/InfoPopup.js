@@ -31,6 +31,7 @@ var InfoPopup = {
             $('<span/>').text(Utils.shorten(args.description, 140) + ' ').appendTo($description);
             if (args.description.length > 140) {
                 $('<a class="more" href="#"/>').text(TranslationSystem.get('More')).click(function() {
+                    Utils.closeAnyOpenArrowPopup();
                     $description.text(args.description);
                     $('#bottom .info .i').arrowPopup('#video-info-popup', 'down');
                 }).appendTo($description);
