@@ -164,7 +164,7 @@ var HomeScreen = {
             }
 
             // Load more automatically if we haven't filled the entire screen
-            if (self.$artists.height() < self.$rightView.height() && self.page < 50) {
+            if (data.length > 0 && self.$artists.height() < self.$rightView.height() && self.page < 50) {
                 self.loadArtists(true);
             }
         });
