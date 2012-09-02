@@ -7,6 +7,12 @@ var HomeScreen = {
     tabs: null,
     page: 0,
     hasMore: true,
+    FILTER: [
+        'mrcoolvideoboy',
+        'huskystarcraft',
+        'husky',
+        'day9tv'
+    ],
     
     init: function() {
         var self = HomeScreen;
@@ -109,6 +115,10 @@ var HomeScreen = {
         var self = this;
 
         if (!externalUser.avatar_url) {
+            return;
+        }
+
+        if ($.inArray(externalUser.username, self.FILTER) !== -1) {
             return;
         }
 
