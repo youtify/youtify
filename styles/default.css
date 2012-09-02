@@ -1266,6 +1266,12 @@ body.fullscreen #bottom {
     top: -5px;
     left: -2px;
 }
+#bottom .info .i:hover,
+#bottom .info .title:hover {
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+}
+
 #bottom .info .title {
     text-align: left;
     font-size: 15px;
