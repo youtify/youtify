@@ -2264,17 +2264,34 @@ body.fullscreen #bottom {
 .home .pane.artists .item:hover .hover:after {
     content: '{';
     font-family: YoutifyRegular;
-    font-size: 100px;
     cursor: pointer;
     color: rgb(102, 166, 255);
-    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
     position: absolute;
-    top: -30px;
+
+    font-size: 50px;
+    width: 33px;
+    height: 33px;
+    line-height: 19%;
+    top: 35px;
     left: 35px;
+    padding-left: 4px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    border-radius: 50px;
+    box-shadow: 0px 0px 2px #000;
+    background:-webkit-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-moz-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-ms-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:-o-linear-gradient(top, #EEE 0%, #CCC 100%);
+    background:linear-gradient(top, #EEE 0%, #CCC 100%);
+
+    color: #333;
 }
 .home .pane.artists .item:active .hover:after {
-    color: rgb(52, 106, 205);
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 0px 3px #000, inset 0px 0px 3px #000;
+    color: #000;
 }
 
 /** LOADING ANIMATION
