@@ -1620,6 +1620,9 @@ body.fullscreen #bottom {
 .popup a:hover {
     text-decoration: underline;
 }
+.popup .button:hover {
+    text-decoration: none;
+}
 .arrow {
     display: block;
 	position: absolute;
@@ -1650,6 +1653,19 @@ body.fullscreen #bottom {
     font-weight: bold;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
+}
+
+/** LOGIN REQUIRED POPUP
+ ****************************************************************************/
+
+#login-required-popup {
+    text-align: center;
+}
+#login-required-popup p {
+    font-weight: bold;
+}
+#login-required-popup .button {
+    margin-top: 10px;
 }
 
 /** SIMILAR ARTISTS POPUP

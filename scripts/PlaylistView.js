@@ -36,20 +36,27 @@ var PlaylistView = {
         
         /* Subscribe/Unsubscribe button */
         $subscribeButton.click(function() {
-            playlist.subscribe();
-            $(this).hide();
-            $(this).next().show();
+            if (UserManager.isLoggedIn()) {
+                playlist.subscribe();
+                $(this).hide();
+                $(this).next().show();
+            } else {
+                $(this).arrowPopup('#login-required-popup');
+            }
         });
         $unsubscribeButton.click(function() {
             playlistManager.deletePlaylist(playlist); // delete unsubscribes
             $(this).hide();
             $(this).prev().show();
         });
+
+        $info.append($subscribeButton);
+        $info.append($unsubscribeButton);
+
         if (UserManager.isLoggedIn() && playlist.owner && playlist.owner.id !== UserManager.currentUser.id) {
-            $info.append($subscribeButton);
-            $info.append($unsubscribeButton);
-        }
-        if (playlist.isSubscription) {
+            $subscribeButton.hide();
+            $unsubscribeButton.hide();
+        } else if (playlist.isSubscription) {
             $subscribeButton.hide();
         } else {
             $unsubscribeButton.hide();

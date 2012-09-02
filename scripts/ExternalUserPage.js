@@ -111,9 +111,13 @@ function ExternalUser(data) {
         var $description = $('<div class="description">').text(Utils.shorten(self.description || '', 500));
 
         $subscribeButton.click(function() {
-            ExternalUserManager.subscribe(self, function() {
-                $subscribeButton.hide().next().show();
-            });
+            if (UserManager.isLoggedIn()) {
+                ExternalUserManager.subscribe(self, function() {
+                    $subscribeButton.hide().next().show();
+                });
+            } else {
+                $(this).arrowPopup('#login-required-popup');
+            }
         });
 
         $unsubscribeButton.click(function() {
