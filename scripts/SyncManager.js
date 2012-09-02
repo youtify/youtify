@@ -15,7 +15,9 @@ var SyncManager = {
     init: function(deviceToken, lastNotificationSeenTimestamp) {
         this.deviceToken = deviceToken;
         this.lastNotificationSeenTimestamp = lastNotificationSeenTimestamp;
-        setInterval(this.checkForNewNotifications, 60 * 10 * 1000);
+        if (UserManager.currentUser) {
+            setInterval(this.checkForNewNotifications, 60 * 10 * 1000);
+        }
     },
 
     checkForNewNotifications: function() {
