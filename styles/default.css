@@ -1897,6 +1897,11 @@ body.fullscreen #bottom {
     word-wrap: break-word;
 }
 #video-info-popup.no-overflow {
+    overflow: hidden;
+    max-height: 90%;
+}
+#video-info-popup.no-overflow .sections {
+    max-height: 100%;
     overflow-y: scroll;
 }
 #video-info-popup .title-and-description {
@@ -1961,9 +1966,11 @@ body.fullscreen #bottom {
     width: 500px;
     height: 75%;
     overflow: hidden;
+}
+#logo-popup > div {
+    max-height: 100%;
     overflow-y: scroll;
 }
-
 #logo-popup h1 {
     font-weight: bold;
     font-size: 15px;

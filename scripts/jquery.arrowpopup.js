@@ -51,7 +51,7 @@
         // Make sure popup is not overflowing height
         if (top < 0) {
             popup.css('height', popup.height() + top - 20);
-            popup.css('overflow-y', 'scroll');
+            popup.addClass('no-overflow');
             top = 20;
         }
 

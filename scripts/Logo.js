@@ -9,7 +9,7 @@ Logo = {
         logo.bind('contextmenu', function(event) {
             LoadingBar.show();
             $.get('/logo', function(data) {
-                $('#logo-popup').html(data);
+                $('#logo-popup > div').html(data);
             });
             logo.arrowPopup('#logo-popup', 'up');
             LoadingBar.hide();
