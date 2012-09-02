@@ -53,7 +53,7 @@ var PlaylistView = {
         $info.append($subscribeButton);
         $info.append($unsubscribeButton);
 
-        if (UserManager.isLoggedIn() && playlist.owner && playlist.owner.id !== UserManager.currentUser.id) {
+        if (UserManager.isLoggedIn() && playlist.owner && playlist.owner.id === UserManager.currentUser.id) {
             $subscribeButton.hide();
             $unsubscribeButton.hide();
         } else if (playlist.isSubscription) {
