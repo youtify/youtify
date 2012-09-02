@@ -6,7 +6,9 @@ var LoadingBar = {
     },
 
     show: function(title) {
-        title = title || TranslationSystem.get('Loading...');
+        if (typeof(title) !== typeof('')) {
+            title = TranslationSystem.get('Loading...');
+        }
         LoadingBar.$elem.removeClass('error');
         LoadingBar.$elem.text(title);
         LoadingBar.$elem.fadeIn(200);
