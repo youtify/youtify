@@ -1715,27 +1715,32 @@ body.fullscreen #bottom {
  ****************************************************************************/
 
 #activities-popup {
-    width: 380px;
-    padding: 5px;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 #activities-popup .activity {
-    min-height: 2em;
-    line-height: 25px;
-    padding: 5px 5px 0 5px;
-    clear: both;
+    position: relative;
+    padding-left: 45px;
+    min-height: 40px;
+    margin-bottom: 10px;
 }
-#activities-popup .activity:nth-of-type(even){
-    background-color: #EEE;
+#activities-popup .activity img {
+    position: absolute;
+    left: 0px;
+    width: 40px;
+    height: 40px;
 }
 #activities-popup .activity .user {
-    display: inline-block;
+    display: inline;
 }
 #activities-popup .activity:last-child {
+    margin-bottom: 0px;
 }
 #activities-popup .activity .timestamp {
-    float: right;
-    font-style: italic;
-    padding-left: 15px;
+    font-size: 12px;
+    color: #666;
+    display: block;
 }
 #activities-popup .loading-animation {
     display: none;

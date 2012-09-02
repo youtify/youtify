@@ -157,7 +157,7 @@ var HomeScreen = {
 
         if (!loadMore) {
             self.$artists.html('');
-            self.page = 0;
+            self.page = -1;
             self.hasMore = true;
             history.pushState(null, null, '/');
         }

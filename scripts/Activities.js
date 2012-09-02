@@ -123,7 +123,7 @@ var Activities = {
             break;
         }
 
-        $div.prepend('<span class="timestamp"> ' + jQuery.timeago(new Date(Number(activity.timestamp * 1000))) + '</span>');
+        $div.append('<span class="timestamp"> ' + jQuery.timeago(new Date(Number(activity.timestamp * 1000))) + '</span>');
 
         return $div;
     },
