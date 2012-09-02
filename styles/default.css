@@ -2162,7 +2162,7 @@ body.fullscreen #bottom {
     position: relative;
     width: 100px;
     height: 100px;
-    float: left;
+    display: inline-block;
     cursor: pointer;
     background-color: #FFF;
     background-repeat: no-repeat;

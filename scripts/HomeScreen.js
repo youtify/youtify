@@ -5,6 +5,8 @@ var HomeScreen = {
     $playlists: null,
     menuItem: null,
     tabs: null,
+    page: 0,
+    hasMore: true,
     
     init: function() {
         var self = HomeScreen;
@@ -28,6 +30,21 @@ var HomeScreen = {
             'playlists': self.loadTopPlaylists,
             'recommendations': self.loadRecommendedArtists
         });
+
+        // Continous scroll for "Popular artists"
+        (function() {
+            var timeout;
+            self.$rightView.scroll(function(event) {
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(function() {
+                    if (self.$rightView.scrollTop() >= (self.$artists.height() - self.$rightView.height()) && self.hasMore) {
+                        self.loadArtists(true);
+                    }
+                }, 100);
+            });
+        }());
     },
 
     show: function(tab) {
@@ -89,39 +106,67 @@ var HomeScreen = {
         });
     },
 
-    loadArtists: function() {
+    addArtist: function(externalUser) {
+        var self = this;
+
+        if (!externalUser.avatar_url) {
+            return;
+        }
+
+        var $item = $('<div class="item"/>'),
+            $title = $('<div class="title"/>'),
+            image = new Image();
+        
+        image.onload = function() {
+            $item.css({'opacity': '1'});
+        };
+        image.src = externalUser.avatar_url;
+
+        $item.css({'background-image': 'url('+ externalUser.avatar_url + ')'});
+        $item.click(function() {
+            ExternalUserPage.load(externalUser.type, externalUser.username);
+        });
+
+        $title.text(externalUser.username);
+        $item.append($title);
+
+        self.$artists.append($item);
+    },
+
+    loadArtists: function(loadMore) {
         var self = HomeScreen,
             i = 0,
             artist = null,
-            nbrOfArtists = 50;
+            pageSize = 50;
 
-        self.$artists.html('');
-
-        history.pushState(null, null, '/');
+        if (!loadMore) {
+            self.$artists.html('');
+            self.page = 0;
+            self.hasMore = true;
+            history.pushState(null, null, '/');
+        }
         
         LoadingBar.show();
-        $.getJSON('/api/external_users/top/' + nbrOfArtists, function(data) {
+        $.getJSON('/api/external_users/top/' + pageSize, {page: self.page}, function(data) {
+            var i,
+                externalUser;
+
             LoadingBar.hide();
-            $.each(data, function(i, externalUser) {
-                if (!externalUser.avatar_url) {
-                    return;
-                }
-                var $item = $('<div class="item"/>'),
-                    $title = $('<div class="title"/>'),
-                    image = new Image();
-                
-                image.onload = function() {
-                    $item.css({'opacity': '1'});
-                };
-                image.src = externalUser.avatar_url;
-                $item.css({'background-image': 'url('+ externalUser.avatar_url + ')'});
-                $item.click(function() {
-                    ExternalUserPage.load(externalUser.type, externalUser.username);
-                });
-                $title.text(externalUser.username);
-                $item.append($title);
-                self.$artists.append($item);
-            });
+
+            self.page += 1;
+
+            if (data.length < pageSize) {
+                self.hasMore = false;
+            }
+
+            for (i = loadMore ? 1 : 0; i < data.length; i += 1) {
+                self.addArtist(data[i]);
+            }
+
+            // Load more automatically if we haven't filled the entire screen
+            if (self.$artists.height() < self.$rightView.height() && self.page < 50) {
+                self.loadArtists(true);
+            }
         });
     }    
 };

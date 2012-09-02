@@ -13,7 +13,9 @@ class TopExternalUsers(webapp.RequestHandler):
 
     def get(self, max):
         """Gets a list of external users"""
-        users = ExternalUser.all().order('-nr_of_subscribers').fetch(int(max));
+        page = int(self.request.get('page', '0'))
+        page_size = int(max)
+        users = ExternalUser.all().order('-nr_of_subscribers').fetch(page_size, page_size * page);
         json = []
         for user in users:
             json.append(get_external_user_subscription_struct(user))
