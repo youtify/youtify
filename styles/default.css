@@ -1711,6 +1711,7 @@ body.fullscreen #bottom {
 #activities-popup .activity .timestamp {
     float: right;
     font-style: italic;
+    padding-left: 15px;
 }
 #activities-popup .loading-animation {
     display: none;
