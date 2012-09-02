@@ -1999,6 +1999,26 @@ body.fullscreen #bottom {
     width: 460px;
 }
 
+/** LOGGED OUT POPUP
+ ****************************************************************************/
+#logged-out-notification {
+    text-align: center;
+    padding: 5px 10px;
+    width: auto;
+}
+#logged-out-notification > span {
+    line-height: 40px;
+}
+#logged-out-notification > span:before {
+    content: 'c';
+    font-family: YoutifyRegular;
+    font-size: 44px;
+    line-height: 20px;
+    position: relative;
+    vertical-align: -30%;
+    padding-right: 5px;
+}
+
 /** MODAL BOXES
  ****************************************************************************/
 

@@ -55,7 +55,15 @@ var UserManager = {
     isLoggedIn: function() {
         return UserManager.currentUser !== null;
     },
-
+    
+    logOutCurrentUser: function() {
+        UserManager.currentUser = null;
+        $('#top .profile').hide();
+        $('#top .login-link')
+            .show()
+            .arrowPopup('#logged-out-notification', 'up');
+    },
+    
     show: function() {
         Menu.deSelect();
         UserManager.tabs.select('profile-playlists');
