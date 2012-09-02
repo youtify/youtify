@@ -55,9 +55,11 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     self.syncing = false; // not part of JSON structure
     self.isSubscription = false;
     for (i = 0; i < self.followers.length; i+=1) {
-        if (Number(self.followers[i].id) === Number(UserManager.currentUser.id)) {
-            self.isSubscription = true;
-            break;
+        if (UserManager.isLoggedIn()) {
+            if (Number(self.followers[i].id) === Number(UserManager.currentUser.id)) {
+                self.isSubscription = true;
+                break;
+            }
         }
     }
     self.menuItem = null;
