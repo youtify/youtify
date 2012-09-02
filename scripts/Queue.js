@@ -8,6 +8,7 @@ var Queue = {
     menuItem: null,
 
     init: function() {
+        var self = this;
         this.$rightView = $('#right .queue');
         this.$tracklist = $('#right .queue .tracklist');
         this.menuItem = new MenuItem({
@@ -16,10 +17,19 @@ var Queue = {
             $contentPane: this.$rightView,
             onSelected: function() {
                 history.pushState(null, null, '/queue');
+                if (self.isEmpty()) {
+                    self.$rightView.find('.help-box').show();
+                } else {
+                    self.$rightView.find('.help-box').hide();
+                }
             },
             translatable: true
         });
         Menu.getGroup('misc').addMenuItem(this.menuItem);
+    },
+    isEmpty: function() {
+        var self = this;
+        return self.manualList.length === 0 && self.autoList.length === 0;
     },
     getMenuItem: function() {
         return this.menuItem;
