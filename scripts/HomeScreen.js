@@ -113,6 +113,10 @@ var HomeScreen = {
         });
     },
 
+    videoPlayCallback: function() {
+        HomeScreen.menuItem.setAsPlaying();
+    },
+
     addArtist: function(externalUser) {
         var self = this;
 
@@ -130,6 +134,7 @@ var HomeScreen = {
         }
 
         var $item = $('<div class="item"/>'),
+            $hover = $('<div class="hover"/>'),
             $title = $('<div class="title"/>'),
             image = new Image();
         
@@ -140,11 +145,25 @@ var HomeScreen = {
 
         $item.css({'background-image': 'url('+ externalUser.avatar_url + ')'});
         $item.click(function() {
+            player.pause();
+            var user = new ExternalUser({
+                type: externalUser.type,
+                username: externalUser.username
+            });
+            user.videoPlayCallback = self.videoPlayCallback;
+            LoadingBar.show();
+            user.load(function(user) {
+                LoadingBar.hide();
+                user.getRightView().find('.video:first-child').dblclick();
+            });
+        });
+        $title.click(function() {
             ExternalUserPage.load(externalUser.type, externalUser.username);
         });
 
         $title.text(externalUser.username);
         $item.append($title);
+        $item.append($hover);
 
         self.$artists.append($item);
     },

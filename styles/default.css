@@ -2229,6 +2229,7 @@ body.fullscreen #bottom {
 	-o-background-size: cover;
 	background-size: cover;
     margin: 10px 10px 40px 10px;
+    text-align: center;
     opacity: 0;
     -moz-transition: opacity 200ms ease-in-out;
     -webkit-transition: opacity 200ms ease-in-out;
@@ -2239,7 +2240,6 @@ body.fullscreen #bottom {
 .home .artist.suggestion .name,
 .home .pane.artists .item .title {
     width: 100px;
-    text-align: center;
     font-size: 12px;
     color: purple;
     overflow: hidden;
@@ -2255,6 +2255,25 @@ body.fullscreen #bottom {
     transition: all 200ms ease-in-out;
     word-break: hyphenate;
     word-wrap: break-word;
+}
+.home .pane.artists .item:hover .hover {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.3);
+}
+.home .pane.artists .item:hover .hover:after {
+    content: '{';
+    font-family: YoutifyRegular;
+    font-size: 80px;
+    cursor: pointer;
+    color: white;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: -15px;
+    left: 40px;
+}
+.home .pane.artists .item:active .hover:after {
+    color: #999;
 }
 
 /** LOADING ANIMATION
