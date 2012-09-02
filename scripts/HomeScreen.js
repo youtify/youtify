@@ -12,6 +12,7 @@ var HomeScreen = {
         'mrcoolvideoboy',
         'huskystarcraft',
         'husky',
+        'collegehumor',
         'day9tv'
     ],
     
@@ -116,6 +117,11 @@ var HomeScreen = {
         var self = this;
 
         if (!externalUser.avatar_url) {
+            return;
+        }
+
+        // If they block us, we block them :)
+        if (externalUser.username.match(/VEVO$/)) {
             return;
         }
 
