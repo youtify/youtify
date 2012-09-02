@@ -2264,16 +2264,17 @@ body.fullscreen #bottom {
 .home .pane.artists .item:hover .hover:after {
     content: '{';
     font-family: YoutifyRegular;
-    font-size: 80px;
+    font-size: 100px;
     cursor: pointer;
-    color: white;
+    color: rgb(102, 166, 255);
     text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
     position: absolute;
-    top: -15px;
-    left: 40px;
+    top: -30px;
+    left: 35px;
 }
 .home .pane.artists .item:active .hover:after {
-    color: #999;
+    color: rgb(52, 106, 205);
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 /** LOADING ANIMATION
