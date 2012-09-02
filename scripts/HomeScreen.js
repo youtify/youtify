@@ -65,7 +65,6 @@ var HomeScreen = {
 
         $content.html('');
         self.$recommendations.find('.help-box').hide();
-        console.log($content);
 
         if (!UserManager.isLoggedIn()) {
             self.$recommendations.find('.help-box.not-logged-in').show();
