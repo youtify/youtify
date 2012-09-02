@@ -145,14 +145,22 @@ var HomeScreen = {
 
         $item.css({'background-image': 'url('+ externalUser.avatar_url + ')'});
         $item.click(function() {
+            if ($item.hasClass('loading')) {
+                return;
+            }
+
             player.pause();
+
             var user = new ExternalUser({
                 type: externalUser.type,
                 username: externalUser.username
             });
             user.videoPlayCallback = self.videoPlayCallback;
+
+            $item.addClass('loading');
             LoadingBar.show();
             user.load(function(user) {
+                $item.removeClass('loading');
                 LoadingBar.hide();
                 user.getRightView().find('.video:first-child').dblclick();
             });
