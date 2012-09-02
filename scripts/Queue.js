@@ -15,7 +15,7 @@ var Queue = {
             title: TranslationSystem.get('Play Queue'),
             $contentPane: this.$rightView,
             onSelected: function() {
-                // nothing special is needed
+                history.pushState(null, null, '/queue');
             },
             translatable: true
         });

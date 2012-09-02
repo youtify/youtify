@@ -100,6 +100,12 @@ var URIManager = {
                 }
             ],
             [
+                '/queue',
+                function(matches) {
+                    Queue.getMenuItem().select();
+                }
+            ],
+            [
                 '/(.+)',
                 function(matches) {
                     UserManager.loadProfile(matches[1]);
