@@ -132,6 +132,11 @@ function AddToPlaylistDialog(videos) {
             playlist.addVideo(video);
         });
         playlistManager.save();
+        
+        /* Hide help if list is showing */
+        if (playlist.getMenuItem().isSelected()) {
+            $('#right .playlists .help-box').hide();
+        }
         self.remove();
     }, 'exposed');
 
