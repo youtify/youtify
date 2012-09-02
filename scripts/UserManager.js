@@ -59,8 +59,11 @@ var UserManager = {
     show: function() {
         Menu.deSelect();
         UserManager.tabs.select('profile-playlists');
-        history.pushState(null, null, UserManager.viewingUser.getUrl());
-
+        if (UserManager.viewingUser) {
+            history.pushState(null, null, UserManager.viewingUser.getUrl());
+        } else {
+            history.pushState(null, null, '/');
+        }
         $('#right > div').hide();
         UserManager.$rightView.show();
     },
