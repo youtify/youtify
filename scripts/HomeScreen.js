@@ -8,6 +8,7 @@ var HomeScreen = {
     page: 0,
     hasMore: true,
     FILTER: [
+        'dignitasApollo',
         'mrcoolvideoboy',
         'huskystarcraft',
         'husky',
