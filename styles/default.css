@@ -2160,8 +2160,8 @@ body.fullscreen #bottom {
 .home .artist.suggestion,
 .home .pane.artists .item {
     position: relative;
-    width: 88px;
-    height: 88px;
+    width: 100px;
+    height: 100px;
     float: left;
     cursor: pointer;
     background-color: #FFF;
@@ -2171,7 +2171,7 @@ body.fullscreen #bottom {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-    margin: 0 5px 39px 5px;
+    margin: 10px 10px 40px 10px;
     opacity: 0;
     -moz-transition: opacity 200ms ease-in-out;
     -webkit-transition: opacity 200ms ease-in-out;
@@ -2181,7 +2181,7 @@ body.fullscreen #bottom {
 }
 .home .artist.suggestion .name,
 .home .pane.artists .item .title {
-    width: 88px;
+    width: 100px;
     text-align: center;
     font-size: 12px;
     color: purple;
