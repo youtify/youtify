@@ -5,7 +5,7 @@ var HomeScreen = {
     $playlists: null,
     menuItem: null,
     tabs: null,
-    page: 0,
+    page: -1,
     hasMore: true,
     FILTER: [
         'dignitasApollo',
@@ -161,6 +161,8 @@ var HomeScreen = {
             self.hasMore = true;
             history.pushState(null, null, '/');
         }
+
+        self.page += 1;
         
         LoadingBar.show();
         $.getJSON('/api/external_users/top/' + pageSize, {page: self.page}, function(data) {
@@ -168,8 +170,6 @@ var HomeScreen = {
                 externalUser;
 
             LoadingBar.hide();
-
-            self.page += 1;
 
             if (data.length < pageSize) {
                 self.hasMore = false;
