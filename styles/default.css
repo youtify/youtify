@@ -1691,9 +1691,6 @@ body.fullscreen #bottom {
 /** PROFILE POPUP
  ****************************************************************************/
 
-#profile-popup {
-    padding: 5px;
-}
 #profile-popup li {
     padding: 5px;
     min-width: 100px;
