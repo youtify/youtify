@@ -2256,12 +2256,14 @@ body.fullscreen #bottom {
     word-break: hyphenate;
     word-wrap: break-word;
 }
-.home .pane.artists .item:hover .hover {
+.home .pane.artists .hover {
     width: 100px;
     height: 100px;
+}
+.home .pane.artists .hover:hover {
     background: rgba(255, 255, 255, 0.3);
 }
-.home .pane.artists .item:hover .hover:after {
+.home .pane.artists .hover:hover:after {
     content: '{';
     font-family: YoutifyRegular;
     cursor: pointer;
@@ -2289,7 +2291,7 @@ body.fullscreen #bottom {
 
     color: #333;
 }
-.home .pane.artists .item:active .hover:after {
+.home .pane.artists .hover:active:after {
     box-shadow: 0px 0px 3px #000, inset 0px 0px 3px #000;
     color: #000;
 }

@@ -144,7 +144,7 @@ var HomeScreen = {
         image.src = externalUser.avatar_url;
 
         $item.css({'background-image': 'url('+ externalUser.avatar_url + ')'});
-        $item.click(function() {
+        $hover.click(function() {
             if ($item.hasClass('loading')) {
                 return;
             }
