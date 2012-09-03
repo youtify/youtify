@@ -2,6 +2,7 @@ import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext import db
+from google.appengine.api import memcache
 from django.utils import simplejson
 from activities import create_external_subscribe_activity
 from model import get_current_youtify_user_model
@@ -15,10 +16,16 @@ class TopExternalUsers(webapp.RequestHandler):
         """Gets a list of external users"""
         page = int(self.request.get('page', '0'))
         page_size = int(max)
-        users = ExternalUser.all().order('-nr_of_subscribers').fetch(page_size, page_size * page);
-        json = []
-        for user in users:
-            json.append(get_external_user_subscription_struct(user))
+        
+        json = memcache.get('TopExternalUsers-' + str(page_size) + '*' + str(page))
+        
+        if json is None:
+            users = ExternalUser.all().order('-nr_of_subscribers').fetch(page_size, page_size * page);
+            json = []
+            for user in users:
+                json.append(get_external_user_subscription_struct(user))
+            memcache.set('TopExternalUsers-' + str(page_size) + '*' + str(page), json, 60*5)
+        
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
