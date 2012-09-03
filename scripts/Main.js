@@ -43,7 +43,6 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
 
 $(document).ready(function() {
     EventSystem.init();
-    Menu.init();
     LoadingBar.init();
     WindowEvents.init();
     Logo.init();
@@ -60,6 +59,7 @@ $(document).ready(function() {
 
         SyncManager.init(data.device, data.lastNotificationSeenTimestamp);
         UserManager.init(data.user);
+        Menu.init();
         TopMenu.init();
 
         $('body').addClass('loaded');

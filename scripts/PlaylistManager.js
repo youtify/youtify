@@ -20,9 +20,7 @@ function PlaylistsManager() {
         }
 
         if (UserManager.isLoggedIn()) {
-            Menu.getGroup('playlists').showLoadingAnimation();
             $.getJSON('/me/playlists', function(data) {
-                Menu.getGroup('playlists').hideLoadingAnimation();
                 self.mergePlaylists(data);
                 self.updateMenu();
                 if (callback) {

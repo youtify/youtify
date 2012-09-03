@@ -6,6 +6,7 @@
  */
 var Menu = {
     $view: null,
+    $loadingAnimation: null,
     selectedMenuItem: null,
     playingMenuItem: null,
     groups: {},
@@ -13,6 +14,35 @@ var Menu = {
     init: function() {
         var self = this;
         this.$view = $('#left .menu');
+        this.$loadingAnimation = this.$view.find('.loading-animation');
+
+        // Hide playlists and extenral users and show loading animation until
+        // they are finished loading.
+        (function() {
+            function done() {
+                if (externalUsersLoaded && playlistsLoaded) {
+                    self.$loadingAnimation.hide();
+                    $('.group.playlists, .group.external-user-subscriptions').show();
+                }
+            }
+            var externalUsersLoaded = false;
+            var playlistsLoaded = false;
+
+            if (UserManager.isLoggedIn()) {
+                self.$loadingAnimation.show();
+                $('.group.playlists, .group.external-user-subscriptions').hide();
+
+                EventSystem.addEventListener('external_user_subscriptions_loaded', function() {
+                    externalUsersLoaded = true;
+                    done();
+                });
+
+                EventSystem.addEventListener('playlists_loaded', function() {
+                    playlistsLoaded = true;
+                    done();
+                });
+            }
+        }());
 
         $.each(this.$view.find('.group'), function(i, $group) {
             $group = $($group);
@@ -123,14 +153,6 @@ function MenuItemGroup($view) {
     self.clear = function() {
         self.menuItems = [];
         self.$ul.html('');
-    };
-
-    self.showLoadingAnimation = function() {
-        self.$view.find('.loading-animation').show();
-    };
-
-    self.hideLoadingAnimation = function() {
-        self.$view.find('.loading-animation').hide();
     };
 }
 

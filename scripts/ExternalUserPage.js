@@ -265,9 +265,7 @@ var ExternalUserManager = {
     init: function() {
         var self = this;
         if (UserManager.isLoggedIn()) {
-            Menu.getGroup('external-user-subscriptions').showLoadingAnimation();
             $.getJSON('/me/external_user_subscriptions', function(data) {
-                Menu.getGroup('external-user-subscriptions').hideLoadingAnimation();
                 $.each(data, function(i, subscription) {
                     self.subscriptions.push(new ExternalUser(subscription));
                 });
