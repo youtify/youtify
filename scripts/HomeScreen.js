@@ -8,12 +8,15 @@ var HomeScreen = {
     page: -1,
     hasMore: true,
     FILTER: [
+        /* Not music */
         'dignitasApollo',
         'mrcoolvideoboy',
         'huskystarcraft',
         'husky',
         'collegehumor',
-        'day9tv'
+        'day9tv',
+        /* Unplayable */
+        'lanadelreyunreleased' 
     ],
     
     init: function() {
