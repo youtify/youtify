@@ -5,6 +5,7 @@ api_version: 1
 
 builtins:
 - remote_api: on
+- appstats: on
 
 error_handlers:
   - file: html/error.html
