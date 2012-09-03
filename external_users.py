@@ -24,10 +24,11 @@ class TopExternalUsers(webapp.RequestHandler):
             json = []
             for user in users:
                 json.append(get_external_user_subscription_struct(user))
+            json = simplejson.dumps(json)
             memcache.set('TopExternalUsers-' + str(page_size) + '*' + str(page), json, 60*5)
         
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(json))
+        self.response.out.write(json)
 
 class SubscribersHandler(webapp.RequestHandler):
     
