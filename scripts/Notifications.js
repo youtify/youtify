@@ -21,18 +21,6 @@ var Notifications = {
 	append: function(message) {
 		if (window.webkitNotifications && window.webkitNotifications.checkPermission() < 2) {
             Notifications._webkitAppend(message);
-        } else {
-            var settings = new Settings(),
-                notification = $('<li/>'),
-                content = $('<div class="content"/>').text(message),
-                close = $('<span class="close"/>').text('X');
-            content.appendTo(notification);
-            close.appendTo(notification);
-            notification.appendTo('#top .notifications');
-
-            setTimeout(function() {
-                notification.find('.close').click(); 
-            }, settings.announceTimeout);
         }
 	},
 	_webkitAppend: function(message) {
