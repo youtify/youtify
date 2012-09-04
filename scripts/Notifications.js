@@ -1,4 +1,5 @@
 var Notifications = {
+    numberOfClicks: 0,
     init: function() {
         $('.notifications .close').live('click', function(event) {
             var parent = $(this).parent();
@@ -9,6 +10,13 @@ var Notifications = {
         EventSystem.addEventListener('video_info_fetched', function(info) {
             Notifications.append(info.title);
         });
+    },
+    requestPermission: function() {
+        if (window.webkitNotifications) {
+            if (window.webkitNotifications.checkPermission() === 1) { // 0=OK, 1=Not Allowed, 2=Denied
+                window.webkitNotifications.requestPermission();
+            }
+        }
     },
 	append: function(message) {
 		if (window.webkitNotifications && window.webkitNotifications.checkPermission() < 2) {
@@ -46,14 +54,9 @@ var Notifications = {
                 console.log(err.message);
             }
         };
-		if (window.webkitNotifications) {
-			if (window.webkitNotifications.checkPermission() === 1) { // 0=OK, 1=Not Allowed, 2=Denied
-				window.webkitNotifications.requestPermission(function() {
-                    announceFunction(message);
-				});
-			} else {
-                announceFunction(message);
-			}
+		if (window.webkitNotifications && window.webkitNotifications.checkPermission() === 0) {
+			// 0=OK, 1=Not Allowed, 2=Denied
+            announceFunction(message);
 		}
 	}
 };

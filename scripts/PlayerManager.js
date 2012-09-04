@@ -77,7 +77,7 @@ function PlayerManager() {
     /* Start (or if video is null resume) playback of a video */
     self.play = function(video) {
         var i = 0;
-        
+        Notifications.requestPermission();
         /* Play called without argument */
         if (video === null || video === undefined) {
             if (self.currentPlayer) {
