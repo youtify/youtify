@@ -34,7 +34,12 @@ var EchoNest = {
             };
             
             $.post('http://developer.echonest.com/api/v4/track/upload', options, function(data) {
-                var response = data.response;
+                var response;
+                if (typeof(data) === 'string') {
+                    response = JSON.parse(data).response;
+                } else {
+                    response = data.response;
+                }
                 
                 if (response.status.message === 'Success') {
                     if (response.track.status === 'complete') {
