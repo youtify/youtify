@@ -30,6 +30,17 @@ COMPLETE = """
 
 flattr_thing_cache = {}
 
+def import_followings(external_user_id):
+    url = "http://api.soundcloud.com/users/%s/followings.json?client_id=%s" % (external_user_id, '206f38d9623048d6de0ef3a89fea1c4d')
+    result = urlfetch.fetch(url)
+    result = simplejson.loads(result.content)
+    for user in result:
+        if ExternalUser.all().filter('type =', 'soundcloud').filter('external_user_id =', str(user['id'])).get() is None:
+            external_user_model = ExternalUser(type='soundcloud', external_user_id=str(user['id'])) 
+            external_user_model.username = user['permalink']
+            external_user_model.avatar_url = user['avatar_url']
+            external_user_model.save()
+
 class MigrationStepHandler(webapp.RequestHandler):
 
     def get(self):
@@ -40,10 +51,9 @@ class MigrationStepHandler(webapp.RequestHandler):
 
         #### START MIGRATION CODE ####
 
-        for m in ExternalUser.all().fetch(page_size, page_size * page):
+        for m in ExternalUser.all().filter('type =', 'soundcloud').fetch(page_size, page_size * page):
             count += 1
-            m.nr_of_subscribers = len(m.subscribers)
-            m.save()
+            import_followings(m.external_user_id)
 
         #### END MIGRATION CODE ####
 
@@ -60,7 +70,7 @@ class MigrationStepHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/admin/migrations/migrate_nr_of_subscribers_for_external_users', MigrationStepHandler),
+        ('/admin/migrations/import_followings', MigrationStepHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 
