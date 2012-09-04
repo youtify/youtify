@@ -119,16 +119,10 @@ var Search = {
 
         c = Search.tabs.$selectedPane.data('results-count') || 0;
 
+        EventSystem.callEventListeners('new_search_executed', q);
+
         switch (type) {
             case 'youtube-videos':
-                if (Search.lastVideosSearchQuery === q && !loadMore) {
-                    return;
-                } else {
-                    Search.lastVideosSearchQuery = q;
-                    EventSystem.callEventListeners('new_search_executed', q);
-                }
-
-                /* Get the results */
                 url = 'http://gdata.youtube.com/feeds/api/videos?callback=?';
                 params = {
                     'alt': 'json-in-script', 'max-results': Search.itemsPerPage,
@@ -158,13 +152,6 @@ var Search = {
 
                 break;
             case 'soundcloud-tracks':
-                if (Search.lastSoundCloudTracksQuery === q && !loadMore) {
-                    return;
-                } else {
-                    Search.lastSoundCloudTracksQuery = q;
-                    EventSystem.callEventListeners('new_search_executed', q);
-                }
-
                 url = 'https://api.soundcloud.com/tracks.json';
                 params = {
                     'q': q,
@@ -195,13 +182,6 @@ var Search = {
                 });
                 break;
             case 'officialfm-tracks':
-                if (Search.lastOfficialfmTracksQuery === q && !loadMore) {
-                    return;
-                } else {
-                    Search.lastOfficialfmTracksQuery = q;
-                    EventSystem.callEventListeners('new_search_executed', q);
-                }
-
                 url = 'http://api.official.fm/search/tracks/' + escape(q) + '/paginate';
                 params = {
                     'format': 'json',
@@ -232,13 +212,6 @@ var Search = {
                 });
                 break;
             case 'youtify-users':
-                if (Search.youtifyUsersQuery === q && !loadMore) {
-                    return;
-                } else {
-                    Search.youtifyUsersQuery = q;
-                    EventSystem.callEventListeners('new_search_executed', q);
-                }
-
                 url = '/api/search/users';
                 params = {
                     'q': q,
@@ -260,13 +233,6 @@ var Search = {
                 });
                 break;
             case 'youtify-playlists':
-                if (Search.youtifyPlaylistsQuery === q && !loadMore) {
-                    return;
-                } else {
-                    Search.youtifyPlaylistsQuery = q;
-                    EventSystem.callEventListeners('new_search_executed', q);
-                }
-
                 url = '/api/search/playlists';
                 params = {
                     'q': q,
