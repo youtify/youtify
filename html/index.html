@@ -32,56 +32,36 @@
         <link href="https://plus.google.com/117221740012078743992/" rel="publisher" />
 		<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho" />
     
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            if (typeof jQuery == 'undefined')
-            {
-              document.write(unescape("%3Cscript src='/scripts/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
-            }
-        </script>
+        <script src="/scripts/jquery-1.7.2.min.js"></script>
         
+        {% if DO_FEATURE_DETECTION %}
 		<script src="/scripts/FeatureDetection.js?v={{ CURRENT_VERSION_ID }}"></script>
         <script>
             FeatureDetection.init();
             FeatureDetection.checkBrowser();
         </script>
+        {% endif %}
         
         <link rel="icon" href="/images/logo/logo_16x16.png" type="image/png" />
         <link href='/styles/default.css?v={{ CURRENT_VERSION_ID }}' rel='stylesheet' type='text/css'media="only screen and (min-width: 321px)">
         <link href='/styles/mobile.css?v={{ CURRENT_VERSION_ID }}' rel="stylesheet" type="text/css" media="only screen and (max-width: 320px)">
         
-        <link href='/styles/fullscreen.css' rel='stylesheet' type='text/css'>
+        {% if USE_SELF_HOSTED_FONT %}
+        <style type="text/css">
+        @font-face {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Open Sans'), local('OpenSans'), url(/styles/opensans.woff) format('woff');
+        }
+        </style>
+        {% else %}
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
-        <script>
-            var my_user_id = "{{ my_user_id }}";
-            var logged_in = {{ logged_in }};
-            var has_flattr_access_token = {{ has_flattr_access_token }};
-            var flattr_user_name = "{{ flattr_user_name }}";
-			var device = "{{ device }}";
-            var autoDetectedLanguageByServer = "{{ autoDetectedLanguageByServer }}";
-            var autoDetectedTranslations = {{ autoDetectedTranslations }};
-            var ON_DEV = {{ ON_DEV|lower }};
-            var ON_PRODUCTION = {{ ON_PRODUCTION|lower }};
-            var SEARCH_STATS_URL = "{{ SEARCH_STATS_URL }}";
-            var USER = {{ USER }};
-            var myFollowers = {{ myFollowers }};
-            var myFollowings = {{ myFollowings }};
-            var settingsFromServer = {{ settingsFromServer }};
-            var flattrStats = {{ flattrStats }};
-
-            var playlistsFromServer = {{ playlistsFromServer }};
-            var flattrTopList = {{ flattrTopList }};
-        </script>
+        {% endif %}
         		
 		<script src="/scripts/jquery.shuffle.js"></script>
 		<script src="/scripts/soundmanager2-jsmin.js"></script>
 
-		<script>
-			soundManager.url = '/scripts/swf/';
-			soundManager.flashVersion = 9;
-            soundManager.debugMode = false;
-		</script>
         {% if USE_PRODUCTION_JAVASCRIPT %}
         <script src="/scripts/jquery.timeago.js"></script>
         <script src="/scripts/production.js?v={{ CURRENT_VERSION_ID }}"></script>
@@ -94,13 +74,11 @@
         <script src="/scripts/Utils.js"></script>
         <script src="/scripts/Drag.js"></script>
         <script src="/scripts/ContextMenu.js"></script>
-
         <script src="/scripts/AbstractPlayer.js"></script>
         <script src="/scripts/YouTubePlayer.js"></script>
 		<script src="/scripts/SoundCloudPlayer.js"></script>
 		<script src="/scripts/OfficialfmPlayer.js"></script>
         <script src="/scripts/PlayerManager.js"></script>
-
         <script src="/scripts/LoadingBar.js"></script>
         <script src="/scripts/Volume.js"></script>
         <script src="/scripts/Search.js"></script>
@@ -117,16 +95,19 @@
         <script src="/scripts/Uploader.js"></script>
         <script src="/scripts/SpotifyImporter.js"></script>
         <script src="/scripts/SpotifyImporterPopup.js"></script>
-        <script src="/scripts/NewsFeed.js"></script>
+        <script src="/scripts/Activities.js"></script>
         <script src="/scripts/Menu.js"></script>
-        <script src="/scripts/Tab.js"></script>
+        <script src="/scripts/Tabs.js"></script>
         <script src="/scripts/Timeline.js"></script>
         <script src="/scripts/EventSystem.js"></script>
-        <script src="/scripts/Toplist.js"></script>
+        <script src="/scripts/HomeScreen.js"></script>
+        <script src="/scripts/Recommendations.js"></script>
         <script src="/scripts/InfoPopup.js"></script>
         <script src="/scripts/FlattrFinder.js"></script>
         <script src="/scripts/AutoFlattrer.js"></script>
-        <script src="/scripts/VideoInfo.js"></script>
+        <script src="/scripts/Lastfm.js"></script>
+        <script src="/scripts/EchoNest.js"></script>
+        <script src="/scripts/InfoFetcher.js"></script>
         <script src="/scripts/BottomPanel.js"></script>
         <script src="/scripts/TopMenu.js"></script>
         <script src="/scripts/User.js"></script>
@@ -134,85 +115,196 @@
         <script src="/scripts/ExternalUserPage.js"></script>
         <script src="/scripts/ModalBox.js"></script>
         <script src="/scripts/LayoutManager.js"></script>
+        <script src="/scripts/Logo.js"></script>
+        <script src="/scripts/FullScreen.js"></script>
+        <script src="/scripts/WindowEvents.js"></script>
+        <script src="/scripts/SyncManager.js"></script>
 		<script src="/scripts/SearchStats.js"></script>
 		<script src="/scripts/Main.js"></script>
         {% endif %}
         
-		{% if ON_PRODUCTION %}
-			<script>
-                var _gaq = _gaq || [];
-                _gaq.push(['_setAccount', 'UA-22835317-1']);
-                _gaq.push(['_trackPageview']);
+		{% if INCLUDE_GOOGLE_ANALYTICS %}
+        <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-22835317-1']);
+            _gaq.push(['_trackPageview']);
 
-                (function() {
-                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                })();
-            </script>
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
 		{% endif %}
 		
 		<script src="http://www.youtube.com/player_api"></script>
 	</head> 
-    {% if logged_in %}
-	<body class="logged-in">
-    {% else %}
-	<body class="logged-out">
-    {% endif %}
 	<body>
         <div id="loading" class="translatable">Loading...</div>
 
-        {% include "./popups/spotify_importer.html" %}
-        {% include "./popups/settings.html" %}
-        {% include "./popups/videoinfo.html" %}
+        <div id="spotify-importer" style="display:none;" class="popup">
+            <h2 class="translatable">Paste Spotify links below</h2>
+            <span class="translatable instructions">Instructions</span>
+            <textarea></textarea>
+            <input type="button" value="Cancel" class="translatable cancel" />
+            <span class="added">0</span><span class="max">/0</span>
+            <input type="button" value="Import" class="translatable start" />
+        </div>
+
+        <div id="login-required-popup" style="display:none" class="popup">
+            <p class="translatable">Login required<p>
+            <a class="login-link button exposed translatable" href="#">Login</a>
+        </div>
+
+        <div id="settings" style="display:none" class="popup">
+            <div class="puffs" style="display:none">
+                <a class="puff chrome-webstore translatable" href="#" target="_blank">Install Youtify from the Chrome Web Store</a>
+            </div>
+            <div class="language">
+                <h2 class="translatable">Language</h2>
+                <select>
+                </select>
+                <a class="translatable" href="/translations">Help out with translations</a>
+            </div>
+            <div class="connections">
+                <h2 class="translatable">Connections</h2>
+                <div class="connection flattr">
+                    <div class="account">
+                    </div>
+                    <div class="settings">
+                        <div class="tickbox">
+                            <input type="checkbox" name="flattr_automatically" />
+                            <label for="flattr_automatically" class="translatable">Automatically flattr songs after they finish playing</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="connection lastfm">
+                    <div class="account">
+                    </div>
+                    <div class="settings">
+                        <div class="tickbox">
+                            <input type="checkbox" name="lastfm_scrobble_automatically" />
+                            <label for="lastfm_scrobble_automatically" class="translatable">Automatically scrobble songs to Last.fm after they finish playing</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="notifications">
+                <h2 class="translatable">Notifications</h2>
+                <p class="translatable">Email me when:</p>
+                <div class="toggle">
+                    <input type="checkbox" name="send_new_follower_email" />
+                    <span class="translatable">I'm followed by someone new</span>
+                </div>
+                <div class="toggle">
+                    <input type="checkbox" name="send_new_subscriber_email" />
+                    <span class="translatable">My playlists are subscribed to</span>
+                </div>
+            </div>
+            <div class="quality">
+                <h2 class="translatable">Quality (Sound & Video)</h2>
+                <input id="qualityLowRadio" type="radio" name="quality" value="Low" />
+                <label id="qualityLowSpan" for="qualityLowRadio" class="translatable">Low</label>
+                <input id="qualityHighRadio" type="radio" name="quality" value="High" />
+                <label id="qualityHighSpan" for="qualityHighRadio" class="translatable">High</label>
+            </div>
+        </div>
+
+        <div id="video-info-popup" style="display:none;" class="popup">
+            <ul class="sections">
+                <li class="video">
+                    <h2 class="translatable">Video/Track</h2>
+                    <div class="content">
+                    </div>
+                </li>
+
+                <li class="uploader">
+                    <h2 class="translatable">Uploader/Artist</h2>
+                    <div class="content">
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="activities-popup" style="display:none" class="popup">
+            <div class="loading-animation"><div></div><div></div><div></div></div>
+            <ul>
+            </ul>
+        </div>
+
+        <div id="profile-popup" style="display:none" class="popup">
+            <ul>
+                <li class="profile-page"><span class="link translatable">My profile</span></li>
+                <li class="logout"><a class="link translatable" href="">Logout</a></li>
+            </ul>
+        </div>
+
+        <div id="logo-popup" style="display:none" class="popup no-overflow"><div></div></div>
+
+        <div id="similar-artists-popup" style="display:none" class="popup">
+            <div class="loading-animation"><div></div><div></div><div></div></div>
+            <div class="content">
+            </div>
+        </div>
+
+        <div id="logged-out-notification" style="display:none" class="popup">
+            <span class="translatable">You have been logged out!</span>
+        </div>
+
         <div id="about-popup" style="display:none" class="popup"></div>
+
         <div id="playlist-subscribers-popup" style="display:none" class="popup"></div>
         
         <div id="top">
-            <div class="profile">
-                <span class="picture"></span>
-                <span class="display-name link"></span>
-            </div>
-            <div class="search"> 
-                <input type="search" class="translatable" placeholder="Search" />
-                <button />
-            </div>
-            
-            <ul class="notifications"></ul>
-            
-            <div class="menu">
-                <div class="item about">
+            <div class="left-area">
+                <div class="item logo"></div>
+                <div class="item dropdown-button about">
                     <span class="title translatable">About</span>
                 </div>
-                <div class="item settings translatable">
+
+                <div class="item search"> 
+                    <input type="search" class="translatable" placeholder="Search" />
+                    <button class="button"/>
+                </div>
+            </div>
+            
+            <div class="right-area">
+                <div class="item right activities dropdown-button">
+                    <span class="title translatable" title="Activities">=</span>
+                    <span class="counter" style="display:none"></span>
+                </div>
+                <div class="item right settings dropdown-button">
                     <span class="title translatable">Settings</span>
                     <span class="counter" style="display:none"></span>
                 </div>
-                {% if logged_in %}
-                <a class="item last logout-link translatable" href="{{ logout_url }}">Logout</a>
-                {% else %}
-                <a class="item last login-link translatable" href="{{ login_url }}">Login</a>
-                {% endif %}
+                <div class="item right last profile dropdown-button">
+                </div>
+                <a class="item right last login-link button exposed translatable" href="#">Login</a>
             </div>
+
+            <ul class="notifications"></ul>
         </div>
         
         <div class="left-wrapper">
             <div id="left">
                 <ul class="menu">
-                    {% if logged_in %}
-                        <li class="news-feed translatable">News Feed</li>
-                    {% endif %}
-                    <li class="toplist translatable">Toplist</li>
-                    <li class="queue translatable">Play Queue</li>
-                    <li class="search translatable">Search Results</li>
-                    <li class="external-user-subscriptions">
+                    <li class="group misc" rel="misc">
                         <ul>
                         </ul>
                     </li>
-                    <li class="playlists">
+                    <li class="loading-animation" style="display:none"><div></div><div></div><div></div></li>
+                    <li class="group external-user-subscriptions" rel="external-user-subscriptions">
                         <ul>
                         </ul>
-                        <div class="new droppable">
+                    </li>
+                    <li class="group subscriptions" rel="subscriptions">
+                        <ul>
+                        </ul>
+                    </li>
+                    <li class="group playlists" rel="playlists">
+                        <ul>
+                        </ul>
+                        <div class="new droppable button">
                             <span class="translatable">New playlist...</span> 
                             <input type="text" style="display:none" /> 
                         </div> 
@@ -230,49 +322,67 @@
             <div id="right">
                 <div class="search">
                     <ul class="tabs">
-                        <li class="youtube videos" rel=".youtube.videos.pane" class="active">YouTube</li>
-                        <li class="soundcloud tracks" rel=".soundcloud.playlists.pane">SoundCloud</li>
-                        <li class="officialfm tracks" rel=".officialfm.playlists.pane">Official.fm</li>
-                        <li class="youtify users translatable" rel=".youtify.users.pane">Users</li>
-                        <li class="youtify playlists translatable" rel=".youtify.playlists.pane">Playlists</li>
+                        <li class="youtube-videos" rel="youtube-videos">YouTube</li>
+                        <li class="soundcloud-tracks" rel="soundcloud-tracks">SoundCloud</li>
+                        <li class="officialfm-tracks" rel="officialfm-tracks">Official.fm</li>
+                        <li class="youtify-users translatable" rel="youtify-users">Users</li>
+                        <li class="youtify-playlists translatable" rel="youtify-playlists">Playlists</li>
                     </ul>
-                    <table class="youtube videos pane tracklist"></table>
-                    <table class="soundcloud tracks pane tracklist"></table>
-                    <table class="officialfm tracks pane tracklist"></table>
-                    <div class="youtify users pane user-list"></div>
-                    <div class="youtify playlists pane playlist-list"></div>
-                </div>
-
-                <div class="news-feed">
-                    <div class="activities pane"></div>
+                    <table class="youtube-videos pane tracklist"></table>
+                    <table class="soundcloud-tracks pane tracklist"></table>
+                    <table class="officialfm-tracks pane tracklist"></table>
+                    <div class="youtify-users pane user-list"></div>
+                    <div class="youtify-playlists pane playlist-list"></div>
                 </div>
                 
-                <div class="toplists">
+                <div class="home">
                     <ul class="tabs">
-                        <li class="flattr translatable" rel=".flattr">Most Flattred</li>
-                        <li class="playlists translatable" rel=".playlists">Popular Playlists</li>
+                        <li class="artists translatable" rel="artists">Popular Artists</li>
+                        <li class="playlists translatable" rel="playlists">Popular Playlists</li>
+                        <li class="recommendations translatable" rel="recommendations">Recommendations</li>
                     </ul>
-                    <div class="flattr pane">
-                        <div class="puff">
-                            <span class="stats"></span>
-                            <a class="button translatable" href="http://blog.youtify.com/2012/06/auto-flattr-songs-as-you-listen-to-them.html" target="_blank">Learn more</a>
-                        </div>
-                        <table class="tracklist">
-                        </table>
+
+                    <div class="pane artists">
                     </div>
-                    <div class="playlists pane">
+
+                    <div class="pane playlists">
+                    </div>
+
+                    <div class="pane recommendations">
+                        <div class="help-box not-logged-in">
+                            <h2 class="translatable">You are not logged in</h2>
+                            <div class="translatable">You need to log in to get recommendations.</div>
+                        </div>
+                        <div class="help-box not-connected-to-lastfm">
+                            <h2 class="translatable">You are not connected to Last.fm</h2>
+                            <div class="translatable">You need to connect your Last.fm account to get recommendations.</div>
+                            <a class="button exposed" href="/lastfm/connect">Connect with Last.fm</a>
+                        </div>
+                        <div class="content">
+                        </div>
                     </div>
                 </div>
                 
                 <div class="queue">
-                    <table class="queue pane tracklist"></table>
+                    <div class="help-box">
+                        <h2 class="translatable">The play queue is empty</h2>
+                    </div>
+                    <table class="tracklist"></table>
+                </div>
+
+                <div class="recommendations">
+                    <table class="tracklist"></table>
+                    <div class="artists"></div>
                 </div>
                 
                 <div class="playlists droppable">
-                    <div class="playlist-header">
+                    <div class="playlist-header"></div>
+                    <div class="help-box">
+                        <h2 class="translatable">This playlist is empty</h2>
+                        <div class="translatable">You can add tracks by dragging from other playlists or from the search results.</div>
                     </div>
                 </div>
-                
+                               
                 <div class="profile">
                     <div class="picture-container">
                         <div class="change">
@@ -286,41 +396,33 @@
                             <button class="edit button translatable">Edit</button>
                         </div>
                         <span class="nickname"></span>
-                        <a class="flattr-user-name link" target="_blank" href="#"></a>
+                        <span class="flattr">
+                            <a class="username link" target="_blank" href="#"></a>
+                            -
+                            <span class="count"></span>
+                        </span>
                         <span class="tagline"></span>
                     </div>
 
-                    <ul class="tabs">
-                        <li class="profile-playlists" rel=".profile-playlists.pane">Playlists</li>
-                        <li class="profile-followings" rel=".profile-followings.pane">Following</li>
-                        <li class="profile-followers" rel=".profile-followers.pane">Followers</li>
-                        <li class="profile-flattrs" rel=".profile-flattrs.pane">Flattrs</li>
-                    </ul>
+                    <div class="tab-area">
+                        <ul class="tabs">
+                            <li class="profile-playlists" rel="profile-playlists">Playlists</li>
+                            <li class="profile-followings" rel="profile-followings">Following</li>
+                            <li class="profile-followers" rel="profile-followers">Followers</li>
+                        </ul>
 
-                    <div class="pane profile-playlists">
-                    </div>
+                        <div class="pane profile-playlists">
+                        </div>
 
-                    <div class="pane profile-followings">
-                    </div>
+                        <div class="pane profile-followings">
+                        </div>
 
-                    <div class="pane profile-followers">
-                    </div>
-
-                    <div class="pane profile-flattrs">
+                        <div class="pane profile-followers">
+                        </div>
                     </div>
                 </div>
 
                 <div class="external-profile">
-                    <div class="info">
-                        <div class="img"></div>
-                        <div class="name-container">
-                            <h1></h1>
-                            <button class="subscribe button translatable">Subscribe</button>
-                            <button class="unsubscribe button translatable">Unsubscribe</button>
-                        </div>
-                        <a class="source link" href="#" target="_blank"></a>
-                        <div class="description"></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -333,9 +435,8 @@
             </div>
 
             <div class="info">
-                <div class="title">
-                    <span class="text"></span>
-                </div>
+                <div class="i"></div>
+                <div class="title"></div>
             </div>
 
             <div class="timeline-wrapper"> 

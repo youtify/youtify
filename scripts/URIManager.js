@@ -16,7 +16,7 @@ var URIManager = {
     },
     loadWarnings: function() {
         if (window.top !== window.self) {
-            Notifications.append('This address is not affiliated with Youtify. Always use www.youtify.com');
+            Utils.showModalBox('This address is not affiliated with Youtify. Always use www.youtify.com');
         }
     },
     loadState: function() {
@@ -58,23 +58,15 @@ var URIManager = {
                 }
             ],
             [
-                '/toplist/playlists',
-                function(matches) {
-                    Toplist.popularPlaylistsTab.select();
-                }
-            ],
-            [
                 '/soundcloud/(.*)',
                 function(matches) {
-                    Menu.deSelectAll();
-                    ExternalUserPage.loadSoundCloudUser(matches[1]);
+                    ExternalUserPage.load('soundcloud', matches[1]);
                 }
             ],
             [
                 '/youtube/(.*)',
                 function(matches) {
-                    Menu.deSelectAll();
-                    ExternalUserPage.loadYouTubeUser(matches[1]);
+                    ExternalUserPage.load('youtube', matches[1]);
                 }
             ],
             [
@@ -86,27 +78,43 @@ var URIManager = {
             [
                 '/profile',
                 function(matches) {
-                    Menu.profile.select();
+                    UserManager.loadCurrentUser();
                 }
             ],
             [
                 '/users/(.*)',
                 function(matches) {
-                    UserManager.doFakeProfileMenuClick();
                     UserManager.loadProfile(matches[1]);
+                }
+            ],
+            [
+                '/toplist/playlists',
+                function(matches) {
+                    HomeScreen.show('playlists');
+                }
+            ],
+            [
+                '/recommendations',
+                function(matches) {
+                    HomeScreen.show('recommendations');
+                }
+            ],
+            [
+                '/queue',
+                function(matches) {
+                    Queue.getMenuItem().select();
                 }
             ],
             [
                 '/(.+)',
                 function(matches) {
-                    UserManager.doFakeProfileMenuClick();
                     UserManager.loadProfile(matches[1]);
                 }
             ],
             [
                 '/',
                 function(matches) {
-                    Menu.find('toplist').select();
+                    HomeScreen.menuItem.select();
                 }
             ]
         ];

@@ -1,4 +1,5 @@
 import re
+import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from django.utils import simplejson
@@ -11,6 +12,8 @@ from model import get_activities_structs
 from model import get_display_name_for_youtify_user_model
 from model import get_external_user_subscriptions_struct_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
+from model import get_playlist_structs_for_youtify_user_model
+from model import generate_device_token
 from activities import create_follow_activity
 from mail import send_new_follower_email
 
@@ -30,6 +33,7 @@ BLOCKED_NICKNAMES = [
     'newsfeed',
     'activities',
     'toplist',
+    'recommendations',
     'queue',
     'search',
     'users',
@@ -92,7 +96,11 @@ class SettingsHandler(webapp.RequestHandler):
         user.send_new_follower_email = self.request.get('send_new_follower_email') == 'true'
         user.send_new_subscriber_email = self.request.get('send_new_subscriber_email') == 'true'
         user.flattr_automatically = self.request.get('flattr_automatically') == 'true'
+        user.lastfm_scrobble_automatically = self.request.get('lastfm_scrobble_automatically') == 'true'
         user.save()
+        
+        logging.info(self.request)
+        
         settings = get_settings_struct_for_youtify_user_model(user)
         self.response.out.write(simplejson.dumps(settings))
 
@@ -176,11 +184,73 @@ class ExternalUserSubscriptionsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(get_external_user_subscriptions_struct_for_youtify_user_model(user)))
 
+class PlaylistsHandler(webapp.RequestHandler):
+
+    def get(self):
+        """Get the users playlists, including private ones"""
+        user = get_current_youtify_user_model()
+        if user:
+            json = get_playlist_structs_for_youtify_user_model(user, include_private_playlists=True)
+        else:
+            json = []
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
+class MeHandler(webapp.RequestHandler):
+
+    def get(self):
+        """Get the currnet user, incuding private data"""
+        user = get_current_youtify_user_model()
+        if user:
+            json = get_youtify_user_struct(user, include_private_data=True)
+        else:
+            json = {
+            }
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
+class DeviceTokenHandler(webapp.RequestHandler):
+
+    def get(self):
+        """Set a new device token for the user"""
+        user = get_current_youtify_user_model()
+        user.device = generate_device_token()
+        user.save()
+        json = {
+            'device': user.device
+        }
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
+class LastNotificationSeenTimestampHandler(webapp.RequestHandler):
+
+    def post(self):
+        user = get_current_youtify_user_model()
+        val = self.request.get('val')
+        json = {
+            'message': '',
+        }
+        if user:
+            if val > user.last_notification_seen_timestamp:
+                user.last_notification_seen_timestamp = val
+                user.save()
+                json['message'] = 'timestamp updated'
+            else:
+                json['message'] = 'newer timestamp already set'
+        else:
+            json['message'] = 'no user found'
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(simplejson.dumps(json))
+
 def main():
     application = webapp.WSGIApplication([
+        ('/me', MeHandler),
+        ('/me/last-notification-seen-timestamp', LastNotificationSeenTimestampHandler),
         ('/me/external_user_subscriptions', ExternalUserSubscriptionsHandler),
         ('/me/youtube_username', YouTubeUserNameHandler),
         ('/me/profile', ProfileHandler),
+        ('/me/playlists', PlaylistsHandler),
+        ('/me/request_new_device_token', DeviceTokenHandler),
         ('/me/settings', SettingsHandler),
         ('/me/followings/(.*)', FollowingsHandler),
     ], debug=True)

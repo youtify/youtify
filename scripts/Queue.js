@@ -3,8 +3,36 @@ var Queue = {
     autoList: [],
     manualPlayIndex: null,
     autoPlayIndex: null,
+    $rightView: null,
+    $tracklist: null,
+    menuItem: null,
+
     init: function() {
-    
+        var self = this;
+        this.$rightView = $('#right .queue');
+        this.$tracklist = $('#right .queue .tracklist');
+        this.menuItem = new MenuItem({
+            cssClasses: ['queue'],
+            title: TranslationSystem.get('Play Queue'),
+            $contentPane: this.$rightView,
+            onSelected: function() {
+                history.pushState(null, null, '/queue');
+                if (self.isEmpty()) {
+                    self.$rightView.find('.help-box').show();
+                } else {
+                    self.$rightView.find('.help-box').hide();
+                }
+            },
+            translatable: true
+        });
+        Menu.getGroup('misc').addMenuItem(this.menuItem);
+    },
+    isEmpty: function() {
+        var self = this;
+        return self.manualList.length === 0 && self.autoList.length === 0;
+    },
+    getMenuItem: function() {
+        return this.menuItem;
     },
     addManual: function(video) {
         Queue.manualList.push(video);  
@@ -16,32 +44,28 @@ var Queue = {
         Queue.updateView();
     },
     manualPlay: function(index) {
-        console.log('manual ' + index);
         if (Queue.manualList.length === 0) {
             return false;
         }
         
         if (index < 0 || index > Queue.manualList.length -1) {
             return false;
-        } else {
-            Queue.manualPlayIndex = index;
         }
+        Queue.manualPlayIndex = index;
         Queue.manualList[Queue.manualPlayIndex].play();
         Queue.autoPlayIndex = null;
         Queue.updateView();
         return true;
     },
     autoPlay: function(index) {
-        console.log('auto ' + index);
         if (Queue.autoList.length === 0) {
             return false;
         }
         
         if (index < 0 || index > Queue.autoList.length -1) {
             return false;
-        } else {
-            Queue.autoPlayIndex = index;
         }
+        Queue.autoPlayIndex = index;
         Queue.autoList[Queue.autoPlayIndex].play();
         Queue.updateView();
         return true;
@@ -53,15 +77,17 @@ var Queue = {
         
         if (Queue.manualList.length > 0 && Queue.manualPlayIndex === null) {
             return Queue.manualPlay(0);
-        } else if (Queue.manualList.length > 0 && Queue.manualPlayIndex + 1 < Queue.manualList.length) {
-            return Queue.manualPlay(Queue.manualPlayIndex + 1);
-        } else if (Queue.autoList.length > 0 && Queue.autoPlayIndex === null) {
-            return Queue.autoPlay(0);
-        } else if (Queue.autoList.length > 0 && Queue.autoPlayIndex + 1 < Queue.autoList.length) {
-            return Queue.autoPlay(Queue.autoPlayIndex + 1);
-        } else {
-            return false;
         }
+        if (Queue.manualList.length > 0 && Queue.manualPlayIndex + 1 < Queue.manualList.length) {
+            return Queue.manualPlay(Queue.manualPlayIndex + 1);
+        }
+        if (Queue.autoList.length > 0 && Queue.autoPlayIndex === null) {
+            return Queue.autoPlay(0);
+        }
+        if (Queue.autoList.length > 0 && Queue.autoPlayIndex + 1 < Queue.autoList.length) {
+            return Queue.autoPlay(Queue.autoPlayIndex + 1);
+        }
+        return false;
     },
     playPrev: function() {
         if ((Queue.manualList.length + Queue.autoList.length) === 0) {
@@ -70,16 +96,17 @@ var Queue = {
         
         if (Queue.autoPlayIndex !== null && Queue.autoPlayIndex > 0) {
             return Queue.autoPlay(Queue.autoPlayIndex - 1);
-        } else if (Queue.autoPlayIndex !== null && Queue.autoPlayIndex === 0) {
-            return Queue.manualPlay(Queue.manualList.length - 1);
-        } else if (Queue.manualPlayIndex !== null && Queue.manualPlayIndex > 0) {
-            return Queue.manualPlay(Queue.manualPlayIndex - 1);
-        } else {
-            return false;
         }
+        if (Queue.autoPlayIndex !== null && Queue.autoPlayIndex === 0) {
+            return Queue.manualPlay(Queue.manualList.length - 1);
+        }
+        if (Queue.manualPlayIndex !== null && Queue.manualPlayIndex > 0) {
+            return Queue.manualPlay(Queue.manualPlayIndex - 1);
+        }
+        return false;
     },
 	updateView: function() {
-        var view = Menu.find('queue').findTab('queue').paneView;
+        var view = this.$tracklist;
         
         view.html('');
         $.each(Queue.manualList, function(index, video) {

@@ -1,10 +1,11 @@
 application: youtify
-version: 14
+version: 15
 runtime: python
 api_version: 1
 
 builtins:
 - remote_api: on
+- appstats: on
 
 error_handlers:
   - file: html/error.html
@@ -50,6 +51,9 @@ handlers:
 - url: /stats
   script: stats.py
 
+- url: /me
+  script: me.py
+
 - url: /me/.*
   script: me.py
 
@@ -62,8 +66,8 @@ handlers:
   #expiration: "1d"
 
 - url: /about
-  static_files: html/popups/about.html
-  upload: html/popups/about.html
+  static_files: html/about.html
+  upload: html/about.html
   #expiration: "1d"
 
 - url: /yourbrowsersucks
@@ -72,12 +76,12 @@ handlers:
 - url: /yourdecisionrocks
   script: sucks.py
 
-- url: /cron/generate_youtube_toplist.*
-  script: youtube_toplist.py
-  login: admin
-
 - url: /cron/generate_flattr_toplist.*
   script: flattr_toplist.py
+  login: admin
+
+- url: /cron/generate_youtube_toplist.*
+  script: youtube_toplist.py
   login: admin
 
 - url: /cron/generate_playlists_toplist.*
@@ -170,6 +174,10 @@ handlers:
   script: flattr.py
   login: required
 
+- url: /lastfm/*.*
+  script: lastfm.py
+  login: required
+
 - url: /unsubscribe
   script: mail.py
 
@@ -180,6 +188,9 @@ handlers:
   static_files: opensearch.xml
   upload: opensearch.xml
   expiration: "1d"
+
+- url: /api/main
+  script: main.py
 
 - url: /.*
   script: main.py

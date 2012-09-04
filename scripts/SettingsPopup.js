@@ -32,15 +32,30 @@ var SettingsPopup = {
             $('#top .menu .settings .counter').text(numberOfUnseenPuffs).show();
         }
 
-        // FLATTR
+        if (UserManager.isLoggedIn()) {
+            // FLATTR
+            if (UserManager.currentUser.flattrUserName) {
+                $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + UserManager.currentUser.flattrUserName).text(UserManager.currentUser.flattrUserName).appendTo('#settings .connections .flattr .account');
+                $('<a class="action disconnect translatable" href="/flattrdisconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .flattr .account');
+            } else {
+                $('<span class="title">Flattr</span>').appendTo('#settings .connections .flattr .account');
+                $('<a class="action connect translatable" href="/flattrconnect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .flattr .account');
+                $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('disabled', 'disabled');
+            }
 
-        if (has_flattr_access_token) {
-            $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + flattr_user_name).text(flattr_user_name).appendTo('#settings .connections .flattr .account');
-            $('<a class="button disconnect translatable" href="/flattrdisconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .flattr .account');
+            // LASTFM
+            if (UserManager.currentUser.lastfmUserName) {
+                $('<a class="title" target="_blank"></a>').attr('href', 'http://www.last.fm/user/' + UserManager.currentUser.lastfmUserName).text(UserManager.currentUser.lastfmUserName).appendTo('#settings .connections .lastfm .account');
+                $('<a class="action disconnect translatable" href="/lastfm/disconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .lastfm .account');
+            } else {
+                $('<span class="title">Last.fm</span>').appendTo('#settings .connections .lastfm .account');
+                $('<a class="action connect translatable" href="/lastfm/connect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .lastfm .account');
+                $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').attr('disabled', 'disabled');
+            }
         } else {
-            $('<span class="title">Flattr</span>').appendTo('#settings .connections .flattr .account');
-            $('<a class="button connect translatable" href="/flattrconnect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .flattr .account');
-            $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('disabled', 'disabled');
+            $('#settings .connections').hide();
+            $('#settings .notifications').hide();
+            $('#settings .notifications').hide();
         }
 
         (function() {
@@ -48,12 +63,23 @@ var SettingsPopup = {
             if (settings.flattr_automatically) {
                 $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('checked', 'checked');
             }
+
+            if (settings.lastfm_scrobble_automatically) {
+                $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').attr('checked', 'checked');
+            }
         }());
 
         $('#settings .connections .flattr .settings input[name=flattr_automatically]').change(function() {
             var settings = new Settings();
             settingsFromServer.flattr_automatically = this.checked;
             settings.flattr_automatically = this.checked;
+            settings.save();
+        });
+        
+        $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').change(function() {
+            var settings = new Settings();
+            settingsFromServer.lastfm_scrobble_automatically = this.checked;
+            settings.lastfm_scrobble_automatically = this.checked;
             settings.save();
         });
 
@@ -76,6 +102,14 @@ var SettingsPopup = {
             });
             
         // LANGUAGE
+
+        $.each(languagesFromServer, function(i, lang) {
+            var $option = $('<option></option>').attr('value', lang.code).text(lang.label);
+            if (lang.code === settings.language) {
+                $option.attr('selected', 'selected');
+            }
+            $option.appendTo('#settings .language select');
+        });
 
         $('#settings .language select').change(function() {
             var code = $(this).val();
@@ -142,7 +176,7 @@ var SettingsPopup = {
 
     installChromeWebStoreApp: function() {
         var fail = function() {
-                Notifications.append('Failed to install App.');
+                Utils.showModalBox('Failed to install App.');
             },
             success = function() {
                 Notifications.append('Installation succeded!');

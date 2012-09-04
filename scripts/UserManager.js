@@ -1,14 +1,14 @@
 var UserManager = {
     currentUser: null,
     viewingUser: null,
+    tabs: null,
+    $rightView: null,
     $playlists: null,
     $followings: null,
     $followers: null,
-    $flattrs: null,
     $playlistsTab: null,
     $followingsTab: null,
     $followersTab: null,
-    $flattrsTab: null,
     $followButton: null,
     $unFollowButton: null,
     $editButton: null,
@@ -27,38 +27,59 @@ var UserManager = {
                 UserManager.loadCurrentUser();
                 history.pushState(null, null, UserManager.currentUser.getUrl());
             });
+
             EventSystem.addEventListener('flattr_click_made', function(data) {
                 UserManager.currentUser.nrOfFlattrs += 1;
             });
         }
 
+        UserManager.$rightView = $('#right .profile');
         UserManager.$playlists = $('#right .profile .pane.profile-playlists');
         UserManager.$followings = $('#right .profile .pane.profile-followings');
         UserManager.$followers = $('#right .profile .pane.profile-followers');
-        UserManager.$flattrs = $('#right .profile .pane.profile-flattrs');
         UserManager.$playlistsTab = $('#right .profile .tabs .profile-playlists');
         UserManager.$followingsTab = $('#right .profile .tabs .profile-followings');
         UserManager.$followersTab = $('#right .profile .tabs .profile-followers');
-        UserManager.$flattrsTab = $('#right .profile .tabs .profile-flattrs');
         UserManager.$followButton = $('#right .profile .follow.button');
         UserManager.$unFollowButton = $('#right .profile .unfollow.button');
         UserManager.$editButton = $('#right .profile .edit.button');
         UserManager.$img = $('#right .profile .picture-container .picture');
         UserManager.$changePictureBox = $('#right .profile .picture-container .change');
+
+        UserManager.tabs = new Tabs(UserManager.$rightView.find('.tab-area'), {
+            'profile-followers': UserManager.loadFollowers,
+            'profile-followings': UserManager.loadFollowings
+        });
     },
 
-    doFakeProfileMenuClick: function() {
-        Menu.deSelectAll();
-
-        Menu.profile.rightView.show();
-        Menu.profile.leftView.addClass('selected');
-
-        Menu.profile.tabs[0].select();
+    isLoggedIn: function() {
+        return UserManager.currentUser !== null;
+    },
+    
+    logOutCurrentUser: function() {
+        UserManager.currentUser = null;
+        $('#top .profile').hide();
+        $('#top .login-link')
+            .show()
+            .arrowPopup('#logged-out-notification', 'up');
+    },
+    
+    show: function() {
+        Menu.deSelect();
+        UserManager.tabs.select('profile-playlists');
+        if (UserManager.viewingUser) {
+            history.pushState(null, null, UserManager.viewingUser.getUrl());
+        } else {
+            history.pushState(null, null, '/');
+        }
+        $('#right > div').hide();
+        UserManager.$rightView.show();
     },
 
     loadCurrentUser: function() {
         UserManager.resetUserProfileView();
         UserManager.populateUserProfile(UserManager.currentUser);
+        UserManager.show();
     },
 
     loadProfile: function(nickOrId) {
@@ -98,12 +119,14 @@ var UserManager = {
             UserManager.$img.remove();
         }
 
-        $('#right .profile .information-container .flattr-user-name').text('').hide();
+        $('#right .profile .information-container .flattr').hide();
+        $('#right .profile .information-container .flattr .username').text('');
+        $('#right .profile .information-container .flattr .count').text('');
         $('#right .profile .information-container .display-name').text('');
         $('#right .profile .information-container .nickname').text('');
         $('#right .profile .information-container .tagline').text('');
 
-        Menu.profile.tabs[0].select();
+        UserManager.tabs.select('profile-playlists');
 
         $('#right .profile .tabs').hide();
     },
@@ -155,34 +178,34 @@ var UserManager = {
             new EditProfileDialog().show();
         });
 
-        if (logged_in && UserManager.currentUser.id === user.id) {
+        if (UserManager.isLoggedIn() && UserManager.currentUser.id === user.id) {
             user.playlists = playlistManager.playlists;
             UserManager.$editButton.show();
             UserManager.$changePictureBox.html(TranslationSystem.get('Configure your profile picture for $email at $gravatar', {$email: UserManager.currentUser.email, $gravatar: '<a href="http://www.gravatar.com" target="_blank">gravatar.com</a>'}));
             UserManager.$changePictureBox.show();
-        } else if (logged_in && Utils.isFollowingUser(user.id)) {
+        } else if (UserManager.isLoggedIn() && Utils.isFollowingUser(user.id)) {
             UserManager.$unFollowButton.show();
-        } else if (logged_in) {
+        } else if (UserManager.isLoggedIn()) {
             UserManager.$followButton.show();
         }
 
         if (user.flattrUserName) {
-            $('#right .profile .information-container .flattr-user-name')
+            $('#right .profile .information-container .flattr .username')
                 .text(user.flattrUserName)
-                .attr('href', 'http://flattr.com/profile/' + user.flattrUserName)
-                .show();
+                .attr('href', 'http://flattr.com/profile/' + user.flattrUserName);
+            $('#right .profile .information-container .flattr .count').html(TranslationSystem.get('$count donations made', {$count: '<strong>' + user.nrOfFlattrs + '</strong>'}));
+            $('#right .profile .information-container .flattr').show();
         }
 
         $('#right .profile .information-container .display-name').text(user.displayName);
-        $('#right .profile .information-container .nickname').text(user.nickname);
-        $('#right .profile .information-container .tagline').text(user.tagline);
+        $('#right .profile .information-container .nickname').text(user.nickname || '');
+        $('#right .profile .information-container .tagline').text(user.tagline || '');
 
         UserManager.updatePlaylistsTabLabel(user.nrOfPlaylists);
         UserManager.updateFollowersTabLabel(user.nrOfFollowers);
         UserManager.updateFollowingsTabLabel(user.nrOfFollowings);
-        UserManager.updateFlattrsTabLabel(user.nrOfFlattrs);
 
-        if (logged_in && UserManager.currentUser.id === user.id) {
+        if (UserManager.isLoggedIn() && UserManager.currentUser.id === user.id) {
             $.each(playlistManager.playlists, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
                 if (playlist.videos.length) {
@@ -206,10 +229,6 @@ var UserManager = {
 
     updatePlaylistsTabLabel: function(nrOfPlaylists) {
         UserManager.$playlistsTab.text(TranslationSystem.get('Playlists') + ' (' + nrOfPlaylists + ')');
-    },
-
-    updateFlattrsTabLabel: function(nrOfFlattrs) {
-        UserManager.$flattrsTab.text(TranslationSystem.get('Flattrs') + ' (' + nrOfFlattrs + ')');
     },
 
     loadPlaylists: function() {
@@ -241,17 +260,6 @@ var UserManager = {
             UserManager.updateFollowingsTabLabel(data.length);
             $.each(data, function(i, item) {
                 UserManager.$followings.append(new User(item).getSmallView());
-            });
-        });
-    },
-
-    loadFlattrs: function() {
-        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/activities?verb=flattr&type=outgoing', function(data) {
-            UserManager.$flattrs.html('');
-            UserManager.updateFlattrsTabLabel(data.length);
-            $.each(data, function(i, activity) {
-                var thing = JSON.parse(activity.target);
-                UserManager.$flattrs.append(NewsFeed.getIncomingFlattrActivity(UserManager.viewingUser, thing));
             });
         });
     },

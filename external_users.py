@@ -2,11 +2,33 @@ import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext import db
+from google.appengine.api import memcache
 from django.utils import simplejson
 from activities import create_external_subscribe_activity
 from model import get_current_youtify_user_model
 from model import get_youtify_user_struct
 from model import ExternalUser
+from model import get_external_user_subscription_struct
+
+class TopExternalUsers(webapp.RequestHandler):
+
+    def get(self, max):
+        """Gets a list of external users"""
+        page = int(self.request.get('page', '0'))
+        page_size = int(max)
+        
+        json = memcache.get('TopExternalUsers-' + str(page_size) + '*' + str(page))
+        
+        if json is None:
+            users = ExternalUser.all().order('-nr_of_subscribers').fetch(page_size, page_size * page);
+            json = []
+            for user in users:
+                json.append(get_external_user_subscription_struct(user))
+            json = simplejson.dumps(json)
+            memcache.set('TopExternalUsers-' + str(page_size) + '*' + str(page), json, 60*5)
+        
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json)
 
 class SubscribersHandler(webapp.RequestHandler):
     
@@ -49,6 +71,7 @@ class SubscribersHandler(webapp.RequestHandler):
         youtify_user_model.save()
         
         external_user_model.subscribers.append(youtify_user_model.key())
+        external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
         external_user_model.save()
 
         create_external_subscribe_activity(youtify_user_model, external_user_model)
@@ -69,6 +92,7 @@ class SubscribersHandler(webapp.RequestHandler):
         youtify_user_model.save()
         
         external_user_model.subscribers.remove(youtify_user_model.key())
+        external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
         external_user_model.save()
         
         self.response.headers['Content-Type'] = 'text/plain'
@@ -77,6 +101,7 @@ class SubscribersHandler(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication([
         ('/api/external_users/(.*)/(.*)/subscribers', SubscribersHandler),
+        ('/api/external_users/top/(.*)', TopExternalUsers),
     ], debug=True)
     util.run_wsgi_app(application)
 

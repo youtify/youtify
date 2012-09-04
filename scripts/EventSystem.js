@@ -3,12 +3,12 @@ var EventSystem = {
     },
 
     listeners: {
+        'external_user_subscriptions_loaded': [],
         'new_search_executed': [],
         'language_changed': [],
         'song_almost_done_playing': [],
         'flattr_click_made': [],
         'playlists_loaded': [],
-        'external_user_subscriptions_updated': [],
         'player_manager_initialized': [],
         'video_started_playing_successfully': [],
         'video_failed_to_play': [],
@@ -22,7 +22,8 @@ var EventSystem = {
         'flattr_thing_for_track_found': [],
         'flattr_thing_for_uploader_found': [],
         'user_profile_updated': [],
-        'video_duration_updated': []
+        'video_duration_updated': [],
+        'window_resized': []
     },
 
     addEventListener: function(type, fn) {

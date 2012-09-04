@@ -1,8 +1,9 @@
 function PlaylistsManager() {
     this.playlists = [];
 
-    this.load = function() {
-        var data,
+    this.load = function(callback) {
+        var self = this,
+            data,
             item,
             i;
 
@@ -18,9 +19,35 @@ function PlaylistsManager() {
             alert('Error parsing playlists from localStorage: ' + e); 
         }
 
-        this.mergePlaylists(playlistsFromServer);
+        if (UserManager.isLoggedIn()) {
+            $.getJSON('/me/playlists', function(data) {
+                self.mergePlaylists(data);
+                self.updateMenu();
+                if (callback) {
+                    callback();
+                }
+                EventSystem.callEventListeners('playlists_loaded', self.playlists);
+            });
+        } else {
+            self.updateMenu();
+            if (callback) {
+                callback();
+            }
+            EventSystem.callEventListeners('playlists_loaded', self.playlists);
+        }
+    };
 
-        EventSystem.callEventListeners('playlists_loaded', this.playlists);
+    this.reset = function() {
+        this.playlists = [];
+        Menu.getGroup('playlists').clear();
+    };
+
+    this.updateMenu = function() {
+        var group = Menu.getGroup('playlists');
+        group.clear();
+        $.each(this.playlists, function(i, playlist) {
+            Menu.getGroup('playlists').addMenuItem(playlist.getMenuItem());
+        });
     };
 
     this.removeRemotePlaylistsFromLocalStorage = function() {
@@ -77,7 +104,7 @@ function PlaylistsManager() {
 
     this.save = function() {
         this.saveToLocalStorage();
-        if (logged_in && this.playlists.length) {
+        if (UserManager.isLoggedIn() && this.playlists.length) {
             this.syncPlaylists(0);
         }
     };
@@ -136,6 +163,7 @@ function PlaylistsManager() {
             throw "playlist param must be object";
         }
         this.playlists.push(playlist);
+        Menu.getGroup('playlists').addMenuItem(playlist.getMenuItem());
     };
 
     this.getPlaylist = function(index) {
@@ -165,7 +193,10 @@ function PlaylistsManager() {
 
     this.deletePlaylist = function(playlistOrIndex) {
         var index;
+        var playlist;
+
         if (playlistOrIndex instanceof Playlist) {
+            playlist = playlistOrIndex;
             index = this.getIndexOfPlaylist(playlistOrIndex);
             if (index === undefined) {
                 console.log("Could not find index for playlist " + playlistOrIndex.title);
@@ -173,18 +204,17 @@ function PlaylistsManager() {
             }
         } else {
             index = playlistOrIndex;
+            playlist = this.playlists[index];
         }
 
-        if (logged_in && this.playlists[index].remoteId) {
-            this.playlists[index].unsync();
+        if (UserManager.isLoggedIn() && playlist.remoteId) {
+            playlist.unsync();
         }
-        if (this.playlists[index].leftMenuDOMHandle) {
-            this.playlists[index].leftMenuDOMHandle.remove();
-        }
-        if (this.playlists[index].playlistDOMHandle) {
-            this.playlists[index].playlistDOMHandle.remove();
-        }
+
         this.playlists.splice(index, 1);
+
+        Menu.deSelect();
+        Menu.getGroup('playlists').removeMenuItem(playlist.getMenuItem());
     };
 
     this.getIndexOfPlaylist = function(playlist) {
@@ -201,7 +231,7 @@ function PlaylistsManager() {
     this.selectPlaylistByRemoteId = function(remoteId) {
         var map = this.getPlaylistsMap();
         if (map.hasOwnProperty(remoteId)) {
-            map[remoteId].leftMenuDOMHandle.mousedown();
+            map[remoteId].getMenuItem().select();
         }
     };
 

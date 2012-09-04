@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'YoutifyRegular';
+    src: url('YoutifyRegular.eot');
+    src: url('YoutifyRegular.eot?#iefix') format('embedded-opentype'),
+         url('YoutifyRegular.woff') format('woff'),
+         url('YoutifyRegular.ttf') format('truetype'),
+         url('YoutifyRegular.svg#YoutifyRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+

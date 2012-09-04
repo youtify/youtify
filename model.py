@@ -13,6 +13,7 @@ class ExternalUser(db.Model):
     username = db.StringProperty()
     avatar_url = db.StringProperty()
     subscribers = db.ListProperty(db.Key)
+    nr_of_subscribers = db.IntegerProperty(default=0)
 
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
@@ -24,6 +25,9 @@ class YoutifyUser(search.SearchableModel):
     flattr_user_name = db.StringProperty()
     flattr_scope = db.StringProperty()
     flattr_automatically = db.BooleanProperty(default=True)
+    lastfm_user_name = db.StringProperty()
+    lastfm_access_token = db.StringProperty()
+    lastfm_scrobble_automatically = db.BooleanProperty(default=True)
     youtube_username = db.StringProperty()
     nickname = db.StringProperty()
     nickname_lower = db.StringProperty()
@@ -32,6 +36,7 @@ class YoutifyUser(search.SearchableModel):
     tagline = db.StringProperty()
     playlists = db.ListProperty(db.Key)
     playlist_subscriptions = db.ListProperty(db.Key)
+    last_notification_seen_timestamp = db.StringProperty()
     external_user_subscriptions = db.ListProperty(db.Key)
     nr_of_followers = db.IntegerProperty(default=0)
     nr_of_followings = db.IntegerProperty(default=0)
@@ -204,6 +209,7 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False):
         'id': str(youtify_user_model.key().id()),
         'email': None,
         'flattr_user_name': youtify_user_model.flattr_user_name,
+        'lastfm_user_name': youtify_user_model.lastfm_user_name,
         'displayName': get_display_name_for_youtify_user_model(youtify_user_model),
         'nr_of_followers': youtify_user_model.nr_of_followers,
         'nr_of_followings': youtify_user_model.nr_of_followings,
@@ -276,13 +282,22 @@ def get_playlist_struct_from_playlist_model(playlist_model):
     
     return playlist_struct
 
-def get_activities_structs(youtify_user_model, filter={}):
-    query = Activity.all().filter('owner =', youtify_user_model)
+def get_activities_structs(youtify_user_model, verbs=None, type=None, count=None):
+    query = Activity.all()
 
-    for k, v in filter.items():
-        query = query.filter(k + ' =', v)
+    if youtify_user_model:
+        query = query.filter('owner =', youtify_user_model)
+
+    if verbs:
+        query = query.filter('verb IN', verbs)
+
+    if type:
+        query = query.filter('type =', type)
 
     query = query.order('-timestamp')
+
+    if count is not None:
+        query = query.fetch(count)
 
     ret = []
 
@@ -300,6 +315,7 @@ def get_activities_structs(youtify_user_model, filter={}):
 def get_settings_struct_for_youtify_user_model(youtify_user_model):
     return {
         'flattr_automatically': youtify_user_model.flattr_automatically,
+        'lastfm_scrobble_automatically': youtify_user_model.lastfm_scrobble_automatically,
         'send_new_follower_email': youtify_user_model.send_new_follower_email,
         'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email
     }
@@ -319,3 +335,6 @@ def get_external_user_subscriptions_struct_for_youtify_user_model(youtify_user_m
         ret.append(get_external_user_subscription_struct(external_user_model))
 
     return ret
+
+def generate_device_token():
+    return str(random.random())

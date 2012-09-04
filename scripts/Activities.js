@@ -1,4 +1,4 @@
-var NewsFeed = {
+var Activities = {
     getSignupActivity: function() {
         return $('<div class="activity">' + TranslationSystem.get('You joined Youtify') + '</div>'); 
     },
@@ -22,7 +22,6 @@ var NewsFeed = {
     },
 
     getIncomingExternalSubscribeActivity: function(actor, externalUser) {
-        console.log(actor, externalUser);
         var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span clas="name">' + Utils.escape(actor.displayName) + '</span></span>';
         var $externalUser = '<span class="link external-user">' + Utils.escape(externalUser.username) + '</span>';
         var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to $externalUser', {$externalUser: $externalUser, $user: $user}) + '</div>'); 
@@ -82,9 +81,9 @@ var NewsFeed = {
                 actor = new User(JSON.parse(activity.actor));
                 otherUser = new User(JSON.parse(activity.target));
                 if (otherUser.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getIncomingFollowActivity(actor);
+                    $div = Activities.getIncomingFollowActivity(actor);
                 } else if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingFollowActivity(otherUser);
+                    $div = Activities.getOutgoingFollowActivity(otherUser);
                 }
             break;
 
@@ -93,33 +92,33 @@ var NewsFeed = {
                 playlist = JSON.parse(activity.target);
                 playlist = new Playlist(playlist.title, playlist.videos, playlist.remoteId, playlist.owner, playlist.isPrivate);
                 if (playlist.owner.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getIncomingSubscribeActivityView(actor, playlist);
+                    $div = Activities.getIncomingSubscribeActivityView(actor, playlist);
                 } else if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingSubscribeActivityView(playlist);
+                    $div = Activities.getOutgoingSubscribeActivityView(playlist);
                 }
             break;
 
             case 'external_subscribe':
                 actor = new User(JSON.parse(activity.actor));
-                externalUser = new ExternalUserSubscription(JSON.parse(activity.target));
+                externalUser = new ExternalUser(JSON.parse(activity.target));
                 if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingExternalSubscribeActivity(externalUser);
+                    $div = Activities.getOutgoingExternalSubscribeActivity(externalUser);
                 } else {
-                    $div = NewsFeed.getIncomingExternalSubscribeActivity(actor, externalUser);
+                    $div = Activities.getIncomingExternalSubscribeActivity(actor, externalUser);
                 }
             break;
 
             case 'signup':
-                $div = NewsFeed.getSignupActivity();
+                $div = Activities.getSignupActivity();
             break;
 
             case 'flattr':
                 actor = new User(JSON.parse(activity.actor));
                 thing = JSON.parse(activity.target);
                 if (actor.id === UserManager.currentUser.id) {
-                    $div = NewsFeed.getOutgoingFlattrActivity(thing);
+                    $div = Activities.getOutgoingFlattrActivity(thing);
                 } else {
-                    $div = NewsFeed.getIncomingFlattrActivity(actor, thing);
+                    $div = Activities.getIncomingFlattrActivity(actor, thing);
                 }
             break;
         }
@@ -129,13 +128,29 @@ var NewsFeed = {
         return $div;
     },
 
-    load: function(callback) {
-        var $newsFeed = $('<div class="news-feed"></div');
-        $.get('/api/users/' + my_user_id + '/activities', function(data) {
+    getNewNotifications: function(callback) {
+        $.get('/api/users/' + UserManager.currentUser.id + '/activities?type=incoming&verbs=follow,subscribe&count=50', callback);
+    },
+
+    loadNotificationsPopup: function() {
+        var $popup = $('#activities-popup');
+        var $ul = $popup.find('ul');
+        $ul.html('');
+
+        $popup.addClass('loading');
+
+        this.getNewNotifications(function(data) {
+            $popup.removeClass('loading');
+
+            $('#top .activities').removeClass('has-new');
+
+            if (data.length > 0 && data[0].timestamp > SyncManager.getLastNotificationSeenTimestamp()) {
+                SyncManager.setLastNotificationSeenTimestamp(data[0].timestamp);
+            }
+
             $.each(data, function(i, activity) {
-                $newsFeed.append(NewsFeed.getActivityElem(activity));
+                $ul.append(Activities.getActivityElem(activity));
             });
-            callback($newsFeed);
         });
     }
 };

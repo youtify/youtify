@@ -1,54 +1,18 @@
 var ExternalUserPage = {
     $view: null,
-    $subscribeButton: null,
-    $unsubscribeButton: null,
-    externalUser: null,
+    selectedUser: null,
+    cache: {},
 
     init: function() {
-        var self = this;
-        self.$view = $('#right > div.external-profile');
-        self.$subscribeButton = self.$view.find('.button.subscribe');
-        self.$unsubscribeButton = self.$view.find('.button.unsubscribe');
-
-        self.$subscribeButton.click(function() {
-            ExternalUserSubscriptions.subscribe(self.externalUser, function() {
-                self.$subscribeButton.hide().next().show();
-            });
-        });
-
-        self.$unsubscribeButton.click(function() {
-            ExternalUserSubscriptions.unsubscribe(self.externalUser, function() {
-                self.$unsubscribeButton.hide().prev().show();
-            });
-        });
+        this.$view = $('#right > div.external-profile');
     },
 
-    setMenuItemAsPlayingFor: function(type, username) {
-        $('#left .menu .playing').removeClass('playing');
-        $.each($('#left .menu .external-user-subscriptions li'), function(i, elem) {
-            elem = $(elem);
-            if (elem.hasClass(type) && elem.text() === username) {
-                elem.addClass('playing');
-            }
-        });
-    },
-
-    showView: function() {
+    show: function() {
         $('#right > div').hide();
         this.$view.show();
     },
 
-    resetView: function() {
-        this.$view.find('h1').html('');
-        this.$view.find('.source').attr('href', '#').html('');
-        this.$view.find('.img').html('');
-        this.$view.find('.description').html('');
-        this.$view.find('.tracklist').hide();
-        this.$view.find('.button.subscribe').hide();
-        this.$view.find('.button.unsubscribe').hide();
-    },
-
-    show: function(externalUrl) {
+    loadFromExternalUrl: function(externalUrl) {
         var matches;
         var type;
         var username;
@@ -69,131 +33,117 @@ var ExternalUserPage = {
     },
 
     load: function(type, username) {
-        switch (type) {
-            case 'soundcloud':
-            this.loadSoundCloudUser(username);
-            break;
-
-            case 'youtube':
-            this.loadYouTubeUser(username);
-            break;
-
-            default:
-            console.log('Unknown type for external users: ' + type);
-        }
-    },
-
-    loadSoundCloudUser: function(username) {
-        var self = this;
-        this.resetView();
-        this.showView();
-
-        history.pushState(null, null, '/soundcloud/' + username);
-
-        $.getJSON("http://api.soundcloud.com/resolve.json?callback=?", {client_id: SOUNDCLOUD_API_KEY, url: "https://soundcloud.com/" + username}, function(resolveData) {
-            $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + ".json", {client_id: SOUNDCLOUD_API_KEY}, function(userData) {
-                self.externalUser = new ExternalUserSubscription({
-                    type: 'soundcloud',
-                    external_user_id: String(userData.id),
-                    username: username,
-                    avatar_url: userData.avatar_url
-                });
-
-                if (logged_in) {
-                    if (ExternalUserSubscriptions.isSubscription(self.externalUser)) {
-                        self.$unsubscribeButton.show();
-                    } else {
-                        self.$subscribeButton.show();
-                    }
-                }
-
-                self.$view.find('h1').text(userData.username);
-                self.$view.find('.source').text(TranslationSystem.get('View on SoundCloud')).attr('href', userData.permalink_url);
-                self.$view.find('.img').append($('<img src="' + userData.avatar_url + '"/>'));
-                self.$view.find('.description').text(Utils.shorten(userData.description, 500));
-            });
-            
-            var key = 'soundcloud' + username;
-            var $existingTracklist = self.$view.find('#' + key);
-            if ($existingTracklist.length) {
-                $existingTracklist.show();
-            } else {
-                $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + "/tracks.json", {client_id: SOUNDCLOUD_API_KEY}, function(tracksData) {
-                    var results = Search.getVideosFromSoundCloudSearchData(tracksData);
-                    var $tracklist = $('<table class="tracklist"></table>').attr('id', key);
-                    $.each(results, function(i, video) {
-                        video.onPlayCallback = function() {
-                            self.setMenuItemAsPlayingFor('soundcloud', username);
-                        };
-                        video.createListView().appendTo($tracklist);
-                    });
-                    $tracklist.appendTo(self.$view);
-                });
-            }
-        });
-    },
-
-    loadYouTubeUser: function(username) {
         var self = this;
 
-        self.resetView();
-        self.showView();
-
-        history.pushState(null, null, '/youtube/' + username);
-
-        // https://developers.google.com/youtube/2.0/developers_guide_protocol_profiles#Profiles
-        $.getJSON('https://gdata.youtube.com/feeds/api/users/' + username + '?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
-            self.externalUser = new ExternalUserSubscription({
-                type: 'youtube',
-                external_user_id: username,
-                username: username,
-                avatar_url: data.entry.media$thumbnail.url
-            });
-
-            if (logged_in) {
-                if (ExternalUserSubscriptions.isSubscription(self.externalUser)) {
-                    self.$unsubscribeButton.show();
-                } else {
-                    self.$subscribeButton.show();
-                }
-            }
-
-            self.$view.find('h1').text(data.entry.author[0].name.$t);
-            self.$view.find('.source').text(TranslationSystem.get('View on YouTube')).attr('href', 'http://www.youtube.com/user/' + username);
-            self.$view.find('.img').append($('<img src="' + self.externalUser.avatarUrl + '"/>'));
-            self.$view.find('.description').text(data.entry.summary.$t);
-        });
-
-        var key = 'youtube' + username;
-        var $existingTracklist = self.$view.find('#' + key);
-        if ($existingTracklist.length) {
-            $existingTracklist.show();
+        var user;
+        var key = type + username;
+        if (self.cache.hasOwnProperty(key)) {
+            user = self.cache[key];
         } else {
-            // https://developers.google.com/youtube/2.0/developers_guide_protocol_video_feeds#User_Uploaded_Videos
-            $.getJSON('https://gdata.youtube.com/feeds/api/users/' + username + '/uploads?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
-                if (data.feed.entry === undefined) {
-                    return;
-                }
-                var results = Search.getVideosFromYouTubeSearchData(data);
-                var $tracklist = $('<table class="tracklist"></table>').attr('id', key);
-                $.each(results, function(i, video) {
-                    video.onPlayCallback = function() {
-                        self.setMenuItemAsPlayingFor('youtube', username);
-                    };
-                    video.createListView().appendTo($tracklist);
-                });
-                $tracklist.appendTo(self.$view);
+            user = new ExternalUser({
+                type: type,
+                username: username
+            });
+            self.cache[key] = user;
+            self.$view.append(user.getRightView());
+
+            LoadingBar.show();
+            user.load(function(user) {
+                LoadingBar.hide();
             });
         }
+
+        history.pushState(null, null, user.getUrl());
+
+        if (self.selectedUser) {
+            self.selectedUser.getRightView().hide();
+        }
+        self.selectedUser = user;
+        self.selectedUser.getRightView().show();
+        self.show();
     }
 };
 
-function ExternalUserSubscription(data) {
+function ExternalUser(data) {
     var self = this;
     self.externalUserId = data.external_user_id;
     self.type = data.type;
     self.username = data.username;
     self.avatarUrl = data.avatar_url;
+    self.menuItem = null;
+
+    self.displayName = data.display_name;
+    self.linkLabel = data.linkLabel;
+    self.linkUrl = data.linkUrl;
+    self.description = data.description;
+
+    self.$rightView = $('<div class="external-user">').addClass(data.type);
+    self.$tracklist = $('<table class="tracklist">');
+    self.$info = $('<div class="info">');
+
+    self.$rightView.append(self.$info);
+    self.$rightView.append(self.$tracklist);
+
+    self.getRightView = function() {
+        return self.$rightView;
+    };
+
+    EventSystem.addEventListener('external_user_subscriptions_loaded', function() {
+        self.updateInfoBar();
+    });
+
+    self.updateInfoBar = function() {
+        self.$info.html('');
+
+        var $img = $('<img/>').attr('src', self.avatarUrl);
+
+        var $nameContainer = $('<div class="name-container">');
+        var $h1 = $('<h1>').text(self.displayName);
+        var $subscribeButton = $('<button class="button subscribe translatable">').text(TranslationSystem.get('Subscribe'));
+        var $unsubscribeButton = $('<button class="button unsubscribe translatable">').text(TranslationSystem.get('Unsubscribe'));
+
+        $nameContainer.append($h1);
+        $nameContainer.append($subscribeButton);
+        $nameContainer.append($unsubscribeButton);
+
+        var $source = $('<a class="source link translatable" target="_blank">').attr('href', self.linkUrl).text(self.linkLabel || '');
+        var $recommendations = $('<span class="recommendations link translatable" target="_blank">').text(TranslationSystem.get('Similar artists'));
+        var $description = $('<div class="description">').text(Utils.shorten(self.description || '', 500));
+
+        $subscribeButton.click(function() {
+            if (UserManager.isLoggedIn()) {
+                ExternalUserManager.subscribe(self, function() {
+                    $subscribeButton.hide().next().show();
+                });
+            } else {
+                $(this).arrowPopup('#login-required-popup');
+            }
+        });
+
+        $unsubscribeButton.click(function() {
+            ExternalUserManager.unsubscribe(self, function() {
+                $unsubscribeButton.hide().prev().show();
+            });
+        });
+
+        if (ExternalUserManager.isSubscription(self)) {
+            $subscribeButton.hide();
+        } else {
+            $unsubscribeButton.hide();
+        }
+
+        $recommendations.click(function() {
+            Recommendations.loadSimilarArtistsPopup(self);
+            $(this).arrowPopup('#similar-artists-popup');
+        });
+
+        self.$info.append($img);
+        self.$info.append($nameContainer);
+        self.$info.append($source);
+        self.$info.append($('<span> | </span>'));
+        self.$info.append($recommendations);
+        self.$info.append($description);
+    };
 
     self.getMetaData = function() {
         return {
@@ -202,13 +152,16 @@ function ExternalUserSubscription(data) {
         };
     };
 
+    self.getCacheKey = function() {
+        return self.type + self.username;
+    };
+
     self.goTo = function() {
-        console.log(self, 'goto');
         ExternalUserPage.load(self.type, self.username);
     };
 
     self.getUrl = function() {
-        return '/' + self.type + '/' + self.externalUserId;
+        return '/' + self.type + '/' + self.username;
     };
 
     self.getApiUrl = function() {
@@ -219,34 +172,125 @@ function ExternalUserSubscription(data) {
         return self.externalUserId === other.externalUserId && self.type === other.type;
     };
 
-    self.getMenuView = function() {
-        var $li = $('<li></li>').addClass(self.type);
-        $('<img/>').attr('src', self.avatarUrl).appendTo($li);
-        $('<span class="username"></span>').text(self.username).appendTo($li);
+    self.getMenuItem = function() {
+        if (self.menuItem === null) {
+            self.menuItem = new MenuItem({
+                cssClasses: ['external-user-subscription', self.type],
+                title: self.username,
+                $img: $('<img/>').attr('src', self.avatarUrl),
+                onSelected: function() {
+                    ExternalUserPage.load(self.type, self.username);
+                }
+            });
+        }
+        return self.menuItem;
+    };
 
-        $li.mousedown(function() {
-            $('#left .menu li').removeClass('selected');
-            $(this).addClass('selected');
-            ExternalUserPage.load(self.type, self.username);
+    self.load = function(callback) {
+        switch (self.type) {
+            case 'soundcloud':
+            self.loadSoundCloudUser(callback);
+            break;
+
+            case 'youtube':
+            self.loadYouTubeUser(callback);
+            break;
+
+            default:
+            console.log('Unknown type for external users: ' + type);
+        }
+    };
+
+    self.videoPlayCallback = function() {
+        if (Menu.getPlayingMenuItem() !== self.getMenuItem()) {
+            Menu.setAsNotPlaying();
+        }
+        ExternalUserManager.setMenuItemAsPlayingFor(self);
+    };
+
+    self.loadSoundCloudUser = function(callback) {
+        $.getJSON("http://api.soundcloud.com/resolve.json?callback=?", {client_id: SOUNDCLOUD_API_KEY, url: "https://soundcloud.com/" + self.username}, function(resolveData) {
+            $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + ".json", {client_id: SOUNDCLOUD_API_KEY}, function(userData) {
+                self.externalUserId = String(userData.id);
+                self.displayName = userData.username;
+                self.avatarUrl = userData.avatar_url;
+                self.linkLabel = TranslationSystem.get('View on SoundCloud');
+                self.linkUrl = userData.permalink_url;
+                self.description = userData.description;
+                self.updateInfoBar();
+
+                $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + "/tracks.json", {client_id: SOUNDCLOUD_API_KEY}, function(tracksData) {
+                    var results = Search.getVideosFromSoundCloudSearchData(tracksData);
+                    $.each(results, function(i, video) {
+                        video.parent = self;
+                        video.onPlayCallback = self.videoPlayCallback;
+                        video.createListView().appendTo(self.$tracklist);
+                    });
+                    callback(self);
+                });
+            });
         });
+    };
 
-        return $li;
+    self.loadYouTubeUser = function(callback) {
+        // https://developers.google.com/youtube/2.0/developers_guide_protocol_profiles#Profiles
+        $.getJSON('https://gdata.youtube.com/feeds/api/users/' + self.username + '?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
+            self.externalUserId = self.username;
+            self.displayName = data.entry.author[0].name.$t;
+            self.avatarUrl = data.entry.media$thumbnail.url;
+            self.linkLabel = TranslationSystem.get('View on YouTube');
+            self.linkUrl = 'http://www.youtube.com/user/' + self.username;
+            self.description = data.entry.summary.$t;
+            self.updateInfoBar();
+
+            // https://developers.google.com/youtube/2.0/developers_guide_protocol_video_feeds#User_Uploaded_Videos
+            $.getJSON('https://gdata.youtube.com/feeds/api/users/' + self.username + '/uploads?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
+                if (data.feed.entry !== undefined) {
+                    var results = Search.getVideosFromYouTubeSearchData(data);
+                    $.each(results, function(i, video) {
+                        video.parent = self;
+                        video.onPlayCallback = self.videoPlayCallback;
+                        video.createListView().appendTo(self.$tracklist);
+                    });
+                }
+                callback(self);
+            });
+        });
     };
 }
 
-var ExternalUserSubscriptions = {
+var ExternalUserManager = {
     subscriptions: [],
 
     init: function() {
         var self = this;
-        if (logged_in) {
+        if (UserManager.isLoggedIn()) {
             $.getJSON('/me/external_user_subscriptions', function(data) {
                 $.each(data, function(i, subscription) {
-                    self.subscriptions.push(new ExternalUserSubscription(subscription));
+                    self.subscriptions.push(new ExternalUser(subscription));
                 });
-                EventSystem.callEventListeners('external_user_subscriptions_updated', self.subscriptions);
+                self.updateMenu();
+                EventSystem.callEventListeners('external_user_subscriptions_loaded');
             });
         }
+    },
+
+    updateMenu: function() {
+        var self = this;
+        var group = Menu.getGroup('external-user-subscriptions');
+        group.clear();
+        $.each(self.subscriptions, function(i, subscription) {
+            group.addMenuItem(subscription.getMenuItem());
+        });
+    },
+
+    setMenuItemAsPlayingFor: function(externalUser) {
+        $.each(this.subscriptions, function(i, subscription) {
+            if (externalUser.equals(subscription)) {
+                subscription.getMenuItem().setAsPlaying();
+                return;
+            }
+        });
     },
 
     isSubscription: function(externalUser) {
@@ -274,11 +318,8 @@ var ExternalUserSubscriptions = {
             statusCode: {
                 200: function(data) {
                     self.subscriptions.push(externalUser);
-                    EventSystem.callEventListeners('external_user_subscriptions_updated', self.subscriptions);
+                    self.updateMenu();
                     callback();
-                },
-                409: function(data) {
-                    new ReloadDialog().show();
                 }
             }
         });
@@ -303,11 +344,8 @@ var ExternalUserSubscriptions = {
                         }
                     });
                     self.subscriptions = newSubscriptions;
-                    EventSystem.callEventListeners('external_user_subscriptions_updated', self.subscriptions);
+                    self.updateMenu();
                     callback();
-                },
-                409: function(data) {
-                    new ReloadDialog().show();
                 }
             }
         });

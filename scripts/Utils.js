@@ -27,6 +27,61 @@ var Utils = {
         return replacedText;
     },
 
+    getArtistAndTrackNames: function(video) {
+        if (video.track && video.artist) {
+            return { track: video.track, artist: video.artist };
+        }
+
+        var title = video.title.toLowerCase();
+        var ret = false;
+        var strip = [
+            '(official video)',
+            'official video',
+            'p/v',
+            'm/v'
+        ];
+
+        $.each(strip, function(i, s) {
+            title = title.replace(s, '');
+        });
+
+        title.replace('  ', '');
+        title.replace('   ', '');
+
+        var split = title.split('-');
+        var match1 = title.match(/(.*)'(.*)'/); // Robyn 'Call Your Girlfriend' Official Video
+        var match2 = title.match(/(.*)"(.*)"/); // Robyn "Call Your Girlfriend" Official Video
+
+        if (split.length >= 2) {
+            ret = {
+                artist: $.trim(split[0]),
+                track: $.trim(split[1])
+            };
+        } else if (match1 && match1.length === 3) {
+            ret = {
+                artist: $.trim(match1[1]),
+                track: $.trim(match1[2])
+            };
+        } else if (match2 && match2.length === 3) {
+            ret = {
+                artist: $.trim(match2[1]),
+                track: $.trim(match2[2])
+            };
+        } else if (video.artist) {
+            ret = {
+                artist: video.artist,
+                track: $.trim(video.title)
+            };
+        }
+
+        if (video.echonestArtist && ret.track === video.echonestArtist.toLowerCase()) { // TODO: Should count the number of Echo Nest hits in the artist/track and base the decision on that.
+            ret.track = ret.artist;
+            ret.artist = video.echonestArtist;
+        }
+
+        return ret;
+    },
+
     escape: function(s) {
         s = s.replace('<', '&lt;');
         s = s.replace('>', '&gt;');
@@ -35,6 +90,9 @@ var Utils = {
     },
 
     shorten: function(inputText, limit) {
+        if (inputText === null) {
+            return '';
+        }
         var ret = inputText;
 
         if (ret.length > limit) {
@@ -43,16 +101,6 @@ var Utils = {
         }
 
         return ret;
-    },
-
-    extractArtist: function(title) {
-        if (title) {
-            var parts = title.split('-');
-            if (parts.length > 1) {
-                return $.trim(parts[0]);
-            }
-        }
-        return false;
     },
 
     deSelectSelectedVideos: function() {
@@ -64,6 +112,10 @@ var Utils = {
 
     addFollowing: function(user) {
         myFollowings.push(user);
+    },
+
+    closeAnyOpenArrowPopup: function(user) {
+        $('#arrow-popup-blocker').click();
     },
 
     removeFollowing: function(userId) {
@@ -89,6 +141,28 @@ var Utils = {
         });
 
         return ret;
+    },
+
+    showModalBox: function(msg) {
+        var modalBox = new ModalBox();
+        modalBox.setMessage(msg);
+        modalBox.setCanBeClosed(true);
+        modalBox.show();
+        return modalBox;
+    },
+
+    showWhatIsCurrentlyPlaying: function() {
+        if (Menu.getPlayingMenuItem()) {
+            Menu.getPlayingMenuItem().select();
+        } else if (player.getCurrentVideo().getParent() === 'search') {
+            Search.show();
+        } else if (player.getCurrentVideo().getParent() instanceof Playlist // "unpinned" Playlist or ExternalUser?
+                || player.getCurrentVideo().getParent() instanceof ExternalUser) {
+            player.getCurrentVideo().getParent().goTo();
+        } else { // Track visited from URL?
+            Queue.getMenuItem().select();
+        }
+        player.getCurrentVideo().scrollTo();
     },
     
     openLink: function(url) {

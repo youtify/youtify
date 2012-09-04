@@ -11,3 +11,5 @@ Disallow: /scripts
 Disallow: /tests
 Disallow: /toplist
 Disallow: /api
+Disallow: /cron
+Disallow: /unsubscribe

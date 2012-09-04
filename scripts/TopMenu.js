@@ -3,18 +3,30 @@ var TopMenu = {
     init: function() {
 
         // PROFILE
-        if (UserManager.currentUser) {
-            $('#top .profile .picture').replaceWith('<img class="picture" src="'+ UserManager.currentUser.smallImageUrl + '" />');
-            $('#top .profile .display-name').text(UserManager.currentUser.displayName);
-            $('#top .profile').show();
+
+        if (UserManager.isLoggedIn()) {
+            /*$('#top .profile').append('<img src="'+ user.smallImageUrl + '" width="24" height="24" />');*/
+            $('#top .profile').css('background-image', 'url(' + UserManager.currentUser.smallImageUrl + ')');
+
+            $('#top .profile').click(function(event) {
+                $(this).arrowPopup('#profile-popup');
+            });
 
             EventSystem.addEventListener('user_profile_updated', function(params) {
                 $('#top .profile .display-name').text(params.displayName);
             });
+
+            // I know, not the most natural place to put this...
+            $('#profile-popup .profile-page').click(function(event) {
+                UserManager.loadCurrentUser();
+                Utils.closeAnyOpenArrowPopup();
+            });
+
+            $('#top .login-link').hide();
         } else {
             $('#top .profile').hide();
+            $('#top .activities').hide();
         }
-
 
         // ABOUT
         $('#top .about').click(function() {
@@ -31,6 +43,12 @@ var TopMenu = {
                     }
                 });
             }
+        });
+
+        // NOTIFICATIONS
+        $('#top .activities').click(function() {
+            $(this).arrowPopup('#activities-popup');
+            Activities.loadNotificationsPopup();
         });
 
         // SETTINGS

@@ -7,10 +7,6 @@ var PlaylistView = {
 
         /* Title */
         $('<span class="title link"/>').text(playlist.title).click(function() {
-            if (playlist.playlistDOMHandle === null) {
-                playlist.createViews();
-            }
-
             if (playlist.remoteId) {
                 history.pushState(null, null, playlist.getUrl());
             } else {
@@ -40,27 +36,34 @@ var PlaylistView = {
         
         /* Subscribe/Unsubscribe button */
         $subscribeButton.click(function() {
-            playlist.subscribe();
-            $(this).hide();
-            $(this).next().show();
+            if (UserManager.isLoggedIn()) {
+                playlist.subscribe();
+                $(this).hide();
+                $(this).next().show();
+            } else {
+                $(this).arrowPopup('#login-required-popup');
+            }
         });
         $unsubscribeButton.click(function() {
             playlistManager.deletePlaylist(playlist); // delete unsubscribes
             $(this).hide();
             $(this).prev().show();
         });
-        if (logged_in && playlist.owner && playlist.owner.id !== UserManager.currentUser.id) {
-            $info.append($subscribeButton);
-            $info.append($unsubscribeButton);
-        }
-        if (playlist.isSubscription) {
+
+        $info.append($subscribeButton);
+        $info.append($unsubscribeButton);
+
+        if (UserManager.isLoggedIn() && playlist.owner && playlist.owner.id === UserManager.currentUser.id) {
+            $subscribeButton.hide();
+            $unsubscribeButton.hide();
+        } else if (playlist.isSubscription) {
             $subscribeButton.hide();
         } else {
             $unsubscribeButton.hide();
         }
         
         /* Privacy checkbox*/
-        if (showPrivacyToggle && playlist.remoteId !== null && my_user_id === playlist.owner.id) {
+        if (UserManager.isLoggedIn() && showPrivacyToggle && playlist.remoteId !== null && UserManager.currentUser.id === playlist.owner.id) {
             PlaylistView.createPrivacyToggleButton(playlist).appendTo($info);
         }
 
@@ -144,21 +147,20 @@ var PlaylistView = {
     },
 
     loadPlaylistView: function (playlist) {
-        if (playlist.leftMenuDOMHandle.hasClass('selected') && player.currentVideo && player.currentVideo.listView) {
+        if (playlist.getMenuItem().isSelected() && player.currentVideo && player.currentVideo.listView) {
             player.currentVideo.scrollTo();
         }
-            
+
         $('#right > div').hide();
+        $('#right > .playlists .tracklist').hide();
+        $('#right > .playlists').show();
 
-        $('#right > .playlists .pane').hide().removeClass('active');
-        $('#left .menu li').removeClass('selected');
-
-        playlist.playlistDOMHandle.addClass('active');
-        playlist.leftMenuDOMHandle.addClass('selected');
+        var $tracklist =  playlist.getTrackList();
+        $tracklist.show();
 
         PlaylistView.updatePlaylistBar(playlist);
-        if(playlist.playlistDOMHandle.find('.video').length !== playlist.videos.length) {
-            playlist.playlistDOMHandle.html('');
+        if ($tracklist.find('.video').length !== playlist.videos.length) {
+            $tracklist.html('');
             $.each(playlist.videos, function (i, item) {
                 if(item) {
                     $video = item.createListView();
@@ -174,17 +176,19 @@ var PlaylistView = {
 
                         $video.addClass('reorderable');
                     }
-                    $video.appendTo(playlist.playlistDOMHandle);
+                    $video.appendTo($tracklist);
                 }
             });
         }
-        playlist.playlistDOMHandle.show();
-        $('#right > .playlists').show();
+        if (playlist.videos.length === 0) {
+            $('#right .playlists .help-box').show();
+        } else {
+            $('#right .playlists .help-box').hide();
+        }
     },
 
     syncPlaylistButtonClicked: function (event) {
         var playlist = playlistManager.getCurrentlySelectedPlaylist();
-        console.log('syncing playlist ' + playlist.title);
         playlist.sync(function () {
             PlaylistView.updatePlaylistBar(playlist);
             playlistManager.save();

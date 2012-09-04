@@ -25,7 +25,9 @@ function dragAborted() {
         dragElem = null;
     }
     removeTargetClasses();
-    sourceElem.removeClass('dragged');
+    if (sourceElem) {
+        sourceElem.removeClass('dragged');
+    }
 }
 
 /**
@@ -199,14 +201,14 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
         playlist = playlistManager.getCurrentlySelectedPlaylist();
         selectedVideos = sourceElem.parent().find('.video.selected');
 
-        lastVideo = playlist.playlistDOMHandle.find('.video:last');
+        lastVideo = playlist.getTrackList().find('.video:last');
         sourceIndex = sourceElem.index();
         destIndex = lastVideo.index();
 
         $.each(selectedVideos, function(index, elem) {
             if (playlist !== undefined) { // hack to not crash when dragging videos on profile pages
                 playlist.moveVideo(sourceIndex, destIndex+1);
-                $(elem).detach().appendTo(playlist.playlistDOMHandle);
+                $(elem).detach().appendTo(playlist.getTrackList());
             }
         });
 
@@ -218,33 +220,18 @@ registerDropCallback(function (dragElem, sourceElem, targetElem) {
 registerDropCallback(function (dragElem, sourceElem, targetElem) {
     if (targetElem.hasClass('playlistElem') && sourceElem.hasClass('video')) {
         var playlist = targetElem.data('model');
-        $.each(sourceElem, function(index, item) {
-            item = $(item);
-            if (item.hasClass('video')) {
-                playlist.addVideo(item.data('model'));
-                item.removeClass('selected');
-            }
-        });
-        playlistManager.save();
-    }
-});
-
-// VIDEO DROPPED ON #new-playlist
-registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (targetElem.attr('id') === 'new-playlist' && sourceElem.hasClass('video')) {
-        pendingVideo = {
-            title: sourceElem.find('.title').text(),
-            videoId: sourceElem.data('videoId')
+        var lastAction = function() {
+            $.each(sourceElem, function(index, item) {
+                item = $(item);
+                if (item.hasClass('video')) {
+                    playlist.addVideo(item.data('model'));
+                    item.removeClass('selected');
+                }
+            });
         };
-        $('#new-playlist span').click();
-    }
-});
-
-// VIDEO TITLE DROPPED ON #new-playlist
-registerDropCallback(function (dragElem, sourceElem, targetElem) {
-    if (targetElem.attr('id') === 'new-playlist' && sourceElem.attr('id') === 'info') {
-        pendingVideo = sourceElem.data('model');
-        $('#new-playlist span').click();
+        lastAction();
+        SyncManager.setLastAction(lastAction);
+        playlistManager.save();
     }
 });
 

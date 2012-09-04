@@ -4,6 +4,7 @@ import os
 
 from google.appengine.ext import db
 from google.appengine.api import memcache
+from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
@@ -19,7 +20,15 @@ def get_or_create_pings():
     
 class PingHandler(webapp.RequestHandler):
     """ Increment pings """
-
+    def post(self):
+        get_or_create_pings()
+        memcache.incr('pings');
+        current_user = users.get_current_user()
+        if current_user == None:
+            self.response.out.write('logged_out')
+        else:
+            self.response.out.write('ok')
+    
     def get(self):
         get_or_create_pings()
         memcache.incr('pings');

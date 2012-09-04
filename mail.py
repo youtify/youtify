@@ -101,6 +101,10 @@ class UnsubscribeHandler(webapp.RequestHandler):
 
     def get(self):
         user = get_youtify_user_model_by_id_or_nick(self.request.get('uid'))
+        if user is None:
+            self.response.out.write('No such user found')
+            return
+        
         if md5(EMAIL_UNSUBSCRIBE_SALT + str(user.key().id())).hexdigest() == self.request.get('token'):
             user.send_new_follower_email = False
             user.send_new_subscriber_email = False

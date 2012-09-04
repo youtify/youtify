@@ -4,6 +4,7 @@ function User(args) {
     self.nickname = args.nickname;
     self.displayName = args.displayName;
     self.flattrUserName = args.flattr_user_name;
+    self.lastfmUserName = args.lastfm_user_name;
     self.email = args.email;
     self.largeImageUrl = args.largeImageUrl;
     self.smallImageUrl = args.smallImageUrl;
@@ -52,12 +53,11 @@ function User(args) {
     };
 
     self.goTo = function() {
-        history.pushState(null, null, self.getUrl());
-        UserManager.doFakeProfileMenuClick();
-        if (logged_in && self.id === UserManager.currentUser.id) {
+        if (UserManager.isLoggedIn() && self.id === UserManager.currentUser.id) {
             UserManager.loadCurrentUser();
         } else {
             UserManager.loadProfile(self.id);
+            UserManager.show();
         }
     };
 

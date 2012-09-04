@@ -108,7 +108,7 @@ function SoundCloudPlayer() {
     /* Enter fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOn = function() {
         var width = $(window).width(),
-            height = $(window).height() - $('#bottom').outerHeight();
+            height = $(window).height() - 10;
         
         if (self.view === null) {
             return;
@@ -159,16 +159,16 @@ function SoundCloudPlayer() {
 		var sound = soundManager.getSoundById(self.video.videoId);
 		if (sound) {
 			return sound.position / 1000.0;
-		} else {
-			return 0;
 		}
+        return 0;
     };
     
     /* Returns the length of the video in seconds */
     self.getTotalPlaybackTime = function() {
         if (self.video && self.video.duration) {
             return self.video.duration / 1000.0;
-		} else if (self.video) {
+		}
+        if (self.video) {
             var sound = soundManager.getSoundById(self.video.videoId);
             if (sound) {
                 return sound.durationEstimate / 1000.0;

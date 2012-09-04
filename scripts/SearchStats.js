@@ -2,7 +2,7 @@ var SearchStats = {
     timeout: null,
 
     init: function() {
-        self = this;
+        var self = this;
 
         if (!SEARCH_STATS_URL) {
             return;

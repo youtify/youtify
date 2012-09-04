@@ -2,29 +2,39 @@ function Video(args) {
     var self = this;
 
     this.videoId = args.videoId;
+    this.mbid = args.mbid || null;
     this.flattrThingId = args.flattrThingId || null;
     this.flattrs = args.flattrs || null;
     this.title = $.trim(args.title) || '';
-    this.artist = Utils.extractArtist(this.title);
+    this.artist = args.artist || null;
     this.duration = args.duration || null;
     this.buyLinks = args.buyLinks || null;
     this.type = args.type || 'youtube';
     this.onPlayCallback = args.onPlayCallback;
     this.listView = null;
     this.uploaderUsername = args.uploaderUsername || null;
+    this.artworkURL = args.artworkURL || null;
+    this.parent = args.parent || null;
     
     this.clone = function() {
         return new Video({
             'videoId': this.videoId,
+            'mbid': this.mbid,
             'title': this.title,
             'type': this.type,
             'duration': this.duration,
-            'onPlayCallback': this.onPlayCallback
+            'onPlayCallback': this.onPlayCallback,
+            'uploaderUsername': this.uploaderUsername,
+            'artworkURL': this.artworkURL
         });
     };
 
     this.getUrl = function() {
         return location.protocol + '//' + location.host + '/tracks/' + this.type + '/' + this.videoId;
+    };
+
+    this.getParent = function() {
+        return this.parent;
     };
 
     this.getExternalLink = function() {
@@ -66,6 +76,9 @@ function Video(args) {
     };
     
     this.scrollTo = function() {
+        if (this.listView === null) {
+            return;
+        }
         var $container = this.listView.parents('#right > div'),
             viewTop = 0,
             containerTop = 0;
@@ -79,8 +92,13 @@ function Video(args) {
     };
     
     this.createAlternativeContextMenuButton = function(originalTrack, playlist) {
-        var buttons = originalTrack.listView.data('additionalMenuButtons') || [];
-        
+        var buttons = originalTrack.listView.data('additionalMenuButtons') || [],
+            i;
+        for (i = buttons.length - 1; i >= 0 ; i -= 1) {
+            if (buttons[i].cssClass === 'replace') {
+                buttons.splice(i, 1);
+            }
+        }
         buttons.unshift({
             title: TranslationSystem.get('Replace with alternative'),
             cssClass: 'replace',
@@ -125,12 +143,10 @@ function Video(args) {
         $fragment.appendChild($title);
         $fragment.appendChild($space.cloneNode(false));
 
-        if (this.uploaderUsername) {
-            $uploader.innerHTML = this.uploaderUsername;
-            $uploader.setAttribute('class', 'uploader link');
-            $fragment.appendChild($uploader);
-            $fragment.appendChild($space.cloneNode(false));
-        }
+        $uploader.innerHTML = this.uploaderUsername || '';
+        $uploader.setAttribute('class', 'uploader link');
+        $fragment.appendChild($uploader);
+        $fragment.appendChild($space.cloneNode(false));
         
         $heart.setAttribute('class', 'like');
         $heart.innerHTML = '&hearts;';
@@ -182,18 +198,7 @@ function Video(args) {
     };
 
     this.goToUploader = function() {
-        switch (self.type) {
-            case 'soundcloud':
-            ExternalUserPage.loadSoundCloudUser(self.uploaderUsername);
-            break;
-
-            case 'youtube':
-            ExternalUserPage.loadYouTubeUser(self.uploaderUsername);
-            break;
-
-            default:
-            throw 'Unknown type for external users: ' + self.type;
-        }
+        ExternalUserPage.load(self.type, self.uploaderUsername);
     };
     
     /**
@@ -205,6 +210,9 @@ function Video(args) {
      * queue where the listView element being pressed is a "ghost" element.
      */
     this.listViewSelect = function(event, $listView) {
+        $('#left, #top .search').removeClass('focused');
+        $('#right').addClass('focused');
+
         if ($listView === undefined) {
             $listView = this.listView;
         }
@@ -271,6 +279,7 @@ function Video(args) {
     this.toJSON = function() {
         return {
             'videoId': this.videoId,
+            'mbid': this.mbid,
             'title': this.title,
             'duration': this.duration,
             'type': this.type,

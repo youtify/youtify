@@ -7,7 +7,7 @@ ModalBox.prototype.setCanBeClosed = function(canBeClosed) {
     self = this;
 
     if (canBeClosed) {
-        $('<span class="close">x</span>').click(function() {
+        $('<span class="close">X</span>').click(function() {
             self.remove();
         }).appendTo(self.view.find('.top'));
 
@@ -23,9 +23,12 @@ ModalBox.prototype.setMessage = function(message) {
     this.view.find('.wrapper p').text(message);
 };
 
-ModalBox.prototype.addButton = function(label, callback) {
+ModalBox.prototype.addButton = function(label, callback, cssClass) {
     var self = this;
     var elem = $('<button class="button"></button>').text(label);
+    if (cssClass) {
+        elem.addClass(cssClass);
+    }
     elem.click(function() {
         callback(self);
     });
@@ -39,22 +42,6 @@ ModalBox.prototype.show = function() {
 ModalBox.prototype.remove = function() {
     this.view.remove();
 };
-
-/* RELOAD DIALOG
- ****************************************************************************/
-
-function ReloadDialog() {
-    ModalBox.call(this);
-
-    this.setMessage('Your account has been used somewhere else. Please reload the page.');
-
-    this.addButton('Reload', function(self) {
-        location.reload();
-    });
-}
-
-ReloadDialog.prototype = new ModalBox();
-ReloadDialog.prototype.constructor = ReloadDialog;
 
 /* EDIT PROFILE DIALOG
  ****************************************************************************/
@@ -78,6 +65,10 @@ function EditProfileDialog() {
 
     this.setCanBeClosed(true);
 
+    this.addButton(TranslationSystem.get('Cancel'), function(self) {
+        self.remove();
+    });
+
     this.addButton(TranslationSystem.get('Save'), function(self) {
         var params = {};
         $.each(self.view.find('input, textarea'), function(i, elem) {
@@ -85,11 +76,7 @@ function EditProfileDialog() {
         });
         UserManager.currentUser.saveProfile(params);
         self.remove();
-    });
-
-    this.addButton(TranslationSystem.get('Cancel'), function(self) {
-        self.remove();
-    });
+    }, 'exposed');
 }
 
 EditProfileDialog.prototype = new ModalBox();
@@ -145,8 +132,13 @@ function AddToPlaylistDialog(videos) {
             playlist.addVideo(video);
         });
         playlistManager.save();
+        
+        /* Hide help if list is showing */
+        if (playlist.getMenuItem().isSelected()) {
+            $('#right .playlists .help-box').hide();
+        }
         self.remove();
-    });
+    }, 'exposed');
 
     this.setCanBeClosed(true);
 }

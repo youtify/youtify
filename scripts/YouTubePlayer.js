@@ -11,6 +11,7 @@
     self.inFullScreen = false;
     self.defaultWidth = $('#left .players').width();
     self.defaultHeight = $('#left .players').height();
+    self.qualitySet = false;
     
     /* Init the player */
     self.init = function(callback) {
@@ -29,7 +30,7 @@
             enablejsapi: 1,
             modestbranding: 1,
             origin: origin,
-            playerVars: { 'autoplay': 0, 'controls': 0 },
+            playerVars: { 'autoplay': 0, 'controls': 0, 'wmode': 'opaque' },
             events: {
                 'onReady': function(data) {
                         self.initialized = true;
@@ -68,7 +69,10 @@
         /* unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5) */
 		switch (event.data) {
             case YT.PlayerState.BUFFERING:
-                event.target.setPlaybackQuality(new Settings().quality);
+                if (!self.qualitySet) {
+                    event.target.setPlaybackQuality(new Settings().quality);
+                    self.qualitySet = true;
+                }
                 break;
 			case 0:
                 self.currentVideo = null;
@@ -111,6 +115,7 @@
         var quality = new Settings().quality || 'hd720';
         
         if (video) {
+            self.qualitySet = false;
             self.loadedNewVideo = true;
             self.currentVideo = video;
             self.player.loadVideoById(video.videoId, 0, quality);
@@ -135,7 +140,7 @@
     /* Enter fullScreen (must respect self.show() & self.hide()) */
     self.fullScreenOn = function() {
         var width = $(window).width(),
-            height = $(window).height() - $('#bottom').outerHeight();
+            height = $(window).height() - 10;
         
         if (self.view === null || self.view.left < 0) {
             return;
@@ -156,6 +161,8 @@
         
 		/* Must set style, not class */
 		$('#left .players').removeAttr('style');
+        $('#left .players .youtube').css('pointer-events', 'all');
+        
 		self.view.width(self.defaultWidth);
 		self.view.height(self.defaultHeight);
         self.inFullScreen = false;
@@ -184,17 +191,15 @@
     self.getCurrentPlaybackTime = function() {
         if (self.currentVideo) {
             return self.player.getCurrentTime();
-        } else {
-            return 0;
         }
+        return 0;
     };
     
     /* Returns the length of the video in seconds */
     self.getTotalPlaybackTime = function() {
         if (self.currentVideo) {
             return self.player.getDuration();
-        } else {
-            return 0;
         }
+        return 0;
     };
 }

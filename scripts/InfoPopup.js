@@ -3,7 +3,6 @@ var InfoPopup = {
         EventSystem.addEventListener('video_started_playing_successfully', InfoPopup.clearPopup);
         EventSystem.addEventListener('video_info_fetched', InfoPopup.loadVideo);
         EventSystem.addEventListener('uploader_info_fetched', InfoPopup.loadUploader);
-        EventSystem.addEventListener('artist_twitter_account_found', InfoPopup.loadTwitter);
     },
 
 	clearPopup: function(video) {
@@ -32,8 +31,9 @@ var InfoPopup = {
             $('<span/>').text(Utils.shorten(args.description, 140) + ' ').appendTo($description);
             if (args.description.length > 140) {
                 $('<a class="more" href="#"/>').text(TranslationSystem.get('More')).click(function() {
+                    Utils.closeAnyOpenArrowPopup();
                     $description.text(args.description);
-                    $('#bottom .info .title').arrowPopup('#video-info-popup', 'down');
+                    $('#bottom .info .i').arrowPopup('#video-info-popup', 'down');
                 }).appendTo($description);
             }
             $description.appendTo($titleAndDescription);
@@ -46,26 +46,6 @@ var InfoPopup = {
         }
 
         return $div;
-    },
-
-    loadTwitter: function(twitterUrl) {
-        var screenName = twitterUrl.split('/')[3];
-        var url = 'https://api.twitter.com/1/users/show.json?screen_name=' + screenName +'&include_entities=true&callback=?';
-        var $twitter = $('#video-info-popup .twitter');
-
-        $.getJSON(url, function(twitterData) {
-            $twitter.addClass('found');
-            $twitter.find('.content').replaceWith(
-                InfoPopup.createSection({
-                    a: {
-                        text: '@' + screenName,
-                        link: twitterUrl
-                    },
-                    image: twitterData.profile_image_url,
-                    url: twitterUrl
-                })
-            );
-        });
     },
 
     loadVideo: function(info) {
@@ -91,7 +71,7 @@ var InfoPopup = {
 
         if (info.url.match('soundcloud') || info.url.match('youtube')) {
             callback = function(event) {
-                ExternalUserPage.show(info.url);
+                ExternalUserPage.loadFromExternalUrl(info.url);
                 event.preventDefault();
             };
         }
