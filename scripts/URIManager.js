@@ -16,7 +16,7 @@ var URIManager = {
     },
     loadWarnings: function() {
         if (window.top !== window.self) {
-            Notifications.append('This address is not affiliated with Youtify. Always use www.youtify.com');
+            Utils.showModalBox('This address is not affiliated with Youtify. Always use www.youtify.com');
         }
     },
     loadState: function() {

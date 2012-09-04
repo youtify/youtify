@@ -176,7 +176,7 @@ var SettingsPopup = {
 
     installChromeWebStoreApp: function() {
         var fail = function() {
-                Notifications.append('Failed to install App.');
+                Utils.showModalBox('Failed to install App.');
             },
             success = function() {
                 Notifications.append('Installation succeded!');

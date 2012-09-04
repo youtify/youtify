@@ -30,7 +30,7 @@ soundManager.debugMode = false;
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
-            Notifications.append('Connection error! <i>' + r.responseText + '</i>');
+            Utils.showModalBox('Connection error! <i>' + r.responseText + '</i>');
         } else {
             $('body').html(r.responseText);
         }
