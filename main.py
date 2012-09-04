@@ -16,7 +16,10 @@ from model import generate_device_token
 from languages import auto_detect_language
 from snapshots import get_deployed_translations_struct
 from languages import get_languages
-from config import ON_PRODUCTION
+try:
+    import config
+except ImportError:
+    import config_template as config
 
 class NotFoundHandler(webapp.RequestHandler):
 
@@ -40,8 +43,8 @@ class MainHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
         self.response.out.write(template.render(path, {
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
-            'USE_PRODUCTION_JAVASCRIPT': ON_PRODUCTION,
-            'INCLUDE_GOOGLE_ANALYTICS': ON_PRODUCTION,
+            'USE_PRODUCTION_JAVASCRIPT': config.ON_PRODUCTION,
+            'INCLUDE_GOOGLE_ANALYTICS': config.ON_PRODUCTION,
 			'url': self.request.url,
             'og_tag': og_tag,
         }))
@@ -80,7 +83,8 @@ class ApiMainHandler(webapp.RequestHandler):
         lang_code = auto_detect_language(self.request)
 
         json = {
-            'ON_PRODUCTION': ON_PRODUCTION,
+            'ON_PRODUCTION': config.ON_PRODUCTION,
+            'SEARCH_STATS_URL': config.SEARCH_STATS_URL,
             'languagesFromServer': [lang for lang in get_languages() if lang['enabled_on_site']],
             'device': youtify_user_model is not None and youtify_user_model.device,
             'user': youtify_user_struct,

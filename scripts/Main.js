@@ -15,6 +15,7 @@ var languagesFromServer;
 var autoDetectedLanguageByServer;
 var autoDetectedTranslations;
 var ON_PRODUCTION;
+var SEARCH_STATS_URL;
 var myFollowers;
 var myFollowings;
 
@@ -54,9 +55,11 @@ $(document).ready(function() {
         autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
         autoDetectedTranslations = data.autoDetectedTranslations;
         ON_PRODUCTION = data.ON_PRODUCTION;
+        SEARCH_STATS_URL = data.SEARCH_STATS_URL;
         myFollowers = data.myFollowers;
         myFollowings = data.myFollowings;
 
+        SearchStats.init();
         SyncManager.init(data.device, data.lastNotificationSeenTimestamp);
         UserManager.init(data.user);
         Menu.init();
