@@ -106,7 +106,7 @@ function ExternalUser(data) {
         $nameContainer.append($subscribeButton);
         $nameContainer.append($unsubscribeButton);
 
-        var $source = $('<a class="source link" target="_blank">').attr('href', self.linkUrl).text(self.linkLabel || '');
+        var $source = $('<a class="source link translatable" target="_blank">').attr('href', self.linkUrl).text(self.linkLabel || '');
         var $recommendations = $('<span class="recommendations link translatable" target="_blank">').text(TranslationSystem.get('Similar artists'));
         var $description = $('<div class="description">').text(Utils.shorten(self.description || '', 500));
 
