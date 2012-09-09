@@ -85,8 +85,9 @@ function SpotifyImporter() {
 				self.wait *= 2;
 				setTimeout(function() { self.addFromSpotifyToPlaylist(playlist); }, self.longWait);
 			} else {
-				console.log(jqXHR);
-				alert(jqXHR.statusText);
+				console.log(jqXHR.statusText);
+				self.spotifyIds.shift();
+				setTimeout(function() { self.addFromSpotifyToPlaylist(playlist); }, self.wait);
 			}
 		});
 	};
@@ -125,11 +126,14 @@ function SpotifyImporter() {
 	};
 	
 	this.updatedPlaylist = function() {
+        var self = this;
 		if (this.spotifyIds.length > 0) {
 			this.callbackUpdate();
 		} else {
-			playlistManager.save();
-			this.callbackDone();
+            setTimeout(function() { // with no timeout there's an error "wait until playlist is done"
+                playlistManager.save();
+                self.callbackDone();
+            }, 1000);
 		}
 	};
 }
