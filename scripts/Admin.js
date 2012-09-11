@@ -394,9 +394,13 @@ $(document).ready(function() {
             showLoadingBar();
             button.attr('disabled', 'disabled');
             $.post('/snapshots', function(data) {
-                hideLoadingBar();
-                button.removeAttr('disabled');
-                $('#tabs li[rel=snapshots]').click();
+                alert("Done. Will now continue to init cache");
+                $.post('/snapshots/init_cached_translations', function(data) {
+                    alert("Done. Translations should be live now");
+                    hideLoadingBar();
+                    button.removeAttr('disabled');
+                    $('#tabs li[rel=snapshots]').click();
+                });
             });
         }
     });

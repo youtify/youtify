@@ -22,6 +22,11 @@ def init_cached_translations():
 def get_deployed_translations_struct(lang_code):
     return deployed_translations.get(lang_code, {})
 
+class InitCacheHandler(webapp.RequestHandler):
+
+    def post(self):
+        init_cached_translations()
+
 class LatestHandler(webapp.RequestHandler):
     def get(self):
         lang_code = self.request.path.split('/')[-1]
@@ -43,13 +48,18 @@ class SnapshotsHandler(webapp.RequestHandler):
     def post(self):
         """Deploy action"""
         json = {}
-        for language in Language.all():
+        for language in Language.all().filter('enabled_on_site =', True):
+            logging.info("Buiding translation snapshot for " + language.code)
             translations = {}
             for key in language.translations:
                 translation = db.get(key)
                 translations[translation.phrase.text] = translation.text
             json[language.code] = translations
+
+        logging.info("Encoding snapshot JSON")
         json = simplejson.dumps(json)
+
+        logging.info("Switching active snapshot")
 
         active_snapshot = SnapshotMetadata.all().filter('active =', True).get()
         if active_snapshot:
@@ -60,8 +70,6 @@ class SnapshotsHandler(webapp.RequestHandler):
         metadata.put()
         content = SnapshotContent(metadata=metadata, json=json)
         content.put()
-
-        init_cached_translations()
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('success')
@@ -111,6 +119,7 @@ init_cached_translations()
 def main():
     application = webapp.WSGIApplication([
         ('/api/translations/.*', LatestHandler),
+        ('/snapshots/init_cached_translations', InitCacheHandler),
         ('/snapshots.*', SnapshotsHandler),
     ], debug=True)
     util.run_wsgi_app(application)
