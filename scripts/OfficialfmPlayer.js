@@ -6,7 +6,6 @@ function OfficialfmPlayer() {
     self.video = null;
     self.view = null;
     self.volume = 100;
-    self.mp3_url = 'http://cdn.official.fm/';
 	self.playedSuccessfully = false;
     self.defaultWidth = $('#left .players').width();
     self.defaultHeight = $('#left .players').height();
@@ -54,8 +53,8 @@ function OfficialfmPlayer() {
             soundManager.stopAll();
 			self.playedSuccessfully = false;
             soundManager.createSound({
-                id: video.videoId,
-                url: 'http://cdn.official.fm/mp3s/' + Math.floor(video.videoId / 1000) + '/' + video.videoId + '.mp3',
+                id: video.videoId, 
+                url: 'http://api.official.fm/tracks/' + video.videoId + '/stream?api_version=2',
                 volume: self.volume,
                 onplay: function() {
 					if (!self.playedSuccessfully) {

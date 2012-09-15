@@ -182,7 +182,7 @@ var Search = {
                 });
                 break;
             case 'officialfm-tracks':
-                url = 'http://api.official.fm/search/tracks/' + escape(q) + '/paginate';
+                url = 'http://api.official.fm/tracks/search?q=' + escape(q) + '&api_version=2&fields=cover';
                 params = {
                     'format': 'json',
                     'per_page': 30,
@@ -279,15 +279,22 @@ var Search = {
     getVideosFromOfficialfmSearchData: function(data) {
         ret = [];
         $.each(data, function(i, track) {
-        var buyLinks = track.purchase_url ? [track.buy_url] : null;
+            track = track.track;
+            var title = track.title.indexOf(track.artist) > -1 ? 
+                    track.title : 
+                    track.artist + ' - ' + track.title,
+                buyLinks = track.purchase_url ? [track.buy_url] : null,
+                id = track.page.split('/');
+            id = id[id.length-1];
             ret.push(new Video({
                 parent: 'search',
                 onPlayCallback: Search.onPlayCallback,
-                videoId: track.id,
-                title: track.title,
-                duration: track.length * 1000,
+                videoId: id,
+                title: title,
+                duration: track.duration * 1000,
                 buyLinks: buyLinks,
-                type: 'officialfm'
+                type: 'officialfm',
+                artworkURL: track.cover.urls.large
             }));
         });
         return ret;

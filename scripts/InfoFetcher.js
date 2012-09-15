@@ -45,7 +45,7 @@ var InfoFetcher = {
     },
 
 	loadOfficialFmTrackInfo: function(video) {
-        var url = "http://api.official.fm/track/" + video.videoId;
+        var url = "http://api.official.fm/tracks/" + video.videoId + '?api_version=2&fields=cover';
         var params = {
             format: 'json',
             key: OFFICIALFM_API_KEY
@@ -54,17 +54,23 @@ var InfoFetcher = {
             video: video
         };
         $.getJSON(url, params, function(data) {
-            data = data[0];
-            info.video.title = data.title;
-            info.video.duration = data.length * 1000;
-            info.url = 'http://official.fm/tracks/' + data.id;
-            info.title = data.title;
-            info.description = data.description;
-            info.thumbnail = data.picture_absolute_url;
+            data = data.track;
+            var title = data.title.indexOf(data.artist) > -1 ? 
+                    data.title : 
+                    data.artist + ' - ' + data.title,
+                id = data.page.split('/');
+            id = id[id.length-1];
+            
+            info.video.title = title;
+            info.video.duration = data.duration * 1000;
+            info.url = 'http://official.fm/tracks/' + id;
+            info.title = title;
+            info.description = "";
+            info.thumbnail = data.cover.urls.large;
             info.author = {
-                name: data.artist_string,
-                url: data.web_url || data.buy_url,
-                user_id: data.user_id
+                name: data.artist,
+                url: data.project.url.replace(/api\./, "").split('?')[0] || data.buy_url,
+                user_id: data.project.url.split('/')[data.project.url.split('/').length -1].split('?')[0]
             };
             info.buyLinks = video.buyLinks || data.buy_url ? [data.buy_url] : null;
             EventSystem.callEventListeners('video_info_fetched', info);
