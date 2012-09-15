@@ -110,7 +110,6 @@ var Queue = {
         
         view.html('');
         if (!Queue.isEmpty()) {
-            console.log('hiding');
             $('#right .queue .help-box').hide();
         }
         
