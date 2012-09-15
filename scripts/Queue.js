@@ -109,6 +109,11 @@ var Queue = {
         var view = this.$tracklist;
         
         view.html('');
+        if (!Queue.isEmpty()) {
+            console.log('hiding');
+            $('#right .queue .help-box').hide();
+        }
+        
         $.each(Queue.manualList, function(index, video) {
 			var clone = video.listView.clone(),
                 play = function() {
