@@ -47,6 +47,7 @@ class MainHandler(webapp.RequestHandler):
             'INCLUDE_GOOGLE_ANALYTICS': config.ON_PRODUCTION,
 			'url': self.request.url,
             'og_tag': og_tag,
+            'DO_FEATURE_DETECTION': True,
         }))
 
 class ApiMainHandler(webapp.RequestHandler):
