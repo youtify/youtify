@@ -14,7 +14,13 @@ var Notifications = {
     requestPermission: function() {
         if (window.webkitNotifications) {
             if (window.webkitNotifications.checkPermission() === 1) { // 0=OK, 1=Not Allowed, 2=Denied
-                window.webkitNotifications.requestPermission();
+                try {
+                    window.webkitNotifications.requestPermission();
+                } catch (e) {
+                    // Safari 6.01 throws a TypeError when we do the 
+                    // requestPermission() call. Temp fixing by disallowing
+                    // notifications for now.
+                }
             }
         }
     },
