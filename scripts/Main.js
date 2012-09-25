@@ -1,4 +1,4 @@
-﻿// GLOBALS
+// GLOBALS
 var playlistManager;
 var youTubeApiReady = false;
 var player = null;
@@ -30,7 +30,7 @@ soundManager.debugMode = false;
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {
         if (ON_PRODUCTION) {
-            Utils.showModalBox('Connection error! <i>' + r.responseText + '</i>');
+            console.log(r.responseText);
         } else {
             $('body').html(r.responseText);
         }
