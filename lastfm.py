@@ -41,7 +41,7 @@ def lastfm_request(method, t, options, user = None):
     http_method = urlfetch.GET if t == 'GET' else urlfetch.POST # TODO: Fix this
 
     try:
-        response = urlfetch.fetch(url=url, method=http_method, validate_certificate=VALIDATE_CERTIFICATE)
+        response = urlfetch.fetch(url=url, method=http_method, deadline=10, validate_certificate=VALIDATE_CERTIFICATE)
         return simplejson.loads(response.content)
     except Exception:
         return simplejson.loads({
