@@ -293,6 +293,7 @@ var Search = {
                 title: title,
                 duration: track.duration * 1000,
                 buyLinks: buyLinks,
+                uploaderUsername: track.project.name,
                 type: 'officialfm',
                 artworkURL: track.cover.urls.large
             }));

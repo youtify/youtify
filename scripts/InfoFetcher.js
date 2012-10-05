@@ -58,7 +58,8 @@ var InfoFetcher = {
             var title = data.title.indexOf(data.artist) > -1 ? 
                     data.title : 
                     data.artist + ' - ' + data.title,
-                id = data.page.split('/');
+                id = data.page.split('/'),
+                user_id = data.project.url.split('/')[data.project.url.split('/').length -1].split('?')[0];
             id = id[id.length-1];
             
             info.video.title = title;
@@ -69,8 +70,8 @@ var InfoFetcher = {
             info.thumbnail = data.cover.urls.large;
             info.author = {
                 name: data.artist,
-                url: data.project.url.replace(/api\./, "").split('?')[0] || data.buy_url,
-                user_id: data.project.url.split('/')[data.project.url.split('/').length -1].split('?')[0]
+                url: 'http://official.fm/projects/'+user_id || data.buy_url,
+                user_id: user_id
             };
             info.buyLinks = video.buyLinks || data.buy_url ? [data.buy_url] : null;
             EventSystem.callEventListeners('video_info_fetched', info);

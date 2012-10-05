@@ -257,6 +257,42 @@ function ExternalUser(data) {
             });
         });
     };
+    
+    self.loadOfficialFMUser = function(callback) {
+        $.getJSON("http://api.official.fm/projects/search?q=" + self.username + "&api_version=2", function(resolveData) {
+            var i = 0,
+                resolveURL = null;
+            for (i; i < resolveData.projects.length; i += 1) {
+                if (resolveData.projects[i].project.name.toLower() === self.username.toLower()) {
+                    resolveURL = resolveData.projects[i].project.url;
+                    break;
+                }
+            }
+            if (resolveURL === null) {
+                LoadingBar.error();
+                return;
+            }
+            $.getJSON(resolveURL + "&fields=cover", function(userData) {
+                self.externalUserId = String(userData.id);
+                self.displayName = userData.name;
+                self.avatarUrl = userData.cover.urls.large;
+                self.linkLabel = TranslationSystem.get('View on Official.fm');
+                self.linkUrl = 'http://official.fm/projects/'+self.externalUserId;
+                self.description = "";
+                self.updateInfoBar();
+
+                $.getJSON("http://api.official.fm/projects/" + self.externalUserId + "/tracks?api_version=2", function(tracksData) {
+                    var results = Search.getVideosFromSoundCloudSearchData(tracksData);
+                    $.each(results, function(i, video) {
+                        video.parent = self;
+                        video.onPlayCallback = self.videoPlayCallback;
+                        video.createListView().appendTo(self.$tracklist);
+                    });
+                    callback(self);
+                });
+            });
+        });
+    };
 }
 
 var ExternalUserManager = {
