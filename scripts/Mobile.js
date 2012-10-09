@@ -1,4 +1,6 @@
 
+// https://gist.github.com/1172490
+
 var Mobile = {
     elements: null,
     lastWidth: 0,
@@ -10,7 +12,9 @@ var Mobile = {
     android: ~navigator.userAgent.indexOf('Android'),
     
     init: function() {
-        // https://gist.github.com/1172490
+        $('#top .go-left').click(Utils.scrollLeft).hide();
+        $('#top .go-right').click(Utils.scrollRight);
+    
         Mobile.ios = Mobile.iphone || Mobile.ipad;
         Mobile.elements = $('body, .left-wrapper, #left, .right-wrapper, #right');
         
@@ -24,8 +28,8 @@ var Mobile = {
                 Mobile.elements.height(window.innerHeight + 'px');
             };
         }
-        window.onload = Mobile.setHeight;
         window.onresize = Mobile.resize;
+        Mobile.setHeight();
     },
     resize: function() {
         var pageWidth = $('body')[0].offsetWidth;
