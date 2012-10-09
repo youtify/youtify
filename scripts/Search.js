@@ -85,7 +85,8 @@ var Search = {
         if (q.length === 0) {
             return;
         }
-
+        Utils.scrollRight();
+        
         var url = null,
             c = null,
             start = null,
