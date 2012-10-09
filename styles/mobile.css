@@ -4,7 +4,6 @@ html, body, input, textarea, button, .button, #top .dropdown-button, #left .menu
     font-size: 10px;
 }
 body {
-    min-height: 480px;
     min-width: 640px;
 }
 #top {
@@ -49,12 +48,9 @@ body {
     font-weight: normal;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-.left-wrapper {
-    min-height: 480px;
-}
+
 #left {
     padding-bottom: 80px;
-    min-height: 360px;
 }
 #left .players,
 #left .players .soundcloud,
@@ -69,10 +65,6 @@ body {
 
 .right-wrapper {
     min-width: 640px;
-    min-height: 480px;
-}
-.right-wrapper, #right {
-    min-height: 360px;
 }
 
 #bottom {

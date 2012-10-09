@@ -72,7 +72,22 @@ $(document).ready(function() {
         $('#top .go-left').click(Utils.scrollLeft);
         $('#top .go-right').click(Utils.scrollRight);
         if (Utils.is320()) {
+            alert(
+                'window ' + window.height + 
+                ' body ' + $('body').height() + 
+                ' left-wrapper ' + $('.left-wrapper').height() + 
+                ' left ' + $('#left').height()
+            );
+                
             $('body').scrollTop(1);
+            
+            alert(
+                'window ' + window.height + 
+                ' body ' + $('body').height() + 
+                ' left-wrapper ' + $('.left-wrapper').height() + 
+                ' left ' + $('#left').height()
+            );
+            
         }
 
         playlistManager = new PlaylistsManager();
