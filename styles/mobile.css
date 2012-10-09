@@ -69,6 +69,9 @@ body {
 .right-wrapper {
     min-width: 640px;
 }
+#right > div {
+    padding: 10px 0 0 0;
+}
 
 #bottom {
     position: fixed;
