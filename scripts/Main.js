@@ -71,6 +71,9 @@ $(document).ready(function() {
         $('#profile-popup .logout a').attr('href', data.logoutUrl);
         $('#top .go-left').click(Utils.scrollLeft);
         $('#top .go-right').click(Utils.scrollRight);
+        if (Utils.is320()) {
+            $('body').scrollTop(1);
+        }
 
         playlistManager = new PlaylistsManager();
         Volume.init();

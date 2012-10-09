@@ -49,6 +49,20 @@ body {
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 
+#left {
+    padding-bottom: 80px;
+}
+#left .players,
+#left .players .soundcloud,
+#left .players .officialfm,
+#left .players .youtube {
+    width: 320px;
+    height: 80px;
+    background: #000;
+    position: absolute;
+    z-index: 30;
+}
+
 .right-wrapper {
     min-width: 640px;
 }
