@@ -62,6 +62,9 @@ body {
     position: absolute;
     z-index: 30;
 }
+#left .players { 
+    bottom: 70px;
+}
 
 .right-wrapper {
     min-width: 640px;
