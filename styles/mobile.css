@@ -52,6 +52,7 @@ body {
 
 #left {
     padding-bottom: 80px;
+    min-height: 360px;
 }
 #left .players,
 #left .players .soundcloud,
@@ -66,6 +67,9 @@ body {
 
 .right-wrapper {
     min-width: 640px;
+}
+#right {
+    min-height: 360px;
 }
 
 #bottom {
