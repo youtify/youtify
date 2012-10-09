@@ -12,7 +12,7 @@ var Mobile = {
     init: function() {
         // https://gist.github.com/1172490
         Mobile.ios = Mobile.iphone || Mobile.ipad;
-        Mobile.page = $('.left-wrapper')[0];
+        Mobile.page = $('#left')[0];
         
         if (Mobile.android) {
             // Android's browser adds the scroll position to the innerHeight, just to
