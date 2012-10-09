@@ -49,7 +49,9 @@ body {
     font-weight: normal;
     text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
-
+.left-wrapper {
+    min-height: 480px;
+}
 #left {
     padding-bottom: 80px;
     min-height: 360px;
@@ -67,8 +69,9 @@ body {
 
 .right-wrapper {
     min-width: 640px;
+    min-height: 480px;
 }
-#right {
+.right-wrapper, #right {
     min-height: 360px;
 }
 
