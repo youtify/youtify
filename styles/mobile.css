@@ -4,6 +4,7 @@ html, body, input, textarea, button, .button, #top .dropdown-button, #left .menu
     font-size: 10px;
 }
 body {
+    min-height: 480px;
     min-width: 640px;
 }
 #top {
