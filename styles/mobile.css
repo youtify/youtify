@@ -76,3 +76,8 @@ body {
 #bottom .info, #bottom .volume-wrapper, #bottom .fullscreen, #bottom .shuffle, #bottom  .timeline-wrapper .position, #bottom .timeline-wrapper {
     display: none;
 }
+
+
+#contextmenu {
+    width: 150px;
+}
