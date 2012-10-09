@@ -1,6 +1,6 @@
 
 var Mobile = {
-    page: null,
+    elements: null,
     lastWidth: 0,
     iphone: (navigator.userAgent.indexOf('iPhone') >= 0 || navigator.userAgent.indexOf('iPod') >= 0) || false,
     ipad: navigator.userAgent.indexOf('iPad') >= 0 || false,
@@ -12,7 +12,7 @@ var Mobile = {
     init: function() {
         // https://gist.github.com/1172490
         Mobile.ios = Mobile.iphone || Mobile.ipad;
-        Mobile.page = $('#left')[0];
+        Mobile.elements = $('body, .left-wrapper, #left, .right-wrapper, #right');
         
         if (Mobile.android) {
             // Android's browser adds the scroll position to the innerHeight, just to
@@ -21,14 +21,14 @@ var Mobile = {
             // when already scrolled down. The pageYOffset is of no use, since it always
             // returns 0 while the address bar is displayed.
             window.onscroll = function() {
-                Mobile.page.style.height = window.innerHeight + 'px';
+                Mobile.elements.height(window.innerHeight + 'px');
             };
         }
         window.onload = Mobile.setHeight;
         window.onresize = Mobile.resize;
     },
     resize: function() {
-        var pageWidth = Mobile.page.offsetWidth;
+        var pageWidth = $('body')[0].offsetWidth;
         // Android doesn't support orientation change, so check for when the width
         // changes to figure out when the orientation changes
         if (Mobile.lastWidth === pageWidth) {
@@ -50,11 +50,11 @@ var Mobile = {
             if (Mobile.iphone && !Mobile.fullscreen) {
                 height += 60;
             }
-            page.style.height = height + 'px';
+            elements.height(height + 'px');
         } else if (Mobile.android) {
             // The stock Android browser has a location bar height of 56 pixels, but
             // this very likely could be broken in other Android browsers.
-            Mobile.page.style.height = (window.innerHeight + 56) + 'px';
+            Mobile.elements.height((window.innerHeight + 56) + 'px');
         }
         // Scroll after a timeout, since iOS will scroll to the top of the page
         // after it fires the onload event
