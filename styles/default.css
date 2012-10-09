@@ -173,8 +173,10 @@ body.fullscreen #right {
 }
 
 #top {
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
     padding: 0 20px 0 5px;
@@ -329,12 +331,19 @@ input[type=search]::-webkit-search-results-decoration {
     cursor: pointer;
     line-height: 20px;
 }
+
+#top .go-left, #top .go-right {
+    display: none;
+}
+
 /** LEFT
  ****************************************************************************/
 
 .left-wrapper {
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
     top: 0;
@@ -344,16 +353,20 @@ input[type=search]::-webkit-search-results-decoration {
     padding: 50px 0 70px 0; /* #top, 0, #bottom, 0 */
 }
 #left {
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
     width: 320px;
     height: 100%;
     padding-bottom: 200px; /* #.players.height */
 }
 #left .menu {
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
     height: 100%;
     max-width: 100%;
@@ -510,8 +523,10 @@ input[type=search]::-webkit-search-results-decoration {
  ****************************************************************************/
  
 .right-wrapper {
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
     top: 0;
@@ -526,8 +541,10 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #right > div {
     display: none;
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
     padding: 10px 5px 0 5px;
     width: 100%;
@@ -1199,8 +1216,10 @@ body.fullscreen #bottom {
     overflow: hidden;
     width: 100%;
     padding-right: 360px; /* #controls.width */
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
 }
 #bottom .info .i {
@@ -1239,8 +1258,10 @@ body.fullscreen #bottom {
     height: 12px;
     width: 100%;
     padding-right: 550px;
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
 }
 #bottom .timeline-wrapper .position,
@@ -1391,7 +1412,7 @@ body.fullscreen #bottom {
  ****************************************************************************/
  
  .blocker {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 20;
@@ -2227,8 +2248,10 @@ body.fullscreen #bottom {
     top: 35px;
     left: 35px;
     padding-left: 4px;
-    -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
 
     border-radius: 50px;

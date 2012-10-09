@@ -69,6 +69,8 @@ $(document).ready(function() {
         $('body').addClass('loaded');
         $('.login-link').attr('href', data.loginUrl);
         $('#profile-popup .logout a').attr('href', data.logoutUrl);
+        $('#top .go-left').click(Utils.scrollLeft);
+        $('#top .go-right').click(Utils.scrollRight);
 
         playlistManager = new PlaylistsManager();
         Volume.init();

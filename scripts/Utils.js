@@ -167,6 +167,27 @@ var Utils = {
     
     openLink: function(url) {
         window.open(url);
+    },
+    
+    is320: function() {
+        return window.width <= 320;
+    },
+    
+    scrollLeft: function() {
+        if (Utils.is320()) {
+            $('html, body').animate({ scrollLeft: '0' }, 200, function() {
+                $('#top .go-left').hide();
+                $('#top .go-right').show();
+            });
+        }
+    },
+    scrollRight: function() {
+        if (Utils.is320()) {
+            $('html, body').animate({ scrollLeft: '320px' }, 200, function() {
+                $('#top .go-left').show();
+                $('#top .go-right').hide();
+            });
+        }
     }
     
 };

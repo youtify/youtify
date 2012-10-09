@@ -219,7 +219,8 @@ function MenuItem(args) {
         if (self.onSelected) {
             self.onSelected(self);
         }
-
+        
+        Utils.scrollRight();
         Menu.selectedMenuItem = self;
     };
 

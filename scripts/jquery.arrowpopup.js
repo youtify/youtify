@@ -62,7 +62,9 @@
         if (left < 0) {
             left = 0;
         }
-
+        if (Utils.is320()) {
+            left += window.scrollX;
+        }
         // Display a blocker div that removes the popup when clicked
         $('<div id="arrow-popup-blocker" class="blocker"></div>').click(function(event) {
             $(this).remove();
