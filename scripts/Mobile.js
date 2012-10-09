@@ -32,13 +32,13 @@ var Mobile = {
         Mobile.setHeight();
     },
     resize: function() {
-        var pageWidth = $('body')[0].offsetWidth;
+        /*var pageWidth = $('body')[0].offsetWidth;
         // Android doesn't support orientation change, so check for when the width
         // changes to figure out when the orientation changes
         if (Mobile.lastWidth === pageWidth) {
             return;
         }
-        Mobile.lastWidth = pageWidth;
+        Mobile.lastWidth = pageWidth;*/
         Mobile.setHeight();
     },
     setHeight: function() {
@@ -54,7 +54,7 @@ var Mobile = {
             if (Mobile.iphone && !Mobile.fullscreen) {
                 height += 60;
             }
-            elements.height(height + 'px');
+            Mobile.elements.height(height + 'px');
         } else if (Mobile.android) {
             // The stock Android browser has a location bar height of 56 pixels, but
             // this very likely could be broken in other Android browsers.
