@@ -134,6 +134,7 @@ function PlayerManager() {
             /* Everything seems to be in order. Play the video! */
             self.currentVideo = video;
             self.currentPlayer.play(video);
+            Timeline.updateBuffer(0);
         }
     };
     
@@ -347,8 +348,16 @@ function PlayerManager() {
             self.currentVideoLength = self.currentPlayer.getTotalPlaybackTime();
             return self.currentVideoLength;
         }
-        //console.log("Player.getTotalPlaybackTime(): currentPlayer is null");
         return 0;
+    };
+    
+    /* Returns the buffer in percent 0-100 */
+    self.getBuffer = function() {
+        var buffer = 0;
+        if (self.currentPlayer && self.currentPlayer.getBuffer) {
+            buffer = self.currentPlayer.getBuffer();
+        }
+        return buffer;
     };
     
     /* Find an alternative to the current video and play it */

@@ -171,4 +171,16 @@ function OfficialfmPlayer() {
         }
         return 0;
     };
+    
+    /* Returns the buffer in percent 0-100 */
+    self.getBuffer = function() {
+        var buffer = 0;
+        if (self.video) {
+            var sound = soundManager.getSoundById(self.video.videoId);
+            buffer = sound.bytesLoaded / sound.bytesTotal * 100;
+            buffer = buffer > 100 ? 100 : buffer;
+            buffer = buffer < 0 ? 0 : buffer;
+        }
+        return buffer;
+    };
 }

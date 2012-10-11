@@ -1291,6 +1291,10 @@ body.fullscreen #bottom {
     background: #666;
     padding-right: 5px;
 }
+#bottom .timeline-wrapper .timeline {
+    margin: 1px 90px 0 0;
+}
+#bottom.timeline .buffer,
 #bottom .timeline .slider,
 #bottom .volume .slider {
     height: 100%;
@@ -1302,10 +1306,20 @@ body.fullscreen #bottom {
     border-radius: 10px;
     position: relative;
 }
-#bottom .timeline-wrapper .timeline {
-    margin: 1px 90px 0 0;
+#bottom .timeline .buffer {
+    height: 10px;
+    position: absolute;
+    bottom: 0;
+    margin-left: 4px;
+    border-radius: 5px;
+    background:-webkit-linear-gradient(top, #666 30%, #888 100%);
+    background:-moz-linear-gradient(top, #666 30%, #888 100%);
+    background:-ms-linear-gradient(top, #666 30%, #888 100%);
+    background:-o-linear-gradient(top, #666 30%, #888 100%);
+    background:linear-gradient(top, #666 30%, #888 100%);
 }
-#bottom .timeline-wrapper .slider {
+#bottom .timeline .buffer,
+#bottom .timeline .slider {
     width: 0;
 }
 #bottom .volume-wrapper {

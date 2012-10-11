@@ -202,4 +202,15 @@
         }
         return 0;
     };
+    
+    /* Returns the buffer in percent 0-100 */
+    self.getBuffer = function() {
+        var buffer = 0;
+        if (self.currentVideo) {
+            buffer = self.player.getVideoLoadedFraction() * 100;
+            buffer = buffer > 100 ? 100 : buffer;
+            buffer = buffer < 0 ? 0 : buffer;
+        }
+        return buffer;
+    };
 }
