@@ -2,6 +2,7 @@ import os
 import re
 from datetime import datetime
 from google.appengine.api import users
+from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
@@ -30,13 +31,24 @@ class NotFoundHandler(webapp.RequestHandler):
 class MainHandler(webapp.RequestHandler):
 
     def get(self):
+    
+        og_title = '<meta property="og:title" content="Youtify"/>'
+        og_description = '<meta property="og:description" content="The Web Music Player"/>'
+        og_tag = ''
         # Find videotag and generate open graph meta tags
         match = re.compile(r'tracks/youtube/(.*)').search(self.request.url)
-        if match: 
-            og_tag = '<meta property="og:video" content="http://www.youtube.com/v/' + match.groups()[0] + '?version=3&amp;autohide=1"/><meta property="og:video:type" content="application/x-shockwave-flash"/><meta property="og:video:width" content="396"/><meta property="og:video:height" content="297"/>'
-        else:
-            og_tag = ''
-
+        if match:
+            videoID = match.groups()[0]
+            try:
+                response = urlfetch.fetch(url='http://gdata.youtube.com/feeds/api/videos/' + videoID + '?alt=json', deadline=15)
+                json = simplejson.loads(response.content)
+                title = json['entry'].get('title').get('$t')
+                og_title = '<meta property="og:title" content="' + title + ' | Youtify" />'
+                og_description = '<meta property="og:description" content="Listen to ' + title + ' on Youtify - The Web Music Player" />'
+            except:
+                pass
+            og_tag = '<meta property="og:video" content="http://www.youtube.com/v/' + videoID + '?version=3&amp;autohide=1"/><meta property="og:video:type" content="application/x-shockwave-flash"/><meta property="og:video:width" content="396"/><meta property="og:video:height" content="297"/>'
+        
         # TODO add og_tag for SoundCloud & Official.fm tracks
 
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
@@ -46,6 +58,8 @@ class MainHandler(webapp.RequestHandler):
             'USE_PRODUCTION_JAVASCRIPT': config.ON_PRODUCTION,
             'INCLUDE_GOOGLE_ANALYTICS': config.ON_PRODUCTION,
 			'url': self.request.url,
+            'og_title': og_title,
+            'og_description': og_description,
             'og_tag': og_tag,
             'DO_FEATURE_DETECTION': True,
         }))

@@ -19,13 +19,13 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
-        <meta property="og:title" content="Youtify"/>
 		<meta property="og:type" content="software"/>
 		<meta property="og:image" content="http://www.youtify.com/images/logo/logo_128x128.png"/>
 		<meta property="og:site_name" content="Youtify"/>
 		<meta property="og:url" content="{{url}}"/>
 		<meta property="fb:admins" content="704121239,676899180"/>
-		<meta property="og:description" content="The Web Music Player"/>
+        {{og_title}}
+        {{og_description}}
         {{og_tag}}
 		
 		<meta name="google-site-verification" content="8FTwN14g2Fk0iuvckECzl44YtXAU9kmCipo0S4oBOf0" />
@@ -43,7 +43,7 @@
         {% endif %}
         
         <link rel="icon" href="/images/logo/logo_16x16.png" type="image/png" />
-        <link href='/styles/default.css?v={{ CURRENT_VERSION_ID }}' rel='stylesheet' type='text/css'media="only screen">
+        <link href='/styles/default.css?v={{ CURRENT_VERSION_ID }}' rel='stylesheet' type='text/css' media="only screen">
         <link href='/styles/mobile.css?v={{ CURRENT_VERSION_ID }}' rel="stylesheet" type="text/css" media="only screen and (max-width: 320px)">
         
         {% if USE_SELF_HOSTED_FONT %}
