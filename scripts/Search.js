@@ -246,10 +246,11 @@ var Search = {
                     var results = data;
 
                     $.each(results, function(i, playlist) {
-                        if (playlist.videos.length > 0) {
+                        var videos = JSON.parse(playlist.videos);
+                        if (videos.length) {
                             new Playlist(
                                 playlist.title, 
-                                playlist.videos, 
+                                videos, 
                                 playlist.remoteId, 
                                 playlist.owner, 
                                 playlist.isPrivate
