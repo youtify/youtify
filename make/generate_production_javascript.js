@@ -6,7 +6,7 @@ var jsp = require("uglify-js").parser;
 var pro = require("uglify-js").uglify;
 
 var MATCH_PATTERN = /\/scripts\/(.*\.js)/g;
-var IGNORE_PATTERN = /jquery-1\.|jquery\.time|less|fastclick|soundmanager|production|shuffle|featuredetection.*.js/i;
+var IGNORE_PATTERN = /jquery-1\.|jquery\.time|less|soundmanager|production|shuffle|featuredetection.*.js/i;
 var JSLINT_OPTIONS = {
     devel: true,
     browser: true,

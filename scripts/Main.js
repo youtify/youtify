@@ -42,11 +42,6 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     }
 });
 
-// Init fast click for touch devices
-window.addEventListener('load', function() {
-    var click = new FastClick(document.body);
-}, false);
-
 $(document).ready(function() {
     EventSystem.init();
     LoadingBar.init();
