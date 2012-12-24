@@ -350,7 +350,7 @@ input[type=search]::-webkit-search-results-decoration {
     z-index: 5;
     width: 320px;
     height: 100%;
-    padding: 50px 0 70px 0; /* #top, 0, #bottom, 0 */
+    padding: 50px 0 0 0; /* #top, 0, 0, 0 */
 }
 #left {
     -webkit-box-sizing: border-box;
@@ -360,7 +360,7 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: border-box;
     width: 320px;
     height: 100%;
-    padding-bottom: 200px; /* #.players.height */
+    padding-bottom: 270px; /* #.players.height */
 }
 #left .menu {
     -webkit-box-sizing: border-box;
@@ -533,12 +533,18 @@ input[type=search]::-webkit-search-results-decoration {
     top: 0;
     width: 100%;
     height: 100%;
-    padding: 50px 0 70px 320px; /* #top, 0, #bottom, #leftcolumn */
+    padding: 50px 0 0 320px; /* #top, 0, 0, #leftcolumn */
 }
 #right {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-bottom: 70px;
 }
 #right > div {
     display: none;
@@ -1075,6 +1081,7 @@ input[type=search]::-webkit-search-results-decoration {
 
 /** BOTTOM
  ****************************************************************************/
+
 body.fullscreen #bottom:hover,
 body.fullscreen #bottom.on,
 #bottom {
