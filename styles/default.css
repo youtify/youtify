@@ -28,7 +28,7 @@ body:after {
 *******************************/
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; -webkit-tap-highlight-color: transparent; }
 blockquote, q { quotes: none; }
 blockquote:before, blockquote:after, q:before, q:after { content: ""; content: none; }
 ins { background-color: #ff9; color: #000; text-decoration: none; }
@@ -36,15 +36,18 @@ mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bol
 del { text-decoration: line-through; }
 hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
 input, select { vertical-align: middle; }
-a, input, a:hover, a:active { outline: none; }
+a, input, a:hover, a:active { outline: none; -webkit-tap-highlight-color: transparent; }
 /* Webkit browsers add a 2px margin outside the chrome of form elements */
-button, input, select, textarea { margin: 0; }
+button, input, select, textarea { margin: 0; -webkit-tap-highlight-color: transparent; }
 /* Hand cursor on clickable input elements */
 input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
 ol, ul { list-style: none; }
 strong { font-weight: bold; }
 /* Make objects non selectable */
-div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td { -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; -o-user-select: none; -ms-user-select: none; user-select: none; }
+div, p, span, i, b, h1, h2, h3, h4, label, ul, ol, li, img, a, table, th, tr, td { 
+    -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; -o-user-select: none; -ms-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
 
 /*******************************
  * z-index layout:
