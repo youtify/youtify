@@ -52,7 +52,7 @@ var Mobile = {
             // Only add extra padding to the height on iphone / ipod, since the ipad
             // browser doesn't scroll off the location bar.
             if (Mobile.iphone && !Mobile.fullscreen) {
-                height += 60;
+                //height += 60;
             }
             Mobile.elements.height(height + 'px');
         } else if (Mobile.android) {
