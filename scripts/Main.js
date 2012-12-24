@@ -44,7 +44,7 @@ $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
 
 // Init fast click for touch devices
 window.addEventListener('load', function() {
-    new FastClick(document.body);
+    var click = new FastClick(document.body);
 }, false);
 
 $(document).ready(function() {
