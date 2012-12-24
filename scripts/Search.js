@@ -246,7 +246,16 @@ var Search = {
                     var results = data;
 
                     $.each(results, function(i, playlist) {
-                        new Playlist(playlist.title, playlist.videos, playlist.remoteId, playlist.owner, playlist.isPrivate).getSearchView().appendTo(Search.tabs.$selectedPane);
+                        if (playlist.videos.length > 0) {
+                            new Playlist(
+                                playlist.title, 
+                                playlist.videos, 
+                                playlist.remoteId, 
+                                playlist.owner, 
+                                playlist.isPrivate
+                            ).getSearchView()
+                            .appendTo(Search.tabs.$selectedPane);
+                        }
                     });
 
                     Search.tabs.$selectedPane.data('results-count', c + results.length);
