@@ -350,7 +350,7 @@ input[type=search]::-webkit-search-results-decoration {
     z-index: 5;
     width: 320px;
     height: 100%;
-    padding: 50px 0 0 0; /* #top, 0, 0, 0 */
+    padding: 0 0 0 0; /* 0, 0, 0, 0 */
 }
 #left {
     -webkit-box-sizing: border-box;
@@ -360,6 +360,7 @@ input[type=search]::-webkit-search-results-decoration {
     box-sizing: border-box;
     width: 320px;
     height: 100%;
+    padding-top: 50px;
     padding-bottom: 270px; /* #.players.height */
 }
 #left .menu {
@@ -533,7 +534,7 @@ input[type=search]::-webkit-search-results-decoration {
     top: 0;
     width: 100%;
     height: 100%;
-    padding: 50px 0 0 320px; /* #top, 0, 0, #leftcolumn */
+    padding: 0 0 0 320px; /* #top, 0, 0, #leftcolumn */
 }
 #right {
     width: 100%;
@@ -544,6 +545,7 @@ input[type=search]::-webkit-search-results-decoration {
     -ms-box-sizing: border-box;
     -o-box-sizing: border-box;
     box-sizing: border-box;
+    padding-top: 50px;
     padding-bottom: 70px;
 }
 #right > div {
