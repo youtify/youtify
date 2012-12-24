@@ -51,9 +51,9 @@ var Mobile = {
             var height = document.documentElement.clientHeight;
             // Only add extra padding to the height on iphone / ipod, since the ipad
             // browser doesn't scroll off the location bar.
-            //if (Mobile.iphone && !Mobile.fullscreen) {
-                //height += 60;
-            //}
+            if (Mobile.iphone && !Mobile.fullscreen) {
+                height -= 60;
+            }
             Mobile.elements.height(height + 'px');
         } else if (Mobile.android) {
             // The stock Android browser has a location bar height of 56 pixels, but
