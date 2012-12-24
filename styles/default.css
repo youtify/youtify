@@ -151,7 +151,6 @@ input, textarea, button {
     color: #FFF;
     text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
     background-color: #aaa;
-    -webkit-tap-highlight-color: rgb(62, 126, 221);
 }
 
 #right.focused .video.selected,
@@ -159,7 +158,6 @@ input, textarea, button {
     color: #FFF;
     text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
     background-color: rgb(62, 126, 221);
-    -webkit-tap-highlight-color: rgb(62, 126, 221);
 }
 
 /** TOP
