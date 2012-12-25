@@ -1,11 +1,11 @@
 import os
 from datetime import datetime
 
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 from google.appengine.api import memcache
-from django.utils import simplejson
+import json as simplejson
 from model import Stats
 from model import YoutifyUser
 from model import Playlist
@@ -19,7 +19,7 @@ def get_flattr_stats_json():
         json = '{nr_of_users: 0, nr_of_flattrs: 0}'
     return json
 
-class FlattrStatsCronJobHandler(webapp.RequestHandler):
+class FlattrStatsCronJobHandler(webapp2.RequestHandler):
 
     def get(self):
         json = simplejson.dumps({
@@ -29,7 +29,7 @@ class FlattrStatsCronJobHandler(webapp.RequestHandler):
         memcache.delete('flattr_stats')
         memcache.add('flattr_stats', json, 3600*24)
 
-class StatsPageHandler(webapp.RequestHandler):
+class StatsPageHandler(webapp2.RequestHandler):
 
     def get(self):
         path = os.path.join(os.path.dirname(__file__), 'html', 'stats.html')
@@ -37,7 +37,7 @@ class StatsPageHandler(webapp.RequestHandler):
             'stats': Stats.all().order('-date').get()
         }))
 
-class CronJobHandler(webapp.RequestHandler):
+class CronJobHandler(webapp2.RequestHandler):
 
     def get(self):
         stats = Stats()
@@ -80,13 +80,8 @@ class CronJobHandler(webapp.RequestHandler):
         
         stats.put()
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/stats', StatsPageHandler),
         ('/cron/gather_stats', CronJobHandler),
         ('/cron/gather_flattr_stats', FlattrStatsCronJobHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

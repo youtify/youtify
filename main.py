@@ -3,10 +3,10 @@ import re
 from datetime import datetime
 from google.appengine.api import users
 from google.appengine.api import urlfetch
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from model import create_youtify_user_model
 from model import get_youtify_user_struct
@@ -22,13 +22,13 @@ try:
 except ImportError:
     import config_template as config
 
-class NotFoundHandler(webapp.RequestHandler):
+class NotFoundHandler(webapp2.RequestHandler):
 
     def get(self):
         self.response.set_status(404)
         self.response.out.write("404 Not found")
 
-class MainHandler(webapp.RequestHandler):
+class MainHandler(webapp2.RequestHandler):
 
     def get(self):
     
@@ -64,7 +64,7 @@ class MainHandler(webapp.RequestHandler):
             'DO_FEATURE_DETECTION': True,
         }))
 
-class ApiMainHandler(webapp.RequestHandler):
+class ApiMainHandler(webapp2.RequestHandler):
 
     def get(self):
         my_followers_struct = []
@@ -116,13 +116,8 @@ class ApiMainHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json));
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/api/main', ApiMainHandler),
         ('/.*\.(?:png|ico|jpg|gif|xml|css|swf|js|yaml|py|pyc|woff|eot|svg|ttf)$', NotFoundHandler),
         ('/.*', MainHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

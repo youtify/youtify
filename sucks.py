@@ -1,9 +1,9 @@
 import os
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
 
-class SuckyBrowserHandler(webapp.RequestHandler):
+class SuckyBrowserHandler(webapp2.RequestHandler):
 
     def get(self):
         path = os.path.join(os.path.dirname(__file__), 'html', 'yourbrowsersucks.html')
@@ -12,7 +12,7 @@ class SuckyBrowserHandler(webapp.RequestHandler):
             'ON_PRODUCTION': os.environ['SERVER_SOFTWARE'].startswith('Google App Engine'), # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
         }))
 
-class RockyDecisionHandler(webapp.RequestHandler):
+class RockyDecisionHandler(webapp2.RequestHandler):
 
     def get(self):
         path = os.path.join(os.path.dirname(__file__), 'html', 'yourdecisionrocks.html')
@@ -21,12 +21,7 @@ class RockyDecisionHandler(webapp.RequestHandler):
             'ON_PRODUCTION': os.environ['SERVER_SOFTWARE'].startswith('Google App Engine'), # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
         }))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/yourbrowsersucks', SuckyBrowserHandler),
         ('/yourdecisionrocks', RockyDecisionHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

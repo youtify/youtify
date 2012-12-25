@@ -1,8 +1,8 @@
 import re
 import logging
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from model import get_youtify_user_model_by_id_or_nick
 from model import get_youtify_user_struct
@@ -44,7 +44,7 @@ BLOCKED_NICKNAMES = [
     'faq',
 ]
 
-class ProfileHandler(webapp.RequestHandler):
+class ProfileHandler(webapp2.RequestHandler):
     def get(self):
         user = get_current_youtify_user_model()
         self.response.headers['Content-Type'] = 'application/json'
@@ -84,7 +84,7 @@ class ProfileHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(get_display_name_for_youtify_user_model(user))
 
-class SettingsHandler(webapp.RequestHandler):
+class SettingsHandler(webapp2.RequestHandler):
     
     def get(self):
         user = get_current_youtify_user_model()
@@ -104,7 +104,7 @@ class SettingsHandler(webapp.RequestHandler):
         settings = get_settings_struct_for_youtify_user_model(user)
         self.response.out.write(simplejson.dumps(settings))
 
-class FollowingsHandler(webapp.RequestHandler):
+class FollowingsHandler(webapp2.RequestHandler):
 
     def delete(self, uid):
         me = get_current_youtify_user_model()
@@ -162,7 +162,7 @@ class FollowingsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
-class YouTubeUserNameHandler(webapp.RequestHandler):
+class YouTubeUserNameHandler(webapp2.RequestHandler):
     def get(self):
         user = get_current_youtify_user_model()
         self.response.headers['Content-Type'] = 'text/plain'
@@ -178,13 +178,13 @@ class YouTubeUserNameHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
-class ExternalUserSubscriptionsHandler(webapp.RequestHandler):
+class ExternalUserSubscriptionsHandler(webapp2.RequestHandler):
     def get(self):
         user = get_current_youtify_user_model()
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(get_external_user_subscriptions_struct_for_youtify_user_model(user)))
 
-class PlaylistsHandler(webapp.RequestHandler):
+class PlaylistsHandler(webapp2.RequestHandler):
 
     def get(self):
         """Get the users playlists, including private ones"""
@@ -196,7 +196,7 @@ class PlaylistsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
-class MeHandler(webapp.RequestHandler):
+class MeHandler(webapp2.RequestHandler):
 
     def get(self):
         """Get the currnet user, incuding private data"""
@@ -209,7 +209,7 @@ class MeHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
-class DeviceTokenHandler(webapp.RequestHandler):
+class DeviceTokenHandler(webapp2.RequestHandler):
 
     def get(self):
         """Set a new device token for the user"""
@@ -222,7 +222,7 @@ class DeviceTokenHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
-class LastNotificationSeenTimestampHandler(webapp.RequestHandler):
+class LastNotificationSeenTimestampHandler(webapp2.RequestHandler):
 
     def post(self):
         user = get_current_youtify_user_model()
@@ -242,8 +242,7 @@ class LastNotificationSeenTimestampHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(json))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/me', MeHandler),
         ('/me/last-notification-seen-timestamp', LastNotificationSeenTimestampHandler),
         ('/me/external_user_subscriptions', ExternalUserSubscriptionsHandler),
@@ -254,7 +253,3 @@ def main():
         ('/me/settings', SettingsHandler),
         ('/me/followings/(.*)', FollowingsHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

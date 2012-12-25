@@ -1,7 +1,7 @@
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.api import urlfetch
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from model import Playlist
 from model import ExternalUser
@@ -38,7 +38,7 @@ EXTERNAL_USERS = (
     ('soundcloud', 'beltek'),
 )
 
-class Handler(webapp.RequestHandler):
+class Handler(webapp2.RequestHandler):
 
     def get(self):
         user = get_current_youtify_user_model()
@@ -77,12 +77,7 @@ class Handler(webapp.RequestHandler):
 
         self.redirect('/')
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/.*', Handler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()
 

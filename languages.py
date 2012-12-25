@@ -2,10 +2,10 @@
 
 import logging
 from google.appengine.ext import db
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from model import YoutifyUser
 from model import Language
@@ -77,7 +77,7 @@ def auto_detect_language(request):
 
     return 'en_US'
 
-class LeadersHandler(webapp.RequestHandler):
+class LeadersHandler(webapp2.RequestHandler):
     def get(self):
         lang_code = self.request.path.split('/')[-2]
         language = Language.all().filter('code =', lang_code).get()
@@ -138,7 +138,7 @@ class LeadersHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('success')
 
-class LanguagesHandler(webapp.RequestHandler):
+class LanguagesHandler(webapp2.RequestHandler):
     def get(self):
         """Returns the list of languages"""
         global languages
@@ -169,7 +169,7 @@ class LanguagesHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('')
 
-class SpecificLanguageHandler(webapp.RequestHandler):
+class SpecificLanguageHandler(webapp2.RequestHandler):
     def post(self):
         """Update a specific language"""
         if not users.is_current_user_admin():
@@ -207,7 +207,7 @@ class SpecificLanguageHandler(webapp.RequestHandler):
         else:
             self.error(404)
 
-class TranslationsHandler(webapp.RequestHandler):
+class TranslationsHandler(webapp2.RequestHandler):
     def get(self):
         """Get all translations for a specific language"""
         lang_code = self.request.path.split('/')[-2]
@@ -265,14 +265,9 @@ def get_leader_langs_for_user(youtify_user):
             ret.append(language.code)
     return ret
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/languages/.*?/leaders.*', LeadersHandler),
         ('/languages/.*?/translations.*', TranslationsHandler),
         ('/languages/.*', SpecificLanguageHandler),
         ('/languages', LanguagesHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

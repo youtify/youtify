@@ -1,9 +1,9 @@
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.api import urlfetch
-from django.utils import simplejson
+import json as simplejson
 
-class Handler(webapp.RequestHandler):
+class Handler(webapp2.RequestHandler):
 
     def get(self):
         id = self.request.get('id')
@@ -11,11 +11,6 @@ class Handler(webapp.RequestHandler):
         json = simplejson.loads(response.content)
         self.redirect(json['permalink_url'])
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/soundcloud_id_to_permalink', Handler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

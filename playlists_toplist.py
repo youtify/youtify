@@ -1,8 +1,8 @@
 import logging
 from google.appengine.api import memcache
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+import json as simplejson
 from model import Playlist
 from model import get_playlist_struct_from_playlist_model
 
@@ -22,7 +22,7 @@ def get_playlists_toplist_json():
         return '[]'
     return cache
 
-class CronJobHandler(webapp.RequestHandler):
+class CronJobHandler(webapp2.RequestHandler):
 
     def get(self):
         json = fetch_toplist()
@@ -33,18 +33,13 @@ class CronJobHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json)
 
-class ApiHandler(webapp.RequestHandler):
+class ApiHandler(webapp2.RequestHandler):
 
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(get_playlists_toplist_json())
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/cron/generate_playlists_toplist', CronJobHandler),
         ('/api/toplists/playlists', ApiHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

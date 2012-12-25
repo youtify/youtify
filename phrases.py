@@ -1,13 +1,13 @@
 from google.appengine.ext import db
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
-from django.utils import simplejson
+import json as simplejson
 from model import Phrase
 from model import Language
 from model import Translation
 
-class PhrasesHandler(webapp.RequestHandler):
+class PhrasesHandler(webapp2.RequestHandler):
     def get(self):
         """Get all phrases"""
         json = []
@@ -59,11 +59,6 @@ class PhrasesHandler(webapp.RequestHandler):
         else:
             self.error(404)
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/phrases.*', PhrasesHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

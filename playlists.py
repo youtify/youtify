@@ -1,8 +1,8 @@
 import logging
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext import db
-from django.utils import simplejson
+import json as simplejson
 from activities import create_subscribe_activity
 from model import get_current_youtify_user_model
 from model import get_playlist_struct_from_playlist_model
@@ -11,7 +11,7 @@ from model import get_youtify_user_struct
 from model import Playlist
 from mail import send_new_subscriber_email
 
-class PlaylistFollowersHandler(webapp.RequestHandler):
+class PlaylistFollowersHandler(webapp2.RequestHandler):
     
     def get(self, playlist_id):
         """Gets the list of users that follow a playlist"""
@@ -79,7 +79,7 @@ class PlaylistFollowersHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
-class SpecificPlaylistHandler(webapp.RequestHandler):
+class SpecificPlaylistHandler(webapp2.RequestHandler):
     
     def get(self):
         """Get playlist"""
@@ -150,7 +150,7 @@ class SpecificPlaylistHandler(webapp.RequestHandler):
         else:
             self.error(403)
 
-class PlaylistsHandler(webapp.RequestHandler):
+class PlaylistsHandler(webapp2.RequestHandler):
 
     def post(self):
         """Create new playlist"""
@@ -176,13 +176,8 @@ class PlaylistsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(get_playlist_struct_from_playlist_model(playlist_model)))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/api/playlists/(.*)/followers', PlaylistFollowersHandler),
         ('/api/playlists/.*', SpecificPlaylistHandler),
         ('/api/playlists', PlaylistsHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

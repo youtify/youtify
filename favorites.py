@@ -1,14 +1,14 @@
 import logging
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from model import get_display_name_for_youtify_user_model
 from model import get_playlist_struct_from_playlist_model
 from model import get_playlist_structs_by_id
 from model import Playlist
 
-class FavoriteHandler(webapp.RequestHandler):
+class FavoriteHandler(webapp2.RequestHandler):
     
     def post(self):
         """Add a track to the favorite list"""
@@ -63,11 +63,6 @@ class FavoriteHandler(webapp.RequestHandler):
         else:
             self.error(403)
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/api/favorites/.*', FavoriteHandler)
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

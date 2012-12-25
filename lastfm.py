@@ -5,9 +5,9 @@ import base64
 from hashlib import md5
 from urllib import quote
 from google.appengine.api import urlfetch
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 
 try:
@@ -48,7 +48,7 @@ def lastfm_request(method, t, options, user = None):
             'message': 'urlfetch failed'
         })
 
-class ConnectHandler(webapp.RequestHandler):
+class ConnectHandler(webapp2.RequestHandler):
     """Initiate the Last.fm authentication dance"""
     def get(self):
         redirect_uri = self.request.get('redirect_uri')
@@ -60,7 +60,7 @@ class ConnectHandler(webapp.RequestHandler):
 
         self.redirect(url)
 
-class DisconnectHandler(webapp.RequestHandler):
+class DisconnectHandler(webapp2.RequestHandler):
     """Remove the current user's Last.fm access token"""
     def get(self):
         redirect_uri = self.request.get('redirect_uri', '/')
@@ -75,7 +75,7 @@ class DisconnectHandler(webapp.RequestHandler):
 
         self.redirect(redirect_uri)
 
-class CallbackHandler(webapp.RequestHandler):
+class CallbackHandler(webapp2.RequestHandler):
     """Retrieve the access token"""
     def get(self):
         session = lastfm_request('auth.getSession', 'GET', { 'token': self.request.get('token') })
@@ -101,7 +101,7 @@ class CallbackHandler(webapp.RequestHandler):
 
             self.response.out.write(str(session))
 
-class ScrobbleHandler(webapp.RequestHandler):
+class ScrobbleHandler(webapp2.RequestHandler):
     """Scrobble a track"""
     def post(self):
         options = {
@@ -119,7 +119,7 @@ class ScrobbleHandler(webapp.RequestHandler):
         else:
             self.response.out.write(simplejson.dumps({ 'success': False }))
 
-class RecommendationsHandler(webapp.RequestHandler):
+class RecommendationsHandler(webapp2.RequestHandler):
     """Recommended artists for the user"""
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
@@ -133,15 +133,10 @@ class RecommendationsHandler(webapp.RequestHandler):
         except:
             self.response.out.write(simplejson.dumps({ 'success': False }))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/lastfm/connect', ConnectHandler),
         ('/lastfm/disconnect', DisconnectHandler),
         ('/lastfm/callback', CallbackHandler),
         ('/lastfm/scrobble', ScrobbleHandler),
         ('/lastfm/recommendations', RecommendationsHandler)
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

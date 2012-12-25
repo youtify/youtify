@@ -1,9 +1,9 @@
 import os
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
 
-class MinimizerHandler(webapp.RequestHandler):
+class MinimizerHandler(webapp2.RequestHandler):
 
     def get(self):
         path = os.path.join(os.path.dirname(__file__), 'html', 'minimizer.html')
@@ -11,11 +11,6 @@ class MinimizerHandler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {
         }))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/.*', MinimizerHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

@@ -2,9 +2,9 @@ import logging
 import urllib
 import base64
 from google.appengine.api import urlfetch
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from activities import create_flattr_activity
 try:
@@ -15,7 +15,7 @@ except ImportError:
 VALIDATE_CERTIFICATE = True
 FLATTR_SCOPE = 'flattr thing'
 
-class ClickHandler(webapp.RequestHandler):
+class ClickHandler(webapp2.RequestHandler):
     """Flattrs a specified thing"""
     def post(self):
         thing_id = self.request.get('thing_id')
@@ -41,7 +41,7 @@ class ClickHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
 
-class AutoSubmitHandler(webapp.RequestHandler):
+class AutoSubmitHandler(webapp2.RequestHandler):
     """Flattrs a specified URL even though it may not be on flattr yet"""
     def post(self):
         url_to_submit = self.request.get('url')
@@ -72,7 +72,7 @@ class AutoSubmitHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
 
-class DisconnectHandler(webapp.RequestHandler):
+class DisconnectHandler(webapp2.RequestHandler):
     """Remove the current users access token"""
     def get(self):
         redirect_uri = self.request.get('redirect_uri', '/')
@@ -82,7 +82,7 @@ class DisconnectHandler(webapp.RequestHandler):
         user.save()
         self.redirect(redirect_uri)
 
-class ConnectHandler(webapp.RequestHandler):
+class ConnectHandler(webapp2.RequestHandler):
     """Initiate the OAuth dance"""
     def get(self):
         redirect_uri = self.request.get('redirect_uri')
@@ -105,7 +105,7 @@ def update_fattr_user_info(user):
     else:
         user.flattr_user_name = response['username']
 
-class BackHandler(webapp.RequestHandler):
+class BackHandler(webapp2.RequestHandler):
     """Retrieve the access token"""
     def get(self):
         code = self.request.get('code')
@@ -147,15 +147,10 @@ class BackHandler(webapp.RequestHandler):
             self.response.out.write('\n\n')
             self.response.out.write(str(response))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/flattrdisconnect', DisconnectHandler),
         ('/flattrconnect', ConnectHandler),
         ('/flattrback', BackHandler),
         ('/flattrclick', ClickHandler),
         ('/flattrautosubmit', AutoSubmitHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

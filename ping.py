@@ -5,10 +5,10 @@ import os
 from google.appengine.ext import db
 from google.appengine.api import memcache
 from google.appengine.api import users
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
-from django.utils import simplejson
+import json as simplejson
 from model import PingStats
 
 def get_or_create_pings():
@@ -18,7 +18,7 @@ def get_or_create_pings():
         memcache.add('pings', pings)
     return pings
     
-class PingHandler(webapp.RequestHandler):
+class PingHandler(webapp2.RequestHandler):
     """ Increment pings """
     def post(self):
         get_or_create_pings()
@@ -34,7 +34,7 @@ class PingHandler(webapp.RequestHandler):
         memcache.incr('pings');
         self.response.out.write('')
 
-class PingCronHandler(webapp.RequestHandler):
+class PingCronHandler(webapp2.RequestHandler):
     """ Move pings from memcache to DB """
 
     def get(self):
@@ -42,7 +42,7 @@ class PingCronHandler(webapp.RequestHandler):
         m.put()
         memcache.set('pings', 0)
 
-class PingGraphHandler(webapp.RequestHandler):
+class PingGraphHandler(webapp2.RequestHandler):
     """ Get pings for the last 24h """
 
     def get(self):
@@ -60,13 +60,8 @@ class PingGraphHandler(webapp.RequestHandler):
             'npings': len(json),
         }))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/cron/store_pings', PingCronHandler),
         ('/admin/pinggraph', PingGraphHandler),
         ('/ping', PingHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

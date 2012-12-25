@@ -1,4 +1,4 @@
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from model import get_youtify_user_model_by_id_or_nick
 from model import get_youtify_user_struct
@@ -6,9 +6,9 @@ from model import get_playlist_structs_for_youtify_user_model
 from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
 from model import get_activities_structs
-from django.utils import simplejson
+import json as simplejson
 
-class ActivitiesHandler(webapp.RequestHandler):
+class ActivitiesHandler(webapp2.RequestHandler):
 
     def get(self, id_or_nick):
         """Get activities for user as JSON"""
@@ -33,7 +33,7 @@ class ActivitiesHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 
-class FollowersHandler(webapp.RequestHandler):
+class FollowersHandler(webapp2.RequestHandler):
 
     def get(self, id_or_nick):
         """Get followers for user as JSON"""
@@ -48,7 +48,7 @@ class FollowersHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 
-class FollowingsHandler(webapp.RequestHandler):
+class FollowingsHandler(webapp2.RequestHandler):
 
     def get(self, id_or_nick):
         """Get followings for user as JSON"""
@@ -63,7 +63,7 @@ class FollowingsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 
-class PlaylistsHandler(webapp.RequestHandler):
+class PlaylistsHandler(webapp2.RequestHandler):
 
     def get(self, id_or_nick):
         """Get playlists for user as JSON"""
@@ -78,7 +78,7 @@ class PlaylistsHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 
-class UserHandler(webapp.RequestHandler):
+class UserHandler(webapp2.RequestHandler):
 
     def get(self, id_or_nick):
         """Get user as JSON"""
@@ -98,15 +98,10 @@ class UserHandler(webapp.RequestHandler):
         """Update user"""
         self.error(500)
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/api/users/(.*)/activities', ActivitiesHandler),
         ('/api/users/(.*)/followers', FollowersHandler),
         ('/api/users/(.*)/followings', FollowingsHandler),
         ('/api/users/(.*)/playlists', PlaylistsHandler),
         ('/api/users/(.*)', UserHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

@@ -2,7 +2,7 @@
 
 import logging
 
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 
 from languages import Language
@@ -176,7 +176,7 @@ old_translations['ro_SE'] = {
 	'Less': u'Mominondodrore',
 }
 
-class Handler(webapp.RequestHandler):
+class Handler(webapp2.RequestHandler):
     def get(self):
         for m in Language.all():
             m.delete()
@@ -220,12 +220,7 @@ class Handler(webapp.RequestHandler):
 
         #self.redirect('/admin/languages')
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/admin/import_old_translations', Handler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()
 

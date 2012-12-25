@@ -1,9 +1,9 @@
 import logging
 from google.appengine.ext import db
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
-from django.utils import simplejson
+import json as simplejson
 from model import Language
 from model import SnapshotMetadata
 from model import SnapshotContent
@@ -22,18 +22,18 @@ def init_cached_translations():
 def get_deployed_translations_struct(lang_code):
     return deployed_translations.get(lang_code, {})
 
-class InitCacheHandler(webapp.RequestHandler):
+class InitCacheHandler(webapp2.RequestHandler):
 
     def post(self):
         init_cached_translations()
 
-class LatestHandler(webapp.RequestHandler):
+class LatestHandler(webapp2.RequestHandler):
     def get(self):
         lang_code = self.request.path.split('/')[-1]
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(get_deployed_translations_struct(lang_code)))
 
-class SnapshotsHandler(webapp.RequestHandler):
+class SnapshotsHandler(webapp2.RequestHandler):
     def get(self):
         json = [];
         for snapshot in SnapshotMetadata.all().order('-date'):
@@ -116,13 +116,8 @@ class SnapshotsHandler(webapp.RequestHandler):
 
 init_cached_translations()
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/api/translations/.*', LatestHandler),
         ('/snapshots/init_cached_translations', InitCacheHandler),
         ('/snapshots.*', SnapshotsHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import logging
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
+import json as simplejson
 from model import Playlist
 from model import YoutifyUser
 from model import get_playlist_struct_from_playlist_model
 from model import get_youtify_user_struct
 
-class PlaylistSearchHandler(webapp.RequestHandler):
+class PlaylistSearchHandler(webapp2.RequestHandler):
 
     def get(self):
         q = self.request.get('q').strip(' \t\n\r')
@@ -22,7 +22,7 @@ class PlaylistSearchHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 
-class UserSearchHandler(webapp.RequestHandler):
+class UserSearchHandler(webapp2.RequestHandler):
 
     def get(self):
         q = self.request.get('q').strip(' \t\n\r')
@@ -36,12 +36,7 @@ class UserSearchHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/api/search/playlists', PlaylistSearchHandler),
         ('/api/search/users', UserSearchHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

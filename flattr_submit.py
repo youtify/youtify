@@ -2,17 +2,17 @@
 
 import os
 import urllib
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api import urlfetch
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user
 from model import create_youtify_user
 from model import SubmittedVideo
 
-class Handler(webapp.RequestHandler):
+class Handler(webapp2.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
         user = get_current_youtify_user()
@@ -84,11 +84,6 @@ class Handler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(response.content)
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/flattr_submit', Handler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

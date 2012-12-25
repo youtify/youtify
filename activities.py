@@ -4,7 +4,7 @@ from model import Activity
 from model import get_youtify_user_struct
 from model import get_playlist_struct_from_playlist_model
 from model import get_external_user_subscription_struct
-from django.utils import simplejson
+import json as simplejson
 
 def create_follow_activity(owner, other_user):
     """ owner started following other_user 

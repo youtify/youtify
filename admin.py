@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api.users import User
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from model import create_youtify_user_model
 from model import YoutifyUser
@@ -20,7 +20,7 @@ def get_youtify_user_by_email(email):
     except:
         pass
 
-class UserLookupHandler(webapp.RequestHandler):
+class UserLookupHandler(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
         youtify_user = get_youtify_user_by_email(self.request.get('email'))
@@ -36,7 +36,7 @@ class UserLookupHandler(webapp.RequestHandler):
                 'success': False,
             }))
 
-class AdminHandler(webapp.RequestHandler):
+class AdminHandler(webapp2.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
         user = get_current_youtify_user_model()
@@ -52,12 +52,7 @@ class AdminHandler(webapp.RequestHandler):
             'languages': [lang for lang in get_languages() if lang['enabled_in_tool']],
         }))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/admin/userlookup', UserLookupHandler),
         ('/admin.*', AdminHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

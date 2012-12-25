@@ -1,7 +1,8 @@
 application: youtify-hrd
-version: 15
-runtime: python
+version: 16
+runtime: python27
 api_version: 1
+threadsafe: true
 
 builtins:
 - remote_api: on
@@ -16,19 +17,19 @@ error_handlers:
 handlers:
 
 - url: /admin/import_old_translations
-  script: import_old_translations.py
+  script: import_old_translations.app
   login: admin
 
 - url: /admin/migrations/.*
-  script: migrations.py
+  script: migrations.app
   login: admin
 
 - url: /admin/minimizer
-  script: minimizer.py
+  script: minimizer.app
   login: admin
 
 - url: /admin/fakesetup
-  script: fakesetup.py
+  script: fakesetup.app
   login: admin
 
 - url: /admin/filter
@@ -37,28 +38,28 @@ handlers:
   login: admin
 
 - url: /admin/pinggraph
-  script: ping.py
+  script: ping.app
   login: admin
 
 - url: /admin
-  script: admin.py
+  script: admin.app
   login: admin
 
 - url: /admin/.*
-  script: admin.py
+  script: admin.app
   login: admin
 
 - url: /stats
-  script: stats.py
+  script: stats.app
 
 - url: /me
-  script: me.py
+  script: me.app
 
 - url: /me/.*
-  script: me.py
+  script: me.app
 
 - url: /api/users.*
-  script: users.py
+  script: users.app
 
 - url: /logo
   static_files: html/logo-guidlines.html
@@ -71,55 +72,55 @@ handlers:
   #expiration: "1d"
 
 - url: /yourbrowsersucks
-  script: sucks.py
+  script: sucks.app
 
 - url: /yourdecisionrocks
-  script: sucks.py
+  script: sucks.app
 
 - url: /cron/generate_flattr_toplist.*
-  script: flattr_toplist.py
+  script: flattr_toplist.app
   login: admin
 
 - url: /cron/generate_youtube_toplist.*
-  script: youtube_toplist.py
+  script: youtube_toplist.app
   login: admin
 
 - url: /cron/generate_playlists_toplist.*
-  script: playlists_toplist.py
+  script: playlists_toplist.app
   login: admin
 
 - url: /cron/gather_stats
-  script: stats.py
+  script: stats.app
   login: admin
 
 - url: /cron/gather_flattr_stats
-  script: stats.py
+  script: stats.app
   login: admin
 
 - url: /flattr_submit.*
-  script: flattr_submit.py
+  script: flattr_submit.app
 
 - url: /api/external_users.*
-  script: external_users.py
+  script: external_users.app
 
 - url: /api/playlists.*
-  script: playlists.py
+  script: playlists.app
 
 - url: /api/search.*
-  script: search.py
+  script: search.app
 
 - url: /api/favorites.*
-  script: favorites.py
+  script: favorites.app
 
 - url: /api/toplists/playlists
-  script: playlists_toplist.py
+  script: playlists_toplist.app
 
 - url: /cron/store_pings
-  script: ping.py
+  script: ping.app
   login: admin
 
 - url: /ping
-  script: ping.py
+  script: ping.app
 
 - url: /scripts
   static_dir: scripts
@@ -132,33 +133,33 @@ handlers:
   expiration: "1d"
 
 - url: /translations
-  script: translations.py
+  script: translations.app
   login: required
 
 - url: /translations/.*
-  script: translations.py
+  script: translations.app
   login: required
 
 - url: /phrases
-  script: phrases.py
+  script: phrases.app
 
 - url: /phrases/.*
-  script: phrases.py
+  script: phrases.app
 
 - url: /languages
-  script: languages.py
+  script: languages.app
 
 - url: /languages/.*
-  script: languages.py
+  script: languages.app
 
 - url: /snapshots
-  script: snapshots.py
+  script: snapshots.app
 
 - url: /snapshots/.*
-  script: snapshots.py
+  script: snapshots.app
 
 - url: /api/translations/.*
-  script: snapshots.py
+  script: snapshots.app
 
 - url: /youtify.webapp
   static_files: youtify.webapp
@@ -171,18 +172,18 @@ handlers:
   expiration: "1d"
 
 - url: /flattr.*
-  script: flattr.py
+  script: flattr.app
   login: required
 
 - url: /lastfm/*.*
-  script: lastfm.py
+  script: lastfm.app
   login: required
 
 - url: /unsubscribe
-  script: mail.py
+  script: mail.app
 
 - url: /soundcloud_id_to_permalink
-  script: soundcloud_id_to_permalink.py
+  script: soundcloud_id_to_permalink.app
   
 - url: /opensearch.xml
   static_files: opensearch.xml
@@ -190,8 +191,8 @@ handlers:
   expiration: "1d"
 
 - url: /api/main
-  script: main.py
+  script: main.app
 
 - url: /.*
-  script: main.py
+  script: main.app
 

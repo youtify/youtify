@@ -1,16 +1,16 @@
 import logging
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext import db
 from google.appengine.api import memcache
-from django.utils import simplejson
+import json as simplejson
 from activities import create_external_subscribe_activity
 from model import get_current_youtify_user_model
 from model import get_youtify_user_struct
 from model import ExternalUser
 from model import get_external_user_subscription_struct
 
-class TopExternalUsers(webapp.RequestHandler):
+class TopExternalUsers(webapp2.RequestHandler):
 
     def get(self, max):
         """Gets a list of external users"""
@@ -30,7 +30,7 @@ class TopExternalUsers(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json)
 
-class SubscribersHandler(webapp.RequestHandler):
+class SubscribersHandler(webapp2.RequestHandler):
     
     def get(self, type, external_user_id):
         """Gets the subscribers of an external user"""
@@ -98,12 +98,7 @@ class SubscribersHandler(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/api/external_users/(.*)/(.*)/subscribers', SubscribersHandler),
         ('/api/external_users/top/(.*)', TopExternalUsers),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

@@ -1,4 +1,4 @@
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.api import urlfetch
 from model import FollowRelation
@@ -7,7 +7,7 @@ from model import Activity
 from model import Playlist
 from model import ExternalUser
 from string import Template
-from django.utils import simplejson
+import json as simplejson
 
 TEMPLATE = """
 <html>
@@ -41,7 +41,7 @@ def import_followings(external_user_id):
             external_user_model.avatar_url = user['avatar_url']
             external_user_model.save()
 
-class MigrationStepHandler(webapp.RequestHandler):
+class MigrationStepHandler(webapp2.RequestHandler):
 
     def get(self):
         global flattr_thing_cache
@@ -68,11 +68,6 @@ class MigrationStepHandler(webapp.RequestHandler):
                 'next': page + 1,
             }))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/admin/migrations/import_followings', MigrationStepHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

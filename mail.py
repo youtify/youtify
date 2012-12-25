@@ -2,7 +2,7 @@ from datetime import datetime
 from hashlib import md5
 from string import Template
 from google.appengine.api import mail
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from model import get_youtify_user_model_by_id_or_nick
 from model import get_display_name_for_youtify_user_model
@@ -97,7 +97,7 @@ def send_new_subscriber_email(user1, playlist_model):
     user2.last_emailed = datetime.now()
     user2.save()
 
-class UnsubscribeHandler(webapp.RequestHandler):
+class UnsubscribeHandler(webapp2.RequestHandler):
 
     def get(self):
         user = get_youtify_user_model_by_id_or_nick(self.request.get('uid'))
@@ -113,11 +113,6 @@ class UnsubscribeHandler(webapp.RequestHandler):
         else:
             self.response.out.write('Wrong token.')
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/unsubscribe', UnsubscribeHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()

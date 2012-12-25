@@ -1,15 +1,15 @@
 import os
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
-from django.utils import simplejson
+import json as simplejson
 from model import get_current_youtify_user_model
 from model import create_youtify_user_model
 from languages import get_languages
 from languages import get_leader_langs_for_user
 
-class TranslationsToolHandler(webapp.RequestHandler):
+class TranslationsToolHandler(webapp2.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
         youtify_user = get_current_youtify_user_model()
@@ -27,11 +27,6 @@ class TranslationsToolHandler(webapp.RequestHandler):
             'languages': [lang for lang in get_languages() if lang['enabled_in_tool']],
         }))
 
-def main():
-    application = webapp.WSGIApplication([
+app = webapp2.WSGIApplication([
         ('/translations.*', TranslationsToolHandler),
     ], debug=True)
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-    main()
