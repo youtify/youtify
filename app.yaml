@@ -114,6 +114,9 @@ handlers:
 
 - url: /api/toplists/playlists
   script: playlists_toplist.app
+  
+- url: /api/dropbox.*
+  script: dropbox-handler.app
 
 - url: /cron/store_pings
   script: ping.app

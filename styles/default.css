@@ -1791,6 +1791,10 @@ body.fullscreen #bottom {
 #settings .connections .lastfm .account {
     background: url(/images/lastfm_16.png) no-repeat center left;
 }
+#settings .connections .dropbox .account {
+    background: url(/images/dropbox_32.png) no-repeat center left;
+    background-size: 16px;
+}
 #settings .connections .action {
     float: right;
 }

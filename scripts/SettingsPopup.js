@@ -52,6 +52,15 @@ var SettingsPopup = {
                 $('<a class="action connect translatable" href="/lastfm/connect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .lastfm .account');
                 $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').attr('disabled', 'disabled');
             }
+            
+            // DROPBOX
+            if (UserManager.currentUser.dropboxUserName) {
+                $('<a class="title" target="_blank"></a>').attr('href', 'https://www.dropbox.com/home').text(UserManager.currentUser.dropboxUserName).appendTo('#settings .connections .dropbox .account');
+                $('<a class="action disconnect translatable" href="/api/dropbox/disconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .dropbox .account');
+            } else {
+                $('<span class="title">Dropbox</span>').appendTo('#settings .connections .dropbox .account');
+                $('<a class="action connect translatable" href="/api/dropbox/connect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .dropbox .account');
+            }
         } else {
             $('#settings .connections').hide();
             $('#settings .notifications').hide();

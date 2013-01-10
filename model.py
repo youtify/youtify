@@ -18,9 +18,10 @@ class ExternalUser(db.Model):
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
     last_login = db.DateTimeProperty()
+    device = db.StringProperty()
+    
     google_user = db.UserProperty()
     google_user2 = db.UserProperty()
-    device = db.StringProperty()
     flattr_access_token = db.StringProperty()
     flattr_user_name = db.StringProperty()
     flattr_scope = db.StringProperty()
@@ -29,6 +30,9 @@ class YoutifyUser(search.SearchableModel):
     lastfm_access_token = db.StringProperty()
     lastfm_scrobble_automatically = db.BooleanProperty(default=True)
     youtube_username = db.StringProperty()
+    dropbox_access_token = db.StringProperty()
+    dropbox_user_name = db.StringProperty()
+    
     nickname = db.StringProperty()
     nickname_lower = db.StringProperty()
     first_name = db.StringProperty()
@@ -210,6 +214,7 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False):
         'email': None,
         'flattr_user_name': youtify_user_model.flattr_user_name,
         'lastfm_user_name': youtify_user_model.lastfm_user_name,
+        'dropbox_user_name': youtify_user_model.dropbox_user_name,
         'displayName': get_display_name_for_youtify_user_model(youtify_user_model),
         'nr_of_followers': youtify_user_model.nr_of_followers,
         'nr_of_followings': youtify_user_model.nr_of_followings,
