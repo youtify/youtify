@@ -249,7 +249,7 @@ body.fullscreen #right {
     background-color: #FFF;
 }
 
-/* Hide top menu optinos until settings and user has loaded */
+/* Hide top menu options until settings and user has loaded */
 #top .right {
     opacity: 0;
     -moz-transition: opacity 0.5s;
@@ -397,6 +397,7 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #left .menu .home, 
 #left .menu .queue,
+#left .menu .dropbox,
 #left .menu .playlists li ,
 #left .menu .external-user-subscriptions li,
 #left .menu .playlists li.subscription {
@@ -434,6 +435,17 @@ input[type=search]::-webkit-search-results-decoration {
     top: -1px;
     left: 4px;
 }
+#left .menu .dropbox:before {
+    content: 's';
+    font-family: YoutifyRegular;
+    font-size: 32px;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: -1px;
+    left: 4px;
+}
 #left .menu .group .loading-animation {
     text-align: left;
     padding: 5px;
@@ -452,6 +464,7 @@ input[type=search]::-webkit-search-results-decoration {
 
 #left .menu .selected.home:before,
 #left .menu .selected.queue:before,
+#left .menu .selected.dropbox:before,
 #left .menu .selected.search:before,
 #left .menu .playlists li.selected:before {
     color: #FFF;

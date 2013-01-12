@@ -93,6 +93,7 @@ $(document).ready(function() {
         BottomPanel.init();
         ExternalUserPage.init();
         ExternalUserManager.init();
+        Dropbox.init();
         URIManager.init();
         FullScreen.init();
         Mobile.init();

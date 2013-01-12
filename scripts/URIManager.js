@@ -106,6 +106,13 @@ var URIManager = {
                 }
             ],
             [
+                '/dropbox',
+                function(matches) {
+                    Dropbox.getMenuItem().select();
+                }
+            ],
+
+            [
                 '/(.+)',
                 function(matches) {
                     UserManager.loadProfile(matches[1]);
