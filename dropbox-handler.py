@@ -51,7 +51,7 @@ class DropboxCallbackHandler(webapp2.RequestHandler):
     
     def get(self):
         # Maybe the user pressed cancel
-        if self.request.path.lower().find('not_approved=true'):
+        if self.request.path.lower().find('not_approved=true') > 0:
             self.redirect('/')
             return
         
@@ -63,8 +63,9 @@ class DropboxCallbackHandler(webapp2.RequestHandler):
             session.request_token = request_token
             access_token = session.obtain_access_token(request_token)
             user.dropbox_access_token = access_token.to_string()
-            
+
             # get user name
+            session.token = access_token
             client = dropbox.client.DropboxClient(session)
             info = client.account_info()
             user.dropbox_user_name = info['display_name']
@@ -72,7 +73,7 @@ class DropboxCallbackHandler(webapp2.RequestHandler):
             self.redirect('/')
         else:
             self.error(403)
-            self.response.out.write('User not logged in')    
+            self.response.out.write('User not logged in')
 
 class DropboxHandler(webapp2.RequestHandler):
     
