@@ -865,6 +865,9 @@ input[type=search]::-webkit-search-results-decoration {
 #right .tracklist .video.officialfm .type {
     background-image: url(/images/officialfm.png);
 }
+#right .tracklist .video.dropbox .type {
+    background-image: url(/images/dropbox.png);
+}
 #right .tracklist .video.youtube.selected .type {
     background-image: url(/images/youtube-inverted.png);
 }
@@ -873,6 +876,9 @@ input[type=search]::-webkit-search-results-decoration {
 }
 #right .tracklist .video.officialfm.selected .type {
     background-image: url(/images/officialfm-inverted.png);
+}
+#right .tracklist .video.dropbox.selected .type {
+    background-image: url(/images/dropbox.png);
 }
 #right .profile .picture-container {
     width: 208px;
