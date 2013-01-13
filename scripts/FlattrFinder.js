@@ -4,6 +4,9 @@ var FlattrFinder = {
     },
 
     findFlattrThingForTrack: function(info) {
+        if (info.video.type === 'dropbox') {
+            return;
+        }
         var url = 'https://api.flattr.com/rest/v2/things/lookup/?q=' + encodeURIComponent(info.url) + '&jsonp=?';
 
         console.log('looking up flattr thing for ' + info.url);
