@@ -12,7 +12,7 @@ function OfficialfmPlayer() {
 
     /* Init the player */
     self.init = function(callback) {
-        soundManager.onready(function() {
+        var ready = function() {
             self.view = $('#officialfm');
             EventSystem.addEventListener('video_info_fetched', function(info) {
                 if (self.video !== null) {
@@ -33,7 +33,12 @@ function OfficialfmPlayer() {
             if (callback) {
                 callback(self);
             }
-        });
+        };
+        if (soundManager.ok()) {
+            ready();
+        } else {
+            soundManager.onready(ready);
+        }
     };
     
     /* Hide the player from the UI. Must be callable without prior init */
@@ -69,7 +74,7 @@ function OfficialfmPlayer() {
                     EventSystem.callEventListeners('backend_paused_video', self.video);
                 },
                 onfinish: function() {
-                    soundManager.destroySound('soundcloud');
+                    soundManager.destroySound(video.videoId);
                     EventSystem.callEventListeners('video_played_to_end', self);
                 },
                 onload: function(success) {
@@ -177,9 +182,11 @@ function OfficialfmPlayer() {
         var buffer = 0;
         if (self.video) {
             var sound = soundManager.getSoundById(self.video.videoId);
-            buffer = sound.bytesLoaded / sound.bytesTotal * 100;
-            buffer = buffer > 100 ? 100 : buffer;
-            buffer = buffer < 0 ? 0 : buffer;
+            if (sound) {
+                buffer = sound.bytesLoaded / sound.bytesTotal * 100;
+                buffer = buffer > 100 ? 100 : buffer;
+                buffer = buffer < 0 ? 0 : buffer;
+            }
         }
         return buffer;
     };
