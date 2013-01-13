@@ -22,10 +22,11 @@ var myFollowings;
 if (window.API_HOST === undefined) { // This is set for the Chrome Web App
     window.API_HOST = '';
 }
-
-soundManager.url = '/scripts/swf/';
-soundManager.flashVersion = 9;
-soundManager.debugMode = false;
+soundManager.setup({
+    url:'/scripts/swf/',
+    flashVersion: 9,
+    debugMode: false
+});
 
 $(document).ajaxError(function (e, r, ajaxOptions, thrownError) {
     if (r.status === 500 && $.trim(r.responseText).length > 0) {

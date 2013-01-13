@@ -15,6 +15,8 @@ function Video(args) {
     this.uploaderUsername = args.uploaderUsername || null;
     this.artworkURL = args.artworkURL || null;
     this.parent = args.parent || null;
+    this.stream = args.stream || null;
+    this.streamExpires = args.streamExpires || null;
     
     this.clone = function() {
         return new Video({
@@ -285,5 +287,21 @@ function Video(args) {
             'type': this.type,
             'buyLinks': this.buyLinks
         };
+    };
+    
+    self.hasValidStream = function() {
+        if (self.stream && self.streamExpires && 
+            self.streamExpires > new Date().getTime()) {
+            return true;
+        }
+        return false;
+    };
+    
+    self.getDropboxStream = function(callback) {
+        $.get('/api/dropbox/stream/' + self.videoId, function(data) {
+            self.stream = data.url;
+            self.streamExpires = Date.parse(data.expires);
+            callback(self);
+        });
     };
 }

@@ -23,6 +23,7 @@ function PlayerManager() {
         self.players.push(new YouTubePlayer());
 		self.players.push(new SoundCloudPlayer());
         self.players.push(new OfficialfmPlayer());
+        self.players.push(new DropboxPlayer());
         
         EventSystem.addEventListener('video_failed_to_play', self.findAndPlayAlternative);
         EventSystem.addEventListener('video_played_to_end', function() {
@@ -55,7 +56,7 @@ function PlayerManager() {
             }
         });
         
-        $('#left .soundcloud, #left .officialfm').click(function() {
+        $('#left .soundcloud, #left .officialfm, #left .dropbox').click(function() {
             if (self.currentVideo) {
                 self.playPause();
             }
@@ -104,7 +105,11 @@ function PlayerManager() {
             /* Remove reference to currentPlayer to discover an eventual video type error */
             self.currentPlayer = null;
             
-            BottomPanel.setTitleText('Loading...');
+            if (video.title) {
+                BottomPanel.setTitleText('Loading ' + video.title);
+            } else {
+                BottomPanel.setTitleText('Loading...');
+            }
             
             /* Display the right player and init if uninitialized */
             for (i = 0; i < self.players.length; i+=1) {
