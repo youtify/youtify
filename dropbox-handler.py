@@ -104,7 +104,7 @@ class DropboxHandler(webapp2.RequestHandler):
                         for filetype in filetypes:
                             if item['path'].lower().endswith(filetype):
                                 # all currently supported filetypes are 4 chars long
-                                title = item['path'].split('/')[-1][:-4]
+                                title = ' - '.join(item['path'].split('/'))[3:-4]
                                 track = { 'videoId': item['path'], 'title': title, 'type': 'dropbox' }
                                 mediafiles.append(track)
                                 break
