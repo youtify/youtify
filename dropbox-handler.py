@@ -137,7 +137,7 @@ class DropboxStreamHandler(webapp2.RequestHandler):
         stream = client.media(unquote(path))
         logging.info(stream['url'])
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(stream)
+        self.response.out.write(simplejson.dumps(stream))
 
 app = webapp2.WSGIApplication([
         ('/api/dropbox/connect', DropboxConnectHandler),
