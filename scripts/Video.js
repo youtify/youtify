@@ -47,20 +47,27 @@ function Video(args) {
 
         switch (this.type) {
             case 'youtube':
-            ret.label = TranslationSystem.get('View on YouTube');
-            ret.url = 'http://www.youtube.com/watch?v=' + this.videoId;
-            break;
-
+                ret.label = TranslationSystem.get('View on YouTube');
+                ret.url = 'http://www.youtube.com/watch?v=' + this.videoId;
+                break;
             case 'soundcloud':
-            ret.label = TranslationSystem.get('View on SoundCloud');
-            //ret.url = "http://api.soundcloud.com/tracks/" + this.videoId + ".json";
-            ret.url = "/soundcloud_id_to_permalink?id=" + this.videoId;
-            break;
-
+                ret.label = TranslationSystem.get('View on SoundCloud');
+                //ret.url = "http://api.soundcloud.com/tracks/" + this.videoId + ".json";
+                ret.url = "/soundcloud_id_to_permalink?id=" + this.videoId;
+                break;
             case 'officialfm':
-            ret.label = TranslationSystem.get('View on Official.fm');
-            ret.url = 'http://www.official.fm/tracks/' + this.videoId;
-            break;
+                ret.label = TranslationSystem.get('View on Official.fm');
+                ret.url = 'http://www.official.fm/tracks/' + this.videoId;
+                break;
+            case 'dropbox':
+                var parts;
+                ret.label = TranslationSystem.get('View on Dropbox');
+                ret.url = 'https://www.dropbox.com/home';
+                parts = this.videoId.split('/');
+                // The last element is the filename. Only open the folder.
+                parts.pop();
+                ret.url += parts.join('/');
+                break;
         }
         
         return ret;
