@@ -12,6 +12,9 @@ var InfoFetcher = {
                 case 'officialfm':
                     self.loadOfficialFmTrackInfo(video);
                     break;
+                case 'dropbox':
+                    self.loadDropboxInfo(video);
+                    break;
             }
         });
         EventSystem.addEventListener('video_info_fetched', function(videoInfo) {
@@ -22,6 +25,8 @@ var InfoFetcher = {
                 case 'soundcloud':
                     break;
                 case 'officialfm':
+                    break;
+                case 'dropbox':
                     break;
             }
         });
@@ -42,6 +47,17 @@ var InfoFetcher = {
             info.avatar_url = data.entry.media$thumbnail.url;
             EventSystem.callEventListeners('uploader_info_fetched', info);
         });
+    },
+    
+    loadDropboxInfo: function(video) {
+        var info = {
+            video: video,
+            url: 'https://www.dropbox.com/home',
+            title: video.title,
+            description: "",
+            thumbnail: null
+        };    
+        EventSystem.callEventListeners('video_info_fetched', info);
     },
 
 	loadOfficialFmTrackInfo: function(video) {
