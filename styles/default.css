@@ -528,13 +528,17 @@ input[type=search]::-webkit-search-results-decoration {
     pointer-events: all;
 }
 #left .players .soundcloud,
-#left .players .officialfm {
+#left .players .officialfm ,
+#left .players .dropbox {
     background-repeat: no-repeat;
     background-position: center center;
     -webkit-background-size: contain;
 	-moz-background-size: contain;
 	-o-background-size: contain;
 	background-size: contain;
+}
+#left .players .dropbox {
+    background-image: url(/images/dropbox-large.png);
 }
 
 /** RIGHT
