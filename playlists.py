@@ -93,6 +93,8 @@ class SpecificPlaylistHandler(webapp2.RequestHandler):
 
         if playlist_struct:
             self.response.headers['Content-Type'] = 'application/json'
+            self.response.headers['Access-Control-Allow-Origin'] = '*'
+            
             self.response.out.write(simplejson.dumps(playlist_struct))
         else:
             self.error(404)
