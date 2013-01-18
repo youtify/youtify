@@ -309,6 +309,8 @@ function Video(args) {
             self.stream = data.url;
             self.streamExpires = Date.parse(data.expires);
             callback(self);
+        }).error(function() { 
+            EventSystem.callEventListeners('video_failed_to_play', self);
         });
     };
 }
