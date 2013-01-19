@@ -71,7 +71,7 @@ $(window).keydown(function(event) {
             break;
 		case 65: // A
             if (event.ctrlKey || event.metaKey) {
-                $('#results-container li.selected').siblings().addClass('selected');
+                $('#right > div:visible .tracklist .video').siblings().addClass('selected');
             }
 			event.preventDefault();
 			return false;
