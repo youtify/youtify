@@ -1,12 +1,39 @@
 $(window).keydown(function(event) {
     var model = null;
     
-    if ($('input, textarea').is(":focus")) {
+    if ($('input, textarea').is(":focus") && event.keyCode !== 9) {
         return; // Shouldn't the other keypresses make sure the event isn't propagated here?
     }
     
 	//console.log(event.keyCode);
     switch(event.keyCode) {
+        case 9: // TAB
+            var i = 0,
+                noFocus = true;
+                list = [ $('#left'), $('#top .search input[type="search"]'), $('#right') ];
+            
+            for (i; i < list.length; i += 1) {
+                if (list[i].hasClass('focused')) {
+                    list[i].removeClass('focused');
+                    list[i].blur(); // Make sure inputs lose focus.
+                    noFocus = false;
+                    if (i + 1 < list.length) {
+                        list[i + 1].addClass('focused');
+                        list[i + 1].focus();
+                    } else {
+                        list[0].addClass('focused');
+                        list[0].focus();
+                    }
+                    break;
+                }
+            }
+            
+            // None of the elems had focus. Set focus to the first.
+            if (noFocus) {
+                list[0].addClass('focused');
+            }
+            event.preventDefault();
+            break;
         case 32: // Space
             player.playPause();
             event.preventDefault();
