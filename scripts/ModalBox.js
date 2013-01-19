@@ -4,7 +4,7 @@ function ModalBox() {
 }
 
 ModalBox.prototype.setCanBeClosed = function(canBeClosed) {
-    self = this;
+    var self = this;
 
     if (canBeClosed) {
         $('<span class="close">X</span>').click(function() {
