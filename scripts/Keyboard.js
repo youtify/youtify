@@ -19,7 +19,7 @@ $(window).keydown(function(event) {
             event.preventDefault();
             break;
         case 13: // Enter
-            $('#results li.selected').dblclick();
+            $('#right > div:visible .tracklist .video.selected:first').dblclick();
             break;
         case 37: // Left
             if (event.ctrlKey || event.metaKey) {
