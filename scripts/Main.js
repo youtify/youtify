@@ -66,6 +66,7 @@ $(document).ready(function() {
         UserManager.init(data.user);
         Menu.init();
         TopMenu.init();
+        Keyboard.init();
 
         $('body').addClass('loaded');
         $('.login-link').attr('href', data.loginUrl);
