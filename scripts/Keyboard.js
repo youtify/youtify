@@ -59,17 +59,30 @@ $(window).keydown(function(event) {
         case 38: // Up
             if (event.ctrlKey || event.metaKey) {
                 player.setRelativeVolume(10);
-            }
-            else {
-                model = $('#right > div:visible .tracklist:visible .video.selected:first').prev().data('model');
-                if (!model) {
-                    model = $('#right > div:visible .tracklist:visible .video:last').data('model');
+            } else {
+                if ($('#right').hasClass('focused')) {
+                    model = $('#right > div:visible .tracklist:visible .video.selected:first').prev().data('model');
+                    if (!model) {
+                        model = $('#right > div:visible .tracklist:visible .video:last').data('model');
+                    }
+                    if (model) {
+                        if (event.shiftKey) {
+                            model.listViewSelect(event);
+                        } else {
+                            model.listViewSelect();
+                        }
+                    }
                 }
-                if (model) {
-                    if (event.shiftKey) {
-                        model.listViewSelect(event);
-                    } else {
-                        model.listViewSelect();
+                if ($('#left').hasClass('focused')) {
+                    var parent, next, selected = $('#left .menu li.selected');
+                    next = selected.prev('li');
+                    parent = selected.parents('.group');
+                    while (next.length === 0 && parent.length > 0) {
+                        parent = parent.prev();
+                        next = parent.find('li:last');
+                    }
+                    if (next.length > 0) {
+                        next.trigger('mousedown');
                     }
                 }
             }
@@ -86,17 +99,30 @@ $(window).keydown(function(event) {
         case 40: // Down
             if (event.ctrlKey || event.metaKey) {
                 player.setRelativeVolume(-10);
-            }
-            else {
-                model = $('#right > div:visible .tracklist:visible .video.selected:last').next().data('model');
-                if (!model) {
-                    model = $('#right > div:visible .tracklist:visible .video:first').data('model');
+            } else {
+                if ($('#right').hasClass('focused')) {
+                    model = $('#right > div:visible .tracklist:visible .video.selected:last').next().data('model');
+                    if (!model) {
+                        model = $('#right > div:visible .tracklist:visible .video:first').data('model');
+                    }
+                    if (model) {
+                        if (event.shiftKey) {
+                            model.listViewSelect(event);
+                        } else {
+                            model.listViewSelect();
+                        }
+                    }
                 }
-                if (model) {
-                    if (event.shiftKey) {
-                        model.listViewSelect(event);
-                    } else {
-                        model.listViewSelect();
+                if ($('#left').hasClass('focused')) {
+                    var parent, next, selected = $('#left .menu li.selected');
+                    next = selected.next('li');
+                    parent = selected.parents('.group');
+                    while (next.length === 0 && parent.length > 0) {
+                        parent = parent.next();
+                        next = parent.find('li:first');
+                    }
+                    if (next.length > 0) {
+                        next.trigger('mousedown');
                     }
                 }
             }
@@ -108,5 +134,7 @@ $(window).keydown(function(event) {
             }
 			event.preventDefault();
 			return false;
+        case 70: // F
+            break;
     }
 });
