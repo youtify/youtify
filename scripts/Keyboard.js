@@ -43,23 +43,42 @@ var Keyboard = {
         }
     },
     tab: function(event) {
-        var i = 0,
+        var list = [ $('#left'), $('#top .search input[type="search"]'), $('#right') ],
+            i = 0,
+            len = list.length,
             noFocus = true;
-            list = [ $('#left'), $('#top .search input[type="search"]'), $('#right') ];
         
-        for (i; i < list.length; i += 1) {
-            if (list[i].hasClass('focused')) {
-                list[i].removeClass('focused');
-                list[i].blur(); // Make sure inputs lose focus.
-                noFocus = false;
-                if (i + 1 < list.length) {
-                    list[i + 1].addClass('focused');
-                    list[i + 1].focus();
-                } else {
-                    list[0].addClass('focused');
-                    list[0].focus();
+        if (event.shiftKey) {
+            for (i = len -1; i >= 0; i -= 1) {
+                if (list[i].hasClass('focused')) {
+                    list[i].removeClass('focused');
+                    list[i].blur(); // Make sure inputs lose focus.
+                    noFocus = false;
+                    if (i - 1 >= 0) {
+                        list[i - 1].addClass('focused');
+                        list[i - 1].focus();
+                    } else {
+                        list[len -1].addClass('focused');
+                        list[len -1].focus();
+                    }
+                    break;
                 }
-                break;
+            }        
+        } else {
+            for (i; i < len; i += 1) {
+                if (list[i].hasClass('focused')) {
+                    list[i].removeClass('focused');
+                    list[i].blur(); // Make sure inputs lose focus.
+                    noFocus = false;
+                    if (i + 1 < len) {
+                        list[i + 1].addClass('focused');
+                        list[i + 1].focus();
+                    } else {
+                        list[0].addClass('focused');
+                        list[0].focus();
+                    }
+                    break;
+                }
             }
         }
         
