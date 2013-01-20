@@ -19,7 +19,7 @@ function Video(args) {
     this.streamExpires = args.streamExpires || null;
     
     // SoundManager2 doesn't play well with '
-    if (self.type === 'dropbox' || self.type === 'soundcloud' || self.type === 'officialfm') {
+    if (self.type === 'dropbox' && typeof(self.videoId) === 'string') {
         self.videoId = self.videoId.replace(/\'/g, '');
     }
     
