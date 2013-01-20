@@ -39,7 +39,7 @@ var Keyboard = {
                 self.a(event);
                 return false;
             case 70: // F
-                break;
+                return self.f(event);
         }
     },
     tab: function(event) {
@@ -196,5 +196,22 @@ var Keyboard = {
             $('#right > div:visible .tracklist:visible .video').siblings().addClass('selected');
         }
         event.preventDefault();
+    },
+    f: function(event) {
+        var tracklist;
+        if (event.ctrlKey || event.metaKey) {
+            if ($('#right').hasClass('focused')) {
+                tracklist = $('#right > div:visible .tracklist:visible');
+                if (tracklist.length > 0) {
+                    Filter.showRight();
+                }
+            } else if ($('#left').hasClass('focused')) {
+                Filter.showLeft();
+            } else {
+                return true;
+            }
+        }
+        event.preventDefault();
+        return false;
     }
 };

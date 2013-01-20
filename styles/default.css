@@ -146,6 +146,37 @@ input, textarea, button {
     background: linear-gradient(top, #207ce5 0%,#499bea 100%);
 }
 
+.filter {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 50px;
+    right: 20px;
+    background-color: #DDD;
+    border: 1px solid #999;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+}
+.filter input[type=search] {
+    font-size: 11px;
+    height: 20px;
+    margin: 3px 0 3px 3px;
+    border: 1px solid #999;
+    border-radius: 2px;
+}
+.filter button {
+    color: #999;
+    height: 25px;
+    margin: 3px 0 3px 0;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+.filter button:hover {
+    color: #000;
+}
+
+
 #right .video.selected,
 #left .menu .selected {
     color: #FFF;
@@ -192,7 +223,6 @@ body.fullscreen #right {
     background:-o-linear-gradient(top, #EEE 0%, #CCC 100%);
     background:linear-gradient(top, #EEE 0%, #CCC 100%);
     border-bottom: 1px solid #999;
-    box-shadow: 0px 0px 1px #333;
 }
 #top .left-area{
     padding-top: 8px;

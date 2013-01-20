@@ -99,6 +99,7 @@ $(document).ready(function() {
         URIManager.init();
         FullScreen.init();
         Mobile.init();
+        Filter.init();
     });
     
     $('.login-link').click(LoadingBar.show);
