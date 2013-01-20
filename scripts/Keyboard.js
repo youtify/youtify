@@ -127,6 +127,11 @@ var Keyboard = {
             }
             if ($('#left').hasClass('focused')) {
                 var parent, next, selected = $('#left .menu li.selected');
+                if (selected.length === 0) {
+                    selected = $('#left .menu li:last');
+                    selected.trigger('mousedown');
+                    return;
+                }
                 next = selected.prev('li');
                 parent = selected.parents('.group');
                 while (next.length === 0 && parent.length > 0) {
@@ -168,6 +173,11 @@ var Keyboard = {
             }
             if ($('#left').hasClass('focused')) {
                 var parent, next, selected = $('#left .menu li.selected');
+                if (selected.length === 0) {
+                    selected = $('#left .home'); // Hardcoded Home since first li is a group
+                    selected.trigger('mousedown');
+                    return;
+                }
                 next = selected.next('li');
                 parent = selected.parents('.group');
                 while (next.length === 0 && parent.length > 0) {
