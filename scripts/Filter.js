@@ -64,10 +64,21 @@ Filter = {
         var self = Filter,
             filterString = self.$leftFilterInput.val().trim().toLowerCase(),
             selected = false;
-        if (event && event.keyCode === 27) {
-            self.hideLeft();
-            return;
+        if (event) {
+            switch(event.keyCode) {
+                case 27: // ESC
+                    self.hideLeft();
+                    return;
+                case 9: // TAB
+                case 13: // Enter
+                case 37: // Left
+                case 38: // Up
+                case 39: // Right
+                case 40: // Down
+                    return;
+            }
         }
+        
         if (self.$menuitems === null || self.$menuitems === 0) {
             return;
         }
@@ -94,9 +105,19 @@ Filter = {
     rightKeyUp: function(event) {
         var self = Filter,
             filterString = self.$rightFilterInput.val().trim().toLowerCase();
-        if (event && event.keyCode === 27) {
-            self.hideRight();
-            return;
+        if (event) {
+            switch(event.keyCode) {
+                case 27: // ESC
+                    self.hideRight();
+                    return;
+                case 9: // TAB
+                case 13: // Enter
+                case 37: // Left
+                case 38: // Up
+                case 39: // Right
+                case 40: // Down
+                    return;
+            }
         }
 
         if (self.$tracklist === null || self.$tracklist === 0) {
