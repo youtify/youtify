@@ -23,12 +23,16 @@ Filter = {
         self.$rightFilter.find('button').click(self.hideRight);
     },
     
-    resetFilter: function() {
+    resetFilter: function(left, right) {
         var self = Filter;
-        self.$leftFilterInput.val('');
-        self.$rightFilterInput.val('');
-        self.leftKeyUp();
-        self.rightKeyUp();
+        if (typeof(left) === 'undefined' || left === true) {
+            self.$leftFilterInput.val('');
+            self.leftKeyUp();
+        }
+        if (typeof(right) === 'undefined' || right === true) {
+            self.$rightFilterInput.val('');
+            self.rightKeyUp();
+        }
     },
     
     showLeft: function() {
@@ -39,7 +43,7 @@ Filter = {
     },
     hideLeft: function() {
         var self = Filter;
-        self.resetFilter();
+        self.resetFilter(true, false);
         self.$leftFilterInput.blur();
         self.$leftFilter.slideUp(200);
     },
@@ -51,14 +55,15 @@ Filter = {
     },
     hideRight: function() {
         var self = Filter;
-        self.resetFilter();
+        self.resetFilter(false, true);
         self.$rightFilterInput.blur();
         self.$rightFilter.slideUp(200);
     },
     
     leftKeyUp: function(event) {
         var self = Filter,
-            filterString = self.$leftFilterInput.val().trim().toLowerCase();
+            filterString = self.$leftFilterInput.val().trim().toLowerCase(),
+            selected = false;
         if (event && event.keyCode === 27) {
             self.hideLeft();
             return;
@@ -78,6 +83,11 @@ Filter = {
                 $(item).hide();
             } else {
                 $(item).show();
+                if (selected === false) {
+                    self.resetFilter(false, true);
+                    $(item).trigger('mousedown');
+                    selected = true;
+                }
             }
         });
     },
