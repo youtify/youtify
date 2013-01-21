@@ -5,7 +5,7 @@ var Keyboard = {
     },
     keyDown: function(event) {
         var self = Keyboard;
-        if ($('input, textarea').is(":focus") && event.keyCode !== 9) {
+        if ($('input, textarea').not('.filter input').is(":focus") && event.keyCode !== 9) {
             return; // Shouldn't the other keypresses make sure the event isn't propagated here?
         }
         
@@ -36,8 +36,7 @@ var Keyboard = {
                 self.down(event);
                 break;
             case 65: // A
-                self.a(event);
-                return false;
+                return self.a(event);
             case 70: // F
                 return self.f(event);
         }
@@ -108,14 +107,18 @@ var Keyboard = {
         }
     },
     up: function(event) {
-        var model;
+        var model, parent, next, selected, nextRight;
         if (event.ctrlKey || event.metaKey) {
             player.setRelativeVolume(10);
         } else {
             if ($('#right').hasClass('focused')) {
-                model = $('#right > div:visible .tracklist:visible .video.selected:first').prev().data('model');
+                nextRight = $('#right > div:visible .tracklist:visible .video.selected:first').prev();
+                while (nextRight.length > 0 && nextRight.is(':visible') === false) {
+                    nextRight = nextRight.prev();
+                }
+                model = nextRight.data('model');
                 if (!model) {
-                    model = $('#right > div:visible .tracklist:visible .video:last').data('model');
+                    model = $('#right > div:visible .tracklist:visible .video:visible:last').data('model');
                 }
                 if (model) {
                     if (event.shiftKey) {
@@ -126,17 +129,17 @@ var Keyboard = {
                 }
             }
             if ($('#left').hasClass('focused')) {
-                var parent, next, selected = $('#left .menu li.selected');
+                selected = $('#left .menu li.selected');
                 if (selected.length === 0) {
-                    selected = $('#left .menu li:last');
+                    selected = $('#left .menu li:visible:last');
                     selected.trigger('mousedown');
                     return;
                 }
-                next = selected.prev('li');
+                next = selected.prev('li:visible');
                 parent = selected.parents('.group');
                 while (next.length === 0 && parent.length > 0) {
                     parent = parent.prev();
-                    next = parent.find('li:last');
+                    next = parent.find('li:visible:last');
                 }
                 if (next.length > 0) {
                     next.trigger('mousedown');
@@ -154,14 +157,18 @@ var Keyboard = {
         }
     },
     down: function(event) {
-        var model;
+        var model, parent, next, selected, nextRight;
         if (event.ctrlKey || event.metaKey) {
             player.setRelativeVolume(-10);
         } else {
             if ($('#right').hasClass('focused')) {
-                model = $('#right > div:visible .tracklist:visible .video.selected:last').next().data('model');
+                nextRight = $('#right > div:visible .tracklist:visible .video.selected:last').next();
+                while (nextRight.length > 0 && nextRight.is(':visible') === false) {
+                    nextRight = nextRight.next();
+                }
+                model = nextRight.data('model');
                 if (!model) {
-                    model = $('#right > div:visible .tracklist:visible .video:first').data('model');
+                    model = $('#right > div:visible .tracklist:visible .video:visible:first').data('model');
                 }
                 if (model) {
                     if (event.shiftKey) {
@@ -172,17 +179,17 @@ var Keyboard = {
                 }
             }
             if ($('#left').hasClass('focused')) {
-                var parent, next, selected = $('#left .menu li.selected');
+                selected = $('#left .menu li.selected');
                 if (selected.length === 0) {
                     selected = $('#left .home'); // Hardcoded Home since first li is a group
                     selected.trigger('mousedown');
                     return;
                 }
-                next = selected.next('li');
+                next = selected.next('li:visible');
                 parent = selected.parents('.group');
                 while (next.length === 0 && parent.length > 0) {
                     parent = parent.next();
-                    next = parent.find('li:first');
+                    next = parent.find('li:visible:first');
                 }
                 if (next.length > 0) {
                     next.trigger('mousedown');
@@ -194,8 +201,10 @@ var Keyboard = {
     a: function(event) {
         if (event.ctrlKey || event.metaKey) {
             $('#right > div:visible .tracklist:visible .video').siblings().addClass('selected');
+            event.preventDefault();
+            return false;
         }
-        event.preventDefault();
+        return true;
     },
     f: function(event) {
         var tracklist;
@@ -210,8 +219,9 @@ var Keyboard = {
             } else {
                 return true;
             }
+            event.preventDefault();
+            return false;
         }
-        event.preventDefault();
-        return false;
+        return true;
     }
 };
