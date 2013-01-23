@@ -54,6 +54,7 @@ function OfficialfmPlayer() {
     /* Start (or if video is null resume) playback of a video */
     self.play = function(video) {
         if (video) {
+            self.view.css('backgroundImage', 'none');
             self.video = video;
             soundManager.stopAll();
 			self.playedSuccessfully = false;
