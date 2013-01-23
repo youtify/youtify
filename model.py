@@ -149,6 +149,7 @@ class Stats(db.Model):
     nr_of_active_users = db.IntegerProperty()
     nr_of_playlists = db.IntegerProperty()
     nr_of_users_with_flattr_account = db.IntegerProperty()
+    nr_of_users_with_dropbox = db.IntegerProperty()
     nr_of_flattrs = db.IntegerProperty()
     nr_of_playlist_subscriptions = db.IntegerProperty()
     nr_of_follow_relations = db.IntegerProperty()

@@ -46,6 +46,7 @@ class CronJobHandler(webapp2.RequestHandler):
         stats.nr_of_active_users = 0
         stats.nr_of_playlists = len([i for i in Playlist.all()])
         stats.nr_of_users_with_flattr_account = 0
+        stats.nr_of_users_with_dropbox = 0
         stats.nr_of_flattrs = len([i for i in Activity.all().filter('type =', 'outgoing').filter('verb =', 'flattr')])
         stats.nr_of_playlist_subscriptions = 0
         stats.nr_of_follow_relations = len([i for i in FollowRelation.all()])
@@ -55,6 +56,9 @@ class CronJobHandler(webapp2.RequestHandler):
             
             if user.flattr_user_name:
                 stats.nr_of_users_with_flattr_account += 1
+            
+            if user.dropbox_user_name:
+                stats.nr_of_users_with_dropbox += 1
 
             if user.playlist_subscriptions:
                 stats.nr_of_playlist_subscriptions += len(user.playlist_subscriptions)
