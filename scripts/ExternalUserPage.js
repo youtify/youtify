@@ -61,6 +61,13 @@ var ExternalUserPage = {
         self.selectedUser = user;
         self.selectedUser.getRightView().show();
         self.show();
+        
+        // mark as viewed
+        if (typeof(self.selectedUser.externalUserId) !== 'undefined') {
+            $.post('/api/external_users/' + type + '/' + self.selectedUser.externalUserId + '/markasviewed', function() {
+                self.selectedUser.lastViewed = new Date();
+            });
+        }
     }
 };
 
@@ -76,6 +83,7 @@ function ExternalUser(data) {
     self.linkLabel = data.linkLabel;
     self.linkUrl = data.linkUrl;
     self.description = data.description;
+    self.lastViewed = new Date(data.last_viewed);
 
     self.$rightView = $('<div class="external-user">').addClass(data.type);
     self.$tracklist = $('<table class="tracklist">');

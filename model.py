@@ -14,7 +14,7 @@ class ExternalUser(db.Model):
     avatar_url = db.StringProperty()
     subscribers = db.ListProperty(db.Key)
     nr_of_subscribers = db.IntegerProperty(default=0)
-
+    
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
     last_login = db.DateTimeProperty()
@@ -133,6 +133,11 @@ class Stats(db.Model):
 class PingStats(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
     pings = db.IntegerProperty(required=True)
+
+class ExternalUserTimestamp(db.Model):
+    external_user = db.ReferenceProperty(reference_class=ExternalUser)
+    user = db.ReferenceProperty(reference_class=YoutifyUser)
+    last_viewed = db.DateTimeProperty()
 
 # HELPERS
 ##############################################################################
@@ -301,19 +306,24 @@ def get_settings_struct_for_youtify_user_model(youtify_user_model):
         'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email
     }
 
-def get_external_user_subscription_struct(m):
+def get_external_user_subscription_struct(m, timestamp):
     return {
         'type': m.type,
         'external_user_id': m.external_user_id,
         'username': m.username,
         'avatar_url': m.avatar_url,
+        'timestamp': timestamp,
     }
 
 def get_external_user_subscriptions_struct_for_youtify_user_model(youtify_user_model):
     ret = []
 
     for external_user_model in db.get(youtify_user_model.external_user_subscriptions):
-        ret.append(get_external_user_subscription_struct(external_user_model))
+        timestamp = ExternalUserTimestamp.all().filter('external_user =', external_user_model).filter('user =', youtify_user_model).get();
+        timestamp_int = 0
+        if timestamp:
+            timestamp_int = timestamp.last_viewed.time()
+        ret.append(get_external_user_subscription_struct(external_user_model, timestamp_int))
 
     return ret
 

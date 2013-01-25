@@ -1,5 +1,6 @@
 import logging
 import webapp2
+from datetime import datetime
 from google.appengine.ext.webapp import util
 from google.appengine.ext import db
 from google.appengine.api import memcache
@@ -8,6 +9,7 @@ from activities import create_external_subscribe_activity
 from model import get_current_youtify_user_model
 from model import get_youtify_user_struct
 from model import ExternalUser
+from model import ExternalUserTimestamp
 from model import get_external_user_subscription_struct
 
 class TopExternalUsers(webapp2.RequestHandler):
@@ -98,7 +100,35 @@ class SubscribersHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
+class MarkAsViewedHandler(webapp2.RequestHandler):
+    
+    def post(self, type, external_user_id):
+        """Marks the external user as viewed"""
+        youtify_user_model = get_current_youtify_user_model()
+        if youtify_user_model == None:
+            self.response.out.write('user not logged in')
+            logging.info('user not logged in')
+            self.error(403)
+            return
+        
+        external_user_model = ExternalUser.all().filter('type =', type).filter('external_user_id =', external_user_id).get()
+        if external_user_model == None:
+            logging.info('external user ' + external_user_id + ' not found')
+            self.response.out.write('external user ' + external_user_id + ' not found')
+            self.error(404)
+            return
+        external_user_timestamp = ExternalUserTimestamp.all().filter('external_user =', external_user_model).filter('user =', youtify_user_model).get()
+        
+        if external_user_timestamp == None:
+            external_user_timestamp = ExternalUserTimestamp(external_user = external_user_model.key(), user = youtify_user_model.key())
+        
+        external_user_timestamp.last_viewed = datetime.now()
+        external_user_timestamp.save()
+        
+        self.response.out.write('ok')
+        
 app = webapp2.WSGIApplication([
         ('/api/external_users/(.*)/(.*)/subscribers', SubscribersHandler),
         ('/api/external_users/top/(.*)', TopExternalUsers),
+        ('/api/external_users/(.*)/(.*)/markasviewed', MarkAsViewedHandler),
     ], debug=True)
