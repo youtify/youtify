@@ -6,6 +6,7 @@ import hashlib
 from google.appengine.ext import db
 from google.appengine.ext import search
 from google.appengine.api import users
+from time import mktime
 
 class ExternalUser(db.Model):
     type = db.StringProperty(required=True)
@@ -14,6 +15,7 @@ class ExternalUser(db.Model):
     avatar_url = db.StringProperty()
     subscribers = db.ListProperty(db.Key)
     nr_of_subscribers = db.IntegerProperty(default=0)
+    last_updated = db.DateTimeProperty(auto_now_add=True)
     
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
@@ -306,24 +308,25 @@ def get_settings_struct_for_youtify_user_model(youtify_user_model):
         'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email
     }
 
-def get_external_user_subscription_struct(m, timestamp):
+def get_external_user_subscription_struct(m, last_viewed=0):
     return {
         'type': m.type,
         'external_user_id': m.external_user_id,
         'username': m.username,
         'avatar_url': m.avatar_url,
-        'timestamp': timestamp,
+        'last_updated': mktime(m.last_updated.timetuple()),
+        'last_viewed': last_viewed,
     }
 
 def get_external_user_subscriptions_struct_for_youtify_user_model(youtify_user_model):
     ret = []
 
     for external_user_model in db.get(youtify_user_model.external_user_subscriptions):
-        timestamp = ExternalUserTimestamp.all().filter('external_user =', external_user_model).filter('user =', youtify_user_model).get();
-        timestamp_int = 0
-        if timestamp:
-            timestamp_int = timestamp.last_viewed.time()
-        ret.append(get_external_user_subscription_struct(external_user_model, timestamp_int))
+        last_viewed = ExternalUserTimestamp.all().filter('external_user =', external_user_model).filter('user =', youtify_user_model).get();
+        last_viewed_ms = 0
+        if last_viewed:
+            last_viewed_ms = mktime(last_viewed.last_viewed.timetuple())
+        ret.append(get_external_user_subscription_struct(external_user_model, last_viewed_ms))
 
     return ret
 

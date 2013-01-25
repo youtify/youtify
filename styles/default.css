@@ -436,6 +436,25 @@ input[type=search]::-webkit-search-results-decoration {
     position: relative;
     overflow: hidden;
 }
+#left .menu .dot {
+    position: absolute;
+    right: 5px;
+    top: 13px;
+    width: 10px;
+    height: 10px;
+    display: none;
+    border-radius: 16px;
+}
+#left .menu .external-user-subscriptions li.new-items .dot {
+    display: block;
+    background: #c5deea;
+    background: -moz-linear-gradient(top,  #c5deea 0%, #8abbd7 31%, #066dab 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c5deea), color-stop(31%,#8abbd7), color-stop(100%,#066dab));
+    background: -webkit-linear-gradient(top,  #c5deea 0%,#8abbd7 31%,#066dab 100%);
+    background: -o-linear-gradient(top,  #c5deea 0%,#8abbd7 31%,#066dab 100%);
+    background: -ms-linear-gradient(top,  #c5deea 0%,#8abbd7 31%,#066dab 100%);
+    background: linear-gradient(to bottom,  #c5deea 0%,#8abbd7 31%,#066dab 100%);
+}
 #left .menu .title {
     display: block;
     overflow: hidden;

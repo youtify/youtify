@@ -169,6 +169,7 @@ function MenuItem(args) {
     self.onContextMenu = args.onContextMenu;
 
     $('<span class="title"></span>').text(args.title).appendTo(self.$view);
+    $('<span class="dot"/>').appendTo(self.$view);
 
     if (args.$img) {
         self.$view.append(args.$img);

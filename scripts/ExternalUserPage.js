@@ -62,12 +62,6 @@ var ExternalUserPage = {
         self.selectedUser.getRightView().show();
         self.show();
         
-        // mark as viewed
-        if (typeof(self.selectedUser.externalUserId) !== 'undefined') {
-            $.post('/api/external_users/' + type + '/' + self.selectedUser.externalUserId + '/markasviewed', function() {
-                self.selectedUser.lastViewed = new Date();
-            });
-        }
     }
 };
 
@@ -84,11 +78,12 @@ function ExternalUser(data) {
     self.linkUrl = data.linkUrl;
     self.description = data.description;
     self.lastViewed = new Date(data.last_viewed);
-
-    self.$rightView = $('<div class="external-user">').addClass(data.type);
+    self.lastUpdated = new Date(data.last_updated);
+    
     self.$tracklist = $('<table class="tracklist">');
     self.$info = $('<div class="info">');
-
+    self.$rightView = $('<div class="external-user">').addClass(data.type);
+    
     self.$rightView.append(self.$info);
     self.$rightView.append(self.$tracklist);
 
@@ -188,10 +183,33 @@ function ExternalUser(data) {
                 $img: $('<img/>').attr('src', self.avatarUrl),
                 onSelected: function() {
                     ExternalUserPage.load(self.type, self.username);
+                    self.markAsViewed();
                 }
             });
         }
+        self.checkLastUpdated();
         return self.menuItem;
+    };
+    
+    self.markAsViewed = function() {
+        // mark as viewed
+        if (typeof(self.externalUserId) !== 'undefined') {
+            $.post('/api/external_users/' + self.type + '/' + self.externalUserId + '/markasviewed', function() {
+                self.lastViewed = new Date();
+                if (self.menuItem) {
+                    self.menuItem.$view.removeClass('new-items');
+                }
+            });
+        }
+    };
+    
+    self.checkLastUpdated = function() {
+        console.log(self.lastViewed, self.lastUpdated);
+        if (self.lastViewed < self.lastUpdated) {
+            self.menuItem.$view.addClass('new-items');
+        } else {
+            self.menuItem.$view.removeClass('new-items');
+        }
     };
 
     self.load = function(callback) {
