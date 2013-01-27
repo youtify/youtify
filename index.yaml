@@ -24,6 +24,12 @@ indexes:
   - name: timestamp
     direction: desc
 
+- kind: ExternalUser
+  properties:
+  - name: last_updated
+  - name: nr_of_subscribers
+    direction: desc
+
 - kind: Playlist
   properties:
   - name: private

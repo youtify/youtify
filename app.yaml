@@ -84,6 +84,10 @@ handlers:
 - url: /cron/gather_flattr_stats
   script: stats.app
   login: admin
+  
+- url: /cron/update_external_users
+  script: external_users.app
+  login: admin
 
 - url: /api/external_users.*
   script: external_users.app
