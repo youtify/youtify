@@ -16,10 +16,6 @@ error_handlers:
 
 handlers:
 
-- url: /admin/import_old_translations
-  script: import_old_translations.app
-  login: admin
-
 - url: /admin/migrations/.*
   script: migrations.app
   login: admin
@@ -135,35 +131,6 @@ handlers:
   static_dir: images
   expiration: "1d"
 
-- url: /translations
-  script: translations.app
-  login: required
-
-- url: /translations/.*
-  script: translations.app
-  login: required
-
-- url: /phrases
-  script: phrases.app
-
-- url: /phrases/.*
-  script: phrases.app
-
-- url: /languages
-  script: languages.app
-
-- url: /languages/.*
-  script: languages.app
-
-- url: /snapshots
-  script: snapshots.app
-
-- url: /snapshots/.*
-  script: snapshots.app
-
-- url: /api/translations/.*
-  script: snapshots.app
-
 - url: /youtify.webapp
   static_files: youtify.webapp
   mime_type: application/x-web-app-manifest+json
@@ -181,6 +148,9 @@ handlers:
 - url: /lastfm/*.*
   script: lastfm.app
   login: required
+
+- url: /happytranslate/.*
+  script: happytranslate.app
 
 - url: /unsubscribe
   script: mail.app

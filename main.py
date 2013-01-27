@@ -14,9 +14,9 @@ from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
 from model import generate_device_token
-from languages import auto_detect_language
-from snapshots import get_deployed_translations_struct
-from languages import get_languages
+from happytranslate import get_or_fetch_translations
+from happytranslate import get_languages
+from happytranslate import auto_detect_language
 try:
     import config
 except ImportError:
@@ -100,7 +100,7 @@ class ApiMainHandler(webapp2.RequestHandler):
         json = {
             'ON_PRODUCTION': config.ON_PRODUCTION,
             'SEARCH_STATS_URL': config.SEARCH_STATS_URL,
-            'languagesFromServer': [lang for lang in get_languages() if lang['enabled_on_site']],
+            'languagesFromServer': get_languages(),
             'device': youtify_user_model is not None and youtify_user_model.device,
             'user': youtify_user_struct,
             'lastNotificationSeenTimestamp': youtify_user_model is not None and youtify_user_model.last_notification_seen_timestamp, 
@@ -108,7 +108,7 @@ class ApiMainHandler(webapp2.RequestHandler):
             'myFollowings': my_followings_struct,
             'settingsFromServer': settings_struct,
             'autoDetectedLanguageByServer': lang_code,
-            'autoDetectedTranslations': get_deployed_translations_struct(lang_code),
+            'autoDetectedTranslations': get_or_fetch_translations(lang_code),
             'loginUrl': users.create_login_url('/'),
             'logoutUrl': users.create_logout_url('/'),
         }
