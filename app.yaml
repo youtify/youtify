@@ -85,9 +85,6 @@ handlers:
   script: stats.app
   login: admin
 
-- url: /flattr_submit.*
-  script: flattr_submit.app
-
 - url: /api/external_users.*
   script: external_users.app
 
