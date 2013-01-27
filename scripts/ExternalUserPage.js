@@ -204,7 +204,6 @@ function ExternalUser(data) {
     };
     
     self.checkLastUpdated = function() {
-        console.log(self.lastViewed, self.lastUpdated);
         if (self.lastViewed < self.lastUpdated) {
             self.menuItem.$view.addClass('new-items');
         } else {
