@@ -73,14 +73,6 @@ handlers:
 - url: /yourdecisionrocks
   script: sucks.app
 
-- url: /cron/generate_flattr_toplist.*
-  script: flattr_toplist.app
-  login: admin
-
-- url: /cron/generate_youtube_toplist.*
-  script: youtube_toplist.app
-  login: admin
-
 - url: /cron/generate_playlists_toplist.*
   script: playlists_toplist.app
   login: admin
