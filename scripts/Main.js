@@ -100,6 +100,7 @@ $(document).ready(function() {
         FullScreen.init();
         Mobile.init();
         Filter.init();
+        AlternativesFeedback.init();
     });
     
     $('.login-link').click(LoadingBar.show);

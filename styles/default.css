@@ -2053,6 +2053,16 @@ body.fullscreen #bottom {
     font-weight: bold;
 }
 
+/** ALTERNATIVE VIDEO POPUP
+ ****************************************************************************/
+#alternative-video-popup h3 {
+    text-align: center;
+    margin: 15px 0;
+}
+#alternative-video-popup .yes {
+    float: right;
+}
+
 /** PROFILE POPUP
  ****************************************************************************/
 

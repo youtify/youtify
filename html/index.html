@@ -123,6 +123,7 @@
         <script src="/scripts/WindowEvents.js"></script>
         <script src="/scripts/SyncManager.js"></script>
 		<script src="/scripts/SearchStats.js"></script>
+        <script src="/scripts/AlternativesFeedback.js"></script>
         <script src="/scripts/Mobile.js"></script>
 		<script src="/scripts/Main.js"></script>
         {% endif %}
@@ -218,6 +219,13 @@
                 <input id="qualityHighRadio" type="radio" name="quality" value="High" />
                 <label id="qualityHighSpan" for="qualityHighRadio" class="translatable">High</label>
             </div>
+        </div>
+        
+        <div id="alternative-video-popup" style="display:none;" class="popup">
+            <h2 class="translatable">The original track could not be played</h2>
+            <h3 class="translatable">Is this a good alternative?</h3>
+            <button class="button translatable no">No, play next</button>
+            <button class="button translatable yes exposed">Yes</button>
         </div>
 
         <div id="video-info-popup" style="display:none;" class="popup">
