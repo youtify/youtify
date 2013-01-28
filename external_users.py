@@ -63,6 +63,7 @@ class SubscribersHandler(webapp2.RequestHandler):
             # @XXX should not trust client with this information, fetch from server instead
             external_user_model.username = self.request.get('username')
             external_user_model.avatar_url = self.request.get('avatar_url')
+            external_user_model.get_last_updated = True
 
             external_user_model.save()
         
@@ -76,6 +77,7 @@ class SubscribersHandler(webapp2.RequestHandler):
         
         external_user_model.subscribers.append(youtify_user_model.key())
         external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
+        external_user_model.get_last_updated = True
         external_user_model.save()
 
         create_external_subscribe_activity(youtify_user_model, external_user_model)
@@ -97,6 +99,11 @@ class SubscribersHandler(webapp2.RequestHandler):
         
         external_user_model.subscribers.remove(youtify_user_model.key())
         external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
+        
+        if external_user_model.nr_of_subscribers > 0:
+            external_user_model.get_last_updated = True
+        else:
+            external_user_model.get_last_updated = False
         external_user_model.save()
         
         self.response.headers['Content-Type'] = 'text/plain'
@@ -133,7 +140,7 @@ class ExternalUserCronHandler(webapp2.RequestHandler):
     """ Update last_updated on ExternalUsers """
 
     def get(self):
-        external_users = ExternalUser.all().filter('nr_of_subscribers >', 0).order('last_updated').order('-nr_of_subscribers').fetch(50)
+        external_users = ExternalUser.all().filter('get_last_updated =', True).order('last_updated').order('-nr_of_subscribers').fetch(50)
         for external_user in external_users:
             if external_user.type == 'soundcloud':
                 try:

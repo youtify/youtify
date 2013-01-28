@@ -26,6 +26,20 @@ indexes:
 
 - kind: ExternalUser
   properties:
+  - name: get_last_updated
+  - name: last_updated
+  - name: nr_of_subscribers
+    direction: desc
+
+- kind: ExternalUser
+  properties:
+  - name: last_updated
+  - name: nr_of_subscribers
+    direction: desc
+
+- kind: ExternalUser
+  properties:
+  - name: update_time
   - name: last_updated
   - name: nr_of_subscribers
     direction: desc

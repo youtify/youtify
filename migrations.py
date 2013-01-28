@@ -43,6 +43,10 @@ class MigrationStepHandler(webapp2.RequestHandler):
 
         for m in ExternalUser.all().fetch(page_size, page_size * page):
             count += 1
+            if m.nr_of_subscribers > 0:
+                m.get_last_updated = True
+            else:
+                m.get_last_updated = False
             m.save()
 
         #### END MIGRATION CODE ####
