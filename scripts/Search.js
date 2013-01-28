@@ -338,7 +338,6 @@ var Search = {
             } else {
                 username = item.author[0].name.$t;
             }
-            console.log(item);
             var video = new Video({
                 parent: 'search',
                 onPlayCallback: Search.onPlayCallback,
