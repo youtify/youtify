@@ -325,19 +325,26 @@ var Search = {
 
             var url = item.id.$t,
                 title = item.title.$t,
-                videoId;
+                videoId,
+                username;
 
             if (url.match('videos/(.*)$')) {
                 videoId = url.match('videos/(.*)$')[1];
             } else {
                 videoId = item.media$group.yt$videoid.$t;
             }
+            if (item.author[0].uri) {
+                username = item.author[0].uri.$t.split('/').pop();
+            } else {
+                username = item.author[0].name.$t;
+            }
+            console.log(item);
             var video = new Video({
                 parent: 'search',
                 onPlayCallback: Search.onPlayCallback,
                 videoId: videoId,
                 title: title,
-                uploaderUsername: item.author[0].name.$t,
+                uploaderUsername: username,
                 type: 'youtube',
                 artworkURL: item.media$group.media$thumbnail.length > 1 ? item.media$group.media$thumbnail[1].url : null
             });
