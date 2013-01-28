@@ -125,6 +125,7 @@ var Keyboard = {
                         model.listViewSelect(event);
                     } else {
                         model.listViewSelect();
+                        model.scrollTo();
                     }
                 }
             }
@@ -175,6 +176,7 @@ var Keyboard = {
                         model.listViewSelect(event);
                     } else {
                         model.listViewSelect();
+                        model.scrollTo();
                     }
                 }
             }
