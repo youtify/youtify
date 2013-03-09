@@ -115,7 +115,10 @@ var URIManager = {
             [
                 '/(.+)',
                 function(matches) {
-                    UserManager.loadProfile(matches[1]);
+                    // Fix for youtube ads screwup
+                    if (matches[1].toLowerCase() !== 'doubleclick/dartiframe.html') {
+                        UserManager.loadProfile(matches[1]);
+                    }
                 }
             ],
             [
