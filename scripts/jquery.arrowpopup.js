@@ -1,6 +1,6 @@
 (function($){
 
-    $.fn.arrowPopup = function(popupSelector, arrowDirection) {
+    $.fn.arrowPopup = function(popupSelector, arrowDirection, showCloseButton) {
         arrowDirection = arrowDirection || 'up';
 
         var popup = $(popupSelector).removeAttr('style');
@@ -65,14 +65,24 @@
         if (Utils.is320()) {
             left += window.scrollX;
         }
-        // Display a blocker div that removes the popup when clicked
-        $('<div id="arrow-popup-blocker" class="blocker"></div>').click(function(event) {
-            $(this).remove();
-            arrow.remove();
-            popup.hide();
-            event.stopPropagation();
-        }).appendTo('body');
-
+        
+        if (showCloseButton) {
+            $('<span class="close">X</span>').click(function() {
+                $(this).remove();
+                arrow.remove();
+                popup.hide();
+                event.stopPropagation();
+            }).css({ 'top': '0px', 'right': '0px', 'cursor': 'pointer', 'position': 'absolute', 'padding': '2px 5px' }).appendTo($(popupSelector));
+        } else {
+            // Display a blocker div that removes the popup when clicked
+            $('<div id="arrow-popup-blocker" class="blocker"></div>').click(function(event) {
+                $(this).remove();
+                arrow.remove();
+                popup.hide();
+                event.stopPropagation();
+            }).appendTo('body');
+        }
+        
         popup.css({
             top: top,
             left: left

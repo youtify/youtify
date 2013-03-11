@@ -4,10 +4,10 @@ AlternativesFeedback = {
         var self = this;
         $('#alternative-video-popup .no').click(function() {
             player.findAndPlayAlternative(player.currentVideo);
-            $('#arrow-popup-blocker').click();
+            $('#alternative-video-popup .close').click();
         });
         $('#alternative-video-popup .yes').click(function() {
-            $('#arrow-popup-blocker').click();
+            $('#alternative-video-popup .close').click();
         });
         EventSystem.addEventListener('video_started_playing_successfully', function(video) {
             if (video.listView && video.listView.hasClass('alternative')) {
@@ -16,6 +16,6 @@ AlternativesFeedback = {
         });
     },
     showPopup: function(video) {
-        $('#bottom .info .title').arrowPopup('#alternative-video-popup', 'down');
+        $('#bottom .info .title').arrowPopup('#alternative-video-popup', 'down', true);
     }
 };
