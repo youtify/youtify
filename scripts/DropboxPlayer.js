@@ -47,7 +47,7 @@ function DropboxPlayer() {
 			soundManager.stopAll();
 			self.playedSuccessfully = false;
 			soundManager.createSound({
-				id: self.video.videoId,
+				id: self.video.videoId.replace('\'', ''),
 				url: self.video.stream,
 				volume: self.volume,
 				onplay: function() {
@@ -63,7 +63,7 @@ function DropboxPlayer() {
 					EventSystem.callEventListeners('backend_paused_video', self.video);
 				},
 				onfinish: function() {
-					soundManager.destroySound(video.videoId);
+					soundManager.destroySound(video.videoId.replace('\'', ''));
 					EventSystem.callEventListeners('video_played_to_end', self);
 				},
                 onload: function(success) {
@@ -77,9 +77,9 @@ function DropboxPlayer() {
                     EventSystem.callEventListeners('video_duration_updated', self.getTotalPlaybackTime());
                 }
 			});
-			soundManager.play(self.video.videoId);
+			soundManager.play(self.video.videoId.replace('\'', ''));
 		} else {
-			soundManager.play(self.video.videoId);
+			soundManager.play(self.video.videoId.replace('\'', ''));
 		}
     };
     
@@ -94,7 +94,7 @@ function DropboxPlayer() {
     
     /* Pauses the current video */
     self.pause = function() {
-        soundManager.pause(self.video.videoId);
+        soundManager.pause(self.video.videoId.replace('\'', ''));
     };
     
     /* Enter fullScreen (must respect self.show() & self.hide()) */
@@ -129,7 +129,7 @@ function DropboxPlayer() {
     self.setVolume = function(volume) {
 		self.volume = volume;
 		if (self.video) {
-			soundManager.setVolume(self.video.videoId, volume);
+			soundManager.setVolume(self.video.videoId.replace('\'', ''), volume);
 		}
     };
     
@@ -140,7 +140,7 @@ function DropboxPlayer() {
     
     /* Seek to time (seconds) in video */
     self.seekTo = function(time) {
-        soundManager.setPosition(self.video.videoId, time * 1000);
+        soundManager.setPosition(self.video.videoId.replace('\'', ''), time * 1000);
     };
     
     /* Returns the current playback position in seconds */
@@ -148,7 +148,7 @@ function DropboxPlayer() {
 		if (!self.video) {
 			return 0;
 		}
-		var sound = soundManager.getSoundById(self.video.videoId);
+		var sound = soundManager.getSoundById(self.video.videoId.replace('\'', ''));
 		if (sound) {
 			return sound.position / 1000.0;
 		}
@@ -161,7 +161,7 @@ function DropboxPlayer() {
             return self.video.duration / 1000.0;
 		}
         if (self.video) {
-            var sound = soundManager.getSoundById(self.video.videoId);
+            var sound = soundManager.getSoundById(self.video.videoId.replace('\'', ''));
             if (sound) {
                 return sound.durationEstimate / 1000.0;
             }
@@ -173,7 +173,7 @@ function DropboxPlayer() {
     self.getBuffer = function() {
         var buffer = 0;
         if (self.video) {
-            var sound = soundManager.getSoundById(self.video.videoId);
+            var sound = soundManager.getSoundById(self.video.videoId.replace('\'', ''));
             if (sound) {
                 buffer = sound.bytesLoaded / sound.bytesTotal * 100;
                 buffer = buffer > 100 ? 100 : buffer;
