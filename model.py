@@ -17,6 +17,7 @@ class ExternalUser(db.Model):
     nr_of_subscribers = db.IntegerProperty(default=0)
     last_updated = db.DateTimeProperty(auto_now_add=True)
     get_last_updated = db.BooleanProperty(default=True)
+    last_checked = db.DateTimeProperty(auto_now_add=True)
     
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)

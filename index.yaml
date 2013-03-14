@@ -27,7 +27,7 @@ indexes:
 - kind: ExternalUser
   properties:
   - name: get_last_updated
-  - name: last_updated
+  - name: last_checked
   - name: nr_of_subscribers
     direction: desc
 

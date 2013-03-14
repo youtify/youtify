@@ -140,8 +140,11 @@ class ExternalUserCronHandler(webapp2.RequestHandler):
     """ Update last_updated on ExternalUsers """
 
     def get(self):
-        external_users = ExternalUser.all().filter('get_last_updated =', True).order('last_updated').order('-nr_of_subscribers').fetch(50)
+        external_users = ExternalUser.all().filter('get_last_updated =', True).order('last_checked').order('-nr_of_subscribers').fetch(50)
         for external_user in external_users:
+            external_user.last_checked = datetime.now()
+            external_user.save()
+            
             if external_user.type == 'soundcloud':
                 try:
                     last_date = datetime.fromtimestamp(0)

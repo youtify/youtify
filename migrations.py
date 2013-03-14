@@ -8,6 +8,7 @@ from model import Playlist
 from model import ExternalUser
 from string import Template
 import json as simplejson
+from datetime import datetime
 
 TEMPLATE = """
 <html>
@@ -43,6 +44,7 @@ class MigrationStepHandler(webapp2.RequestHandler):
 
         for m in ExternalUser.all().fetch(page_size, page_size * page):
             count += 1
+            m.last_checked = datetime.now()
             if m.nr_of_subscribers > 0:
                 m.get_last_updated = True
             else:
@@ -63,5 +65,5 @@ class MigrationStepHandler(webapp2.RequestHandler):
             }))
 
 app = webapp2.WSGIApplication([
-        ('/admin/migrations/migrate', MigrationStepHandler),
+        ('/admin/migrations/set_last_checked', MigrationStepHandler),
     ], debug=True)
