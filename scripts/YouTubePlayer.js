@@ -15,7 +15,8 @@
     
     /* Init the player */
     self.init = function(callback) {
-        var videoId = 'cpvty-isRCk',
+        // Any ID seems fine, though the first frame of the video is sometimes displayed for a moment
+        var videoId = 'a9-O2OfTD5Y',
             origin = document.location.origin || document.location.protocol + '//' + document.location.host;
         
         if (callback === null || callback === undefined) {

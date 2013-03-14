@@ -3,6 +3,7 @@ var Search = {
     searchTimeoutHandle: null,
     currentQuery: '',
     alternatives: undefined,
+    originalTrack: null,
     lastVideosSearchQuery: undefined,
     lastPlaylistsSearchQuery: undefined,
     lastSoundCloudTracksQuery: undefined,
@@ -68,9 +69,6 @@ var Search = {
 
         $('#top .search button').click(function() {
             Search.search($.trim($('#top .search input').val()));
-        });
-        EventSystem.addEventListener('video_started_playing_successfully', function() {
-            Search.alternatives = undefined;
         });
     },
     searchCurrentQuery: function() {
@@ -368,7 +366,8 @@ var Search = {
     },
     findAlternative: function(video, callback) {
         console.log('finding alternative for ' + video.title);
-        if (Search.alternatives === undefined) {
+        if (Search.alternatives === undefined || video !== Search.originalTrack) {
+            Search.originalTrack = video;
             Search.findAlternativesToVideo(video, function(videos) {
                 Search.alternatives = videos;
                 if (videos.length) {
@@ -380,6 +379,7 @@ var Search = {
         } else if (Search.alternatives.length) {
             callback(Search.alternatives.shift());
         } else {
+            Search.originalTrack = null;
             callback(false);
         }
     },

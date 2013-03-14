@@ -142,6 +142,14 @@ class ExternalUserTimestamp(db.Model):
     user = db.ReferenceProperty(reference_class=YoutifyUser)
     last_viewed = db.DateTimeProperty()
 
+class AlternativeTrack(db.Model):
+    track_id = db.StringProperty(required=True)
+    track_type = db.StringProperty(required=True)
+    replacement_for_id = db.StringProperty(required=True)
+    replacement_for_type = db.StringProperty(required=True)
+    vote = db.IntegerProperty(required=True)
+    
+
 # HELPERS
 ##############################################################################
 
@@ -333,3 +341,12 @@ def get_external_user_subscriptions_struct_for_youtify_user_model(youtify_user_m
 
 def generate_device_token():
     return str(random.random())
+
+def get_alternative_struct(alternative_model):
+    return {
+        'track_id': alternative_model.track_id,
+        'track_type': alternative_model.track_type,
+        'replacement_for_id': alternative_model.replacement_for_id,
+        'replacement_for_type': alternative_model.replacement_for_type,
+        'vote': alternative_model.vote
+    }

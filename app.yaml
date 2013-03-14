@@ -57,6 +57,9 @@ handlers:
 - url: /api/users.*
   script: users.app
 
+- url: /api/alternatives.*
+  script: alternatives.app
+
 - url: /logo
   static_files: html/logo-guidlines.html
   upload: html/logo-guidlines.html

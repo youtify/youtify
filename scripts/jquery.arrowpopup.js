@@ -79,7 +79,9 @@
                 $(this).remove();
                 arrow.remove();
                 popup.hide();
-                event.stopPropagation();
+                if (event) {
+                    event.stopPropagation();
+                }
             }).appendTo('body');
         }
         
