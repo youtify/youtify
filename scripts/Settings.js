@@ -9,14 +9,20 @@ function Settings() {
     this.send_new_subscriber_email = settingsFromServer.send_new_subscriber_email;
     this.flattr_automatically = settingsFromServer.flattr_automatically;
     this.lastfm_scrobble_automatically = settingsFromServer.lastfm_scrobble_automatically;
+    this.shuffle = settings.shuffle || false;
 
-    this.save = function() {
+    this.saveLocal = function(){
         localStorage.settings = JSON.stringify({
             'language': this.language,
             'enableTranslationTool': this.enableTranslationTool,
-			'quality': this.quality,
-			'announceTimeout': this.announceTimeout
+            'quality': this.quality,
+            'announceTimeout': this.announceTimeout,
+            'shuffle': this.shuffle
         });
+    };
+
+    this.save = function() {
+        this.saveLocal();
 
         if (UserManager.isLoggedIn()) {
             LoadingBar.show();

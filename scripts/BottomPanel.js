@@ -28,8 +28,17 @@ var BottomPanel = {
         // FULLSCREEN is set in FullScreen.js
         
         // SHUFFLE
+        if (new Settings().shuffle) {
+            $('#bottom .shuffle').addClass('on');
+        }
+        
         $('#bottom .shuffle').click(function() {
-            $(this).toggleClass('on');
+            var settings = new Settings(),
+                $this = $(this);
+            $this.toggleClass('on');
+            settings.shuffle = $this.hasClass('on');
+            settings.saveLocal();
+
             if (player.currentVideo && player.currentVideo.listView) {
                 Queue.addSiblingsToPlayorder(player.currentVideo.listView);
             }
