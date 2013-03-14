@@ -370,8 +370,8 @@ var Search = {
             Search.originalTrack = video;
             Search.findAlternativesToVideo(video, function(videos) {
                 // Make sure they don't forget their master
-                for (i = 0; i < results.length; i += 1) {
-                    results[i].alternativeFor = video;
+                for (i = 0; i < videos.length; i += 1) {
+                    videos[i].alternativeFor = video;
                 }
                 
                 Search.alternatives = videos;
