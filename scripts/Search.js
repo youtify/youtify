@@ -369,6 +369,11 @@ var Search = {
         if (Search.alternatives === undefined || video !== Search.originalTrack) {
             Search.originalTrack = video;
             Search.findAlternativesToVideo(video, function(videos) {
+                // Make sure they don't forget their master
+                for (i = 0; i < results.length; i += 1) {
+                    results[i].alternativeFor = video;
+                }
+                
                 Search.alternatives = videos;
                 if (videos.length) {
                     callback(Search.alternatives.shift());
@@ -384,7 +389,8 @@ var Search = {
         }
     },
     findAlternativesToVideo: function(video, callback) {
-        var results = [],
+        var i = 0,
+            results = [],
             url = 'http://gdata.youtube.com/feeds/api/videos?callback=?',
             params = {
                 'alt': 'json-in-script',

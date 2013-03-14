@@ -370,6 +370,9 @@ function PlayerManager() {
         if (video.listView) {
             video.listView.addClass('alternative');
         }
+        if (video.alternativeFor) {
+            video = video.alternativeFor;
+        }
         Search.findAlternative(video, function(alternative) {
             var $playlist;
             if (alternative) {

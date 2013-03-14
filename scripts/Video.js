@@ -17,6 +17,7 @@ function Video(args) {
     this.parent = args.parent || null;
     this.stream = args.stream || null;
     this.streamExpires = args.streamExpires || null;
+    this.alternativeFor = args.alternativeFor || null;
     
     this.clone = function() {
         return new Video({
