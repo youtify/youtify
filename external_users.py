@@ -171,7 +171,7 @@ class ExternalUserCronHandler(webapp2.RequestHandler):
                     logging.info(response.status_code)
                     if response.status_code == 200:
                         tracks = simplejson.loads(response.content)
-                        updated = tracks['feed']['updated']['$t']
+                        updated = tracks['feed']['published']['$t']
                         last_date = parser.parse(updated)
                         if last_date.time() != external_user.last_updated.time():
                             external_user.last_updated = last_date
