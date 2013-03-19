@@ -60,10 +60,3 @@ Discussion
 Twitter: @youtify, @pthulin, @kallux
 Mail: youtify@youtify.com
 ... or create issues here on GitHub!
-
-How to get translations working on your development setup
----------------------------------------------------------
-
-1. Make sure you are logged in as admin and run http://localhost:8080/admin/import_old_translations
-2. Go to /admin and select the deploy tab. Press the deploy button.
-3. Done!
