@@ -51,8 +51,12 @@ class MainHandler(webapp2.RequestHandler):
         
         # TODO add og_tag for SoundCloud & Official.fm tracks
 
+        # Let's not be embedded to other youtify clones
+        if self.request.host.find('youtify') >= 0 and self.request.host.find('youtify.com') == -1:
+            self.response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+
         path = os.path.join(os.path.dirname(__file__), 'html', 'index.html')
-        self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
+        self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.out.write(template.render(path, {
             'CURRENT_VERSION_ID': os.environ['CURRENT_VERSION_ID'],
             'USE_PRODUCTION_JAVASCRIPT': config.ON_PRODUCTION,
