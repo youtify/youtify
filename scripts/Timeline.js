@@ -69,7 +69,9 @@ var Timeline = {
         var maxWidth = Timeline.$timeline.width(),
             mouseX = event.pageX - Timeline.$slider.offset().left,
             pos = null,
-            len = player.getTotalPlaybackTime();
+            posText = '',
+            len = player.getTotalPlaybackTime(),
+            lenText = '';
         
         if (mouseX < 0) {
             mouseX = 0;
@@ -79,8 +81,16 @@ var Timeline = {
         }
         pos = mouseX / maxWidth * len;
 
-        Timeline.$pos.html(Math.floor(pos/60.0)+':' + ((Math.floor(pos%60) <10) ? '0' : '') + Math.floor(pos%60));
-        Timeline.$len.html(Math.floor(len/60.0)+':' + ((Math.floor(len%60) <10) ? '0' : '') + Math.floor(len%60));
+        posText = Math.floor(pos/60.0) + ':';
+        if (posText.length < 4) {
+            posText += ((Math.floor(pos%60) <10) ? '0' : '') + Math.floor(pos%60);
+        }
+        Timeline.$pos.text(posText);
+        lenText = Math.floor(len/60.0) + ':';
+        if (lenText.length < 4) {
+            lenText += ((Math.floor(len%60) <10) ? '0' : '') + Math.floor(len%60);
+        }
+        Timeline.$len.text(lenText);
 		Timeline.$slider.width(pos/len*maxWidth);
         
         if (!Timeline.isDragging) {
@@ -88,12 +98,14 @@ var Timeline = {
         }
         Timeline.$buffer.width(player.getBuffer() / 100.0 * maxWidth);
     },
-	update: function(percent) { 
+	update: function(percent) {
 		if (Timeline.isDragging) {
             return;
         }
         var pos = player.getCurrentPlaybackTime(),
+            posText = '',
             len = player.getTotalPlaybackTime(),
+            lenText = '',
             width = Timeline.$timeline.width();
 
         if (!Timeline.hasThrownAlmostDoneEvent && pos/len > 0.9) {
@@ -102,12 +114,20 @@ var Timeline = {
         }
         
         if (pos && len) {
-            Timeline.$pos.html(Math.floor(pos/60.0)+':' + ((Math.floor(pos%60) <10) ? '0' : '') + Math.floor(pos%60));
-            Timeline.$len.html(Math.floor(len/60.0)+':' + ((Math.floor(len%60) <10) ? '0' : '') + Math.floor(len%60));
+            posText = Math.floor(pos/60.0) + ':';
+            if (posText.length < 4) {
+                posText += ((Math.floor(pos%60) <10) ? '0' : '') + Math.floor(pos%60);
+            }
+            Timeline.$pos.text(posText);
+            lenText = Math.floor(len/60.0) + ':';
+            if (lenText.length < 4) {
+                lenText += ((Math.floor(len%60) <10) ? '0' : '') + Math.floor(len%60);
+            }
+            Timeline.$len.text(lenText);
             Timeline.$slider.width(pos/len*width);
         } else {
-            Timeline.$pos.html('0:00');
-            Timeline.$len.html('0:00');
+            Timeline.$pos.text('0:00');
+            Timeline.$len.text('0:00');
             Timeline.$slider.width(0);
         }
 	},
