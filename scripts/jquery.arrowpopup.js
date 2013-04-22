@@ -67,7 +67,7 @@
         }
         
         if (showCloseButton) {
-            $('<span class="close">X</span>').click(function() {
+            $('<span class="close">X</span>').click(function(event) {
                 $(this).remove();
                 arrow.remove();
                 popup.hide();
