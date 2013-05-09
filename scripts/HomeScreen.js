@@ -16,6 +16,7 @@ var HomeScreen = {
         'collegehumor',
         'day9tv',
         /* Unplayable */
+        'monstercatmedia',
         'lanadelreyunreleased' 
     ],
     
