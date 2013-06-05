@@ -11,7 +11,7 @@ MEMCACHE_KEY = 'playlists_toplist'
 def fetch_toplist():
     """Fetch the most popular playlists"""
     json = []
-    for m in Playlist.all().filter('private =', False).order('-nr_of_followers').fetch(30):
+    for m in Playlist.all().filter('private =', False).order('-nr_of_followers').fetch(100):
         json.append(get_playlist_struct_from_playlist_model(m))
     return simplejson.dumps(json)
 
