@@ -34,21 +34,19 @@
             playerVars: { 'autoplay': 0, 'controls': 0, 'wmode': 'opaque' },
             events: {
                 'onReady': function(data) {
-                        self.initialized = true;
-                        
-                        /* Must be set onReady because the div is replaced with an iFrame */
-                        self.view = $('#youtube');
-                        
-                        if (callback) {
-                            callback();
-                        }
-                    },
-                'onStateChange': self.onPlayerStateChange,
-                'onError': self.onError
+                    self.initialized = true;
+                    /* Must be set onReady because the div is replaced with an iFrame */
+                    self.view = $('#youtube');
+                    
+                    data.target.addEventListener('onStateChange', self.onPlayerStateChange);
+                    data.target.addEventListener('onError', self.onError);
+                    
+                    if (callback) {
+                        callback();
+                    }
+                }
             }
         });
-        
-        // EventSystem.callEventListeners('player_error', [self, errorMessage]);
     };
     
     /* Hide the player from the UI. Must be callable without prior init */
