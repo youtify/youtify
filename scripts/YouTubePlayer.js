@@ -65,6 +65,7 @@
             event.data === null || event.data === undefined) {
             return;
         }
+        console.log('YouTubePlayer.onPlayerStateChange', event.data);
         /* unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5) */
 		switch (event.data) {
             case YT.PlayerState.BUFFERING:
