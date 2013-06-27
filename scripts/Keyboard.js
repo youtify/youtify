@@ -202,7 +202,7 @@ var Keyboard = {
     },
     a: function(event) {
         if (event.ctrlKey || event.metaKey) {
-            $('#right > div:visible .tracklist:visible .video').siblings().addClass('selected');
+            $('#right > div:visible .tracklist:visible .video:visible').siblings().addClass('selected');
             event.preventDefault();
             return false;
         }
