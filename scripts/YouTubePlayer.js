@@ -65,7 +65,6 @@
             event.data === null || event.data === undefined) {
             return;
         }
-        console.log('YouTubePlayer.onPlayerStateChange', event.data);
         /* unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5) */
 		switch (event.data) {
             case YT.PlayerState.BUFFERING:
@@ -75,8 +74,14 @@
                 }
                 break;
 			case 0:
-                self.currentVideo = null;
-				EventSystem.callEventListeners('video_played_to_end', self);
+                // Workaround, since YT calls ended twice when loading a video
+                // directly when another has ended.
+                var pos = self.player.getCurrentTime();
+                var len = self.player.getDuration();
+                if (pos && len) {
+                    self.currentVideo = null;
+                    EventSystem.callEventListeners('video_played_to_end', self);
+                }
 				break;
 			case 1: 
                 if (self.loadedNewVideo) {
