@@ -37,25 +37,39 @@ Dropbox = {
         return this.menuItem;
     },
     loadTracks: function() {
-        var self = Dropbox;
-        LoadingBar.show();
-        $.get('/api/dropbox/list', function(data) {
-            $.each(data, function(i, item) {
-                var video = new Video({
-                    videoId: item.videoId,
-                    title: item.title,
-                    type: item.type,
-                    onPlayCallback: self.menuItem.setAsPlaying
+        var self = Dropbox,
+            dirs = ['/'],
+            list = function() {
+                if (dirs.length === 0) {
+                    // All done
+                    if (self.isEmpty()) {
+                        self.$rightView.find('.help-box').show();
+                    }
+                    LoadingBar.hide();
+                    return;
+                }
+
+                var dir = dirs.shift();
+                $.get('/api/dropbox/list' + dir, function(data) {
+                    console.log(dir, data.dirs, data.media);
+                    // Add directories
+                    dirs = data.dirs.concat(dirs);
+                    // Add media
+                    $.each(data.media, function(i, item) {
+                        var video = new Video({
+                            videoId: item.videoId,
+                            title: item.title,
+                            type: item.type,
+                            onPlayCallback: self.menuItem.setAsPlaying
+                        });
+                        video.createListView().appendTo(self.$tracklist);
+                        self.tracks.push(video);
+                    });
+                    list();
                 });
-                video.createListView().appendTo(self.$tracklist);
-                self.tracks.push(video);
-            });
-            if (self.isEmpty()) {
-                self.$rightView.find('.help-box').show();
-            } else {
-                self.$rightView.find('.help-box').hide();
-            }
-            LoadingBar.hide();
-        });
+            };
+        self.$rightView.find('.help-box').hide();
+        LoadingBar.show();
+        list();
     }
 };

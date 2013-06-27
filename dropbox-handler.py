@@ -76,10 +76,10 @@ class DropboxCallbackHandler(webapp2.RequestHandler):
             self.error(403)
             self.response.out.write('User not logged in')
 
-class DropboxHandler(webapp2.RequestHandler):
+class DropboxListingHandler(webapp2.RequestHandler):
     
-    def get(self):
-        """List content in all folders"""
+    def get(self, path):
+        """List content in path"""
         filetypes = ['.mp3', '.mp4', '.ogg', '.wav']
         user = get_current_youtify_user_model()
         if user is None:
@@ -90,30 +90,31 @@ class DropboxHandler(webapp2.RequestHandler):
         session = dropbox.session.DropboxSession(config.DROPBOX_APP_KEY, config.DROPBOX_APP_SECRET, config.DROPBOX_ACCESS_TYPE)
         session.token = access_token
         client = dropbox.client.DropboxClient(session)
-        dirs = ['/']
+        
+        path = '/' + path
+        dirs = []
         mediafiles = []
         
+        logging.info('listing ' + path)
+
         try:
-            while len(dirs) > 0:
-                dir = dirs.pop(0)
-                metadata = client.metadata(dir)
-                if 'contents' in metadata:
-                    for item in metadata['contents']:
-                        logging.info(item['path'])
-                        if item['is_dir']:
-                            dirs.append(item['path'])
-                        else:
-                            for filetype in filetypes:
-                                if item['path'].lower().endswith(filetype):
-                                    # all currently supported filetypes are 4 chars long
-                                    title = ' - '.join(item['path'].split('/'))[3:-4]
-                                    track = { 'videoId': item['path'], 'title': title, 'type': 'dropbox' }
-                                    mediafiles.append(track)
-                                    break
+            metadata = client.metadata(path)
+            if 'contents' in metadata:
+                for item in metadata['contents']:
+                    if item['is_dir']:
+                        dirs.append(item['path'])
+                    else:
+                        for filetype in filetypes:
+                            if item['path'].lower().endswith(filetype):
+                                # all currently supported filetypes are 4 chars long
+                                title = ' - '.join(item['path'].split('/'))[3:-4]
+                                track = { 'videoId': item['path'], 'title': title, 'type': 'dropbox' }
+                                mediafiles.append(track)
+                                break
         except DeadlineExceededError:
             pass
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(mediafiles))
+        self.response.out.write(simplejson.dumps({'dirs': dirs, 'media': mediafiles}))
 
 class DropboxStreamHandler(webapp2.RequestHandler):
     
@@ -146,6 +147,6 @@ app = webapp2.WSGIApplication([
         ('/api/dropbox/connect', DropboxConnectHandler),
         ('/api/dropbox/disconnect', DropboxDisconnectHandler),
         ('/api/dropbox/callback', DropboxCallbackHandler),
-        ('/api/dropbox/list', DropboxHandler),
+        ('/api/dropbox/list/(.*)', DropboxListingHandler),
         ('/api/dropbox/stream/.*', DropboxStreamHandler),
     ], debug=True)
