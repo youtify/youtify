@@ -89,14 +89,6 @@
             case 2:
                 EventSystem.callEventListeners('backend_paused_video', self.currentVideo);
                 break;
-			case 3:
-				// Avoid buffer hang at end (rare)
-				var pos = self.player.getCurrentTime();
-				var len = self.player.getDuration();
-				if (pos > len-2.0 && len > 0) {
-					EventSystem.callEventListeners('video_played_to_end', self);
-                }
-				break;
 			default:
                 break;
 		}
