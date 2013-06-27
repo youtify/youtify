@@ -47,11 +47,12 @@ Dropbox = {
                     }
                     LoadingBar.hide();
                     return;
+                } else {
+                    self.$rightView.find('.help-box').hide();
                 }
 
                 var dir = dirs.shift();
                 $.get('/api/dropbox/list' + dir, function(data) {
-                    console.log(dir, data.dirs, data.media);
                     // Add directories
                     dirs = data.dirs.concat(dirs);
                     // Add media
@@ -68,7 +69,6 @@ Dropbox = {
                     list();
                 });
             };
-        self.$rightView.find('.help-box').hide();
         LoadingBar.show();
         list();
     }

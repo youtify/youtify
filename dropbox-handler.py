@@ -95,8 +95,6 @@ class DropboxListingHandler(webapp2.RequestHandler):
         dirs = []
         mediafiles = []
         
-        logging.info('listing ' + path)
-
         try:
             metadata = client.metadata(path)
             if 'contents' in metadata:
@@ -120,7 +118,6 @@ class DropboxStreamHandler(webapp2.RequestHandler):
     
     def get(self):
         """Get the dropbox stream path, which is valid for 4 hours"""
-        logging.info(self.request.path)
         path = self.request.path
         path_separator = '/api/dropbox/stream/'
         path = path[path.find(path_separator) + len(path_separator):]
@@ -139,7 +136,6 @@ class DropboxStreamHandler(webapp2.RequestHandler):
         session.token = access_token
         client = dropbox.client.DropboxClient(session)
         stream = client.media(unquote(path))
-        logging.info(stream['url'])
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(stream))
 
