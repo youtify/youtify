@@ -47,9 +47,8 @@ Dropbox = {
                     }
                     LoadingBar.hide();
                     return;
-                } else {
-                    self.$rightView.find('.help-box').hide();
                 }
+                self.$rightView.find('.help-box').hide();
 
                 var dir = dirs.shift();
                 $.get('/api/dropbox/list' + dir, function(data) {
