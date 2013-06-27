@@ -2,6 +2,7 @@ import logging
 import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext import db
+from google.appengine.runtime import DeadlineExceededError
 import json as simplejson
 from urllib import unquote
 from model import YoutifyUser
@@ -92,23 +93,25 @@ class DropboxHandler(webapp2.RequestHandler):
         dirs = ['/']
         mediafiles = []
         
-        while len(dirs) > 0:
-            dir = dirs.pop(0)
-            metadata = client.metadata(dir)
-            if 'contents' in metadata:
-                for item in metadata['contents']:
-                    logging.info(item['path'])
-                    if item['is_dir']:
-                        dirs.append(item['path'])
-                    else:
-                        for filetype in filetypes:
-                            if item['path'].lower().endswith(filetype):
-                                # all currently supported filetypes are 4 chars long
-                                title = ' - '.join(item['path'].split('/'))[3:-4]
-                                track = { 'videoId': item['path'], 'title': title, 'type': 'dropbox' }
-                                mediafiles.append(track)
-                                break
-                        
+        try:
+            while len(dirs) > 0:
+                dir = dirs.pop(0)
+                metadata = client.metadata(dir)
+                if 'contents' in metadata:
+                    for item in metadata['contents']:
+                        logging.info(item['path'])
+                        if item['is_dir']:
+                            dirs.append(item['path'])
+                        else:
+                            for filetype in filetypes:
+                                if item['path'].lower().endswith(filetype):
+                                    # all currently supported filetypes are 4 chars long
+                                    title = ' - '.join(item['path'].split('/'))[3:-4]
+                                    track = { 'videoId': item['path'], 'title': title, 'type': 'dropbox' }
+                                    mediafiles.append(track)
+                                    break
+        except DeadlineExceededError:
+            pass
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(mediafiles))
 
