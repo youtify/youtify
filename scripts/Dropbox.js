@@ -65,8 +65,7 @@ Dropbox = {
                         video.createListView().appendTo(self.$tracklist);
                         self.tracks.push(video);
                     });
-                    list();
-                });
+                }).complete(list);
             };
         LoadingBar.show();
         list();
