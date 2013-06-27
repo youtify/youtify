@@ -66,7 +66,7 @@ class AutoSubmitHandler(webapp2.RequestHandler):
             create_flattr_activity(user, thing_id, video_title)
             user.nr_of_flattrs += 1
             user.save()
-        elif 'error' in json and json['error'] == 'flattr_once':
+        elif json.get('error') == 'flattr_once':
             pass
         else:
             logging.error('Error creating flattr click. Response: %s' % response.content)
