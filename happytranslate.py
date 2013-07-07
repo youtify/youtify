@@ -1,7 +1,4 @@
-import logging
 import webapp2
-from google.appengine.api import urlfetch
-from google.appengine.api import memcache
 import json
 
 _cache = {}
@@ -40,8 +37,7 @@ def _get_translations_from_cache_or_file():
         
     f = open('translations.json', 'r')
     
-    data = f.read()
-    _cache = json.loads(data)
+    _cache = json.loads(f.read())
     
     f.close()
     
