@@ -9,10 +9,6 @@ var TranslationSystem = {
     init: function() {
         var settings = new Settings();
         TranslationSystem.changeLanguage(settings.language);
-
-        $('#translations').click(function() {
-            $(this).arrowPopup("#translationsPopup");
-        });
     },
 
     get: function(original, vars) {
