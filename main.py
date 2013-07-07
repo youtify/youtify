@@ -14,7 +14,7 @@ from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
 from model import generate_device_token
-from happytranslate import get_or_fetch_translations
+from happytranslate import get_translations_for_lang
 from happytranslate import get_languages
 from happytranslate import auto_detect_language
 try:
@@ -112,7 +112,7 @@ class ApiMainHandler(webapp2.RequestHandler):
             'myFollowings': my_followings_struct,
             'settingsFromServer': settings_struct,
             'autoDetectedLanguageByServer': lang_code,
-            'autoDetectedTranslations': get_or_fetch_translations(lang_code),
+            'autoDetectedTranslations': get_translations_for_lang(lang_code),
             'loginUrl': users.create_login_url('/'),
             'logoutUrl': users.create_logout_url('/'),
         }
