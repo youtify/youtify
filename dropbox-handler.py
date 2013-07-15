@@ -2,7 +2,6 @@ import logging
 import webapp2
 from google.appengine.ext.webapp import util
 from google.appengine.ext import db
-from google.appengine.runtime import DeadlineExceededError
 import json as simplejson
 from urllib import unquote
 from model import YoutifyUser
@@ -109,7 +108,7 @@ class DropboxListingHandler(webapp2.RequestHandler):
                                 track = { 'videoId': item['path'], 'title': title, 'type': 'dropbox' }
                                 mediafiles.append(track)
                                 break
-        except DeadlineExceededError:
+        except:
             pass
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps({'dirs': dirs, 'media': mediafiles}))
