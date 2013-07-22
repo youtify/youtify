@@ -15,10 +15,12 @@ var HomeScreen = {
         'husky',
         'collegehumor',
         'day9tv',
+        'theverge',
+        'GoogleDevelopers',
         /* Unplayable */
         'ukfdubstep',
         'monstercatmedia',
-        'lanadelreyunreleased' 
+        'lanadelreyunreleased'
     ],
     
     init: function() {
