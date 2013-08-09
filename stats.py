@@ -44,41 +44,57 @@ class CronJobHandler(webapp2.RequestHandler):
 
         stats.nr_of_users = 0
         stats.nr_of_active_users = 0
-        stats.nr_of_playlists = len([i for i in Playlist.all()])
+        try:
+            stats.nr_of_playlists = Playlist.all(keys_only=True).count(read_policy=EVENTUAL_CONSISTENCY)
+        except:
+            pass
         stats.nr_of_users_with_flattr_account = 0
         stats.nr_of_users_with_dropbox = 0
-        stats.nr_of_flattrs = len([i for i in Activity.all().filter('type =', 'outgoing').filter('verb =', 'flattr')])
+        try:
+            stats.nr_of_flattrs = Activity.all().filter('type =', 'outgoing').filter('verb =', 'flattr').count(read_policy=EVENTUAL_CONSISTENCY)
+        except:
+            pass
         stats.nr_of_playlist_subscriptions = 0
-        stats.nr_of_follow_relations = len([i for i in FollowRelation.all()])
+        try:
+            stats.nr_of_follow_relations = FollowRelation.all(keys_only=True).count(read_policy=EVENTUAL_CONSISTENCY)
+        except:
+            pass
 
-        for user in YoutifyUser.all():
-            stats.nr_of_users += 1
-            
-            if user.flattr_user_name:
-                stats.nr_of_users_with_flattr_account += 1
-            
-            if user.dropbox_user_name:
-                stats.nr_of_users_with_dropbox += 1
+        try:
+            for user in YoutifyUser.all():
+                stats.nr_of_users += 1
+                
+                if user.flattr_user_name:
+                    stats.nr_of_users_with_flattr_account += 1
+                
+                if user.dropbox_user_name:
+                    stats.nr_of_users_with_dropbox += 1
 
-            if user.playlist_subscriptions:
-                stats.nr_of_playlist_subscriptions += len(user.playlist_subscriptions)
+                if user.playlist_subscriptions:
+                    stats.nr_of_playlist_subscriptions += len(user.playlist_subscriptions)
 
-            if user.last_login:
-                delta = datetime.now() - user.last_login
-                if delta.seconds < 3600 * 24 * 7:
-                    stats.nr_of_active_users += 1
+                if user.last_login:
+                    delta = datetime.now() - user.last_login
+                    if delta.seconds < 3600 * 24 * 7:
+                        stats.nr_of_active_users += 1
+        except:
+            pass
         
         pings = []
         last_ping = None
-        for m in PingStats.all().order('-date').fetch(6*24*7):
-            if last_ping is not None and last_ping.date.hour is not m.date.hour:
-                pings.append({
-                    'date': str(last_ping.date),
-                    'pings': last_ping.pings
-                })
-                last_ping = m
-            elif last_ping is None or m.pings > last_ping.pings:
-                last_ping = m
+
+        try:
+            for m in PingStats.all().order('-date').fetch(6*24*7):
+                if last_ping is not None and last_ping.date.hour is not m.date.hour:
+                    pings.append({
+                        'date': str(last_ping.date),
+                        'pings': last_ping.pings
+                    })
+                    last_ping = m
+                elif last_ping is None or m.pings > last_ping.pings:
+                    last_ping = m
+        except:
+            pass
             
         stats.pings = simplejson.dumps(pings)
         
