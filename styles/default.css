@@ -83,6 +83,7 @@ html, body {
     /* http://www.base64online.com/image_base64.php */
     background: #EEE;
 }
+body { max-height: 100%; max-width: 100%; }
 input, textarea, button {
     font-family: 'Open Sans', arial, sans-serif;
 	font-size: 14px;
