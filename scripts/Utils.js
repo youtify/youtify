@@ -188,6 +188,9 @@ var Utils = {
                 $('#top .go-right').hide();
             });
         }
+    },
+    isiOS: function() {
+         return (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
     }
     
 };
