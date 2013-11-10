@@ -49,5 +49,11 @@ var BottomPanel = {
         $('#bottom .info .title')
             .text(titleText)
             .attr('title', titleText);
+    },
+    show: function() {
+        $('#bottom').show();
+    },
+    hide: function() {
+        $('#bottom').hide();
     }
 };
