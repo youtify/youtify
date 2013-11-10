@@ -117,7 +117,17 @@ function PlayerManager() {
                     /* Init the player and start playing the video on callback */
                     if (self.players[i].initialized === false) {
                         self.players[i].show();
-                        self.players[i].init(callback);
+                        
+                        /* iOS requires the user to press the large red youtube play icon before we can do anything */
+                        if (Utils.isiOS() && video.type === 'youtube') {
+                            self.players[i].init(null, video);
+                            self.currentPlayer = self.players[i];
+                            self.currentPlayer.show();
+                            self.currentVideo = video;
+                            Timeline.updateBuffer(0);
+                        } else {
+                            self.players[i].init(callback);
+                        }
                         return;
                     }
                     /* We found the right player! */

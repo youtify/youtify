@@ -13,20 +13,41 @@
     self.defaultHeight = $('#left .players').height();
     self.qualitySet = false;
     
-    /* Init the player */
-    self.init = function(callback) {
+    /* Init the player, the video option should only be used with iOS. */
+    self.init = function(callback, video) {
         // Any ID seems fine, though the first frame of the video is sometimes displayed for a moment
         var videoId = 'a9-O2OfTD5Y',
-            origin = document.location.origin || document.location.protocol + '//' + document.location.host;
+            origin = document.location.origin || document.location.protocol + '//' + document.location.host,
+            initialWidth = self.defaultWidth,
+            initialHeight = self.defaultHeight;
         
         if (callback === null || callback === undefined) {
             callback = function() { console.log("YouTube player loaded"); };
         }
+
+        /*
+            This is a stupid iOS specific workaround because we cannot call player.playVideo or even
+            player.loadVideoById before the user clicked the big red playbutton on the player. 
+            If we try to play anything before the mouse event, the whole youtube player crashes.
+            So we enter a fake fullscreen mode where the only visible thing is the player and it's big red button, 
+            and when we get the onPlayerStateChange event of playing (1), we exit the fake fullscreen.
+        */
+        if (video) {
+            videoId = video.videoId;
+            self.currentVideo = video;
+            self.loadedNewVideo = true;
+            initialWidth = $(window).width();
+            initialHeight = $(window).height() - 10;
+            $('#youtube').width(initialWidth).height(initialHeight);
+            $('#left .players').css('top',0);
+            Utils.scrollLeft();
+            BottomPanel.hide();
+        }
         
         /* First argument is a DOM id */
 		self.player = new YT.Player('youtube', {
-            height: self.defaultHeight,
-            width: self.defaultWidth,
+            width: initialWidth,
+            height: initialHeight,
             videoId: videoId,
             enablejsapi: 1,
             modestbranding: 1,
@@ -40,7 +61,7 @@
                     
                     data.target.addEventListener('onStateChange', self.onPlayerStateChange);
                     data.target.addEventListener('onError', self.onError);
-                    
+
                     if (callback) {
                         callback();
                     }
@@ -65,6 +86,7 @@
             event.data === null || event.data === undefined) {
             return;
         }
+        console.log('onPlayerStateChange ' + event.data);
         /* unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5) */
 		switch (event.data) {
             case YT.PlayerState.BUFFERING:
@@ -87,6 +109,15 @@
                 if (self.loadedNewVideo) {
                     self.loadedNewVideo = false;
                     EventSystem.callEventListeners('video_started_playing_successfully', self.currentVideo);
+
+                    /* iOS again*/
+                    if (self.view.width() === $(window).width() && self.inFullScreen === false) {
+                        $('#left .players').removeAttr('style');
+                        self.view.width(self.defaultWidth);
+                        self.view.height(self.defaultHeight);
+                        BottomPanel.show();
+                    }
+
                 } else {
                     EventSystem.callEventListeners('backend_played_video', self.currentVideo);
 				}
