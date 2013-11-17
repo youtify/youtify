@@ -4,7 +4,31 @@ var ExternalUserPage = {
     cache: {},
 
     init: function() {
-        this.$view = $('#right > div.external-profile');
+        var self = this;
+        self.$view = $('#right > div.external-profile');
+        console.log(self.$view);
+        (function() {
+            var timeout;
+            self.$view.scroll(function(event) {
+                if (timeout) {
+                    clearTimeout(timeout);
+                }
+                if (self.selectedUser) {
+                    timeout = setTimeout(function() {
+                        if ((self.$view.scrollTop() + self.$view.height()) >= (self.selectedUser.getRightView().height() | 0) && self.selectedUser.hasMore) {
+                            switch(self.selectedUser.type) {
+                                case 'soundcloud':
+                                    self.selectedUser.loadSoundCloudTracks();
+                                    break;
+                                case 'youtube':
+                                    self.selectedUser.loadYouTubeTracks();
+                                    break;
+                            }
+                        }
+                    }, 100);
+                }
+            });
+        }());
     },
 
     show: function() {
@@ -68,6 +92,7 @@ var ExternalUserPage = {
 function ExternalUser(data) {
     var self = this;
     self.externalUserId = data.external_user_id;
+    self.soundCloudResolveId = null;
     self.type = data.type;
     self.username = data.username;
     self.avatarUrl = data.avatar_url;
@@ -79,6 +104,9 @@ function ExternalUser(data) {
     self.description = data.description;
     self.lastViewed = new Date(data.last_viewed);
     self.lastUpdated = new Date(data.last_updated);
+    self.offset = 0;
+    self.take = 30;
+    self.hasMore = true;
     
     self.$tracklist = $('<table class="tracklist">');
     self.$info = $('<div class="info">');
@@ -233,9 +261,23 @@ function ExternalUser(data) {
         ExternalUserManager.setMenuItemAsPlayingFor(self);
     };
 
-    self.loadSoundCloudUser = function(callback) {
+    self.resolveSoundCloudId = function(callback) {
+        if (self.soundCloudResolveId && callback) {
+            callback(self.soundCloudResolveId);
+            return;
+        }
+
         $.getJSON("http://api.soundcloud.com/resolve.json?callback=?", {client_id: SOUNDCLOUD_API_KEY, url: "https://soundcloud.com/" + self.username}, function(resolveData) {
-            $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + ".json", {client_id: SOUNDCLOUD_API_KEY}, function(userData) {
+            self.soundCloudResolveId = resolveData.id;
+            if (callback) {
+                callback(self.soundCloudResolveId);
+            }
+        });
+    };
+
+    self.loadSoundCloudUser = function(callback) {
+        self.resolveSoundCloudId(function() {
+            $.getJSON("http://api.soundcloud.com/users/" + self.soundCloudResolveId + ".json", {client_id: SOUNDCLOUD_API_KEY}, function(userData) {
                 self.externalUserId = String(userData.id);
                 self.displayName = userData.username;
                 self.avatarUrl = userData.avatar_url;
@@ -244,15 +286,29 @@ function ExternalUser(data) {
                 self.description = userData.description;
                 self.updateInfoBar();
 
-                $.getJSON("http://api.soundcloud.com/users/" + resolveData.id + "/tracks.json", {client_id: SOUNDCLOUD_API_KEY}, function(tracksData) {
-                    var results = Search.getVideosFromSoundCloudSearchData(tracksData);
-                    $.each(results, function(i, video) {
-                        video.parent = self;
-                        video.onPlayCallback = self.videoPlayCallback;
-                        video.createListView().appendTo(self.$tracklist);
-                    });
-                    callback(self);
+                self.loadSoundCloudTracks(callback);
+            });
+        });
+    };
+
+    self.loadSoundCloudTracks = function(callback) {
+        LoadingBar.show();
+        self.resolveSoundCloudId(function() {
+            $.getJSON("http://api.soundcloud.com/users/" + self.soundCloudResolveId + "/tracks.json",
+                {client_id: SOUNDCLOUD_API_KEY, offset: self.offset, limit: self.take}, function(tracksData) {
+                var results = Search.getVideosFromSoundCloudSearchData(tracksData);
+                self.offset += results.length;
+                self.hasMore = results.length > 0;
+
+                $.each(results, function(i, video) {
+                    video.parent = self;
+                    video.onPlayCallback = self.videoPlayCallback;
+                    video.createListView().appendTo(self.$tracklist);
                 });
+                if (callback) {
+                    callback(self);
+                }
+                LoadingBar.hide();
             });
         });
     };
@@ -268,18 +324,35 @@ function ExternalUser(data) {
             self.description = data.entry.summary.$t;
             self.updateInfoBar();
 
-            // https://developers.google.com/youtube/2.0/developers_guide_protocol_video_feeds#User_Uploaded_Videos
-            $.getJSON('https://gdata.youtube.com/feeds/api/users/' + self.username + '/uploads?callback=?', {alt: 'json-in-script', v: 2}, function(data) {
-                if (data.feed.entry !== undefined) {
-                    var results = Search.getVideosFromYouTubeSearchData(data);
-                    $.each(results, function(i, video) {
-                        video.parent = self;
-                        video.onPlayCallback = self.videoPlayCallback;
-                        video.createListView().appendTo(self.$tracklist);
-                    });
-                }
+            self.loadYouTubeTracks(callback);
+        });
+    };
+
+    self.loadYouTubeTracks = function(callback) {
+        LoadingBar.show();
+        // YouTube starts offset at 1
+        if (self.offset === 0) {
+            self.offset = 1;
+        }
+
+        // https://developers.google.com/youtube/2.0/developers_guide_protocol_video_feeds#User_Uploaded_Videos
+        $.getJSON('https://gdata.youtube.com/feeds/api/users/' + self.username + '/uploads?callback=?',
+            {alt: 'json-in-script', v: 2, 'start-index': self.offset, 'max-results': self.take}, function(data) {
+            if (data.feed.entry !== undefined) {
+                var results = Search.getVideosFromYouTubeSearchData(data);
+                self.offset += results.length;
+                self.hasMore = results.length > 0;
+
+                $.each(results, function(i, video) {
+                    video.parent = self;
+                    video.onPlayCallback = self.videoPlayCallback;
+                    video.createListView().appendTo(self.$tracklist);
+                });
+            }
+            if (callback) {
                 callback(self);
-            });
+            }
+            LoadingBar.hide();
         });
     };
     
