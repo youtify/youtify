@@ -1,5 +1,5 @@
 application: youtify-hrd
-version: 16
+version: 17
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -87,7 +87,7 @@ handlers:
 - url: /cron/gather_flattr_stats
   script: stats.app
   login: admin
-  
+
 - url: /cron/update_external_users
   script: external_users.app
   login: admin
@@ -106,7 +106,7 @@ handlers:
 
 - url: /api/toplists/playlists
   script: playlists_toplist.app
-  
+
 - url: /api/dropbox.*
   script: dropbox-handler.app
 
@@ -131,7 +131,7 @@ handlers:
   static_files: youtify.webapp
   mime_type: application/x-web-app-manifest+json
   upload: youtify.webapp
-  
+
 - url: /robots.*
   static_files: robots.txt
   upload: robots.txt
@@ -153,7 +153,7 @@ handlers:
 
 - url: /soundcloud_id_to_permalink
   script: soundcloud_id_to_permalink.app
-  
+
 - url: /opensearch.xml
   static_files: opensearch.xml
   upload: opensearch.xml
