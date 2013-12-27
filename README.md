@@ -52,7 +52,7 @@ Install JSLint, UglifyJS and other dependencies:
 
 To run the build system:
 
-    $ node make.js
+    $ node make/generate_production_javascript.js
 
 Discussion
 ----------
