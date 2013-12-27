@@ -16,11 +16,12 @@ function PlaylistsManager() {
                 }
             }
         } catch (e) {
-            alert('Error parsing playlists from localStorage: ' + e); 
+            alert('Error parsing playlists from localStorage: ' + e);
         }
 
         if (UserManager.isLoggedIn()) {
             $.getJSON('/me/playlists', function(data) {
+                console.log('me/playlists', data);
                 self.mergePlaylists(data);
                 self.updateMenu();
                 if (callback) {
@@ -95,7 +96,7 @@ function PlaylistsManager() {
                 followers = item.followers || [];
 
             if (!remoteIds.hasOwnProperty(remoteId)) {
-                self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate ,followers));
+                self.addPlaylist(new Playlist(title, videos, remoteId, owner, isPrivate, followers));
             }
         });
 
@@ -149,7 +150,7 @@ function PlaylistsManager() {
         var playlist = this.playlists[i],
             self = this;
 
-        if (playlist.remoteId) {
+        if (playlist.remoteId && playlist.isSubscription === false) {
             playlist.sync(function() {
                 self.syncPlaylists(i + 1);
             });

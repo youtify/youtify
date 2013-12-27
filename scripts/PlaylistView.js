@@ -20,7 +20,7 @@ var PlaylistView = {
         if (playlist.owner) {
             playlist.owner.getSmallView().appendTo($info);
         }
-        
+
         /* Number of tracks */
         $info.append($('<span class="nr"/>').text(playlist.videos.length));
 
@@ -33,7 +33,7 @@ var PlaylistView = {
                 })
                 .appendTo($info);
         }
-        
+
         /* Subscribe/Unsubscribe button */
         $subscribeButton.click(function() {
             if (UserManager.isLoggedIn()) {
@@ -61,7 +61,7 @@ var PlaylistView = {
         } else {
             $unsubscribeButton.hide();
         }
-        
+
         /* Privacy checkbox*/
         if (UserManager.isLoggedIn() && showPrivacyToggle && playlist.remoteId !== null && UserManager.currentUser.id === playlist.owner.id) {
             PlaylistView.createPrivacyToggleButton(playlist).appendTo($info);
@@ -94,7 +94,7 @@ var PlaylistView = {
                     .appendTo($tracklist);
             }
         }
-        
+
         $box.append($header);
         $tracklistContainer.append($tracklist);
         $box.append($tracklistContainer);
@@ -151,6 +151,14 @@ var PlaylistView = {
             player.currentVideo.scrollTo();
         }
 
+        console.log('playlist.isLoaded', playlist.isLoaded);
+        if (playlist.isLoaded === false) {
+            playlist.load(function() {
+                PlaylistView.loadPlaylistView(playlist);
+            });
+            return;
+        }
+
         $('#right > div').hide();
         $('#right > .playlists .tracklist').hide();
         $('#right > .playlists').show();
@@ -162,7 +170,8 @@ var PlaylistView = {
         if ($tracklist.find('.video').length !== playlist.videos.length) {
             $tracklist.html('');
             $.each(playlist.videos, function (i, item) {
-                if(item) {
+                console.log(item);
+                if (item) {
                     $video = item.createListView();
                     $video.addClass('droppable');
                     $video.addClass('draggable');

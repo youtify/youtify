@@ -7,7 +7,7 @@ function loadPlaylist(playlistId) {
         type: 'GET',
         statusCode: {
             200: function(data) {
-                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate, data.followers);
+                var playlist = new Playlist(data.title, data.videos, data.remoteId, data.owner, data.isPrivate, data.followers, true);
                 PlaylistView.loadPlaylistView(playlist);
                 playlistManager.selectPlaylistByRemoteId(data.remoteId);
             },
@@ -36,34 +36,85 @@ function playlistMenuItemSelected(menuItem) {
 /** CLASS PLAYLIST
  ****************************************************************************/
 
-function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
-    var i, 
+function Playlist(title, videos, remoteId, owner, isPrivate, followers, isLoaded) {
+    var i,
         self = this;
-    self.title = title;
-    self.videos = [];
-    /* The loop that adds videos to self.videos is moved to the end of the class to avoid reference errors */
-    self.remoteId = remoteId || null;
 
-    self.owner = owner;
-    if (owner) {
-        self.owner = new User(owner);
-    }
-
-    self.isPrivate = isPrivate || false;
-    self.followers = followers || [];
-    self.synced = true; // not part of JSON structure
-    self.syncing = false; // not part of JSON structure
-    self.isSubscription = false;
-    for (i = 0; i < self.followers.length; i+=1) {
-        if (UserManager.isLoggedIn()) {
-            if (Number(self.followers[i].id) === Number(UserManager.currentUser.id)) {
-                self.isSubscription = true;
-                break;
+    /* Copy properties from options */
+    self.setProps = function(options, setTracks) {
+        var property;
+        for (property in options) {
+            if (options.hasOwnProperty(property)) {
+                self[property] = options[property];
             }
         }
-    }
-    self.menuItem = null;
-    self.$tracklist = null;
+        self.videos = [];
+
+        if (options.owner) {
+            self.owner = new User(options.owner);
+        }
+
+        if (UserManager.isLoggedIn()) {
+            for (i = 0; i < self.followers.length; i+=1) {
+                if (Number(self.followers[i].id) === Number(UserManager.currentUser.id)) {
+                    self.isSubscription = true;
+                    break;
+                }
+            }
+        }
+
+        if (typeof self.remoteId === 'undefined' || self.remoteId === null) {
+            self.isLoaded = true;
+        }
+
+        if (setTracks) {
+            self.setTracks(options.videos);
+        }
+        console.log('setProps', options);
+    };
+
+    /* Populate self.videos */
+    self.setTracks = function(tracks) {
+        if (typeof tracks === 'string') {
+            tracks = JSON.parse(tracks);
+        }
+        if (typeof tracks === 'undefined') {
+            tracks = [];
+        }
+
+        for (i = 0; i < tracks.length; i+= 1) {
+            if (tracks[i]) {
+                var video = new Video({
+                    parent: this,
+                    videoId: tracks[i].videoId,
+                    mbid: tracks[i].mbid,
+                    title: tracks[i].title,
+                    type: tracks[i].type,
+                    duration: tracks[i].duration,
+                    onPlayCallback: self.setAsPlaying
+                });
+                self.videos.push(video);
+            }
+        }
+        console.log('setTracks', tracks);
+    };
+
+    self.setProps({
+        title: title,
+        /* The loop that adds videos to self.videos is moved to the end of the class to avoid reference errors */
+        videos: [],
+        remoteId: remoteId || null,
+        owner: owner || null,
+        isPrivate: isPrivate || false,
+        followers: followers || [],
+        synced: true,
+        syncing: false,
+        isSubscription: false,
+        menuItem: null,
+        $tracklist: null,
+        isLoaded: isLoaded || false
+    }, false);
+
 
     self.getTwitterShareUrl = function() {
         var url = self.getUrl(),
@@ -128,7 +179,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         }
         return self.$tracklist;
     };
-    
+
     self.setAsPlaying = function() {
         self.getMenuItem().setAsPlaying();
     };
@@ -154,17 +205,17 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             complete: function(jqXHR, textStatus) {
                 LoadingBar.hide();
             },
-			statusCode: {
-				200: function(data) {
-					if (callback) {
+            statusCode: {
+                200: function(data) {
+                    if (callback) {
                         self.isSubscription = false;
-						callback();
-					}
-				},
-				404: function(data) {
-					alert(TranslationSystem.translations['No such playlist found']);
-				}
-			}
+                        callback();
+                    }
+                },
+                404: function(data) {
+                    alert(TranslationSystem.translations['No such playlist found']);
+                }
+            }
         });
 
         if (!self.isSubscription) {
@@ -172,7 +223,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             self.owner = null;
         }
     };
-    
+
     self.subscribe = function(callback) {
         var params = {
         };
@@ -215,34 +266,40 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
         self.syncing = true;
 
-		$.ajax({
+        $.ajax({
             type: 'POST',
             url: '/api/playlists',
-			data: params,
+            data: params,
             complete: function(jqXHR, textStatus) {
                 self.syncing = false;
             },
-			statusCode: {
-				200: function(data, textStatus) {
-					if (textStatus === 'success') {
-						self.remoteId = data.remoteId;
-						self.owner = new User(data.owner);
-						self.synced = true;
+            statusCode: {
+                200: function(data, textStatus) {
+                    if (textStatus === 'success') {
+                        self.remoteId = data.remoteId;
+                        self.owner = new User(data.owner);
+                        self.synced = true;
+                        self.isLoaded = true;
                     } else {
-						alert('Failed to create new playlist ' + self.title);
-					}
-					if (callback) {
-						callback();
-					}
-				}
-			}
+                        alert('Failed to create new playlist ' + self.title);
+                    }
+                    if (callback) {
+                        callback();
+                    }
+                }
+            }
         });
     };
 
     self.updatePlaylistOnRemote = function(callback) {
-        if (self.isSubscription) {
+        // Do not update subscriptions and playlists that aren't fully loaded
+        if (self.isSubscription || self.isLoaded !== true) {
+            if (callback) {
+                callback();
+            }
             return;
         }
+
         var params = {
             'json': JSON.stringify(self.toJSON()),
             'device': SyncManager.getDeviceToken()
@@ -250,31 +307,31 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
         self.syncing = true;
 
-		$.ajax({
+        $.ajax({
             type: 'POST',
             url: '/api/playlists/' + self.remoteId,
-			data: params,
+            data: params,
             complete: function(jqXHR, textStatus) {
                 self.syncing = false;
             },
-			statusCode: {
-				200: function(data, textStatus) {
-					if (textStatus === 'success') {
-						self.synced = true;
-					} else {
-						alert('Failed to create new playlist ' + self.title);
-					}
-					if (callback) {
-						callback();
-					}
-				},
-				404: function(data) {
-					alert(TranslationSystem.translations['No such playlist found']);
-				},
-				409: function(data) {
+            statusCode: {
+                200: function(data, textStatus) {
+                    if (textStatus === 'success') {
+                        self.synced = true;
+                    } else {
+                        alert('Failed to create new playlist ' + self.title);
+                    }
+                    if (callback) {
+                        callback();
+                    }
+                },
+                404: function(data) {
+                    alert(TranslationSystem.translations['No such playlist found']);
+                },
+                409: function(data) {
                     SyncManager.reloadAndPerformLastAction();
-				}
-			}
+                }
+            }
         });
     };
 
@@ -292,6 +349,14 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
         if (self.isSubscription) {
             return;
         }
+
+        if (self.isLoaded !== true) {
+            self.load(function() {
+                self.addVideo(video);
+            });
+            return;
+        }
+
         if (self.syncing) {
             alert("Please wait until the playlist is synced");
             return;
@@ -320,7 +385,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     };
 
     self.moveVideo = function(sourceIndex, destIndex) {
-        if (self.isSubscription) {
+        if (self.isSubscription || self.isLoaded !== true) {
             return;
         }
         if (self.syncing) {
@@ -341,7 +406,7 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
     };
 
     self.deleteVideo = function(index) {
-        if (self.isSubscription) {
+        if (self.isSubscription || self.isLoaded !== true) {
             return;
         }
         if (self.syncing) {
@@ -359,31 +424,35 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
             videos: self.videos,
             remoteId: self.remoteId,
             owner: self.owner,
-            isPrivate: self.isPrivate
+            isPrivate: self.isPrivate,
+            isLoaded: self.isLoaded || false
         };
     };
 
-	self.removeDuplicates = function() {
-		var deleted = 0,
+    self.removeDuplicates = function() {
+        if (self.isLoaded !== true) {
+            self.load(self.removeDuplicates);
+            return;
+        }
+        var deleted = 0,
             i, j;
-		for (i = self.videos.length-1; i > 0; i -= 1) {
-			for (j = i-1; j >= 0; j -= 1) {
-				if (self.videos[i].videoId === self.videos[j].videoId) {
-					self.deleteVideo(j);
-					deleted += 1;
-					break;
-				}
-			}
-		}
-		playlistManager.save();
-		PlaylistView.loadPlaylistView(self);
-		return deleted;
-	};
+        for (i = self.videos.length-1; i > 0; i -= 1) {
+            for (j = i-1; j >= 0; j -= 1) {
+                if (self.videos[i].videoId === self.videos[j].videoId) {
+                    self.deleteVideo(j);
+                    deleted += 1;
+                    break;
+                }
+            }
+        }
+        playlistManager.save();
+        PlaylistView.loadPlaylistView(self);
+        return deleted;
+    };
 
     self.goTo = function() {
         history.pushState(null, null, self.owner.getUrl() + '/playlists/' + self.remoteId);
         Menu.deSelect();
-        loadPlaylist(self.remoteId);
     };
 
     self.getSmallView = function() {
@@ -404,23 +473,41 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers) {
 
         return $playlist;
     };
-    
-    if (typeof(videos) === 'string') {
-        videos = JSON.parse(videos);
-    }
 
-    for (i = 0; i < videos.length; i+= 1) {
-        if (videos[i]) {
-            var video = new Video({
-                parent: this,
-                videoId: videos[i].videoId,
-                mbid: videos[i].mbid,
-                title: videos[i].title,
-                type: videos[i].type,
-                duration: videos[i].duration,
-                onPlayCallback: self.setAsPlaying
-            });
-            self.videos.push(video);
+    self.load = function(callback) {
+        if (self.remoteId === null) {
+            self.isLoaded = true;
+            return;
         }
-    }
+        if (self.syncing) {
+            if (callback) {
+                callback();
+            }
+            return;
+        }
+        self.syncing = true;
+
+        $.ajax({
+            url: '/api/playlists/' + self.remoteId,
+            type: 'GET',
+            statusCode: {
+                200: function(data) {
+                    self.setProps(data, true);
+                    self.isLoaded = true;
+                    self.syncing = false;
+                    if (callback) {
+                        callback();
+                    }
+                },
+                403: function(data) {
+                    alert("Looks like this playlist is private");
+                },
+                404: function(data) {
+                    alert("No such playlist found");
+                }
+            }
+        });
+    };
+
+    self.setTracks(videos);
 }
