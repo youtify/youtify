@@ -23,13 +23,13 @@ class ActivitiesHandler(webapp2.RequestHandler):
 
         if count:
             count = int(count)
-        
+
         if youtify_user_model is None:
             self.error(404)
             return
-        
+
         ret = get_activities_structs(youtify_user_model, verbs, type, count)
-        
+
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 
@@ -38,13 +38,13 @@ class FollowersHandler(webapp2.RequestHandler):
     def get(self, id_or_nick):
         """Get followers for user as JSON"""
         youtify_user_model = get_youtify_user_model_by_id_or_nick(id_or_nick)
-        
+
         if youtify_user_model is None:
             self.error(404)
             return
-        
+
         ret = get_followers_for_youtify_user_model(youtify_user_model)
-        
+
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))
 

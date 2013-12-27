@@ -18,12 +18,12 @@ class ExternalUser(db.Model):
     last_updated = db.DateTimeProperty(auto_now_add=True)
     get_last_updated = db.BooleanProperty(default=True)
     last_checked = db.DateTimeProperty(auto_now_add=True)
-    
+
 class YoutifyUser(search.SearchableModel):
     created = db.DateTimeProperty(auto_now_add=True)
     last_login = db.DateTimeProperty()
     device = db.StringProperty()
-    
+
     google_user = db.UserProperty()
     google_user2 = db.UserProperty()
     flattr_access_token = db.StringProperty()
@@ -36,7 +36,7 @@ class YoutifyUser(search.SearchableModel):
     youtube_username = db.StringProperty()
     dropbox_access_token = db.StringProperty()
     dropbox_user_name = db.StringProperty()
-    
+
     nickname = db.StringProperty()
     nickname_lower = db.StringProperty()
     first_name = db.StringProperty()
@@ -149,7 +149,7 @@ class AlternativeTrack(db.Model):
     replacement_for_id = db.StringProperty(required=True)
     replacement_for_type = db.StringProperty(required=True)
     vote = db.IntegerProperty(required=True)
-    
+
 
 # HELPERS
 ##############################################################################
@@ -197,7 +197,7 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False):
         email = youtify_user_model.google_user2.email()
     else:
         email = youtify_user_model.google_user.email()
-    
+
     gravatar_email = email
     default_image = 'http://' + os.environ['HTTP_HOST'] + '/images/user.png'
     small_size = 64
@@ -222,7 +222,7 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False):
     }
     if include_private_data:
         user['email'] = email
-    
+
     return user
 
 def get_display_name_for_youtify_user_model(youtify_user_model):
@@ -259,6 +259,30 @@ def get_playlist_structs_for_youtify_user_model(youtify_user_model, include_priv
 
     return playlist_structs
 
+def get_playlist_overview_structs(youtify_user_model):
+    playlist_structs = []
+
+    for playlist_model in db.get(youtify_user_model.playlists):
+        playlist_structs.append({
+            'title': playlist_model.title,
+            'remoteId': playlist_model.key().id(),
+            'isPrivate': playlist_model.private,
+            'owner': get_youtify_user_struct(playlist_model.owner),
+            'isLoaded': False
+        })
+
+    for playlist_model in db.get(youtify_user_model.playlist_subscriptions):
+        if playlist_model is not None:
+            playlist_structs.append({
+                'title': playlist_model.title,
+                'remoteId': playlist_model.key().id(),
+                'isPrivate': playlist_model.private,
+                'owner': get_youtify_user_struct(playlist_model.owner),
+                'isLoaded': False
+            })
+
+    return playlist_structs
+
 def get_playlist_structs_by_id(playlist_id):
     playlist_model = Playlist.get_by_id(int(playlist_id))
     return get_playlist_struct_from_playlist_model(playlist_model)
@@ -273,11 +297,11 @@ def get_playlist_struct_from_playlist_model(playlist_model):
         'followers': [],
         'favorite': playlist_model.favorite
     }
-    
+
     for key in playlist_model.followers:
         youtify_user_model = db.get(key)
         playlist_struct['followers'].append(get_youtify_user_struct(youtify_user_model))
-    
+
     return playlist_struct
 
 def get_activities_structs(youtify_user_model, verbs=None, type=None, count=None):

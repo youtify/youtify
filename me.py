@@ -12,7 +12,7 @@ from model import get_activities_structs
 from model import get_display_name_for_youtify_user_model
 from model import get_external_user_subscriptions_struct_for_youtify_user_model
 from model import get_settings_struct_for_youtify_user_model
-from model import get_playlist_structs_for_youtify_user_model
+from model import get_playlist_overview_structs
 from model import generate_device_token
 from activities import create_follow_activity
 from mail import send_new_follower_email
@@ -85,7 +85,7 @@ class ProfileHandler(webapp2.RequestHandler):
         self.response.out.write(get_display_name_for_youtify_user_model(user))
 
 class SettingsHandler(webapp2.RequestHandler):
-    
+
     def get(self):
         user = get_current_youtify_user_model()
         settings = get_settings_struct_for_youtify_user_model(user)
@@ -98,9 +98,9 @@ class SettingsHandler(webapp2.RequestHandler):
         user.flattr_automatically = self.request.get('flattr_automatically') == 'true'
         user.lastfm_scrobble_automatically = self.request.get('lastfm_scrobble_automatically') == 'true'
         user.save()
-        
+
         logging.info(self.request)
-        
+
         settings = get_settings_struct_for_youtify_user_model(user)
         self.response.out.write(simplejson.dumps(settings))
 
@@ -172,7 +172,7 @@ class YouTubeUserNameHandler(webapp2.RequestHandler):
         username = self.request.get('username')
 
         user = get_current_youtify_user_model()
-        user.youtube_username = username 
+        user.youtube_username = username
         user.save()
 
         self.response.headers['Content-Type'] = 'text/plain'
@@ -190,7 +190,7 @@ class PlaylistsHandler(webapp2.RequestHandler):
         """Get the users playlists, including private ones"""
         user = get_current_youtify_user_model()
         if user:
-            json = get_playlist_structs_for_youtify_user_model(user, include_private_playlists=True)
+            json = get_playlist_overview_structs(user)
         else:
             json = []
         self.response.headers['Content-Type'] = 'application/json'
