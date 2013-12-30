@@ -1,12 +1,12 @@
 var Activities = {
     getSignupActivity: function() {
-        return $('<div class="activity">' + TranslationSystem.get('You joined Youtify') + '</div>'); 
+        return $('<div class="activity">' + TranslationSystem.get('You joined Youtify') + '</div>');
     },
 
     getIncomingSubscribeActivityView: function(actor, playlist) {
         var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span clas="name">' + Utils.escape(actor.displayName) + '</span></span>';
         var $playlist = '<span class="link playlist">' + Utils.escape(playlist.title) + '</span>';
-        var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to your playlist $playlist', {$playlist: $playlist, $user: $user}) + '</div>'); 
+        var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to your playlist $playlist', {$playlist: $playlist, $user: $user}) + '</div>');
         $div.find('.link.user').click(actor.goTo);
         $div.find('.link.playlist').click(playlist.goTo);
         return $div;
@@ -15,7 +15,7 @@ var Activities = {
     getOutgoingSubscribeActivityView: function(playlist) {
         var $user = '<span class="user small link"><img src="' + playlist.owner.smallImageUrl + '"/><span clas="name">' + Utils.escape(playlist.owner.displayName) + '</span></span>';
         var $playlist = '<span class="link playlist">' + Utils.escape(playlist.title) + '</span>';
-        var $div = $('<div class="activity">' + TranslationSystem.get('You subscribed to $playlist by $user', {$playlist: $playlist, $user: $user}) + '</div>'); 
+        var $div = $('<div class="activity">' + TranslationSystem.get('You subscribed to $playlist by $user', {$playlist: $playlist, $user: $user}) + '</div>');
         $div.find('.link.user').click(playlist.owner.goTo);
         $div.find('.link.playlist').click(playlist.goTo);
         return $div;
@@ -24,7 +24,7 @@ var Activities = {
     getIncomingExternalSubscribeActivity: function(actor, externalUser) {
         var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span clas="name">' + Utils.escape(actor.displayName) + '</span></span>';
         var $externalUser = '<span class="link external-user">' + Utils.escape(externalUser.username) + '</span>';
-        var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to $externalUser', {$externalUser: $externalUser, $user: $user}) + '</div>'); 
+        var $div = $('<div class="activity">' + TranslationSystem.get('$user subscribed to $externalUser', {$externalUser: $externalUser, $user: $user}) + '</div>');
         $div.find('.link.user').click(actor.goTo);
         $div.find('.link.external-user').click(externalUser.goTo);
         return $div;
@@ -32,7 +32,7 @@ var Activities = {
 
     getOutgoingExternalSubscribeActivity: function(externalUser) {
         var $externalUser = '<span class="link external-user">' + Utils.escape(externalUser.username) + '</span>';
-        var $div = $('<div class="activity">' + TranslationSystem.get('You subscribed to $externalUser', {$externalUser: $externalUser}) + '</div>'); 
+        var $div = $('<div class="activity">' + TranslationSystem.get('You subscribed to $externalUser', {$externalUser: $externalUser}) + '</div>');
         $div.find('.link.external-user').click(externalUser.goTo);
         return $div;
     },
@@ -129,7 +129,7 @@ var Activities = {
     },
 
     getNewNotifications: function(callback) {
-        $.get('/api/users/' + UserManager.currentUser.id + '/activities?type=incoming&verbs=follow,subscribe&count=50', callback);
+        $.get('/api/users/' + UserManager.currentUser.id + '/activities?type=incoming&verbs=follow,subscribe&count=10', callback);
     },
 
     loadNotificationsPopup: function() {
