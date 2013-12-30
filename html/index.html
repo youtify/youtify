@@ -23,7 +23,16 @@
         <link rel="apple-touch-icon" href="/images/logo/logo_512x512.png" sizes="512x512" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
 
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
+        <meta id="viewport" name="viewport">
+        <script>
+            (function(win, doc) {
+                if (win.screen.width === 320) {
+                    doc.getElementById("viewport").setAttribute("content", "width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" );
+                }
+            }(window, document));
+        </script>
+
+
 		<meta property="og:type" content="software"/>
 		<meta property="og:image" content="http://www.youtify.com/images/logo/logo_128x128.png"/>
 		<meta property="og:site_name" content="Youtify"/>
