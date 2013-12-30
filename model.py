@@ -222,18 +222,19 @@ def get_playlist_structs_for_youtify_user_model(youtify_user_model, include_priv
 
     return playlist_structs
 
-def get_playlist_overview_structs(youtify_user_model):
+def get_playlist_overview_structs(youtify_user_model, include_private_playlists=False):
     playlist_structs = []
     owner = get_youtify_user_struct(youtify_user_model)
 
     for playlist_model in db.get(youtify_user_model.playlists):
-        playlist_structs.append({
-            'title': playlist_model.title,
-            'remoteId': playlist_model.key().id(),
-            'isPrivate': playlist_model.private,
-            'owner': owner,
-            'isLoaded': False
-        })
+        if (not playlist_model.private) or include_private_playlists:
+            playlist_structs.append({
+                'title': playlist_model.title,
+                'remoteId': playlist_model.key().id(),
+                'isPrivate': playlist_model.private,
+                'owner': owner,
+                'isLoaded': False
+            })
 
     for playlist_model in db.get(youtify_user_model.playlist_subscriptions):
         if playlist_model is not None:

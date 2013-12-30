@@ -2,7 +2,7 @@ import webapp2
 from google.appengine.ext.webapp import util
 from model import get_youtify_user_model_by_id_or_nick
 from model import get_youtify_user_struct
-from model import get_playlist_structs_for_youtify_user_model
+from model import get_playlist_overview_structs
 from model import get_followers_for_youtify_user_model
 from model import get_followings_for_youtify_user_model
 from model import get_activities_structs
@@ -73,7 +73,7 @@ class PlaylistsHandler(webapp2.RequestHandler):
             self.error(404)
             return
 
-        ret = get_playlist_structs_for_youtify_user_model(youtify_user_model)
+        ret = get_playlist_overview_structs(youtify_user_model, False)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps(ret))

@@ -190,7 +190,7 @@ class PlaylistsHandler(webapp2.RequestHandler):
         """Get the users playlists, including private ones"""
         user = get_current_youtify_user_model()
         if user:
-            json = get_playlist_overview_structs(user)
+            json = get_playlist_overview_structs(user, True)
         else:
             json = []
         self.response.headers['Content-Type'] = 'application/json'

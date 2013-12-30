@@ -205,22 +205,7 @@ var UserManager = {
         UserManager.updateFollowersTabLabel(user.nrOfFollowers);
         UserManager.updateFollowingsTabLabel(user.nrOfFollowings);
 
-        if (UserManager.isLoggedIn() && UserManager.currentUser.id === user.id) {
-            $.each(playlistManager.playlists, function(index, playlist) {
-                if (playlist) {
-                    var callback = function() {
-                        UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, true));
-                    };
-                    if (playlist.isLoaded === false) {
-                        playlist.load(callback);
-                    } else {
-                        callback();
-                    }
-                }
-            });
-        } else {
-            UserManager.loadPlaylists();
-        }
+        UserManager.loadPlaylists();
 
         $('#right .profile .tabs').show();
     },
@@ -238,16 +223,24 @@ var UserManager = {
     },
 
     loadPlaylists: function() {
-        LoadingBar.show();
-        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/playlists', function(data) {
+        var populateView = function(data) {
             $.each(data, function(index, item) {
-                if (item && item.videos && item.videos.length) {
-                    var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
-                    UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist));
+                var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers, item.isLoaded);
+                console.log('data.isLoaded', item.isLoaded)
+                if (playlist) {
+                    var callback = function() {
+                        UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, true));
+                    };
+                    if (playlist.isLoaded === false) {
+                        playlist.load(callback);
+                    } else {
+                        callback();
+                    }
                 }
             });
-            LoadingBar.hide();
-        });
+        };
+
+        $.getJSON('/api/users/' + UserManager.viewingUser.id + '/playlists', populateView);
     },
 
     loadFollowers: function() {
