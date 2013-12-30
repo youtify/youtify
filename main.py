@@ -103,7 +103,6 @@ class ApiMainHandler(webapp2.RequestHandler):
 
         json = {
             'ON_PRODUCTION': config.ON_PRODUCTION,
-            'SEARCH_STATS_URL': config.SEARCH_STATS_URL,
             'languagesFromServer': get_languages(),
             'device': youtify_user_model is not None and youtify_user_model.device,
             'user': youtify_user_struct,
