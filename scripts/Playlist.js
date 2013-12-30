@@ -54,12 +54,9 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers, isLoaded
             self.owner = new User(options.owner);
         }
 
-        if (UserManager.isLoggedIn()) {
-            for (i = 0; i < self.followers.length; i+=1) {
-                if (Number(self.followers[i].id) === Number(UserManager.currentUser.id)) {
-                    self.isSubscription = true;
-                    break;
-                }
+        if (UserManager.isLoggedIn() && self.owner) {
+            if (Number(self.owner.id) !== Number(UserManager.currentUser.id)) {
+                self.isSubscription = true;
             }
         }
 
