@@ -106,22 +106,6 @@ class Playlist(search.SearchableModel):
     def SearchableProperties(cls):
       return [['title']]
 
-class SubmittedVideo(db.Model):
-    date = db.DateTimeProperty(auto_now_add=True)
-    youtify_user = db.ReferenceProperty(reference_class=YoutifyUser)
-    flattr_user_name = db.StringProperty()
-    title = db.StringProperty()
-    thing_id = db.StringProperty()
-    video_id = db.StringProperty()
-
-class FlattrClick(db.Model):
-    date = db.DateTimeProperty(auto_now_add=True)
-    youtify_user = db.ReferenceProperty(reference_class=YoutifyUser)
-    flattr_user_name = db.StringProperty()
-    thing_id = db.StringProperty()
-    thing_title = db.StringProperty()
-    migrated = db.BooleanProperty(default=False)
-
 class Stats(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
     nr_of_users = db.IntegerProperty()
