@@ -1,9 +1,10 @@
 <html> 
-   <head> 
-   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <head> 
+    <title>Youtify Public Stats</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script>
-        var pings = {{ pings }};
-        var npings = {{ npings }};
+        var pings = {{ pings|safe }};
+        var npings = {{ npings|safe }};
 
         function convertToDate(str) {
             return new Date(
@@ -14,36 +15,39 @@
                str.substring(14,16),
                str.substring(17,19));
        }
-    
-        function drawChart() {
-            google.load("visualization", "1", {packages:["corechart"]});
-            google.setOnLoadCallback(function () {
-                var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Time');
-                data.addColumn('number', 'Users');
-                for (var i = pings.length-1; i > 0; i--) {
-                    data.addRow([pings[i].date.substring(0,19), pings[i].pings]);
-                }
-                 new google.visualization.LineChart(
-                    document.getElementById('visualization')).draw(
-                        data, {curveType: "function", width: 800, height: 600, vAxis: {maxValue: 10}});
-            });
-        }
 
-        if (pings.length) {
-            drawChart();
-        } else {
-            document.write('no data');
-        }
-                   
-        setInterval(function() {
-            window.location.reload();
-        }, 1000*60*10);
+       function drawChart() {
+           var width = window.innerWidth - 100;
+           var height= 300;
+           google.load("visualization", "1", {packages:["corechart"]});
+           google.setOnLoadCallback(function () {
+               var data = new google.visualization.DataTable();
+               data.addColumn('string', 'Time');
+               data.addColumn('number', 'Users');
+               for (var i = pings.length-1; i > 0; i--) {
+                   data.addRow([pings[i].date.substring(0,19), pings[i].pings]);
+               }
+               new google.visualization.LineChart(
+                   document.getElementById('visualization')).draw(
+                       data, {curveType: "function", width: width, height: height, vAxis: {maxValue: 10}});
+           });
+       }
+
+       if (pings.length) {
+           drawChart();
+       } else {
+           document.write('no data');
+       }
+                  
+       setInterval(function() {
+           window.location.reload();
+       }, 1000*60*10);
    </script>
    </head> 
    <body> 
-       <div style="margin: auto; width: 800px;">
-           <div id="visualization"></div>
-       </div>
+        <h1>Youtify Public Stats</h1>
+        <div style="margin:auto">
+            <div id="visualization"></div>
+        </div>
    </body> 
 </html>

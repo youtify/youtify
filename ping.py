@@ -49,7 +49,7 @@ class PingGraphHandler(webapp2.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'html', 'usersonline.html')
         json = []
 
-        for m in PingStats.all().order('-date').fetch(6*24):
+        for m in PingStats.all().order('-date').fetch(6*24*7):
             json.append({
                 'date': str(m.date),
                 'pings': m.pings,
