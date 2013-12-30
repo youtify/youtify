@@ -127,6 +127,11 @@ handlers:
   static_dir: images
   expiration: "1d"
 
+- url: /favicon.ico
+  static_files: images/favicon.ico
+  upload: images/favicon.ico
+  expiration: "1d"
+
 - url: /youtify.webapp
   static_files: youtify.webapp
   mime_type: application/x-web-app-manifest+json

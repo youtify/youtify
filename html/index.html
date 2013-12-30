@@ -1,23 +1,28 @@
-﻿<!DOCTYPE html> 
- 
-<html> 
-	<head> 
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
         <title>Youtify - The Web Music Player</title>
 
-        <meta charset="utf-8"> 
+        <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="keywords" content="youtify, music, youtube, spotify, streaming" /> 
-        <meta name="description" content="Youtify - YouTube's music, all the time" /> 
+        <meta name="keywords" content="youtify, music, youtube, spotify, streaming" />
+        <meta name="description" content="Youtify - YouTube's music, all the time" />
 		<link rel="canonical" href="{{url}}" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<link rel="search" type="application/opensearchdescription+xml" href="http://youtify.com/opensearch.xml" title="Youtify">
-		
+		<link rel="search" type="application/opensearchdescription+xml" href="http://www.youtify.com/opensearch.xml" title="Youtify" />
+
+        <link rel="icon" type="image/png" href="/images/logo/logo_16x16.png" sizes="16x16" />
+        <link rel="icon" type="image/png" href="/images/logo/logo_32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/images/logo/logo_64x64.png" sizes="64x64" />
+        <link rel="icon" type="image/png" href="/images/logo/logo_128x128.png" sizes="128x128" />
+        <link rel="icon" type="image/png" href="/images/logo/logo_512x512.png" sizes="512x512" />
+
         <link rel="fluid-icon" href="http://www.youtify.com/images/logo/logo_128x128.png" title="Youtify" />
-        <link rel="icon" type="image/png" href="/images/logo/logo_512x512.png" />
         <link rel="apple-touch-icon" href="/images/logo/logo_128x128.png" sizes="128x128" />
         <link rel="apple-touch-icon" href="/images/logo/logo_512x512.png" sizes="512x512" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        
+
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
 		<meta property="og:type" content="software"/>
 		<meta property="og:image" content="http://www.youtify.com/images/logo/logo_128x128.png"/>
@@ -27,13 +32,13 @@
         {{og_title|safe}}
         {{og_description|safe}}
         {{og_tag|safe}}
-		
+
 		<meta name="google-site-verification" content="8FTwN14g2Fk0iuvckECzl44YtXAU9kmCipo0S4oBOf0" />
         <link href="https://plus.google.com/117221740012078743992/" rel="publisher" />
 		<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ceimdjnelbadcaempefhdpdhdokpnbho" />
-    
+
         <script src="/scripts/jquery-1.7.2.min.js"></script>
-        
+
         {% if DO_FEATURE_DETECTION %}
 		<script src="/scripts/FeatureDetection.js?v={{ CURRENT_VERSION_ID }}"></script>
         <script>
@@ -41,11 +46,11 @@
             FeatureDetection.checkBrowser();
         </script>
         {% endif %}
-        
+
         <link rel="icon" href="/images/logo/logo_16x16.png" type="image/png" />
         <link href='/styles/default.css?v={{ CURRENT_VERSION_ID }}' rel='stylesheet' type='text/css' media="only screen">
         <link href='/styles/mobile.css?v={{ CURRENT_VERSION_ID }}' rel="stylesheet" type="text/css" media="only screen and (max-width: 320px)">
-        
+
         {% if USE_SELF_HOSTED_FONT %}
         <style type="text/css">
         @font-face {
@@ -58,7 +63,7 @@
         {% else %}
         <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         {% endif %}
-        		
+
 		<script src="/scripts/jquery.shuffle.js"></script>
 		<script src="/scripts/soundmanager2-nodebug-jsmin.js"></script>
 
@@ -127,7 +132,7 @@
         <script src="/scripts/Mobile.js"></script>
 		<script src="/scripts/Main.js"></script>
         {% endif %}
-        
+
 		{% if INCLUDE_GOOGLE_ANALYTICS %}
         <script>
             var _gaq = _gaq || [];
@@ -141,9 +146,9 @@
             })();
         </script>
 		{% endif %}
-		
+
 		<script src="http://www.youtube.com/player_api"></script>
-	</head> 
+	</head>
 	<body>
         <div id="loading" class="translatable">Loading...</div>
 
@@ -220,7 +225,7 @@
                 <label id="qualityHighSpan" for="qualityHighRadio" class="translatable">High</label>
             </div>
         </div>
-        
+
         <div id="alternative-video-popup" style="display:none;" class="popup">
             <h2 class="translatable">The original track could not be played</h2>
             <h3 class="translatable">Is this a good alternative?</h3>
@@ -272,7 +277,7 @@
         <div id="about-popup" style="display:none" class="popup"></div>
 
         <div id="playlist-subscribers-popup" style="display:none" class="popup"></div>
-        
+
         <div id="top">
             <div class="left-area">
                 <div class="item go-left"></div>
@@ -281,12 +286,12 @@
                     <span class="title translatable">About</span>
                 </div>
 
-                <div class="item search"> 
+                <div class="item search">
                     <input type="search" class="translatable" placeholder="Search" />
                     <button class="button"/>
                 </div>
             </div>
-            
+
             <div class="right-area">
                 <div class="item right activities dropdown-button">
                     <span class="title translatable" title="Activities">=</span>
@@ -304,7 +309,7 @@
 
             <ul class="notifications"></ul>
         </div>
-        
+
         <div class="left-wrapper">
             <div class="filter"><input class="translatable" type="search" placeholder="Filter..." /><button>x</button></div>
             <div id="left">
@@ -326,11 +331,11 @@
                         <ul>
                         </ul>
                         <div class="new droppable button">
-                            <span class="translatable">New playlist...</span> 
-                            <input type="text" style="display:none" /> 
-                        </div> 
+                            <span class="translatable">New playlist...</span>
+                            <input type="text" style="display:none" />
+                        </div>
                     </li>
-                </ul> 
+                </ul>
                 <div class="players">
                     <div id="dropbox" class="dropbox"></div>
                     <div id="officialfm" class="officialfm"></div>
@@ -339,7 +344,7 @@
 				</div>
             </div>
         </div>
-        
+
         <div class="right-wrapper">
             <div class="filter"><input class="translatable" type="search" placeholder="Filter..." /><button>x</button></div>
             <div id="right">
@@ -357,7 +362,7 @@
                     <div class="youtify-users pane user-list"></div>
                     <div class="youtify-playlists pane playlist-list"></div>
                 </div>
-                
+
                 <div class="home">
                     <ul class="tabs">
                         <li class="artists translatable" rel="artists">Popular Artists</li>
@@ -385,7 +390,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="queue">
                     <div class="help-box">
                         <h2 class="translatable">The play queue is empty</h2>
@@ -400,12 +405,12 @@
                     </div>
                     <table class="tracklist"></table>
                 </div>
-                
+
                 <div class="recommendations">
                     <table class="tracklist"></table>
                     <div class="artists"></div>
                 </div>
-                
+
                 <div class="playlists droppable">
                     <div class="playlist-header"></div>
                     <div class="help-box">
@@ -413,7 +418,7 @@
                         <div class="translatable">You can add tracks by dragging from other playlists or from the search results.</div>
                     </div>
                 </div>
-                               
+
                 <div class="profile">
                     <div class="picture-container">
                         <div class="change">
@@ -457,9 +462,9 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="bottom">
-            <div class="controls"> 
+            <div class="controls">
                 <div class="border"><div class="prev"></div></div>
                 <div class="border middle"><div class="playpause"></div></div>
                 <div class="border"><div class="next"></div></div>
@@ -470,7 +475,7 @@
                 <div class="title"></div>
             </div>
 
-            <div class="timeline-wrapper"> 
+            <div class="timeline-wrapper">
                 <span class="position">0:00</span>
                 <div class="timeline">
                     <div class="buffer"></div>
@@ -478,15 +483,15 @@
                 </div>
                 <span class="length">0:00</span>
             </div>
-            
+
             <div class="volume-wrapper">
-                <div class="volume"> 
-                    <div class="slider"><div class="knob"></div></div> 
-                </div> 
+                <div class="volume">
+                    <div class="slider"><div class="knob"></div></div>
+                </div>
             </div>
-            
+
             <div class="fullscreen translatable" title="Toggle fullscreen"></div>
             <div class="shuffle"></div>
-        </div> 
-	</body> 
-</html> 
+        </div>
+	</body>
+</html>
