@@ -17,7 +17,7 @@ var Search = {
         Search.tabs = new Tabs(Search.$rightView, {
             'youtube-videos': Search.searchCurrentQuery,
             'soundcloud-tracks': Search.searchCurrentQuery,
-            'officialfm-tracks': Search.searchCurrentQuery,
+            'officialfm-tracks': Search.searchCurrentQuery
         });
 
         /* Search on key up */
