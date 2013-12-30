@@ -13,4 +13,4 @@ class Handler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
         ('/soundcloud_id_to_permalink', Handler),
-    ], debug=True)
+    ], debug=False)

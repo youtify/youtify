@@ -17,7 +17,7 @@ def get_or_create_pings():
         pings = 0
         memcache.add('pings', pings)
     return pings
-    
+
 class PingHandler(webapp2.RequestHandler):
     """ Increment pings """
     def post(self):
@@ -28,7 +28,7 @@ class PingHandler(webapp2.RequestHandler):
             self.response.out.write('logged_out')
         else:
             self.response.out.write('ok')
-    
+
     def get(self):
         get_or_create_pings()
         memcache.incr('pings');
@@ -64,4 +64,4 @@ app = webapp2.WSGIApplication([
         ('/cron/store_pings', PingCronHandler),
         ('/stats', PingGraphHandler),
         ('/ping', PingHandler),
-    ], debug=True)
+    ], debug=False)

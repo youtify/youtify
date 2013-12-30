@@ -79,7 +79,7 @@ class CallbackHandler(webapp2.RequestHandler):
     """Retrieve the access token"""
     def get(self):
         session = lastfm_request('auth.getSession', 'GET', { 'token': self.request.get('token') })
-        
+
         if 'session' in session:
             user = get_current_youtify_user_model()
 
@@ -139,4 +139,4 @@ app = webapp2.WSGIApplication([
         ('/lastfm/callback', CallbackHandler),
         ('/lastfm/scrobble', ScrobbleHandler),
         ('/lastfm/recommendations', RecommendationsHandler)
-    ], debug=True)
+    ], debug=False)

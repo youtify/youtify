@@ -13,4 +13,4 @@ class MinimizerHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
         ('/.*', MinimizerHandler),
-    ], debug=True)
+    ], debug=False)

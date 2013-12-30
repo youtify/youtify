@@ -31,7 +31,7 @@ class NotFoundHandler(webapp2.RequestHandler):
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
-    
+
         og_title = '<meta property="og:title" content="Youtify"/>'
         og_description = '<meta property="og:description" content="The Web Music Player"/>'
         og_tag = ''
@@ -48,7 +48,7 @@ class MainHandler(webapp2.RequestHandler):
             except:
                 pass
             og_tag = '<meta property="og:video" content="http://www.youtube.com/v/' + videoID + '?version=3&amp;autohide=1"/><meta property="og:video:type" content="application/x-shockwave-flash"/><meta property="og:video:width" content="396"/><meta property="og:video:height" content="297"/>'
-        
+
         # TODO add og_tag for SoundCloud & Official.fm tracks
 
         # Let's not be embedded to other youtify clones
@@ -106,7 +106,7 @@ class ApiMainHandler(webapp2.RequestHandler):
             'languagesFromServer': get_languages(),
             'device': youtify_user_model is not None and youtify_user_model.device,
             'user': youtify_user_struct,
-            'lastNotificationSeenTimestamp': youtify_user_model is not None and youtify_user_model.last_notification_seen_timestamp, 
+            'lastNotificationSeenTimestamp': youtify_user_model is not None and youtify_user_model.last_notification_seen_timestamp,
             'myFollowers': my_followers_struct,
             'myFollowings': my_followings_struct,
             'settingsFromServer': settings_struct,
@@ -123,4 +123,4 @@ app = webapp2.WSGIApplication([
         ('/api/main', ApiMainHandler),
         ('/.*\.(?:png|ico|jpg|gif|xml|css|swf|js|yaml|py|pyc|woff|eot|svg|ttf)$', NotFoundHandler),
         ('/.*', MainHandler),
-    ], debug=True)
+    ], debug=False)

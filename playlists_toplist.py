@@ -42,4 +42,4 @@ class ApiHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
         ('/cron/generate_playlists_toplist', CronJobHandler),
         ('/api/toplists/playlists', ApiHandler),
-    ], debug=True)
+    ], debug=False)

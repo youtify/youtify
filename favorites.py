@@ -9,14 +9,14 @@ from model import get_playlist_structs_by_id
 from model import Playlist
 
 class FavoriteHandler(webapp2.RequestHandler):
-    
+
     def post(self):
         """Add a track to the favorite list"""
         youtify_user_model = get_current_youtify_user_model()
         if youtify_user_model == None:
             self.error(403)
             return
-        
+
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
         json = self.request.get('json', None)
@@ -40,7 +40,7 @@ class FavoriteHandler(webapp2.RequestHandler):
                 playlist_model.remote_id = old_playlist['remoteId']
                 playlist_model.json = None
                 playlist_model.save()
-                
+
                 self.response.out.write(str(playlist_model.key().id()))
         else:
             self.error(403)
@@ -51,18 +51,18 @@ class FavoriteHandler(webapp2.RequestHandler):
         if youtify_user_model == None:
             self.error(403)
             return
-        
+
         playlist_id = self.request.path.split('/')[-1]
         playlist_model = Playlist.get_by_id(int(playlist_id))
 
         if playlist_model.owner.key() == youtify_user_model.key():
             youtify_user_model.playlists.remove(playlist_model.key())
             youtify_user_model.save()
-            
+
             playlist_model.delete()
         else:
             self.error(403)
 
 app = webapp2.WSGIApplication([
         ('/api/favorites/.*', FavoriteHandler)
-    ], debug=True)
+    ], debug=False)

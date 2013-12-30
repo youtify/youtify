@@ -50,7 +50,7 @@ class Handler(webapp2.RequestHandler):
             url = 'http://soundcloud.com/' + username
             response = urlfetch.fetch('https://api.soundcloud.com/resolve.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d&url=' + url);
             response = simplejson.loads(response.content)
-            external_user_model = ExternalUser(type=type, external_user_id=str(response['id']), username=username, avatar_url=response['avatar_url']) 
+            external_user_model = ExternalUser(type=type, external_user_id=str(response['id']), username=username, avatar_url=response['avatar_url'])
             external_user_model.save()
             user.external_user_subscriptions.append(external_user_model.key())
             user.save()
@@ -79,5 +79,5 @@ class Handler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
         ('/.*', Handler),
-    ], debug=True)
+    ], debug=False)
 

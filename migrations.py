@@ -66,4 +66,4 @@ class MigrationStepHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
         ('/admin/migrations/set_last_checked', MigrationStepHandler),
-    ], debug=True)
+    ], debug=False)

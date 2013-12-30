@@ -6,7 +6,7 @@ import json as simplejson
 from model import AlternativeTrack, get_alternative_struct
 
 class AlternativesHandler(webapp2.RequestHandler):
-    
+
     def get(self, track_type, track_id):
         """ get alternatives for a track """
         alternatives = AlternativeTrack.all().filter('replacement_for_id = ', track_id).filter('replacement_type = ', track_type)
@@ -33,14 +33,14 @@ class AlternativesHandler(webapp2.RequestHandler):
             self.response.out.write('Rating must be in range -1 to 1')
             self.error(400)
             return
-        
+
         alternative = AlternativeTrack.all() \
             .filter('track_id = ', track_id) \
             .filter('track_type = ', track_type) \
             .filter('replacement_for_id = ', replacement_for_id) \
             .filter('replacement_for_type = ', replacement_track_type) \
             .get()
-        
+
         if alternative is not None:
             alternative.vote += vote
             alternative.save()
@@ -50,8 +50,8 @@ class AlternativesHandler(webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
-    
-    
+
+
 app = webapp2.WSGIApplication([
         ('/api/alternatives/(.*)/(.*)', AlternativesHandler),
-    ], debug=True)
+    ], debug=False)

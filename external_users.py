@@ -20,9 +20,9 @@ class TopExternalUsers(webapp2.RequestHandler):
         """Gets a list of external users"""
         page = int(self.request.get('page', '0'))
         page_size = int(max)
-        
+
         json = memcache.get('TopExternalUsers-' + str(page_size) + '*' + str(page))
-        
+
         if json is None:
             users = ExternalUser.all().order('-nr_of_subscribers').fetch(page_size, page_size * page)
             json = []
@@ -30,12 +30,12 @@ class TopExternalUsers(webapp2.RequestHandler):
                 json.append(get_external_user_subscription_struct(user))
             json = simplejson.dumps(json)
             memcache.set('TopExternalUsers-' + str(page_size) + '*' + str(page), json, 60*5)
-        
+
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json)
 
 class SubscribersHandler(webapp2.RequestHandler):
-    
+
     def get(self, type, external_user_id):
         """Gets the subscribers of an external user"""
         external_user_model = ExternalUser.all().filter('type =', type).filter('external_user_id =', external_user_id).get()
@@ -55,10 +55,10 @@ class SubscribersHandler(webapp2.RequestHandler):
         if youtify_user_model == None:
             self.error(403)
             return
-        
+
         external_user_model = ExternalUser.all().filter('type =', type).filter('external_user_id =', external_user_id).get()
         if external_user_model is None:
-            external_user_model = ExternalUser(type=type, external_user_id=external_user_id) 
+            external_user_model = ExternalUser(type=type, external_user_id=external_user_id)
 
             # @XXX should not trust client with this information, fetch from server instead
             external_user_model.username = self.request.get('username')
@@ -66,51 +66,51 @@ class SubscribersHandler(webapp2.RequestHandler):
             external_user_model.get_last_updated = True
 
             external_user_model.save()
-        
+
         if external_user_model.key() in youtify_user_model.external_user_subscriptions:
             self.error(400)
             self.response.out.write('You already subscribe to this external user')
             return
-            
+
         youtify_user_model.external_user_subscriptions.append(external_user_model.key())
         youtify_user_model.save()
-        
+
         external_user_model.subscribers.append(youtify_user_model.key())
         external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
         external_user_model.get_last_updated = True
         external_user_model.save()
 
         create_external_subscribe_activity(youtify_user_model, external_user_model)
-        
+
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
-    
+
     def delete(self, type, external_user_id):
         """Unsubscribes from an external user"""
         youtify_user_model = get_current_youtify_user_model()
         if youtify_user_model == None:
             self.error(403)
             return
-        
+
         external_user_model = ExternalUser.all().filter('type =', type).filter('external_user_id =', external_user_id).get()
-        
+
         youtify_user_model.external_user_subscriptions.remove(external_user_model.key())
         youtify_user_model.save()
-        
+
         external_user_model.subscribers.remove(youtify_user_model.key())
         external_user_model.nr_of_subscribers = len(external_user_model.subscribers)
-        
+
         if external_user_model.nr_of_subscribers > 0:
             external_user_model.get_last_updated = True
         else:
             external_user_model.get_last_updated = False
         external_user_model.save()
-        
+
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write('ok')
 
 class MarkAsViewedHandler(webapp2.RequestHandler):
-    
+
     def post(self, type, external_user_id):
         """Marks the external user as viewed"""
         youtify_user_model = get_current_youtify_user_model()
@@ -119,7 +119,7 @@ class MarkAsViewedHandler(webapp2.RequestHandler):
             logging.info('user not logged in')
             self.error(403)
             return
-        
+
         external_user_model = ExternalUser.all().filter('type =', type).filter('external_user_id =', external_user_id).get()
         if external_user_model == None:
             logging.info('external user ' + external_user_id + ' not found')
@@ -127,13 +127,13 @@ class MarkAsViewedHandler(webapp2.RequestHandler):
             self.error(404)
             return
         external_user_timestamp = ExternalUserTimestamp.all().filter('external_user =', external_user_model).filter('user =', youtify_user_model).get()
-        
+
         if external_user_timestamp == None:
             external_user_timestamp = ExternalUserTimestamp(external_user = external_user_model.key(), user = youtify_user_model.key())
-        
+
         external_user_timestamp.last_viewed = datetime.now()
         external_user_timestamp.save()
-        
+
         self.response.out.write('ok')
 
 class ExternalUserCronHandler(webapp2.RequestHandler):
@@ -144,7 +144,7 @@ class ExternalUserCronHandler(webapp2.RequestHandler):
         for external_user in external_users:
             external_user.last_checked = datetime.now()
             external_user.save()
-            
+
             if external_user.type == 'soundcloud':
                 try:
                     last_date = datetime.fromtimestamp(0)
@@ -163,7 +163,7 @@ class ExternalUserCronHandler(webapp2.RequestHandler):
                             external_user.save()
                 except:
                     pass
-            
+
             if external_user.type == 'youtube':
                 try:
                     url = 'https://gdata.youtube.com/feeds/api/users/' + external_user.external_user_id + '/uploads?alt=json&v=2'
@@ -178,10 +178,10 @@ class ExternalUserCronHandler(webapp2.RequestHandler):
                             external_user.save()
                 except:
                     pass
-        
+
 app = webapp2.WSGIApplication([
         ('/api/external_users/(.*)/(.*)/subscribers', SubscribersHandler),
         ('/api/external_users/top/(.*)', TopExternalUsers),
         ('/api/external_users/(.*)/(.*)/markasviewed', MarkAsViewedHandler),
         ('/cron/update_external_users', ExternalUserCronHandler),
-    ], debug=True)
+    ], debug=False)

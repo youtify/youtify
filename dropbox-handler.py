@@ -15,13 +15,13 @@ except ImportError:
 import dropbox
 
 class DropboxConnectHandler(webapp2.RequestHandler):
-    
+
     def get(self):
         """Callback for connecting to a dropbox account"""
         sess = dropbox.session.DropboxSession(config.DROPBOX_APP_KEY, config.DROPBOX_APP_SECRET, config.DROPBOX_ACCESS_TYPE)
         request_token = sess.obtain_request_token()
         url = sess.build_authorize_url(request_token, config.DROPBOX_CALLBACK_URL)
-        
+
         user = get_current_youtify_user_model()
         if user:
             user.dropbox_access_token = request_token.to_string()
@@ -29,7 +29,7 @@ class DropboxConnectHandler(webapp2.RequestHandler):
             self.redirect(url)
         else:
             self.error(403)
-            self.response.out.write('User not logged in')    
+            self.response.out.write('User not logged in')
 
 class DropboxDisconnectHandler(webapp2.RequestHandler):
 
@@ -48,13 +48,13 @@ class DropboxDisconnectHandler(webapp2.RequestHandler):
         self.redirect('/')
 
 class DropboxCallbackHandler(webapp2.RequestHandler):
-    
+
     def get(self):
         # Maybe the user pressed cancel
         if self.request.path.lower().find('not_approved=true') > 0:
             self.redirect('/')
             return
-        
+
         session = dropbox.session.DropboxSession(config.DROPBOX_APP_KEY, config.DROPBOX_APP_SECRET, config.DROPBOX_ACCESS_TYPE)
         user = get_current_youtify_user_model()
         if user:
@@ -76,7 +76,7 @@ class DropboxCallbackHandler(webapp2.RequestHandler):
             self.response.out.write('User not logged in')
 
 class DropboxListingHandler(webapp2.RequestHandler):
-    
+
     def get(self, path):
         """List content in path"""
         filetypes = ['.mp3', '.mp4', '.ogg', '.wav']
@@ -89,11 +89,11 @@ class DropboxListingHandler(webapp2.RequestHandler):
         session = dropbox.session.DropboxSession(config.DROPBOX_APP_KEY, config.DROPBOX_APP_SECRET, config.DROPBOX_ACCESS_TYPE)
         session.token = access_token
         client = dropbox.client.DropboxClient(session)
-        
+
         path = '/' + path
         dirs = []
         mediafiles = []
-        
+
         try:
             metadata = client.metadata(path)
             if 'contents' in metadata:
@@ -114,7 +114,7 @@ class DropboxListingHandler(webapp2.RequestHandler):
         self.response.out.write(simplejson.dumps({'dirs': dirs, 'media': mediafiles}))
 
 class DropboxStreamHandler(webapp2.RequestHandler):
-    
+
     def get(self):
         """Get the dropbox stream path, which is valid for 4 hours"""
         path = self.request.path
@@ -144,4 +144,4 @@ app = webapp2.WSGIApplication([
         ('/api/dropbox/callback', DropboxCallbackHandler),
         ('/api/dropbox/list/(.*)', DropboxListingHandler),
         ('/api/dropbox/stream/.*', DropboxStreamHandler),
-    ], debug=True)
+    ], debug=False)

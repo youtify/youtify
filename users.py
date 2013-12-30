@@ -104,4 +104,4 @@ app = webapp2.WSGIApplication([
         ('/api/users/(.*)/followings', FollowingsHandler),
         ('/api/users/(.*)/playlists', PlaylistsHandler),
         ('/api/users/(.*)', UserHandler),
-    ], debug=True)
+    ], debug=False)

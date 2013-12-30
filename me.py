@@ -252,4 +252,4 @@ app = webapp2.WSGIApplication([
         ('/me/request_new_device_token', DeviceTokenHandler),
         ('/me/settings', SettingsHandler),
         ('/me/followings/(.*)', FollowingsHandler),
-    ], debug=True)
+    ], debug=False)

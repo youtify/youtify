@@ -155,4 +155,4 @@ app = webapp2.WSGIApplication([
         ('/flattrback', BackHandler),
         ('/flattrclick', ClickHandler),
         ('/flattrautosubmit', AutoSubmitHandler),
-    ], debug=True)
+    ], debug=False)

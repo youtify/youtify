@@ -31,16 +31,16 @@ def auto_detect_language(request):
 
 def _get_translations_from_cache_or_file():
     global _cache
-    
+
     if _cache:
         return _cache
-        
+
     f = open('translations.json', 'r')
-    
+
     _cache = json.loads(f.read())
-    
+
     f.close()
-    
+
     return _cache
 
 def get_translations_for_lang(lang_code):
@@ -68,4 +68,4 @@ class Handler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
         ('/happytranslate/(.*)', Handler),
-    ], debug=True)
+    ], debug=False)

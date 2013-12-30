@@ -24,4 +24,4 @@ class RockyDecisionHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
         ('/yourbrowsersucks', SuckyBrowserHandler),
         ('/yourdecisionrocks', RockyDecisionHandler),
-    ], debug=True)
+    ], debug=False)

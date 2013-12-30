@@ -104,7 +104,7 @@ class UnsubscribeHandler(webapp2.RequestHandler):
         if user is None:
             self.response.out.write('No such user found')
             return
-        
+
         if md5(EMAIL_UNSUBSCRIBE_SALT + str(user.key().id())).hexdigest() == self.request.get('token'):
             user.send_new_follower_email = False
             user.send_new_subscriber_email = False
@@ -115,4 +115,4 @@ class UnsubscribeHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
         ('/unsubscribe', UnsubscribeHandler),
-    ], debug=True)
+    ], debug=False)
