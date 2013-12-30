@@ -67,7 +67,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers, isLoaded
         if (setTracks) {
             self.setTracks(options.videos);
         }
-        console.log('setProps', options);
     };
 
     /* Populate self.videos */
@@ -93,7 +92,6 @@ function Playlist(title, videos, remoteId, owner, isPrivate, followers, isLoaded
                 self.videos.push(video);
             }
         }
-        console.log('setTracks', tracks);
     };
 
     self.setProps({

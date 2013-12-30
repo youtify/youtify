@@ -21,7 +21,6 @@ function PlaylistsManager() {
 
         if (UserManager.isLoggedIn()) {
             $.getJSON('/me/playlists', function(data) {
-                console.log('me/playlists', data);
                 self.mergePlaylists(data);
                 self.updateMenu();
                 if (callback) {

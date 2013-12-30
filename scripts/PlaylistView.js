@@ -170,7 +170,6 @@ var PlaylistView = {
         if ($tracklist.find('.video').length !== playlist.videos.length) {
             $tracklist.html('');
             $.each(playlist.videos, function (i, item) {
-                console.log(item);
                 if (item) {
                     $video = item.createListView();
                     $video.addClass('droppable');
