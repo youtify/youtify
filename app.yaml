@@ -76,14 +76,6 @@ handlers:
   script: playlists_toplist.app
   login: admin
 
-- url: /cron/gather_stats
-  script: stats.app
-  login: admin
-
-- url: /cron/gather_flattr_stats
-  script: stats.app
-  login: admin
-
 - url: /cron/update_external_users
   script: external_users.app
   login: admin
