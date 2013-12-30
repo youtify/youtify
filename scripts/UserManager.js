@@ -226,7 +226,6 @@ var UserManager = {
         var populateView = function(data) {
             $.each(data, function(index, item) {
                 var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers, item.isLoaded);
-                console.log('data.isLoaded', item.isLoaded)
                 if (playlist) {
                     var callback = function() {
                         UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist, true));
