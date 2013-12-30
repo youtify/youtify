@@ -6,7 +6,7 @@ cron:
 - description: generate playlists toplist
   url: /cron/generate_playlists_toplist
   schedule: every 5 minutes
-  
+
 - description: get last_updated for external users
   url: /cron/update_external_users
   schedule: every 5 minutes
