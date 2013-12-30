@@ -14,7 +14,7 @@ var UserManager = {
     $editButton: null,
     $img: null,
     $changePictureBox: null,
-    
+
     init: function(userJSON) {
         if (userJSON) {
             UserManager.currentUser = new User(userJSON);
@@ -55,7 +55,7 @@ var UserManager = {
     isLoggedIn: function() {
         return UserManager.currentUser !== null;
     },
-    
+
     logOutCurrentUser: function() {
         UserManager.currentUser = null;
         $('#top .profile').hide();
@@ -63,7 +63,7 @@ var UserManager = {
             .show()
             .arrowPopup('#logged-out-notification', 'up');
     },
-    
+
     show: function() {
         Menu.deSelect();
         UserManager.tabs.select('profile-playlists');
@@ -235,8 +235,8 @@ var UserManager = {
         LoadingBar.show();
         $.getJSON('/api/users/' + UserManager.viewingUser.id + '/playlists', function(data) {
             $.each(data, function(index, item) {
-                var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
-                if (playlist.videos.length) {
+                if (item && item.videos && item.videos.length) {
+                    var playlist = new Playlist(item.title, item.videos, item.remoteId, item.owner, item.isPrivate, item.followers);
                     UserManager.$playlists.append(PlaylistView.createSmallPlaylistView(playlist));
                 }
             });
