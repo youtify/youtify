@@ -20,25 +20,8 @@ handlers:
   script: migrations.app
   login: admin
 
-- url: /admin/minimizer
-  script: minimizer.app
-  login: admin
-
 - url: /admin/fakesetup
   script: fakesetup.app
-  login: admin
-
-- url: /admin/filter
-  static_files: html/filter.html
-  upload: html/filter.html
-  login: admin
-
-- url: /admin
-  script: admin.app
-  login: admin
-
-- url: /admin/.*
-  script: admin.app
   login: admin
 
 - url: /stats
