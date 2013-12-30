@@ -33,10 +33,6 @@ handlers:
   upload: html/filter.html
   login: admin
 
-- url: /admin/pinggraph
-  script: ping.app
-  login: admin
-
 - url: /admin
   script: admin.app
   login: admin
@@ -46,7 +42,7 @@ handlers:
   login: admin
 
 - url: /stats
-  script: stats.app
+  script: ping.app
 
 - url: /me
   script: me.app

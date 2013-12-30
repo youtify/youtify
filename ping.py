@@ -62,6 +62,6 @@ class PingGraphHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
         ('/cron/store_pings', PingCronHandler),
-        ('/admin/pinggraph', PingGraphHandler),
+        ('/stats', PingGraphHandler),
         ('/ping', PingHandler),
     ], debug=True)
