@@ -151,17 +151,17 @@ var PlaylistView = {
             player.currentVideo.scrollTo();
         }
 
-        console.log('playlist.isLoaded', playlist.isLoaded);
+        $('#right > div').hide();
+        $('#right > .playlists .tracklist').hide();
+        $('#right > .playlists').show();
+
         if (playlist.isLoaded === false) {
+            LoadingBar.show();
             playlist.load(function() {
                 PlaylistView.loadPlaylistView(playlist);
             });
             return;
         }
-
-        $('#right > div').hide();
-        $('#right > .playlists .tracklist').hide();
-        $('#right > .playlists').show();
 
         var $tracklist =  playlist.getTrackList();
         $tracklist.show();
@@ -194,6 +194,7 @@ var PlaylistView = {
         } else {
             $('#right .playlists .help-box').hide();
         }
+        LoadingBar.hide();
     },
 
     syncPlaylistButtonClicked: function (event) {
