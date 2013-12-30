@@ -86,9 +86,6 @@ handlers:
 - url: /api/playlists.*
   script: playlists.app
 
-- url: /api/search.*
-  script: search.app
-
 - url: /api/favorites.*
   script: favorites.app
 

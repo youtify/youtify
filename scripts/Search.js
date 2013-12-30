@@ -18,8 +18,6 @@ var Search = {
             'youtube-videos': Search.searchCurrentQuery,
             'soundcloud-tracks': Search.searchCurrentQuery,
             'officialfm-tracks': Search.searchCurrentQuery,
-            'youtify-playlists': Search.searchCurrentQuery,
-            'youtify-users': Search.searchCurrentQuery
         });
 
         /* Search on key up */
@@ -206,58 +204,6 @@ var Search = {
                         Search.tabs.$selectedPane.removeClass('has-more');
 
                     }
-
-                    LoadingBar.hide();
-                });
-                break;
-            case 'youtify-users':
-                url = '/api/search/users';
-                params = {
-                    'q': q,
-                    'per_page': 30,
-                    'page': Math.ceil(start / 30)
-                };
-
-                LoadingBar.show();
-                $.get(url, params, function(data) {
-                    var results = data;
-
-                    $.each(results, function(i, user) {
-                        new User(user).getSmallView().appendTo(Search.tabs.$selectedPane);
-                    });
-
-                    Search.tabs.$selectedPane.data('results-count', c + results.length);
-
-                    LoadingBar.hide();
-                });
-                break;
-            case 'youtify-playlists':
-                url = '/api/search/playlists';
-                params = {
-                    'q': q,
-                    'per_page': 30,
-                    'page': Math.ceil(start / 30)
-                };
-
-                LoadingBar.show();
-                $.get(url, params, function(data) {
-                    var results = data;
-
-                    $.each(results, function(i, playlist) {
-                        var videos = JSON.parse(playlist.videos);
-                        if (videos.length) {
-                            new Playlist(
-                                playlist.title, 
-                                videos, 
-                                playlist.remoteId, 
-                                playlist.owner, 
-                                playlist.isPrivate
-                            ).getSearchView()
-                            .appendTo(Search.tabs.$selectedPane);
-                        }
-                    });
-
-                    Search.tabs.$selectedPane.data('results-count', c + results.length);
 
                     LoadingBar.hide();
                 });

@@ -4,7 +4,6 @@ import random
 import urllib
 import hashlib
 from google.appengine.ext import db
-from google.appengine.ext import search
 from google.appengine.api import users
 from time import mktime
 
@@ -19,7 +18,7 @@ class ExternalUser(db.Model):
     get_last_updated = db.BooleanProperty(default=True)
     last_checked = db.DateTimeProperty(auto_now_add=True)
 
-class YoutifyUser(search.SearchableModel):
+class YoutifyUser(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     last_login = db.DateTimeProperty()
     device = db.StringProperty()
@@ -60,10 +59,6 @@ class YoutifyUser(search.SearchableModel):
     city = db.StringProperty()
     latlon = db.StringProperty()
 
-    @classmethod
-    def SearchableProperties(cls):
-      return [['nickname', 'flattr_user_name', 'first_name', 'last_name', 'tagline']]
-
 class FollowRelation(db.Model):
     """ user1 follows user2 """
     user1 = db.IntegerProperty()
@@ -92,7 +87,7 @@ class Activity(db.Model):
     type = db.StringProperty()
     target = db.TextProperty()
 
-class Playlist(search.SearchableModel):
+class Playlist(db.Model):
     owner = db.ReferenceProperty(reference_class=YoutifyUser)
     json = db.TextProperty()
     private = db.BooleanProperty(default=False)
@@ -101,10 +96,6 @@ class Playlist(search.SearchableModel):
     followers = db.ListProperty(db.Key)
     nr_of_followers = db.IntegerProperty(default=0)
     favorite = db.BooleanProperty(default=False)
-
-    @classmethod
-    def SearchableProperties(cls):
-      return [['title']]
 
 class PingStats(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
