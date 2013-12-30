@@ -152,6 +152,7 @@ var PlaylistView = {
         }
 
         $('#right > div').hide();
+        $('#right > .playlists .playlist-header').hide();
         $('#right > .playlists .tracklist').hide();
         $('#right > .playlists').show();
 
@@ -167,6 +168,8 @@ var PlaylistView = {
         $tracklist.show();
 
         PlaylistView.updatePlaylistBar(playlist);
+        $('#right > .playlists .playlist-header').show();
+
         if ($tracklist.find('.video').length !== playlist.videos.length) {
             $tracklist.html('');
             $.each(playlist.videos, function (i, item) {
