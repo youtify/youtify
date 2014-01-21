@@ -5,13 +5,16 @@ function PlayerManager() {
     self.players = [];
     self.currentVideo = null;
     self.currentVideoLength = 0;
-    self.volume = 100;
+    self.volume = 0;
     self.currentPlayer = null;
     self.inFullScreen = false;
     self.isPlaying = false;
     
     /* Init the player */
     self.init = function() {
+        /* Set the default volume */
+        self.loadDefaultVolume();
+
         /* Wait for APIs */
         if (!youTubeApiReady) {
             setTimeout(function() {
@@ -280,6 +283,7 @@ function PlayerManager() {
             return;
         }
         self.volume = volume;
+        self.rememberVolume(volume);
         
         for (i = 0; i < self.players.length; i+=1) {
             if (self.players[i].initialized) {
@@ -407,5 +411,28 @@ function PlayerManager() {
     /* Get the current playing video (if any) */
     self.getCurrentVideo = function() {
         return self.currentVideo;
+    };
+
+    /* Sets the internal value and updates the UI */
+    self.loadDefaultVolume = function() {
+        self.volume = self.getDefaultVolume();
+        Volume.updateUI(self.volume);
+    }
+
+    /* Get last used volume or 50 (not very loud default) */
+    self.getDefaultVolume = function() {
+        value = self.getRememberedVolume()
+        if(value != 0 && !value) value = 50; // trick to preserve zero volume
+        return value;
+    }
+
+    /* Save volume to localStorage to use it later */
+    self.rememberVolume = function(volume) {
+        localStorage.setItem('lastSetVolume', volume);
+    };
+
+    /* Get saved volume value from localStorage */
+    self.getRememberedVolume = function() {
+        return localStorage.getItem('lastSetVolume');
     };
 }
