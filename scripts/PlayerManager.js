@@ -417,22 +417,24 @@ function PlayerManager() {
     self.loadDefaultVolume = function() {
         self.volume = self.getDefaultVolume();
         Volume.updateUI(self.volume);
-    }
+    };
 
     /* Get last used volume or 50 (not very loud default) */
     self.getDefaultVolume = function() {
-        value = self.getRememberedVolume()
-        if(value != 0 && !value) value = 50; // trick to preserve zero volume
+        var value = self.getRememberedVolume();
+        if (value !== 0 && !value) {
+            value = 50; // trick to preserve zero volume
+        }
         return value;
-    }
+    };
 
     /* Save volume to localStorage to use it later */
     self.rememberVolume = function(volume) {
-        localStorage.setItem('lastSetVolume', volume);
+        localStorage.setItem('volume', volume);
     };
 
     /* Get saved volume value from localStorage */
     self.getRememberedVolume = function() {
-        return localStorage.getItem('lastSetVolume');
+        return localStorage.getItem('volume');
     };
 }
