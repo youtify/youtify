@@ -3,7 +3,6 @@ function User(args) {
     self.id = args.id;
     self.nickname = args.nickname;
     self.displayName = args.displayName;
-    self.flattrUserName = args.flattr_user_name;
     self.lastfmUserName = args.lastfm_user_name;
     self.dropboxUserName = args.dropbox_user_name;
     self.email = args.email;
@@ -15,7 +14,6 @@ function User(args) {
     self.nrOfFollowers = args.nr_of_followers;
     self.nrOfFollowings = args.nr_of_followings;
     self.nrOfPlaylists = args.nr_of_playlists;
-    self.nrOfFlattrs = args.nr_of_flattrs;
     self.tagline = args.tagline;
 
     self.saveProfile = function(params) {

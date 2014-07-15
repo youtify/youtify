@@ -110,10 +110,6 @@ handlers:
   upload: robots.txt
   expiration: "1d"
 
-- url: /flattr.*
-  script: flattr.app
-  login: required
-
 - url: /lastfm/*.*
   script: lastfm.app
   login: required

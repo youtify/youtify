@@ -84,8 +84,6 @@ $(document).ready(function() {
         InfoPopup.init();
         InfoFetcher.init();
         Recommendations.init();
-        FlattrFinder.init();
-        AutoFlattrer.init();
         Lastfm.init();
         EchoNest.init();
         BottomPanel.init();

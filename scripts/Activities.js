@@ -51,23 +51,6 @@ var Activities = {
         return $div;
     },
 
-    getOutgoingFlattrActivity: function(thing) {
-        var thingUrl = 'https://flattr.com/t/' + thing.thing_id;
-        var thingTitle = thing.thing_title || thingUrl;
-        var $thing = '<a class="thing link" href="' + thingUrl + '" target="_blank">' + thingTitle + '</a>';
-        return $('<div class="activity">' + TranslationSystem.get('You flattred $thing', {$thing: $thing}) + '</div>');
-    },
-
-    getIncomingFlattrActivity: function(actor, thing) {
-        var thingUrl = 'https://flattr.com/t/' + thing.thing_id;
-        var thingTitle = thing.thing_title || thingUrl;
-        var $thing = '<a class="thing link" href="' + thingUrl + '" target="_blank">' + thingTitle + '</a>';
-        var $user = '<span class="user small link"><img src="' + actor.smallImageUrl + '"/><span class="name">' + Utils.escape(actor.displayName) + '</span></span>';
-        var $div = $('<div class="activity">' + TranslationSystem.get('$user flattred $thing', {$user: $user, $thing: $thing}) + '</div>');
-        $div.find('.link.user').click(actor.goTo);
-        return $div;
-    },
-
     getActivityElem: function(activity) {
         var $div = $('<div class="activity"></div>'),
             actor = null,
@@ -110,16 +93,6 @@ var Activities = {
 
             case 'signup':
                 $div = Activities.getSignupActivity();
-            break;
-
-            case 'flattr':
-                actor = new User(JSON.parse(activity.actor));
-                thing = JSON.parse(activity.target);
-                if (actor.id === UserManager.currentUser.id) {
-                    $div = Activities.getOutgoingFlattrActivity(thing);
-                } else {
-                    $div = Activities.getIncomingFlattrActivity(actor, thing);
-                }
             break;
         }
 

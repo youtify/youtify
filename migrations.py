@@ -29,13 +29,10 @@ COMPLETE = """
 </html>
 """
 
-flattr_thing_cache = {}
-
 
 class MigrationStepHandler(webapp2.RequestHandler):
 
     def get(self):
-        global flattr_thing_cache
         page = int(self.request.get('page', '0'))
         page_size = 30
         count = 0

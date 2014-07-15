@@ -3,8 +3,6 @@ function Video(args) {
 
     this.videoId = args.videoId;
     this.mbid = args.mbid || null;
-    this.flattrThingId = args.flattrThingId || null;
-    this.flattrs = args.flattrs || null;
     this.title = $.trim(args.title) || '';
     this.artist = args.artist || null;
     this.duration = args.duration || null;

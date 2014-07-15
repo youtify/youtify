@@ -33,16 +33,6 @@ var SettingsPopup = {
         }
 
         if (UserManager.isLoggedIn()) {
-            // FLATTR
-            if (UserManager.currentUser.flattrUserName) {
-                $('<a class="title" target="_blank"></a>').attr('href', 'https://flattr.com/profile/' + UserManager.currentUser.flattrUserName).text(UserManager.currentUser.flattrUserName).appendTo('#settings .connections .flattr .account');
-                $('<a class="action disconnect translatable" href="/flattrdisconnect"></a>').text(TranslationSystem.get('Disconnect')).appendTo('#settings .connections .flattr .account');
-            } else {
-                $('<span class="title">Flattr</span>').appendTo('#settings .connections .flattr .account');
-                $('<a class="action connect translatable" href="/flattrconnect"></a>').text(TranslationSystem.get('Connect')).appendTo('#settings .connections .flattr .account');
-                $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('disabled', 'disabled');
-            }
-
             // LASTFM
             if (UserManager.currentUser.lastfmUserName) {
                 $('<a class="title" target="_blank"></a>').attr('href', 'http://www.last.fm/user/' + UserManager.currentUser.lastfmUserName).text(UserManager.currentUser.lastfmUserName).appendTo('#settings .connections .lastfm .account');
@@ -69,22 +59,12 @@ var SettingsPopup = {
 
         (function() {
             var settings = new Settings();
-            if (settings.flattr_automatically) {
-                $('#settings .connections .flattr .settings input[name=flattr_automatically]').attr('checked', 'checked');
-            }
 
             if (settings.lastfm_scrobble_automatically) {
                 $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').attr('checked', 'checked');
             }
         }());
 
-        $('#settings .connections .flattr .settings input[name=flattr_automatically]').change(function() {
-            var settings = new Settings();
-            settingsFromServer.flattr_automatically = this.checked;
-            settings.flattr_automatically = this.checked;
-            settings.save();
-        });
-        
         $('#settings .connections .lastfm .settings input[name=lastfm_scrobble_automatically]').change(function() {
             var settings = new Settings();
             settingsFromServer.lastfm_scrobble_automatically = this.checked;
