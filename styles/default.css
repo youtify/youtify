@@ -333,10 +333,6 @@ input[type=search]::-webkit-search-results-decoration {
     top: -4px;
     left: 6px;
 }
-#settings .puffs .chrome-webstore {
-    padding-left: 20px;
-    background: url(/images/chrome_16.png) no-repeat left center;
-}
 #top .activities {
     position: relative;
 }

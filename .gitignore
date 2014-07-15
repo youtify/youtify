@@ -8,5 +8,4 @@ config.py
 /Icon*
 *~
 .c9revisions
-chrome_webstore
 /make/node_modules

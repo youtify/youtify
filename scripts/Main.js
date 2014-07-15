@@ -18,9 +18,6 @@ var ON_PRODUCTION;
 var myFollowers;
 var myFollowings;
 
-if (window.API_HOST === undefined) { // This is set for the Chrome Web App
-    window.API_HOST = '';
-}
 soundManager.setup({
     url:'/scripts/swf/',
     flashVersion: 9,
@@ -49,7 +46,7 @@ $(document).ready(function() {
     Logo.init();
     LayoutManager.init();
 
-    $.getJSON(API_HOST + '/api/main', function(data) {
+    $.getJSON('/api/main', function(data) {
         settingsFromServer = data.settingsFromServer;
         languagesFromServer = data.languagesFromServer;
         autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
