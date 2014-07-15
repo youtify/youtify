@@ -15,12 +15,10 @@ try:
 except ImportError:
     import config_template as config
 
-VALIDATE_CERTIFICATE = True
-
 def lastfm_request(method, t, options, user = None):
     options.update({
         'method': method,
-        'api_key': 'db8b8dccb3afd186b6df786775a62cb5'
+        'api_key': config.LASTFM_APP_KEY
     })
 
     if user:
@@ -30,7 +28,7 @@ def lastfm_request(method, t, options, user = None):
 
     keys.sort()
 
-    signature = reduce(lambda s, v: s + v, [k + options[k].encode('utf8') for k in keys]) + '75dada4b3f3794de3be2db291c20528b'
+    signature = reduce(lambda s, v: s + v, [k + options[k].encode('utf8') for k in keys]) + config.LASTFM_APP_SECRET
 
     signature = md5(signature).hexdigest()
 
@@ -41,7 +39,7 @@ def lastfm_request(method, t, options, user = None):
     http_method = urlfetch.GET if t == 'GET' else urlfetch.POST # TODO: Fix this
 
     try:
-        response = urlfetch.fetch(url=url, method=http_method, deadline=10, validate_certificate=VALIDATE_CERTIFICATE)
+        response = urlfetch.fetch(url=url, method=http_method, deadline=10, validate_certificate=True)
         return simplejson.loads(response.content)
     except Exception:
         return simplejson.loads({
@@ -56,7 +54,7 @@ class ConnectHandler(webapp2.RequestHandler):
         if redirect_uri and redirect_uri != 'deleted':
             self.response.headers['Set-Cookie'] = 'redirect_uri=' + redirect_uri
 
-        url = 'http://www.last.fm/api/auth/?api_key=db8b8dccb3afd186b6df786775a62cb5&cb=' + config.LASTFM_REDIRECT_URL
+        url = 'http://www.last.fm/api/auth/?api_key=' + config.LASTFM_APP_KEY + '&cb=' + config.LASTFM_REDIRECT_URL
 
         self.redirect(url)
 
