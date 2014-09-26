@@ -11,6 +11,7 @@ DROPBOX_ACCESS_TYPE = 'app_folder'
 LASTFM_APP_KEY = ''
 LASTFM_APP_SECRET = ''
 LASTFM_REDIRECT_URL = ''
+SOUNDCLOUD_CONSUMER_KEY = ''
 
 ON_PRODUCTION = os.environ['SERVER_SOFTWARE'].startswith('Google App Engine') # http://stackoverflow.com/questions/1916579/in-python-how-can-i-test-if-im-in-google-app-engine-sdk
 

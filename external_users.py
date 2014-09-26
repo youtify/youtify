@@ -13,6 +13,10 @@ from model import get_youtify_user_struct
 from model import ExternalUser
 from model import ExternalUserTimestamp
 from model import get_external_user_subscription_struct
+try:
+    import config
+except ImportError:
+    import config_template as config
 
 class TopExternalUsers(webapp2.RequestHandler):
 
@@ -148,7 +152,7 @@ class ExternalUserCronHandler(webapp2.RequestHandler):
             if external_user.type == 'soundcloud':
                 try:
                     last_date = datetime.fromtimestamp(0)
-                    url = 'http://api.soundcloud.com/users/' + external_user.external_user_id + '/tracks.json?consumer_key=206f38d9623048d6de0ef3a89fea1c4d'
+                    url = 'http://api.soundcloud.com/users/' + external_user.external_user_id + '/tracks.json?consumer_key=' + config.SOUNDCLOUD_CONSUMER_KEY
                     response = urlfetch.fetch(url=url, method=urlfetch.GET)
                     if response.status_code == 200:
                         tracks = simplejson.loads(response.content)
