@@ -38,7 +38,6 @@
                             $.each(data, function(index, item) {
                                 calls += 1;
                                 $.get('/api/playlists/' + item.remoteId, function(data, x, y) {
-                                    console.log(data);
                                     youtify.dump += data.title + '\n' + '===' + '\n';
                                     var playlists = JSON.parse(data.videos) || [];
                                     for (i = 0; i < playlists.length; i += 1) {
@@ -51,12 +50,13 @@
                                     }
                                     youtify.dump += '\n';
                                     calls -= 1;
-                                });
+                                    $btn.text('working ' + calls);
+                                }).fail(function() { calls -= 1; });
                             });
-                            var t = setTimeout(function() {
-                                console.log(calls)
+                            var t = setInterval(function() {
+                                console.log(calls);
                                 if (calls === 0) {
-                                    clearTimeout(t);
+                                    clearInterval(t);
                                     if (youtify.dump.length === 0) {
                                         $('.actions').text(' - No data found.');
                                     } else {
@@ -87,7 +87,7 @@
                     <a href="#" class="logout">Logout</a><br />
                 </span>
             </p>
-            <p>All data will be permanently deleted February the 1th, 2015.</p>
+            <p>All data will be permanently deleted February the 1st, 2015.</p>
         </div>
     </body>
 </html>
