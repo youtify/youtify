@@ -16,125 +16,129 @@ error_handlers:
 
 handlers:
 
-- url: /admin/migrations/.*
-  script: migrations.app
-  login: admin
+#- url: /admin/migrations/.*
+#  script: migrations.app
+#  login: admin
 
-- url: /admin/fakesetup
-  script: fakesetup.app
-  login: admin
+#- url: /admin/fakesetup
+#  script: fakesetup.app
+#  login: admin
 
 - url: /stats
   script: ping.app
 
-- url: /me
-  script: me.app
+#- url: /me
+#  script: me.app
 
-- url: /me/.*
-  script: me.app
+#- url: /me/.*
+#  script: me.app
 
 - url: /api/users.*
   script: users.app
 
-- url: /api/alternatives.*
-  script: alternatives.app
+#- url: /api/alternatives.*
+#  script: alternatives.app
 
-- url: /logo
-  static_files: html/logo-guidlines.html
-  upload: html/logo-guidlines.html
+#- url: /logo
+#  static_files: html/logo-guidlines.html
+#  upload: html/logo-guidlines.html
   #expiration: "1d"
 
-- url: /about
-  static_files: html/about.html
-  upload: html/about.html
+#- url: /about
+#  static_files: html/about.html
+#  upload: html/about.html
   #expiration: "1d"
 
-- url: /yourbrowsersucks
-  script: sucks.app
+#- url: /yourbrowsersucks
+#  script: sucks.app
 
-- url: /yourdecisionrocks
-  script: sucks.app
+#- url: /yourdecisionrocks
+#  script: sucks.app
 
-- url: /cron/generate_playlists_toplist.*
-  script: playlists_toplist.app
-  login: admin
+#- url: /cron/generate_playlists_toplist.*
+#  script: playlists_toplist.app
+#  login: admin
 
-- url: /cron/update_external_users
-  script: external_users.app
-  login: admin
+#- url: /cron/update_external_users
+#  script: external_users.app
+#  login: admin
 
-- url: /api/external_users.*
-  script: external_users.app
+#- url: /api/external_users.*
+#  script: external_users.app
 
 - url: /api/playlists.*
   script: playlists.app
 
-- url: /api/favorites.*
-  script: favorites.app
+#- url: /api/favorites.*
+#  script: favorites.app
 
-- url: /api/toplists/playlists
-  script: playlists_toplist.app
+#- url: /api/toplists/playlists
+#  script: playlists_toplist.app
 
-- url: /api/dropbox.*
-  script: dropbox-handler.app
+#- url: /api/dropbox.*
+#  script: dropbox-handler.app
 
-- url: /cron/store_pings
-  script: ping.app
-  login: admin
+#- url: /cron/store_pings
+#  script: ping.app
+#  login: admin
 
-- url: /ping
-  script: ping.app
+#- url: /ping
+#  script: ping.app
 
-- url: /scripts
-  static_dir: scripts
+#- url: /scripts
+#  static_dir: scripts
 
-- url: /styles
-  static_dir: styles
+#- url: /styles
+#  static_dir: styles
 
-- url: /images
-  static_dir: images
-  expiration: "1d"
+#- url: /images
+#  static_dir: images
+#  expiration: "1d"
 
 - url: /favicon.ico
   static_files: images/favicon.ico
   upload: images/favicon.ico
   expiration: "1d"
 
-- url: /youtify.webapp
-  static_files: youtify.webapp
-  mime_type: application/x-web-app-manifest+json
-  upload: youtify.webapp
+#- url: /youtify.webapp
+#  static_files: youtify.webapp
+#  mime_type: application/x-web-app-manifest+json
+#  upload: youtify.webapp
 
 - url: /robots.*
   static_files: robots.txt
   upload: robots.txt
   expiration: "1d"
 
-- url: /flattr.*
-  script: flattr.app
-  login: required
+#- url: /flattr.*
+#  script: flattr.app
+#  login: required
 
-- url: /lastfm/*.*
-  script: lastfm.app
-  login: required
+#- url: /lastfm/*.*
+#  script: lastfm.app
+#  login: required
 
-- url: /happytranslate/.*
-  script: happytranslate.app
+#- url: /happytranslate/.*
+#  script: happytranslate.app
 
 - url: /unsubscribe
   script: mail.app
 
-- url: /soundcloud_id_to_permalink
-  script: soundcloud_id_to_permalink.app
+#- url: /soundcloud_id_to_permalink
+#  script: soundcloud_id_to_permalink.app
 
-- url: /opensearch.xml
-  static_files: opensearch.xml
-  upload: opensearch.xml
-  expiration: "1d"
+#- url: /opensearch.xml
+#  static_files: opensearch.xml
+#  upload: opensearch.xml
+#  expiration: "1d"
 
 - url: /api/main
   script: main.app
 
 - url: /.*
-  script: main.app
+  static_files: html/shutdown.html
+  upload: html/shutdown.html
+
+#- url: /.*
+#  script: main.app
 

@@ -1,12 +1,12 @@
 cron:
-- description: store pings
-  url: /cron/store_pings
-  schedule: every 10 minutes
+#- description: store pings
+#  url: /cron/store_pings
+#  schedule: every 10 minutes
 
-- description: generate playlists toplist
-  url: /cron/generate_playlists_toplist
-  schedule: every 5 minutes
+#- description: generate playlists toplist
+#  url: /cron/generate_playlists_toplist
+#  schedule: every 5 minutes
 
-- description: get last_updated for external users
-  url: /cron/update_external_users
-  schedule: every 5 minutes
+#- description: get last_updated for external users
+#  url: /cron/update_external_users
+#  schedule: every 5 minutes
