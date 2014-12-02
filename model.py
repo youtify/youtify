@@ -25,10 +25,6 @@ class YoutifyUser(db.Model):
 
     google_user = db.UserProperty()
     google_user2 = db.UserProperty()
-    flattr_access_token = db.StringProperty()
-    flattr_user_name = db.StringProperty()
-    flattr_scope = db.StringProperty()
-    flattr_automatically = db.BooleanProperty(default=True)
     lastfm_user_name = db.StringProperty()
     lastfm_access_token = db.StringProperty()
     lastfm_scrobble_automatically = db.BooleanProperty(default=True)
@@ -47,7 +43,6 @@ class YoutifyUser(db.Model):
     external_user_subscriptions = db.ListProperty(db.Key)
     nr_of_followers = db.IntegerProperty(default=0)
     nr_of_followings = db.IntegerProperty(default=0)
-    nr_of_flattrs = db.IntegerProperty(default=0)
     migrated_playlists = db.BooleanProperty(default=False)
 
     last_emailed = db.DateTimeProperty()
@@ -76,7 +71,6 @@ class Activity(db.Model):
     Implemented activities:
 
     actor signed up
-    actor flattred <thing>
     actor subscribed to <playlist>
     actor followed <user>
     """
@@ -168,14 +162,12 @@ def get_youtify_user_struct(youtify_user_model, include_private_data=False):
     user = {
         'id': str(youtify_user_model.key().id()),
         'email': None,
-        'flattr_user_name': youtify_user_model.flattr_user_name,
         'lastfm_user_name': youtify_user_model.lastfm_user_name,
         'dropbox_user_name': youtify_user_model.dropbox_user_name,
         'displayName': get_display_name_for_youtify_user_model(youtify_user_model),
         'nr_of_followers': youtify_user_model.nr_of_followers,
         'nr_of_followings': youtify_user_model.nr_of_followings,
         'nr_of_playlists': len(youtify_user_model.playlists) + len(youtify_user_model.playlist_subscriptions),
-        'nr_of_flattrs': youtify_user_model.nr_of_flattrs,
         'nickname': youtify_user_model.nickname,
         'firstName': youtify_user_model.first_name,
         'lastName': youtify_user_model.last_name,
@@ -195,8 +187,6 @@ def get_display_name_for_youtify_user_model(youtify_user_model):
         return youtify_user_model.first_name
     elif youtify_user_model.nickname:
         return youtify_user_model.nickname
-    elif youtify_user_model.flattr_user_name:
-        return youtify_user_model.flattr_user_name
     if youtify_user_model.google_user2:
         return youtify_user_model.google_user2.nickname().split('@')[0] # don't leak users email
     else:
@@ -301,7 +291,6 @@ def get_activities_structs(youtify_user_model, verbs=None, type=None, count=None
 
 def get_settings_struct_for_youtify_user_model(youtify_user_model):
     return {
-        'flattr_automatically': youtify_user_model.flattr_automatically,
         'lastfm_scrobble_automatically': youtify_user_model.lastfm_scrobble_automatically,
         'send_new_follower_email': youtify_user_model.send_new_follower_email,
         'send_new_subscriber_email': youtify_user_model.send_new_subscriber_email

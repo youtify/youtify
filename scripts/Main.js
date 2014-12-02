@@ -3,7 +3,7 @@ var playlistManager;
 var youTubeApiReady = false;
 var player = null;
 var ECHONEST_API_KEY = 'GWFNOCZP6DVXYN4RT';
-var SOUNDCLOUD_API_KEY = '206f38d9623048d6de0ef3a89fea1c4d';
+var SOUNDCLOUD_API_KEY = '40649f290be96b18240795348e96e5d8';
 var OFFICIALFM_API_KEY = 'gLc8fHvg39ez6EAYvxFA';
 var LASTFM_API_KEY = 'efe2adba16c8a466ea98520a8a3c5903';
 var selectedVideoElements = [];
@@ -18,9 +18,6 @@ var ON_PRODUCTION;
 var myFollowers;
 var myFollowings;
 
-if (window.API_HOST === undefined) { // This is set for the Chrome Web App
-    window.API_HOST = '';
-}
 soundManager.setup({
     url:'/scripts/swf/',
     flashVersion: 9,
@@ -49,7 +46,7 @@ $(document).ready(function() {
     Logo.init();
     LayoutManager.init();
 
-    $.getJSON(API_HOST + '/api/main', function(data) {
+    $.getJSON('/api/main', function(data) {
         settingsFromServer = data.settingsFromServer;
         languagesFromServer = data.languagesFromServer;
         autoDetectedLanguageByServer = data.autoDetectedLanguageByServer;
@@ -84,8 +81,6 @@ $(document).ready(function() {
         InfoPopup.init();
         InfoFetcher.init();
         Recommendations.init();
-        FlattrFinder.init();
-        AutoFlattrer.init();
         Lastfm.init();
         EchoNest.init();
         BottomPanel.init();

@@ -117,8 +117,6 @@
         <script src="/scripts/HomeScreen.js"></script>
         <script src="/scripts/Recommendations.js"></script>
         <script src="/scripts/InfoPopup.js"></script>
-        <script src="/scripts/FlattrFinder.js"></script>
-        <script src="/scripts/AutoFlattrer.js"></script>
         <script src="/scripts/Lastfm.js"></script>
         <script src="/scripts/EchoNest.js"></script>
         <script src="/scripts/InfoFetcher.js"></script>
@@ -174,9 +172,6 @@
         </div>
 
         <div id="settings" style="display:none" class="popup">
-            <div class="puffs" style="display:none">
-                <a class="puff chrome-webstore translatable" href="#" target="_blank">Install Youtify from the Chrome Web Store</a>
-            </div>
             <div class="language">
                 <h2 class="translatable">Language</h2>
                 <select>
@@ -185,16 +180,6 @@
             </div>
             <div class="connections">
                 <h2 class="translatable">Connections</h2>
-                <div class="connection flattr">
-                    <div class="account">
-                    </div>
-                    <div class="settings">
-                        <div class="tickbox">
-                            <input type="checkbox" name="flattr_automatically" />
-                            <label for="flattr_automatically" class="translatable">Automatically flattr songs after they finish playing</label>
-                        </div>
-                    </div>
-                </div>
                 <div class="connection lastfm">
                     <div class="account">
                     </div>
@@ -435,11 +420,6 @@
                             <button class="edit button translatable">Edit</button>
                         </div>
                         <span class="nickname"></span>
-                        <span class="flattr">
-                            <a class="username link" target="_blank" href="#"></a>
-                            -
-                            <span class="count"></span>
-                        </span>
                         <span class="tagline"></span>
                     </div>
 

@@ -95,7 +95,6 @@ class SettingsHandler(webapp2.RequestHandler):
         user = get_current_youtify_user_model()
         user.send_new_follower_email = self.request.get('send_new_follower_email') == 'true'
         user.send_new_subscriber_email = self.request.get('send_new_subscriber_email') == 'true'
-        user.flattr_automatically = self.request.get('flattr_automatically') == 'true'
         user.lastfm_scrobble_automatically = self.request.get('lastfm_scrobble_automatically') == 'true'
         user.save()
 

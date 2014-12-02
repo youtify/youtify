@@ -7,7 +7,6 @@ function Settings() {
 	this.announceTimeout = settings.announceTimeout || 3000;
     this.send_new_follower_email = settingsFromServer.send_new_follower_email;
     this.send_new_subscriber_email = settingsFromServer.send_new_subscriber_email;
-    this.flattr_automatically = settingsFromServer.flattr_automatically;
     this.lastfm_scrobble_automatically = settingsFromServer.lastfm_scrobble_automatically;
     this.shuffle = settings.shuffle || false;
 
@@ -28,7 +27,6 @@ function Settings() {
             LoadingBar.show();
 
             params = {
-                 flattr_automatically: this.flattr_automatically,
                  lastfm_scrobble_automatically: this.lastfm_scrobble_automatically,
                  send_new_follower_email: this.send_new_follower_email,
                  send_new_subscriber_email: this.send_new_subscriber_email

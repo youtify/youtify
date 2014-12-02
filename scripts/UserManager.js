@@ -27,10 +27,6 @@ var UserManager = {
                 UserManager.loadCurrentUser();
                 history.pushState(null, null, UserManager.currentUser.getUrl());
             });
-
-            EventSystem.addEventListener('flattr_click_made', function(data) {
-                UserManager.currentUser.nrOfFlattrs += 1;
-            });
         }
 
         UserManager.$rightView = $('#right .profile');
@@ -119,9 +115,6 @@ var UserManager = {
             UserManager.$img.remove();
         }
 
-        $('#right .profile .information-container .flattr').hide();
-        $('#right .profile .information-container .flattr .username').text('');
-        $('#right .profile .information-container .flattr .count').text('');
         $('#right .profile .information-container .display-name').text('');
         $('#right .profile .information-container .nickname').text('');
         $('#right .profile .information-container .tagline').text('');
@@ -187,14 +180,6 @@ var UserManager = {
             UserManager.$unFollowButton.show();
         } else if (UserManager.isLoggedIn()) {
             UserManager.$followButton.show();
-        }
-
-        if (user.flattrUserName) {
-            $('#right .profile .information-container .flattr .username')
-                .text(user.flattrUserName)
-                .attr('href', 'http://flattr.com/profile/' + user.flattrUserName);
-            $('#right .profile .information-container .flattr .count').html(TranslationSystem.get('$count donations made', {$count: '<strong>' + user.nrOfFlattrs + '</strong>'}));
-            $('#right .profile .information-container .flattr').show();
         }
 
         $('#right .profile .information-container .display-name').text(user.displayName);
