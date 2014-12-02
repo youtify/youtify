@@ -50,10 +50,3 @@ Install JSLint, UglifyJS and other dependencies:
 To run the build system:
 
     $ node make/generate_production_javascript.js
-
-Discussion
-----------
-
-Twitter: @youtify, @pthulin, @kallux
-Mail: youtify@youtify.com
-... or create issues here on GitHub!
